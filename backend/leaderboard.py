@@ -222,6 +222,26 @@ class SupabaseClient:
     """Thin wrapper around the Supabase Python client."""
 
     def __init__(self, url: Optional[str] = None, key: Optional[str] = None):
+        import httpx
+        
+        if not hasattr(httpx.Client, "_patched_for_proxy"):
+            orig_sync = httpx.Client.__init__
+            def sync_patch(self, *args, **kwargs):
+                kwargs.pop("proxy", None)
+                kwargs.pop("proxies", None)
+                orig_sync(self, *args, **kwargs)
+            httpx.Client.__init__ = sync_patch
+            httpx.Client._patched_for_proxy = True
+
+        if not hasattr(httpx.AsyncClient, "_patched_for_proxy"):
+            orig_async = httpx.AsyncClient.__init__
+            def async_patch(self, *args, **kwargs):
+                kwargs.pop("proxy", None)
+                kwargs.pop("proxies", None)
+                orig_async(self, *args, **kwargs)
+            httpx.AsyncClient.__init__ = async_patch
+            httpx.AsyncClient._patched_for_proxy = True
+
         from supabase import create_client
 
         self.url = url or os.environ.get("SUPABASE_URL", "")

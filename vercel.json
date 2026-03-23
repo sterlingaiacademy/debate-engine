@@ -6,9 +6,25 @@
   "functions": {
     "api/index.js": {
       "includeFiles": "backend/**"
+    },
+    "api/py_*.py": {
+      "runtime": "@vercel/python@4.5.0",
+      "includeFiles": "backend/**"
     }
   },
   "rewrites": [
+    {
+      "source": "/api/evaluate",
+      "destination": "/api/py_evaluate.py"
+    },
+    {
+      "source": "/api/analytics/:studentId",
+      "destination": "/api/py_analytics.py?studentId=:studentId"
+    },
+    {
+      "source": "/api/leaderboard",
+      "destination": "/api/py_leaderboard.py"
+    },
     {
       "source": "/api/(.*)",
       "destination": "/api/index.js"

@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const path = require('path');
 const db = require('./database');
 const { exec } = require('child_process');
@@ -285,7 +285,7 @@ app.post('/api/evaluate', async (req, res) => {
     }
 
     // Step 2: Write to tmp file
-    const tmpDir = path.join(__dirname, 'tmp');
+    const tmpDir = process.env.VERCEL ? '/tmp' : path.join(__dirname, 'tmp');
     if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
     const filename = path.join(tmpDir, `transcript_${Date.now()}.txt`);
     fs.writeFileSync(filename, rawText.trim());
