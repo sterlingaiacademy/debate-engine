@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Mic, Zap, Trophy, ArrowRight, Sparkles } from 'lucide-react';
 
 export default function Login({ onLogin }) {
   const [studentId, setStudentId] = useState('');
@@ -13,7 +14,7 @@ export default function Login({ onLogin }) {
     setError('');
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/login', {
+      const res = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ studentId, password }),
@@ -30,78 +31,195 @@ export default function Login({ onLogin }) {
   };
 
   return (
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      minHeight: '100vh',
-      padding: '1.5rem',
-      background: 'linear-gradient(135deg, #dbeafe 0%, #f8fafc 40%, #ede9fe 100%)',
-      fontFamily: "var(--font-sans)",
+    <div style={{ 
+      display: 'flex', minHeight: '100vh', width: '100%', fontFamily: 'var(--font-sans)', 
+      background: 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%)',
+      position: 'relative', overflow: 'hidden'
     }}>
-      <div style={{ width: '100%', maxWidth: '430px' }}>
-        {/* Branding */}
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }} className="animate-fade-in">
-          <span style={{
-            display: 'block',
-            fontSize: '2.75rem',
-            fontWeight: 800,
-            background: 'linear-gradient(135deg, #3b82f6 0%, #6366f1 60%, #8b5cf6 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-            letterSpacing: '-0.03em',
-            lineHeight: 1.1,
-            marginBottom: '0.5rem',
-          }}>
-            Grace and Force AI
-          </span>
-          <p style={{ color: '#64748b', fontSize: '1rem', fontWeight: 500 }}>
-            AI Debate Training Platform for Students
+      
+      {/* Decorative Background Elements */}
+      <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '400px', height: '400px', background: 'rgba(99, 102, 241, 0.4)', filter: 'blur(100px)', borderRadius: '50%' }} />
+      <div style={{ position: 'absolute', bottom: '-20%', right: '-10%', width: '500px', height: '500px', background: 'rgba(236, 72, 153, 0.2)', filter: 'blur(120px)', borderRadius: '50%' }} />
+
+      {/* LEFT PANE - Hero (Hidden on smaller screens) */}
+      <div className="login-left-pane animate-fade-in" style={{ 
+        flex: 1, 
+        position: 'relative', 
+        background: 'transparent',
+        color: '#fff',
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '3.5rem 3.5rem 3.5rem 6.5rem',
+        zIndex: 1
+      }}>
+        
+        {/* Main Content - Centered Vertically */}
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', zIndex: 10, maxWidth: '600px', paddingBottom: '15vh' }}>
+          
+          {/* Brand Logo tied to the Hero block */}
+          <div style={{ marginBottom: '1rem' }}>
+            <span style={{ fontSize: '1.15rem', fontWeight: 800, letterSpacing: '-0.03em' }}>Grace and Force AI</span>
+          </div>
+
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.15)', padding: '0.5rem 1rem', borderRadius: '99px', fontSize: '0.875rem', fontWeight: 600, marginBottom: '1.5rem', color: '#e0e7ff', backdropFilter: 'blur(10px)', width: 'fit-content' }}>
+            <Sparkles size={16} color="#a855f7" /> The Ultimate Debate Training
+          </div>
+          
+          <h1 style={{ fontSize: '3.5rem', fontWeight: 800, lineHeight: 1.1, marginBottom: '1.5rem', letterSpacing: '-0.04em', whiteSpace: 'nowrap' }}>
+            Master the <span style={{ background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Art of Debate</span>
+          </h1>
+          
+          <p style={{ fontSize: '1.125rem', color: '#cbd5e1', lineHeight: 1.6, marginBottom: '2.75rem', fontWeight: 400 }}>
+            Engage with advanced AI personas, refine your argumentation skills, and climb the global leaderboards in real-time.
           </p>
+          
+          <div style={{ display: 'flex', gap: '1.75rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: '#f8fafc', fontSize: '0.9rem', fontWeight: 600 }}>
+              <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'rgba(16, 185, 129, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Zap size={14} color="#10b981" />
+              </div>
+              Real-time Analytics
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: '#f8fafc', fontSize: '0.9rem', fontWeight: 600 }}>
+              <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'rgba(245, 158, 11, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Trophy size={14} color="#f59e0b" />
+              </div>
+              Global Ranking
+            </div>
+          </div>
         </div>
 
-        {/* Card */}
-        <div style={{
-          background: '#ffffff',
-          borderRadius: '20px',
-          boxShadow: '0 20px 60px 0 rgba(0,0,0,0.12)',
+        {/* Footer info inside Left Pane */}
+        <div style={{ zIndex: 10, fontSize: '0.85rem', color: 'rgba(255,255,255,0.4)', fontWeight: 500 }}>
+          © 2026 Grace and Force AI. All rights reserved.
+        </div>
+      </div>
+
+      {/* RIGHT PANE - Login Form */}
+      <div style={{ 
+        flex: 1, 
+        display: 'flex', 
+        flexDirection: 'column', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        padding: '2rem',
+        background: 'transparent',
+        zIndex: 1
+      }}>
+        <div className="animate-slide-up" style={{ 
+          width: '100%', 
+          maxWidth: '420px',
+          background: 'rgba(255, 255, 255, 0.04)',
+          backdropFilter: 'blur(24px)',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          borderRadius: '24px',
           padding: '2.5rem',
-          border: '1px solid rgba(226,232,240,0.8)',
-        }} className="animate-slide-up">
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
+        }}>
+          
+          {/* Mobile-only logo (shows when left pane is hidden) */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '2.5rem', justifyContent: 'center' }} className="mobile-logo">
+             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', borderRadius: '10px', background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)' }}>
+               <Mic size={18} color="#fff" />
+             </div>
+             <span style={{ fontSize: '1.5rem', fontWeight: 800, letterSpacing: '-0.03em', color: '#fff' }}>Grace and Force</span>
+          </div>
+
+          <div style={{ marginBottom: '2.5rem' }}>
+            <h2 style={{ fontSize: '2.25rem', fontWeight: 800, color: '#fff', marginBottom: '0.5rem', letterSpacing: '-0.03em' }}>Welcome back</h2>
+            <p style={{ color: '#94a3b8', fontSize: '1rem', fontWeight: 500 }}>Enter your credentials to access your account.</p>
+          </div>
+
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-            {error && <div className="alert alert-error">{error}</div>}
+            {error && (
+              <div className="alert alert-error" style={{ borderRadius: '8px', padding: '0.85rem 1rem', fontSize: '0.85rem', background: 'rgba(239, 68, 68, 0.15)', color: '#fca5a5', border: '1px solid rgba(239, 68, 68, 0.3)' }}>
+                {error}
+              </div>
+            )}
 
-            <div className="input-group">
-              <label className="input-label">Student ID Card</label>
-              <input type="text" className="input-field" value={studentId}
-                onChange={(e) => setStudentId(e.target.value)} placeholder="e.g. STU12345" required />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+              <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#e2e8f0' }}>Student ID Card</label>
+              <input 
+                type="text" 
+                value={studentId}
+                onChange={(e) => setStudentId(e.target.value)} 
+                placeholder="e.g. STU12345" 
+                required 
+                style={{
+                  width: '100%', padding: '0.85rem 1rem', fontSize: '0.95rem',
+                  border: '1px solid rgba(255, 255, 255, 0.15)', borderRadius: '10px',
+                  background: 'rgba(255, 255, 255, 0.05)', color: '#fff', transition: 'all 0.2s ease',
+                  outline: 'none'
+                }}
+                onFocus={(e) => { e.target.style.borderColor = '#8b5cf6'; e.target.style.boxShadow = '0 0 0 3px rgba(139, 92, 246, 0.25)'; e.target.style.background = 'rgba(255, 255, 255, 0.1)'; }}
+                onBlur={(e) => { e.target.style.borderColor = 'rgba(255, 255, 255, 0.15)'; e.target.style.boxShadow = 'none'; e.target.style.background = 'rgba(255, 255, 255, 0.05)'; }}
+              />
             </div>
 
-            <div className="input-group">
-              <label className="input-label">Password</label>
-              <input type="password" className="input-field" value={password}
-                onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" required />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#e2e8f0' }}>Password</label>
+              </div>
+              <input 
+                type="password" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)} 
+                placeholder="Enter your password" 
+                required 
+                style={{
+                  width: '100%', padding: '0.85rem 1rem', fontSize: '0.95rem',
+                  border: '1px solid rgba(255, 255, 255, 0.15)', borderRadius: '10px',
+                  background: 'rgba(255, 255, 255, 0.05)', color: '#fff', transition: 'all 0.2s ease',
+                  outline: 'none'
+                }}
+                onFocus={(e) => { e.target.style.borderColor = '#8b5cf6'; e.target.style.boxShadow = '0 0 0 3px rgba(139, 92, 246, 0.25)'; e.target.style.background = 'rgba(255, 255, 255, 0.1)'; }}
+                onBlur={(e) => { e.target.style.borderColor = 'rgba(255, 255, 255, 0.15)'; e.target.style.boxShadow = 'none'; e.target.style.background = 'rgba(255, 255, 255, 0.05)'; }}
+              />
             </div>
 
-            <button type="submit" className="btn btn-primary btn-lg" disabled={loading}
-              style={{ width: '100%', marginTop: '0.25rem' }}>
-              {loading ? 'Logging in…' : 'Login'}
+            <button 
+              type="submit" 
+              disabled={loading}
+              style={{
+                width: '100%', padding: '1rem', marginTop: '0.5rem',
+                background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+                color: '#fff', fontSize: '1.05rem', fontWeight: 700,
+                border: 'none', borderRadius: '12px', cursor: loading ? 'not-allowed' : 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
+                boxShadow: '0 4px 14px rgba(236, 72, 153, 0.4)',
+                transition: 'transform 0.2s, box-shadow 0.2s',
+                opacity: loading ? 0.7 : 1
+              }}
+              onMouseEnter={(e) => { if(!loading) { e.target.style.transform = 'translateY(-2px)'; e.target.style.boxShadow = '0 8px 24px rgba(236, 72, 153, 0.5)'; } }}
+              onMouseLeave={(e) => { if(!loading) { e.target.style.transform = 'translateY(0)'; e.target.style.boxShadow = '0 4px 14px rgba(236, 72, 153, 0.4)'; } }}
+            >
+              {loading ? 'Authenticating...' : (
+                <>Sign In <ArrowRight size={18} /></>
+              )}
             </button>
 
-            <div className="divider">or</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', margin: '1rem 0', color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem' }}>
+              <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
+              <span>or</span>
+              <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
+            </div>
 
-            <Link to="/register" className="btn btn-secondary btn-lg"
-              style={{ width: '100%', justifyContent: 'center', textDecoration: 'none' }}>
-              Create Account
-            </Link>
+            <div style={{ textAlign: 'center', fontSize: '0.95rem', color: '#cbd5e1' }}>
+              Don't have an account?{' '}
+              <Link to="/register" style={{ color: '#fbcfe8', fontWeight: 600, textDecoration: 'none' }} onMouseEnter={(e) => e.target.style.textDecoration='underline'} onMouseLeave={(e) => e.target.style.textDecoration='none'}>
+                Create one now
+              </Link>
+            </div>
           </form>
         </div>
-
-        <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: '0.8125rem', marginTop: '1.5rem' }}>
-          © 2026 Grace and Force AI · All rights reserved
-        </p>
       </div>
+      
+      {/* Small inline style block to hide the mobile-logo on desktop where the left pane is visible */}
+      <style>{`
+        @media (min-width: 901px) {
+          .mobile-logo { display: none !important; }
+        }
+      `}</style>
     </div>
   );
 }

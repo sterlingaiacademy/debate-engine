@@ -1,0 +1,1 @@
+postgresql://postgres:sterlingvoiceorders%%40123@db.whfmuswqbsgbmaramuhi.supabase.co:5432/postgres 

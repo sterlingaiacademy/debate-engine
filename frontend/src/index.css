@@ -734,6 +734,7 @@ tbody tr:hover { background: var(--bg-tertiary); }
 @media (max-width: 900px) {
   .grid-3 { grid-template-columns: repeat(2, 1fr); }
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .login-left-pane { display: none !important; }
 }
 
 @media (max-width: 640px) {

@@ -1,25 +1,24 @@
+require('dotenv').config();
 const { Pool } = require('pg');
-const path = require('path');
 
-// Connect to PostgreSQL (Supabase or default local)
+const connectionString = process.env.DATABASE_URL || 
+  'postgresql://postgres.whfmuswqbsgbmaramuhi:sterlingvoiceorders%40123@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres';
+
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false // Required for Supabase/Render connections
-  }
+  connectionString,
+  ssl: { rejectUnauthorized: false },
+  max: 10,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 10000,
 });
 
-pool.on('error', (err) => {
-  console.error('Unexpected error on idle pg client', err);
-  process.exit(-1);
-});
+console.log('Connecting to Supabase PostgreSQL database...');
 
+// Initialize tables on startup
 async function initDB() {
+  const client = await pool.connect();
   try {
-    const client = await pool.connect();
-    console.log('Connected to the PostgreSQL database.');
-    
-    // Create Tables using PostgreSQL syntax (SERIAL for auto-increment, TIMESTAMP for dates)
+    // Core tables
     await client.query(`
       CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
@@ -53,16 +52,33 @@ async function initDB() {
       )
     `);
 
-    client.release();
-    console.log('Database tables verified.');
+    // Daily time-limit columns — add if not already present
+    const addColumnSafe = async (col, type, def) => {
+      try {
+        await client.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS "${col}" ${type} DEFAULT ${def}`);
+      } catch (e) { /* Already exists */ }
+    };
+
+    await addColumnSafe('lastDebateDate', 'TEXT', "''");
+    await addColumnSafe('dailyRankedTime', 'INTEGER', '0');
+    await addColumnSafe('dailyPersonaTime', 'INTEGER', '0');
+
+    console.log('Supabase database tables verified.');
   } catch (err) {
-    console.error('Error initializing database:', err.message);
+    console.error('DB init error:', err.message);
+  } finally {
+    client.release();
   }
 }
 
-// Initialize tables on startup
 initDB();
 
-module.exports = {
-  query: (text, params) => pool.query(text, params),
-};
+/**
+ * pg-compatible query wrapper — same API as before (server.js unchanged).
+ */
+async function query(sql, params = []) {
+  const result = await pool.query(sql, params);
+  return result;
+}
+
+module.exports = { query };

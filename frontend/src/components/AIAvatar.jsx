@@ -5,9 +5,9 @@ import seniorAvatar from '../assets/senior_avatar.png';
  * AIAvatar — Talking Tom-style animated avatar for the Debate Arena.
  * Bounces gently when idle, wiggles + scales when the AI is speaking.
  */
-export default function AIAvatar({ isJunior, isSpeaking, size = 120 }) {
-  const src = isJunior ? juniorAvatar : seniorAvatar;
-  const name = isJunior ? 'Leo' : 'Professor Owl';
+export default function AIAvatar({ isJunior, isSpeaking, size = 120, overrideImage, overrideName }) {
+  const src = overrideImage ? overrideImage : (isJunior ? juniorAvatar : seniorAvatar);
+  const name = overrideName ? overrideName : (isJunior ? 'Leo' : 'Professor Owl');
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>

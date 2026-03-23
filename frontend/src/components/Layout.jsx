@@ -3,15 +3,14 @@ import { LogOut, LayoutDashboard, Mic, BarChart2, Trophy, UserCircle } from 'luc
 
 export default function Layout({ user, onLogout }) {
   const { pathname } = useLocation();
-  const isJunior = user?.classLevel === 'Class 1-3';
+  const isJunior = ['Level 1', 'Level 2', 'Class 1-3'].includes(user?.classLevel);
 
   const navLinks = [
     { name: 'Dashboard',   path: '/dashboard',   icon: LayoutDashboard },
     { name: 'Start Debate',path: '/debate',       icon: Mic },
-    { name: 'Analytics',   path: '/analytics',    icon: BarChart2 },
-    { name: 'Leaderboard', path: '/leaderboard',  icon: Trophy },
-    { name: 'Profile',     path: '/dashboard',    icon: UserCircle },
-  ];
+    !isJunior && { name: 'Analytics',   path: '/analytics',    icon: BarChart2 },
+    !isJunior && { name: 'Leaderboard', path: '/leaderboard',  icon: Trophy },
+  ].filter(Boolean);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -29,10 +28,6 @@ export default function Layout({ user, onLogout }) {
               <span className="nav-label">{name}</span>
             </Link>
           ))}
-
-          {isJunior && (
-            <span style={{ marginLeft: '0.5rem', fontSize: '1.25rem' }}>🦁</span>
-          )}
 
           <button
             onClick={onLogout}

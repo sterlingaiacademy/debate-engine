@@ -1,35 +1,55 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Mic, MicOff, PhoneOff, Timer as TimerIcon, Play } from 'lucide-react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Mic, MicOff, PhoneOff, ArrowLeft, Play, Timer as TimerIcon } from 'lucide-react';
 import { Conversation } from '@11labs/client';
 import AIAvatar from '../components/AIAvatar';
 
-const TOPICS = [
-  'Should school uniforms be mandatory?',
-  'Is social media good or bad for society?',
-  'Should we prioritize space exploration over ocean research?',
-  'Are video games a valid form of art?',
-  'Should homework be abolished?',
-  'Is technology making us less social?',
-  'Should zoos be banned?',
-];
-
-export default function DebateArena({ user }) {
-  const [topic] = useState(() => TOPICS[Math.floor(Math.random() * TOPICS.length)]);
-  const isJunior = ['Level 1', 'Level 2', 'Class 1-3'].includes(user.classLevel);
-  const [timer, setTimer] = useState(1800);
-  const [isActive, setIsActive] = useState(false);
-  const [transcript, setTranscript] = useState([]);
-  const transcriptRef = useRef([]);
-  const [isSpeaking, setIsSpeaking] = useState(false);
-  const [status, setStatus] = useState('idle'); // idle | connecting | active | ended | error | out_of_time
-  const conversationRef = useRef(null);
-  const timerRef = useRef(null);
-  const transcriptEndRef = useRef(null);
-  const hasStartedRef = useRef(false);
-  const conversationIdRef = useRef(null);
-  const initialTimerRef = useRef(1800);
+export default function PersonaDebate({ user }) {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const personaName = searchParams.get('name') || 'Historical Figure';
+  const personaImage = searchParams.get('image') || '/gandhi_avatar_1773899586119.png';
+  const agentId = searchParams.get('agentId');
+
+  const [transcript, setTranscript] = useState([]);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [status, setStatus] = useState('idle'); // idle | connecting | active | ended | error
+  const conversationRef = useRef(null);
+  const transcriptEndRef = useRef(null);
+
+  const isJunior = ['Level 1', 'Level 2', 'Class 1-3'].includes(user?.classLevel);
+  const [timer, setTimer] = useState(1800);
+  const initialTimerRef = useRef(1800);
+  const timerRef = useRef(null);
+  const isActive = status === 'active';
+
+  // Timer effect
+  useEffect(() => {
+    if (!isActive) return;
+
+    timerRef.current = setInterval(() => {
+      setTimer((prev) => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current);
+          handleEnd();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timerRef.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isActive]);
+
+  const formatTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+  const timerWarning = timer < 60;
+
+  // scroll chat
+  useEffect(() => {
+    transcriptEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [transcript]);
 
   // Screen Saver State
   const [isAwake, setIsAwake] = useState(true);
@@ -55,21 +75,6 @@ export default function DebateArena({ user }) {
     };
   }, []);
 
-  // auto-scroll placeholder for future logic if needed
-  useEffect(() => {
-    transcriptEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [transcript]);
-
-  // countdown
-  useEffect(() => {
-    if (isActive && timer > 0) {
-      timerRef.current = setInterval(() => setTimer((t) => t - 1), 1000);
-    } else if (timer === 0 && isActive) {
-      handleEndDebate();
-    }
-    return () => clearInterval(timerRef.current);
-  }, [isActive, timer]);
-
   // Robust connection handling for React Strict Mode and fast navigation
   useEffect(() => {
     let isTerminated = false;
@@ -78,11 +83,11 @@ export default function DebateArena({ user }) {
     const init = async () => {
       setStatus('connecting');
       try {
-        const res = await fetch(`/api/time-limits/${user.studentId}`);
+        const res = await fetch(`/api/time-limits/${user?.studentId}`);
         if (isTerminated) return;
         if (res.ok) {
           const data = await res.json();
-          const remain = data.remainingRanked;
+          const remain = data.remainingPersona;
           if (remain <= 0) {
             setStatus('out_of_time');
             return;
@@ -107,35 +112,10 @@ export default function DebateArena({ user }) {
         window._activeElevenLabsSessions = [];
 
         localSession = await Conversation.startSession({
-          agentId: user.assignedAgentId,
-          onConnect: () => {
-            if (!isTerminated) {
-              setStatus('active');
-              setIsActive(true);
-              try {
-                const convId = localSession?.getId?.() || localSession?.id || null;
-                if (convId) conversationIdRef.current = convId;
-              } catch (e) {}
-            }
-          },
-          onDisconnect: () => {
-            if (!isTerminated) {
-              setIsActive(false); 
-              setStatus('ended');
-              setTimeout(() => {
-                if (!isTerminated) handleEndDebate();
-              }, 500);
-            }
-          },
-          onMessage: (msg) => { 
-            if (!isTerminated) {
-              setTranscript(p => {
-                const newT = [...p, { role: msg.source, text: msg.message }];
-                transcriptRef.current = newT;
-                return newT;
-              });
-            }
-          },
+          agentId,
+          onConnect: () => { if (!isTerminated) setStatus('active'); },
+          onDisconnect: () => { if (!isTerminated) setStatus('ended'); },
+          onMessage: (msg) => { if (!isTerminated) setTranscript(p => [...p, { role: msg.source, text: msg.message }]); },
           onError: (err) => { if (!isTerminated) setStatus('error'); },
           onModeChange: (m) => { if (!isTerminated) setIsSpeaking(m.mode === 'speaking'); }
         });
@@ -151,7 +131,7 @@ export default function DebateArena({ user }) {
       }
     };
 
-    if (user?.assignedAgentId) init();
+    if (agentId) init();
 
     return () => {
       isTerminated = true;
@@ -159,70 +139,38 @@ export default function DebateArena({ user }) {
         try { localSession.endSession(); } catch(e){}
       }
     };
-  }, [user?.assignedAgentId, user?.studentId]);
+  }, [agentId, user?.studentId]);
 
-  const handleEndDebate = async () => {
-    clearInterval(timerRef.current);
-    if (conversationRef.current) {
-      try { await conversationRef.current.endSession(); } catch(e) {}
-    }
-    setIsActive(false);
+  const handleEnd = async () => {
+    if (timerRef.current) clearInterval(timerRef.current);
     setStatus('evaluating');
+    if (conversationRef.current) {
+      try { await conversationRef.current.endSession(); } catch { /* ignore */ }
+    }
 
-    let evaluation = null;
-    const currentTranscript = transcriptRef.current;
-
-    // Step 1: Get real AI judge evaluation from transcript
+    // Save persona session to update the daily time limit
     try {
-      const evalRes = await fetch('/api/evaluate', {
+      await fetch('/api/sessions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          transcript: currentTranscript,
-          topic,
-          isJunior: ['Level 1', 'Level 2', 'Class 1-3'].includes(user.classLevel),
-          conversationId: conversationIdRef.current,
           studentId: user?.studentId,
-          name: user?.name,
-          classLevel: user?.classLevel,
+          debateTopic: `Persona: ${personaName}`,
+          sessionDuration: initialTimerRef.current - timer,
+          argumentsCount: transcript.filter(m => m.role === 'user').length,
+          debateScore: 0, // Personas might not grant scores or it defaults inside
+          isPersona: true
         }),
       });
-      evaluation = await evalRes.json();
-    } catch (err) {
-      console.error('Evaluation failed, using fallback:', err);
+    } catch (e) {
+      console.error('Error saving persona session limit', e);
     }
 
-    const finalScore = evaluation?.overallScore ?? Math.floor(Math.random() * 20) + 65;
-
-    // Step 2: Save session with real score
-    const sessionData = {
-      studentId: user.studentId,
-      debateTopic: topic,
-      sessionDuration: initialTimerRef.current - timer,
-      argumentsCount: currentTranscript.filter(m => m.role === 'user').length,
-      debateScore: finalScore,
-      isPersona: false
-    };
-
-    try {
-      const res = await fetch('/api/sessions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(sessionData),
-      });
-      const data = await res.json();
-      // Navigate with both session data AND real evaluation results
-      navigate(`/results/${data.sessionId}`, {
-        state: { sessionData, evaluation }
-      });
-    } catch {
-      navigate('/dashboard');
-    }
+    setTimeout(() => {
+      navigate('/persona');
+    }, 4500);
   };
 
-  const formatTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
-  const timerPct = (timer / initialTimerRef.current) * 100;
-  const timerWarning = timer < 60;
 
   return (
     <>
@@ -248,37 +196,76 @@ export default function DebateArena({ user }) {
       </div>
 
       <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', height: 'calc(100vh - 64px - 1.5rem)' }}>
+
+      {/* Persona Header Banner */}
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: '1rem',
+        padding: '1rem 1.5rem',
+        borderRadius: 'var(--radius-xl)',
+        background: 'linear-gradient(135deg, #fdf4ff 0%, #ede9fe 100%)',
+        border: '2px solid rgba(139,92,246,0.2)',
+        flexShrink: 0,
+      }}>
+        <button
+          onClick={handleEnd}
+          className="btn btn-secondary btn-sm"
+          style={{ gap: '0.4rem', flexShrink: 0 }}
+        >
+          <ArrowLeft size={16} /> Leave
+        </button>
+        <div style={{ width: '48px', height: '48px', borderRadius: '50%', overflow: 'hidden', border: '2px solid #8b5cf6', flexShrink: 0 }}>
+          <img src={personaImage} alt={personaName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        </div>
+        <div>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0, color: '#4c1d95' }}>
+            {personaName}
+          </h2>
+          <p style={{ margin: '0.15rem 0 0', fontSize: '0.85rem', color: '#7c3aed' }}>
+            {isActive ? '● Live conversation' : status === 'connecting' ? 'Connecting…' : status === 'ended' ? 'Session ended' : status === 'error' ? 'Connection failed' : 'Initialising…'}
+          </p>
+        </div>
+        {isActive && (
+          <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <div style={{
+              width: 10, height: 10, borderRadius: '50%',
+              background: isSpeaking ? '#8b5cf6' : '#10b981',
+              boxShadow: isSpeaking ? '0 0 10px #8b5cf6' : '0 0 6px #10b981',
+              animation: 'ping 1.5s cubic-bezier(0,0,0.2,1) infinite',
+            }} />
+            <span style={{ fontSize: '0.8rem', fontWeight: 600, color: isSpeaking ? '#7c3aed' : '#059669' }}>
+              {isSpeaking ? `${personaName.split(' ')[0]} speaking` : 'Your turn'}
+            </span>
+          </div>
+        )}
+      </div>
+
       {/* Chat Window */}
       <div className="card" style={{
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        padding: 0,
-        overflow: 'hidden',
-        minHeight: 0,
-        borderRadius: 'var(--radius-xl)',
+        flex: 1, padding: 0, overflow: 'hidden',
+        minHeight: 0, borderRadius: 'var(--radius-xl)',
+        display: 'flex', flexDirection: 'column',
       }}>
         <div style={{ flex: 1, overflowY: 'auto', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          
-          {/* Connecting State */}
+
+          {/* Connecting */}
           {transcript.length === 0 && (status === 'connecting' || status === 'idle') && (
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', animation: 'fadeIn 0.5s' }}>
-              <AIAvatar isJunior={isJunior} isSpeaking={false} size={120} />
+              <AIAvatar overrideImage={personaImage} overrideName={personaName} isJunior={false} isSpeaking={false} size={120} />
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-                <div className="animate-spin" style={{ width: 44, height: 44, border: '3px solid var(--border)', borderTopColor: 'var(--accent)', borderRadius: '50%' }} />
-                <p className="text-secondary font-semibold">Connecting to your debate buddy…</p>
+                <div className="animate-spin" style={{ width: 44, height: 44, border: '3px solid var(--border)', borderTopColor: '#8b5cf6', borderRadius: '50%' }} />
+                <p className="text-secondary font-semibold">Connecting to {personaName}…</p>
               </div>
             </div>
           )}
 
-          {/* Error State */}
+          {/* Error */}
           {status === 'error' && (
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '3rem 1.5rem', gap: '1.25rem' }}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', gap: '1.25rem', padding: '3rem 1.5rem' }}>
               <div className="alert alert-error" style={{ maxWidth: '400px' }}>
-                <strong>Connection Failed:</strong> Could not connect to AI agent. Please check your microphone permissions and try again.
+                <strong>Connection Failed:</strong> Could not connect to {personaName}. Please check your microphone permissions and try again.
               </div>
               <div style={{ display: 'flex', gap: '1rem' }}>
-                <button onClick={() => navigate('/dashboard')} className="btn btn-secondary">Back to Dashboard</button>
+                <button onClick={() => navigate('/persona')} className="btn btn-secondary">Back to Personas</button>
               </div>
             </div>
           )}
@@ -286,10 +273,10 @@ export default function DebateArena({ user }) {
           {/* Out of Time State */}
           {status === 'out_of_time' && (
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '3rem 1.5rem', gap: '1.25rem' }}>
-              <AIAvatar isJunior={isJunior} isSpeaking={false} size={120} />
+              <AIAvatar overrideImage={personaImage} overrideName={personaName} isJunior={false} isSpeaking={false} size={120} />
               <div className="alert alert-warning" style={{ maxWidth: '400px', backgroundColor: '#fffbeb', color: '#b45309', border: '1px solid #fcd34d' }}>
                 <strong>Time's Up! ⏱️</strong><br/>
-                You have reached your 30-minute daily debate limit. Come back tomorrow to continue practicing!
+                You have reached your 30-minute daily debate limit for Persona Mode. Come back tomorrow!
               </div>
               <button onClick={() => navigate('/dashboard')} className="btn btn-primary">Back to Dashboard</button>
             </div>
@@ -299,7 +286,7 @@ export default function DebateArena({ user }) {
           {status === 'evaluating' && (
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2rem', animation: 'fadeIn 0.5s' }}>
               <div style={{ position: 'relative' }}>
-                <AIAvatar isJunior={isJunior} isSpeaking={false} size={140} />
+                <AIAvatar overrideImage={personaImage} overrideName={personaName} isJunior={false} isSpeaking={false} size={140} />
                 <div style={{
                   position: 'absolute', top: -15, left: -15, right: -15, bottom: -15,
                   border: '4px solid rgba(139,92,246,0.1)',
@@ -310,8 +297,21 @@ export default function DebateArena({ user }) {
                 }} />
               </div>
               <div style={{ textAlign: 'center' }}>
-                <h3 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>Analyzing Debate...</h3>
-                <p className="text-secondary font-semibold" style={{ fontSize: '1.1rem' }}>The AI is carefully reviewing your arguments!</p>
+                <h3 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>Saving Conversation...</h3>
+                <p className="text-secondary font-semibold" style={{ fontSize: '1.1rem' }}>Logging the interaction safely before concluding!</p>
+              </div>
+            </div>
+          )}
+
+          {/* Session ended */}
+          {status === 'ended' && (
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', gap: '1.5rem', padding: '3rem 1.5rem' }}>
+              <AIAvatar overrideImage={personaImage} overrideName={personaName} isJunior={false} isSpeaking={false} size={100} />
+              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, marginTop: '1rem' }}>Conversation Ended</h3>
+              <p className="text-secondary">You spoke with {personaName}. What an experience!</p>
+              <div style={{ display: 'flex', gap: '1rem' }}>
+                <button onClick={() => navigate('/persona')} className="btn btn-secondary">Choose Another Persona</button>
+                <button onClick={() => navigate('/dashboard')} className="btn btn-primary">Back to Dashboard</button>
               </div>
             </div>
           )}
@@ -325,16 +325,16 @@ export default function DebateArena({ user }) {
             }}>
               
               <div style={{ position: 'relative' }}>
-                <AIAvatar isJunior={isJunior} isSpeaking={isSpeaking} size={240} />
+                <AIAvatar overrideImage={personaImage} overrideName={personaName} isJunior={false} isSpeaking={isSpeaking} size={240} />
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
                 <h3 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0, color: 'var(--text-primary)' }}>
-                  {isSpeaking ? 'AI is speaking…' : 'Listening carefully…'}
+                  {isSpeaking ? `${personaName.split(' ')[0]} is speaking…` : 'Listening carefully…'}
                 </h3>
                 <div className="waveform" style={{ opacity: isActive ? 1 : 0.3, margin: '0.5rem 0', height: '24px', gap: '4px' }}>
                   {[...Array(8)].map((_, i) => (
-                    <div key={i} className="waveform-bar" style={{ height: isSpeaking ? '24px' : '6px', background: 'var(--accent)', minWidth: '6px' }} />
+                    <div key={i} className="waveform-bar" style={{ height: isSpeaking ? '24px' : '6px', background: '#8b5cf6', minWidth: '6px' }} />
                   ))}
                 </div>
               </div>
@@ -352,7 +352,7 @@ export default function DebateArena({ user }) {
                   </span>
                 </div>
 
-                <button onClick={handleEndDebate} className="btn btn-danger" style={{ 
+                <button onClick={handleEnd} className="btn btn-danger" style={{ 
                   borderRadius: '99px', padding: '1rem 2.5rem', fontSize: '1.25rem', gap: '0.75rem', fontWeight: 700
                 }}>
                   <PhoneOff size={24} /> End Call

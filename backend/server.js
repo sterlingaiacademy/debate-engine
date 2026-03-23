@@ -4,7 +4,8 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const path = require('path');
 const db = require('./database');
-const { evaluateDebate } = require('./judge');
+const { exec } = require('child_process');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -12,8 +13,14 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Serve static React frontend files
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
+// Helper for IST Date (Resets at 12:00 AM IST)
+function getISTDateString() {
+  const now = new Date();
+  // IST is UTC + 5 hours and 30 minutes
+  const istOffsetMs = 5.5 * 60 * 60 * 1000;
+  const istDate = new Date(now.getTime() + istOffsetMs);
+  return istDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+}
 
 // Users
 app.post('/api/register', async (req, res) => {
@@ -24,10 +31,17 @@ app.post('/api/register', async (req, res) => {
 
   // Assign agent ID based on class
   let assignedAgentId = '';
-  if (classLevel === 'Class 1-3') {
+  if (classLevel === 'Level 1' || classLevel === 'Class 1-3') {
     assignedAgentId = 'agent_3201kkb0dbh3fgravbhyjw4crve8';
-  } else if (classLevel === 'Class 10-12') {
+  } else if (classLevel === 'Level 2') {
+    assignedAgentId = 'agent_1201kkvd9ke5fd180zjz6ckrameq';
+  } else if (classLevel === 'Level 4' || classLevel === 'Class 10-12') {
+    // Level 4 uses senior debate agent for the standard debate tile
     assignedAgentId = 'agent_1201kkdnn526eebs4fwb822fzgs3';
+  } else if (classLevel === 'Level 5') {
+    assignedAgentId = 'agent_3801km7h68pbfn1t8m52ny028t6w';
+  } else if (['Level 3'].includes(classLevel)) {
+    assignedAgentId = 'agent_5601kkx9fa95e9eswcm93gdmp18h';
   } else {
     return res.status(400).json({ error: 'Invalid class level' });
   }
@@ -39,7 +53,7 @@ app.post('/api/register', async (req, res) => {
     try {
       await db.query(query, [name, studentId, hashedPassword, classLevel, assignedAgentId]);
     } catch (err) {
-      if (err.code === '23505') { // Postgres unique violation error code
+      if (err.code === '23505' || /UNIQUE constraint failed/i.test(err.message)) {
         return res.status(400).json({ error: 'Student ID already exists' });
       }
       return res.status(500).json({ error: err.message });
@@ -77,9 +91,53 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+// Time Limits
+app.get('/api/time-limits/:studentId', async (req, res) => {
+  const studentId = req.params.studentId.replace(/"/g, '');
+  try {
+    const result = await db.query(`SELECT * FROM users WHERE "studentId" = $1`, [studentId]);
+    if (!result.rows.length) return res.status(404).json({ error: 'User not found' });
+    
+    let user = result.rows[0];
+    const currentDateIST = getISTDateString();
+    
+    if (user.lastDebateDate !== currentDateIST) {
+      // Reset times for the new day
+      await db.query(`UPDATE users SET "lastDebateDate" = $1, "dailyRankedTime" = 0, "dailyPersonaTime" = 0 WHERE "studentId" = $2`, [currentDateIST, studentId]);
+      user.lastDebateDate = currentDateIST;
+      user.dailyRankedTime = 0;
+      user.dailyPersonaTime = 0;
+    }
+    
+    // Calculate remaining limits (1800 seconds = 30 minutes)
+    const isJunior = ['Level 1', 'Level 2', 'Class 1-3'].includes(user.classLevel);
+    const LIMIT = 1800;
+    let remainingRanked = 0;
+    let remainingPersona = 0;
+    
+    if (isJunior) {
+      const used = (user.dailyRankedTime || 0) + (user.dailyPersonaTime || 0);
+      remainingRanked = Math.max(0, LIMIT - used);
+      remainingPersona = remainingRanked; // Shared pool
+    } else {
+      remainingRanked = Math.max(0, LIMIT - (user.dailyRankedTime || 0));
+      remainingPersona = Math.max(0, LIMIT - (user.dailyPersonaTime || 0));
+    }
+    
+    res.json({
+      remainingRanked,
+      remainingPersona,
+      dailyRankedTime: user.dailyRankedTime || 0,
+      dailyPersonaTime: user.dailyPersonaTime || 0
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Debate Sessions
 app.post('/api/sessions', async (req, res) => {
-  const { studentId, debateTopic, sessionDuration, argumentsCount, debateScore } = req.body;
+  const { studentId, debateTopic, sessionDuration, argumentsCount, debateScore, isPersona } = req.body;
   
   const query = `INSERT INTO debate_sessions ("studentId", "debateTopic", "sessionDuration", "argumentsCount", "debateScore") VALUES ($1, $2, $3, $4, $5) RETURNING id`;
   
@@ -101,39 +159,62 @@ app.post('/api/sessions', async (req, res) => {
       );
     }
     
+    // Update Daily Time Buckets
+    const currentDateIST = getISTDateString();
+    if (isPersona) {
+      await db.query(`UPDATE users SET "lastDebateDate" = $1, "dailyPersonaTime" = coalesce("dailyPersonaTime", 0) + $2 WHERE "studentId" = $3`, [currentDateIST, Math.round(sessionDuration), studentId]);
+    } else {
+      await db.query(`UPDATE users SET "lastDebateDate" = $1, "dailyRankedTime" = coalesce("dailyRankedTime", 0) + $2 WHERE "studentId" = $3`, [currentDateIST, Math.round(sessionDuration), studentId]);
+    }
+
     res.status(201).json({ message: 'Session saved', sessionId: newSessionId });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// Analytics
-app.get('/api/analytics/:studentId', async (req, res) => {
-  try {
-    const result = await db.query(`SELECT * FROM analytics WHERE "studentId" = $1`, [req.params.studentId]);
-    res.json(result.rows[0] || { averageScore: 0, debatesCompleted: 0, speakingTime: 0 });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+// Analytics (Routed via Python Profile script)
+app.get('/api/analytics/:studentId', (req, res) => {
+  const scriptPath = path.join(__dirname, 'api_profile.py');
+  const studentId = req.params.studentId.replace(/"/g, '');
+  
+  exec(`py "${scriptPath}" "${studentId}"`, (error, stdout, stderr) => {
+    try {
+      const data = JSON.parse(stdout);
+      if (data.error) {
+        return res.json({ total_debates: 0, avg_score: 0, total_words_spoken: 0, elo_rating: 1000, badges: [], badge_details: [] });
+      }
+      res.json(data);
+    } catch (e) {
+      console.error('Python Analytics route parse error:', e);
+      res.json({ total_debates: 0, avg_score: 0, total_words_spoken: 0, elo_rating: 1000, badges: [], badge_details: [] });
+    }
+  });
 });
 
-// Leaderboard
-app.get('/api/leaderboard', async (req, res) => {
-  const query = `
-    SELECT u.name, u."classLevel", a."averageScore", a."debatesCompleted" 
-    FROM analytics a
-    JOIN users u ON a."studentId" = u."studentId"
-    WHERE a."debatesCompleted" > 0
-    ORDER BY a."averageScore" DESC, a."debatesCompleted" DESC
-    LIMIT 10
-  `;
-  try {
-    const result = await db.query(query);
-    res.json(result.rows);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+// Leaderboard (Routed via Python)
+app.get('/api/leaderboard', (req, res) => {
+  const level = req.query.level || 'undefined';
+  const scriptPath = path.join(__dirname, 'api_leaderboard.py');
+  
+  exec(`py "${scriptPath}" "${level}"`, (error, stdout, stderr) => {
+    if (error) {
+      console.error('Python leaderboard error:', error);
+      console.error('stderr:', stderr);
+      return res.status(500).json({ error: 'Failed to fetch leaderboard' });
+    }
+    
+    try {
+      const data = JSON.parse(stdout);
+      res.json(data);
+    } catch (parseError) {
+      console.error('JSON parse error from python leaderboard:', parseError);
+      console.error('Raw stdout:', stdout);
+      res.status(500).json({ error: 'Invalid output from python leaderboard service' });
+    }
+  });
 });
+
 
 // Helper: Fetch ElevenLabs post-call conversation data
 async function fetchElevenLabsConversationData(conversationId) {
@@ -171,53 +252,82 @@ async function fetchElevenLabsConversationData(conversationId) {
 
 // AI Judge Evaluation
 app.post('/api/evaluate', async (req, res) => {
-  const { transcript, topic, isJunior, conversationId } = req.body;
+  const { transcript, topic, isJunior, conversationId, studentId, name, classLevel } = req.body;
 
   if (!transcript || !Array.isArray(transcript)) {
     return res.status(400).json({ error: 'transcript array is required' });
   }
 
+  if (isJunior) {
+    return res.json({
+      skipped: true,
+      overall_score: 10.0,
+      grade: "N/A",
+      strengths: ["Great effort!", "Keep practicing your speaking skills."],
+      weaknesses: [],
+      areas_to_improve: ["Speak a bit louder next time."],
+      categories: [],
+      fallacies_detected: [],
+      persuasion_techniques: [],
+      disfluency_report: { total: 0 },
+      key_moments: [],
+      ai_challenges_summary: [],
+      stats: { total_turns: transcript.length, total_words: transcript.reduce((acc, m) => acc + m.text.split(' ').length, 0) }
+    });
+  }
+
   try {
-    // Step 1: Try to fetch ElevenLabs post-call data first
-    let elevenLabsData = null;
-    if (conversationId) {
-      console.log('Fetching ElevenLabs data for conversation:', conversationId);
-      // Wait a moment for ElevenLabs to finish processing the call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      elevenLabsData = await fetchElevenLabsConversationData(conversationId);
-      if (elevenLabsData) {
-        console.log('Successfully extracted ElevenLabs data:', elevenLabsData.dataVars);
-      }
+    // Step 1: Convert transcript to ElevenLabs raw text format
+    let rawText = '';
+    for (const msg of transcript) {
+      rawText += `\n${msg.text}\n`;
+      rawText += msg.role === 'user' ? 'ASR\n' : 'LLM\n';
     }
 
-    // Step 2: Pass transcript + ElevenLabs data to Gemini for scoring
-    const result = await evaluateDebate(transcript, topic || '', isJunior || false, elevenLabsData);
-    res.json(result);
-  } catch (err) {
-    console.error('Judge error:', err);
-    const studentTurns = transcript.filter(m => m.role === 'user').length;
-    const totalWords = transcript.reduce((acc, m) => acc + (m.role === 'user' ? m.text.split(' ').length : 0), 0);
-    res.status(200).json({
-      overallScore: 65,
-      metrics: [
-        { name: 'Argument Strength and Clarity', score: 60 },
-        { name: 'Evidence and Logical Reasoning Usage', score: 55 },
-        { name: 'Rebuttal Effectiveness', score: 65 },
-        { name: 'Debate Technique Adherence', score: 58 },
-        { name: 'Overall Performance/Improvement', score: 63 },
-      ],
-      feedback: "The debate was too short or an error occurred. Try speaking more next time!",
-      elevenLabsData: null,
-      analysisDetails: { totalWords, studentTurns, avgWordsPerTurn: studentTurns ? Math.round(totalWords / studentTurns) : 0 }
+    // Step 2: Write to tmp file
+    const tmpDir = path.join(__dirname, 'tmp');
+    if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
+    const filename = path.join(tmpDir, `transcript_${Date.now()}.txt`);
+    fs.writeFileSync(filename, rawText.trim());
+
+    // Step 3: Call Python script
+    const scriptPath = path.join(__dirname, 'api_evaluate.py');
+    const sId = studentId ? String(studentId).replace(/"/g, '') : 'unknown';
+    const sName = name ? String(name).replace(/"/g, '') : 'Anon';
+    const sClass = classLevel ? String(classLevel).replace(/"/g, '') : 'unknown';
+    const sTopic = topic ? String(topic).replace(/"/g, '') : 'Unknown Motion';
+    
+    // Pass args securely. Format: py script.py transcript.txt studentId name classLevel topic
+    exec(`py "${scriptPath}" "${filename}" "${sId}" "${sName}" "${sClass}" "${sTopic}"`, (error, stdout, stderr) => {
+      // Clean up file
+      try { fs.unlinkSync(filename); } catch (e) {}
+
+      if (error) {
+        console.error('Python execute error:', error);
+        console.error('stderr:', stderr);
+        return res.status(500).json({ error: 'Failed to run debate judge' });
+      }
+
+      try {
+        const result = JSON.parse(stdout);
+        res.json(result);
+      } catch (parseError) {
+        console.error('JSON parse error from python output:', parseError);
+        console.error('Raw stdout:', stdout);
+        res.status(500).json({ error: 'Invalid output from judge' });
+      }
     });
+  } catch (err) {
+    console.error('Judge mapping error:', err);
+    res.status(500).json({ error: 'Server error during evaluation' });
   }
 });
 
-// Catch-all route to serve React app for non-API routes (React Router support)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-});
+// Check if running locally vs Vercel Serverless
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+module.exports = app;
