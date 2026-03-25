@@ -14,29 +14,54 @@ export default function PersonaDebate({ user }) {
 
   const [transcript, setTranscript] = useState([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [status, setStatus] = useState('idle'); // idle | connecting | active | ended | error
+  const [status, setStatus] = useState('idle'); // idle | connecting | config | active | ended | error | out_of_time
+  const [maxMinutesAvailable, setMaxMinutesAvailable] = useState(0);
+  const [selectedDuration, setSelectedDuration] = useState(5);
+  const [customValue, setCustomValue] = useState('');
   const conversationRef = useRef(null);
   const transcriptEndRef = useRef(null);
+  const currentTimerRef = useRef(0);
 
   const isJunior = ['Level 1', 'Level 2', 'Class 1-3'].includes(user?.classLevel);
   const [timer, setTimer] = useState(1800);
   const initialTimerRef = useRef(1800);
+  const initialDailyRemainingRef = useRef(1800);
   const timerRef = useRef(null);
   const isActive = status === 'active';
 
-  // Timer effect
+  // Timer effect with heartbeat logic
   useEffect(() => {
-    if (!isActive) return;
+    if (!isActive || !agentId) return;
+
+    const startTime = Date.now();
+    let lastSyncTime = startTime;
+    const startTimerValue = initialTimerRef.current;
 
     timerRef.current = setInterval(() => {
-      setTimer((prev) => {
-        if (prev <= 1) {
-          clearInterval(timerRef.current);
-          handleEnd();
-          return 0;
-        }
-        return prev - 1;
-      });
+      const now = Date.now();
+      const elapsedSeconds = Math.floor((now - startTime) / 1000);
+      const newTime = Math.max(0, startTimerValue - elapsedSeconds);
+      
+      setTimer(newTime);
+      currentTimerRef.current = newTime;
+
+      const timeSinceLastSync = Math.floor((now - lastSyncTime) / 1000);
+      
+      // Background sync every 15 real seconds
+      if (timeSinceLastSync >= 15) {
+        fetch('/api/time-sync', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ studentId: user?.studentId, usedSeconds: timeSinceLastSync, isPersona: true })
+        }).catch(e => console.error('Persona time sync failed', e));
+        
+        lastSyncTime = now;
+      }
+
+      if (newTime <= 0) {
+        clearInterval(timerRef.current);
+        handleEnd();
+      }
     }, 1000);
 
     return () => clearInterval(timerRef.current);
@@ -78,9 +103,8 @@ export default function PersonaDebate({ user }) {
   // Robust connection handling for React Strict Mode and fast navigation
   useEffect(() => {
     let isTerminated = false;
-    let localSession = null;
 
-    const init = async () => {
+    const fetchLimits = async () => {
       setStatus('connecting');
       try {
         const res = await fetch(`/api/time-limits/${user?.studentId}`);
@@ -92,60 +116,76 @@ export default function PersonaDebate({ user }) {
             setStatus('out_of_time');
             return;
           }
-          initialTimerRef.current = remain;
-          setTimer(remain);
+          initialDailyRemainingRef.current = remain;
+          setMaxMinutesAvailable(Math.floor(remain / 60));
+          setStatus('config'); // Switch to Time Selection Modal Mode
         }
       } catch(err) {
         console.error('Failed to fetch time limits', err);
-      }
-
-      if (isTerminated) return;
-
-      try {
-        await navigator.mediaDevices.getUserMedia({ audio: true });
-        if (isTerminated) return;
-
-        // Force-kill any lingering background SDK instances
-        if (window._activeElevenLabsSessions) {
-          window._activeElevenLabsSessions.forEach(s => { try { s.endSession(); } catch(e){} });
-        }
-        window._activeElevenLabsSessions = [];
-
-        localSession = await Conversation.startSession({
-          agentId,
-          onConnect: () => { if (!isTerminated) setStatus('active'); },
-          onDisconnect: () => { if (!isTerminated) setStatus('ended'); },
-          onMessage: (msg) => { if (!isTerminated) setTranscript(p => [...p, { role: msg.source, text: msg.message }]); },
-          onError: (err) => { if (!isTerminated) setStatus('error'); },
-          onModeChange: (m) => { if (!isTerminated) setIsSpeaking(m.mode === 'speaking'); }
-        });
-
-        if (isTerminated) {
-          localSession.endSession();
-        } else {
-          window._activeElevenLabsSessions.push(localSession);
-          conversationRef.current = localSession;
-        }
-      } catch (err) {
         if (!isTerminated) setStatus('error');
       }
     };
 
-    if (agentId) init();
+    if (agentId) fetchLimits();
 
     return () => {
       isTerminated = true;
-      if (localSession) {
-        try { localSession.endSession(); } catch(e){}
-      }
     };
   }, [agentId, user?.studentId]);
+
+  const startDebateSession = async () => {
+    let localSession = null;
+    setStatus('connecting');
+
+    try {
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+      
+      // Setup chosen timer limit
+      const limitSeconds = selectedDuration === 'custom' ? parseInt(customValue, 10) * 60 : selectedDuration * 60;
+      const sessionMax = Math.min(limitSeconds, initialDailyRemainingRef.current);
+      initialTimerRef.current = sessionMax;
+      currentTimerRef.current = sessionMax;
+      setTimer(sessionMax);
+
+      // Force-kill any lingering background SDK instances
+      if (window._activeElevenLabsSessions) {
+        window._activeElevenLabsSessions.forEach(s => { try { s.endSession(); } catch(e){} });
+      }
+      window._activeElevenLabsSessions = [];
+
+      localSession = await Conversation.startSession({
+        agentId,
+        onConnect: () => { setStatus('active'); },
+        onDisconnect: () => { setStatus('ended'); },
+        onMessage: (msg) => { setTranscript(p => [...p, { role: msg.source, text: msg.message }]); },
+        onError: (err) => { setStatus('error'); },
+        onModeChange: (m) => { setIsSpeaking(m.mode === 'speaking'); }
+      });
+
+      window._activeElevenLabsSessions.push(localSession);
+      conversationRef.current = localSession;
+    } catch (err) {
+      setStatus('error');
+    }
+  };
 
   const handleEnd = async () => {
     if (timerRef.current) clearInterval(timerRef.current);
     setStatus('evaluating');
     if (conversationRef.current) {
       try { await conversationRef.current.endSession(); } catch { /* ignore */ }
+    }
+
+    // Sync any remaining unsaved seconds before ending
+    const elapsedTotal = initialTimerRef.current - currentTimerRef.current;
+    const alreadySynced = Math.floor(elapsedTotal / 15) * 15;
+    const unsavedSeconds = Math.max(0, elapsedTotal - alreadySynced);
+    if (unsavedSeconds > 0) {
+      fetch('/api/time-sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ studentId: user?.studentId, usedSeconds: unsavedSeconds, isPersona: true })
+      }).catch(e => console.error('Final persona time sync failed', e));
     }
 
     // Save persona session to update the daily time limit
@@ -186,11 +226,16 @@ export default function PersonaDebate({ user }) {
         }}
       >
         {isActive && (
-          <div style={{ fontSize: '10rem', fontWeight: 'bold', fontFamily: 'monospace', fontVariantNumeric: 'tabular-nums', opacity: 0.8 }}>
-            {formatTime(timer)}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ fontSize: '10rem', fontWeight: 'bold', fontFamily: 'monospace', fontVariantNumeric: 'tabular-nums', opacity: 0.8, lineHeight: 1 }}>
+              {formatTime(timer)}
+            </div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 600, color: 'rgba(255,255,255,0.6)', marginTop: '1rem' }}>
+              Daily Time Remaining: {formatTime(Math.max(0, initialDailyRemainingRef.current - (initialTimerRef.current - timer)))}
+            </div>
           </div>
         )}
-        <div style={{ fontSize: '1.5rem', color: '#6b7280', animation: 'pulse 3s infinite' }}>
+        <div style={{ fontSize: '1.5rem', color: '#6b7280', animation: 'pulse 3s infinite', marginTop: '2rem' }}>
           Move mouse to wake
         </div>
       </div>
@@ -246,6 +291,90 @@ export default function PersonaDebate({ user }) {
         display: 'flex', flexDirection: 'column',
       }}>
         <div style={{ flex: 1, overflowY: 'auto', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+
+          {/* Time Limit Setup UI */}
+          {status === 'config' && (
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '2rem 1rem', animation: 'fadeIn 0.5s' }}>
+              <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>Choose Time Limit</h2>
+              <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', marginBottom: '2rem', maxWidth: '500px' }}>
+                How long do you want to debate today?
+              </p>
+              
+              <div style={{ 
+                background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(217, 70, 239, 0.1) 100%)',
+                padding: '1.25rem 2rem', borderRadius: '16px', border: '1px solid rgba(139, 92, 246, 0.2)',
+                marginBottom: '2rem', display: 'flex', flexDirection: 'column', gap: '0.5rem'
+              }}>
+                <span style={{ fontSize: '0.85rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#7c3aed' }}>Daily Remaining Pool</span>
+                <span style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1 }}>{maxMinutesAvailable} <span style={{ fontSize: '1.25rem', color: 'var(--text-secondary)' }}>mins</span></span>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem', width: '100%', maxWidth: '600px', marginBottom: '2rem' }}>
+                {[5, 10, 15].map(preset => {
+                  const isDisabled = preset > maxMinutesAvailable;
+                  const isSelected = selectedDuration === preset && customValue === '';
+                  return (
+                    <button
+                      key={preset}
+                      onClick={() => { setSelectedDuration(preset); setCustomValue(''); }}
+                      disabled={isDisabled}
+                      style={{
+                        padding: '1rem 0', borderRadius: '12px', fontWeight: 700, fontSize: '1.25rem',
+                        transition: 'all 0.2s', border: '2px solid',
+                        background: isDisabled ? 'var(--bg-secondary)' : isSelected ? 'var(--accent)' : 'transparent',
+                        borderColor: isDisabled ? 'var(--border)' : isSelected ? 'var(--accent)' : 'var(--border)',
+                        color: isDisabled ? 'var(--text-muted)' : isSelected ? '#fff' : 'var(--text-primary)',
+                        cursor: isDisabled ? 'not-allowed' : 'pointer',
+                        opacity: isDisabled ? 0.5 : 1
+                      }}
+                    >
+                      {preset}m
+                    </button>
+                  );
+                })}
+                <button
+                  onClick={() => setSelectedDuration('custom')}
+                  style={{
+                        padding: '1rem 0', borderRadius: '12px', fontWeight: 700, fontSize: '1.25rem',
+                        transition: 'all 0.2s', border: '2px solid',
+                        background: selectedDuration === 'custom' ? 'var(--accent)' : 'transparent',
+                        borderColor: selectedDuration === 'custom' ? 'var(--accent)' : 'var(--border)',
+                        color: selectedDuration === 'custom' ? '#fff' : 'var(--text-primary)',
+                        cursor: 'pointer'
+                  }}
+                >
+                  Custom
+                </button>
+              </div>
+
+              {selectedDuration === 'custom' && (
+                <div style={{ marginBottom: '2.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', width: '100%', maxWidth: '300px', animation: 'fadeIn 0.3s' }}>
+                  <span style={{ fontSize: '3.5rem', fontWeight: 800, color: 'var(--accent)', lineHeight: 1 }}>{customValue || 1}<span style={{fontSize: '1.25rem', color: 'var(--text-secondary)'}}>m</span></span>
+                  <input 
+                    type="range" min={1} max={maxMinutesAvailable} 
+                    value={customValue || 1} onChange={(e) => {
+                      let val = parseInt(e.target.value, 10);
+                      setCustomValue(val);
+                      setSelectedDuration('custom');
+                    }}
+                    style={{ 
+                      width: '100%', cursor: 'pointer', accentColor: 'var(--accent)',
+                      height: '8px', borderRadius: '4px', appearance: 'none', background: 'rgba(139, 92, 246, 0.2)'
+                    }} 
+                  />
+                </div>
+              )}
+
+              <button 
+                onClick={startDebateSession} 
+                disabled={!selectedDuration || (selectedDuration === 'custom' && (!customValue || customValue < 1))}
+                className="btn btn-primary btn-lg" 
+                style={{ width: '100%', maxWidth: '300px', padding: '1.25rem', fontSize: '1.25rem', boxShadow: '0 8px 24px rgba(139, 92, 246, 0.3)' }}
+              >
+                <Play fill="#fff" size={24} /> Start Debate
+              </button>
+            </div>
+          )}
 
           {/* Connecting */}
           {transcript.length === 0 && (status === 'connecting' || status === 'idle') && (
@@ -340,20 +469,25 @@ export default function PersonaDebate({ user }) {
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginTop: '1rem' }}>
-                <div style={{
-                  display: 'flex', alignItems: 'center', gap: '0.75rem',
-                  padding: '1rem 2rem', border: `2px solid ${timerWarning ? 'var(--error)' : 'var(--border)'}`,
-                  background: timerWarning ? '#fef2f2' : 'var(--bg-secondary)',
-                  borderRadius: '99px', color: timerWarning ? 'var(--error)' : 'var(--text-primary)'
-                }}>
-                  <TimerIcon size={24} />
-                  <span style={{ fontSize: '1.5rem', fontWeight: 800, fontFamily: 'monospace', minWidth: '60px', textAlign: 'center' }} className={timerWarning ? 'animate-pulse' : ''}>
-                    {formatTime(timer)}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                  <div style={{
+                    display: 'flex', alignItems: 'center', gap: '0.75rem',
+                    padding: '1rem 2rem', border: `2px solid ${timerWarning ? 'var(--error)' : 'var(--border)'}`,
+                    background: timerWarning ? '#fef2f2' : 'var(--bg-secondary)',
+                    borderRadius: '99px', color: timerWarning ? 'var(--error)' : 'var(--text-primary)'
+                  }}>
+                    <TimerIcon size={24} />
+                    <span style={{ fontSize: '1.5rem', fontWeight: 800, fontFamily: 'monospace', minWidth: '60px', textAlign: 'center' }} className={timerWarning ? 'animate-pulse' : ''}>
+                      {formatTime(timer)}
+                    </span>
+                  </div>
+                  <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    Daily Left: {formatTime(Math.max(0, initialDailyRemainingRef.current - (initialTimerRef.current - timer)))}
                   </span>
                 </div>
 
                 <button onClick={handleEnd} className="btn btn-danger" style={{ 
-                  borderRadius: '99px', padding: '1rem 2.5rem', fontSize: '1.25rem', gap: '0.75rem', fontWeight: 700
+                  borderRadius: '99px', padding: '1rem 2.5rem', fontSize: '1.25rem', gap: '0.75rem', fontWeight: 700, alignSelf: 'flex-start'
                 }}>
                   <PhoneOff size={24} /> End Call
                 </button>

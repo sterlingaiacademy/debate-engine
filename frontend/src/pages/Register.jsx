@@ -51,10 +51,10 @@ export default function Register() {
   };
 
   return (
-    <div style={{ 
+    <div className="login-wrapper" style={{ 
       display: 'flex', minHeight: '100vh', width: '100%', fontFamily: 'var(--font-sans)', 
       background: 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%)',
-      position: 'relative', overflow: 'hidden'
+      position: 'relative', overflow: 'auto'
     }}>
       
       {/* Decorative Background Elements */}
@@ -69,11 +69,11 @@ export default function Register() {
         color: '#fff',
         display: 'flex',
         flexDirection: 'column',
-        padding: '3.5rem 3.5rem 3.5rem 6.5rem',
+        padding: '2.5rem 2rem 2.5rem 3rem',
         zIndex: 1
       }}>
         {/* Main Content - Centered Vertically */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', zIndex: 10, maxWidth: '600px', paddingBottom: '15vh' }}>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', zIndex: 10, maxWidth: '600px' }}>
           
           {/* Brand Logo tied to the Hero block */}
           <div style={{ marginBottom: '1rem' }}>
@@ -84,7 +84,7 @@ export default function Register() {
             <Sparkles size={16} color="#a855f7" /> Join the Debate Revolution
           </div>
           
-          <h1 style={{ fontSize: '3.5rem', fontWeight: 800, lineHeight: 1.1, marginBottom: '1.5rem', letterSpacing: '-0.04em', whiteSpace: 'nowrap' }}>
+          <h1 style={{ fontSize: 'clamp(1.75rem, 5vw, 3.5rem)', fontWeight: 800, lineHeight: 1.1, marginBottom: '1.5rem', letterSpacing: '-0.04em' }}>
             Unlock your <span style={{ background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Potential</span>
           </h1>
           
@@ -109,7 +109,7 @@ export default function Register() {
         </div>
 
         {/* Footer info inside Left Pane */}
-        <div style={{ zIndex: 10, fontSize: '0.85rem', color: 'rgba(255,255,255,0.4)', fontWeight: 500 }}>
+        <div style={{ zIndex: 10, fontSize: '0.85rem', color: 'rgba(255,255,255,0.4)', fontWeight: 500, marginTop: '3rem' }}>
           © 2026 Grace and Force AI. All rights reserved.
         </div>
       </div>
@@ -259,6 +259,10 @@ export default function Register() {
       {/* Small inline style block to hide the mobile-logo on desktop where the left pane is visible */}
       <style>{`
         @media (min-width: 901px) {
+          .mobile-logo { display: none !important; }
+        }
+        @media (max-width: 900px) {
+          .login-wrapper { flex-direction: column !important; }
           .mobile-logo { display: none !important; }
         }
       `}</style>

@@ -24,12 +24,23 @@ class handler(BaseHTTPRequestHandler):
         try:
             parsed_path = urlparse(self.path)
             query_params = parse_qs(parsed_path.query)
-            c_level = query_params.get('level', [None])[0]
-            if c_level == 'undefined':
-                c_level = None
+            
+            # Build params dict matching what api_leaderboard.py expects
+            params = {
+                'level': query_params.get('level', [''])[0] or '',
+                'timeframe': query_params.get('timeframe', [''])[0] or '',
+                'category': query_params.get('category', [''])[0] or '',
+                'school': query_params.get('school', [''])[0] or '',
+                'limit': int(query_params.get('limit', ['50'])[0] or 50),
+                'offset': int(query_params.get('offset', ['0'])[0] or 0),
+            }
+            
+            # Clean up empty/undefined values
+            if params['level'] == 'undefined':
+                params['level'] = ''
                 
             with Capturing() as output:
-                get_lb(c_level)
+                get_lb(params)
                 
             out_str = "\n".join(output)
             

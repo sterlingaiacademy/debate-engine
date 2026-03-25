@@ -13,14 +13,14 @@ import PersonaDebate from './pages/PersonaDebate';
 import Layout from './components/Layout';
 
 function App() {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+  const [user, setUser] = useState(() => {
+    try {
+      const storedUser = localStorage.getItem('user');
+      return storedUser ? JSON.parse(storedUser) : null;
+    } catch {
+      return null;
     }
-  }, []);
+  });
 
   const handleLogin = (userData) => {
     setUser(userData);
@@ -42,6 +42,7 @@ function App() {
   return (
     <Router>
       <div className={themeClass}>
+
         <Routes>
           <Route path="/login" element={!user ? <Login onLogin={handleLogin} /> : <Navigate to="/dashboard" />} />
           <Route path="/register" element={!user ? <Register onLogin={handleLogin} /> : <Navigate to="/dashboard" />} />

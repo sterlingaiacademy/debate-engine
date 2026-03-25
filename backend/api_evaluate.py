@@ -15,8 +15,9 @@ def evaluate_and_submit(transcript_file, user_id, username, class_level, topic=N
         result = judge.judge_file(transcript_file, output_format="dict")
         
         # Override the AI-extracted topic with the actual assigned topic
-        if topic and topic != "Unknown Motion":
-            result["motion"] = topic
+        # (Removed: We now want to strictly use the motion extracted by the judge)
+        # if topic and topic != "Unknown Motion":
+        #     result["motion"] = topic
 
         # Only submit if it's a valid judgement and not skipped for junior levels
         if "error" not in result and not result.get("skipped"):

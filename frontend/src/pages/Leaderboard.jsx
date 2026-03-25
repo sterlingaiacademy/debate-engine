@@ -21,37 +21,60 @@ const TIME_TABS = [
   { id: 'week', label: 'This Week' }
 ];
 
+// Module-level caches
+const leaderboardCache = new Map();
+const countCache = new Map();
+
 export default function Leaderboard({ user }) {
-  const [leaders, setLeaders] = useState([]);
-  const [totalCount, setTotalCount] = useState(0);
-  const [loading, setLoading] = useState(true);
-  
-  // Filters & Pagination State
-  const [timeframe, setTimeframe] = useState('all_time');
-  const [category, setCategory] = useState('global');
   const [classFilter] = useState(user?.classLevel || '');
   const [schoolFilter, setSchoolFilter] = useState('');
+  const [timeframe, setTimeframe] = useState('all_time');
+  const [category, setCategory] = useState('global');
   const [page, setPage] = useState(1);
   const limit = 50;
 
+  const defaultCacheKey = `timeframe=${timeframe}&category=${category}&level=${classFilter}&limit=${limit}&offset=${(page - 1) * limit}`;
+
+  const [leaders, setLeaders] = useState(() => leaderboardCache.get(defaultCacheKey) || []);
+  const [totalCount, setTotalCount] = useState(() => countCache.get(defaultCacheKey) || 0);
+  const [loading, setLoading] = useState(!leaderboardCache.has(defaultCacheKey));
+  
+  // Filters & Pagination State
+
   useEffect(() => {
     const fetchLeaders = async () => {
-      setLoading(true);
-      try {
-        // Build query string
-        const params = new URLSearchParams();
-        if (timeframe !== 'all_time') params.append('timeframe', timeframe);
-        if (category !== 'global') params.append('category', category);
-        if (classFilter) params.append('level', classFilter);
-        if (schoolFilter) params.append('school', schoolFilter);
-        params.append('limit', limit);
-        params.append('offset', (page - 1) * limit);
+      // Build query string
+      const params = new URLSearchParams();
+      if (timeframe !== 'all_time') params.append('timeframe', timeframe);
+      if (category !== 'global') params.append('category', category);
+      if (classFilter) params.append('level', classFilter);
+      if (schoolFilter) params.append('school', schoolFilter);
+      params.append('limit', limit);
+      params.append('offset', (page - 1) * limit);
 
-        const res = await fetch(`/api/leaderboard?${params.toString()}`);
+      const cacheKey = params.toString();
+      
+      if (leaderboardCache.has(cacheKey)) {
+        setLeaders(leaderboardCache.get(cacheKey));
+        setTotalCount(countCache.get(cacheKey) || 0);
+        setLoading(false);
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        const res = await fetch(`/api/leaderboard?${cacheKey}`);
         if (res.ok) {
           const data = await res.json();
-          setLeaders(data.leaderboard || []);
-          setTotalCount(data.total_count || 0);
+          const pLeaders = data.leaderboard || [];
+          const pCount = data.total_count || 0;
+          
+          leaderboardCache.set(cacheKey, pLeaders);
+          countCache.set(cacheKey, pCount);
+          
+          setLeaders(pLeaders);
+          setTotalCount(pCount);
         }
       } catch (err) {
         console.error("Error fetching leaderboard:", err);
@@ -158,12 +181,12 @@ export default function Leaderboard({ user }) {
           <>
             {/* Top 3 Podium only on page 1 and Global */}
             {page === 1 && category === 'global' && classFilter === '' && leaders.length >= 3 && (
-              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-end', gap: '1.5rem', padding: '2.5rem 1rem 0 1rem', background: 'linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-tertiary) 100%)', borderBottom: '1px solid var(--border)' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-end', gap: 'clamp(0.5rem, 2vw, 1.5rem)', padding: '2rem 0.5rem 0 0.5rem', background: 'linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-tertiary) 100%)', borderBottom: '1px solid var(--border)' }}>
                 {[leaders[1], leaders[0], leaders[2]].map((leader, podiumIdx) => {
                   const realRank = podiumIdx === 0 ? 1 : podiumIdx === 1 ? 0 : 2;
                   const heights = ['110px', '150px', '90px'];
                   return (
-                    <div key={realRank} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', width: '120px' }}>
+                    <div key={realRank} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', width: 'clamp(80px, 20vw, 120px)' }}>
                       <span style={{ fontSize: '2rem', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }}>{RANK_EMOJIS[realRank]}</span>
                       <div style={{
                          width: 48, height: 48, borderRadius: '50%',
@@ -202,9 +225,9 @@ export default function Leaderboard({ user }) {
                   <tr>
                     <th style={{ width: '80px', textAlign: 'center' }}>Rank</th>
                     <th>Debater</th>
-                    <th>Level</th>
+                    <th className="hide-mobile">Level</th>
                     <th style={{ textAlign: 'center' }}>Debates</th>
-                    <th style={{ textAlign: 'center' }}>Win Rate</th>
+                    <th className="hide-mobile" style={{ textAlign: 'center' }}>Win Rate</th>
                     <th style={{ textAlign: 'right' }}>{category === 'global' ? 'ELO Rating' : 'Avg Score'}</th>
                   </tr>
                 </thead>
@@ -251,9 +274,9 @@ export default function Leaderboard({ user }) {
                             </div>
                           </div>
                         </td>
-                        <td style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 600 }}>{leader.class || 'Class 1-3'}</td>
+                        <td className="hide-mobile" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 600 }}>{leader.class || 'Class 1-3'}</td>
                         <td style={{ textAlign: 'center', fontWeight: 600, color: 'var(--text-secondary)' }}>{leader.total_debates}</td>
-                        <td style={{ textAlign: 'center' }}>
+                        <td className="hide-mobile" style={{ textAlign: 'center' }}>
                           <span style={{ 
                              background: leader.win_rate >= 50 ? '#ecfdf5' : '#fef2f2',
                              color: leader.win_rate >= 50 ? '#059669' : '#dc2626',

@@ -110,19 +110,13 @@ app.get('/api/time-limits/:studentId', async (req, res) => {
     }
     
     // Calculate remaining limits (1800 seconds = 30 minutes)
-    const isJunior = ['Level 1', 'Level 2', 'Class 1-3'].includes(user.classLevel);
+    // The user requested a single shared 30-minute pool across all levels for both Ranked and Persona
     const LIMIT = 1800;
-    let remainingRanked = 0;
-    let remainingPersona = 0;
+    const used = (user.dailyRankedTime || 0) + (user.dailyPersonaTime || 0);
+    const sharedRemaining = Math.max(0, LIMIT - used);
     
-    if (isJunior) {
-      const used = (user.dailyRankedTime || 0) + (user.dailyPersonaTime || 0);
-      remainingRanked = Math.max(0, LIMIT - used);
-      remainingPersona = remainingRanked; // Shared pool
-    } else {
-      remainingRanked = Math.max(0, LIMIT - (user.dailyRankedTime || 0));
-      remainingPersona = Math.max(0, LIMIT - (user.dailyPersonaTime || 0));
-    }
+    let remainingRanked = sharedRemaining;
+    let remainingPersona = sharedRemaining;
     
     res.json({
       remainingRanked,
@@ -135,9 +129,40 @@ app.get('/api/time-limits/:studentId', async (req, res) => {
   }
 });
 
+app.post('/api/time-sync', async (req, res) => {
+  const { studentId, usedSeconds, isPersona } = req.body;
+  if (!studentId || !usedSeconds) return res.status(400).json({ error: 'Missing required params' });
+
+  try {
+    const result = await db.query(`SELECT "lastDebateDate" FROM users WHERE "studentId" = $1`, [studentId]);
+    if (!result.rows.length) return res.status(404).json({ error: 'User not found' });
+    
+    const currentDateIST = getISTDateString();
+    const userLastDate = result.rows[0].lastDebateDate;
+
+    if (userLastDate !== currentDateIST) {
+      if (isPersona) {
+        await db.query(`UPDATE users SET "lastDebateDate" = $1, "dailyRankedTime" = 0, "dailyPersonaTime" = $2 WHERE "studentId" = $3`, [currentDateIST, Math.round(usedSeconds), studentId]);
+      } else {
+        await db.query(`UPDATE users SET "lastDebateDate" = $1, "dailyRankedTime" = $2, "dailyPersonaTime" = 0 WHERE "studentId" = $3`, [currentDateIST, Math.round(usedSeconds), studentId]);
+      }
+    } else {
+      if (isPersona) {
+        await db.query(`UPDATE users SET "dailyPersonaTime" = coalesce("dailyPersonaTime", 0) + $1 WHERE "studentId" = $2`, [Math.round(usedSeconds), studentId]);
+      } else {
+        await db.query(`UPDATE users SET "dailyRankedTime" = coalesce("dailyRankedTime", 0) + $1 WHERE "studentId" = $2`, [Math.round(usedSeconds), studentId]);
+      }
+    }
+    
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Debate Sessions
 app.post('/api/sessions', async (req, res) => {
-  const { studentId, debateTopic, sessionDuration, argumentsCount, debateScore, isPersona } = req.body;
+  const { studentId, debateTopic, sessionDuration, argumentsCount, debateScore } = req.body;
   
   const query = `INSERT INTO debate_sessions ("studentId", "debateTopic", "sessionDuration", "argumentsCount", "debateScore") VALUES ($1, $2, $3, $4, $5) RETURNING id`;
   
@@ -159,14 +184,6 @@ app.post('/api/sessions', async (req, res) => {
       );
     }
     
-    // Update Daily Time Buckets
-    const currentDateIST = getISTDateString();
-    if (isPersona) {
-      await db.query(`UPDATE users SET "lastDebateDate" = $1, "dailyPersonaTime" = coalesce("dailyPersonaTime", 0) + $2 WHERE "studentId" = $3`, [currentDateIST, Math.round(sessionDuration), studentId]);
-    } else {
-      await db.query(`UPDATE users SET "lastDebateDate" = $1, "dailyRankedTime" = coalesce("dailyRankedTime", 0) + $2 WHERE "studentId" = $3`, [currentDateIST, Math.round(sessionDuration), studentId]);
-    }
-
     res.status(201).json({ message: 'Session saved', sessionId: newSessionId });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -194,10 +211,19 @@ app.get('/api/analytics/:studentId', (req, res) => {
 
 // Leaderboard (Routed via Python)
 app.get('/api/leaderboard', (req, res) => {
-  const level = req.query.level || 'undefined';
+  const level = req.query.level || '';
+  const timeframe = req.query.timeframe || '';
+  const category = req.query.category || '';
+  const school = req.query.school || '';
+  const limit = req.query.limit || '50';
+  const offset = req.query.offset || '0';
   const scriptPath = path.join(__dirname, 'api_leaderboard.py');
   
-  exec(`py "${scriptPath}" "${level}"`, (error, stdout, stderr) => {
+  // Pass params as JSON to avoid argument quoting issues
+  const paramsJson = JSON.stringify({ level, timeframe, category, school, limit: parseInt(limit), offset: parseInt(offset) });
+  const escapedJson = paramsJson.replace(/"/g, '\\"');
+  
+  exec(`py "${scriptPath}" "${escapedJson}"`, (error, stdout, stderr) => {
     if (error) {
       console.error('Python leaderboard error:', error);
       console.error('stderr:', stderr);

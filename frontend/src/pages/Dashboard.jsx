@@ -16,33 +16,57 @@ const formatCategory = (key) => {
     avg_persuasiveness: 'Persuasiveness',
     avg_knowledge: 'Knowledge',
     avg_respect: 'Respectfulness',
-    avg_consistency: 'Consistency'
+    avg_consistency: 'Consistency',
+    // Also map full backend names to short display names
+    'Argument Quality': 'Argument Quality',
+    'Rebuttal & Engagement': 'Rebuttal',
+    'Clarity & Coherence': 'Clarity',
+    'Speech Fluency': 'Speech Fluency',
+    'Persuasiveness': 'Persuasiveness',
+    'Knowledge & Evidence': 'Knowledge',
+    'Respectfulness & Tone': 'Respectfulness',
+    'Consistency & Position': 'Consistency',
   };
   return map[key] || key;
 };
 
+// Module-level cache to prevent reloading spinners on rapid navigation
+let cachedStats = null;
+let cachedStudentId = null;
+
 export default function Dashboard({ user }) {
   const navigate = useNavigate();
-  const [stats, setStats] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState(() => (user?.studentId === cachedStudentId ? cachedStats : null));
+  const [loading, setLoading] = useState(!stats);
 
   const isJunior = ['Level 1', 'Level 2', 'Class 1-3'].includes(user?.classLevel);
   const isPersona = ['Level 4', 'Level 5'].includes(user?.classLevel);
 
   useEffect(() => {
     if (!user?.studentId) return;
-    setLoading(true);
-    fetch(`/api/analytics/${user.studentId}`)
-      .then((r) => r.json())
-      .then((data) => {
-        setStats(data);
-        setLoading(false);
-      })
-      .catch((e) => {
-        console.error(e);
-        setStats({ error: true });
-        setLoading(false);
-      });
+    
+    // If we have cached stats for this user, use them and still refetch in background
+    if (user.studentId === cachedStudentId && cachedStats) {
+      setStats(cachedStats);
+      setLoading(false);
+    }
+    
+    Promise.all([
+      fetch(`/api/analytics/${user.studentId}`).then((r) => r.json()),
+      fetch(`/api/time-limits/${user.studentId}`).then((r) => r.json()).catch(() => ({ remainingRanked: 0 }))
+    ])
+    .then(([analyticsData, timeData]) => {
+      const combinedData = { ...analyticsData, timeLimits: timeData };
+      cachedStats = combinedData;
+      cachedStudentId = user.studentId;
+      setStats(combinedData);
+      setLoading(false);
+    })
+    .catch((e) => {
+      console.error(e);
+      setStats(prev => prev || { error: true });
+      setLoading(false);
+    });
   }, [user?.studentId]);
 
   // Guard against null/undefined user (can happen briefly before redirect)
@@ -92,16 +116,16 @@ export default function Dashboard({ user }) {
       
       {/* SECTION 1: Profile Header & Actions */}
       <div className="card" style={{ 
-        display: 'flex', flexWrap: 'wrap', gap: '2rem', alignItems: 'center', justifyContent: 'space-between',
+        display: 'flex', flexWrap: 'wrap', gap: '1.25rem', alignItems: 'center', justifyContent: 'space-between',
         background: `linear-gradient(135deg, ${tier.color}15 0%, #ffffff 100%)`, 
         borderLeft: `6px solid ${tier.color}`
       }}>
          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-            <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'linear-gradient(135deg, #f43f5e 0%, #ec4899 50%, #8b5cf6 100%)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.5rem', boxShadow: '0 4px 12px rgba(236, 72, 153, 0.3)' }}>
+            <div style={{ width: '60px', height: '60px', minWidth: '60px', borderRadius: '50%', background: 'linear-gradient(135deg, #f43f5e 0%, #ec4899 50%, #8b5cf6 100%)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.75rem', boxShadow: '0 4px 12px rgba(236, 72, 153, 0.3)' }}>
               {user.name.charAt(0).toUpperCase()}
             </div>
             <div>
-               <h1 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.25rem 0' }}>{user.name}</h1>
+               <h1 style={{ fontSize: 'clamp(1.15rem, 4vw, 1.75rem)', fontWeight: 800, margin: '0 0 0.25rem 0', wordBreak: 'break-word' }}>{user.name}</h1>
                <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                  <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{user.classLevel}</span> &bull; {user.school || 'Debate Arena'}
                </p>
@@ -120,12 +144,23 @@ export default function Dashboard({ user }) {
                    </span>
                  </div>
                )}
+             </div>
+          </div>
+          {stats?.timeLimits && (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.4rem', padding: '1rem', background: 'rgba(139, 92, 246, 0.05)', borderRadius: '16px', border: '1px solid rgba(139, 92, 246, 0.15)' }}>
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#7c3aed' }}>Daily Free Time</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <Clock size={22} color="var(--accent)" strokeWidth={2.5} />
+                <span style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1 }}>
+                  {Math.floor(stats.timeLimits.remainingRanked / 60)} <span style={{fontSize: '1rem', color: 'var(--text-secondary)'}}>mins</span>
+                </span>
+              </div>
             </div>
-         </div>
+          )}
       </div>
 
       {/* DEBATE MODE TILES — always visible */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '1.5rem' }}>
         
         {/* TILE 1: Ranked Match */}
         <div
@@ -221,7 +256,7 @@ export default function Dashboard({ user }) {
       ) : (
         <>
           {/* SECTION 4: Stat Cards Row */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 140px), 1fr))', gap: '0.75rem' }}>
             {[
               { label: 'Debates', val: stats.total_debates, icon: MessageSquare, color: '#3b82f6' },
               { label: 'Avg Score', val: stats.avg_score?.toFixed(1) || '0.0', icon: Star, color: '#f59e0b' },
@@ -238,7 +273,7 @@ export default function Dashboard({ user }) {
             ))}
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 400px), 1fr))', gap: '1.5rem' }}>
              
              {/* SECTION 2: Score Trend Chart */}
              <div className="card" style={{ display: 'flex', flexDirection: 'column' }}>
@@ -275,28 +310,29 @@ export default function Dashboard({ user }) {
              </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(300px, 1fr) 2fr', gap: '1.5rem', alignItems: 'start' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', alignItems: 'stretch' }}>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                {/* SECTION 5: Strongest/Weakest Callouts */}
-               <div className="card" style={{ background: 'linear-gradient(135deg, #ecfdf5 0%, #ffffff 100%)', border: '1px solid #10b981', borderLeft: '6px solid #10b981' }}>
-                 <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#10b981', textTransform: 'uppercase', marginBottom: '0.5rem', letterSpacing: '0.05em' }}>Strongest Attribute</p>
-                 <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
-                   {stats.strongest_category ? formatCategory(stats.strongest_category) : 'N/A'}
-                 </h4>
-                 <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', margin: 0, fontWeight: 500 }}>
-                   Avg Score: <strong style={{ color: '#10b981' }}>{stats.strongest_category && stats.category_averages ? (stats.category_averages[stats.strongest_category] || 0).toFixed(1) : '0.0'}/10</strong>
-                 </p>
-               </div>
+               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '1rem' }}>
+                 <div className="card" style={{ background: 'linear-gradient(135deg, #ecfdf5 0%, #ffffff 100%)', border: '1px solid #10b981', borderLeft: '6px solid #10b981' }}>
+                   <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#10b981', textTransform: 'uppercase', marginBottom: '0.5rem', letterSpacing: '0.05em' }}>Strongest Attribute</p>
+                   <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
+                     {stats.strongest_category ? formatCategory(stats.strongest_category) : 'N/A'}
+                   </h4>
+                   <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', margin: 0, fontWeight: 500 }}>
+                     Avg Score: <strong style={{ color: '#10b981' }}>{stats.strongest_category && stats.category_averages ? (stats.category_averages[stats.strongest_category] || 0).toFixed(1) : '0.0'}/10</strong>
+                   </p>
+                 </div>
 
-               <div className="card" style={{ background: 'linear-gradient(135deg, #fff7ed 0%, #ffffff 100%)', border: '1px solid #f97316', borderLeft: '6px solid #f97316' }}>
-                 <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#ea580c', textTransform: 'uppercase', marginBottom: '0.5rem', letterSpacing: '0.05em' }}>Focus Area</p>
-                 <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
-                   {stats.weakest_category ? formatCategory(stats.weakest_category) : 'N/A'}
-                 </h4>
-                 <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', margin: 0, fontWeight: 500 }}>
-                   Avg Score: <strong style={{ color: '#ea580c' }}>{stats.weakest_category && stats.category_averages ? (stats.category_averages[stats.weakest_category] || 0).toFixed(1) : '0.0'}/10</strong>
-                 </p>
+                 <div className="card" style={{ background: 'linear-gradient(135deg, #fff7ed 0%, #ffffff 100%)', border: '1px solid #f97316', borderLeft: '6px solid #f97316' }}>
+                   <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#ea580c', textTransform: 'uppercase', marginBottom: '0.5rem', letterSpacing: '0.05em' }}>Focus Area</p>
+                   <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
+                     {stats.weakest_category ? formatCategory(stats.weakest_category) : 'N/A'}
+                   </h4>
+                   <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', margin: 0, fontWeight: 500 }}>
+                     Avg Score: <strong style={{ color: '#ea580c' }}>{stats.weakest_category && stats.category_averages ? (stats.category_averages[stats.weakest_category] || 0).toFixed(1) : '0.0'}/10</strong>
+                   </p>
+                 </div>
                </div>
 
                {/* SECTION 6: Badges Collection */}
@@ -322,51 +358,6 @@ export default function Dashboard({ user }) {
                    )}
                  </div>
                </div>
-            </div>
-
-            {/* SECTION 7: Recent Debate History */}
-            <div className="card">
-               <h3 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <Clock size={18} /> Recent Debate History
-               </h3>
-               {stats.recent_debates?.length > 0 ? (
-                 <div className="table-wrap">
-                   <table>
-                     <thead>
-                       <tr>
-                         <th>Date</th>
-                         <th style={{ minWidth: '200px' }}>Topic</th>
-                         <th>Grade</th>
-                         <th>Score</th>
-                       </tr>
-                     </thead>
-                     <tbody>
-                       {stats.recent_debates.map((h, i) => {
-                         const d = new Date(h.created_at);
-                         return (
-                           <tr key={h.debate_id || i} style={{ cursor: 'pointer' }} onClick={() => console.log('Row clicked, potentially navigate to /results/' + h.debate_id)}>
-                             <td style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>
-                               {d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
-                             </td>
-                             <td style={{ fontWeight: 600, fontSize: '0.9rem' }}>{h.motion || 'Unknown Motion'}</td>
-                             <td>
-                               <span style={{ background: '#f3f4f6', color: 'var(--text-primary)', padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700 }}>
-                                 {h.grade || 'N/A'}
-                               </span>
-                             </td>
-                             <td style={{ fontWeight: 800, color: 'var(--accent)' }}>{h.overall_score != null ? h.overall_score.toFixed(1) : '-'}</td>
-                           </tr>
-                         );
-                       })}
-                     </tbody>
-                   </table>
-                 </div>
-               ) : (
-                 <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-muted)' }}>
-                   No debate history found.
-                 </div>
-               )}
-            </div>
 
           </div>
         </>

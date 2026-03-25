@@ -15,7 +15,16 @@ const formatCategory = (key) => {
     avg_persuasiveness: 'Persuasiveness',
     avg_knowledge: 'Knowledge',
     avg_respect: 'Respectfulness',
-    avg_consistency: 'Consistency'
+    avg_consistency: 'Consistency',
+    // Also map full backend names to short display names
+    'Argument Quality': 'Argument Quality',
+    'Rebuttal & Engagement': 'Rebuttal',
+    'Clarity & Coherence': 'Clarity',
+    'Speech Fluency': 'Speech Fluency',
+    'Persuasiveness': 'Persuasiveness',
+    'Knowledge & Evidence': 'Knowledge',
+    'Respectfulness & Tone': 'Respectfulness',
+    'Consistency & Position': 'Consistency',
   };
   return map[key] || key;
 };
@@ -124,7 +133,7 @@ export default function Analytics({ user }) {
         </p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(500px, 1fr))', gap: '1.5rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 500px), 1fr))', gap: '1.5rem' }}>
         
         {/* SECTION 1: Overall Progress Chart */}
         <div className="card" style={{ display: 'flex', flexDirection: 'column' }}>

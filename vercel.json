@@ -4,12 +4,9 @@
   "installCommand": "cd backend && npm install",
   "outputDirectory": "frontend/dist",
   "functions": {
-    "api/index.js": {
-      "includeFiles": "backend/**"
-    },
     "api/py_*.py": {
       "runtime": "@vercel/python@4.5.0",
-      "includeFiles": "backend/**"
+      "includeFiles": "backend/*.py"
     }
   },
   "rewrites": [
