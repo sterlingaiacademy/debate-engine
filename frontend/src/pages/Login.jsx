@@ -90,7 +90,7 @@ export default function Login({ onLogin }) {
 
           <div style={{ marginTop: '3rem' }}>
             <a
-              href="https://swqbsgbmaramuhi.supabase.co/storage/v1/object/public/Downloads/grace-and-force.apk"
+              href="https://whfmuswqbsgbmaramuhi.supabase.co/storage/v1/object/public/Downloads/grace-and-force.apk"
               target="_blank"
               rel="noopener noreferrer"
               className="apk-btn"
