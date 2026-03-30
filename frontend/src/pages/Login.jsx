@@ -88,6 +88,43 @@ export default function Login({ onLogin }) {
             </div>
           </div>
 
+          <div style={{ marginTop: '3rem' }}>
+            <a
+              href="https://swqbsgbmaramuhi.supabase.co/storage/v1/object/public/Downloads/grace-and-force.apk"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="apk-btn"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.6rem',
+                padding: '0.85rem 1.75rem',
+                background: 'rgba(255, 255, 255, 0.08)',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
+                borderRadius: '12px',
+                color: '#f8fafc',
+                fontSize: '0.95rem',
+                fontWeight: 600,
+                textDecoration: 'none',
+                backdropFilter: 'blur(10px)',
+                transition: 'all 0.2s ease',
+                cursor: 'pointer'
+              }}
+              onMouseEnter={(e) => { 
+                e.currentTarget.style.background = 'rgba(168, 85, 247, 0.2)'; 
+                e.currentTarget.style.borderColor = 'rgba(168, 85, 247, 0.4)'; 
+                e.currentTarget.style.transform = 'translateY(-2px)'; 
+              }}
+              onMouseLeave={(e) => { 
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)'; 
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)'; 
+                e.currentTarget.style.transform = 'translateY(0)'; 
+              }}
+            >
+              📱 Download for Android
+            </a>
+          </div>
+
         </div>
 
         {/* Footer info inside Left Pane */}
