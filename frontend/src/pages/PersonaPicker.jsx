@@ -45,18 +45,18 @@ const LEVEL_5_PERSONAS = [
 
 // Unique colours per category
 const CATEGORY_COLORS = {
-  'Freedom Fighter': { bg: '#fff7ed', border: '#fb923c', text: '#c2410c' },
-  'Civil Rights':    { bg: '#fef3c7', border: '#f59e0b', text: '#92400e' },
-  'Humanitarian':    { bg: '#fdf2f8', border: '#ec4899', text: '#9d174d' },
-  'Spiritual Leader':{ bg: '#f0fdf4', border: '#34d399', text: '#065f46' },
-  'Statesman':       { bg: '#eff6ff', border: '#60a5fa', text: '#1e40af' },
-  'Reformer':        { bg: '#faf5ff', border: '#a78bfa', text: '#4c1d95' },
-  'Scientist':       { bg: '#ecfeff', border: '#22d3ee', text: '#164e63' },
-  'Visionary':       { bg: '#f0f9ff', border: '#38bdf8', text: '#0c4a6e' },
-  'Philosopher':     { bg: '#fefce8', border: '#facc15', text: '#713f12' },
-  'Activist':        { bg: '#fff1f2', border: '#fb7185', text: '#9f1239' },
-  'Artist & Scientist': { bg: '#fdf4ff', border: '#c084fc', text: '#6b21a8' },
-  'Business Leader': { bg: '#f8fafc', border: '#94a3b8', text: '#334155' },
+  'Freedom Fighter': { bg: 'rgba(251, 146, 60, 0.08)', border: '#fb923c', text: '#fdba74' },
+  'Civil Rights':    { bg: 'rgba(245, 158, 11, 0.08)', border: '#f59e0b', text: '#fcd34d' },
+  'Humanitarian':    { bg: 'rgba(236, 72, 153, 0.08)', border: '#ec4899', text: '#f9a8d4' },
+  'Spiritual Leader':{ bg: 'rgba(52, 211, 153, 0.08)', border: '#34d399', text: '#6ee7b7' },
+  'Statesman':       { bg: 'rgba(96, 165, 250, 0.08)', border: '#60a5fa', text: '#93c5fd' },
+  'Reformer':        { bg: 'rgba(167, 139, 250, 0.08)', border: '#a78bfa', text: '#c4b5fd' },
+  'Scientist':       { bg: 'rgba(34, 211, 238, 0.08)', border: '#22d3ee', text: '#67e8f9' },
+  'Visionary':       { bg: 'rgba(56, 189, 248, 0.08)', border: '#38bdf8', text: '#7dd3fc' },
+  'Philosopher':     { bg: 'rgba(250, 204, 21, 0.08)', border: '#facc15', text: '#fef08a' },
+  'Activist':        { bg: 'rgba(251, 113, 133, 0.08)', border: '#fb7185', text: '#fda4af' },
+  'Artist & Scientist': { bg: 'rgba(192, 132, 252, 0.08)', border: '#c084fc', text: '#d8b4fe' },
+  'Business Leader': { bg: 'rgba(148, 163, 184, 0.08)', border: '#94a3b8', text: '#cbd5e1' },
 };
 
 export default function PersonaPicker({ user }) {
@@ -115,28 +115,30 @@ export default function PersonaPicker({ user }) {
               title={isLive ? `Talk to ${persona.name}` : 'Coming Soon'}
               style={{
                 cursor: isLive ? 'pointer' : 'not-allowed',
-                border: `2px solid ${isLive ? colors.border : '#e2e8f0'}`,
+                border: `2px solid ${isLive ? colors.border : 'rgba(255,255,255,0.05)'}`,
                 borderRadius: '16px',
                 padding: '1.25rem 0.75rem 1rem',
-                background: isLive ? colors.bg : '#f8fafc',
+                background: isLive ? colors.bg : 'rgba(255,255,255,0.02)',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 gap: '0.625rem',
                 textAlign: 'center',
-                transition: 'transform 0.18s, box-shadow 0.18s',
-                boxShadow: isLive ? `0 2px 12px ${colors.border}33` : '0 1px 4px rgba(0,0,0,0.06)',
+                transition: 'transform 0.18s, box-shadow 0.18s, background 0.18s',
+                boxShadow: isLive ? `0 2px 12px ${colors.border}15` : 'none',
                 opacity: isLive ? 1 : 0.65,
                 position: 'relative',
               }}
               onMouseEnter={e => {
                 if (!isLive) return;
                 e.currentTarget.style.transform = 'translateY(-4px) scale(1.02)';
-                e.currentTarget.style.boxShadow = `0 10px 28px ${colors.border}55`;
+                e.currentTarget.style.boxShadow = `0 10px 28px ${colors.border}40`;
+                e.currentTarget.style.background = `rgba(${colors.bg.substring(5, colors.bg.length - 6)}, 0.15)`;
               }}
               onMouseLeave={e => {
                 e.currentTarget.style.transform = '';
-                e.currentTarget.style.boxShadow = isLive ? `0 2px 12px ${colors.border}33` : '0 1px 4px rgba(0,0,0,0.06)';
+                e.currentTarget.style.boxShadow = isLive ? `0 2px 12px ${colors.border}15` : 'none';
+                e.currentTarget.style.background = isLive ? colors.bg : 'rgba(255,255,255,0.02)';
               }}
             >
               {/* LIVE dot */}
@@ -153,9 +155,9 @@ export default function PersonaPicker({ user }) {
               <div style={{
                 width: 72, height: 72,
                 borderRadius: '50%',
-                background: isLive ? `linear-gradient(135deg, ${colors.border}33, ${colors.border}66)` : '#e2e8f0',
+                background: isLive ? `linear-gradient(135deg, ${colors.border}33, ${colors.border}66)` : 'rgba(255,255,255,0.05)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                border: `2px solid ${isLive ? colors.border : '#cbd5e1'}`,
+                border: `2px solid ${isLive ? colors.border : 'rgba(255,255,255,0.1)'}`,
                 flexShrink: 0,
                 overflow: 'hidden'
               }}>
@@ -179,9 +181,9 @@ export default function PersonaPicker({ user }) {
                 fontWeight: 600,
                 padding: '0.15rem 0.5rem',
                 borderRadius: '999px',
-                background: isLive ? `${colors.border}22` : '#f1f5f9',
-                color: isLive ? colors.text : '#94a3b8',
-                border: `1px solid ${isLive ? colors.border : '#e2e8f0'}`,
+                background: isLive ? `${colors.border}22` : 'rgba(255,255,255,0.03)',
+                color: isLive ? colors.text : 'rgba(255,255,255,0.5)',
+                border: `1px solid ${isLive ? colors.border : 'rgba(255,255,255,0.1)'}`,
               }}>
                 {persona.category}
               </span>

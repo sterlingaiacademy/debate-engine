@@ -52,11 +52,18 @@ export default function Dashboard({ user }) {
     }
     
     Promise.all([
-      fetch(`/api/analytics/${user.studentId}`).then((r) => r.json()),
-      fetch(`/api/time-limits/${user.studentId}`).then((r) => r.json()).catch(() => ({ remainingRanked: 0 }))
+      fetch(`/api/analytics/${user.studentId}`).then((r) => {
+        if (!r.ok) throw new Error('Analytics failed');
+        return r.json();
+      }),
+      fetch(`/api/time-limits/${user.studentId}`).then((r) => {
+        if (!r.ok) throw new Error('Time limits failed');
+        return r.json();
+      }).catch(() => null)
     ])
     .then(([analyticsData, timeData]) => {
-      const combinedData = { ...analyticsData, timeLimits: timeData };
+      // If analytics failed gracefully returning fallback, total_debates might be 0
+      const combinedData = { ...analyticsData, timeLimits: timeData || { remainingRanked: 1800, remainingPersona: 1800, error: true } };
       cachedStats = combinedData;
       cachedStudentId = user.studentId;
       setStats(combinedData);
@@ -117,36 +124,18 @@ export default function Dashboard({ user }) {
       {/* SECTION 1: Profile Header & Actions */}
       <div className="card" style={{ 
         display: 'flex', flexWrap: 'wrap', gap: '1.25rem', alignItems: 'center', justifyContent: 'space-between',
-        background: `linear-gradient(135deg, ${tier.color}15 0%, #ffffff 100%)`, 
+        background: `linear-gradient(135deg, ${tier.color}15 0%, var(--bg-tertiary) 100%)`, 
         borderLeft: `6px solid ${tier.color}`
       }}>
-         <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-            <div style={{ width: '60px', height: '60px', minWidth: '60px', borderRadius: '50%', background: 'linear-gradient(135deg, #f43f5e 0%, #ec4899 50%, #8b5cf6 100%)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.75rem', boxShadow: '0 4px 12px rgba(236, 72, 153, 0.3)' }}>
-              {user.name.charAt(0).toUpperCase()}
-            </div>
+         <div style={{ display: 'flex', alignItems: 'center', gap: '0' }}>
             <div>
                <h1 style={{ fontSize: 'clamp(1.15rem, 4vw, 1.75rem)', fontWeight: 800, margin: '0 0 0.25rem 0', wordBreak: 'break-word' }}>{user.name}</h1>
                <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                  <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{user.classLevel}</span> &bull; {user.school || 'Debate Arena'}
                </p>
-               {!isJunior && (
-                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '0.75rem', flexWrap: 'wrap' }}>
-                   <span style={{ background: 'var(--bg-primary)', padding: '0.25rem 0.75rem', borderRadius: '99px', fontSize: '0.85rem', fontWeight: 700, border: '1px solid var(--border)', display: 'flex', gap: '0.35rem', alignItems: 'center' }}>
-                      <span style={{ fontSize: '1rem' }}>{tier.icon}</span> {tier.name}
-                   </span>
-                   <span style={{ fontSize: '0.9rem', fontWeight: 600 }}>
-                      <span style={{ color: 'var(--text-muted)', textTransform: 'uppercase', fontSize: '0.75rem' }}>ELO </span>
-                      <span style={{ color: tier.color, fontSize: '1.1rem', fontWeight: 800 }}>{elo}</span>
-                   </span>
-                   <span style={{ fontSize: '0.9rem', fontWeight: 600 }}>
-                      <span style={{ color: 'var(--text-muted)', textTransform: 'uppercase', fontSize: '0.75rem' }}>Rank </span>
-                      #{stats.global_rank || '-'}
-                   </span>
-                 </div>
-               )}
              </div>
           </div>
-          {stats?.timeLimits && (
+          {stats?.timeLimits && !stats.timeLimits.error && stats.timeLimits.remainingRanked !== undefined && (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.4rem', padding: '1rem', background: 'rgba(139, 92, 246, 0.05)', borderRadius: '16px', border: '1px solid rgba(139, 92, 246, 0.15)' }}>
               <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#7c3aed' }}>Daily Free Time</span>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -168,14 +157,15 @@ export default function Dashboard({ user }) {
           style={{
             position: 'relative', overflow: 'hidden', cursor: 'pointer',
             borderRadius: '20px', padding: '2.5rem 2rem',
-            background: isJunior ? 'linear-gradient(135deg, var(--j-pink) 0%, var(--j-purple) 100%)' : 'linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #4f46e5 100%)',
+            background: isJunior ? 'linear-gradient(135deg, var(--j-pink) 0%, var(--j-purple) 100%)' : 'linear-gradient(135deg, #1e3a8a 0%, #172554 50%, #0f172a 100%)',
+            border: isJunior ? 'none' : '1px solid rgba(59,130,246,0.3)',
             color: '#fff', minHeight: '220px',
             display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-            boxShadow: '0 8px 32px rgba(59,130,246,0.35)',
+            boxShadow: isJunior ? '0 8px 32px rgba(59,130,246,0.35)' : '0 8px 32px rgba(59,130,246,0.15)',
             transition: 'transform 0.25s ease, box-shadow 0.25s ease',
           }}
-          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px) scale(1.01)'; e.currentTarget.style.boxShadow = isJunior ? '0 16px 48px rgba(168,85,247,0.45)' : '0 16px 48px rgba(59,130,246,0.45)'; }}
-          onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; e.currentTarget.style.boxShadow = isJunior ? '0 8px 32px rgba(168,85,247,0.35)' : '0 8px 32px rgba(59,130,246,0.35)'; }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px) scale(1.01)'; e.currentTarget.style.boxShadow = isJunior ? '0 16px 48px rgba(168,85,247,0.45)' : '0 16px 48px rgba(59,130,246,0.25)'; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; e.currentTarget.style.boxShadow = isJunior ? '0 8px 32px rgba(168,85,247,0.35)' : '0 8px 32px rgba(59,130,246,0.15)'; }}
         >
           {/* Background decoration */}
           <div style={{ position: 'absolute', top: '-30px', right: '-30px', width: '180px', height: '180px', borderRadius: '50%', background: 'rgba(255,255,255,0.08)' }} />
@@ -212,14 +202,15 @@ export default function Dashboard({ user }) {
           style={{
             position: 'relative', overflow: 'hidden', cursor: 'pointer',
             borderRadius: '20px', padding: '2.5rem 2rem',
-            background: 'linear-gradient(135deg, #a855f7 0%, #d946ef 50%, #ec4899 100%)',
+            background: isJunior ? 'linear-gradient(135deg, #a855f7 0%, #d946ef 50%, #ec4899 100%)' : 'linear-gradient(135deg, #4c1d95 0%, #3b0764 50%, #0f172a 100%)',
+            border: isJunior ? 'none' : '1px solid rgba(168,85,247,0.3)',
             color: '#fff', minHeight: '220px',
             display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-            boxShadow: '0 8px 32px rgba(168,85,247,0.35)',
+            boxShadow: isJunior ? '0 8px 32px rgba(168,85,247,0.35)' : '0 8px 32px rgba(168,85,247,0.15)',
             transition: 'transform 0.25s ease, box-shadow 0.25s ease',
           }}
-          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px) scale(1.01)'; e.currentTarget.style.boxShadow = '0 16px 48px rgba(168,85,247,0.45)'; }}
-          onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(168,85,247,0.35)'; }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px) scale(1.01)'; e.currentTarget.style.boxShadow = isJunior ? '0 16px 48px rgba(168,85,247,0.45)' : '0 16px 48px rgba(168,85,247,0.25)'; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; e.currentTarget.style.boxShadow = isJunior ? '0 8px 32px rgba(168,85,247,0.35)' : '0 8px 32px rgba(168,85,247,0.15)'; }}
         >
           {/* Background decoration */}
           <div style={{ position: 'absolute', top: '-30px', right: '-30px', width: '180px', height: '180px', borderRadius: '50%', background: 'rgba(255,255,255,0.08)' }} />
@@ -248,7 +239,7 @@ export default function Dashboard({ user }) {
       </div>
 
       {isJunior ? null : stats.total_debates === 0 ? (
-         <div className="card" style={{ textAlign: 'center', padding: '3rem 2rem', background: 'linear-gradient(135deg, #f0f9ff 0%, #faf5ff 100%)', border: '1px dashed var(--border)' }}>
+         <div className="card" style={{ textAlign: 'center', padding: '3rem 2rem', background: isJunior ? 'linear-gradient(135deg, #f0f9ff 0%, #faf5ff 100%)' : 'var(--bg-tertiary)', border: '1px dashed var(--border)' }}>
 
             <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>Your stats will appear here</h3>
             <p style={{ color: 'var(--text-secondary)', margin: 0, fontSize: '0.9rem' }}>Complete your first debate to unlock analytics, ELO rating, and skill breakdowns.</p>
@@ -301,7 +292,7 @@ export default function Dashboard({ user }) {
                     <RadarChart cx="50%" cy="50%" outerRadius="55%" data={skillData}>
                       <PolarGrid stroke="var(--border)" />
                       <PolarAngleAxis dataKey="subject" tick={{ fontSize: 10, fill: 'var(--text-secondary)', fontWeight: 600 }} />
-                      <PolarRadiusAxis angle={30} domain={[0, 10]} tick={{ fontSize: 10, fill: 'var(--text-muted)' }} />
+                      <PolarRadiusAxis angle={30} domain={[0, 10]} tick={false} axisLine={false} />
                       <Radar name="My Skills" dataKey="A" stroke="#8b5cf6" strokeWidth={2} fill="#8b5cf6" fillOpacity={0.4} />
                       <RechartsTooltip />
                     </RadarChart>
@@ -314,7 +305,7 @@ export default function Dashboard({ user }) {
             
                {/* SECTION 5: Strongest/Weakest Callouts */}
                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '1rem' }}>
-                 <div className="card" style={{ background: 'linear-gradient(135deg, #ecfdf5 0%, #ffffff 100%)', border: '1px solid #10b981', borderLeft: '6px solid #10b981' }}>
+                 <div className="card" style={{ background: isJunior ? 'linear-gradient(135deg, #ecfdf5 0%, #ffffff 100%)' : 'linear-gradient(135deg, rgba(16,185,129,0.1) 0%, var(--bg-primary) 100%)', border: '1px solid #10b981', borderLeft: '6px solid #10b981' }}>
                    <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#10b981', textTransform: 'uppercase', marginBottom: '0.5rem', letterSpacing: '0.05em' }}>Strongest Attribute</p>
                    <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
                      {stats.strongest_category ? formatCategory(stats.strongest_category) : 'N/A'}
@@ -324,7 +315,7 @@ export default function Dashboard({ user }) {
                    </p>
                  </div>
 
-                 <div className="card" style={{ background: 'linear-gradient(135deg, #fff7ed 0%, #ffffff 100%)', border: '1px solid #f97316', borderLeft: '6px solid #f97316' }}>
+                 <div className="card" style={{ background: isJunior ? 'linear-gradient(135deg, #fff7ed 0%, #ffffff 100%)' : 'linear-gradient(135deg, rgba(234,88,12,0.1) 0%, var(--bg-primary) 100%)', border: '1px solid #f97316', borderLeft: '6px solid #f97316' }}>
                    <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#ea580c', textTransform: 'uppercase', marginBottom: '0.5rem', letterSpacing: '0.05em' }}>Focus Area</p>
                    <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
                      {stats.weakest_category ? formatCategory(stats.weakest_category) : 'N/A'}

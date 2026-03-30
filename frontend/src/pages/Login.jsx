@@ -58,7 +58,7 @@ export default function Login({ onLogin }) {
 
           {/* Brand Logo tied to the Hero block */}
           <div style={{ marginBottom: '1rem' }}>
-            <span style={{ fontSize: '1.15rem', fontWeight: 800, letterSpacing: '-0.03em' }}>Grace and Force AI</span>
+            <span style={{ fontSize: '1.25rem', fontWeight: 900, letterSpacing: '-0.02em' }}>G FORCE</span>
           </div>
 
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.15)', padding: '0.5rem 1rem', borderRadius: '99px', fontSize: '0.875rem', fontWeight: 600, marginBottom: '1.5rem', color: '#e0e7ff', backdropFilter: 'blur(10px)', width: 'fit-content' }}>
@@ -92,7 +92,7 @@ export default function Login({ onLogin }) {
 
         {/* Footer info inside Left Pane */}
         <div style={{ zIndex: 10, fontSize: '0.85rem', color: 'rgba(255,255,255,0.4)', fontWeight: 500, marginTop: '3rem' }}>
-          © 2026 Grace and Force AI. All rights reserved.
+          © 2026 G FORCE. All rights reserved.
         </div>
       </div>
 
@@ -123,7 +123,7 @@ export default function Login({ onLogin }) {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', borderRadius: '10px', background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)' }}>
               <Mic size={18} color="#fff" />
             </div>
-            <span style={{ fontSize: '1.5rem', fontWeight: 800, letterSpacing: '-0.03em', color: '#fff' }}>Grace and Force</span>
+            <span style={{ fontSize: '1.75rem', fontWeight: 900, letterSpacing: '-0.02em', color: '#fff' }}>G FORCE</span>
           </div>
 
           <div style={{ marginBottom: '2.5rem' }}>

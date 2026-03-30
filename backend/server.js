@@ -191,22 +191,45 @@ app.post('/api/sessions', async (req, res) => {
 });
 
 // Analytics (Routed via Python Profile script)
-app.get('/api/analytics/:studentId', (req, res) => {
+app.get('/api/analytics/:studentId', async (req, res) => {
   const scriptPath = path.join(__dirname, 'api_profile.py');
   const studentId = req.params.studentId.replace(/"/g, '');
   
-  exec(`py "${scriptPath}" "${studentId}"`, (error, stdout, stderr) => {
+  const MAX_RETRIES = 3;
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     try {
-      const data = JSON.parse(stdout);
+      const data = await new Promise((resolve, reject) => {
+        exec(`py "${scriptPath}" "${studentId}"`, (error, stdout, stderr) => {
+          if (error) {
+            console.error(`Python Analytics attempt ${attempt} exec error:`, error);
+          }
+          try {
+            const parsed = JSON.parse(stdout);
+            if (parsed.error && parsed.error.includes('10054')) {
+              reject(new Error('Connection reset by peer (10054)'));
+              return;
+            }
+            resolve(parsed);
+          } catch (e) {
+            reject(new Error('Parse error or invalid output'));
+          }
+        });
+      });
+
       if (data.error) {
+         // It's a valid JSON response but contains a logical error (e.g. User not found)
+         return res.json({ total_debates: 0, avg_score: 0, total_words_spoken: 0, elo_rating: 1000, badges: [], badge_details: [] });
+      }
+      return res.json(data); // Success!
+    } catch (err) {
+      if (attempt === MAX_RETRIES) {
+        console.error('Python Analytics route failed after retries:', err.message);
         return res.json({ total_debates: 0, avg_score: 0, total_words_spoken: 0, elo_rating: 1000, badges: [], badge_details: [] });
       }
-      res.json(data);
-    } catch (e) {
-      console.error('Python Analytics route parse error:', e);
-      res.json({ total_debates: 0, avg_score: 0, total_words_spoken: 0, elo_rating: 1000, badges: [], badge_details: [] });
+      // Wait a bit before retrying
+      await new Promise(r => setTimeout(r, 500));
     }
-  });
+  }
 });
 
 // Leaderboard (Routed via Python)

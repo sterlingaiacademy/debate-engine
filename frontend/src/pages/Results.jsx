@@ -164,11 +164,11 @@ export default function Results({ user }) {
             <Play size={18} fill="currentColor" /> Try Again
           </button>
           
-          <div style={{ width: '100%', background: '#fffbeb', border: '1px solid #fde68a', borderRadius: 'var(--radius-md)', padding: '1.5rem', textAlign: 'left' }}>
-            <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#b45309', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div style={{ width: '100%', background: 'rgba(245, 158, 11, 0.1)', border: '1px solid rgba(245, 158, 11, 0.2)', borderRadius: 'var(--radius-md)', padding: '1.5rem', textAlign: 'left' }}>
+            <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#fcd34d', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <Lightbulb size={16} /> Quick Tips for Next Time:
             </h4>
-            <ul style={{ margin: 0, paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', color: '#92400e', fontSize: '0.85rem' }}>
+            <ul style={{ margin: 0, paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', color: '#fef3c7', fontSize: '0.85rem' }}>
               <li>Engage with the topic — state your position clearly and give at least one supporting reason.</li>
               <li>Aim to speak for at least 30 seconds per turn with a clear claim and evidence.</li>
             </ul>
@@ -215,7 +215,7 @@ export default function Results({ user }) {
         <div style={{ height: '1px', background: 'var(--border)', margin: '0.25rem 0' }} />
         
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', alignItems: 'center' }}>
-          <span style={{ fontSize: '1rem', fontStyle: 'italic', fontWeight: 600, color: 'var(--text-primary)' }}>
+          <span style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)' }}>
             "{evaluation?.motion || 'Unknown Motion'}"
           </span>
           <span style={{ background: `${sideColor}15`, color: sideColor, border: `1px solid ${sideColor}40`, padding: '0.2rem 0.6rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
@@ -327,26 +327,6 @@ export default function Results({ user }) {
         {/* Right Column */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           
-          {/* Section 5: Areas to Improve */}
-          {evaluation?.areas_to_improve?.length > 0 && (
-            <div className="card" style={{ borderLeft: '4px solid #f97316', background: 'linear-gradient(to right, #fff7ed 0%, #ffffff 100%)' }}>
-               <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem', fontWeight: 800, color: '#ea580c', marginBottom: '1rem' }}>
-                 <Target size={20} /> Areas to Improve
-               </h3>
-               <ol style={{ margin: 0, paddingLeft: '1.2rem', display: 'flex', flexDirection: 'column', gap: '1rem', color: 'var(--text-primary)' }}>
-                 {evaluation.areas_to_improve.map((tipStr, i) => {
-                   const { category, instruction } = formatTip(tipStr);
-                   return (
-                     <li key={i} style={{ fontSize: '0.95rem', lineHeight: 1.5, paddingLeft: '0.5rem' }}>
-                       {category && <strong style={{ color: '#b45309', marginRight: '0.35rem' }}>[{category}]</strong>}
-                       {instruction}
-                     </li>
-                   );
-                 })}
-               </ol>
-            </div>
-          )}
-
           {/* Section 3: Skill Breakdown Grid */}
           <div>
             <h3 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -383,7 +363,7 @@ export default function Results({ user }) {
                    })}
                  </div>
                ) : (
-                 <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontStyle: 'italic' }}>No standout moments detected — try to develop your arguments more fully in your next debate.</p>
+                 <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>No standout moments detected — try to develop your arguments more fully in your next debate.</p>
                )}
             </div>
 

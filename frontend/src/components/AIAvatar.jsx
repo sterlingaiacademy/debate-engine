@@ -1,13 +1,20 @@
+import React, { useState, useEffect } from 'react';
 import juniorAvatar from '../assets/junior_avatar.png';
-import seniorAvatar from '../assets/senior_avatar.png';
 
 /**
- * AIAvatar — Talking Tom-style animated avatar for the Debate Arena.
- * Bounces gently when idle, wiggles + scales when the AI is speaking.
+ * AIAvatar — renders either:
+ *   - Junior (Level 1/2): Talking Tom-style animated image (Leo/owl)
+ *   - Senior (Level 3/4/5): Handled externally via GeminiWave (returns null here unless persona override)
  */
 export default function AIAvatar({ isJunior, isSpeaking, size = 120, overrideImage, overrideName }) {
-  const src = overrideImage ? overrideImage : (isJunior ? juniorAvatar : seniorAvatar);
-  const name = overrideName ? overrideName : (isJunior ? 'Leo' : 'Professor Owl');
+  // Senior users get the fluid wave (handled in parent). If no override, render nothing here.
+  if (!isJunior && !overrideImage) {
+    return null;
+  }
+
+  // Junior users (or persona override with a custom image) get the image avatar
+  const src = overrideImage ? overrideImage : juniorAvatar;
+  const displayName = overrideName ? overrideName : 'Leo';
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
@@ -20,7 +27,7 @@ export default function AIAvatar({ isJunior, isSpeaking, size = 120, overrideIma
             position: 'absolute',
             inset: -6,
             borderRadius: '50%',
-            border: `3px solid ${isJunior ? '#a855f7' : '#3b82f6'}`,
+            border: `3px solid #a855f7`,
             animation: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
             opacity: 0.5,
           }} />
@@ -31,13 +38,13 @@ export default function AIAvatar({ isJunior, isSpeaking, size = 120, overrideIma
           position: 'absolute',
           inset: -3,
           borderRadius: '50%',
-          border: `3px solid ${isJunior ? 'rgba(168,85,247,0.3)' : 'rgba(59,130,246,0.3)'}`,
+          border: `3px solid rgba(168,85,247,0.3)`,
         }} />
 
         {/* Avatar image with talk/idle animation */}
         <img
           src={src}
-          alt={name}
+          alt={displayName}
           style={{
             width: size,
             height: size,
@@ -71,13 +78,13 @@ export default function AIAvatar({ isJunior, isSpeaking, size = 120, overrideIma
       <div style={{
         fontSize: '0.8125rem',
         fontWeight: 700,
-        color: isJunior ? '#7c3aed' : '#1d4ed8',
-        background: isJunior ? 'rgba(168,85,247,0.08)' : 'rgba(59,130,246,0.08)',
+        color: '#7c3aed',
+        background: 'rgba(168,85,247,0.08)',
         padding: '0.2rem 0.75rem',
         borderRadius: '99px',
         letterSpacing: '0.02em',
       }}>
-        {isSpeaking ? `${name} is speaking...` : name}
+        {isSpeaking ? `${displayName} is speaking...` : displayName}
       </div>
 
       {/* Inline keyframes injected via style tag */}

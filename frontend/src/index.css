@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Nunito:wght@600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Display:wght@400;700&family=Nunito:wght@600;700;800;900&display=swap');
+/* Fallback: Google Sans isn't always available via Google Fonts standard API, use Product Sans equivalent */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Outfit:wght@400;500;600;700;800&display=swap');
 
 /* ===========================
    CSS VARIABLES / DESIGN TOKENS
@@ -29,8 +31,8 @@
   --radius-lg: 16px;
   --radius-xl: 24px;
   --radius-full: 9999px;
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-junior: 'Nunito', 'Inter', sans-serif;
+  --font-sans: 'Google Sans', 'Outfit', 'Product Sans', system-ui, sans-serif;
+  --font-junior: 'Nunito', 'Google Sans', 'Outfit', sans-serif;
   --transition: 0.2s ease;
 
   /* Junior palette */
@@ -70,6 +72,101 @@ body {
   --bg-secondary: var(--j-bg);
   --text-primary: var(--j-text);
 }
+
+/* Senior Dark Futuristic Theme */
+.theme-senior {
+  --bg-primary: #0d1117;
+  --bg-secondary: #0a0f1e;
+  --bg-tertiary: #161b2e;
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --accent: #00d4ff;
+  --accent-dark: #0099cc;
+  --accent-light: rgba(0, 212, 255, 0.08);
+  --border: rgba(0, 212, 255, 0.15);
+  --border-focus: #00d4ff;
+  --shadow-sm: 0 1px 3px 0 rgba(0, 212, 255, 0.05);
+  --shadow-md: 0 4px 16px 0 rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 40px 0 rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 60px 0 rgba(0, 0, 0, 0.6);
+  --error-light: rgba(239,68,68,0.15);
+  color-scheme: dark;
+}
+
+.theme-senior body,
+.theme-senior {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.theme-senior .card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 24px rgba(0, 212, 255, 0.06);
+}
+
+.theme-senior .header {
+  background: rgba(13, 17, 23, 0.92);
+  border-bottom: 1px solid rgba(0, 212, 255, 0.12);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+
+.theme-senior .site-title {
+  background: linear-gradient(135deg, #00d4ff 0%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.theme-senior .nav-link {
+  color: #94a3b8;
+}
+.theme-senior .nav-link:hover {
+  background: rgba(0, 212, 255, 0.08);
+  color: #00d4ff;
+}
+.theme-senior .nav-link.active {
+  background: rgba(0, 212, 255, 0.1);
+  color: #00d4ff;
+}
+
+.theme-senior .btn-primary {
+  background: linear-gradient(135deg, #0099cc 0%, #7c3aed 100%);
+  box-shadow: 0 0 16px rgba(0, 212, 255, 0.3);
+}
+.theme-senior .btn-primary:hover:not(:disabled) {
+  box-shadow: 0 0 24px rgba(0, 212, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.theme-senior .btn-secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+.theme-senior .btn-secondary:hover:not(:disabled) {
+  background: rgba(0, 212, 255, 0.08);
+  border-color: rgba(0, 212, 255, 0.3);
+}
+
+.theme-senior .input-field {
+  background: var(--bg-tertiary);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+.theme-senior .input-field:focus {
+  border-color: #00d4ff;
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.12);
+}
+
+.theme-senior .waveform-bar {
+  background: #00d4ff;
+}
+
+.theme-senior ::-webkit-scrollbar-thumb { background: #1e293b; }
+.theme-senior ::-webkit-scrollbar-thumb:hover { background: #334155; }
 
 /* ===========================
    TYPOGRAPHY
@@ -806,4 +903,47 @@ tbody tr:hover { background: var(--bg-tertiary); }
 
   /* Table: hide less important columns */
   .hide-mobile { display: none !important; }
+}
+
+/* ===========================
+   ORB ANIMATIONS (Senior)
+   =========================== */
+@keyframes orbIdle {
+  0%   { transform: scale(1); box-shadow: 0 0 30px rgba(0,212,255,0.4), 0 0 60px rgba(120,80,255,0.2), inset 0 0 30px rgba(0,212,255,0.1); }
+  50%  { transform: scale(1.04); box-shadow: 0 0 45px rgba(0,212,255,0.6), 0 0 90px rgba(120,80,255,0.3), inset 0 0 40px rgba(0,212,255,0.15); }
+  100% { transform: scale(1); box-shadow: 0 0 30px rgba(0,212,255,0.4), 0 0 60px rgba(120,80,255,0.2), inset 0 0 30px rgba(0,212,255,0.1); }
+}
+
+@keyframes orbSpeak {
+  0%   { transform: scale(1) translate(0, 0); }
+  10%  { transform: scale(1.06) translate(-2px, 1px); }
+  20%  { transform: scale(1.08) translate(2px, -1px); }
+  30%  { transform: scale(1.07) translate(-1px, 2px); }
+  40%  { transform: scale(1.09) translate(1px, -2px); }
+  50%  { transform: scale(1.08) translate(-2px, 0px); }
+  60%  { transform: scale(1.07) translate(2px, 1px); }
+  70%  { transform: scale(1.09) translate(-1px, -1px); }
+  80%  { transform: scale(1.06) translate(1px, 2px); }
+  90%  { transform: scale(1.08) translate(-2px, -1px); }
+  100% { transform: scale(1.07) translate(0px, 1px); }
+}
+
+@keyframes orbRingExpand {
+  0%   { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+@keyframes orbRingExpandSlow {
+  0%   { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+
+@keyframes orbCoreRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes orbInnerPulse {
+  0%, 100% { opacity: 0.6; }
+  50%  { opacity: 1; }
 }

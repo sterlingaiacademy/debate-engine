@@ -15,7 +15,7 @@ export default function Layout({ user, onLogout }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <header className="header">
-        <Link to="/dashboard" className="site-title">Grace and Force AI</Link>
+        <Link to="/dashboard" className="site-title" style={{ fontFamily: 'var(--font-sans)', fontWeight: 900, letterSpacing: '-0.02em', fontSize: '1.4rem' }}>G FORCE</Link>
 
         <nav style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
           {navLinks.map(({ name, path, icon: Icon }) => (
