@@ -154,6 +154,14 @@ export default function MockUN({ user }) {
             const id = localSession?.getId?.() || localSession?.id || null;
             if (id) conversationIdRef.current = id;
           } catch {}
+          // Auto-inject the topic as a text message so the agent starts the debate immediately
+          setTimeout(() => {
+            try {
+              localSession.sendUserInput(
+                `The debate topic for this Mock UN session is: "${topicObj.topic}". Please begin the session by announcing the topic and asking me to present my opening position.`
+              );
+            } catch {}
+          }, 800);
         },
         onDisconnect: () => {
           setIsActive(false);
@@ -165,7 +173,6 @@ export default function MockUN({ user }) {
             transcriptRef.current = t;
             return t;
           });
-          // Hide prompt card once conversation starts
           setShowPromptCard(false);
         },
         onError: () => setStep('error'),
@@ -297,29 +304,8 @@ export default function MockUN({ user }) {
 
               <GeminiWave isSpeaking={isSpeaking} />
 
-              <div style={{ position: 'relative', zIndex: 10, flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', marginTop: showTranscript ? '0' : '10vh' }}>
+              <div style={{ position: 'relative', zIndex: 10, flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', marginTop: showTranscript ? '0' : '15vh' }}>
                 {showTranscript && <TranscriptView transcript={transcript} agentName="UN Moderator" />}
-
-                {/* Topic prompt card — shown until conversation starts */}
-                {showPromptCard && !showTranscript && (
-                  <div className="animate-fade-in" style={{
-                    background: 'rgba(251,191,36,0.08)',
-                    border: '1px solid rgba(251,191,36,0.3)',
-                    borderRadius: '16px',
-                    padding: '1.25rem 1.75rem',
-                    maxWidth: '520px',
-                    width: '90%',
-                    marginBottom: '1.5rem',
-                    textAlign: 'center',
-                  }}>
-                    <p style={{ fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#fbbf24', marginBottom: '0.5rem' }}>
-                      🎙️ Say this to begin
-                    </p>
-                    <p style={{ fontSize: '1rem', fontWeight: 600, color: '#fff', lineHeight: 1.5, margin: 0 }}>
-                      "I would like to debate the topic: <em style={{ color: '#fbbf24' }}>{selectedTopic}</em>"
-                    </p>
-                  </div>
-                )}
 
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
                   <h3 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0, color: '#fff' }}>
