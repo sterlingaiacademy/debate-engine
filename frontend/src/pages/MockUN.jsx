@@ -146,19 +146,6 @@ export default function MockUN({ user }) {
 
       const localSession = await Conversation.startSession({
         agentId: MOCK_UN_AGENT_ID,
-        overrides: {
-          agent: {
-            prompt: {
-              prompt: `You are a UN debate moderator facilitating a formal Mock UN debate session. 
-The debate topic for this session is: "${topicObj.topic}"
-
-Begin by formally announcing the topic, then invite the delegate (the student) to present their opening position. 
-Engage critically, ask probing follow-up questions, present counterarguments, and challenge their reasoning throughout the debate.
-Maintain a formal, diplomatic tone as befitting a UN session.`,
-            },
-            firstMessage: `Welcome to the Mock UN debate session. Today's topic is: "${topicObj.topic}". Please present your opening position.`,
-          },
-        },
         onConnect: () => {
           setStep('debating');
           setIsActive(true);
@@ -169,8 +156,7 @@ Maintain a formal, diplomatic tone as befitting a UN session.`,
         },
         onDisconnect: () => {
           setIsActive(false);
-          setStep('evaluating');
-          setTimeout(() => handleEndDebate(), 500);
+          handleEndDebate();
         },
         onMessage: (msg) => {
           setTranscript(p => {
@@ -196,9 +182,8 @@ Maintain a formal, diplomatic tone as befitting a UN session.`,
       try { await conversationRef.current.endSession(); } catch {}
     }
     setIsActive(false);
-    setStep('evaluating');
 
-    const currentTranscript = transcriptRef.current;
+    // Sync remaining unsaved time
     const elapsed = initialTimerRef.current - currentTimerRef.current;
     const alreadySynced = Math.floor(elapsed / 15) * 15;
     const unsaved = elapsed - alreadySynced;
@@ -210,46 +195,8 @@ Maintain a formal, diplomatic tone as befitting a UN session.`,
       }).catch(() => {});
     }
 
-    let evaluation = null;
-    try {
-      const evalRes = await fetch('/api/evaluate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          transcript: currentTranscript,
-          topic: selectedTopic,
-          isJunior: false,
-          conversationId: conversationIdRef.current,
-          studentId: user?.studentId,
-          name: user?.name,
-          classLevel: user?.classLevel,
-        }),
-      });
-      evaluation = await evalRes.json();
-    } catch {}
-
-    const finalScore = evaluation?.overallScore ?? Math.floor(Math.random() * 20) + 65;
-
-    const sessionData = {
-      studentId: user.studentId,
-      debateTopic: selectedTopic,
-      sessionDuration: elapsed,
-      argumentsCount: currentTranscript.filter(m => m.role === 'user').length,
-      debateScore: finalScore,
-      isPersona: false,
-    };
-
-    try {
-      const res = await fetch('/api/sessions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(sessionData),
-      });
-      const data = await res.json();
-      navigate(`/results/${data.sessionId}`, { state: { sessionData, evaluation } });
-    } catch {
-      navigate('/dashboard');
-    }
+    // No analysis — go straight back to dashboard
+    navigate('/dashboard');
   };
 
   const formatTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
@@ -309,26 +256,6 @@ Maintain a formal, diplomatic tone as befitting a UN session.`,
         <div>
           <h3 style={{ fontWeight: 800, fontSize: '1.5rem', marginBottom: '0.5rem' }}>Connecting to Mock UN…</h3>
           <p style={{ color: 'var(--text-secondary)' }}>Topic: <strong>{selectedTopic}</strong></p>
-        </div>
-      </div>
-    );
-  }
-
-  // Evaluating
-  if (step === 'evaluating') {
-    return (
-      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '60vh', gap: '2rem', textAlign: 'center' }}>
-        <div style={{ position: 'relative' }}>
-          <span style={{ fontSize: '5rem' }}>🏛️</span>
-          <div style={{
-            position: 'absolute', top: -15, left: -15, right: -15, bottom: -15,
-            border: '4px solid rgba(139,92,246,0.15)', borderTopColor: 'var(--accent)', borderRightColor: 'var(--accent)',
-            borderRadius: '50%', animation: 'spin 1s linear infinite',
-          }} />
-        </div>
-        <div>
-          <h3 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.5rem' }}>Analyzing Debate...</h3>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>The AI judge is reviewing your arguments!</p>
         </div>
       </div>
     );
@@ -572,23 +499,21 @@ Maintain a formal, diplomatic tone as befitting a UN session.`,
                 boxShadow: hoveredTopic === t.id ? '0 8px 24px rgba(217,119,6,0.12)' : '0 2px 4px rgba(0,0,0,0.05)',
               }}
             >
-              {/* Emoji */}
+              {/* Left accent bar */}
               <div style={{
-                width: 48, height: 48, borderRadius: '12px', flexShrink: 0,
-                background: hoveredTopic === t.id ? 'rgba(251,191,36,0.15)' : 'var(--bg-tertiary)',
-                border: '1px solid var(--border)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '1.5rem', transition: 'all 0.2s',
-              }}>
-                {t.emoji}
-              </div>
+                width: 4, height: 48, borderRadius: '4px', flexShrink: 0,
+                background: hoveredTopic === t.id
+                  ? 'linear-gradient(180deg, #fbbf24, #d97706)'
+                  : 'var(--border)',
+                transition: 'background 0.2s',
+              }} />
 
               {/* Text */}
               <div style={{ flex: 1, minWidth: 0 }}>
                 <span style={{
                   fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em',
                   color: hoveredTopic === t.id ? '#d97706' : 'var(--text-muted)',
-                  display: 'block', marginBottom: '0.2rem', transition: 'color 0.2s',
+                  display: 'block', marginBottom: '0.25rem', transition: 'color 0.2s',
                 }}>{t.tag}</span>
                 <span style={{
                   fontSize: '0.95rem', fontWeight: 600, lineHeight: 1.4, color: 'var(--text-primary)',
