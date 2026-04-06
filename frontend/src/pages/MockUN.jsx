@@ -144,23 +144,11 @@ export default function MockUN({ user }) {
       }
       window._activeElevenLabsSessions = [];
 
-      const localSession = await Conversation.startSession({
+      Conversation.startSession({
         agentId: MOCK_UN_AGENT_ID,
         onConnect: () => {
           setStep('debating');
           setIsActive(true);
-          try {
-            const id = localSession?.getId?.() || localSession?.id || null;
-            if (id) conversationIdRef.current = id;
-          } catch {}
-          // Auto-inject the topic as a text message so the agent starts the debate immediately
-          setTimeout(() => {
-            try {
-              localSession.sendUserMessage(
-                `The debate topic for this Mock UN session is: "${topicObj.topic}". Please begin the session by announcing the topic and asking me to present my opening position.`
-              );
-            } catch {}
-          }, 800);
         },
         onDisconnect: () => {
           setIsActive(false);
@@ -175,11 +163,31 @@ export default function MockUN({ user }) {
         },
         onError: () => setStep('error'),
         onModeChange: (m) => setIsSpeaking(m.mode === 'speaking'),
-      });
+      }).then(sessionInstance => {
+        // Now the promise has resolved and we safely have the instance
+        try {
+          const id = sessionInstance?.getId?.() || sessionInstance?.id || null;
+          if (id) conversationIdRef.current = id;
+        } catch {}
 
-      window._activeElevenLabsSessions.push(localSession);
-      conversationRef.current = localSession;
-    } catch {
+        window._activeElevenLabsSessions.push(sessionInstance);
+        conversationRef.current = sessionInstance;
+
+        // Give the websocket connection a moment to finalize, then inject the text
+        setTimeout(() => {
+          try {
+            sessionInstance.sendUserMessage(
+              `The debate topic for this Mock UN session is: "${topicObj.topic}". Please begin the session by announcing the topic and asking me to present my opening position.`
+            );
+            console.log("Topic injected successfully via sendUserMessage");
+          } catch (e) {
+            console.error("Failed to push topic text:", e);
+          }
+        }, 1200);
+      }).catch(() => {
+        setStep('error');
+      });
+    } catch (err) {
       setStep('error');
     }
   };
