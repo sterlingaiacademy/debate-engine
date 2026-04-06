@@ -156,7 +156,7 @@ export default function MockUN({ user }) {
           // Auto-inject the topic as a text message so the agent starts the debate immediately
           setTimeout(() => {
             try {
-              localSession.sendUserInput(
+              localSession.sendUserMessage(
                 `The debate topic for this Mock UN session is: "${topicObj.topic}". Please begin the session by announcing the topic and asking me to present my opening position.`
               );
             } catch {}
