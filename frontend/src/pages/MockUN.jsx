@@ -146,6 +146,10 @@ export default function MockUN({ user }) {
 
       const localSession = await Conversation.startSession({
         agentId: MOCK_UN_AGENT_ID,
+        // Pass topic via dynamicVariables — requires {{topic}} placeholder in agent system prompt on ElevenLabs dashboard
+        dynamicVariables: {
+          topic: topicObj.topic,
+        },
         onConnect: () => {
           setStep('debating');
           setIsActive(true);
