@@ -43,6 +43,7 @@ export default function MockUN({ user }) {
   const initialTimerRef = useRef(300);
   const initialDailyRemainingRef = useRef(1800);
   const conversationIdRef = useRef(null);
+  const agentHasSpokenRef = useRef(false);
 
   const wakeLockRef = useRef(null);
 
@@ -141,13 +142,8 @@ export default function MockUN({ user }) {
 
       window._activeElevenLabsSessions = [];
 
-      let topicInjected = false;
-
       Conversation.startSession({
         agentId: MOCK_UN_AGENT_ID,
-        dynamicVariables: {
-          topic: topicObj.topic,
-        },
         onConnect: () => {
           setStep('debating');
           setIsActive(true);
@@ -166,14 +162,8 @@ export default function MockUN({ user }) {
         onError: () => setStep('error'),
         onModeChange: (m) => {
           setIsSpeaking(m.mode === 'speaking');
-          // Instantly inject the topic the absolute millisecond the agent is ready to listen
-          if (m.mode === 'listening' && !topicInjected && conversationRef.current) {
-            topicInjected = true;
-            try {
-              conversationRef.current.sendUserMessage(
-                `The debate topic for this Mock UN session is: "${topicObj.topic}". Please begin the session by announcing the topic and asking me to present my opening position.`
-              );
-            } catch (e) {}
+          if (m.mode === 'speaking') {
+             agentHasSpokenRef.current = true;
           }
         },
       }).then(sessionInstance => {
@@ -185,6 +175,13 @@ export default function MockUN({ user }) {
 
         window._activeElevenLabsSessions.push(sessionInstance);
         conversationRef.current = sessionInstance;
+
+        // Instantly inject the text exactly when connection is successful
+        try {
+          sessionInstance.sendUserMessage(
+            `The debate topic for this Mock UN session is: "${topicObj.topic}". Please begin the session by announcing the topic and asking me to present my opening position.`
+          );
+        } catch (e) {}
       }).catch(() => {
         setStep('error');
       });
@@ -316,7 +313,7 @@ export default function MockUN({ user }) {
 
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
                   <h3 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0, color: '#fff' }}>
-                    {isSpeaking ? 'UN Moderator is speaking...' : 'Listening carefully…'}
+                    {!agentHasSpokenRef.current ? 'Initializing Debate...' : isSpeaking ? 'UN Moderator is speaking...' : 'Listening carefully…'}
                   </h3>
                   <div className="waveform" style={{ opacity: 1, margin: '0.5rem 0', height: '24px', gap: '4px' }}>
                     {[...Array(8)].map((_, i) => (
