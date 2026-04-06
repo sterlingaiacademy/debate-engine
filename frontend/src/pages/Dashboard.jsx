@@ -236,6 +236,57 @@ export default function Dashboard({ user }) {
           </div>
         </div>
         )}
+
+        {/* TILE 3: Mock UN — Level 5 Premium only */}
+        {user?.classLevel === 'Level 5' && (
+        <div
+          onClick={() => navigate('/mock-un')}
+          style={{
+            position: 'relative', overflow: 'hidden', cursor: 'pointer',
+            borderRadius: '20px', padding: '2.5rem 2rem',
+            background: 'linear-gradient(135deg, #451a03 0%, #78350f 40%, #1c1917 100%)',
+            border: '1px solid rgba(251,191,36,0.25)',
+            color: '#fff', minHeight: '220px',
+            display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+            boxShadow: '0 8px 32px rgba(217,119,6,0.2)',
+            transition: 'transform 0.25s ease, box-shadow 0.25s ease',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px) scale(1.01)'; e.currentTarget.style.boxShadow = '0 16px 48px rgba(217,119,6,0.35)'; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(217,119,6,0.2)'; }}
+        >
+          {/* Background decoration */}
+          <div style={{ position: 'absolute', top: '-30px', right: '-30px', width: '200px', height: '200px', borderRadius: '50%', background: 'rgba(251,191,36,0.06)' }} />
+          <div style={{ position: 'absolute', bottom: '-40px', left: '20px', width: '130px', height: '130px', borderRadius: '50%', background: 'rgba(251,191,36,0.04)' }} />
+          <div style={{ position: 'absolute', top: '18px', right: '22px', fontSize: '4rem', opacity: 0.18 }}>🌐</div>
+
+          {/* Premium badge */}
+          <div style={{
+            position: 'absolute', top: '14px', left: '50%', transform: 'translateX(-50%)',
+            background: 'linear-gradient(90deg, #d97706, #fbbf24)',
+            borderRadius: '99px', padding: '0.2rem 0.75rem',
+            fontSize: '0.65rem', fontWeight: 800, letterSpacing: '0.1em', color: '#000',
+            textTransform: 'uppercase', whiteSpace: 'nowrap',
+          }}>⭐ Premium</div>
+
+          <div style={{ marginTop: '1.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'rgba(251,191,36,0.15)', backdropFilter: 'blur(10px)', border: '1px solid rgba(251,191,36,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>
+                🏛️
+              </div>
+              <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#fbbf24', opacity: 0.9 }}>UN Simulation</span>
+            </div>
+            <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem 0', letterSpacing: '-0.02em', color: '#fef3c7' }}>Mock UN</h2>
+            <p style={{ fontSize: '0.95rem', opacity: 0.8, margin: 0, lineHeight: 1.5, maxWidth: '280px' }}>
+              Debate real-world UN topics — climate, AI warfare, nuclear disarmament, and more.
+            </p>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '1.5rem' }}>
+            <span style={{ fontSize: '0.85rem', fontWeight: 700, letterSpacing: '0.02em', color: '#fbbf24' }}>Enter the Chamber</span>
+            <Play size={16} fill="#fbbf24" />
+          </div>
+        </div>
+        )}
       </div>
 
       {isJunior ? null : stats.total_debates === 0 ? (

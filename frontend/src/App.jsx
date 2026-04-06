@@ -12,6 +12,7 @@ const Analytics = lazy(() => import('./pages/Analytics'));
 const Leaderboard = lazy(() => import('./pages/Leaderboard'));
 const PersonaPicker = lazy(() => import('./pages/PersonaPicker'));
 const PersonaDebate = lazy(() => import('./pages/PersonaDebate'));
+const MockUN = lazy(() => import('./pages/MockUN'));
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -63,6 +64,7 @@ function App() {
               <Route path="/leaderboard" element={user ? <Leaderboard user={user} /> : <Navigate to="/login" />} />
               <Route path="/persona" element={user ? <PersonaPicker user={user} /> : <Navigate to="/login" />} />
               <Route path="/persona-debate" element={user ? <PersonaDebate user={user} /> : <Navigate to="/login" />} />
+              <Route path="/mock-un" element={user ? <MockUN user={user} /> : <Navigate to="/login" />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/login" />} />
