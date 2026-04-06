@@ -315,11 +315,17 @@ export default function MockUN({ user }) {
                   <h3 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0, color: '#fff' }}>
                     {!agentHasSpokenRef.current ? 'Initializing Debate...' : isSpeaking ? 'UN Moderator is speaking...' : 'Listening carefully…'}
                   </h3>
-                  <div className="waveform" style={{ opacity: 1, margin: '0.5rem 0', height: '24px', gap: '4px' }}>
-                    {[...Array(8)].map((_, i) => (
-                      <div key={i} className="waveform-bar" style={{ height: isSpeaking ? '24px' : '6px', background: '#fbbf24', minWidth: '6px' }} />
-                    ))}
-                  </div>
+                  {!agentHasSpokenRef.current ? (
+                    <div style={{ margin: '0.65rem 0', display: 'flex', justifyContent: 'center' }}>
+                      <div className="animate-spin" style={{ width: 24, height: 24, border: '3px solid rgba(251,191,36,0.2)', borderTopColor: '#fbbf24', borderRadius: '50%' }} />
+                    </div>
+                  ) : (
+                    <div className="waveform" style={{ opacity: 1, margin: '0.5rem 0', height: '24px', gap: '4px' }}>
+                      {[...Array(8)].map((_, i) => (
+                        <div key={i} className="waveform-bar" style={{ height: isSpeaking ? '24px' : '6px', background: '#fbbf24', minWidth: '6px' }} />
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
 
