@@ -29,7 +29,6 @@ export default function MockUN({ user }) {
   const [customValue, setCustomValue] = useState('');
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [hoveredTopic, setHoveredTopic] = useState(null);
-  const [showPromptCard, setShowPromptCard] = useState(true);
 
   // Debate state
   const [timer, setTimer] = useState(300);
@@ -173,7 +172,6 @@ export default function MockUN({ user }) {
             transcriptRef.current = t;
             return t;
           });
-          setShowPromptCard(false);
         },
         onError: () => setStep('error'),
         onModeChange: (m) => setIsSpeaking(m.mode === 'speaking'),
