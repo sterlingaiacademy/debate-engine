@@ -145,11 +145,6 @@ export default function MockUN({ user }) {
       Conversation.startSession({
         agentId: MOCK_UN_AGENT_ID,
         dynamicVariables: { topic: topicObj.topic },
-        overrides: {
-          agent: {
-            firstMessage: `Welcome to the Model United Nations debate simulator. The agenda topic for this session is: {{topic}}. Before we begin, which country would you like me to represent?`
-          }
-        },
         onConnect: () => {
           setStep('debating');
           setIsActive(true);
