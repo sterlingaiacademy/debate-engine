@@ -144,6 +144,7 @@ export default function MockUN({ user }) {
 
       Conversation.startSession({
         agentId: MOCK_UN_AGENT_ID,
+        dynamicVariables: { topic: topicObj.topic },
         onConnect: () => {
           setStep('debating');
           setIsActive(true);
@@ -175,13 +176,6 @@ export default function MockUN({ user }) {
 
         window._activeElevenLabsSessions.push(sessionInstance);
         conversationRef.current = sessionInstance;
-
-        // Instantly inject the text exactly when connection is successful
-        try {
-          sessionInstance.sendUserMessage(
-            `The debate topic for this Mock UN session is: "${topicObj.topic}". Please begin the session by announcing the topic and asking me to present my opening position.`
-          );
-        } catch (e) {}
       }).catch(() => {
         setStep('error');
       });
