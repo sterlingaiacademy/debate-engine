@@ -147,7 +147,7 @@ export default function MockUN({ user }) {
         dynamicVariables: { topic: topicObj.topic },
         overrides: {
           agent: {
-            firstMessage: `Welcome to the Model United Nations debate simulator. The agenda topic for this session is: "${topicObj.topic}". Before we begin, which country would you like me to represent?`
+            firstMessage: `Welcome to the Model United Nations debate simulator. The agenda topic for this session is: {{topic}}. Before we begin, which country would you like me to represent?`
           }
         },
         onConnect: () => {
