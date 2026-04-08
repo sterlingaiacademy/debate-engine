@@ -1505,9 +1505,17 @@ tbody tr:hover { background: var(--bg-tertiary); }
   .lp-features-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
-  .lp-nav { padding: 1rem 1.25rem; }
+  .lp-nav { padding: 1rem 1.25rem; flex-direction: column; gap: 1rem; align-items: center; justify-content: center; position: static; }
+  .lp-nav img { height: 60px !important; }
+  .lp-nav-cta { display: flex; justify-content: center; width: 100%; flex-wrap: wrap; gap: 0.75rem; }
   .lp-section { padding: 4rem 1.25rem; }
   .lp-hero { padding: 6rem 1.25rem 3rem; }
+  .lp-feature-card { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .lp-pricing-card { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .lp-pricing-features li { justify-content: center; }
+  .lp-footer-top { align-items: center; text-align: center; }
+  .lp-footer-tagline { text-align: center; }
+  .lp-footer-links { justify-content: center; }
   .lp-footer { padding: 2.5rem 1.25rem 1.5rem; }
   .lp-footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
 }
