@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Layout from './components/Layout';
+import LandingPage from './pages/LandingPage';
 
 const DebateArena = lazy(() => import('./pages/DebateArena'));
 const Results = lazy(() => import('./pages/Results'));
@@ -53,21 +54,24 @@ function App() {
       <div className={themeClass}>
         <Suspense fallback={<PageLoader />}>
           <Routes>
+            {/* Public landing page — root route */}
+            <Route path="/" element={!user ? <LandingPage /> : <Navigate to="/dashboard" />} />
             <Route path="/login" element={!user ? <Login onLogin={handleLogin} /> : <Navigate to="/dashboard" />} />
             <Route path="/register" element={!user ? <Register onLogin={handleLogin} /> : <Navigate to="/dashboard" />} />
             
             <Route element={<Layout user={user} onLogout={handleLogout} />}>
-              <Route path="/dashboard" element={user ? <Dashboard user={user} /> : <Navigate to="/login" />} />
-              <Route path="/debate" element={user ? <DebateArena user={user} /> : <Navigate to="/login" />} />
-              <Route path="/results/:sessionId" element={user ? <Results user={user} /> : <Navigate to="/login" />} />
-              <Route path="/analytics" element={user ? <Analytics user={user} /> : <Navigate to="/login" />} />
-              <Route path="/leaderboard" element={user ? <Leaderboard user={user} /> : <Navigate to="/login" />} />
-              <Route path="/persona" element={user ? <PersonaPicker user={user} /> : <Navigate to="/login" />} />
-              <Route path="/persona-debate" element={user ? <PersonaDebate user={user} /> : <Navigate to="/login" />} />
-              <Route path="/mock-un" element={user ? <MockUN user={user} /> : <Navigate to="/login" />} />
+              <Route path="/dashboard" element={user ? <Dashboard user={user} /> : <Navigate to="/" />} />
+              <Route path="/debate" element={user ? <DebateArena user={user} /> : <Navigate to="/" />} />
+              <Route path="/results/:sessionId" element={user ? <Results user={user} /> : <Navigate to="/" />} />
+              <Route path="/analytics" element={user ? <Analytics user={user} /> : <Navigate to="/" />} />
+              <Route path="/leaderboard" element={user ? <Leaderboard user={user} /> : <Navigate to="/" />} />
+              <Route path="/persona" element={user ? <PersonaPicker user={user} /> : <Navigate to="/" />} />
+              <Route path="/persona-debate" element={user ? <PersonaDebate user={user} /> : <Navigate to="/" />} />
+              <Route path="/mock-un" element={user ? <MockUN user={user} /> : <Navigate to="/" />} />
             </Route>
 
-            <Route path="*" element={<Navigate to="/login" />} />
+            {/* Catch-all → landing page */}
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </Suspense>
       </div>
