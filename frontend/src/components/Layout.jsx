@@ -3,7 +3,7 @@ import { LogOut, LayoutDashboard, Mic, BarChart2, Trophy, UserCircle } from 'luc
 
 export default function Layout({ user, onLogout }) {
   const { pathname } = useLocation();
-  const isJunior = ['Level 1', 'Level 2', 'Class 1-3'].includes(user?.classLevel);
+  const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel);
 
   const navLinks = [
     { name: 'Dashboard',   path: '/dashboard',   icon: LayoutDashboard },

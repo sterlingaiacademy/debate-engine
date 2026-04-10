@@ -35,7 +35,7 @@ function App() {
     localStorage.removeItem('user');
   };
 
-  const isJunior = ['Level 1', 'Level 2', 'Class 1-3'].includes(user?.classLevel);
+  const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel);
   const themeClass = isJunior ? 'theme-junior' : 'theme-senior';
 
   useEffect(() => {

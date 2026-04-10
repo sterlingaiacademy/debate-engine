@@ -39,7 +39,7 @@ export default function Dashboard({ user }) {
   const [stats, setStats] = useState(() => (user?.studentId === cachedStudentId ? cachedStats : null));
   const [loading, setLoading] = useState(!stats);
 
-  const isJunior = ['Level 1', 'Level 2', 'Class 1-3'].includes(user?.classLevel);
+  const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel);
   const isPersona = ['Level 4', 'Level 5'].includes(user?.classLevel);
 
   useEffect(() => {

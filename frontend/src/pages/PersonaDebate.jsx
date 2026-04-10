@@ -26,7 +26,7 @@ export default function PersonaDebate({ user }) {
   const transcriptEndRef = useRef(null);
   const currentTimerRef = useRef(0);
 
-  const isJunior = ['Level 1', 'Level 2', 'Class 1-3'].includes(user?.classLevel);
+  const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel);
   const [timer, setTimer] = useState(1800);
   const initialTimerRef = useRef(1800);
   const initialDailyRemainingRef = useRef(1800);

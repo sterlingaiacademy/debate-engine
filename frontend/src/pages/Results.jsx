@@ -113,7 +113,7 @@ export default function Results({ user }) {
   const evaluation = state?.evaluation;
 
   // Level 1 and 2 skip full evaluation
-  const isJunior = ['Level 1', 'Level 2', 'Class 1-3'].includes(user.classLevel);
+  const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user.classLevel);
   if (isJunior || evaluation?.skipped) {
     return (
       <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '60vh', textAlign: 'center' }}>
