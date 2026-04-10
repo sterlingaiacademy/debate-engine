@@ -232,11 +232,19 @@ export default function Register() {
                   onFocus={(e) => { e.target.style.borderColor = '#F97316'; }}
                   onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; }}
                 >
-                  <option value="KG-1" style={{ color: '#000' }}>KG-1</option>
-                  <option value="1-3" style={{ color: '#000' }}>1-3</option>
-                  <option value="4-5" style={{ color: '#000' }}>4-5</option>
-                  <option value="6-8" style={{ color: '#000' }}>6-8</option>
-                  <option value="9-12" style={{ color: '#000' }}>9-12</option>
+                  <option value="KG" style={{ color: '#000' }}>KG</option>
+                  <option value="Class 1" style={{ color: '#000' }}>Class 1</option>
+                  <option value="Class 2" style={{ color: '#000' }}>Class 2</option>
+                  <option value="Class 3" style={{ color: '#000' }}>Class 3</option>
+                  <option value="Class 4" style={{ color: '#000' }}>Class 4</option>
+                  <option value="Class 5" style={{ color: '#000' }}>Class 5</option>
+                  <option value="Class 6" style={{ color: '#000' }}>Class 6</option>
+                  <option value="Class 7" style={{ color: '#000' }}>Class 7</option>
+                  <option value="Class 8" style={{ color: '#000' }}>Class 8</option>
+                  <option value="Class 9" style={{ color: '#000' }}>Class 9</option>
+                  <option value="Class 10" style={{ color: '#000' }}>Class 10</option>
+                  <option value="Class 11" style={{ color: '#000' }}>Class 11</option>
+                  <option value="Class 12" style={{ color: '#000' }}>Class 12</option>
                 </select>
               </div>
             </div>
