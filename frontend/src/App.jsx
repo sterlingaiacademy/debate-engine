@@ -80,22 +80,31 @@ function App() {
           id: legacyUser.id || session.user.id,
           studentId: legacyUser.studentId
       });
+
+      // After successful OAuth login, naturally dump them into the dashboard if they are on root
+      if (window.location.pathname === '/') {
+         window.history.replaceState(null, '', '/dashboard');
+         window.dispatchEvent(new Event('popstate'));
+      }
     };
 
-    // Clear all persistent session cache so users MUST log in every time
-    // unless they are literally in the middle of a Google OAuth redirect
-    const isOAuthRedirect = window.location.hash.includes('access_token');
-    if (!isOAuthRedirect && window.location.pathname !== '/register') {
-       localStorage.removeItem('user');
-       supabase.auth.signOut();
-    }
-
     // Check initial native session from URL fragment before router executes
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      // Ephemeral sessions: Clear cache if visiting root without an OAuth hash
+      const isOAuthRedirect = window.location.hash.includes('access_token');
+      let activeSession = session;
+
+      if (!isOAuthRedirect && (window.location.pathname === '/' || window.location.pathname === '/login')) {
+         localStorage.removeItem('user');
+         await supabase.auth.signOut();
+         activeSession = null;
+      }
+
       const storedUser = localStorage.getItem('user');
       const parsed = storedUser ? JSON.parse(storedUser) : null;
-      if (session && !parsed && !window.location.pathname.includes('/register')) {
-         hydrateUserFallback(session).finally(() => setIsInitializing(false));
+      
+      if (activeSession && !parsed && !window.location.pathname.includes('/register')) {
+         hydrateUserFallback(activeSession).finally(() => setIsInitializing(false));
       } else if (parsed) {
          handleLogin(parsed);
          setIsInitializing(false);
