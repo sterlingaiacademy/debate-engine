@@ -152,14 +152,12 @@ export default function Register({ onLogin }) {
       // Instead of failing entirely if backend isn't mapped, we'll store local state so UI works
       const data = await res.json().catch(() => ({})); 
 
-      // Trigger global state update!
-      onLogin({
-        ...payload,
-        id: data.user?.id || `usr_${Date.now()}` // Fallback ID if legacy failed
-      });
+      // We log the user out of the active Supabase session here if they used Google/Phone
+      // because the user explicitly requested they must formally log in AFTER registration.
+      await supabase.auth.signOut();
       
       setLoading(false);
-      navigate('/dashboard');
+      navigate('/login?success=account_created');
 
     } catch (err) {
       setError(err.message);
