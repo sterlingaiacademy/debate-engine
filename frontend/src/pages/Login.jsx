@@ -252,42 +252,6 @@ export default function Login({ onLogin }) {
                 </button>
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', margin: '0.5rem 0' }}>
-                <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
-                <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>OR CONTINUE WITH USERNAME</span>
-                <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#e2e8f0' }}>Username / Student ID</label>
-                <input
-                  type="text" placeholder="e.g. @johndoe or STU123" value={username} onChange={e => setUsername(e.target.value)}
-                  style={{ padding: '0.85rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.95rem', outline: 'none' }}
-                />
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                   <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#e2e8f0' }}>Password</label>
-                   <a href="#" style={{ color: '#F97316', fontSize: '0.8rem', fontWeight: 600, textDecoration: 'none' }}>Forgot Password?</a>
-                </div>
-                <input
-                  type="password" placeholder="Enter your password" value={password} onChange={e => setPassword(e.target.value)}
-                  style={{ padding: '0.85rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.95rem', outline: 'none' }}
-                />
-              </div>
-
-              <button
-                type="submit" disabled={loading}
-                style={{
-                  marginTop: '0.5rem', padding: '0.9rem', border: 'none', borderRadius: '12px',
-                  background: 'linear-gradient(135deg, #E8392A 0%, #F97316 100%)', color: '#fff',
-                  fontWeight: 700, fontSize: '1rem', cursor: loading ? 'not-allowed' : 'pointer',
-                  boxShadow: '0 4px 14px rgba(232,57,42,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem'
-                }}
-              >
-                {loading && authMethod === 'credentials' ? 'Authenticating...' : <>Secure Sign In <ArrowRight size={18} /></>}
-              </button>
             </form>
           )}
           
