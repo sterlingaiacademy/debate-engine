@@ -62,7 +62,7 @@ export default function Register({ onLogin }) {
   const set = (field) => (e) => {
     let val = e.target.value;
     if (field === 'name' && formData.username === '') {
-      setFormData((p) => ({ ...p, name: val, username: `@${val.toLowerCase().replace(/[^a-z0-9]/g, '')}${Math.floor(Math.random() * 1000)}` }));
+      setFormData((p) => ({ ...p, name: val, username: `${val.toLowerCase().replace(/[^a-z0-9]/g, '')}${Math.floor(Math.random() * 1000)}` }));
       return;
     }
     setFormData((p) => ({ ...p, [field]: val }));

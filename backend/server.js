@@ -88,7 +88,7 @@ app.post('/api/login', async (req, res) => {
   const { studentId, password } = req.body;
   
   try {
-    const result = await db.query(`SELECT * FROM users WHERE "studentId" = $1`, [studentId]);
+    const result = await db.query(`SELECT * FROM users WHERE LOWER("studentId") = LOWER($1)`, [studentId]);
     const user = result.rows[0];
 
     if (!user) return res.status(404).json({ error: 'User not found' });

@@ -261,9 +261,9 @@ export default function Login({ onLogin }) {
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#e2e8f0' }}>Username / Student ID</label>
+                <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#e2e8f0' }}>Username</label>
                 <input
-                  type="text" placeholder="e.g. @johndoe or STU123" value={username} onChange={e => setUsername(e.target.value)}
+                  type="text" placeholder="e.g. johndoe" value={username} onChange={e => setUsername(e.target.value)}
                   style={{ padding: '0.85rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.95rem', outline: 'none' }}
                 />
               </div>
