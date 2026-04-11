@@ -7,13 +7,23 @@ const GOOGLE_SANS = "'Google Sans', 'Outfit', 'Product Sans', system-ui, sans-se
 
 export default function Register() {
   const [formData, setFormData] = useState({
-    name: '', studentId: '', password: '', selectedClass: 'KG',
+    name: '', username: '', phone: '', selectedClass: 'KG',
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [authMethod, setAuthMethod] = useState(''); // 'google' or 'phone'
   const navigate = useNavigate();
 
-  const set = (field) => (e) => setFormData((p) => ({ ...p, [field]: e.target.value }));
+  const isJuniorClass = ['KG', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(formData.selectedClass);
+
+  const set = (field) => (e) => {
+    let val = e.target.value;
+    if (field === 'name' && formData.username === '') {
+      setFormData((p) => ({ ...p, name: val, username: `@${val.toLowerCase().replace(/[^a-z0-9]/g, '')}${Math.floor(Math.random() * 1000)}` }));
+      return;
+    }
+    setFormData((p) => ({ ...p, [field]: val }));
+  };
 
   const getLevelForClass = (cls) => {
     if (['KG', 'Class 1', 'Class 2'].includes(cls)) return 'Level 1';
@@ -24,25 +34,43 @@ export default function Register() {
     return 'Level 1';
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (method) => {
     setError('');
+    
+    if (!formData.name || !formData.username) {
+      setError('Please provide your name and define a username.');
+      return;
+    }
+
+    if (method === 'phone' && !formData.phone) {
+      setError('Please provide a valid phone number.');
+      return;
+    }
+
     setLoading(true);
+    setAuthMethod(method);
     try {
-      const { name, studentId, password, selectedClass } = formData;
+      const { name, username, phone, selectedClass } = formData;
       const computedClassLevel = getLevelForClass(selectedClass);
-      const res = await fetch('/api/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, studentId, classLevel: computedClassLevel, password }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Registration failed');
-      navigate('/login');
+      
+      // Store temp profile to be picked up after Google/Phone auth callback
+      sessionStorage.setItem('tempProfile', JSON.stringify({ name, username, classLevel: computedClassLevel }));
+
+      if (method === 'google') {
+        window.location.href = '/api/auth/google'; // Mock/Standard Supabase Backend endpoint
+      } else if (method === 'phone') {
+        const res = await fetch('/api/auth/phone', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone, name, username, classLevel: computedClassLevel }),
+        });
+        if (!res.ok) throw new Error('Phone verification failed');
+        navigate('/login?verify=true'); // mock route
+      }
     } catch (err) {
       setError(err.message);
-    } finally {
       setLoading(false);
+      setAuthMethod('');
     }
   };
 
@@ -157,67 +185,37 @@ export default function Register() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-              <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Student ID Card</label>
-              <input
-                type="text"
-                value={formData.studentId}
-                onChange={set('studentId')}
-                required
-                style={{
-                  padding: '0.8rem 1rem', background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
-                  color: '#ffffff', fontSize: '0.9rem', fontFamily: GOOGLE_SANS,
-                  transition: 'border-color 0.2s, background 0.2s, box-shadow 0.2s',
-                  outline: 'none'
-                }}
-                onFocus={(e) => { e.target.style.borderColor = '#F97316'; e.target.style.boxShadow = '0 0 0 3px rgba(249,115,22,0.15)'; e.target.style.background = 'rgba(255,255,255,0.05)'; }}
-                onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'none'; e.target.style.background = 'rgba(255,255,255,0.03)'; }}
-              />
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-              <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Full Name</label>
-              <input
-                type="text"
-                placeholder="e.g. John Doe"
-                value={formData.name}
-                onChange={set('name')}
-                required
-                style={{
-                  padding: '0.8rem 1rem', background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
-                  color: '#ffffff', fontSize: '0.9rem', fontFamily: GOOGLE_SANS,
-                  transition: 'border-color 0.2s, background 0.2s, box-shadow 0.2s',
-                  outline: 'none'
-                }}
-                onFocus={(e) => { e.target.style.borderColor = '#F97316'; e.target.style.boxShadow = '0 0 0 3px rgba(249,115,22,0.15)'; e.target.style.background = 'rgba(255,255,255,0.05)'; }}
-                onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'none'; e.target.style.background = 'rgba(255,255,255,0.03)'; }}
-              />
-            </div>
+          <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
+            
+            {isJuniorClass && (
+              <div style={{ background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.2)', color: '#fed7aa', padding: '0.8rem 1rem', borderRadius: '10px', fontSize: '0.85rem', fontWeight: 600, display: 'flex', gap: '0.5rem' }}>
+                <Shield size={18} color="#F97316" style={{ flexShrink: 0 }} />
+                <span>Level 1 & 2 Students: Please use your parent's Google account or Phone Number to register.</span>
+              </div>
+            )}
 
             <div style={{ display: 'flex', gap: '1rem' }}>
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Password</label>
+                <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Full Name</label>
                 <input
-                  type="password"
-                  placeholder="Password"
-                  value={formData.password}
-                  onChange={set('password')}
+                  type="text"
+                  placeholder="e.g. John Doe"
+                  value={formData.name}
+                  onChange={set('name')}
                   required
                   style={{
                     padding: '0.8rem 1rem', background: 'rgba(255,255,255,0.03)',
                     border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
                     color: '#ffffff', fontSize: '0.9rem', fontFamily: GOOGLE_SANS,
-                    transition: 'border-color 0.2s, background 0.2s', outline: 'none'
+                    transition: 'border-color 0.2s, background 0.2s, box-shadow 0.2s',
+                    outline: 'none'
                   }}
                   onFocus={(e) => { e.target.style.borderColor = '#F97316'; e.target.style.background = 'rgba(255,255,255,0.05)'; }}
                   onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.background = 'rgba(255,255,255,0.03)'; }}
                 />
               </div>
 
-              <div style={{ width: '110px', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+              <div style={{ width: '120px', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
                 <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Class</label>
                 <select
                   value={formData.selectedClass}
@@ -248,31 +246,93 @@ export default function Register() {
                 </select>
               </div>
             </div>
+                required
+                style={{
+                  padding: '0.8rem 1rem', background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
+                  color: '#ffffff', fontSize: '0.9rem', fontFamily: GOOGLE_SANS,
+                  transition: 'border-color 0.2s, background 0.2s, box-shadow 0.2s',
+                  outline: 'none'
+                }}
+                onFocus={(e) => { e.target.style.borderColor = '#F97316'; e.target.style.boxShadow = '0 0 0 3px rgba(249,115,22,0.15)'; e.target.style.background = 'rgba(255,255,255,0.05)'; }}
+                onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'none'; e.target.style.background = 'rgba(255,255,255,0.03)'; }}
+              />
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+              <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>@Username</label>
+              <input
+                type="text"
+                placeholder="Unique username"
+                value={formData.username}
+                onChange={set('username')}
+                required
+                style={{
+                  padding: '0.8rem 1rem', background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
+                  color: '#ffffff', fontSize: '0.9rem', fontFamily: GOOGLE_SANS,
+                  transition: 'border-color 0.2s, background 0.2s', outline: 'none'
+                }}
+                onFocus={(e) => { e.target.style.borderColor = '#F97316'; e.target.style.background = 'rgba(255,255,255,0.05)'; }}
+                onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.background = 'rgba(255,255,255,0.03)'; }}
+              />
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '0.5rem', marginBottom: '0.5rem' }}>
+              <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.05)' }} />
+              <span style={{ fontSize: '0.8rem', color: '#64748b' }}>Select signup method</span>
+              <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.05)' }} />
+            </div>
 
             <button
-              type="submit"
+              type="button"
+              onClick={() => handleSubmit('google')}
               disabled={loading}
               style={{
-                marginTop: '0.5rem',
-                padding: '0.9rem',
-                border: 'none',
-                borderRadius: '12px',
-                background: 'linear-gradient(135deg, #E8392A 0%, #F97316 100%)',
-                color: '#fff',
-                fontWeight: 700,
-                fontSize: '1rem',
-                cursor: loading ? 'not-allowed' : 'pointer',
-                fontFamily: GOOGLE_SANS,
-                boxShadow: '0 4px 14px rgba(232,57,42,0.4)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
-                transition: 'transform 0.2s, box-shadow 0.2s',
-                opacity: loading ? 0.7 : 1
+                padding: '0.9rem', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px',
+                background: '#ffffff', color: '#000', fontWeight: 700, fontSize: '1rem',
+                cursor: loading ? 'not-allowed' : 'pointer', fontFamily: GOOGLE_SANS,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem',
+                transition: 'transform 0.2s, background 0.2s', opacity: loading ? 0.7 : 1
               }}
-              onMouseEnter={e => { if(!loading) { e.target.style.transform = 'translateY(-2px)'; e.target.style.boxShadow = '0 8px 20px rgba(232,57,42,0.5)'; } }}
-              onMouseLeave={e => { if(!loading) { e.target.style.transform = 'none'; e.target.style.boxShadow = '0 4px 14px rgba(232,57,42,0.4)'; } }}
+              onMouseEnter={e => { if(!loading) { e.target.style.transform = 'translateY(-2px)'; e.target.style.background = '#f8fafc'; } }}
+              onMouseLeave={e => { if(!loading) { e.target.style.transform = 'none'; e.target.style.background = '#ffffff'; } }}
             >
-              {loading ? 'Registering...' : <>Create Account <ArrowRight size={18} /></>}
+              <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="G" style={{ width: 20, height: 20 }} />
+              {loading && authMethod === 'google' ? 'Redirecting...' : 'Continue with Google'}
             </button>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.5rem' }}>
+              <input
+                type="tel"
+                placeholder="Phone Number (e.g. +1...)"
+                value={formData.phone}
+                onChange={set('phone')}
+                style={{
+                  padding: '0.9rem 1rem', background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px',
+                  color: '#ffffff', fontSize: '0.9rem', fontFamily: GOOGLE_SANS,
+                  outline: 'none'
+                }}
+                onFocus={(e) => { e.target.style.borderColor = '#F97316'; }}
+                onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; }}
+              />
+              <button
+                type="button"
+                onClick={() => handleSubmit('phone')}
+                disabled={loading || !formData.phone}
+                style={{
+                  padding: '0.9rem', border: 'none', borderRadius: '12px',
+                  background: 'linear-gradient(135deg, #E8392A 0%, #F97316 100%)', color: '#fff',
+                  fontWeight: 700, fontSize: '1rem', cursor: (loading || !formData.phone) ? 'not-allowed' : 'pointer',
+                  fontFamily: GOOGLE_SANS, boxShadow: '0 4px 14px rgba(232,57,42,0.4)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
+                  opacity: (loading || !formData.phone) ? 0.7 : 1
+                }}
+              >
+                {loading && authMethod === 'phone' ? 'Sending SMS...' : 'Continue with Phone Number'}
+              </button>
+            </div>
           </form>
 
           <div style={{ marginTop: '1.75rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>

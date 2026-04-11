@@ -6,30 +6,53 @@ import logoImg from '../assets/logo.png';
 const GOOGLE_SANS = "'Google Sans', 'Outfit', 'Product Sans', system-ui, sans-serif";
 
 export default function Login({ onLogin }) {
-  const [studentId, setStudentId] = useState('');
-  const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [authMethod, setAuthMethod] = useState('');
   const navigate = useNavigate();
+  const searchParams = new URLSearchParams(window.location.search);
+  const isVerify = searchParams.get('verify') === 'true';
+  const [otp, setOtp] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (method) => {
     setError('');
+    
+    if (method === 'phone' && !phone) {
+      setError('Please provide a valid phone number.');
+      return;
+    }
+    
+    if (method === 'verify' && !otp) {
+      setError('Please enter the OTP.');
+      return;
+    }
+
     setLoading(true);
+    setAuthMethod(method);
     try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ studentId, password }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Login failed');
-      onLogin(data.user);
-      navigate('/dashboard');
+      if (method === 'google') {
+        window.location.href = '/api/auth/google';
+      } else if (method === 'phone') {
+        // trigger OTP, swap to verify UI
+        navigate('/login?verify=true');
+        setLoading(false);
+      } else if (method === 'verify') {
+        // verify OTP mock
+        const res = await fetch('/api/auth/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone, otp }),
+        });
+        if (!res.ok) throw new Error('Verification failed. Use 123456');
+        const data = await res.json();
+        onLogin(data.user || JSON.parse(sessionStorage.getItem('tempProfile')));
+        navigate('/dashboard');
+      }
     } catch (err) {
       setError(err.message);
-    } finally {
       setLoading(false);
+      setAuthMethod('');
     }
   };
 
@@ -156,72 +179,109 @@ export default function Login({ onLogin }) {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-              <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#e2e8f0' }}>Student ID Card</label>
-              <input
-                type="text"
-                placeholder="e.g. STU12345"
-                value={studentId}
-                onChange={e => setStudentId(e.target.value)}
-                required
+          {isVerify ? (
+            <form onSubmit={(e) => { e.preventDefault(); handleSubmit('verify'); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#e2e8f0' }}>Enter OTP</label>
+                <input
+                  type="text"
+                  placeholder="6-digit code"
+                  value={otp}
+                  onChange={e => setOtp(e.target.value)}
+                  style={{
+                    padding: '0.85rem 1rem', background: 'rgba(255,255,255,0.03)',
+                    border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
+                    color: '#ffffff', fontSize: '0.95rem', fontFamily: GOOGLE_SANS,
+                    outline: 'none', textAlign: 'center', letterSpacing: '0.5em'
+                  }}
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={loading}
                 style={{
-                  padding: '0.85rem 1rem', background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
-                  color: '#ffffff', fontSize: '0.95rem', fontFamily: GOOGLE_SANS,
-                  transition: 'border-color 0.2s, background 0.2s, box-shadow 0.2s',
-                  outline: 'none'
+                  padding: '0.9rem', border: 'none', borderRadius: '12px',
+                  background: 'linear-gradient(135deg, #E8392A 0%, #F97316 100%)',
+                  color: '#fff', fontWeight: 700, fontSize: '1rem',
+                  cursor: loading ? 'not-allowed' : 'pointer', fontFamily: GOOGLE_SANS,
+                  boxShadow: '0 4px 14px rgba(232,57,42,0.4)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center'
                 }}
-                onFocus={(e) => { e.target.style.borderColor = '#F97316'; e.target.style.boxShadow = '0 0 0 3px rgba(249,115,22,0.15)'; e.target.style.background = 'rgba(255,255,255,0.05)'; }}
-                onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'none'; e.target.style.background = 'rgba(255,255,255,0.03)'; }}
-              />
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-              <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#e2e8f0' }}>Password</label>
-              <input
-                type="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                required
+              >
+                {loading ? 'Verifying...' : 'Verify Login'}
+              </button>
+            </form>
+          ) : (
+            <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+              <button
+                type="button"
+                onClick={() => handleSubmit('google')}
+                disabled={loading}
                 style={{
-                  padding: '0.85rem 1rem', background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
-                  color: '#ffffff', fontSize: '0.95rem', fontFamily: GOOGLE_SANS,
-                  transition: 'border-color 0.2s, background 0.2s, box-shadow 0.2s',
-                  outline: 'none'
+                  padding: '0.9rem', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px',
+                  background: '#ffffff', color: '#000', fontWeight: 700, fontSize: '1rem',
+                  cursor: loading ? 'not-allowed' : 'pointer', fontFamily: GOOGLE_SANS,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem',
+                  transition: 'transform 0.2s, background 0.2s', opacity: loading ? 0.7 : 1
                 }}
-                onFocus={(e) => { e.target.style.borderColor = '#F97316'; e.target.style.boxShadow = '0 0 0 3px rgba(249,115,22,0.15)'; e.target.style.background = 'rgba(255,255,255,0.05)'; }}
-                onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'none'; e.target.style.background = 'rgba(255,255,255,0.03)'; }}
-              />
-            </div>
+                onMouseEnter={e => { if(!loading) { e.target.style.transform = 'translateY(-2px)'; e.target.style.background = '#f8fafc'; } }}
+                onMouseLeave={e => { if(!loading) { e.target.style.transform = 'none'; e.target.style.background = '#ffffff'; } }}
+              >
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="G" style={{ width: 20, height: 20 }} />
+                {loading && authMethod === 'google' ? 'Redirecting...' : 'Sign in with Google'}
+              </button>
 
-            <button
-              type="submit"
-              disabled={loading}
-              style={{
-                marginTop: '0.5rem',
-                padding: '0.9rem',
-                border: 'none',
-                borderRadius: '12px',
-                background: 'linear-gradient(135deg, #E8392A 0%, #F97316 100%)',
-                color: '#fff',
-                fontWeight: 700,
-                fontSize: '1rem',
-                cursor: loading ? 'not-allowed' : 'pointer',
-                fontFamily: GOOGLE_SANS,
-                boxShadow: '0 4px 14px rgba(232,57,42,0.4)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
-                transition: 'transform 0.2s, box-shadow 0.2s',
-                opacity: loading ? 0.7 : 1
-              }}
-              onMouseEnter={e => { if(!loading) { e.target.style.transform = 'translateY(-2px)'; e.target.style.boxShadow = '0 8px 20px rgba(232,57,42,0.5)'; } }}
-              onMouseLeave={e => { if(!loading) { e.target.style.transform = 'none'; e.target.style.boxShadow = '0 4px 14px rgba(232,57,42,0.4)'; } }}
-            >
-              {loading ? 'Authenticating...' : <>Sign In <ArrowRight size={18} /></>}
-            </button>
-          </form>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '0.5rem', marginBottom: '0.5rem' }}>
+                <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.05)' }} />
+                <span style={{ fontSize: '0.8rem', color: '#64748b' }}>or</span>
+                <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.05)' }} />
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <input
+                  type="tel"
+                  placeholder="Phone Number (e.g. +1...)"
+                  value={phone}
+                  onChange={e => setPhone(e.target.value)}
+                  style={{
+                    padding: '0.9rem 1rem', background: 'rgba(255,255,255,0.03)',
+                    border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px',
+                    color: '#ffffff', fontSize: '0.9rem', fontFamily: GOOGLE_SANS,
+                    outline: 'none'
+                  }}
+                  onFocus={(e) => { e.target.style.borderColor = '#F97316'; }}
+                  onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; }}
+                />
+                <button
+                  type="button"
+                  onClick={() => handleSubmit('phone')}
+                  disabled={loading || !phone}
+                  style={{
+                    padding: '0.9rem', border: 'none', borderRadius: '12px',
+                    background: 'linear-gradient(135deg, #E8392A 0%, #F97316 100%)', color: '#fff',
+                    fontWeight: 700, fontSize: '1rem', cursor: (loading || !phone) ? 'not-allowed' : 'pointer',
+                    fontFamily: GOOGLE_SANS, boxShadow: '0 4px 14px rgba(232,57,42,0.4)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
+                    opacity: (loading || !phone) ? 0.7 : 1
+                  }}
+                >
+                  {loading && authMethod === 'phone' ? 'Sending Code...' : 'Sign in with Phone Number'}
+                </button>
+              </div>
+            </form>
+          )}
+          
+          <div style={{ marginTop: '1.75rem', textAlign: 'center', fontSize: '0.85rem', color: '#94a3b8' }}>
+            Don't have an account?{' '}
+            <Link to="/register" style={{ color: '#F97316', textDecoration: 'none', fontWeight: 700 }}>
+              Sign up
+            </Link>
+          </div>
+          <div style={{ marginTop: '1.25rem', textAlign: 'center' }}>
+            <Link to="/" style={{ color: '#64748b', fontSize: '0.8rem', textDecoration: 'none', fontWeight: 500 }}>
+              &larr; Back to Home
+            </Link>
+          </div>
         </div>
       </div>
 

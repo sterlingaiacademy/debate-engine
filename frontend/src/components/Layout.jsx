@@ -6,10 +6,11 @@ export default function Layout({ user, onLogout }) {
   const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel);
 
   const navLinks = [
-    { name: 'Dashboard',   path: '/dashboard',   icon: LayoutDashboard },
-    { name: 'Start Debate',path: '/debate',       icon: Mic },
-    !isJunior && { name: 'Analytics',   path: '/analytics',    icon: BarChart2 },
-    !isJunior && { name: 'Leaderboard', path: '/leaderboard',  icon: Trophy },
+    { name: 'Dashboard',   path: '/dashboard', match: '/dashboard',  icon: LayoutDashboard },
+    { name: 'Start Debate',path: isJunior ? '/debate' : '/debate-instructions?next=/debate', match: '/debate', icon: Mic },
+    !isJunior && { name: 'Analytics',   path: '/analytics', match: '/analytics',   icon: BarChart2 },
+    !isJunior && { name: 'Leaderboard', path: '/leaderboard', match: '/leaderboard', icon: Trophy },
+    { name: 'Settings', path: '/settings', match: '/settings', icon: UserCircle }
   ].filter(Boolean);
 
   return (
@@ -18,11 +19,11 @@ export default function Layout({ user, onLogout }) {
         <Link to="/dashboard" className="site-title" style={{ fontFamily: 'var(--font-sans)', fontWeight: 900, letterSpacing: '-0.02em', fontSize: '1.4rem' }}>G FORCE</Link>
 
         <nav style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-          {navLinks.map(({ name, path, icon: Icon }) => (
+          {navLinks.map(({ name, path, match, icon: Icon }) => (
             <Link
               key={name}
               to={path}
-              className={`nav-link${pathname === path ? ' active' : ''}`}
+              className={`nav-link${pathname.includes(match) ? ' active' : ''}`}
             >
               <Icon size={17} strokeWidth={2} />
               <span className="nav-label">{name}</span>

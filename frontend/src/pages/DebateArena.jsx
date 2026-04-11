@@ -24,6 +24,7 @@ export default function DebateArena({ user }) {
   const [isActive, setIsActive] = useState(false);
   const [screenSleep, setScreenSleep] = useState(false);
   const [showTranscript, setShowTranscript] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
   const [transcript, setTranscript] = useState([]);
   const transcriptRef = useRef([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -231,6 +232,21 @@ export default function DebateArena({ user }) {
       conversationRef.current = localSession;
     } catch (err) {
       setStatus('error');
+    }
+  };
+
+  const toggleMute = async () => {
+    try {
+      if (conversationRef.current) {
+        // Attempt to mute the elevenlabs agent or local microphone
+        if (typeof conversationRef.current.setVolume === 'function') {
+          await conversationRef.current.setVolume(isMuted ? 1.0 : 0.0);
+        }
+      }
+      setIsMuted(p => !p);
+    } catch(e) {
+      console.warn("Mute overlay toggle fell back to mock", e);
+      setIsMuted(p => !p);
     }
   };
 
@@ -555,6 +571,16 @@ export default function DebateArena({ user }) {
                     borderRadius: '50%', width: '56px', height: '56px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0
                   }} title="Toggle Transcript">
                     <MessageSquare size={24} />
+                  </button>
+                )}
+
+                {!isJunior && (
+                  <button onClick={toggleMute} className="btn" style={{ 
+                    background: isMuted ? '#ef4444' : 'var(--bg-secondary)', 
+                    color: isMuted ? '#fff' : 'var(--text-primary)', border: 'none',
+                    borderRadius: '50%', width: '56px', height: '56px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0
+                  }} title={isMuted ? "Unmute" : "Mute"}>
+                    {isMuted ? <MicOff size={24} /> : <Mic size={24} />}
                   </button>
                 )}
 

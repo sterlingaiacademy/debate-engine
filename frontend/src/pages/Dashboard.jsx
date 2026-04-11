@@ -153,7 +153,7 @@ export default function Dashboard({ user }) {
         
         {/* TILE 1: Ranked Match */}
         <div
-          onClick={() => navigate('/debate')}
+          onClick={() => navigate(isJunior ? '/debate' : '/debate-instructions?next=/debate')}
           style={{
             position: 'relative', overflow: 'hidden', cursor: 'pointer',
             borderRadius: '20px', padding: '2.5rem 2rem',
@@ -198,7 +198,7 @@ export default function Dashboard({ user }) {
         {/* TILE 2: Persona Battle */}
         {user?.classLevel === 'Level 4' && (
         <div
-          onClick={() => navigate('/persona')}
+          onClick={() => navigate('/debate-instructions?next=/persona')}
           style={{
             position: 'relative', overflow: 'hidden', cursor: 'pointer',
             borderRadius: '20px', padding: '2.5rem 2rem',
@@ -240,7 +240,7 @@ export default function Dashboard({ user }) {
         {/* TILE 3: Mock UN — Level 5 Premium only */}
         {user?.classLevel === 'Level 5' && (
         <div
-          onClick={() => navigate('/mock-un')}
+          onClick={() => navigate('/debate-instructions?next=/mock-un')}
           style={{
             position: 'relative', overflow: 'hidden', cursor: 'pointer',
             borderRadius: '20px', padding: '2.5rem 2rem',
@@ -284,6 +284,48 @@ export default function Dashboard({ user }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '1.5rem' }}>
             <span style={{ fontSize: '0.85rem', fontWeight: 700, letterSpacing: '0.02em', color: '#fbbf24' }}>Enter the Chamber</span>
             <Play size={16} fill="#fbbf24" />
+          </div>
+        </div>
+        )}
+
+        {/* TILE 4: Conversational Agent (Levels 3, 4, 5) */}
+        {!isJunior && (
+        <div
+          onClick={() => navigate('/conversational-agent')}
+          style={{
+            position: 'relative', overflow: 'hidden', cursor: 'pointer',
+            borderRadius: '20px', padding: '2.5rem 2rem',
+            background: 'linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%)',
+            border: '1px solid rgba(52,211,153,0.3)',
+            color: '#fff', minHeight: '220px',
+            display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+            boxShadow: '0 8px 32px rgba(16,185,129,0.2)',
+            transition: 'transform 0.25s ease, box-shadow 0.25s ease',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px) scale(1.01)'; e.currentTarget.style.boxShadow = '0 16px 48px rgba(16,185,129,0.4)'; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(16,185,129,0.2)'; }}
+        >
+          {/* Background decoration */}
+          <div style={{ position: 'absolute', top: '-30px', right: '-30px', width: '180px', height: '180px', borderRadius: '50%', background: 'rgba(255,255,255,0.08)' }} />
+          <div style={{ position: 'absolute', bottom: '-50px', left: '30px', width: '140px', height: '140px', borderRadius: '50%', background: 'rgba(255,255,255,0.05)' }} />
+          <div style={{ position: 'absolute', top: '20px', right: '25px', fontSize: '4rem', opacity: 0.15 }}>💬</div>
+
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <MessageSquare size={24} strokeWidth={2.5} />
+              </div>
+              <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.8 }}>Helper Bot</span>
+            </div>
+            <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem 0', letterSpacing: '-0.02em' }}>Conversational AI</h2>
+            <p style={{ fontSize: '0.95rem', opacity: 0.85, margin: 0, lineHeight: 1.5, maxWidth: '280px' }}>
+              Upload files, take quizzes, ask questions, or just have a casual talk with your dedicated AI tutor.
+            </p>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '1.5rem' }}>
+            <span style={{ fontSize: '0.85rem', fontWeight: 700, letterSpacing: '0.02em' }}>Start Chat</span>
+            <Play size={16} fill="#fff" />
           </div>
         </div>
         )}
