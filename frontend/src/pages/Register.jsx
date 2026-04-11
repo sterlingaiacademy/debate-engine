@@ -151,6 +151,14 @@ export default function Register({ onLogin }) {
       return;
     }
 
+    const hasUppercase = /[A-Z]/.test(formData.password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(formData.password);
+    
+    if (formData.password.length < 8 || !hasUppercase || !hasSpecialChar) {
+      setError('Password must be at least 8 characters long, and include at least one uppercase letter and one special character.');
+      return;
+    }
+
     setLoading(true);
     try {
       const computedClassLevel = getLevelForClass(formData.selectedClass);
