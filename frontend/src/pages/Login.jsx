@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Zap, Trophy, ArrowRight, Sparkles } from 'lucide-react';
 import logoImg from '../assets/logo.png';
