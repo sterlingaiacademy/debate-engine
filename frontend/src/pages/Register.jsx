@@ -171,8 +171,11 @@ export default function Register({ onLogin }) {
         body: JSON.stringify(payload),
       });
 
-      // Instead of failing entirely if backend isn't mapped, we'll store local state so UI works
       const data = await res.json().catch(() => ({})); 
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to create account. Please try again.');
+      }
 
       // We log the user out of the active Supabase session here if they used Google/Phone
       // because the user explicitly requested they must formally log in AFTER registration.
