@@ -70,6 +70,15 @@ app.post('/api/register', async (req, res) => {
     res.status(500).json({ error: 'Server error during registration' });
   }
 });
+app.get('/api/check-username/:username', async (req, res) => {
+  try {
+    const { username } = req.params;
+    const { rows } = await db.query(`SELECT 1 FROM users WHERE LOWER("studentId") = LOWER($1) LIMIT 1`, [username]);
+    res.json({ available: rows.length === 0 });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 app.get('/api/user-by-email/:email', async (req, res) => {
   try {

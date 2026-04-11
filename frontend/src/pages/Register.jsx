@@ -19,8 +19,50 @@ export default function Register({ onLogin }) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [authMethod, setAuthMethod] = useState(''); // 'google' | 'phone'
+  
+  // Dynamic UI State
+  const [isCheckingUsername, setIsCheckingUsername] = useState(false);
+  const [usernameAvailable, setUsernameAvailable] = useState(null);
+  const [passwordError, setPasswordError] = useState('');
 
   const isJuniorClass = ['KG', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(formData.selectedClass);
+
+  useEffect(() => {
+    // Dynamic Password Checking
+    const p = formData.password;
+    if (p.length > 0) {
+      const hasUppercase = /[A-Z]/.test(p);
+      const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(p);
+      if (p.length < 8) setPasswordError('Needs at least 8 characters');
+      else if (!hasUppercase) setPasswordError('Needs 1 uppercase letter');
+      else if (!hasSpecialChar) setPasswordError('Needs 1 special character');
+      else setPasswordError('');
+    } else {
+      setPasswordError('');
+    }
+
+    // Dynamic Username Checking
+    const u = formData.username;
+    if (u.length >= 3) {
+      setIsCheckingUsername(true);
+      const delayFn = setTimeout(async () => {
+        try {
+          const res = await fetch(`/api/check-username/${encodeURIComponent(u)}`);
+          if (res.ok) {
+            const data = await res.json();
+            setUsernameAvailable(data.available);
+          }
+        } catch {
+          // ignore
+        } finally {
+          setIsCheckingUsername(false);
+        }
+      }, 600);
+      return () => clearTimeout(delayFn);
+    } else {
+      setUsernameAvailable(null);
+    }
+  }, [formData.username, formData.password]);
 
   useEffect(() => {
     // If OAuth redirects back to /register?step=details, capture it
@@ -390,18 +432,20 @@ export default function Register({ onLogin }) {
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
                   <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Username</label>
                   <input type="text" placeholder="e.g. johndoe (like insta)" value={formData.username} onChange={set('username')} required
-                    style={{ padding: '0.8rem 1rem', background: error?.toLowerCase().includes('student id') ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.03)', border: error?.toLowerCase().includes('student id') ? '1px solid rgba(239, 68, 68, 0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
+                    style={{ padding: '0.8rem 1rem', background: (error?.toLowerCase().includes('student id') || usernameAvailable === false) ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.03)', border: (error?.toLowerCase().includes('student id') || usernameAvailable === false) ? '1px solid rgba(239, 68, 68, 0.5)' : usernameAvailable ? '1px solid rgba(52, 211, 153, 0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
                   />
-                  {error?.toLowerCase().includes('student id') && (
-                    <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>Username already exists</span>
-                  )}
+                  {isCheckingUsername && <span style={{ color: '#94a3b8', fontSize: '0.75rem', marginTop: '0.2rem' }}>Checking...</span>}
+                  {usernameAvailable === true && !isCheckingUsername && <span style={{ color: '#34d399', fontSize: '0.75rem', marginTop: '0.2rem' }}>Username available!</span>}
+                  {(usernameAvailable === false || error?.toLowerCase().includes('student id')) && !isCheckingUsername && <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>Username already exists</span>}
                 </div>
                 
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
                   <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Password</label>
                   <input type="password" placeholder="Secure password" value={formData.password} onChange={set('password')} required
-                    style={{ padding: '0.8rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
+                    style={{ padding: '0.8rem 1rem', background: passwordError ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.03)', border: passwordError ? '1px solid rgba(239, 68, 68, 0.5)' : (!passwordError && formData.password.length > 0) ? '1px solid rgba(52, 211, 153, 0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
                   />
+                  {passwordError && <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>{passwordError}</span>}
+                  {!passwordError && formData.password.length > 0 && <span style={{ color: '#34d399', fontSize: '0.75rem', marginTop: '0.2rem' }}>Strong password!</span>}
                 </div>
               </div>
 
