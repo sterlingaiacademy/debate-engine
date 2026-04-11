@@ -88,14 +88,17 @@ function App() {
       }
     };
 
+    // Ephemeral sessions: Clear cache synchronously before any React children mount if visiting root/login without an OAuth hash
+    const isOAuthRedirect = window.location.hash.includes('access_token');
+    if (!isOAuthRedirect && (window.location.pathname === '/' || window.location.pathname === '/login')) {
+       localStorage.removeItem('user');
+    }
+
     // Check initial native session from URL fragment before router executes
     supabase.auth.getSession().then(async ({ data: { session } }) => {
-      // Ephemeral sessions: Clear cache if visiting root without an OAuth hash
-      const isOAuthRedirect = window.location.hash.includes('access_token');
       let activeSession = session;
 
       if (!isOAuthRedirect && (window.location.pathname === '/' || window.location.pathname === '/login')) {
-         localStorage.removeItem('user');
          await supabase.auth.signOut();
          activeSession = null;
       }
@@ -115,6 +118,11 @@ function App() {
 
     // Listen to Supabase native Auth changes (OAuth callbacks, OTP verify)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      const isOAuthRedirect = window.location.hash.includes('access_token');
+      if (!isOAuthRedirect && (window.location.pathname === '/' || window.location.pathname === '/login')) {
+        return; // Let the async getSession() block handle the graceful sign-out
+      }
+
       if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session) {
         // Sync local storage user state natively
         const storedUser = localStorage.getItem('user');
