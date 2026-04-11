@@ -36,27 +36,28 @@ let cachedStudentId = null;
 
 export default function Dashboard({ user }) {
   const navigate = useNavigate();
-  const [stats, setStats] = useState(() => (user?.studentId === cachedStudentId ? cachedStats : null));
+  const [stats, setStats] = useState(() => ((user?.studentId || user?.username) === cachedStudentId ? cachedStats : null));
   const [loading, setLoading] = useState(!stats);
 
   const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel);
   const isPersona = ['Level 4', 'Level 5'].includes(user?.classLevel);
 
   useEffect(() => {
-    if (!user?.studentId) return;
+    const activeId = user?.studentId || user?.username;
+    if (!activeId) return;
     
     // If we have cached stats for this user, use them and still refetch in background
-    if (user.studentId === cachedStudentId && cachedStats) {
+    if (activeId === cachedStudentId && cachedStats) {
       setStats(cachedStats);
       setLoading(false);
     }
     
     Promise.all([
-      fetch(`/api/analytics/${user.studentId}`).then((r) => {
+      fetch(`/api/analytics/${activeId}`).then((r) => {
         if (!r.ok) throw new Error('Analytics failed');
         return r.json();
       }),
-      fetch(`/api/time-limits/${user.studentId}`).then((r) => {
+      fetch(`/api/time-limits/${activeId}`).then((r) => {
         if (!r.ok) throw new Error('Time limits failed');
         return r.json();
       }).catch(() => null)
@@ -65,7 +66,7 @@ export default function Dashboard({ user }) {
       // If analytics failed gracefully returning fallback, total_debates might be 0
       const combinedData = { ...analyticsData, timeLimits: timeData || { remainingRanked: 1800, remainingPersona: 1800, error: true } };
       cachedStats = combinedData;
-      cachedStudentId = user.studentId;
+      cachedStudentId = activeId;
       setStats(combinedData);
       setLoading(false);
     })
@@ -74,7 +75,7 @@ export default function Dashboard({ user }) {
       setStats(prev => prev || { error: true });
       setLoading(false);
     });
-  }, [user?.studentId]);
+  }, [user?.studentId, user?.username]);
 
   // Guard against null/undefined user (can happen briefly before redirect)
   if (!user) return null;
