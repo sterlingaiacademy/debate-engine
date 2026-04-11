@@ -5,6 +5,8 @@ import logoImg from '../assets/logo.png';
 
 const GOOGLE_SANS = "'Google Sans', 'Outfit', 'Product Sans', system-ui, sans-serif";
 
+import { supabase } from '../supabase';
+
 export default function Login({ onLogin }) {
   const [searchParams] = useSearchParams();
   const isVerify = searchParams.get('verify') === 'true';
@@ -39,46 +41,48 @@ export default function Login({ onLogin }) {
     
     try {
       if (method === 'google') {
-        // Just mock the redirect out/in for frontend demo
-        setTimeout(() => {
-          setLoading(false);
-          const fakeProfile = {
-            name: 'Google User',
-            username: '@google_user',
-            classLevel: 'Level 3'
-          };
-          onLogin(fakeProfile);
-          navigate('/dashboard');
-        }, 1200);
+        const { error: googleError } = await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: `${window.location.origin}/dashboard`
+          }
+        });
+        if (googleError) throw googleError;
       } else if (method === 'phone') {
-        // trigger OTP, swap to verify UI
-        setTimeout(() => {
-          setLoading(false);
-          navigate('/login?verify=true');
-        }, 1000);
+        const formattedPhone = phone.startsWith('+') ? phone : `+${phone}`;
+        const { error: phoneError } = await supabase.auth.signInWithOtp({
+          phone: formattedPhone,
+        });
+        if (phoneError) throw phoneError;
+        setLoading(false);
+        navigate('/login?verify=true');
       } else if (method === 'verify') {
-        // verify OTP mock
-        setTimeout(() => {
-          const fakeProfile = { name: 'Phone User', username: '@phone_user', classLevel: 'Level 1' };
-          onLogin(fakeProfile);
-          navigate('/dashboard');
-        }, 1000);
+        const formattedPhone = phone.startsWith('+') ? phone : `+${phone}`;
+        const { data, error: verifyError } = await supabase.auth.verifyOtp({
+          phone: formattedPhone,
+          token: otp,
+          type: 'sms'
+        });
+        if (verifyError) throw verifyError;
+        
+        // Ensure user obj sync
+        const fakeProfile = { name: data.user?.phone || 'User', classLevel: 'Level 3' };
+        onLogin(fakeProfile);
+        navigate('/dashboard');
       } else if (method === 'credentials') {
-        // Standard username/pwd
+        // Standard username/pwd against existing legacy DB
         const res = await fetch('/api/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username, password }),
+          body: JSON.stringify({ studentId: username, password }),
         });
         
-        // Mock fallback so the frontend demo keeps working for the user seamlessly
-        setTimeout(() => {
-          if (!res.ok) {
-           const fakeProfile = { name: username, username: `@${username}`, classLevel: 'Level 3' };
-           onLogin(fakeProfile);
-           navigate('/dashboard');
-          }
-        }, 1000);
+        const data = await res.json();
+        if (!res.ok) {
+           throw new Error(data.error || 'Login failed');
+        }
+        onLogin(data.user);
+        navigate('/dashboard');
       }
     } catch (err) {
       setError(err.message);

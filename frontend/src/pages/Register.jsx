@@ -5,6 +5,8 @@ import logoImg from '../assets/logo.png';
 
 const GOOGLE_SANS = "'Google Sans', 'Outfit', 'Product Sans', system-ui, sans-serif";
 
+import { supabase } from '../supabase';
+
 export default function Register() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -27,6 +29,17 @@ export default function Register() {
     if (searchParams.get('step') === 'details') {
       setStep('details');
     }
+    
+    // Check if we have an active Supabase session
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session && searchParams.get('step') !== 'details') {
+        const uId = session.user?.id;
+        // Check if user is already totally mapped in legacy Postgres, or push to Details
+        setStep('details');
+      }
+    };
+    checkSession();
   }, [searchParams]);
 
   const set = (field) => (e) => {
@@ -53,25 +66,31 @@ export default function Register() {
     setAuthMethod(method);
 
     if (method === 'phone' && !formData.phone) {
-      setError('Please provide a valid phone number.');
+      setError('Please provide a valid phone number (e.g., +1234567890).');
       return;
     }
 
     setLoading(true);
     try {
       if (method === 'google') {
-        // Implement genuine Supabase logic here later (e.g. supabase.auth.signInWithOAuth)
-        // For now, we mock the successful auth redirect to the Details step
-        setTimeout(() => {
-          setLoading(false);
-          setStep('details');
-        }, 1000);
+        // Genuine Supabase Google Auth
+        const { error: googleError } = await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: `${window.location.origin}/register?step=details`
+          }
+        });
+        if (googleError) throw googleError;
+        // Page will redirect momentarily
       } else if (method === 'phone') {
-        // Implement genuine supabase phone OTP initiation here
-        setTimeout(() => {
-          setLoading(false);
-          setStep('verify_otp');
-        }, 1000);
+        // Genuine Supabase Phone OTP Auth
+        const formattedPhone = formData.phone.startsWith('+') ? formData.phone : `+${formData.phone}`;
+        const { error: phoneError } = await supabase.auth.signInWithOtp({
+          phone: formattedPhone,
+        });
+        if (phoneError) throw phoneError;
+        setLoading(false);
+        setStep('verify_otp');
       }
     } catch (err) {
       setError(err.message);
@@ -86,11 +105,18 @@ export default function Register() {
     
     setLoading(true);
     try {
-      // Mock OTP Validation 
-      setTimeout(() => {
-        setLoading(false);
-        setStep('details');
-      }, 1000);
+      const formattedPhone = formData.phone.startsWith('+') ? formData.phone : `+${formData.phone}`;
+      const { data, error: verifyError } = await supabase.auth.verifyOtp({
+        phone: formattedPhone,
+        token: otp,
+        type: 'sms'
+      });
+      
+      if (verifyError) throw verifyError;
+      
+      // OTP verified successfully
+      setLoading(false);
+      setStep('details');
     } catch (err) {
       setError(err.message);
       setLoading(false);
