@@ -61,8 +61,11 @@ export default function Register({ onLogin }) {
 
   const set = (field) => (e) => {
     let val = e.target.value;
+    if (field === 'username') {
+      val = val.toLowerCase().replace(/[^a-z0-9_.]/g, '');
+    }
     if (field === 'name' && formData.username === '') {
-      setFormData((p) => ({ ...p, name: val, username: `${val.toLowerCase().replace(/[^a-z0-9]/g, '')}${Math.floor(Math.random() * 1000)}` }));
+      setFormData((p) => ({ ...p, name: val, username: `${val.toLowerCase().replace(/[^a-z0-9_.]/g, '')}${Math.floor(Math.random() * 1000)}` }));
       return;
     }
     setFormData((p) => ({ ...p, [field]: val }));
@@ -376,9 +379,9 @@ export default function Register({ onLogin }) {
               </div>
 
               <div style={{ display: 'flex', gap: '1rem' }}>
-                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
                   <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Username</label>
-                  <input type="text" placeholder="Unique handle" value={formData.username} onChange={set('username')} required
+                  <input type="text" placeholder="e.g. johndoe (like insta)" value={formData.username} onChange={set('username')} required
                     style={{ padding: '0.8rem 1rem', background: error?.toLowerCase().includes('student id') ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.03)', border: error?.toLowerCase().includes('student id') ? '1px solid rgba(239, 68, 68, 0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
                   />
                   {error?.toLowerCase().includes('student id') && (

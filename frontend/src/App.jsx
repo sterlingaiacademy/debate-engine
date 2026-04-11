@@ -82,12 +82,23 @@ function App() {
       });
     };
 
+    // Clear all persistent session cache so users MUST log in every time
+    // unless they are literally in the middle of a Google OAuth redirect
+    const isOAuthRedirect = window.location.hash.includes('access_token');
+    if (!isOAuthRedirect && window.location.pathname !== '/register') {
+       localStorage.removeItem('user');
+       supabase.auth.signOut();
+    }
+
     // Check initial native session from URL fragment before router executes
     supabase.auth.getSession().then(({ data: { session } }) => {
       const storedUser = localStorage.getItem('user');
       const parsed = storedUser ? JSON.parse(storedUser) : null;
       if (session && !parsed && !window.location.pathname.includes('/register')) {
          hydrateUserFallback(session).finally(() => setIsInitializing(false));
+      } else if (parsed) {
+         handleLogin(parsed);
+         setIsInitializing(false);
       } else {
          setIsInitializing(false);
       }
