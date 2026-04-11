@@ -31,14 +31,33 @@ export default function Register({ onLogin }) {
     // Check if we have an active Supabase session
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      if (session && searchParams.get('step') !== 'details') {
-        const uId = session.user?.id;
-        // Check if user is already totally mapped in legacy Postgres, or push to Details
-        setStep('details');
+      if (session) {
+        
+        // Prevent duplicate accounts: check if legacy profile already exists
+        if (session.user?.email) {
+          try {
+             const res = await fetch(`/api/user-by-email/${encodeURIComponent(session.user.email)}`);
+             if (res.ok) {
+                 const data = await res.json();
+                 if (data.user) {
+                     // Block duplicate creation! Sign out and kick to Login.
+                     await supabase.auth.signOut();
+                     navigate('/login?error=account_exists');
+                     return;
+                 }
+             }
+          } catch (e) {
+             console.error('Failed checking duplicate profile', e);
+          }
+        }
+
+        if (searchParams.get('step') !== 'details') {
+          setStep('details');
+        }
       }
     };
     checkSession();
-  }, [searchParams]);
+  }, [searchParams, navigate]);
 
   const set = (field) => (e) => {
     let val = e.target.value;

@@ -16,7 +16,9 @@ export default function Login({ onLogin }) {
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError] = useState(
+    searchParams.get('error') === 'account_exists' ? 'An account with this Google email already exists. Please log in.' : ''
+  );
   const [loading, setLoading] = useState(false);
   const [authMethod, setAuthMethod] = useState('');
 
