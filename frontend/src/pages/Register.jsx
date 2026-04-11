@@ -420,9 +420,11 @@ export default function Register({ onLogin }) {
               Already have an account? <Link to="/login" style={{ color: '#F97316', textDecoration: 'none', fontWeight: 700 }}>Sign in</Link>
              </div>
           )}
-          <div style={{ marginTop: '1.25rem', textAlign: 'center' }}>
-            <Link to="/" style={{ color: '#64748b', fontSize: '0.8rem', textDecoration: 'none', fontWeight: 500 }}>&larr; Back to Home</Link>
-          </div>
+          {step !== 'details' && (
+            <div style={{ marginTop: '1.25rem', textAlign: 'center' }}>
+              <Link to="/" style={{ color: '#64748b', fontSize: '0.8rem', textDecoration: 'none', fontWeight: 500 }}>&larr; Back to Home</Link>
+            </div>
+          )}
         </div>
 
       </div>
