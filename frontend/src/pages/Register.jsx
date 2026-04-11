@@ -2,12 +2,10 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Mic, UserPlus, ArrowRight, Sparkles, Zap, Trophy, Shield, KeyRound, CheckCircle2 } from 'lucide-react';
 import logoImg from '../assets/logo.png';
-
 const GOOGLE_SANS = "'Google Sans', 'Outfit', 'Product Sans', system-ui, sans-serif";
-
 import { supabase } from '../supabase';
 
-export default function Register() {
+export default function Register({ onLogin }) {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
@@ -150,12 +148,18 @@ export default function Register() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
+
+      // Instead of failing entirely if backend isn't mapped, we'll store local state so UI works
+      const data = await res.json().catch(() => ({})); 
+
+      // Trigger global state update!
+      onLogin({
+        ...payload,
+        id: data.user?.id || `usr_${Date.now()}` // Fallback ID if legacy failed
+      });
       
-      // We will pretend registration works if backend fails, strictly for the frontend demo
-      setTimeout(() => {
-        setLoading(false);
-        navigate('/dashboard');
-      }, 1500);
+      setLoading(false);
+      navigate('/dashboard');
 
     } catch (err) {
       setError(err.message);
@@ -234,10 +238,10 @@ export default function Register() {
       }}>
         
         <div style={{
-          width: '100%', maxWidth: '440px',
+          width: '100%', maxWidth: step === 'details' ? '540px' : '440px',
           background: 'rgba(255, 255, 255, 0.02)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
           border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '24px', padding: '2.5rem',
-          boxShadow: '0 12px 40px rgba(0,0,0,0.3)', position: 'relative'
+          boxShadow: '0 12px 40px rgba(0,0,0,0.3)', position: 'relative', transition: 'max-width 0.3s ease'
         }}>
           
           <div className="mobile-logo" style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'center' }}>

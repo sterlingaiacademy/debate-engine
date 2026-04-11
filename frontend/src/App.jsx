@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import React, { useState, useEffect, Suspense, lazy } from 'react';
+import { supabase } from './supabase';
 
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -33,9 +34,10 @@ function App() {
     localStorage.setItem('user', JSON.stringify(userData));
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     setUser(null);
     localStorage.removeItem('user');
+    await supabase.auth.signOut();
   };
 
   const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel);
@@ -48,11 +50,32 @@ function App() {
   }, [themeClass]);
 
   useEffect(() => {
+    // Listen to Supabase native Auth changes (OAuth callbacks, OTP verify)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session) {
+        // Sync local storage user state natively
+        const storedUser = localStorage.getItem('user');
+        const parsed = storedUser ? JSON.parse(storedUser) : null;
+        if (!parsed) {
+            handleLogin({
+                name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'User',
+                username: session.user.email || session.user.id,
+                classLevel: 'Class 10', // Default fallback so dashboards don't crash
+                id: session.user.id
+            });
+        }
+      } else if (event === 'SIGNED_OUT') {
+        setUser(null);
+        localStorage.removeItem('user');
+      }
+    });
+
     const handleOnline = () => setIsOffline(false);
     const handleOffline = () => setIsOffline(true);
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
     return () => {
+      subscription.unsubscribe();
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
