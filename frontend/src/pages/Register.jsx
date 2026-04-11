@@ -246,18 +246,7 @@ export default function Register() {
                 </select>
               </div>
             </div>
-                required
-                style={{
-                  padding: '0.8rem 1rem', background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
-                  color: '#ffffff', fontSize: '0.9rem', fontFamily: GOOGLE_SANS,
-                  transition: 'border-color 0.2s, background 0.2s, box-shadow 0.2s',
-                  outline: 'none'
-                }}
-                onFocus={(e) => { e.target.style.borderColor = '#F97316'; e.target.style.boxShadow = '0 0 0 3px rgba(249,115,22,0.15)'; e.target.style.background = 'rgba(255,255,255,0.05)'; }}
-                onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'none'; e.target.style.background = 'rgba(255,255,255,0.03)'; }}
-              />
-            </div>
+
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
               <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>@Username</label>
