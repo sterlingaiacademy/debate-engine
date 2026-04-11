@@ -23,6 +23,7 @@ export default function Register({ onLogin }) {
   // Dynamic UI State
   const [isCheckingUsername, setIsCheckingUsername] = useState(false);
   const [usernameAvailable, setUsernameAvailable] = useState(null);
+  const [usernameFormatError, setUsernameFormatError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
   const isJuniorClass = ['KG', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(formData.selectedClass);
@@ -43,7 +44,19 @@ export default function Register({ onLogin }) {
 
     // Dynamic Username Checking
     const u = formData.username;
-    if (u.length >= 3) {
+    
+    // Structural formatting validation
+    let hasFormatError = false;
+    if (u.length > 0) {
+      if (u.startsWith('.') || u.endsWith('.')) { setUsernameFormatError('Cannot start or end with a dot'); hasFormatError = true; }
+      else if (u.includes('..')) { setUsernameFormatError('Cannot contain consecutive dots'); hasFormatError = true; }
+      else if (/^[_.]+$/.test(u)) { setUsernameFormatError('Must contain at least one letter or number'); hasFormatError = true; }
+      else { setUsernameFormatError(''); }
+    } else {
+      setUsernameFormatError('');
+    }
+
+    if (u.length >= 3 && !hasFormatError) {
       setIsCheckingUsername(true);
       const delayFn = setTimeout(async () => {
         try {
@@ -104,10 +117,10 @@ export default function Register({ onLogin }) {
   const set = (field) => (e) => {
     let val = e.target.value;
     if (field === 'username') {
-      val = val.toLowerCase().replace(/[^a-z0-9_.]/g, '');
+      val = val.toLowerCase().replace(/[^a-z0-9_.]/g, '').slice(0, 30);
     }
     if (field === 'name' && formData.username === '') {
-      setFormData((p) => ({ ...p, name: val, username: `${val.toLowerCase().replace(/[^a-z0-9_.]/g, '')}${Math.floor(Math.random() * 1000)}` }));
+      setFormData((p) => ({ ...p, name: val, username: `${val.toLowerCase().replace(/[^a-z0-9_.]/g, '').slice(0, 26)}${Math.floor(Math.random() * 1000)}` }));
       return;
     }
     setFormData((p) => ({ ...p, [field]: val }));
@@ -190,6 +203,12 @@ export default function Register({ onLogin }) {
     setError('');
     if (!formData.name || !formData.username || !formData.password) {
       setError('Name, Username, and Password are required.');
+      return;
+    }
+
+    const u = formData.username;
+    if (u.startsWith('.') || u.endsWith('.') || u.includes('..') || /^[_.]+$/.test(u)) {
+      setError('Username format is invalid (Instagram rules).');
       return;
     }
 
@@ -432,11 +451,12 @@ export default function Register({ onLogin }) {
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
                   <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Username</label>
                   <input type="text" placeholder="e.g. johndoe (like insta)" value={formData.username} onChange={set('username')} required
-                    style={{ padding: '0.8rem 1rem', background: (error?.toLowerCase().includes('student id') || usernameAvailable === false) ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.03)', border: (error?.toLowerCase().includes('student id') || usernameAvailable === false) ? '1px solid rgba(239, 68, 68, 0.5)' : usernameAvailable ? '1px solid rgba(52, 211, 153, 0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
+                    style={{ padding: '0.8rem 1rem', background: (error?.toLowerCase().includes('student id') || usernameAvailable === false || usernameFormatError) ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.03)', border: (error?.toLowerCase().includes('student id') || usernameAvailable === false || usernameFormatError) ? '1px solid rgba(239, 68, 68, 0.5)' : usernameAvailable ? '1px solid rgba(52, 211, 153, 0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
                   />
-                  {isCheckingUsername && <span style={{ color: '#94a3b8', fontSize: '0.75rem', marginTop: '0.2rem' }}>Checking...</span>}
-                  {usernameAvailable === true && !isCheckingUsername && <span style={{ color: '#34d399', fontSize: '0.75rem', marginTop: '0.2rem' }}>Username available!</span>}
-                  {(usernameAvailable === false || error?.toLowerCase().includes('student id')) && !isCheckingUsername && <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>Username already exists</span>}
+                  {usernameFormatError && <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>{usernameFormatError}</span>}
+                  {isCheckingUsername && !usernameFormatError && <span style={{ color: '#94a3b8', fontSize: '0.75rem', marginTop: '0.2rem' }}>Checking...</span>}
+                  {usernameAvailable === true && !isCheckingUsername && !usernameFormatError && <span style={{ color: '#34d399', fontSize: '0.75rem', marginTop: '0.2rem' }}>Username available!</span>}
+                  {(usernameAvailable === false || error?.toLowerCase().includes('student id')) && !isCheckingUsername && !usernameFormatError && <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>Username already exists</span>}
                 </div>
                 
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
