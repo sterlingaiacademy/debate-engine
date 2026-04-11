@@ -20,6 +20,7 @@ const ConversationalAgent = lazy(() => import('./pages/ConversationalAgent'));
 const DebateInstructions = lazy(() => import('./pages/DebateInstructions'));
 
 function App() {
+  const [isInitializing, setIsInitializing] = useState(true);
   const [user, setUser] = useState(() => {
     try {
       const storedUser = localStorage.getItem('user');
@@ -50,17 +51,32 @@ function App() {
   }, [themeClass]);
 
   useEffect(() => {
+    // Check initial native session from URL fragment before router executes
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      const storedUser = localStorage.getItem('user');
+      const parsed = storedUser ? JSON.parse(storedUser) : null;
+      if (session && !parsed && !window.location.pathname.includes('/register')) {
+         handleLogin({
+             name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'User',
+             username: session.user.email || session.user.id,
+             classLevel: 'Class 10', 
+             id: session.user.id
+         });
+      }
+      setIsInitializing(false);
+    });
+
     // Listen to Supabase native Auth changes (OAuth callbacks, OTP verify)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session) {
         // Sync local storage user state natively
         const storedUser = localStorage.getItem('user');
         const parsed = storedUser ? JSON.parse(storedUser) : null;
-        if (!parsed) {
+        if (!parsed && !window.location.pathname.includes('/register')) {
             handleLogin({
                 name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'User',
                 username: session.user.email || session.user.id,
-                classLevel: 'Class 10', // Default fallback so dashboards don't crash
+                classLevel: 'Class 10', 
                 id: session.user.id
             });
         }
@@ -83,10 +99,14 @@ function App() {
 
   // Loading spinner for lazy-loaded pages
   const PageLoader = () => (
-    <div style={{ display: 'flex', height: '50vh', width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-      <div className="animate-spin" style={{ width: 44, height: 44, border: '3px solid var(--border)', borderTopColor: 'var(--accent)', borderRadius: '50%' }} />
+    <div style={{ display: 'flex', height: '100vh', width: '100%', justifyContent: 'center', alignItems: 'center', background: '#06080F' }}>
+      <div className="animate-spin" style={{ width: 44, height: 44, border: '3px solid rgba(255,255,255,0.1)', borderTopColor: '#F97316', borderRadius: '50%' }} />
     </div>
   );
+
+  if (isInitializing) {
+    return <PageLoader />;
+  }
 
   return (
     <Router>
