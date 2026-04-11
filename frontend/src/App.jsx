@@ -53,7 +53,6 @@ function App() {
   useEffect(() => {
     const hydrateUserFallback = async (session) => {
       const email = session?.user?.email;
-      const phone = session?.user?.phone;
       let legacyUser = null;
 
       try {
@@ -68,12 +67,18 @@ function App() {
         console.error("Failed to fetch legacy profile", err);
       }
 
+      if (!legacyUser) {
+          // If no legacy profile was ever fully created, bounce them to Complete Profile
+          window.location.href = '/register?step=details';
+          return;
+      }
+
       handleLogin({
-          name: legacyUser?.name || session.user.user_metadata?.full_name || email?.split('@')[0] || 'User',
-          username: legacyUser?.studentId || email || session.user.id,
-          classLevel: legacyUser?.classLevel || 'Class 10', 
-          id: legacyUser?.id || session.user.id,
-          studentId: legacyUser?.studentId || email || session.user.id
+          name: legacyUser.name,
+          username: legacyUser.studentId,
+          classLevel: legacyUser.classLevel, 
+          id: legacyUser.id || session.user.id,
+          studentId: legacyUser.studentId
       });
     };
 

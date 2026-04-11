@@ -284,7 +284,7 @@ export default function Register({ onLogin }) {
             </p>
           </div>
 
-          {error && (
+          {error && !error.toLowerCase().includes('student id') && (
             <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#fca5a5', padding: '0.7rem 1rem', borderRadius: '10px', fontSize: '0.85rem', marginBottom: '1.25rem', fontWeight: 500 }}>
               {error}
             </div>
@@ -315,14 +315,14 @@ export default function Register({ onLogin }) {
 
           {/* STEP 2: VERIFY OTP (if phone method chosen) */}
           {step === 'verify_otp' && (
-            <form onSubmit={(e) => { e.preventDefault(); handleVerifyOtp(); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            <form onSubmit={(e) => { e.preventDefault(); handleVerifyOtp(); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
                 <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#e2e8f0' }}>Enter OTP</label>
                 <input
-                  type="text" placeholder="6-digit code" value={otp} onChange={e => setOtp(e.target.value)}
+                  type="text" placeholder="6-digit code" value={otp} onChange={e => setOtp(e.target.value)} required
                   style={{
-                    padding: '1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: '12px', color: '#ffffff', fontSize: '1rem', fontFamily: GOOGLE_SANS, outline: 'none', textAlign: 'center', letterSpacing: '0.5em'
+                    padding: '1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px',
+                    color: '#ffffff', fontSize: '1rem', fontFamily: GOOGLE_SANS, outline: 'none', textAlign: 'center', letterSpacing: '0.5em'
                   }}
                   autoFocus
                 />
@@ -330,62 +330,60 @@ export default function Register({ onLogin }) {
               <button
                 type="submit" disabled={loading}
                 style={{
-                  padding: '1rem', border: 'none', borderRadius: '12px',
-                  background: 'linear-gradient(135deg, #E8392A 0%, #F97316 100%)', color: '#fff',
-                  fontWeight: 700, fontSize: '1.05rem', cursor: loading ? 'not-allowed' : 'pointer',
-                  fontFamily: GOOGLE_SANS, boxShadow: '0 4px 14px rgba(232,57,42,0.4)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center'
+                  padding: '1rem', border: 'none', borderRadius: '12px', background: 'linear-gradient(135deg, #E8392A 0%, #F97316 100%)', color: '#fff',
+                  fontWeight: 700, fontSize: '1.05rem', cursor: loading ? 'not-allowed' : 'pointer', fontFamily: GOOGLE_SANS,
+                  boxShadow: '0 4px 14px rgba(232,57,42,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center'
                 }}
               >
-                {loading ? 'Verifying...' : 'Verify Number'}
-              </button>
-              <button 
-                type="button" onClick={() => setStep('auth')}
-                style={{ background: 'transparent', border: 'none', color: '#94a3b8', fontSize: '0.85rem', cursor: 'pointer', marginTop: '-0.5rem' }}
-              >
-                ← Use a different number
+                {loading ? 'Verifying...' : 'Verify Identity'}
               </button>
             </form>
           )}
 
           {/* STEP 3: ACCOUNT DETAILS */}
           {step === 'details' && (
-            <form onSubmit={(e) => { e.preventDefault(); handleSaveDetails(); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem', animation: 'fadeIn 0.3s' }}>
+            <form onSubmit={(e) => { e.preventDefault(); handleSaveDetails(); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', animation: 'fadeIn 0.3s ease' }}>
               
-              <div style={{ background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.2)', color: '#a7f3d0', padding: '0.8rem 1rem', borderRadius: '10px', fontSize: '0.85rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <CheckCircle2 size={18} color="#10b981" /> Authentication successful!
+              <div style={{ padding: '0.85rem', background: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
+                <CheckCircle2 size={18} color="#34d399" />
+                <span style={{ fontSize: '0.85rem', color: '#6ee7b7', fontWeight: 600 }}>Authentication successful!</span>
               </div>
 
               {isJuniorClass && (
-                <div style={{ background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.2)', color: '#fed7aa', padding: '0.8rem 1rem', borderRadius: '10px', fontSize: '0.85rem', fontWeight: 600, display: 'flex', gap: '0.5rem' }}>
-                  <Shield size={18} color="#F97316" style={{ flexShrink: 0 }} />
-                  <span>Level 1 & 2 Students: Ask for parent permission.</span>
-                </div>
+                 <div style={{ padding: '0.85rem', background: 'rgba(249, 115, 22, 0.08)', border: '1px solid rgba(249, 115, 22, 0.2)', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <Shield size={18} color="#fb923c" />
+                    <span style={{ fontSize: '0.85rem', color: '#fdba74', fontWeight: 600 }}>Level 1 & 2 Students: Ask for parent permission.</span>
+                 </div>
               )}
 
               <div style={{ display: 'flex', gap: '1rem' }}>
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                <div style={{ flex: '2', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
                   <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Full Name</label>
                   <input type="text" placeholder="e.g. John Doe" value={formData.name} onChange={set('name')} required
                     style={{ padding: '0.8rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
                   />
                 </div>
-                <div style={{ width: '120px', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                <div style={{ flex: '1', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
                   <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Class</label>
                   <select value={formData.selectedClass} onChange={set('selectedClass')}
-                    style={{ padding: '0.8rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none', cursor: 'pointer' }}
-                  >
-                    {['KG', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'Class 6', 'Class 7', 'Class 8', 'Class 9', 'Class 10', 'Class 11', 'Class 12'].map(c => <option key={c} value={c} style={{ color: '#000' }}>{c}</option>)}
+                    style={{ padding: '0.8rem', background: '#0f1322', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none', cursor: 'pointer' }}>
+                    <option value="KG">KG</option>
+                    {[...Array(12)].map((_, i) => (
+                      <option key={`Class ${i + 1}`} value={`Class ${i + 1}`}>Class {i + 1}</option>
+                    ))}
                   </select>
                 </div>
               </div>
 
               <div style={{ display: 'flex', gap: '1rem' }}>
                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                  <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>@Username</label>
+                  <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Username</label>
                   <input type="text" placeholder="Unique handle" value={formData.username} onChange={set('username')} required
-                    style={{ padding: '0.8rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
+                    style={{ padding: '0.8rem 1rem', background: error?.toLowerCase().includes('student id') ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.03)', border: error?.toLowerCase().includes('student id') ? '1px solid rgba(239, 68, 68, 0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
                   />
+                  {error?.toLowerCase().includes('student id') && (
+                    <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>Username already exists</span>
+                  )}
                 </div>
                 
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
