@@ -24,7 +24,7 @@ function getISTDateString() {
 
 // Users
 app.post('/api/register', async (req, res) => {
-  const { name, studentId, password, classLevel } = req.body;
+  const { name, studentId, password, classLevel, email, phone, authProvider } = req.body;
   if (!name || !studentId || !password || !classLevel) {
     return res.status(400).json({ error: 'All fields are required' });
   }
@@ -48,10 +48,10 @@ app.post('/api/register', async (req, res) => {
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const query = `INSERT INTO users (name, "studentId", password, "classLevel", "assignedAgentId") VALUES ($1, $2, $3, $4, $5)`;
+    const query = `INSERT INTO users (name, "studentId", password, "classLevel", "assignedAgentId", email, phone, auth_provider) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`;
     
     try {
-      await db.query(query, [name, studentId, hashedPassword, classLevel, assignedAgentId]);
+      await db.query(query, [name, studentId, hashedPassword, classLevel, assignedAgentId, email || null, phone || null, authProvider || null]);
     } catch (err) {
       if (err.code === '23505' || /UNIQUE constraint failed/i.test(err.message)) {
         return res.status(400).json({ error: 'Student ID already exists' });
@@ -64,10 +64,23 @@ app.post('/api/register', async (req, res) => {
     
     res.status(201).json({ 
       message: 'Account created successfully', 
-      user: { name, studentId, classLevel, assignedAgentId } 
+      user: { name, studentId, classLevel, assignedAgentId, email, phone } 
     });
   } catch (err) {
     res.status(500).json({ error: 'Server error during registration' });
+  }
+});
+
+app.get('/api/user-by-email/:email', async (req, res) => {
+  try {
+    const { email } = req.params;
+    const { rows } = await db.query(`SELECT id, name, "studentId", "classLevel", "assignedAgentId" FROM users WHERE email = $1 LIMIT 1`, [email]);
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.json({ user: rows[0] });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 

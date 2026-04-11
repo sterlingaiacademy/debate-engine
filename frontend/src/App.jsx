@@ -51,19 +51,41 @@ function App() {
   }, [themeClass]);
 
   useEffect(() => {
+    const hydrateUserFallback = async (session) => {
+      const email = session?.user?.email;
+      const phone = session?.user?.phone;
+      let legacyUser = null;
+
+      try {
+        if (email) {
+          const res = await fetch(`/api/user-by-email/${encodeURIComponent(email)}`);
+          if (res.ok) {
+            const data = await res.json();
+            legacyUser = data.user;
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch legacy profile", err);
+      }
+
+      handleLogin({
+          name: legacyUser?.name || session.user.user_metadata?.full_name || email?.split('@')[0] || 'User',
+          username: legacyUser?.studentId || email || session.user.id,
+          classLevel: legacyUser?.classLevel || 'Class 10', 
+          id: legacyUser?.id || session.user.id,
+          studentId: legacyUser?.studentId || email || session.user.id
+      });
+    };
+
     // Check initial native session from URL fragment before router executes
     supabase.auth.getSession().then(({ data: { session } }) => {
       const storedUser = localStorage.getItem('user');
       const parsed = storedUser ? JSON.parse(storedUser) : null;
       if (session && !parsed && !window.location.pathname.includes('/register')) {
-         handleLogin({
-             name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'User',
-             username: session.user.email || session.user.id,
-             classLevel: 'Class 10', 
-             id: session.user.id
-         });
+         hydrateUserFallback(session).finally(() => setIsInitializing(false));
+      } else {
+         setIsInitializing(false);
       }
-      setIsInitializing(false);
     });
 
     // Listen to Supabase native Auth changes (OAuth callbacks, OTP verify)
@@ -73,12 +95,7 @@ function App() {
         const storedUser = localStorage.getItem('user');
         const parsed = storedUser ? JSON.parse(storedUser) : null;
         if (!parsed && !window.location.pathname.includes('/register')) {
-            handleLogin({
-                name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'User',
-                username: session.user.email || session.user.id,
-                classLevel: 'Class 10', 
-                id: session.user.id
-            });
+            hydrateUserFallback(session);
         }
       } else if (event === 'SIGNED_OUT') {
         setUser(null);

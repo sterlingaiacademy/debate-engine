@@ -132,14 +132,17 @@ export default function Register({ onLogin }) {
     setLoading(true);
     try {
       const computedClassLevel = getLevelForClass(formData.selectedClass);
+      const { data: { session } } = await supabase.auth.getSession();
       
       const payload = {
         name: formData.name,
-        username: formData.username,
+        studentId: formData.username, // FIXED: was previously missing, causing backend 400 Bad Request
         password: formData.password,
         classLevel: computedClassLevel,
         referralCode: formData.referralCode,
-        authProvider: authMethod
+        authProvider: authMethod,
+        email: session?.user?.email || null,
+        phone: session?.user?.phone || null
       };
 
       // In the real app, hit your API
