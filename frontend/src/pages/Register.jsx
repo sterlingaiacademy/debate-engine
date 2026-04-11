@@ -307,35 +307,6 @@ export default function Register({ onLogin }) {
                 {loading && authMethod === 'google' ? 'Redirecting...' : 'Continue with Google'}
               </button>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', margin: '0.25rem 0' }}>
-                <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.05)' }} />
-                <span style={{ fontSize: '0.85rem', color: '#64748b' }}>or</span>
-                <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.05)' }} />
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <input
-                  type="tel" placeholder="Phone Number (e.g. +1...)" value={formData.phone} onChange={set('phone')}
-                  style={{
-                    padding: '1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: '12px', color: '#ffffff', fontSize: '1rem', fontFamily: GOOGLE_SANS, outline: 'none'
-                  }}
-                  onFocus={(e) => { e.target.style.borderColor = '#F97316'; }}
-                  onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; }}
-                />
-                <button
-                  type="button" onClick={() => handleAuthInitiate('phone')} disabled={loading || !formData.phone}
-                  style={{
-                    padding: '1rem', border: 'none', borderRadius: '12px',
-                    background: 'linear-gradient(135deg, #E8392A 0%, #F97316 100%)', color: '#fff',
-                    fontWeight: 700, fontSize: '1.05rem', cursor: (loading || !formData.phone) ? 'not-allowed' : 'pointer',
-                    fontFamily: GOOGLE_SANS, boxShadow: '0 4px 14px rgba(232,57,42,0.4)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', opacity: (loading || !formData.phone) ? 0.7 : 1
-                  }}
-                >
-                  {loading && authMethod === 'phone' ? 'Sending SMS...' : 'Continue with Phone'}
-                </button>
-              </div>
             </form>
           )}
 

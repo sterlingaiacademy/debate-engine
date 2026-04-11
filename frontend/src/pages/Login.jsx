@@ -232,28 +232,6 @@ export default function Login({ onLogin }) {
                 {loading && authMethod === 'google' ? 'Redirecting...' : 'Sign in with Google'}
               </button>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <input
-                  type="tel" placeholder="Phone Number (e.g. +1...)" value={phone} onChange={e => setPhone(e.target.value)}
-                  style={{
-                    padding: '0.9rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: '12px', color: '#ffffff', fontSize: '0.9rem', outline: 'none'
-                  }}
-                  onFocus={(e) => { e.target.style.borderColor = '#F97316'; }} onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; }}
-                />
-                <button
-                  type="button" onClick={() => handleSubmit('phone')} disabled={loading || !phone}
-                  style={{
-                    padding: '0.9rem', borderRadius: '12px',
-                    background: 'var(--bg-tertiary)', color: '#fff', border: '1px solid var(--border)',
-                    fontWeight: 700, fontSize: '1rem', cursor: (loading || !phone) ? 'not-allowed' : 'pointer',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center'
-                  }}
-                >
-                  {loading && authMethod === 'phone' ? 'Sending Code...' : 'Sign in with OTP'}
-                </button>
-              </div>
-
               <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', margin: '0.5rem 0' }}>
                 <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
                 <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>OR CONTINUE WITH USERNAME</span>
