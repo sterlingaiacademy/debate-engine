@@ -21,12 +21,28 @@ export default function Login({ onLogin }) {
   );
   const [loading, setLoading] = useState(false);
   const [authMethod, setAuthMethod] = useState('');
+  const [usernameFormatError, setUsernameFormatError] = useState('');
+
+  useEffect(() => {
+    if (username.length > 0) {
+      if (username.startsWith('.') || username.endsWith('.')) setUsernameFormatError('Cannot start or end with a dot');
+      else if (username.includes('..')) setUsernameFormatError('Cannot contain consecutive dots');
+      else if (/^[_.]+$/.test(username)) setUsernameFormatError('Must contain at least one letter or number');
+      else setUsernameFormatError('');
+    } else {
+      setUsernameFormatError('');
+    }
+  }, [username]);
 
   const handleSubmit = async (method) => {
     setError('');
     
     if (method === 'credentials' && (!username || !password)) {
       setError('Please provide both username and password.');
+      return;
+    }
+    if (method === 'credentials' && usernameFormatError) {
+      setError('Username format is invalid.');
       return;
     }
     if (method === 'phone' && !phone) {
@@ -241,9 +257,10 @@ export default function Login({ onLogin }) {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
                 <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#e2e8f0' }}>Username</label>
                 <input
-                  type="text" placeholder="e.g. johndoe (like insta)" value={username} onChange={e => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_.]/g, '').slice(0, 30))}
-                  style={{ padding: '0.85rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.95rem', outline: 'none' }}
+                  type="text" placeholder="e.g. johndoe" value={username} onChange={e => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_.]/g, '').slice(0, 30))}
+                  style={{ padding: '0.85rem 1rem', background: usernameFormatError ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.03)', border: usernameFormatError ? '1px solid rgba(239, 68, 68, 0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.95rem', outline: 'none' }}
                 />
+                {usernameFormatError && <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>{usernameFormatError}</span>}
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>

@@ -450,7 +450,7 @@ export default function Register({ onLogin }) {
               <div style={{ display: 'flex', gap: '1rem' }}>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
                   <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Username</label>
-                  <input type="text" placeholder="e.g. johndoe (like insta)" value={formData.username} onChange={set('username')} required
+                  <input type="text" placeholder="e.g. johndoe" value={formData.username} onChange={set('username')} required
                     style={{ padding: '0.8rem 1rem', background: (error?.toLowerCase().includes('student id') || usernameAvailable === false || usernameFormatError) ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.03)', border: (error?.toLowerCase().includes('student id') || usernameAvailable === false || usernameFormatError) ? '1px solid rgba(239, 68, 68, 0.5)' : usernameAvailable ? '1px solid rgba(52, 211, 153, 0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
                   />
                   {usernameFormatError && <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>{usernameFormatError}</span>}
