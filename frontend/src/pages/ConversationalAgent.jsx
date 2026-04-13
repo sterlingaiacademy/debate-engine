@@ -430,7 +430,7 @@ const formatTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0
           )}
 
           {/* Evaluating State */}
-          {status === 'evaluating' && (
+          {status === 'ended' && (
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2rem', animation: 'fadeIn 0.5s' }}>
               <div style={{ position: 'relative' }}>
                 <AIAvatar isJunior={isJunior} isSpeaking={false} size={140} />
