@@ -77,6 +77,7 @@ function App() {
           name: legacyUser.name,
           username: legacyUser.studentId,
           classLevel: legacyUser.classLevel, 
+          assignedAgentId: legacyUser.assignedAgentId,
           id: legacyUser.id || session.user.id,
           studentId: legacyUser.studentId
       });
