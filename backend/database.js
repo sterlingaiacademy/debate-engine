@@ -70,7 +70,6 @@ async function initDB() {
       } catch (e) { /* Already exists */ }
     };
 
-    await addColumnSafeSessions('transcript', 'TEXT', "'[]'");
     await addColumnSafeSessions('mode', 'TEXT', "''");
     await addColumnSafeSessions('agentId', 'TEXT', "''");
 

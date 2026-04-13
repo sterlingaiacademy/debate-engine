@@ -227,7 +227,6 @@ export default function PersonaDebate({ user }) {
           argumentsCount: transcript.filter(m => m.role === 'user').length,
           debateScore: 0, // Personas might not grant scores or it defaults inside
           isPersona: true,
-          transcript: transcript,
           mode: `Persona: ${personaName}`,
           agentId: personaAgentId
         }),

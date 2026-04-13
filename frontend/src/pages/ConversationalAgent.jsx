@@ -277,7 +277,6 @@ export default function ConversationalAgent({ user }) {
       argumentsCount: transcriptRef.current.filter(m => m.role === 'user').length,
       debateScore: 0,
       isPersona: true,
-      transcript: transcriptRef.current,
       mode: 'Conversational Agent',
       agentId: getAgentId()
     };

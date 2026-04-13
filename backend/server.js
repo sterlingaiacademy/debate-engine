@@ -184,12 +184,12 @@ app.post('/api/time-sync', async (req, res) => {
 
 // Debate Sessions
 app.post('/api/sessions', async (req, res) => {
-  const { studentId, debateTopic, sessionDuration, argumentsCount, debateScore, transcript, mode, agentId } = req.body;
+  const { studentId, debateTopic, sessionDuration, argumentsCount, debateScore, mode, agentId } = req.body;
   
-  const query = `INSERT INTO debate_sessions ("studentId", "debateTopic", "sessionDuration", "argumentsCount", "debateScore", "transcript", "mode", "agentId") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`;
+  const query = `INSERT INTO debate_sessions ("studentId", "debateTopic", "sessionDuration", "argumentsCount", "debateScore", "mode", "agentId") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`;
   
   try {
-    const result = await db.query(query, [studentId, debateTopic, sessionDuration, argumentsCount, debateScore, typeof transcript === 'string' ? transcript : JSON.stringify(transcript || []), mode || 'Ranked Match', agentId || '']);
+    const result = await db.query(query, [studentId, debateTopic, sessionDuration, argumentsCount, debateScore, mode || 'Ranked Match', agentId || '']);
     const newSessionId = result.rows[0].id;
 
     // Update analytics

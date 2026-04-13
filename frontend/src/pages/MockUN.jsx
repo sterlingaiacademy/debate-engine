@@ -215,7 +215,6 @@ export default function MockUN({ user }) {
         argumentsCount: transcriptRef.current.filter(m => m.role === 'user').length,
         debateScore: 0,
         isPersona: false,
-        transcript: transcriptRef.current,
         mode: 'Mock UN',
         agentId: MOCK_UN_AGENT_ID
       };
