@@ -202,6 +202,7 @@ export default function DebateArena({ user }) {
 
       let localSession = await Conversation.startSession({
         agentId: user.assignedAgentId,
+        dynamicVariables: { topic },
         onConnect: () => {
           setStatus('active');
           setIsActive(true);
