@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+const fs = require('fs');
+const path = '../frontend/src/pages/Settings.jsx';
+
+const content = `import React, { useState, useEffect } from 'react';
 import { User, Settings as SettingsIcon, CreditCard, History, Download, Clock, X, ChevronRight } from 'lucide-react';
 import jsPDF from 'jspdf';
 
@@ -40,10 +43,10 @@ export default function Settings({ user }) {
     
     doc.setFontSize(12);
     doc.setTextColor(100);
-    doc.text('Date: ' + new Date(session.createdAt).toLocaleString(), 14, 32);
-    doc.text('Mode: ' + session.mode, 14, 38);
-    doc.text('Topic: ' + session.debateTopic, 14, 44);
-    doc.text('Duration: ' + Math.floor(session.sessionDuration / 60) + 'm ' + (session.sessionDuration % 60) + 's', 14, 50);
+    doc.text(\'Date: \' + new Date(session.createdAt).toLocaleString(), 14, 32);
+    doc.text(\'Mode: \' + session.mode, 14, 38);
+    doc.text(\'Topic: \' + session.debateTopic, 14, 44);
+    doc.text(\'Duration: \' + Math.floor(session.sessionDuration / 60) + 'm ' + (session.sessionDuration % 60) + 's', 14, 50);
     
     let yPos = 60;
     try {
@@ -72,7 +75,7 @@ export default function Settings({ user }) {
       doc.text('Failed to parse transcript data.', 14, yPos);
     }
 
-    doc.save('Transcript_' + session.id + '.pdf');
+    doc.save(\'Transcript_\' + session.id + '.pdf');
   };
 
   const handlePayment = () => {
@@ -291,3 +294,7 @@ export default function Settings({ user }) {
     </div>
   );
 }
+`;
+
+fs.writeFileSync(path, content);
+console.log('Settings.jsx updated successfully.');

@@ -206,7 +206,27 @@ export default function MockUN({ user }) {
       }).catch(() => {});
     }
 
-    // No analysis — go straight back to dashboard
+    // Save session history for analytics
+    try {
+      const sessionData = {
+        studentId: user.studentId,
+        debateTopic: `Mock UN: ${selectedTopic}`,
+        sessionDuration: initialTimerRef.current - currentTimerRef.current,
+        argumentsCount: transcriptRef.current.filter(m => m.role === 'user').length,
+        debateScore: 0,
+        isPersona: false,
+        transcript: transcriptRef.current,
+        mode: 'Mock UN',
+        agentId: MOCK_UN_AGENT_ID
+      };
+      await fetch('/api/sessions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(sessionData)
+      });
+    } catch (e) { console.error('Mock UN history save failed', e); }
+
+    // No analysis evaluation — go straight back to dashboard
     navigate('/dashboard');
   };
 

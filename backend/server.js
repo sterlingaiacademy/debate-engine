@@ -184,12 +184,12 @@ app.post('/api/time-sync', async (req, res) => {
 
 // Debate Sessions
 app.post('/api/sessions', async (req, res) => {
-  const { studentId, debateTopic, sessionDuration, argumentsCount, debateScore } = req.body;
+  const { studentId, debateTopic, sessionDuration, argumentsCount, debateScore, transcript, mode, agentId } = req.body;
   
-  const query = `INSERT INTO debate_sessions ("studentId", "debateTopic", "sessionDuration", "argumentsCount", "debateScore") VALUES ($1, $2, $3, $4, $5) RETURNING id`;
+  const query = `INSERT INTO debate_sessions ("studentId", "debateTopic", "sessionDuration", "argumentsCount", "debateScore", "transcript", "mode", "agentId") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`;
   
   try {
-    const result = await db.query(query, [studentId, debateTopic, sessionDuration, argumentsCount, debateScore]);
+    const result = await db.query(query, [studentId, debateTopic, sessionDuration, argumentsCount, debateScore, typeof transcript === 'string' ? transcript : JSON.stringify(transcript || []), mode || 'Ranked Match', agentId || '']);
     const newSessionId = result.rows[0].id;
 
     // Update analytics
@@ -207,6 +207,18 @@ app.post('/api/sessions', async (req, res) => {
     }
     
     res.status(201).json({ message: 'Session saved', sessionId: newSessionId });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Transcript History
+app.get('/api/history/:studentId', async (req, res) => {
+  const { studentId } = req.params;
+  try {
+    const query = `SELECT * FROM debate_sessions WHERE "studentId" = $1 ORDER BY "createdAt" DESC`;
+    const result = await db.query(query, [studentId]);
+    res.json(result.rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

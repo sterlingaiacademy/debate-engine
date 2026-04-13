@@ -302,7 +302,10 @@ export default function DebateArena({ user }) {
       sessionDuration: initialTimerRef.current - currentTimerRef.current,
       argumentsCount: currentTranscript.filter(m => m.role === 'user').length,
       debateScore: finalScore,
-      isPersona: false
+      isPersona: false,
+      transcript: currentTranscript,
+      mode: 'Ranked Match',
+      agentId: user?.assignedAgentId || ''
     };
 
     try {

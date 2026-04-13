@@ -53,15 +53,26 @@ async function initDB() {
     `);
 
     // Daily time-limit columns — add if not already present
-    const addColumnSafe = async (col, type, def) => {
+    const addColumnSafeUsers = async (col, type, def) => {
       try {
         await client.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS "${col}" ${type} DEFAULT ${def}`);
       } catch (e) { /* Already exists */ }
     };
 
-    await addColumnSafe('lastDebateDate', 'TEXT', "''");
-    await addColumnSafe('dailyRankedTime', 'INTEGER', '0');
-    await addColumnSafe('dailyPersonaTime', 'INTEGER', '0');
+    await addColumnSafeUsers('lastDebateDate', 'TEXT', "''");
+    await addColumnSafeUsers('dailyRankedTime', 'INTEGER', '0');
+    await addColumnSafeUsers('dailyPersonaTime', 'INTEGER', '0');
+
+    // Session History columns - add if not already present
+    const addColumnSafeSessions = async (col, type, def) => {
+      try {
+        await client.query(`ALTER TABLE debate_sessions ADD COLUMN IF NOT EXISTS "${col}" ${type} DEFAULT ${def}`);
+      } catch (e) { /* Already exists */ }
+    };
+
+    await addColumnSafeSessions('transcript', 'TEXT', "'[]'");
+    await addColumnSafeSessions('mode', 'TEXT', "''");
+    await addColumnSafeSessions('agentId', 'TEXT', "''");
 
     console.log('Supabase database tables verified.');
   } catch (err) {
