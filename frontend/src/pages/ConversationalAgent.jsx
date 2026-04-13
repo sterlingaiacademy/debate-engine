@@ -20,7 +20,7 @@ export default function ConversationalAgent({ user }) {
 
   
   const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user.classLevel);
-  const [timer, setTimer] = useState(1800);
+  const [timer, setTimer] = useState(1200);
   const [isActive, setIsActive] = useState(false);
   const [screenSleep, setScreenSleep] = useState(false);
   const [showTranscript, setShowTranscript] = useState(false);
@@ -38,8 +38,8 @@ export default function ConversationalAgent({ user }) {
   const currentTimerRef = useRef(0);
   const hasStartedRef = useRef(false);
   const conversationIdRef = useRef(null);
-  const initialTimerRef = useRef(1800);
-  const initialDailyRemainingRef = useRef(1800);
+  const initialTimerRef = useRef(1200);
+  const initialDailyRemainingRef = useRef(1200);
   const navigate = useNavigate();
 
   const wakeLockRef = useRef(null);
@@ -423,7 +423,7 @@ const formatTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0
               <AIAvatar isJunior={isJunior} isSpeaking={false} size={120} />
               <div className="alert alert-warning" style={{ maxWidth: '400px', backgroundColor: '#fffbeb', color: '#b45309', border: '1px solid #fcd34d' }}>
                 <strong>Time's Up! ⏱️</strong><br/>
-                You have reached your 30-minute daily debate limit. Come back tomorrow to continue practicing!
+                You have reached your 20-minute daily debate limit. Come back tomorrow to continue practicing!
               </div>
               <button onClick={() => navigate('/dashboard')} className="btn btn-primary">Back to Dashboard</button>
             </div>

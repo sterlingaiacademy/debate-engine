@@ -16,7 +16,7 @@ app.use(express.json());
 // Helper for IST Date (Resets at 12:00 AM IST)
 function getISTDateString() {
   const now = new Date();
-  // IST is UTC + 5 hours and 30 minutes
+  // IST is UTC + 5 hours and 20 minutes
   const istOffsetMs = 5.5 * 60 * 60 * 1000;
   const istDate = new Date(now.getTime() + istOffsetMs);
   return istDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
@@ -131,9 +131,9 @@ app.get('/api/time-limits/:studentId', async (req, res) => {
       user.dailyPersonaTime = 0;
     }
     
-    // Calculate remaining limits (1800 seconds = 30 minutes)
-    // The user requested a single shared 30-minute pool across all levels for both Ranked and Persona
-    const LIMIT = 1800;
+    // Calculate remaining limits (1200 seconds = 20 minutes)
+    // The user requested a single shared 20-minute pool across all levels for both Ranked and Persona
+    const LIMIT = 1200;
     const used = (user.dailyRankedTime || 0) + (user.dailyPersonaTime || 0);
     const sharedRemaining = Math.max(0, LIMIT - used);
     
