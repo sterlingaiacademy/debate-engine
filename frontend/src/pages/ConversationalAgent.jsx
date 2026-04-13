@@ -66,8 +66,8 @@ export default function ConversationalAgent({ user }) {
 
   const toggleMute = async () => {
     try {
-      if (conversationRef.current && typeof conversationRef.current.setVolume === 'function') {
-        await conversationRef.current.setVolume(isMuted ? 1.0 : 0.0);
+      if (conversationRef.current && typeof conversationRef.current.setMicMuted === 'function') {
+        conversationRef.current.setMicMuted(!isMuted);
       }
       setIsMuted(p => !p);
     } catch(e) {

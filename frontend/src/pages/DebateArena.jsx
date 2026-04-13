@@ -238,9 +238,8 @@ export default function DebateArena({ user }) {
   const toggleMute = async () => {
     try {
       if (conversationRef.current) {
-        // Attempt to mute the elevenlabs agent or local microphone
-        if (typeof conversationRef.current.setVolume === 'function') {
-          await conversationRef.current.setVolume(isMuted ? 1.0 : 0.0);
+        if (typeof conversationRef.current.setMicMuted === 'function') {
+          conversationRef.current.setMicMuted(!isMuted);
         }
       }
       setIsMuted(p => !p);
