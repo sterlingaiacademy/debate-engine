@@ -20,12 +20,7 @@ export default function Settings({ user }) {
         .then(res => res.json())
         .then(data => {
           // Only show specific modes based on level if needed, but data is naturally filtered by what they played.
-          setHistoryData(data.filter(d => {
-            try {
-              const t = JSON.parse(d.transcript);
-              return t && t.length > 0;
-            } catch(e) { return false; }
-          }));
+          setHistoryData(data);
         })
         .catch(err => console.error(err))
         .finally(() => setLoadingHistory(false));
@@ -191,7 +186,8 @@ export default function Settings({ user }) {
                      <div style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--border)', borderRadius: '12px', padding: '1.5rem', overflowY: 'auto', flex: 1, maxHeight: '500px', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                         {(() => {
                           try {
-                            const t = JSON.parse(selectedTranscript.transcript);
+                            const t = selectedTranscript.transcript ? JSON.parse(selectedTranscript.transcript) : [];
+                            if (t.length === 0) return <div style={{ color: 'var(--text-muted)' }}>Transcript not recorded for this older session.</div>;
                             return t.map((msg, i) => (
                               <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
                                 <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '0.25rem', textTransform: 'uppercase' }}>
