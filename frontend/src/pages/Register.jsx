@@ -152,7 +152,10 @@ export default function Register({ onLogin }) {
         const { error: googleError } = await supabase.auth.signInWithOAuth({
           provider: 'google',
           options: {
-            redirectTo: `${window.location.origin}/register?step=details`
+            redirectTo: `${window.location.origin}/register?step=details`,
+            queryParams: {
+              prompt: 'select_account'
+            }
           }
         });
         if (googleError) throw googleError;
