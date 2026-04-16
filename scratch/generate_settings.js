@@ -81,7 +81,7 @@ export default function Settings({ user }) {
   const handlePayment = () => {
     if (window.Razorpay) {
       const options = {
-        key: 'rzp_test_mock_key',
+        key: 'rzp_live_Sdf05PuAU9ehu9',
         amount: '199900',
         currency: 'INR',
         name: 'G FORCE AI',
