@@ -44,6 +44,17 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
                   <Zap size={13} strokeWidth={2.5} />
                   {(user.gforceTokens || 0).toLocaleString()}
                 </div>
+                {user.rank && (
+                  <div style={{
+                    display: 'flex', alignItems: 'center', gap: '0.35rem',
+                    background: 'rgba(234,179,8,0.1)', border: '1px solid rgba(234,179,8,0.25)',
+                    borderRadius: '20px', padding: '0.3rem 0.65rem',
+                    fontSize: '0.8rem', fontWeight: 800, color: '#facc15'
+                  }}>
+                    <Award size={13} strokeWidth={2.5} />
+                    {user.rank}
+                  </div>
+                )}
                 <div style={{
                     display: 'flex', alignItems: 'center', gap: '0.35rem',
                     background: 'rgba(249,115,22,0.12)', border: '1px solid rgba(249,115,22,0.25)',

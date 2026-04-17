@@ -73,7 +73,7 @@ export default function Dashboard({ user, setUser }) {
       // Push live token + streak into shared user state so Layout header shows them
       if (setUser) {
         setUser(prev => {
-          const updated = { ...prev, gforceTokens: Math.round(combinedData.gforce_tokens || 0), streak: combinedData.current_streak || 0 };
+          const updated = { ...prev, gforceTokens: Math.round(combinedData.gforce_tokens || 0), streak: combinedData.current_streak || 0, rank: combinedData.tier?.name || null };
           localStorage.setItem('user', JSON.stringify(updated));
           return updated;
         });
@@ -101,6 +101,19 @@ export default function Dashboard({ user, setUser }) {
   // Fallback for new users
   const gforce = Math.round(stats.gforce_tokens || 0);
   const tier = stats.tier || { name: 'Unranked', icon: '⬜', color: '#94a3b8' };
+  // Tier icon mapping — Lucide icons only, no emojis
+  const TIER_ICON_MAP = {
+    'Unranked':    <Shield size={22} color="#94a3b8" strokeWidth={2} />,
+    'Bronze':      <Medal size={22} color="#cd7f32" strokeWidth={2} />,
+    'Silver':      <Award size={22} color="#94a3b8" strokeWidth={2} />,
+    'Gold':        <Star size={22} color="#eab308" strokeWidth={2} />,
+    'Platinum':    <Gem size={22} color="#38bdf8" strokeWidth={2} />,
+    'Diamond':     <Sparkles size={22} color="#818cf8" strokeWidth={2} />,
+    'Master':      <Trophy size={22} color="#f97316" strokeWidth={2} />,
+    'Grandmaster': <Crown size={22} color="#ec4899" strokeWidth={2} />,
+  };
+  const TierIcon = () => TIER_ICON_MAP[tier.name] || <Shield size={22} color={tier.color} strokeWidth={2} />;
+  const dailyMins = stats?.timeLimits && !stats.timeLimits.error ? Math.floor(stats.timeLimits.remainingRanked / 60) : null;
   const recentScoresData = (stats.score_trend || []).map((d, i) => ({
     name: `Debate ${i + 1}`,
     score: d.overall_score
@@ -191,121 +204,96 @@ export default function Dashboard({ user, setUser }) {
   return (
     <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '2rem', paddingBottom: '4rem', maxWidth: '1200px', margin: '0 auto' }}>
       
-      {/* SECTION 1: Profile Header & Actions */}
-      <div className="card" style={{ 
-        display: 'flex', flexWrap: 'wrap', gap: '1.25rem', alignItems: 'center', justifyContent: 'space-between',
-        background: `linear-gradient(135deg, ${tier.color}15 0%, var(--bg-tertiary) 100%)`, 
-        borderLeft: `6px solid ${tier.color}`
+      {/* ═══ COMPACT HERO CARD — profile + all stats in one row ═══ */}
+      <div className="card" style={{
+        background: `linear-gradient(135deg, ${tier.color}12 0%, var(--bg-tertiary) 100%)`,
+        borderLeft: `5px solid ${tier.color}`,
+        padding: '1.25rem 1.5rem',
+        display: 'flex', flexWrap: 'wrap', alignItems: 'center',
+        justifyContent: 'space-between', gap: '1rem'
       }}>
-         <div style={{ display: 'flex', alignItems: 'center', gap: '0' }}>
-            <div>
-               <h1 style={{ fontSize: 'clamp(1.15rem, 4vw, 1.75rem)', fontWeight: 800, margin: '0 0 0.25rem 0', wordBreak: 'break-word' }}>{user.name}</h1>
-               <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                 <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Debater</span> &bull; {user.school || 'Debate Arena'}
-               </p>
-             </div>
+        {/* LEFT: Avatar + Name + Title */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{
+            width: '52px', height: '52px', borderRadius: '14px', flexShrink: 0,
+            background: `linear-gradient(135deg, ${tier.color}66, ${tier.color}33)`,
+            border: `2px solid ${tier.color}55`,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: '1.4rem', fontWeight: 900, color: '#fff',
+            overflow: 'hidden'
+          }}>
+            {user.avatar
+              ? <img src={user.avatar} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              : user.name?.charAt(0).toUpperCase()
+            }
           </div>
-          {stats?.timeLimits && !stats.timeLimits.error && stats.timeLimits.remainingRanked !== undefined && (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.4rem', padding: '1rem', background: 'rgba(139, 92, 246, 0.05)', borderRadius: '16px', border: '1px solid rgba(139, 92, 246, 0.15)' }}>
-              <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#7c3aed' }}>Daily Free Time</span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Clock size={22} color="var(--accent)" strokeWidth={2.5} />
-                <span style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1 }}>
-                  {Math.floor(stats.timeLimits.remainingRanked / 60)} <span style={{fontSize: '1rem', color: 'var(--text-secondary)'}}>mins</span>
-                </span>
+          <div>
+            <h1 style={{ fontSize: 'clamp(1.1rem, 3vw, 1.5rem)', fontWeight: 900, margin: 0, letterSpacing: '-0.02em' }}>{user.name}</h1>
+            <p style={{ margin: '0.15rem 0 0', fontSize: '0.82rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <span style={{ fontWeight: 600, color: 'var(--text-muted)' }}>Debater</span>
+              {user.classLevel && <><span style={{ opacity: 0.4 }}>•</span><span style={{ color: tier.color, fontWeight: 700 }}>{user.classLevel}</span></>}
+            </p>
+          </div>
+        </div>
+
+        {/* RIGHT: Compact stat chips */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
+          {/* Tokens */}
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: '0.5rem',
+            background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.25)',
+            borderRadius: '12px', padding: '0.5rem 0.85rem'
+          }}>
+            <Zap size={15} color="#a78bfa" strokeWidth={2.5} />
+            <div>
+              <div style={{ fontSize: '0.62rem', color: '#a78bfa', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', lineHeight: 1 }}>Tokens</div>
+              <div style={{ fontSize: '1.1rem', fontWeight: 900, color: '#fff', lineHeight: 1.2 }}>{gforce.toLocaleString()}</div>
+            </div>
+          </div>
+
+          {/* Tier */}
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: '0.5rem',
+            background: `${tier.color}12`, border: `1px solid ${tier.color}33`,
+            borderRadius: '12px', padding: '0.5rem 0.85rem'
+          }}>
+            <TierIcon />
+            <div>
+              <div style={{ fontSize: '0.62rem', color: tier.color, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', lineHeight: 1 }}>Rank</div>
+              <div style={{ fontSize: '1.1rem', fontWeight: 900, color: '#fff', lineHeight: 1.2 }}>{tier.name}</div>
+            </div>
+          </div>
+
+          {/* Debates */}
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: '0.5rem',
+            background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.25)',
+            borderRadius: '12px', padding: '0.5rem 0.85rem'
+          }}>
+            <Trophy size={15} color="#34d399" strokeWidth={2.5} />
+            <div>
+              <div style={{ fontSize: '0.62rem', color: '#34d399', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', lineHeight: 1 }}>Debates</div>
+              <div style={{ fontSize: '1.1rem', fontWeight: 900, color: '#fff', lineHeight: 1.2 }}>{stats.total_debates || 0}</div>
+            </div>
+          </div>
+
+          {/* Daily Time */}
+          {dailyMins !== null && (
+            <div style={{
+              display: 'flex', alignItems: 'center', gap: '0.5rem',
+              background: 'rgba(139,92,246,0.07)', border: '1px solid rgba(139,92,246,0.18)',
+              borderRadius: '12px', padding: '0.5rem 0.85rem'
+            }}>
+              <Clock size={15} color="#7c3aed" strokeWidth={2.5} />
+              <div>
+                <div style={{ fontSize: '0.62rem', color: '#7c3aed', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', lineHeight: 1 }}>Free Time</div>
+                <div style={{ fontSize: '1.1rem', fontWeight: 900, color: '#fff', lineHeight: 1.2 }}>{dailyMins}m</div>
               </div>
             </div>
           )}
-      </div>
-
-      {/* GFORCE TOKEN HERO CARDS */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))',
-        gap: '1rem'
-      }}>
-        {/* Token Balance */}
-        <div style={{
-          background: 'linear-gradient(135deg, #1a0533 0%, #0f172a 100%)',
-          border: '1px solid rgba(139,92,246,0.35)',
-          borderRadius: '20px',
-          padding: '1.5rem',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1.25rem',
-          position: 'relative',
-          overflow: 'hidden'
-        }}>
-          <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '120px', height: '120px', borderRadius: '50%', background: 'rgba(139,92,246,0.08)' }} />
-          <div style={{
-            width: '56px', height: '56px', borderRadius: '16px',
-            background: 'linear-gradient(135deg, #7c3aed, #a855f7)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: '0 4px 20px rgba(139,92,246,0.4)', flexShrink: 0
-          }}>
-            <span style={{ fontSize: '1.6rem' }}>⚡</span>
-          </div>
-          <div>
-            <p style={{ margin: 0, fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: '#a78bfa' }}>Gforce Tokens</p>
-            <p style={{ margin: '0.15rem 0 0', fontSize: '2.2rem', fontWeight: 900, color: '#fff', lineHeight: 1, letterSpacing: '-0.02em' }}>{gforce.toLocaleString()}</p>
-          </div>
-        </div>
-
-        {/* Tier Card */}
-        <div style={{
-          background: `linear-gradient(135deg, ${tier.color}22 0%, #0f172a 100%)`,
-          border: `1px solid ${tier.color}55`,
-          borderRadius: '20px',
-          padding: '1.5rem',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1.25rem',
-          position: 'relative',
-          overflow: 'hidden'
-        }}>
-          <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '120px', height: '120px', borderRadius: '50%', background: `${tier.color}10` }} />
-          <div style={{
-            width: '56px', height: '56px', borderRadius: '16px',
-            background: `linear-gradient(135deg, ${tier.color}99, ${tier.color})`,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: `0 4px 20px ${tier.color}55`, flexShrink: 0, fontSize: '2rem'
-          }}>
-            {tier.icon}
-          </div>
-          <div>
-            <p style={{ margin: 0, fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: tier.color }}>Current Tier</p>
-            <p style={{ margin: '0.15rem 0 0', fontSize: '1.6rem', fontWeight: 900, color: '#fff', lineHeight: 1 }}>{tier.name}</p>
-          </div>
-        </div>
-
-        {/* Debates stat */}
-        <div style={{
-          background: 'linear-gradient(135deg, #0c1a12 0%, #0f172a 100%)',
-          border: '1px solid rgba(16,185,129,0.25)',
-          borderRadius: '20px',
-          padding: '1.5rem',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1.25rem',
-          position: 'relative',
-          overflow: 'hidden'
-        }}>
-          <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '120px', height: '120px', borderRadius: '50%', background: 'rgba(16,185,129,0.06)' }} />
-          <div style={{
-            width: '56px', height: '56px', borderRadius: '16px',
-            background: 'linear-gradient(135deg, #059669, #10b981)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: '0 4px 20px rgba(16,185,129,0.4)', flexShrink: 0
-          }}>
-            <span style={{ fontSize: '1.6rem' }}>🏆</span>
-          </div>
-          <div>
-            <p style={{ margin: 0, fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: '#34d399' }}>Debates</p>
-            <p style={{ margin: '0.15rem 0 0', fontSize: '2.2rem', fontWeight: 900, color: '#fff', lineHeight: 1 }}>{stats.total_debates || 0}</p>
-          </div>
         </div>
       </div>
-
+
       {/* DEBATE MODE TILES — always visible */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '1.5rem' }}>
         
