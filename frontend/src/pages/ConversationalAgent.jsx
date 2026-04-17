@@ -161,7 +161,6 @@ export default function ConversationalAgent({ user }) {
     let isTerminated = false;
 
     const fetchLimits = async () => {
-      setStatus('connecting');
       try {
         const res = await fetch(`/api/time-limits/${user.studentId}`);
         if (isTerminated) return;
@@ -174,7 +173,7 @@ export default function ConversationalAgent({ user }) {
           }
           initialDailyRemainingRef.current = remain;
           setMaxMinutesAvailable(Math.floor(remain / 60));
-          // stay on select_topic
+          setStatus('select_topic');
         }
       } catch(err) {
         console.error('Failed to fetch time limits', err);
