@@ -132,7 +132,7 @@ export default function Dashboard({ user }) {
             <div>
                <h1 style={{ fontSize: 'clamp(1.15rem, 4vw, 1.75rem)', fontWeight: 800, margin: '0 0 0.25rem 0', wordBreak: 'break-word' }}>{user.name}</h1>
                <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                 <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{user.classLevel}</span> &bull; {user.school || 'Debate Arena'}
+                 <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Debater</span> &bull; {user.school || 'Debate Arena'}
                </p>
              </div>
           </div>
@@ -178,7 +178,7 @@ export default function Dashboard({ user }) {
               <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Zap size={24} strokeWidth={2.5} />
               </div>
-              <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.8 }}>{user?.classLevel || 'Level 4'}</span>
+              <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.8 }}>Persona Match</span>
             </div>
             <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem 0', letterSpacing: '-0.02em' }}>
               {isJunior ? 'Fun Debate Practice' : 'Ranked Match'}

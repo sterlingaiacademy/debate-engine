@@ -439,12 +439,12 @@ export default function Register({ onLogin }) {
                   />
                 </div>
                 <div style={{ flex: '1', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                  <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Class</label>
+                  <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Grade</label>
                   <select value={formData.selectedClass} onChange={set('selectedClass')}
                     style={{ padding: '0.8rem', background: '#0f1322', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none', cursor: 'pointer' }}>
                     <option value="KG">KG</option>
                     {[...Array(12)].map((_, i) => (
-                      <option key={`Class ${i + 1}`} value={`Class ${i + 1}`}>Class {i + 1}</option>
+                      <option key={`Class ${i + 1}`} value={`Class ${i + 1}`}>Grade {i + 1}</option>
                     ))}
                   </select>
                 </div>
