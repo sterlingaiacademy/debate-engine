@@ -350,14 +350,13 @@ const formatTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0
       )}
       {/* Chat Window */}
       {status !== 'select_topic' && (
-      <div className="card" style={{
+      <div style={{
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
         padding: 0,
         overflow: 'hidden',
         minHeight: 0,
-        borderRadius: 'var(--radius-xl)',
       }}>
         <div style={{ flex: 1, overflowY: isActive ? 'hidden' : 'auto', padding: isActive ? 0 : '1.5rem', display: 'flex', flexDirection: 'column', gap: isActive ? 0 : '1rem' }}>
           
