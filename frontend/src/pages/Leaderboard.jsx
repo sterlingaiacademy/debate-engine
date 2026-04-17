@@ -159,7 +159,7 @@ export default function Leaderboard({ user }) {
          </div>
          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center' }}>
             <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--accent)', background: 'var(--accent-light)', padding: '0.3rem 0.75rem', borderRadius: '4px' }}>
-              {user?.classLevel?.replace('Level', 'Grade') || 'Grade Rank'}
+              {user?.grade ? (user.grade.startsWith('Class') ? user.grade.replace('Class', 'Grade') : user.grade) : (user?.classLevel || 'Unranked')}
             </span>
             <input 
               type="text" 
@@ -275,7 +275,7 @@ export default function Leaderboard({ user }) {
                             </div>
                           </div>
                         </td>
-                        <td className="hide-mobile" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 600 }}>{leader.grade ? (leader.grade.startsWith('Class') ? leader.grade.replace('Class', 'Grade') : leader.grade) : (leader.class?.replace('Level', 'Grade') || 'Grade 1-3')}</td>
+                        <td className="hide-mobile" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 600 }}>{leader.grade ? (leader.grade.startsWith('Class') ? leader.grade.replace('Class', 'Grade') : leader.grade) : (leader.class || 'Unranked')}</td>
                         <td style={{ textAlign: 'center', fontWeight: 600, color: 'var(--text-secondary)' }}>{leader.total_debates}</td>
                         <td className="hide-mobile" style={{ textAlign: 'center' }}>
                           <span style={{ 
