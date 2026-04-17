@@ -1,5 +1,5 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { LogOut, LayoutDashboard, Mic, BarChart2, Trophy, UserCircle, Users, Zap } from 'lucide-react';
+import { LogOut, LayoutDashboard, Mic, BarChart2, Trophy, UserCircle, Users, Zap, Flame } from 'lucide-react';
 
 export default function Layout({ user, onLogout, onSwitchProfile }) {
   const { pathname } = useLocation();
@@ -31,6 +31,32 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
           ))}
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginLeft: '0.75rem', paddingLeft: '0.75rem', borderLeft: '1px solid var(--border)' }}>
+
+            {/* GForce Token + Streak Pills */}
+            {user?.gforceTokens !== undefined && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <div style={{
+                  display: 'flex', alignItems: 'center', gap: '0.35rem',
+                  background: 'rgba(139,92,246,0.12)', border: '1px solid rgba(139,92,246,0.25)',
+                  borderRadius: '20px', padding: '0.3rem 0.65rem',
+                  fontSize: '0.8rem', fontWeight: 800, color: '#a78bfa'
+                }}>
+                  <Zap size={13} strokeWidth={2.5} />
+                  {(user.gforceTokens || 0).toLocaleString()}
+                </div>
+                {user.streak > 0 && (
+                  <div style={{
+                    display: 'flex', alignItems: 'center', gap: '0.35rem',
+                    background: 'rgba(249,115,22,0.12)', border: '1px solid rgba(249,115,22,0.25)',
+                    borderRadius: '20px', padding: '0.3rem 0.65rem',
+                    fontSize: '0.8rem', fontWeight: 800, color: '#fb923c'
+                  }}>
+                    <Flame size={13} strokeWidth={2.5} />
+                    {user.streak}d
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Switch Profile Button */}
             {onSwitchProfile && (

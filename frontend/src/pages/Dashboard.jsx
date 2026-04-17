@@ -36,7 +36,7 @@ const formatCategory = (key) => {
 let cachedStats = null;
 let cachedStudentId = null;
 
-export default function Dashboard({ user }) {
+export default function Dashboard({ user, setUser }) {
   const navigate = useNavigate();
   const [stats, setStats] = useState(() => ((user?.studentId || user?.username) === cachedStudentId ? cachedStats : null));
   const [loading, setLoading] = useState(!stats);
@@ -70,6 +70,14 @@ export default function Dashboard({ user }) {
       cachedStats = combinedData;
       cachedStudentId = activeId;
       setStats(combinedData);
+      // Push live token + streak into shared user state so Layout header shows them
+      if (setUser) {
+        setUser(prev => {
+          const updated = { ...prev, gforceTokens: Math.round(combinedData.gforce_tokens || 0), streak: combinedData.current_streak || 0 };
+          localStorage.setItem('user', JSON.stringify(updated));
+          return updated;
+        });
+      }
       setLoading(false);
     })
     .catch((e) => {

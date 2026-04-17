@@ -270,7 +270,7 @@ function App() {
             } />
             
             <Route element={<Layout user={user} onLogout={handleLogout} onSwitchProfile={handleSwitchProfile} />}>
-              <Route path="/dashboard" element={user ? <Dashboard user={user} /> : <Navigate to="/" />} />
+              <Route path="/dashboard" element={user ? <Dashboard user={user} setUser={setUser} /> : <Navigate to="/" />} />
               <Route path="/debate" element={user ? <DebateArena user={user} /> : <Navigate to="/" />} />
               <Route path="/results/:sessionId" element={user ? <Results user={user} /> : <Navigate to="/" />} />
               <Route path="/analytics" element={user ? <Analytics user={user} /> : <Navigate to="/" />} />
