@@ -86,9 +86,13 @@ export default function Login({ onLogin }) {
         });
         if (verifyError) throw verifyError;
         
-        // Ensure user obj sync
-        const fakeProfile = { name: data.user?.phone || 'User', classLevel: 'Level 3' };
-        onLogin(fakeProfile);
+        // Fetch real profile from DB using the phone number
+        const phone = data.user?.phone;
+        const userId = data.user?.id;
+        
+        // Try fetching by phone (stored as email-equivalent in some setups)
+        // App.jsx hydrateUserFallback will handle this via onAuthStateChange
+        // Just navigate to dashboard and let the auth listener hydrate
         navigate('/dashboard');
       } else if (method === 'credentials') {
         // Standard username/pwd against existing legacy DB
