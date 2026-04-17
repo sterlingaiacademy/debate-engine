@@ -8,7 +8,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
   const [isCollapsed, setIsCollapsed] = useState(true); // START COLLAPSED by default
   const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel);
 
-  const isFullScreenRoute = pathname.includes('/debate') || pathname.includes('/agent') || pathname.includes('/persona') || pathname.includes('/mock-un');
+  const isFullScreenRoute = pathname.includes('/debate') || pathname.includes('agent') || pathname.includes('/persona') || pathname.includes('/mock-un');
 
 
   const navLinks = [
