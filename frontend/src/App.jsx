@@ -178,7 +178,7 @@ function App() {
               <Route path="/persona" element={user ? <PersonaPicker user={user} /> : <Navigate to="/" />} />
               <Route path="/persona-debate" element={user ? <PersonaDebate user={user} /> : <Navigate to="/" />} />
               <Route path="/mock-un" element={user ? <MockUN user={user} /> : <Navigate to="/" />} />
-              <Route path="/settings" element={user ? <Settings user={user} /> : <Navigate to="/" />} />
+              <Route path="/settings" element={user ? <Settings user={user} setUser={setUser} /> : <Navigate to="/" />} />
               <Route path="/conversational-agent" element={user ? <ConversationalAgent user={user} /> : <Navigate to="/" />} />
               <Route path="/debate-instructions" element={user ? <DebateInstructions user={user} /> : <Navigate to="/" />} />
             </Route>
