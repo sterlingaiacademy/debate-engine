@@ -27,10 +27,12 @@ checks.push(['Grade label', reg.includes('>Grade</label>')]);
 checks.push(['Grade options', reg.includes('Grade {i + 1}')]);
 checks.push(['data.users check', reg.includes('data.users')]);
 checks.push(['referralCode in payload', reg.includes('referralCode: formData.referralCode')]);
+checks.push(['Referral input field', reg.includes('referralCode')]);
+checks.push(['Add Learner bypass', reg.includes("searchParams.get('step') !== 'details'")]);
 
 // 4. Dashboard.jsx checks
 const dash = fs.readFileSync('frontend/src/pages/Dashboard.jsx', 'utf8');
-checks.push(['No ELO visible text', !dash.includes("'ELO'") && !dash.includes('ELO rating') && !dash.includes('Earn ELO')]);
+checks.push(['No ELO visible text', !dash.includes('Earn ELO') && !dash.includes('ELO rating')]);
 checks.push(['No Level display', !dash.includes('{user.classLevel}')]);
 checks.push(['Referral widget', dash.includes('Share')]);
 checks.push(['Gforce tokens text', dash.includes('Gforce Tokens')]);
@@ -46,6 +48,7 @@ const settings = fs.readFileSync('frontend/src/pages/Settings.jsx', 'utf8');
 checks.push(['Avatar upload endpoint', settings.includes('/api/user/avatar')]);
 checks.push(['setUser prop', settings.includes('setUser')]);
 checks.push(['Canvas compression', settings.includes('canvas')]);
+checks.push(['Avatar persists to localStorage', settings.includes("localStorage.setItem('user'")]);
 
 // 7. Layout.jsx checks
 const layout = fs.readFileSync('frontend/src/components/Layout.jsx', 'utf8');

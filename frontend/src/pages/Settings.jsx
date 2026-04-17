@@ -76,7 +76,9 @@ export default function Settings({ user, setUser }) {
           .then(r => r.json())
           .then(data => {
              if(data.success) {
-                setUser({ ...user, avatar: base64Avatar });
+                const updatedUser = { ...user, avatar: base64Avatar };
+                setUser(updatedUser);
+                localStorage.setItem('user', JSON.stringify(updatedUser));
              } else {
                 alert("Failed to save profile picture.");
              }

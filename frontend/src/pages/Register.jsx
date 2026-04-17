@@ -89,7 +89,8 @@ export default function Register({ onLogin }) {
       if (session) {
         
         // Prevent duplicate accounts: check if legacy profile already exists
-        if (session.user?.email) {
+        // BUT skip this check if coming from "Add Learner" (step=details already set)
+        if (session.user?.email && searchParams.get('step') !== 'details') {
           try {
              const res = await fetch(`/api/user-by-email/${encodeURIComponent(session.user.email)}`);
              if (res.ok) {
