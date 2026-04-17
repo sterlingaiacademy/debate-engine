@@ -231,7 +231,7 @@ export default function Dashboard({ user, setUser }) {
             <h1 style={{ fontSize: 'clamp(1.1rem, 3vw, 1.5rem)', fontWeight: 900, margin: 0, letterSpacing: '-0.02em' }}>{user.name}</h1>
             <p style={{ margin: '0.15rem 0 0', fontSize: '0.82rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
               <span style={{ fontWeight: 600, color: 'var(--text-muted)' }}>Debater</span>
-              {user.classLevel && <><span style={{ opacity: 0.4 }}>•</span><span style={{ color: tier.color, fontWeight: 700 }}>{user.classLevel}</span></>}
+              {user.classLevel && <><span style={{ opacity: 0.4 }}>•</span><span style={{ color: tier.color, fontWeight: 700 }}>{user.classLevel.replace('Level', 'Grade')}</span></>}
             </p>
           </div>
         </div>

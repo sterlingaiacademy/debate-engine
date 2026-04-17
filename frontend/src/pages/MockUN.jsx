@@ -408,7 +408,7 @@ export default function MockUN({ user }) {
             </div>
             <div>
               <h2 style={{ color: '#fbbf24', fontWeight: 800, fontSize: '1.5rem', margin: 0, letterSpacing: '-0.02em' }}>Model UN</h2>
-              <p style={{ color: 'rgba(255,255,255,0.6)', margin: 0, fontSize: '0.9rem' }}>Level 5 · Premium · Debate real-world UN topics</p>
+              <p style={{ color: 'rgba(255,255,255,0.6)', margin: 0, fontSize: '0.9rem' }}>Grade 5 · Premium · Debate real-world UN topics</p>
             </div>
           </div>
 
@@ -510,7 +510,7 @@ export default function MockUN({ user }) {
         <div style={{ textAlign: 'center' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'linear-gradient(135deg, rgba(251,191,36,0.1) 0%, rgba(217,119,6,0.1) 100%)', border: '1px solid rgba(251,191,36,0.25)', borderRadius: '99px', padding: '0.4rem 1rem', marginBottom: '1rem' }}>
             <Globe size={14} color="#fbbf24" />
-            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#d97706', textTransform: 'uppercase', letterSpacing: '0.07em' }}>Model UN · Level 5 Premium</span>
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#d97706', textTransform: 'uppercase', letterSpacing: '0.07em' }}>Model UN · Grade 5 Premium</span>
           </div>
           <h2 style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 800, marginBottom: '0.5rem' }}>Choose Your Topic</h2>
           <p style={{ color: 'var(--text-secondary)', margin: 0 }}>Select a global issue to debate. Your AI opponent will argue the opposing position.</p>

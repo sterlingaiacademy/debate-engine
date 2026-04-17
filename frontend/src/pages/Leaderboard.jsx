@@ -159,7 +159,7 @@ export default function Leaderboard({ user }) {
          </div>
          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center' }}>
             <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--accent)', background: 'var(--accent-light)', padding: '0.3rem 0.75rem', borderRadius: '4px' }}>
-              {user?.classLevel || 'Level Rank'}
+              {user?.classLevel?.replace('Level', 'Grade') || 'Grade Rank'}
             </span>
             <input 
               type="text" 
@@ -226,7 +226,7 @@ export default function Leaderboard({ user }) {
                   <tr>
                     <th style={{ width: '80px', textAlign: 'center' }}>Rank</th>
                     <th>Debater</th>
-                    <th className="hide-mobile">Level</th>
+                    <th className="hide-mobile">Grade</th>
                     <th style={{ textAlign: 'center' }}>Debates</th>
                     <th className="hide-mobile" style={{ textAlign: 'center' }}>Win Rate</th>
                     <th style={{ textAlign: 'right' }}>{category === 'global' ? 'Gforce Tokens' : category === 'top_streaks' ? 'Max Streak (Days)' : 'Avg Score'}</th>
@@ -275,7 +275,7 @@ export default function Leaderboard({ user }) {
                             </div>
                           </div>
                         </td>
-                        <td className="hide-mobile" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 600 }}>{leader.class || 'Class 1-3'}</td>
+                        <td className="hide-mobile" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 600 }}>{leader.class?.replace('Level', 'Grade') || 'Class 1-3'}</td>
                         <td style={{ textAlign: 'center', fontWeight: 600, color: 'var(--text-secondary)' }}>{leader.total_debates}</td>
                         <td className="hide-mobile" style={{ textAlign: 'center' }}>
                           <span style={{ 

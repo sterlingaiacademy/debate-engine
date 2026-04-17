@@ -82,7 +82,7 @@ export default function PersonaPicker({ user }) {
             Pick a leader and start a live voice conversation
           </p>
         </div>
-        <span className="badge badge-blue" style={{ marginLeft: 'auto' }}>{user?.classLevel || 'Level 4'} • Persona Mode</span>
+        <span className="badge badge-blue" style={{ marginLeft: 'auto' }}>{user?.classLevel?.replace('Level', 'Grade') || 'Grade 4'} • Persona Mode</span>
       </div>
 
       {/* Legend */}
