@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { LogOut, LayoutDashboard, Mic, BarChart2, Trophy, UserCircle, Users, Zap, Flame, Award } from 'lucide-react';
+import { LogOut, LayoutDashboard, Mic, BarChart2, Trophy, UserCircle, Users, Zap, Flame, Award, ChevronLeft, ChevronRight } from 'lucide-react';
+import logoImg from '../assets/logo.png';
 
 export default function Layout({ user, onLogout, onSwitchProfile }) {
   const { pathname } = useLocation();
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel);
 
   const navLinks = [
@@ -15,16 +18,52 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
 
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: 'var(--bg-primary)' }}>
-      {/* SIDEBAR NAVIGATION */}
+      {/* SIDEBAR NAVIGATION - Glassmorphic iOS Style */}
       <aside style={{ 
-        width: '280px', flexShrink: 0, borderRight: '1px solid var(--border)', 
-        background: 'var(--bg-secondary)', display: 'flex', flexDirection: 'column',
-        padding: '1.5rem', zIndex: 50
+        width: isCollapsed ? '88px' : '280px', flexShrink: 0, 
+        borderRight: '1px solid rgba(255,255,255,0.08)', 
+        background: 'rgba(30, 41, 59, 0.4)',
+        backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
+        display: 'flex', flexDirection: 'column',
+        padding: isCollapsed ? '1.5rem 0.75rem' : '1.5rem', zIndex: 50,
+        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+        boxShadow: '4px 0 24px rgba(0,0,0,0.2)'
       }}>
-        {/* LOGO */}
-        <Link to="/dashboard" style={{ fontFamily: 'var(--font-sans)', fontWeight: 900, letterSpacing: '-0.02em', fontSize: '1.75rem', marginBottom: '2.5rem', color: 'var(--text-primary)', textDecoration: 'none' }}>
-          G FORCE
-        </Link>
+        {/* LOGO AND TOGGLE */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: isCollapsed ? 'center' : 'space-between', marginBottom: '2.5rem' }}>
+          <Link to="/dashboard" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }}>
+            <img src={logoImg} alt="G FORCE" style={{ height: '32px', width: 'auto', flexShrink: 0 }} />
+            {!isCollapsed && (
+              <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 900, letterSpacing: '-0.02em', fontSize: '1.5rem', color: 'var(--text-primary)' }}>
+                G FORCE
+              </span>
+            )}
+          </Link>
+          <button 
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            style={{ 
+              background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'var(--text-muted)', 
+              cursor: 'pointer', padding: '0.25rem', borderRadius: '50%', display: isCollapsed ? 'none' : 'flex' 
+            }}
+          >
+            <ChevronLeft size={16} />
+          </button>
+        </div>
+
+        {/* Expand toggle when collapsed (Floating) */}
+        {isCollapsed && (
+          <button 
+            onClick={() => setIsCollapsed(false)}
+            style={{
+              alignSelf: 'center', marginBottom: '1.5rem',
+              background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
+              borderRadius: '50%', padding: '0.25rem', color: 'var(--text-secondary)',
+              cursor: 'pointer', zIndex: 100
+            }}
+          >
+            <ChevronRight size={16} />
+          </button>
+        )}
 
         {/* NAV LINKS */}
         <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', flex: 1 }}>
@@ -34,27 +73,31 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
               <Link
                 key={name}
                 to={path}
+                title={isCollapsed ? name : ''}
                 style={{
-                  display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.875rem 1rem',
+                  display: 'flex', alignItems: 'center', gap: '0.75rem', 
+                  padding: isCollapsed ? '0.875rem' : '0.875rem 1rem',
+                  justifyContent: isCollapsed ? 'center' : 'flex-start',
                   borderRadius: '12px', color: isActive ? '#fff' : 'var(--text-secondary)',
-                  background: isActive ? 'var(--accent)' : 'transparent',
+                  background: isActive ? 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)' : 'transparent',
                   fontWeight: isActive ? 800 : 600, fontSize: '1rem', textDecoration: 'none',
                   transition: 'all 0.2s ease', 
-                  boxShadow: isActive ? '0 4px 15px rgba(139, 92, 246, 0.2)' : 'none'
+                  boxShadow: isActive ? '0 4px 15px rgba(217, 119, 6, 0.4), inset 0 1px 1px rgba(255,255,255,0.2)' : 'none',
+                  overflow: 'hidden', whiteSpace: 'nowrap'
                 }}
               >
-                <Icon size={20} strokeWidth={isActive ? 2.5 : 2} />
-                <span>{name}</span>
+                <Icon size={20} strokeWidth={isActive ? 2.5 : 2} style={{ flexShrink: 0 }} />
+                {!isCollapsed && <span style={{ opacity: isCollapsed ? 0 : 1, transition: 'opacity 0.2s' }}>{name}</span>}
               </Link>
             );
           })}
         </nav>
 
         {/* BOTTOM SECTION: Stats & User */}
-        <div style={{ marginTop: 'auto', paddingTop: '1.5rem', borderTop: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div style={{ marginTop: 'auto', paddingTop: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.08)', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           
           {/* Stats Pills */}
-          {user && (
+          {!isCollapsed && user && (
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
               <div style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem',
@@ -90,8 +133,13 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
           )}
 
           {/* User Profile Bar */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', background: 'var(--bg-tertiary)', padding: '0.75rem', borderRadius: '12px' }}>
-            <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--bg-secondary)', overflow: 'hidden', display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid var(--border)', flexShrink: 0 }}>
+          <div style={{ 
+            display: 'flex', alignItems: 'center', gap: '0.75rem', 
+            background: 'rgba(255,255,255,0.03)', padding: isCollapsed ? '0.5rem' : '0.75rem', 
+            borderRadius: '12px', justifyContent: isCollapsed ? 'center' : 'flex-start',
+            border: '1px solid rgba(255,255,255,0.05)'
+          }}>
+            <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(255,255,255,0.1)', overflow: 'hidden', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0 }}>
                {user?.avatar ? (
                   <img src={user.avatar} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                ) : (
@@ -100,24 +148,29 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
                   </span>
                )}
             </div>
-            <div style={{ flex: 1, overflow: 'hidden' }}>
-              <div style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user?.name}</div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>{user?.classLevel?.replace('Level', 'Grade')}</div>
-            </div>
+            
+            {!isCollapsed && (
+              <>
+                <div style={{ flex: 1, overflow: 'hidden' }}>
+                  <div style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user?.name}</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>{user?.classLevel?.replace('Level', 'Grade')}</div>
+                </div>
 
-            <button
-              onClick={onLogout}
-              style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex', padding: '0.5rem', borderRadius: '8px', transition: 'all 0.2s' }}
-              title="Logout"
-              onMouseEnter={e => { e.currentTarget.style.color = '#ef4444'; e.currentTarget.style.background = 'rgba(239,68,68,0.1)' }}
-              onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-muted)'; e.currentTarget.style.background = 'transparent' }}
-            >
-              <LogOut size={18} />
-            </button>
+                <button
+                  onClick={onLogout}
+                  style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex', padding: '0.5rem', borderRadius: '8px', transition: 'all 0.2s' }}
+                  title="Logout"
+                  onMouseEnter={e => { e.currentTarget.style.color = '#ef4444'; e.currentTarget.style.background = 'rgba(239,68,68,0.1)' }}
+                  onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-muted)'; e.currentTarget.style.background = 'transparent' }}
+                >
+                  <LogOut size={18} />
+                </button>
+              </>
+            )}
           </div>
 
           {/* Switch Profile Button */}
-          {onSwitchProfile && user?.email && (
+          {!isCollapsed && onSwitchProfile && user?.email && (
             <button
               onClick={onSwitchProfile}
               style={{
@@ -143,11 +196,27 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
               Switch Accounts
             </button>
           )}
+
+          {/* Only Logout Button if Collapsed */}
+          {isCollapsed && (
+             <button
+              onClick={onLogout}
+              style={{ 
+                width: '100%',
+                background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', 
+                color: '#ef4444', cursor: 'pointer', display: 'flex', justifyContent: 'center', 
+                padding: '0.75rem', borderRadius: '12px', transition: 'all 0.2s' 
+              }}
+              title="Logout"
+            >
+              <LogOut size={18} />
+            </button>
+          )}
         </div>
       </aside>
 
       {/* MAIN CONTENT */}
-      <main style={{ flex: 1, overflowX: 'hidden', overflowY: 'auto', padding: '2rem 1.5rem', display: 'flex', justifyContent: 'center' }}>
+      <main style={{ flex: 1, overflowX: 'hidden', overflowY: 'auto', padding: '2rem 1.5rem', display: 'flex', justifyContent: 'center', position: 'relative', zIndex: 10 }}>
         <div style={{ width: '100%', maxWidth: '1100px' }}>
           <Outlet />
         </div>
