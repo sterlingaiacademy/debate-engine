@@ -51,14 +51,18 @@ function App() {
       const { data: { session } } = await supabase.auth.getSession();
       email = session?.user?.email;
     } catch (e) {}
-    // Fallback: use email stored in user object (credential login users)
+    // Fallback 1: use email stored in user object (credential login users)
     if (!email) {
       const storedUser = localStorage.getItem('user');
       const parsed = storedUser ? JSON.parse(storedUser) : null;
       email = parsed?.email;
     }
+    // Fallback 2: use email from current in-memory user state
     if (!email) {
-      alert('Cannot switch profile: no email linked to this account.');
+      email = user?.email;
+    }
+    if (!email) {
+      alert('Your account does not have multiple profiles linked to the same email. Each account has a single profile.');
       return;
     }
     try {
@@ -126,7 +130,8 @@ function App() {
           assignedAgentId: legacyUser.assignedAgentId,
           id: legacyUser.id || session.user.id,
           studentId: legacyUser.studentId,
-          avatar: legacyUser.avatar
+          avatar: legacyUser.avatar,
+          email: legacyUser.email || session.user.email || null
       });
 
       // After successful OAuth login, naturally dump them into the dashboard if they are on root
