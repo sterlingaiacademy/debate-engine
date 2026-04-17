@@ -75,9 +75,9 @@ body {
 
 /* Senior Dark Futuristic Theme */
 .theme-senior {
-  --bg-primary: #0A0D18;
-  --bg-secondary: #06080F;
-  --bg-tertiary: #111524;
+  --bg-primary: #000000;
+  --bg-secondary: #000000;
+  --bg-tertiary: #040404;
   --text-primary: #e2e8f0;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;

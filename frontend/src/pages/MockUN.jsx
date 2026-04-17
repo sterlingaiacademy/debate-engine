@@ -301,7 +301,6 @@ export default function MockUN({ user }) {
               flex: 1, display: 'flex', flexDirection: 'column',
               alignItems: 'center', justifyContent: 'center', gap: '2rem',
               position: 'relative', width: '100%', height: '100%',
-              background: 'radial-gradient(ellipse at bottom, #1a1035 0%, #030712 100%)',
             }}>
               {/* UN Banner at top */}
               <div style={{

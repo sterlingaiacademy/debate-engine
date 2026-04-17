@@ -507,9 +507,7 @@ const formatTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0
               alignItems: 'center', justifyContent: 'center', gap: '2rem',
               position: 'relative', width: '100%', height: '100%',
 
-              background: isJunior
-                ? 'radial-gradient(circle at center, rgba(139,92,246,0.05) 0%, transparent 60%)'
-                : 'radial-gradient(ellipse at bottom, #1e1b4b 0%, #030712 100%)'
+              position: 'relative', width: '100%', height: '100%',
             }}>
               
               {/* Screen Sleep Overlay for Kids */}

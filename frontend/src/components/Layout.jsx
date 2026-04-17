@@ -22,8 +22,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
   return (
     <div style={{ 
       display: 'flex', height: '100vh', overflow: 'hidden', 
-      backgroundColor: isFullScreenRoute ? '#000000' : 'var(--bg-primary)',
-      backgroundImage: isFullScreenRoute ? 'none' : 'radial-gradient(circle at 15% 50%, rgba(255, 107, 0, 0.08), transparent 25%), radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.08), transparent 25%)'
+      backgroundColor: '#000000',
     }}>
       {/* SIDEBAR NAVIGATION - Glassmorphic iOS Style */}
       <aside style={{ 
