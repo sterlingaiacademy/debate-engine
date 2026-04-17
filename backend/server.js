@@ -83,13 +83,31 @@ app.get('/api/check-username/:username', async (req, res) => {
 app.get('/api/user-by-email/:email', async (req, res) => {
   try {
     const { email } = req.params;
-    const { rows } = await db.query(`SELECT id, name, "studentId", "classLevel", "assignedAgentId", avatar FROM users WHERE email = $1 LIMIT 1`, [email]);
+    const { rows } = await db.query(`SELECT id, name, "studentId", "classLevel", "assignedAgentId", avatar FROM users WHERE email = $1`, [email]);
     if (rows.length === 0) {
       return res.status(404).json({ error: 'User not found' });
     }
-    res.json({ user: rows[0] });
+    res.json({ users: rows });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+// Upload Avatar
+app.post('/api/user/avatar', async (req, res) => {
+  const { studentId, avatar } = req.body;
+  
+  if (!studentId || !avatar) {
+    return res.status(400).json({ error: 'Missing parameters' });
+  }
+
+  try {
+    await db.query(`UPDATE users SET avatar = $1 WHERE "studentId" = $2`, [avatar, studentId]);
+    await db.query(`UPDATE debate_users SET avatar_url = $1 WHERE user_id = $2`, [avatar, studentId]);
+    res.status(200).json({ success: true, avatar });
+  } catch (err) {
+    console.error('Avatar upload error:', err);
+    res.status(500).json({ error: 'Server error' });
   }
 });
 
