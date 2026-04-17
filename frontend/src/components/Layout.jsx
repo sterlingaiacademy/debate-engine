@@ -1,7 +1,7 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { LogOut, LayoutDashboard, Mic, BarChart2, Trophy, UserCircle } from 'lucide-react';
+import { LogOut, LayoutDashboard, Mic, BarChart2, Trophy, UserCircle, Users, Zap } from 'lucide-react';
 
-export default function Layout({ user, onLogout }) {
+export default function Layout({ user, onLogout, onSwitchProfile }) {
   const { pathname } = useLocation();
   const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel);
 
@@ -31,6 +31,35 @@ export default function Layout({ user, onLogout }) {
           ))}
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginLeft: '0.75rem', paddingLeft: '0.75rem', borderLeft: '1px solid var(--border)' }}>
+
+            {/* Switch Profile Button */}
+            {onSwitchProfile && (
+              <button
+                onClick={onSwitchProfile}
+                title="Switch Profile"
+                style={{
+                  background: 'rgba(139,92,246,0.12)',
+                  border: '1px solid rgba(139,92,246,0.25)',
+                  borderRadius: '8px',
+                  padding: '0.35rem 0.6rem',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  color: '#a78bfa',
+                  fontSize: '0.78rem',
+                  fontWeight: 700,
+                  transition: 'all 0.15s',
+                }}
+                onMouseEnter={e => e.currentTarget.style.background = 'rgba(139,92,246,0.22)'}
+                onMouseLeave={e => e.currentTarget.style.background = 'rgba(139,92,246,0.12)'}
+              >
+                <Users size={14} />
+                <span className="nav-label">Profiles</span>
+              </button>
+            )}
+
+            {/* Avatar */}
             <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--bg-tertiary)', overflow: 'hidden', display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid var(--border)' }}>
                {user?.avatar ? (
                   <img src={user.avatar} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />

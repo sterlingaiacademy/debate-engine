@@ -44,6 +44,24 @@ function App() {
     await supabase.auth.signOut();
   };
 
+  const handleSwitchProfile = async () => {
+    // Fetch profiles for the current Supabase session
+    const { data: { session } } = await supabase.auth.getSession();
+    const email = session?.user?.email;
+    if (!email) return;
+    try {
+      const res = await fetch(`/api/user-by-email/${encodeURIComponent(email)}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.users && data.users.length > 0) {
+          setUser(null);
+          localStorage.removeItem('user');
+          setProfilesToSelect(data.users);
+        }
+      }
+    } catch (e) { console.error(e); }
+  };
+
   const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel);
   const themeClass = isJunior ? 'theme-junior' : 'theme-senior';
 
@@ -245,9 +263,13 @@ function App() {
             {/* Public landing page — root route */}
             <Route path="/" element={!user ? <LandingPage /> : <Navigate to="/dashboard" />} />
             <Route path="/login" element={!user ? <Login onLogin={handleLogin} /> : <Navigate to="/dashboard" />} />
-            <Route path="/register" element={!user ? <Register onLogin={handleLogin} /> : <Navigate to="/dashboard" />} />
+            <Route path="/register" element={
+              user && !window.location.search.includes('step=details')
+                ? <Navigate to="/dashboard" />
+                : <Register onLogin={handleLogin} />
+            } />
             
-            <Route element={<Layout user={user} onLogout={handleLogout} />}>
+            <Route element={<Layout user={user} onLogout={handleLogout} onSwitchProfile={handleSwitchProfile} />}>
               <Route path="/dashboard" element={user ? <Dashboard user={user} /> : <Navigate to="/" />} />
               <Route path="/debate" element={user ? <DebateArena user={user} /> : <Navigate to="/" />} />
               <Route path="/results/:sessionId" element={user ? <Results user={user} /> : <Navigate to="/" />} />

@@ -82,7 +82,11 @@ export default function Register({ onLogin }) {
     if (searchParams.get('step') === 'details') {
       setStep('details');
     }
-    
+    // Auto-fill referral code from ?ref= URL param
+    const refFromUrl = searchParams.get('ref');
+    if (refFromUrl) {
+      setFormData(p => ({ ...p, referralCode: refFromUrl }));
+    }
     // Check if we have an active Supabase session
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();

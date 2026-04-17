@@ -149,6 +149,94 @@ export default function Dashboard({ user }) {
           )}
       </div>
 
+      {/* GFORCE TOKEN HERO CARDS */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))',
+        gap: '1rem'
+      }}>
+        {/* Token Balance */}
+        <div style={{
+          background: 'linear-gradient(135deg, #1a0533 0%, #0f172a 100%)',
+          border: '1px solid rgba(139,92,246,0.35)',
+          borderRadius: '20px',
+          padding: '1.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '1.25rem',
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
+          <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '120px', height: '120px', borderRadius: '50%', background: 'rgba(139,92,246,0.08)' }} />
+          <div style={{
+            width: '56px', height: '56px', borderRadius: '16px',
+            background: 'linear-gradient(135deg, #7c3aed, #a855f7)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: '0 4px 20px rgba(139,92,246,0.4)', flexShrink: 0
+          }}>
+            <span style={{ fontSize: '1.6rem' }}>⚡</span>
+          </div>
+          <div>
+            <p style={{ margin: 0, fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: '#a78bfa' }}>Gforce Tokens</p>
+            <p style={{ margin: '0.15rem 0 0', fontSize: '2.2rem', fontWeight: 900, color: '#fff', lineHeight: 1, letterSpacing: '-0.02em' }}>{gforce.toLocaleString()}</p>
+          </div>
+        </div>
+
+        {/* Tier Card */}
+        <div style={{
+          background: `linear-gradient(135deg, ${tier.color}22 0%, #0f172a 100%)`,
+          border: `1px solid ${tier.color}55`,
+          borderRadius: '20px',
+          padding: '1.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '1.25rem',
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
+          <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '120px', height: '120px', borderRadius: '50%', background: `${tier.color}10` }} />
+          <div style={{
+            width: '56px', height: '56px', borderRadius: '16px',
+            background: `linear-gradient(135deg, ${tier.color}99, ${tier.color})`,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: `0 4px 20px ${tier.color}55`, flexShrink: 0, fontSize: '2rem'
+          }}>
+            {tier.icon}
+          </div>
+          <div>
+            <p style={{ margin: 0, fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: tier.color }}>Current Tier</p>
+            <p style={{ margin: '0.15rem 0 0', fontSize: '1.6rem', fontWeight: 900, color: '#fff', lineHeight: 1 }}>{tier.name}</p>
+          </div>
+        </div>
+
+        {/* Debates stat */}
+        <div style={{
+          background: 'linear-gradient(135deg, #0c1a12 0%, #0f172a 100%)',
+          border: '1px solid rgba(16,185,129,0.25)',
+          borderRadius: '20px',
+          padding: '1.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '1.25rem',
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
+          <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '120px', height: '120px', borderRadius: '50%', background: 'rgba(16,185,129,0.06)' }} />
+          <div style={{
+            width: '56px', height: '56px', borderRadius: '16px',
+            background: 'linear-gradient(135deg, #059669, #10b981)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: '0 4px 20px rgba(16,185,129,0.4)', flexShrink: 0
+          }}>
+            <span style={{ fontSize: '1.6rem' }}>🏆</span>
+          </div>
+          <div>
+            <p style={{ margin: 0, fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: '#34d399' }}>Debates</p>
+            <p style={{ margin: '0.15rem 0 0', fontSize: '2.2rem', fontWeight: 900, color: '#fff', lineHeight: 1 }}>{stats.total_debates || 0}</p>
+          </div>
+        </div>
+      </div>
+
       {/* DEBATE MODE TILES — always visible */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '1.5rem' }}>
         
@@ -489,28 +577,41 @@ export default function Dashboard({ user }) {
       )}
 
       {/* REFERRAL SHARE & EARN WIDGET */}
-      {!isJunior && (
-        <div className="card" style={{ marginTop: '1.5rem', background: 'linear-gradient(135deg, rgba(139,92,246,0.08) 0%, rgba(59,130,246,0.08) 100%)', border: '1px solid rgba(139,92,246,0.2)' }}>
-           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-              <div>
-                 <h3 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '0.35rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>🎁 Share & Earn Gforce Tokens</h3>
-                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', margin: 0 }}>Invite friends with your code. They get <strong>+150 Tokens</strong>, you get <strong>+200 Tokens</strong>!</p>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                 <code style={{ background: 'var(--bg-tertiary)', padding: '0.5rem 1rem', borderRadius: '8px', fontWeight: 800, fontSize: '1rem', color: 'var(--accent)', letterSpacing: '0.02em', border: '1px solid var(--border)' }}>
-                    {user?.studentId || user?.username || 'N/A'}
-                 </code>
-                 <button
-                    onClick={() => { navigator.clipboard.writeText(user?.studentId || user?.username || ''); }}
-                    className="btn btn-secondary btn-sm"
-                    style={{ fontSize: '0.8rem', fontWeight: 700 }}
-                 >
-                    Copy
-                 </button>
-              </div>
-           </div>
-        </div>
-      )}
+      {!isJunior && (() => {
+        const refCode = user?.studentId || user?.username || '';
+        const refUrl = `https://graceandforce.com/register?ref=${refCode}`;
+        const waMsg = encodeURIComponent(`Join me on G Force AI! Use my link to get +150 bonus tokens: ${refUrl}`);
+        return (
+          <div className="card" style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.08) 0%, rgba(59,130,246,0.08) 100%)', border: '1px solid rgba(139,92,246,0.2)' }}>
+             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.25rem' }}>
+                <div>
+                   <h3 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '0.35rem' }}>🎁 Share & Earn Gforce Tokens</h3>
+                   <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', margin: 0 }}>Invite friends. They get <strong style={{color:'#a78bfa'}}>+150 Tokens</strong>, you get <strong style={{color:'#34d399'}}>+200 Tokens</strong>!</p>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                   <code style={{ background: 'var(--bg-tertiary)', padding: '0.5rem 0.75rem', borderRadius: '8px', fontWeight: 700, fontSize: '0.78rem', color: 'var(--accent)', border: '1px solid var(--border)', maxWidth: '240px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {refUrl}
+                   </code>
+                   <button
+                      onClick={() => { navigator.clipboard.writeText(refUrl); }}
+                      className="btn btn-secondary btn-sm"
+                      style={{ fontSize: '0.8rem', fontWeight: 700 }}
+                   >
+                      📋 Copy Link
+                   </button>
+                   <a
+                      href={`https://wa.me/?text=${waMsg}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', background: '#25D366', color: '#fff', padding: '0.4rem 0.75rem', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 700, textDecoration: 'none' }}
+                   >
+                      📲 WhatsApp
+                   </a>
+                </div>
+             </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }
