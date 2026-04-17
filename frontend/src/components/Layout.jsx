@@ -14,110 +14,140 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
   ].filter(Boolean);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <header className="header">
-        <Link to="/dashboard" className="site-title" style={{ fontFamily: 'var(--font-sans)', fontWeight: 900, letterSpacing: '-0.02em', fontSize: '1.4rem' }}>G FORCE</Link>
+    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: 'var(--bg-primary)' }}>
+      {/* SIDEBAR NAVIGATION */}
+      <aside style={{ 
+        width: '280px', flexShrink: 0, borderRight: '1px solid var(--border)', 
+        background: 'var(--bg-secondary)', display: 'flex', flexDirection: 'column',
+        padding: '1.5rem', zIndex: 50
+      }}>
+        {/* LOGO */}
+        <Link to="/dashboard" style={{ fontFamily: 'var(--font-sans)', fontWeight: 900, letterSpacing: '-0.02em', fontSize: '1.75rem', marginBottom: '2.5rem', color: 'var(--text-primary)', textDecoration: 'none' }}>
+          G FORCE
+        </Link>
 
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-          {navLinks.map(({ name, path, match, icon: Icon }) => (
-            <Link
-              key={name}
-              to={path}
-              className={`nav-link${pathname.includes(match) ? ' active' : ''}`}
-            >
-              <Icon size={17} strokeWidth={2} />
-              <span className="nav-label">{name}</span>
-            </Link>
-          ))}
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginLeft: '0.75rem', paddingLeft: '0.75rem', borderLeft: '1px solid var(--border)' }}>
-
-            {/* GForce Token + Streak Pills */}
-            {user && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <div style={{
-                  display: 'flex', alignItems: 'center', gap: '0.35rem',
-                  background: 'rgba(139,92,246,0.12)', border: '1px solid rgba(139,92,246,0.25)',
-                  borderRadius: '20px', padding: '0.3rem 0.65rem',
-                  fontSize: '0.8rem', fontWeight: 800, color: '#a78bfa'
-                }}>
-                  <Zap size={13} strokeWidth={2.5} />
-                  {(user.gforceTokens || 0).toLocaleString()}
-                </div>
-                {user.rank && (
-                  <div style={{
-                    display: 'flex', alignItems: 'center', gap: '0.35rem',
-                    background: 'rgba(234,179,8,0.1)', border: '1px solid rgba(234,179,8,0.25)',
-                    borderRadius: '20px', padding: '0.3rem 0.65rem',
-                    fontSize: '0.8rem', fontWeight: 800, color: '#facc15'
-                  }}>
-                    <Award size={13} strokeWidth={2.5} />
-                    {user.rank}
-                  </div>
-                )}
-                <div style={{
-                    display: 'flex', alignItems: 'center', gap: '0.35rem',
-                    background: 'rgba(249,115,22,0.12)', border: '1px solid rgba(249,115,22,0.25)',
-                    borderRadius: '20px', padding: '0.3rem 0.65rem',
-                    fontSize: '0.8rem', fontWeight: 800, color: '#fb923c'
-                  }}>
-                    <Flame size={13} strokeWidth={2.5} />
-                    {user.streak || 0}d
-                  </div>
-              </div>
-            )}
-
-            {/* Switch Profile Button — only visible for email-linked accounts (OAuth / multi-profile) */}
-            {onSwitchProfile && user?.email && (
-              <button
-                onClick={onSwitchProfile}
-                title="Switch Profile"
+        {/* NAV LINKS */}
+        <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', flex: 1 }}>
+          {navLinks.map(({ name, path, match, icon: Icon }) => {
+            const isActive = pathname.includes(match);
+            return (
+              <Link
+                key={name}
+                to={path}
                 style={{
-                  background: 'rgba(139,92,246,0.12)',
-                  border: '1px solid rgba(139,92,246,0.25)',
-                  borderRadius: '8px',
-                  padding: '0.35rem 0.6rem',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.35rem',
-                  color: '#a78bfa',
-                  fontSize: '0.78rem',
-                  fontWeight: 700,
-                  transition: 'all 0.15s',
+                  display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.875rem 1rem',
+                  borderRadius: '12px', color: isActive ? '#fff' : 'var(--text-secondary)',
+                  background: isActive ? 'var(--accent)' : 'transparent',
+                  fontWeight: isActive ? 800 : 600, fontSize: '1rem', textDecoration: 'none',
+                  transition: 'all 0.2s ease', 
+                  boxShadow: isActive ? '0 4px 15px rgba(139, 92, 246, 0.2)' : 'none'
                 }}
-                onMouseEnter={e => e.currentTarget.style.background = 'rgba(139,92,246,0.22)'}
-                onMouseLeave={e => e.currentTarget.style.background = 'rgba(139,92,246,0.12)'}
               >
-                <Users size={14} />
-                <span className="nav-label">Profiles</span>
-              </button>
-            )}
+                <Icon size={20} strokeWidth={isActive ? 2.5 : 2} />
+                <span>{name}</span>
+              </Link>
+            );
+          })}
+        </nav>
 
-            {/* Avatar */}
-            <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--bg-tertiary)', overflow: 'hidden', display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid var(--border)' }}>
+        {/* BOTTOM SECTION: Stats & User */}
+        <div style={{ marginTop: 'auto', paddingTop: '1.5rem', borderTop: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          
+          {/* Stats Pills */}
+          {user && (
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
+              <div style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem',
+                background: 'rgba(139,92,246,0.12)', border: '1px solid rgba(139,92,246,0.25)',
+                borderRadius: '8px', padding: '0.5rem',
+                fontSize: '0.85rem', fontWeight: 800, color: '#a78bfa'
+              }} title="Gforce Tokens">
+                <Zap size={14} strokeWidth={2.5} />
+                {(user.gforceTokens || 0).toLocaleString()}
+              </div>
+              <div style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem',
+                  background: 'rgba(249,115,22,0.12)', border: '1px solid rgba(249,115,22,0.25)',
+                  borderRadius: '8px', padding: '0.5rem',
+                  fontSize: '0.85rem', fontWeight: 800, color: '#fb923c'
+                }} title="Daily Streak">
+                  <Flame size={14} strokeWidth={2.5} />
+                  {user.streak || 0}d
+                </div>
+              {user.rank && (
+                <div style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem',
+                  background: 'rgba(234,179,8,0.1)', border: '1px solid rgba(234,179,8,0.25)',
+                  borderRadius: '8px', padding: '0.5rem',
+                  fontSize: '0.85rem', fontWeight: 800, color: '#facc15',
+                  gridColumn: 'span 2'
+                }} title="Rank">
+                  <Award size={14} strokeWidth={2.5} />
+                  {user.rank}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* User Profile Bar */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', background: 'var(--bg-tertiary)', padding: '0.75rem', borderRadius: '12px' }}>
+            <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--bg-secondary)', overflow: 'hidden', display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid var(--border)', flexShrink: 0 }}>
                {user?.avatar ? (
                   <img src={user.avatar} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                ) : (
-                  <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--text-muted)' }}>
+                  <span style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--text-muted)' }}>
                     {user?.name?.charAt(0).toUpperCase() || '?'}
                   </span>
                )}
             </div>
-            
+            <div style={{ flex: 1, overflow: 'hidden' }}>
+              <div style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user?.name}</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>{user?.classLevel}</div>
+            </div>
+
             <button
               onClick={onLogout}
-              className="btn btn-secondary btn-sm"
-              style={{ gap: '0.375rem' }}
+              style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex', padding: '0.5rem', borderRadius: '8px', transition: 'all 0.2s' }}
+              title="Logout"
+              onMouseEnter={e => { e.currentTarget.style.color = '#ef4444'; e.currentTarget.style.background = 'rgba(239,68,68,0.1)' }}
+              onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-muted)'; e.currentTarget.style.background = 'transparent' }}
             >
-              <LogOut size={16} />
-              <span className="nav-label">Logout</span>
+              <LogOut size={18} />
             </button>
           </div>
-        </nav>
-      </header>
 
-      <main style={{ flex: 1, padding: '2rem 1.5rem', display: 'flex', justifyContent: 'center' }}>
+          {/* Switch Profile Button */}
+          {onSwitchProfile && user?.email && (
+            <button
+              onClick={onSwitchProfile}
+              style={{
+                width: '100%',
+                background: 'rgba(139,92,246,0.12)',
+                border: '1px solid rgba(139,92,246,0.25)',
+                borderRadius: '8px',
+                padding: '0.65rem',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.5rem',
+                color: '#a78bfa',
+                fontSize: '0.85rem',
+                fontWeight: 700,
+                transition: 'all 0.15s',
+              }}
+              onMouseEnter={e => e.currentTarget.style.background = 'rgba(139,92,246,0.22)'}
+              onMouseLeave={e => e.currentTarget.style.background = 'rgba(139,92,246,0.12)'}
+            >
+              <Users size={16} />
+              Switch Accounts
+            </button>
+          )}
+        </div>
+      </aside>
+
+      {/* MAIN CONTENT */}
+      <main style={{ flex: 1, overflowX: 'hidden', overflowY: 'auto', padding: '2rem 1.5rem', display: 'flex', justifyContent: 'center' }}>
         <div style={{ width: '100%', maxWidth: '1100px' }}>
           <Outlet />
         </div>
