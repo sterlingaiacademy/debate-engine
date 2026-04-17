@@ -80,6 +80,7 @@ function App() {
       // If MULTIPLE profiles exist, trigger the UI!
       if (legacyUsers.length > 1) {
           setProfilesToSelect(legacyUsers);
+          setIsInitializing(false);
           return;
       }
 

@@ -83,7 +83,7 @@ app.get('/api/check-username/:username', async (req, res) => {
 app.get('/api/user-by-email/:email', async (req, res) => {
   try {
     const { email } = req.params;
-    const { rows } = await db.query(`SELECT id, name, "studentId", "classLevel", "assignedAgentId" FROM users WHERE email = $1 LIMIT 1`, [email]);
+    const { rows } = await db.query(`SELECT id, name, "studentId", "classLevel", "assignedAgentId", avatar FROM users WHERE email = $1 LIMIT 1`, [email]);
     if (rows.length === 0) {
       return res.status(404).json({ error: 'User not found' });
     }

@@ -94,7 +94,7 @@ export default function Register({ onLogin }) {
              const res = await fetch(`/api/user-by-email/${encodeURIComponent(session.user.email)}`);
              if (res.ok) {
                  const data = await res.json();
-                 if (data.user) {
+                 if (data.users && data.users.length > 0) {
                      // Block duplicate creation! Sign out and kick to Login.
                      await supabase.auth.signOut();
                      navigate('/login?error=account_exists');
