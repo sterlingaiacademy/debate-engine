@@ -64,7 +64,7 @@ export default function Dashboard({ user }) {
     ])
     .then(([analyticsData, timeData]) => {
       // If analytics failed gracefully returning fallback, total_debates might be 0
-      const combinedData = { ...analyticsData, timeLimits: timeData || { remainingRanked: 1200, remainingPersona: 1200, error: true } };
+      const combinedData = { ...analyticsData, timeLimits: timeData || { remainingRanked: 600, remainingPersona: 600, error: true } };
       cachedStats = combinedData;
       cachedStudentId = activeId;
       setStats(combinedData);

@@ -28,9 +28,9 @@ export default function PersonaDebate({ user }) {
   const currentTimerRef = useRef(0);
 
   const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel);
-  const [timer, setTimer] = useState(1200);
-  const initialTimerRef = useRef(1200);
-  const initialDailyRemainingRef = useRef(1200);
+  const [timer, setTimer] = useState(600);
+  const initialTimerRef = useRef(600);
+  const initialDailyRemainingRef = useRef(600);
   const timerRef = useRef(null);
   const isActive = status === 'active';
 
@@ -416,7 +416,7 @@ export default function PersonaDebate({ user }) {
               <AIAvatar overrideImage={personaImage} overrideName={personaName} isJunior={false} isSpeaking={false} size={120} />
               <div className="alert alert-warning" style={{ maxWidth: '400px', backgroundColor: '#fffbeb', color: '#b45309', border: '1px solid #fcd34d' }}>
                 <strong>Time's Up! ⏱️</strong><br/>
-                You have reached your 20-minute daily debate limit for Persona Mode. Come back tomorrow!
+                You have reached your 10-minute daily debate limit for Persona Mode. Come back tomorrow!
               </div>
               <button onClick={() => navigate('/dashboard')} className="btn btn-primary">Back to Dashboard</button>
             </div>

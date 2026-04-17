@@ -131,9 +131,9 @@ app.get('/api/time-limits/:studentId', async (req, res) => {
       user.dailyPersonaTime = 0;
     }
     
-    // Calculate remaining limits (1200 seconds = 20 minutes)
-    // The user requested a single shared 20-minute pool across all levels for both Ranked and Persona
-    const LIMIT = 1200;
+    // Calculate remaining limits (600 seconds = 10 minutes)
+    // The user requested a single shared 10-minute pool across all levels for both Ranked and Persona
+    const LIMIT = 600;
     const used = (user.dailyRankedTime || 0) + (user.dailyPersonaTime || 0);
     const sharedRemaining = Math.max(0, LIMIT - used);
     
