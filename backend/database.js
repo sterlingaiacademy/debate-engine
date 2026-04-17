@@ -62,6 +62,14 @@ async function initDB() {
     await addColumnSafeUsers('lastDebateDate', 'TEXT', "''");
     await addColumnSafeUsers('dailyRankedTime', 'INTEGER', '0');
     await addColumnSafeUsers('dailyPersonaTime', 'INTEGER', '0');
+    await addColumnSafeUsers('grade', 'TEXT', "''");
+
+    const addColumnSafeDebateUsers = async (col, type, def) => {
+      try {
+        await client.query(`ALTER TABLE debate_users ADD COLUMN IF NOT EXISTS "${col}" ${type} DEFAULT ${def}`);
+      } catch (e) { /* Already exists */ }
+    };
+    await addColumnSafeDebateUsers('grade', 'TEXT', "''");
 
     // Session History columns - add if not already present
     const addColumnSafeSessions = async (col, type, def) => {

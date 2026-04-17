@@ -238,6 +238,7 @@ export default function Register({ onLogin }) {
         studentId: formData.username, // FIXED: was previously missing, causing backend 400 Bad Request
         password: formData.password,
         classLevel: computedClassLevel,
+        grade: formData.selectedClass, // Send the exact grade to the backend
         referralCode: formData.referralCode,
         authProvider: authMethod,
         email: session?.user?.email || null,

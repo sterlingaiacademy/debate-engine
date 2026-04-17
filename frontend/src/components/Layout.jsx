@@ -17,12 +17,16 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
   ].filter(Boolean);
 
   return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: 'var(--bg-primary)' }}>
+    <div style={{ 
+      display: 'flex', height: '100vh', overflow: 'hidden', 
+      backgroundColor: 'var(--bg-primary)',
+      backgroundImage: 'radial-gradient(circle at 15% 50%, rgba(255, 107, 0, 0.08), transparent 25%), radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.08), transparent 25%)'
+    }}>
       {/* SIDEBAR NAVIGATION - Glassmorphic iOS Style */}
       <aside style={{ 
         width: isCollapsed ? '88px' : '280px', flexShrink: 0, 
         borderRight: '1px solid rgba(255,255,255,0.08)', 
-        background: 'rgba(30, 41, 59, 0.4)',
+        background: 'rgba(15, 23, 42, 0.4)',
         backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
         display: 'flex', flexDirection: 'column',
         padding: isCollapsed ? '1.5rem 0.75rem' : '1.5rem', zIndex: 50,
@@ -79,10 +83,10 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
                   padding: isCollapsed ? '0.875rem' : '0.875rem 1rem',
                   justifyContent: isCollapsed ? 'center' : 'flex-start',
                   borderRadius: '12px', color: isActive ? '#fff' : 'var(--text-secondary)',
-                  background: isActive ? 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)' : 'transparent',
+                  background: isActive ? 'linear-gradient(135deg, #FF6B00 0%, #D84200 100%)' : 'transparent',
                   fontWeight: isActive ? 800 : 600, fontSize: '1rem', textDecoration: 'none',
                   transition: 'all 0.2s ease', 
-                  boxShadow: isActive ? '0 4px 15px rgba(217, 119, 6, 0.4), inset 0 1px 1px rgba(255,255,255,0.2)' : 'none',
+                  boxShadow: isActive ? '0 4px 15px rgba(216, 66, 0, 0.4), inset 0 1px 1px rgba(255,255,255,0.2)' : 'none',
                   overflow: 'hidden', whiteSpace: 'nowrap'
                 }}
               >
@@ -153,7 +157,9 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
               <>
                 <div style={{ flex: 1, overflow: 'hidden' }}>
                   <div style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user?.name}</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>{user?.classLevel?.replace('Level', 'Grade')}</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                    {user?.grade ? (user.grade.startsWith('Class') ? user.grade.replace('Class', 'Grade') : user.grade) : user?.classLevel?.replace('Level', 'Grade')}
+                  </div>
                 </div>
 
                 <button

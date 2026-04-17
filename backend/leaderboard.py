@@ -642,7 +642,7 @@ class Leaderboard:
 
         # Build query
         query = (self.db.table("debate_users")
-                 .select("user_id, username, country, region, school, class, "
+                 .select("user_id, username, country, region, school, class, grade, "
                          "total_debates, total_wins, best_score, avg_score, "
                          "gforce_tokens, current_streak, longest_streak, badges, "
                          "total_words_spoken")
@@ -838,7 +838,7 @@ class Leaderboard:
             return []
         user_ids = list(best.keys())
         users = (self.db.table("debate_users")
-                 .select("user_id, username, country, school, class, gforce_tokens")
+                 .select("user_id, username, country, school, class, grade, gforce_tokens")
                  .in_("user_id", user_ids)
                  .execute())
         user_map = {u["user_id"]: u for u in users.data}

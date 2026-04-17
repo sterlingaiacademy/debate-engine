@@ -275,7 +275,7 @@ export default function Leaderboard({ user }) {
                             </div>
                           </div>
                         </td>
-                        <td className="hide-mobile" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 600 }}>{leader.class?.replace('Level', 'Grade') || 'Class 1-3'}</td>
+                        <td className="hide-mobile" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 600 }}>{leader.grade ? (leader.grade.startsWith('Class') ? leader.grade.replace('Class', 'Grade') : leader.grade) : (leader.class?.replace('Level', 'Grade') || 'Grade 1-3')}</td>
                         <td style={{ textAlign: 'center', fontWeight: 600, color: 'var(--text-secondary)' }}>{leader.total_debates}</td>
                         <td className="hide-mobile" style={{ textAlign: 'center' }}>
                           <span style={{ 

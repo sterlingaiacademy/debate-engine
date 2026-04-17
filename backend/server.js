@@ -24,7 +24,7 @@ function getISTDateString() {
 
 // Users
 app.post('/api/register', async (req, res) => {
-  const { name, studentId, password, classLevel, email, phone, authProvider, referralCode } = req.body;
+  const { name, studentId, password, classLevel, grade, email, phone, authProvider, referralCode } = req.body;
   if (!name || !studentId || !password || !classLevel) {
     return res.status(400).json({ error: 'All fields are required' });
   }
@@ -48,10 +48,10 @@ app.post('/api/register', async (req, res) => {
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const query = `INSERT INTO users (name, "studentId", password, "classLevel", "assignedAgentId", email, phone, auth_provider) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`;
+    const query = `INSERT INTO users (name, "studentId", password, "classLevel", grade, "assignedAgentId", email, phone, auth_provider) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
     
     try {
-      await db.query(query, [name, studentId, hashedPassword, classLevel, assignedAgentId, email || null, phone || null, authProvider || null]);
+      await db.query(query, [name, studentId, hashedPassword, classLevel, grade || '', assignedAgentId, email || null, phone || null, authProvider || null]);
     } catch (err) {
       if (err.code === '23505' || /UNIQUE constraint failed/i.test(err.message)) {
         return res.status(400).json({ error: 'Student ID already exists' });
@@ -77,8 +77,8 @@ app.post('/api/register', async (req, res) => {
     
     // Initialize debate_users record for leaderboard with startup tokens
     await db.query(
-      `INSERT INTO debate_users (user_id, username, class, gforce_tokens) VALUES ($1, $2, $3, $4) ON CONFLICT (user_id) DO UPDATE SET gforce_tokens = debate_users.gforce_tokens + $4`,
-      [studentId, name, classLevel, startupTokens]
+      `INSERT INTO debate_users (user_id, username, class, grade, gforce_tokens) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (user_id) DO UPDATE SET gforce_tokens = debate_users.gforce_tokens + $5, grade = $4`,
+      [studentId, name, classLevel, grade || '', startupTokens]
     );
     
     res.status(201).json({ 
@@ -102,7 +102,7 @@ app.get('/api/check-username/:username', async (req, res) => {
 app.get('/api/user-by-email/:email', async (req, res) => {
   try {
     const { email } = req.params;
-    const { rows } = await db.query(`SELECT id, name, "studentId", "classLevel", "assignedAgentId", avatar FROM users WHERE email = $1`, [email]);
+    const { rows } = await db.query(`SELECT id, name, "studentId", "classLevel", "assignedAgentId", avatar, grade FROM users WHERE email = $1`, [email]);
     if (rows.length === 0) {
       return res.status(404).json({ error: 'User not found' });
     }
