@@ -210,12 +210,12 @@ export default function MockUN({ user }) {
     try {
       const sessionData = {
         studentId: user.studentId,
-        debateTopic: `Mock UN: ${selectedTopic}`,
+        debateTopic: `Model UN: ${selectedTopic}`,
         sessionDuration: initialTimerRef.current - currentTimerRef.current,
         argumentsCount: transcriptRef.current.filter(m => m.role === 'user').length,
         debateScore: 0,
         isPersona: false,
-        mode: 'Mock UN',
+        mode: 'Model UN',
         agentId: MOCK_UN_AGENT_ID
       };
       await fetch('/api/sessions', {
@@ -223,7 +223,7 @@ export default function MockUN({ user }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(sessionData)
       });
-    } catch (e) { console.error('Mock UN history save failed', e); }
+    } catch (e) { console.error('Model UN history save failed', e); }
 
     // No analysis evaluation — go straight back to dashboard
     navigate('/dashboard');
@@ -284,7 +284,7 @@ export default function MockUN({ user }) {
           }} />
         </div>
         <div>
-          <h3 style={{ fontWeight: 800, fontSize: '1.5rem', marginBottom: '0.5rem' }}>Connecting to Mock UN…</h3>
+          <h3 style={{ fontWeight: 800, fontSize: '1.5rem', marginBottom: '0.5rem' }}>Connecting to Model UN…</h3>
           <p style={{ color: 'var(--text-secondary)' }}>Topic: <strong>{selectedTopic}</strong></p>
         </div>
       </div>
@@ -315,7 +315,7 @@ export default function MockUN({ user }) {
               }}>
                 <Globe size={18} color="#fbbf24" />
                 <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#fbbf24', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-                  Mock UN &nbsp;•&nbsp;
+                  Model UN &nbsp;•&nbsp;
                 </span>
                 <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.65)', maxWidth: '500px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {selectedTopic}
@@ -407,7 +407,7 @@ export default function MockUN({ user }) {
               🌐
             </div>
             <div>
-              <h2 style={{ color: '#fbbf24', fontWeight: 800, fontSize: '1.5rem', margin: 0, letterSpacing: '-0.02em' }}>Mock UN</h2>
+              <h2 style={{ color: '#fbbf24', fontWeight: 800, fontSize: '1.5rem', margin: 0, letterSpacing: '-0.02em' }}>Model UN</h2>
               <p style={{ color: 'rgba(255,255,255,0.6)', margin: 0, fontSize: '0.9rem' }}>Level 5 · Premium · Debate real-world UN topics</p>
             </div>
           </div>
@@ -510,7 +510,7 @@ export default function MockUN({ user }) {
         <div style={{ textAlign: 'center' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'linear-gradient(135deg, rgba(251,191,36,0.1) 0%, rgba(217,119,6,0.1) 100%)', border: '1px solid rgba(251,191,36,0.25)', borderRadius: '99px', padding: '0.4rem 1rem', marginBottom: '1rem' }}>
             <Globe size={14} color="#fbbf24" />
-            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#d97706', textTransform: 'uppercase', letterSpacing: '0.07em' }}>Mock UN · Level 5 Premium</span>
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#d97706', textTransform: 'uppercase', letterSpacing: '0.07em' }}>Model UN · Level 5 Premium</span>
           </div>
           <h2 style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 800, marginBottom: '0.5rem' }}>Choose Your Topic</h2>
           <p style={{ color: 'var(--text-secondary)', margin: 0 }}>Select a global issue to debate. Your AI opponent will argue the opposing position.</p>

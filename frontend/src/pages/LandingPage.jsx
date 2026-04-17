@@ -40,8 +40,8 @@ const FAQS = [
   { q: 'What age group is G Force AI designed for?', a: 'G Force AI is designed for students from KG through Grade 12, with 5 adaptive difficulty levels that automatically match their school grade.' },
   { q: 'How does the AI scoring work?', a: 'Our AI judge evaluates 8 dimensions: argument quality, rebuttal engagement, clarity, speech fluency, persuasiveness, knowledge & evidence, respectfulness, and position consistency — giving a holistic debate score.' },
   { q: 'Can students use the mobile app and web app together?', a: 'Yes! Both the Android app and web app connect to the same backend and Supabase database, so scores, leaderboards, and progress sync in real time across devices.' },
-  { q: 'What is Mock UN mode?', a: 'Mock UN is a premium debate simulation where students take on country delegate personas and debate global motions in a United Nations-style format, powered by ElevenLabs voice AI.' },
-  { q: 'Is there a free tier?', a: 'Yes! The Free tier includes unlimited practice debates with limited ranked matches per day. School and Enterprise plans unlock unlimited ranked debates, advanced analytics, and priority support.' },
+  { q: 'What is Model UN mode?', a: 'Model UN is a premium debate simulation where students take on country delegate personas and debate global motions in a United Nations-style format, powered by ElevenLabs voice AI.' },
+  { q: 'Is there a free tier?', a: 'Yes! The Free tier includes unlimited practice debates with limited Debate Arena matches per day. School and Enterprise plans unlock unlimited Debate Arena matches, advanced analytics, and priority support.' },
   { q: 'How do I set up G Force AI for my school?', a: "Contact us via the Enterprise plan or email us directly. We'll onboard your school, create student accounts in bulk, and provide a dedicated dashboard for teachers." },
   { q: 'Is student data kept private?', a: 'Absolutely. All data is stored securely in Supabase (hosted on AWS). We never sell student data and comply with standard data privacy guidelines.' },
 ];
@@ -188,7 +188,7 @@ export default function LandingPage() {
               { icon: <Brain size={28} />, title: 'AI Debate Personas', desc: 'Students debate against carefully crafted AI opponents — from confident politicians to expert scientists — that adapt to their level.', color: '#E8392A' },
               { icon: <BarChart2 size={28} />, title: 'Real-time Scoring', desc: 'After every debate, an AI judge scores 8 dimensions including argument quality, fluency, rebuttal, and persuasiveness.', color: '#F97316' },
               { icon: <Trophy size={28} />, title: 'Global Leaderboards', desc: 'Students compete on token-ranked leaderboards — filterable by grade, school, region, and country — driving healthy competition.', color: '#FBBF24' },
-              { icon: <Globe size={28} />, title: 'Mock UN Mode', desc: 'An immersive simulation where students play country delegates and debate global motions in a voice-powered UN format.', color: '#E8392A' },
+              { icon: <Globe size={28} />, title: 'Model UN Mode', desc: 'An immersive simulation where students play country delegates and debate global motions in a voice-powered UN format.', color: '#E8392A' },
               { icon: <Zap size={28} />, title: 'Voice-First AI', desc: 'Powered by ElevenLabs, students speak naturally and get instant AI responses, building real speaking confidence.', color: '#F97316' },
               { icon: <Shield size={28} />, title: 'Adaptive Levels', desc: 'Five difficulty tiers automatically matched to school grade (KG → Grade 12) ensure every student is appropriately challenged.', color: '#FBBF24' },
             ].map(({ icon, title, desc, color }, i) => (
@@ -215,7 +215,7 @@ export default function LandingPage() {
           <div className="lp-steps">
             {[
               { num: '01', icon: <Users size={32} />, title: 'Create Your Account', desc: 'Sign up with your username and pick your grade. The platform automatically assigns the right debate level for you.' },
-              { num: '02', icon: <Mic size={32} />, title: 'Pick a Debate Mode', desc: 'Choose from Ranked Debates, Persona Practice, or Mock UN. Select your topic, pick a side, and start speaking.' },
+              { num: '02', icon: <Mic size={32} />, title: 'Pick a Debate Mode', desc: 'Choose from Debate Arena, Persona Practice, or Model UN. Select your topic, pick a side, and start speaking.' },
               { num: '03', icon: <Star size={32} />, title: 'Get Scored & Improve', desc: 'Receive a detailed AI report card after every debate. Track your Gforce Tokens, streaks, and badges as you improve over time.' },
             ].map(({ num, icon, title, desc }, i) => (
               <div key={num} className="lp-step lp-reveal" style={{ '--step-delay': `${i * 120}ms` }}>
@@ -244,21 +244,21 @@ export default function LandingPage() {
                 name: 'Free', price: '₹0', period: '/forever',
                 desc: 'Perfect for individual students getting started.',
                 highlight: false,
-                features: ['3 ranked debates/day', 'All 5 difficulty levels', 'Basic AI scoring report', 'Global leaderboard access', 'Android & Web app'],
+                features: ['3 Debate Arena matches/day', 'All 5 difficulty levels', 'Basic AI scoring report', 'Global leaderboard access', 'Android & Web app'],
                 cta: 'Get Started Free', ctaLink: '/register',
               },
               {
                 name: 'Individual', price: '₹999', period: '/month',
                 desc: 'For students wanting to accelerate their growth.',
                 highlight: false,
-                features: ['Unlimited practice debates', '10 ranked debates/day', 'Detailed AI scoring report', 'Priority support', 'Android & Web app'],
+                features: ['Unlimited practice debates', '10 Debate Arena matches/day', 'Detailed AI scoring report', 'Priority support', 'Android & Web app'],
                 cta: 'Get Individual Plan', ctaLink: '/register',
               },
               {
                 name: 'School', price: '₹2999', period: '/student/month',
                 desc: 'Ideal for classrooms and debate clubs.',
                 highlight: true,
-                features: ['Unlimited ranked debates', 'Mock UN access', 'Detailed 8-dimension report', 'Teacher analytics dashboard', 'Class & school leaderboards', 'Priority support'],
+                features: ['Unlimited Debate Arena matches', 'Model UN access', 'Detailed 8-dimension report', 'Teacher analytics dashboard', 'Class & school leaderboards', 'Priority support'],
                 cta: 'Start School Plan', ctaLink: '/register',
               },
               {

@@ -297,7 +297,7 @@ export default function Dashboard({ user, setUser }) {
       {/* DEBATE MODE TILES — always visible */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '1.5rem' }}>
         
-        {/* TILE 1: Ranked Match */}
+        {/* TILE 1: Debate Arena */}
         <div
           onClick={() => navigate(isJunior ? '/debate' : '/debate-instructions?next=/debate')}
           style={{
@@ -326,7 +326,7 @@ export default function Dashboard({ user, setUser }) {
               <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.8 }}>Persona Match</span>
             </div>
             <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem 0', letterSpacing: '-0.02em' }}>
-              {isJunior ? 'Fun Debate Practice' : 'Ranked Match'}
+              {isJunior ? 'Fun Debate Practice' : 'Debate Arena'}
             </h2>
             <p style={{ fontSize: '0.95rem', opacity: 0.85, margin: 0, lineHeight: 1.5, maxWidth: '280px' }}>
               {isJunior 
@@ -383,7 +383,7 @@ export default function Dashboard({ user, setUser }) {
         </div>
         )}
 
-        {/* TILE 3: Mock UN — Level 5 Premium only */}
+        {/* TILE 3: Model UN — Level 5 Premium only */}
         {user?.classLevel === 'Level 5' && (
         <div
           onClick={() => navigate('/debate-instructions?next=/mock-un')}
@@ -421,7 +421,7 @@ export default function Dashboard({ user, setUser }) {
               </div>
               <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#fbbf24', opacity: 0.9 }}>UN Simulation</span>
             </div>
-            <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem 0', letterSpacing: '-0.02em', color: '#fef3c7' }}>Mock UN</h2>
+            <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem 0', letterSpacing: '-0.02em', color: '#fef3c7' }}>Model UN</h2>
             <p style={{ fontSize: '0.95rem', opacity: 0.8, margin: 0, lineHeight: 1.5, maxWidth: '280px' }}>
               Debate real-world UN topics — climate, AI warfare, nuclear disarmament, and more.
             </p>
@@ -434,7 +434,7 @@ export default function Dashboard({ user, setUser }) {
         </div>
         )}
 
-        {/* TILE 4: Conversational Agent (Levels 3, 4, 5) */}
+        {/* TILE 4: Super Tutor (Levels 3, 4, 5) */}
         {!isJunior && (
         <div
           onClick={() => navigate('/conversational-agent')}
@@ -463,7 +463,7 @@ export default function Dashboard({ user, setUser }) {
               </div>
               <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.8 }}>Helper Bot</span>
             </div>
-            <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem 0', letterSpacing: '-0.02em' }}>Conversational AI</h2>
+            <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem 0', letterSpacing: '-0.02em' }}>Super Tutor</h2>
             <p style={{ fontSize: '0.95rem', opacity: 0.85, margin: 0, lineHeight: 1.5, maxWidth: '280px' }}>
               Upload files, take quizzes, ask questions, or just have a casual talk with your dedicated AI tutor.
             </p>

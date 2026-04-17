@@ -303,7 +303,7 @@ export default function DebateArena({ user }) {
       argumentsCount: currentTranscript.filter(m => m.role === 'user').length,
       debateScore: finalScore,
       isPersona: false,
-      mode: 'Ranked Match',
+      mode: 'Debate Arena',
       agentId: user?.assignedAgentId || ''
     };
 
