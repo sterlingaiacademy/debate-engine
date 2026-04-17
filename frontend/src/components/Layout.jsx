@@ -67,8 +67,8 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
               </div>
             )}
 
-            {/* Switch Profile Button */}
-            {onSwitchProfile && (
+            {/* Switch Profile Button — only visible for email-linked accounts (OAuth / multi-profile) */}
+            {onSwitchProfile && user?.email && (
               <button
                 onClick={onSwitchProfile}
                 title="Switch Profile"
