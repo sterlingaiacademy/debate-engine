@@ -395,28 +395,20 @@ export default function MockUN({ user }) {
     return (
       <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100vh', width: '100%', margin: '0 auto', maxWidth: '900px' }}>
         <div style={{ padding: 0, overflow: 'hidden', background: 'transparent' }}>
-          {/* Header Banner */}
-          <div style={{
-            background: 'linear-gradient(135deg, #78350f 0%, #92400e 50%, #1a1035 100%)',
-            padding: '2rem 2.5rem',
-            display: 'flex', alignItems: 'center', gap: '1rem',
-            borderBottom: '1px solid rgba(251,191,36,0.15)',
-          }}>
-            <div style={{ width: 56, height: 56, borderRadius: '16px', background: 'rgba(251,191,36,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', border: '1px solid rgba(251,191,36,0.3)' }}>
-              🌐
+          {/* Header */}
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'linear-gradient(135deg, rgba(251,191,36,0.1) 0%, rgba(217,119,6,0.1) 100%)', border: '1px solid rgba(251,191,36,0.25)', borderRadius: '99px', padding: '0.4rem 1rem', marginBottom: '1rem' }}>
+              <Globe size={14} color="#fbbf24" />
+              <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#d97706', textTransform: 'uppercase', letterSpacing: '0.07em' }}>
+                Model UN · {user?.classLevel?.replace('Level', 'Grade') || 'Premium'}
+              </span>
             </div>
-            <div>
-              <h2 style={{ color: '#fbbf24', fontWeight: 800, fontSize: '1.5rem', margin: 0, letterSpacing: '-0.02em' }}>Model UN</h2>
-              <p style={{ color: 'rgba(255,255,255,0.6)', margin: 0, fontSize: '0.9rem' }}>Grade 5 · Premium · Debate real-world UN topics</p>
-            </div>
+            <h2 style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 800, marginBottom: '0.5rem' }}>Choose Time Limit</h2>
+            <p style={{ color: 'var(--text-secondary)', margin: 0 }}>How long do you want to debate today?</p>
           </div>
 
           {/* Time Limit Step */}
-          <div style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '1.5rem' }}>
-            <div>
-              <h3 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.5rem' }}>Choose Time Limit</h3>
-              <p style={{ color: 'var(--text-secondary)', margin: 0 }}>How long do you want to debate today?</p>
-            </div>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '2rem' }}>
 
             {/* Daily pool */}
             <div style={{
@@ -506,17 +498,19 @@ export default function MockUN({ user }) {
       <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100vh', width: '100%', margin: '0 auto', maxWidth: '900px' }}>
 
         {/* Header */}
-        <div style={{ textAlign: 'center' }}>
+        <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'linear-gradient(135deg, rgba(251,191,36,0.1) 0%, rgba(217,119,6,0.1) 100%)', border: '1px solid rgba(251,191,36,0.25)', borderRadius: '99px', padding: '0.4rem 1rem', marginBottom: '1rem' }}>
             <Globe size={14} color="#fbbf24" />
-            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#d97706', textTransform: 'uppercase', letterSpacing: '0.07em' }}>Model UN · Grade 5 Premium</span>
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#d97706', textTransform: 'uppercase', letterSpacing: '0.07em' }}>
+              Model UN · {user?.classLevel?.replace('Level', 'Grade') || 'Premium'}
+            </span>
           </div>
           <h2 style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 800, marginBottom: '0.5rem' }}>Choose Your Topic</h2>
           <p style={{ color: 'var(--text-secondary)', margin: 0 }}>Select a global issue to debate. Your AI opponent will argue the opposing position.</p>
         </div>
 
         {/* Topic Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 380px), 1fr))', gap: '0.85rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1.25rem', width: '100%', maxWidth: '750px', margin: '0 auto' }}>
           {UN_TOPICS.map(t => (
             <div
               key={t.id}
