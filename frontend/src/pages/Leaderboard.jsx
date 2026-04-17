@@ -9,6 +9,7 @@ const Zap = ({ size, color }) => <svg width={size} height={size} viewBox="0 0 24
 
 const CATEGORY_TABS = [
   { id: 'global', label: 'Global Rank', icon: Globe },
+  { id: 'top_streaks', label: 'Top Streaks', icon: TrendingUp },
   { id: 'avg_argument', label: 'Top Arguers', icon: Shield },
   { id: 'avg_rebuttal', label: 'Best Rebuttlers', icon: Zap }, // We need to import Zap if used
   { id: 'avg_fluency', label: 'Most Fluent', icon: Mic },
@@ -228,7 +229,7 @@ export default function Leaderboard({ user }) {
                     <th className="hide-mobile">Level</th>
                     <th style={{ textAlign: 'center' }}>Debates</th>
                     <th className="hide-mobile" style={{ textAlign: 'center' }}>Win Rate</th>
-                    <th style={{ textAlign: 'right' }}>{category === 'global' ? 'ELO Rating' : 'Avg Score'}</th>
+                    <th style={{ textAlign: 'right' }}>{category === 'global' ? 'ELO Rating' : category === 'top_streaks' ? 'Max Streak (Days)' : 'Avg Score'}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -288,6 +289,8 @@ export default function Leaderboard({ user }) {
                         <td style={{ textAlign: 'right' }}>
                           {category === 'global' ? (
                             <span style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--text-primary)' }}>{Math.round(leader.elo_rating)}</span>
+                          ) : category === 'top_streaks' ? (
+                            <span style={{ fontWeight: 800, fontSize: '1.1rem', color: '#8b5cf6' }}>🔥 {leader.longest_streak || leader.current_streak || 0}</span>
                           ) : (
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '0.5rem' }}>
                                <div style={{ width: 40, height: 6, background: 'var(--bg-tertiary)', borderRadius: '99px', overflow: 'hidden' }}>

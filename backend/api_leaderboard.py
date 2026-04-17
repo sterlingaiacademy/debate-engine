@@ -39,6 +39,19 @@ def get_lb(params=None):
         
         # Handle category-specific leaderboards
         if category and category != 'global':
+            if category == 'top_streaks':
+                res = lb.get_leaderboard(
+                    sort_by='longest_streak',
+                    class_=class_level if class_level else None,
+                    school=school if school else None,
+                    time_range=timeframe if timeframe else None,
+                    limit=limit,
+                    offset=offset,
+                )
+                sys.stdout.reconfigure(encoding='utf-8')
+                print(json.dumps(res, cls=CustomJSONEncoder))
+                return
+            
             col = CATEGORY_SORT_MAP.get(category)
             if col:
                 # Use category leaderboard - query debates table for category scores

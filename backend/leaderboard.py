@@ -475,7 +475,7 @@ class Leaderboard:
 
         # ── Get previous debate score for improvement badge ──
         prev_resp = (self.db.table("debates")
-                     .select("overall_score")
+                     .select("overall_score, created_at")
                      .eq("user_id", user_id)
                      .order("created_at", desc=True)
                      .limit(1)
@@ -518,10 +518,25 @@ class Leaderboard:
         new_best = max(user["best_score"], result["overall_score"])
         new_avg = round(((user["avg_score"] * user["total_debates"]) + result["overall_score"]) / new_total, 2)
 
-        if result["overall_score"] >= 6.0:
-            new_streak = user["current_streak"] + 1
-        else:
-            new_streak = 0
+        new_streak = user.get("current_streak") or 0
+        if new_streak == 0:
+            new_streak = 1
+        
+        if prev_resp.data and prev_resp.data[0].get("created_at"):
+            last_date_str = prev_resp.data[0]["created_at"]
+            try:
+                from datetime import datetime, timezone, timedelta
+                last_dt = datetime.fromisoformat(last_date_str.replace("Z", "+00:00"))
+                ist_last = last_dt + timedelta(hours=5, minutes=30)
+                ist_now = datetime.now(timezone.utc) + timedelta(hours=5, minutes=30)
+                delta_days = (ist_now.date() - ist_last.date()).days
+                
+                if delta_days == 1:
+                    new_streak += 1
+                elif delta_days > 1:
+                    new_streak = 1
+            except Exception:
+                pass
         new_longest = max(user["longest_streak"], new_streak)
 
         new_elo = EloSystem.calculate_new_rating(
