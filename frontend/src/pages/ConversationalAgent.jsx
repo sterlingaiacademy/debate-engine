@@ -505,7 +505,7 @@ const formatTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0
             <div className="animate-fade-in" style={{ 
               flex: 1, display: 'flex', flexDirection: 'column', 
               alignItems: 'center', justifyContent: 'center', gap: '2rem',
-              position: 'fixed', inset: 0, zIndex: 9999,
+              position: 'relative', width: '100%', height: '100%',
 
               background: isJunior
                 ? 'radial-gradient(circle at center, rgba(139,92,246,0.05) 0%, transparent 60%)'

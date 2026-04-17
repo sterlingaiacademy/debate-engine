@@ -300,7 +300,7 @@ export default function MockUN({ user }) {
             <div className="animate-fade-in" style={{
               flex: 1, display: 'flex', flexDirection: 'column',
               alignItems: 'center', justifyContent: 'center', gap: '2rem',
-              position: 'fixed', inset: 0, zIndex: 9999,
+              position: 'relative', width: '100%', height: '100%',
               background: 'radial-gradient(ellipse at bottom, #1a1035 0%, #030712 100%)',
             }}>
               {/* UN Banner at top */}

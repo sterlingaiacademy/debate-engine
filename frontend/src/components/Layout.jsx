@@ -26,7 +26,6 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
       backgroundImage: isFullScreenRoute ? 'none' : 'radial-gradient(circle at 15% 50%, rgba(255, 107, 0, 0.08), transparent 25%), radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.08), transparent 25%)'
     }}>
       {/* SIDEBAR NAVIGATION - Glassmorphic iOS Style */}
-      {!isFullScreenRoute && (
       <aside style={{ 
         width: isCollapsed ? '88px' : '280px', flexShrink: 0, 
         borderRight: '1px solid rgba(255,255,255,0.08)', 
@@ -224,7 +223,6 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
           )}
         </div>
       </aside>
-      )}
 
       {/* MAIN CONTENT */}
       <main style={{ 

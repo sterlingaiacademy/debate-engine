@@ -461,7 +461,7 @@ export default function PersonaDebate({ user }) {
             <div className="animate-fade-in" style={{ 
               flex: 1, display: 'flex', flexDirection: 'column', 
               alignItems: 'center', justifyContent: 'center', gap: '2rem',
-              position: 'fixed', inset: 0, zIndex: 9999,
+              position: 'relative', width: '100%', height: '100%',
               background: isJunior
                 ? 'radial-gradient(circle at center, rgba(139,92,246,0.05) 0%, transparent 60%)'
                 : 'radial-gradient(ellipse at bottom, #1e1b4b 0%, #030712 100%)'
