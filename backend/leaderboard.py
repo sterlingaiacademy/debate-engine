@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS debate_users (
     total_wins          INTEGER DEFAULT 0,
     best_score          REAL DEFAULT 0,
     avg_score           REAL DEFAULT 0,
-    elo_rating          REAL DEFAULT 1000.0,
+    gforce_tokens          REAL DEFAULT 1000.0,
     current_streak      INTEGER DEFAULT 0,
     longest_streak      INTEGER DEFAULT 0,
     total_words_spoken  INTEGER DEFAULT 0,
@@ -115,10 +115,10 @@ CREATE TABLE IF NOT EXISTS achievements (
 );
 
 -- 4. INDEXES for fast leaderboard queries
-CREATE INDEX IF NOT EXISTS idx_users_elo ON debate_users(elo_rating DESC);
+CREATE INDEX IF NOT EXISTS idx_users_gforce ON debate_users(gforce_tokens DESC);
 CREATE INDEX IF NOT EXISTS idx_users_avg ON debate_users(avg_score DESC);
-CREATE INDEX IF NOT EXISTS idx_users_country ON debate_users(country, elo_rating DESC);
-CREATE INDEX IF NOT EXISTS idx_users_school ON debate_users(school, elo_rating DESC);
+CREATE INDEX IF NOT EXISTS idx_users_country ON debate_users(country, gforce_tokens DESC);
+CREATE INDEX IF NOT EXISTS idx_users_school ON debate_users(school, gforce_tokens DESC);
 CREATE INDEX IF NOT EXISTS idx_debates_user ON debates(user_id, created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_debates_created ON debates(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_debates_score ON debates(overall_score DESC);
@@ -132,7 +132,7 @@ RETURNS INTEGER AS $$
     SELECT COALESCE(
         (SELECT COUNT(*)::INTEGER + 1
          FROM debate_users
-         WHERE elo_rating > (SELECT elo_rating FROM debate_users WHERE user_id = target_user_id)
+         WHERE gforce_tokens > (SELECT gforce_tokens FROM debate_users WHERE user_id = target_user_id)
          AND total_debates >= 1),
         0
     );
@@ -144,7 +144,7 @@ RETURNS INTEGER AS $$
     SELECT COALESCE(
         (SELECT COUNT(*)::INTEGER + 1
          FROM debate_users
-         WHERE elo_rating > (SELECT elo_rating FROM debate_users WHERE user_id = target_user_id)
+         WHERE gforce_tokens > (SELECT gforce_tokens FROM debate_users WHERE user_id = target_user_id)
          AND country = target_country
          AND total_debates >= 1),
         0
@@ -178,7 +178,7 @@ RETURNS TABLE(
     best_category_score REAL,
     avg_category_score REAL,
     debates_count BIGINT,
-    elo_rating REAL
+    gforce_tokens REAL
 ) AS $$
 BEGIN
     RETURN QUERY EXECUTE format(
@@ -186,11 +186,11 @@ BEGIN
                 MAX(d.%I)::REAL as best_category_score,
                 ROUND(AVG(d.%I)::NUMERIC, 2)::REAL as avg_category_score,
                 COUNT(*) as debates_count,
-                u.elo_rating
+                u.gforce_tokens
          FROM debates d
          JOIN debate_users u ON d.user_id = u.user_id
          WHERE ($1 IS NULL OR d.country = $1)
-         GROUP BY d.user_id, u.username, u.country, u.school, u.class, u.elo_rating
+         GROUP BY d.user_id, u.username, u.country, u.school, u.class, u.gforce_tokens
          HAVING COUNT(*) >= 1
          ORDER BY best_category_score DESC, avg_category_score DESC
          LIMIT $2',
@@ -267,33 +267,7 @@ class SupabaseClient:
 # 3. ELO RATING SYSTEM
 # ─────────────────────────────────────────────────────────────────────
 
-class EloSystem:
-    """
-    Adapted ELO for debate scoring.
-    Score >= 7.0 = "win", 5.0-6.9 = "draw", < 5.0 = "loss"
-    K-factor: 40 (new) → 30 (intermediate) → 20 (experienced)
-    """
 
-    @staticmethod
-    def calculate_new_rating(current_elo: float, score: float, total_debates: int) -> float:
-        if total_debates < 10:
-            k = 40
-        elif total_debates < 30:
-            k = 30
-        else:
-            k = 20
-
-        expected = 1 / (1 + 10 ** ((1500 - current_elo) / 400))
-
-        if score >= 7.0:
-            actual = 0.8 + (score - 7.0) / 30
-        elif score >= 5.0:
-            actual = 0.4 + (score - 5.0) / 5
-        else:
-            actual = score / 12.5
-
-        new_elo = current_elo + k * (actual - expected)
-        return max(100, round(new_elo, 1))
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -327,11 +301,11 @@ BADGE_DEFINITIONS = {
     "words_10k":        {"name": "Chatterbox",         "desc": "Spoke 10,000+ total words"},
     "words_50k":        {"name": "Orator",             "desc": "Spoke 50,000+ total words"},
 
-    "elo_1200":         {"name": "Bronze League",      "desc": "Reached 1200 ELO rating"},
-    "elo_1500":         {"name": "Silver League",      "desc": "Reached 1500 ELO rating"},
-    "elo_1800":         {"name": "Gold League",        "desc": "Reached 1800 ELO rating"},
-    "elo_2000":         {"name": "Platinum League",    "desc": "Reached 2000 ELO rating"},
-    "elo_2200":         {"name": "Diamond League",     "desc": "Reached 2200 ELO rating"},
+    "tokens_1000":         {"name": "Silver Rank",      "desc": "Reached Silver Tier"},
+    "tokens_2000":         {"name": "Gold Rank",      "desc": "Reached Gold Tier"},
+    "tokens_3000":         {"name": "Platinum Rank",        "desc": "Reached Platinum Tier"},
+    "tokens_4000":         {"name": "Diamond Rank",    "desc": "Reached Diamond Tier"},
+    "tokens_5000":         {"name": "Master Rank",     "desc": "Reached Master Tier"},
 }
 
 
@@ -342,7 +316,7 @@ def check_badges(user: dict, debate_result: dict, prev_score: Optional[float] = 
 
     total = user["total_debates"]
     score = debate_result["overall_score"]
-    elo = user["elo_rating"]
+    elo = user["gforce_tokens"]
     total_words = user["total_words_spoken"]
     categories = {c["name"]: c["score"] for c in debate_result.get("categories", [])}
 
@@ -514,7 +488,8 @@ class Leaderboard:
 
         # ── Calculate new user stats ──
         new_total = user["total_debates"] + 1
-        new_words = user["total_words_spoken"] + result.get("stats", {}).get("total_words", 0)
+        debate_words = result.get("stats", {}).get("total_words", 0)
+        new_words = user["total_words_spoken"] + debate_words
         new_best = max(user["best_score"], result["overall_score"])
         new_avg = round(((user["avg_score"] * user["total_debates"]) + result["overall_score"]) / new_total, 2)
 
@@ -539,10 +514,25 @@ class Leaderboard:
                 pass
         new_longest = max(user["longest_streak"], new_streak)
 
-        new_elo = EloSystem.calculate_new_rating(
-            user["elo_rating"], result["overall_score"], user["total_debates"]
-        )
-        elo_change = round(new_elo - user["elo_rating"], 1)
+        # ── Gforce Token Calculation ──
+        # 1 token per 30 words (approx 5 tokens per min)
+        base_tokens = debate_words // 30
+        streak_bonus = new_streak * 5
+        win_bonus = 20 if result["overall_score"] >= 7.0 else 0
+        
+        # We need to pre-check badges to add badge bounty
+        temp_user = user.copy()
+        temp_user.update({
+            "total_debates": new_total,
+            "total_words_spoken": new_words,
+            "current_streak": new_streak,
+            "avg_score": new_avg
+        })
+        new_badges = check_badges(temp_user, result, prev_score)
+        badge_bonus = len(new_badges) * 25
+
+        tokens_earned = int(base_tokens + streak_bonus + win_bonus + badge_bonus)
+        new_gforce = int(user.get("gforce_tokens") or 0) + tokens_earned
 
         # ── Update user ──
         update_data = {
@@ -551,7 +541,7 @@ class Leaderboard:
             "total_wins": user["total_wins"] + (1 if result["overall_score"] >= 7.0 else 0),
             "best_score": new_best,
             "avg_score": new_avg,
-            "elo_rating": new_elo,
+            "gforce_tokens": new_gforce,
             "current_streak": new_streak,
             "longest_streak": new_longest,
             "total_words_spoken": new_words,
@@ -601,8 +591,8 @@ class Leaderboard:
             "debate_id": debate_id,
             "overall_score": result["overall_score"],
             "grade": result.get("grade", ""),
-            "new_elo": new_elo,
-            "elo_change": elo_change,
+            "new_tokens": new_gforce,
+            "tokens_earned": tokens_earned,
             "rank": rank,
             "streak": new_streak,
             "new_badges": [
@@ -615,7 +605,7 @@ class Leaderboard:
 
     def get_leaderboard(
         self,
-        sort_by: str = "elo_rating",
+        sort_by: str = "gforce_tokens",
         limit: int = 50,
         offset: int = 0,
         country: Optional[str] = None,
@@ -629,7 +619,7 @@ class Leaderboard:
         Get global or filtered leaderboard.
 
         Args:
-            sort_by:     "elo_rating", "avg_score", "best_score", "total_debates", "total_wins"
+            sort_by:     "gforce_tokens", "avg_score", "best_score", "total_debates", "total_wins"
             limit:       Number of results (max 100)
             offset:      Pagination offset
             country:     Filter by country code
@@ -639,10 +629,10 @@ class Leaderboard:
             min_debates: Minimum debates to appear
             time_range:  "week", "month", "season", or None for all-time
         """
-        allowed_sorts = {"elo_rating", "avg_score", "best_score", "total_debates",
+        allowed_sorts = {"gforce_tokens", "avg_score", "best_score", "total_debates",
                          "total_wins", "longest_streak"}
         if sort_by not in allowed_sorts:
-            sort_by = "elo_rating"
+            sort_by = "gforce_tokens"
 
         # Time-based leaderboard requires different approach
         if time_range:
@@ -654,7 +644,7 @@ class Leaderboard:
         query = (self.db.table("debate_users")
                  .select("user_id, username, country, region, school, class, "
                          "total_debates, total_wins, best_score, avg_score, "
-                         "elo_rating, current_streak, longest_streak, badges, "
+                         "gforce_tokens, current_streak, longest_streak, badges, "
                          "total_words_spoken")
                  .gte("total_debates", min_debates))
 
@@ -692,7 +682,7 @@ class Leaderboard:
             entry["badges"] = entry.get("badges") or []
             entry["badge_count"] = len(entry["badges"])
             entry["win_rate"] = round(entry["total_wins"] / max(1, entry["total_debates"]) * 100, 1)
-            entry["tier"] = self._elo_tier(entry["elo_rating"])
+            entry["tier"] = self._gforce_tier(entry["gforce_tokens"])
             leaderboard.append(entry)
 
         return {
@@ -745,7 +735,7 @@ class Leaderboard:
 
         user_ids = list(user_stats.keys())
         users_resp = (self.db.table("debate_users")
-                      .select("user_id, username, country, region, school, class, elo_rating, badges")
+                      .select("user_id, username, country, region, school, class, gforce_tokens, badges")
                       .in_("user_id", user_ids)
                       .execute())
 
@@ -762,13 +752,13 @@ class Leaderboard:
                 "region": user.get("region", ""),
                 "school": user.get("school", ""),
                 "class": user.get("class", ""),
-                "elo_rating": user.get("elo_rating", 1000),
+                "gforce_tokens": user.get("gforce_tokens", 1000),
                 "badges": user.get("badges", []),
                 "period_debates": len(stats["scores"]),
                 "period_avg": round(sum(stats["scores"]) / len(stats["scores"]), 2),
                 "period_best": max(stats["scores"]),
                 "period_words": stats["words"],
-                "tier": self._elo_tier(user.get("elo_rating", 1000)),
+                "tier": self._gforce_tier(user.get("gforce_tokens", 1000)),
             })
 
         entries.sort(key=lambda e: e["period_avg"], reverse=True)
@@ -848,7 +838,7 @@ class Leaderboard:
             return []
         user_ids = list(best.keys())
         users = (self.db.table("debate_users")
-                 .select("user_id, username, country, school, class, elo_rating")
+                 .select("user_id, username, country, school, class, gforce_tokens")
                  .in_("user_id", user_ids)
                  .execute())
         user_map = {u["user_id"]: u for u in users.data}
@@ -863,7 +853,7 @@ class Leaderboard:
                 "school": user.get("school", ""),
                 "class": user.get("class", ""),
                 "best_category_score": score,
-                "elo_rating": user.get("elo_rating", 1000),
+                "gforce_tokens": user.get("gforce_tokens", 1000),
             })
         return results
 
@@ -895,7 +885,7 @@ class Leaderboard:
         )
 
         # Tier
-        profile["tier"] = self._elo_tier(profile["elo_rating"])
+        profile["tier"] = self._gforce_tier(profile["gforce_tokens"])
 
         # Category averages from recent debates
         cat_cols = ", ".join(CATEGORY_COLUMN_MAP.values())
@@ -1027,9 +1017,9 @@ class Leaderboard:
     def search_users(self, query: str, limit: int = 20) -> list[dict]:
         """Search users by username."""
         resp = (self.db.table("debate_users")
-                .select("user_id, username, country, school, elo_rating, total_debates, avg_score")
+                .select("user_id, username, country, school, gforce_tokens, total_debates, avg_score")
                 .ilike("username", f"%{query}%")
-                .order("elo_rating", desc=True)
+                .order("gforce_tokens", desc=True)
                 .limit(limit)
                 .execute())
         return resp.data or []
@@ -1055,19 +1045,19 @@ class Leaderboard:
 
     def _rank_fallback(self, user_id: str) -> int:
         """Calculate rank without RPC."""
-        user_resp = self.db.table("debate_users").select("elo_rating").eq("user_id", user_id).execute()
+        user_resp = self.db.table("debate_users").select("gforce_tokens").eq("user_id", user_id).execute()
         if not user_resp.data:
             return 0
-        elo = user_resp.data[0]["elo_rating"]
+        elo = user_resp.data[0]["gforce_tokens"]
         count_resp = (self.db.table("debate_users")
                       .select("user_id", count="exact")
-                      .gt("elo_rating", elo)
+                      .gt("gforce_tokens", elo)
                       .gte("total_debates", 1)
                       .execute())
         return (count_resp.count or 0) + 1
 
     @staticmethod
-    def _elo_tier(elo: float) -> dict:
+    def _gforce_tier(elo: float) -> dict:
         tiers = [
             (2200, "Diamond",  "💎"),
             (2000, "Platinum", "⚪"),

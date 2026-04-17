@@ -229,7 +229,7 @@ export default function Leaderboard({ user }) {
                     <th className="hide-mobile">Level</th>
                     <th style={{ textAlign: 'center' }}>Debates</th>
                     <th className="hide-mobile" style={{ textAlign: 'center' }}>Win Rate</th>
-                    <th style={{ textAlign: 'right' }}>{category === 'global' ? 'ELO Rating' : category === 'top_streaks' ? 'Max Streak (Days)' : 'Avg Score'}</th>
+                    <th style={{ textAlign: 'right' }}>{category === 'global' ? 'Gforce Tokens' : category === 'top_streaks' ? 'Max Streak (Days)' : 'Avg Score'}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -288,7 +288,7 @@ export default function Leaderboard({ user }) {
                         </td>
                         <td style={{ textAlign: 'right' }}>
                           {category === 'global' ? (
-                            <span style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--text-primary)' }}>{Math.round(leader.elo_rating)}</span>
+                            <span style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--text-primary)' }}>{Math.round(leader.gforce_tokens)}</span>
                           ) : category === 'top_streaks' ? (
                             <span style={{ fontWeight: 800, fontSize: '1.1rem', color: '#8b5cf6' }}>🔥 {leader.longest_streak || leader.current_streak || 0}</span>
                           ) : (

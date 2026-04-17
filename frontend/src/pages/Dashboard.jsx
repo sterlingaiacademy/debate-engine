@@ -89,7 +89,7 @@ export default function Dashboard({ user }) {
   }
 
   // Fallback for new users
-  const elo = Math.round(stats.elo_rating || 1000);
+  const gforce = Math.round(stats.gforce_tokens || 0);
   const tier = stats.tier || { name: 'Unranked', icon: '⬜', color: '#94a3b8' };
   const recentScoresData = (stats.score_trend || []).map((d, i) => ({
     name: `Debate ${i + 1}`,

@@ -282,11 +282,11 @@ export default function Results({ user }) {
               <div style={{ width: '100%', marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border)' }}>
                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
-                       <span style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>New Rating</span>
+                       <span style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Gforce Tokens</span>
                        <span style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                         {Math.round(evaluation.leaderboard_update.new_elo)}
-                         <span style={{ fontSize: '0.85rem', color: evaluation.leaderboard_update.elo_change >= 0 ? '#10b981' : '#ef4444' }}>
-                           {evaluation.leaderboard_update.elo_change > 0 ? '+' : ''}{Math.round(evaluation.leaderboard_update.elo_change)}
+                         {Math.round(evaluation.leaderboard_update.new_tokens)}
+                         <span style={{ fontSize: '0.85rem', color: '#8b5cf6' }}>
+                           {'+'}{Math.round(evaluation.leaderboard_update.tokens_earned)}
                          </span>
                        </span>
                     </div>
