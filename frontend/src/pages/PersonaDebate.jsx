@@ -245,7 +245,7 @@ export default function PersonaDebate({ user }) {
     <>
 
 
-      <div className={isActive ? "" : "animate-fade-in"} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', height: 'calc(100vh - 64px - 1.5rem)' }}>
+      <div className={isActive ? "" : "animate-fade-in"} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', height: '100vh', margin: 0, padding: 0 }}>
 
       {/* Persona Header Banner */}
       <div style={{
@@ -296,9 +296,9 @@ export default function PersonaDebate({ user }) {
       </div>
 
       {/* Chat Window */}
-      <div className={isActive ? '' : 'card'} style={{
+      <div style={{
         flex: 1, padding: 0, overflow: 'hidden',
-        minHeight: 0, borderRadius: isActive ? '0' : 'var(--radius-xl)',
+        minHeight: 0,
         display: 'flex', flexDirection: 'column',
       }}>
         <div style={{ flex: 1, overflowY: isActive ? 'hidden' : 'auto', padding: isActive ? 0 : '1.5rem', display: 'flex', flexDirection: 'column', gap: isActive ? 0 : '1rem' }}>
@@ -461,7 +461,7 @@ export default function PersonaDebate({ user }) {
             <div className="animate-fade-in" style={{ 
               flex: 1, display: 'flex', flexDirection: 'column', 
               alignItems: 'center', justifyContent: 'center', gap: '2rem',
-              position: 'fixed', top: '64px', left: 0, right: 0, bottom: 0, zIndex: 50,
+              position: 'fixed', inset: 0, zIndex: 9999,
               background: isJunior
                 ? 'radial-gradient(circle at center, rgba(139,92,246,0.05) 0%, transparent 60%)'
                 : 'radial-gradient(ellipse at bottom, #1e1b4b 0%, #030712 100%)'

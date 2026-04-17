@@ -308,9 +308,9 @@ const formatTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0
 
   return (
     <>
-      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', height: 'calc(100vh - 64px - 1.5rem)' }}>
+      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', height: '100vh', margin: 0, padding: 0 }}>
       {status === 'select_topic' && (
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '2rem 1rem', animation: 'fadeIn 0.5s' }}>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '2rem 1rem', animation: 'fadeIn 0.5s' }}>
           <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2.25rem)', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>What do you feel like doing?</h2>
           <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', marginBottom: '3rem', maxWidth: '600px' }}>
             Whether you want to learn something new, clear up a doubt, or test yourself with a quiz — I've got you.
@@ -505,7 +505,8 @@ const formatTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0
             <div className="animate-fade-in" style={{ 
               flex: 1, display: 'flex', flexDirection: 'column', 
               alignItems: 'center', justifyContent: 'center', gap: '2rem',
-              position: 'relative', width: '100%', height: '100%',
+              position: 'fixed', inset: 0, zIndex: 9999,
+
               background: isJunior
                 ? 'radial-gradient(circle at center, rgba(139,92,246,0.05) 0%, transparent 60%)'
                 : 'radial-gradient(ellipse at bottom, #1e1b4b 0%, #030712 100%)'

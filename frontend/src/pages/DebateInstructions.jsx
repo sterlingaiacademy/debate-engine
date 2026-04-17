@@ -11,12 +11,10 @@ export default function DebateInstructions({ user }) {
   return (
     <div className="animate-fade-in" style={{
       display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-      minHeight: '60vh', textAlign: 'center', padding: '2rem'
+      minHeight: '100vh', textAlign: 'center', padding: '2rem', width: '100%', margin: 0
     }}>
       <div style={{
-        background: 'var(--bg-tertiary)', border: '1px solid var(--border)',
-        borderRadius: '24px', padding: '3rem', maxWidth: '500px', width: '100%',
-        boxShadow: '0 20px 40px rgba(0,0,0,0.2)'
+        padding: '3rem', maxWidth: '600px', width: '100%',
       }}>
         <div style={{
           width: '80px', height: '80px', borderRadius: '50%', background: 'rgba(59, 130, 246, 0.1)',

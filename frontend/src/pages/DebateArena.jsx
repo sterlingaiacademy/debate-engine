@@ -329,16 +329,15 @@ export default function DebateArena({ user }) {
 
   return (
     <>
-      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', height: 'calc(100vh - 64px - 1.5rem)' }}>
+      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', height: '100vh', margin: 0, padding: 0 }}>
       {/* Chat Window */}
-      <div className="card" style={{
+      <div style={{
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
         padding: 0,
         overflow: 'hidden',
         minHeight: 0,
-        borderRadius: 'var(--radius-xl)',
       }}>
         <div style={{ flex: 1, overflowY: isActive ? 'hidden' : 'auto', padding: isActive ? 0 : '1.5rem', display: 'flex', flexDirection: 'column', gap: isActive ? 0 : '1rem' }}>
           
@@ -487,7 +486,7 @@ export default function DebateArena({ user }) {
             <div className="animate-fade-in" style={{ 
               flex: 1, display: 'flex', flexDirection: 'column', 
               alignItems: 'center', justifyContent: 'center', gap: '2rem',
-              position: 'relative', width: '100%', height: '100%',
+              position: 'fixed', inset: 0, zIndex: 9999,
               background: isJunior
                 ? 'radial-gradient(circle at center, rgba(139,92,246,0.05) 0%, transparent 60%)'
                 : 'radial-gradient(ellipse at bottom, #1e1b4b 0%, #030712 100%)'

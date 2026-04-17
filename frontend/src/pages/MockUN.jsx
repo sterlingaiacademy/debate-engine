@@ -300,7 +300,7 @@ export default function MockUN({ user }) {
             <div className="animate-fade-in" style={{
               flex: 1, display: 'flex', flexDirection: 'column',
               alignItems: 'center', justifyContent: 'center', gap: '2rem',
-              position: 'relative', width: '100%', height: '100%',
+              position: 'fixed', inset: 0, zIndex: 9999,
               background: 'radial-gradient(ellipse at bottom, #1a1035 0%, #030712 100%)',
             }}>
               {/* UN Banner at top */}
@@ -394,8 +394,8 @@ export default function MockUN({ user }) {
   // ─── TIME LIMIT STEP ─────────────────────────────────────────────────────────
   if (step === 'time') {
     return (
-      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '900px', margin: '0 auto' }}>
-        <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100vh', width: '100%', margin: '0 auto', maxWidth: '900px' }}>
+        <div style={{ padding: 0, overflow: 'hidden', background: 'transparent' }}>
           {/* Header Banner */}
           <div style={{
             background: 'linear-gradient(135deg, #78350f 0%, #92400e 50%, #1a1035 100%)',
@@ -496,18 +496,57 @@ export default function MockUN({ user }) {
               Continue <ChevronRight size={20} />
             </button>
           </div>
+              onClick={() => setSelectedDuration('custom')}
+              style={{
+                padding: '1rem 0', borderRadius: '12px', fontWeight: 700, fontSize: '1.25rem',
+                transition: 'all 0.2s', border: '2px solid',
+                background: selectedDuration === 'custom' ? '#d97706' : 'transparent',
+                borderColor: selectedDuration === 'custom' ? '#d97706' : 'var(--border)',
+                color: selectedDuration === 'custom' ? '#fff' : 'var(--text-primary)',
+                cursor: 'pointer',
+              }}
+            >Custom</button>
+          </div>
+
+          {selectedDuration === 'custom' && (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', width: '100%', maxWidth: '300px', animation: 'fadeIn 0.3s' }}>
+              <span style={{ fontSize: '3.5rem', fontWeight: 800, color: '#d97706', lineHeight: 1 }}>
+                {customValue || 1}<span style={{ fontSize: '1.25rem', color: 'var(--text-secondary)' }}>m</span>
+              </span>
+              <input
+                type="range" min={1} max={maxMinutesAvailable}
+                value={customValue || 1}
+                onChange={e => { setCustomValue(parseInt(e.target.value, 10)); setSelectedDuration('custom'); }}
+                style={{ width: '100%', cursor: 'pointer', accentColor: '#d97706', height: '8px', borderRadius: '4px' }}
+              />
+            </div>
+          )}
+
+          <button
+            onClick={handleContinueToTopics}
+            disabled={!selectedDuration || (selectedDuration === 'custom' && (!customValue || customValue < 1))}
+            style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem',
+              padding: '1.1rem 3rem', borderRadius: '12px', fontWeight: 700, fontSize: '1.1rem',
+              background: 'linear-gradient(135deg, #d97706 0%, #b45309 100%)',
+              color: '#fff', border: 'none', cursor: 'pointer', width: '100%', maxWidth: '300px',
+              boxShadow: '0 8px 24px rgba(217,119,6,0.3)', transition: 'transform 0.2s, box-shadow 0.2s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 12px 32px rgba(217,119,6,0.45)'; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(217,119,6,0.3)'; }}
+          >
+            Continue <ChevronRight size={20} />
+          </button>
         </div>
       </div>
     );
   }
 
-  // ─── TOPIC PICKER STEP ───────────────────────────────────────────────────────
-  if (step === 'topics') {
+  // ─── TOPIC STEP ──────────────────────────────────────────────────────────────
+  if (step === 'topic') {
     return (
-      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', maxWidth: '900px', margin: '0 auto' }}>
-
-        {/* Header */}
-        <div style={{ textAlign: 'center' }}>
+      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100vh', width: '100%', margin: '0 auto', maxWidth: '900px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem', padding: '0 1rem' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'linear-gradient(135deg, rgba(251,191,36,0.1) 0%, rgba(217,119,6,0.1) 100%)', border: '1px solid rgba(251,191,36,0.25)', borderRadius: '99px', padding: '0.4rem 1rem', marginBottom: '1rem' }}>
             <Globe size={14} color="#fbbf24" />
             <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#d97706', textTransform: 'uppercase', letterSpacing: '0.07em' }}>Model UN · Grade 5 Premium</span>

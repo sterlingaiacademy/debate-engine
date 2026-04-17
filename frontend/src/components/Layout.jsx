@@ -5,8 +5,11 @@ import logoImg from '../assets/logo.png';
 
 export default function Layout({ user, onLogout, onSwitchProfile }) {
   const { pathname } = useLocation();
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true); // START COLLAPSED by default
   const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel);
+
+  const isFullScreenRoute = pathname.includes('/debate') || pathname.includes('/agent') || pathname.includes('/persona') || pathname.includes('/mock-un');
+
 
   const navLinks = [
     { name: 'Dashboard',   path: '/dashboard', match: '/dashboard',  icon: LayoutDashboard },
@@ -19,10 +22,11 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
   return (
     <div style={{ 
       display: 'flex', height: '100vh', overflow: 'hidden', 
-      backgroundColor: 'var(--bg-primary)',
-      backgroundImage: 'radial-gradient(circle at 15% 50%, rgba(255, 107, 0, 0.08), transparent 25%), radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.08), transparent 25%)'
+      backgroundColor: isFullScreenRoute ? '#000000' : 'var(--bg-primary)',
+      backgroundImage: isFullScreenRoute ? 'none' : 'radial-gradient(circle at 15% 50%, rgba(255, 107, 0, 0.08), transparent 25%), radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.08), transparent 25%)'
     }}>
       {/* SIDEBAR NAVIGATION - Glassmorphic iOS Style */}
+      {!isFullScreenRoute && (
       <aside style={{ 
         width: isCollapsed ? '88px' : '280px', flexShrink: 0, 
         borderRight: '1px solid rgba(255,255,255,0.08)', 
@@ -220,10 +224,20 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
           )}
         </div>
       </aside>
+      )}
 
       {/* MAIN CONTENT */}
-      <main style={{ flex: 1, overflowX: 'hidden', overflowY: 'auto', padding: '2rem 1.5rem', display: 'flex', justifyContent: 'center', position: 'relative', zIndex: 10 }}>
-        <div style={{ width: '100%', maxWidth: '1100px' }}>
+      <main style={{ 
+        flex: 1, overflowX: 'hidden', overflowY: isFullScreenRoute ? 'hidden' : 'auto', 
+        padding: isFullScreenRoute ? '0' : '2rem 1.5rem', 
+        display: 'flex', justifyContent: 'center', position: 'relative', zIndex: 10 
+      }}>
+        <div style={{ 
+          width: '100%', 
+          maxWidth: isFullScreenRoute ? '100%' : '1100px', 
+          height: isFullScreenRoute ? '100%' : 'auto',
+          display: 'flex', flexDirection: 'column'
+        }}>
           <Outlet />
         </div>
       </main>
