@@ -506,8 +506,6 @@ const formatTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0
               flex: 1, display: 'flex', flexDirection: 'column', 
               alignItems: 'center', justifyContent: 'center', gap: '2rem',
               position: 'relative', width: '100%', height: '100%',
-
-              position: 'relative', width: '100%', height: '100%',
             }}>
               
               {/* Screen Sleep Overlay for Kids */}

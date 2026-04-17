@@ -462,7 +462,6 @@ export default function PersonaDebate({ user }) {
               flex: 1, display: 'flex', flexDirection: 'column', 
               alignItems: 'center', justifyContent: 'center', gap: '2rem',
               position: 'relative', width: '100%', height: '100%',
-              position: 'relative', width: '100%', height: '100%',
             }}>
               
               {!isJunior && <GeminiWave isSpeaking={isSpeaking} />}
