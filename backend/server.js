@@ -24,7 +24,7 @@ function getISTDateString() {
 
 // Users
 app.post('/api/register', async (req, res) => {
-  const { name, studentId, password, classLevel, email, phone, authProvider } = req.body;
+  const { name, studentId, password, classLevel, email, phone, authProvider, referralCode } = req.body;
   if (!name || !studentId || !password || !classLevel) {
     return res.status(400).json({ error: 'All fields are required' });
   }
