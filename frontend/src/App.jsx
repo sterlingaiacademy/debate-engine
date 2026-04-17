@@ -196,10 +196,7 @@ function App() {
                         avatar: profile.avatar
                      });
                      setProfilesToSelect(null);
-                     if (window.location.pathname === '/' || window.location.pathname === '/login') {
-                         window.history.replaceState(null, '', '/dashboard');
-                         window.dispatchEvent(new Event('popstate'));
-                     }
+                     window.location.href = '/dashboard';
                   }}
                   style={{ 
                      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', 
