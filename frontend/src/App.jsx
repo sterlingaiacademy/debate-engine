@@ -45,10 +45,22 @@ function App() {
   };
 
   const handleSwitchProfile = async () => {
-    // Fetch profiles for the current Supabase session
-    const { data: { session } } = await supabase.auth.getSession();
-    const email = session?.user?.email;
-    if (!email) return;
+    // Get email from OAuth session OR from stored user object (for credential login users)
+    let email = null;
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      email = session?.user?.email;
+    } catch (e) {}
+    // Fallback: use email stored in user object (credential login users)
+    if (!email) {
+      const storedUser = localStorage.getItem('user');
+      const parsed = storedUser ? JSON.parse(storedUser) : null;
+      email = parsed?.email;
+    }
+    if (!email) {
+      alert('Cannot switch profile: no email linked to this account.');
+      return;
+    }
     try {
       const res = await fetch(`/api/user-by-email/${encodeURIComponent(email)}`);
       if (res.ok) {
@@ -57,6 +69,8 @@ function App() {
           setUser(null);
           localStorage.removeItem('user');
           setProfilesToSelect(data.users);
+        } else {
+          alert('Only one profile found for this account.');
         }
       }
     } catch (e) { console.error(e); }
