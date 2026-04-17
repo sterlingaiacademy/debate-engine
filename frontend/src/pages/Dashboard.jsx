@@ -323,7 +323,7 @@ export default function Dashboard({ user, setUser }) {
               <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Zap size={24} strokeWidth={2.5} />
               </div>
-              <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.8 }}>Persona Match</span>
+              <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.8 }}>Ranked Match</span>
             </div>
             <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem 0', letterSpacing: '-0.02em' }}>
               {isJunior ? 'Fun Debate Practice' : 'Debate Arena'}
@@ -405,16 +405,7 @@ export default function Dashboard({ user, setUser }) {
           <div style={{ position: 'absolute', bottom: '-40px', left: '20px', width: '130px', height: '130px', borderRadius: '50%', background: 'rgba(251,191,36,0.04)' }} />
           <div style={{ position: 'absolute', top: '18px', right: '22px', fontSize: '4rem', opacity: 0.18 }}>🌐</div>
 
-          {/* Premium badge */}
-          <div style={{
-            position: 'absolute', top: '14px', left: '50%', transform: 'translateX(-50%)',
-            background: 'linear-gradient(90deg, #d97706, #fbbf24)',
-            borderRadius: '99px', padding: '0.2rem 0.75rem',
-            fontSize: '0.65rem', fontWeight: 800, letterSpacing: '0.1em', color: '#000',
-            textTransform: 'uppercase', whiteSpace: 'nowrap',
-          }}>⭐ Premium</div>
-
-          <div style={{ marginTop: '1.5rem' }}>
+          <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
               <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'rgba(251,191,36,0.15)', backdropFilter: 'blur(10px)', border: '1px solid rgba(251,191,36,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>
                 🏛️
@@ -461,7 +452,7 @@ export default function Dashboard({ user, setUser }) {
               <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <MessageSquare size={24} strokeWidth={2.5} />
               </div>
-              <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.8 }}>Helper Bot</span>
+              <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.8 }}>Conversational AI</span>
             </div>
             <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem 0', letterSpacing: '-0.02em' }}>Super Tutor</h2>
             <p style={{ fontSize: '0.95rem', opacity: 0.85, margin: 0, lineHeight: 1.5, maxWidth: '280px' }}>
