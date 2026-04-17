@@ -1,5 +1,5 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { LogOut, LayoutDashboard, Mic, BarChart2, Trophy, UserCircle, Users, Zap, Flame } from 'lucide-react';
+import { LogOut, LayoutDashboard, Mic, BarChart2, Trophy, UserCircle, Users, Zap, Flame, Award } from 'lucide-react';
 
 export default function Layout({ user, onLogout, onSwitchProfile }) {
   const { pathname } = useLocation();
