@@ -62,6 +62,25 @@ app.post('/api/register', async (req, res) => {
     // Initialize analytics for new user
     await db.query(`INSERT INTO analytics ("studentId") VALUES ($1)`, [studentId]);
     
+    // --- REFERRAL & GFORCE TOKEN ECONOMY ---
+    let startupTokens = 100; // Base signup bonus
+    
+    // Validate referral code (referral code = another user's username)
+    if (referralCode && referralCode.trim() !== '') {
+      const referrerCheck = await db.query(`SELECT "studentId" FROM users WHERE LOWER("studentId") = LOWER($1)`, [referralCode.trim()]);
+      if (referrerCheck.rows.length > 0) {
+        startupTokens = 150; // Referred user bonus
+        // Grant referrer +200 bounty tokens
+        await db.query(`UPDATE debate_users SET gforce_tokens = gforce_tokens + 200 WHERE user_id = $1`, [referrerCheck.rows[0].studentId]);
+      }
+    }
+    
+    // Initialize debate_users record for leaderboard with startup tokens
+    await db.query(
+      `INSERT INTO debate_users (user_id, username, class, gforce_tokens) VALUES ($1, $2, $3, $4) ON CONFLICT (user_id) DO UPDATE SET gforce_tokens = debate_users.gforce_tokens + $4`,
+      [studentId, name, classLevel, startupTokens]
+    );
+    
     res.status(201).json({ 
       message: 'Account created successfully', 
       user: { name, studentId, classLevel, assignedAgentId, email, phone } 
