@@ -243,7 +243,7 @@ export default function Analytics({ user }) {
            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
              <Trophy size={18} color="#eab308" /> Badge Collection
            </h3>
-           <p className="text-secondary text-sm" style={{ marginBottom: '1.25rem' }}>Earn badges by completing challenges and pushing your ELO.</p>
+           <p className="text-secondary text-sm" style={{ marginBottom: '1.25rem' }}>Earn badges by completing challenges and pushing your rank.</p>
            
            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', overflowY: 'auto', maxHeight: '250px', paddingRight: '0.5rem' }}>
              {allBadges.length > 0 ? allBadges.map((b, i) => (

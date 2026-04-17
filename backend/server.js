@@ -252,13 +252,13 @@ app.get('/api/analytics/:studentId', async (req, res) => {
 
       if (data.error) {
          // It's a valid JSON response but contains a logical error (e.g. User not found)
-         return res.json({ total_debates: 0, avg_score: 0, total_words_spoken: 0, elo_rating: 1000, badges: [], badge_details: [] });
+         return res.json({ total_debates: 0, avg_score: 0, total_words_spoken: 0, gforce_tokens: 0, badges: [], badge_details: [] });
       }
       return res.json(data); // Success!
     } catch (err) {
       if (attempt === MAX_RETRIES) {
         console.error('Python Analytics route failed after retries:', err.message);
-        return res.json({ total_debates: 0, avg_score: 0, total_words_spoken: 0, elo_rating: 1000, badges: [], badge_details: [] });
+        return res.json({ total_debates: 0, avg_score: 0, total_words_spoken: 0, gforce_tokens: 0, badges: [], badge_details: [] });
       }
       // Wait a bit before retrying
       await new Promise(r => setTimeout(r, 500));

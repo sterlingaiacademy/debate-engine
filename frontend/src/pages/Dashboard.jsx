@@ -186,7 +186,7 @@ export default function Dashboard({ user }) {
             <p style={{ fontSize: '0.95rem', opacity: 0.85, margin: 0, lineHeight: 1.5, maxWidth: '280px' }}>
               {isJunior 
                 ? 'Have a fun voice debate with your very own AI buddy. Practice speaking and learn new ideas!'
-                : 'Go head-to-head with the AI in a competitive ranked debate. Earn ELO and climb the leaderboard.'}
+                : 'Go head-to-head with the AI in a competitive ranked debate. Earn Gforce Tokens and climb the leaderboard.'}
             </p>
           </div>
 
@@ -336,7 +336,7 @@ export default function Dashboard({ user }) {
          <div className="card" style={{ textAlign: 'center', padding: '3rem 2rem', background: isJunior ? 'linear-gradient(135deg, #f0f9ff 0%, #faf5ff 100%)' : 'var(--bg-tertiary)', border: '1px dashed var(--border)' }}>
 
             <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>Your stats will appear here</h3>
-            <p style={{ color: 'var(--text-secondary)', margin: 0, fontSize: '0.9rem' }}>Complete your first debate to unlock analytics, ELO rating, and skill breakdowns.</p>
+            <p style={{ color: 'var(--text-secondary)', margin: 0, fontSize: '0.9rem' }}>Complete your first debate to unlock analytics, Gforce Tokens, and skill breakdowns.</p>
          </div>
       ) : (
         <>

@@ -277,7 +277,7 @@ export default function Results({ user }) {
                </div>
             </div>
             
-            {/* ELO Changes Widget if available */}
+            {/* Gforce Token Changes Widget if available */}
             {evaluation?.leaderboard_update && (
               <div style={{ width: '100%', marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border)' }}>
                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

@@ -37,7 +37,7 @@ function Logo({ height = 44 }) {
 
 /* ─── FAQ Accordion ─── */
 const FAQS = [
-  { q: 'What age group is G Force AI designed for?', a: 'G Force AI is designed for students from KG through Class 12, with 5 adaptive difficulty levels that automatically match their school class.' },
+  { q: 'What age group is G Force AI designed for?', a: 'G Force AI is designed for students from KG through Grade 12, with 5 adaptive difficulty levels that automatically match their school grade.' },
   { q: 'How does the AI scoring work?', a: 'Our AI judge evaluates 8 dimensions: argument quality, rebuttal engagement, clarity, speech fluency, persuasiveness, knowledge & evidence, respectfulness, and position consistency — giving a holistic debate score.' },
   { q: 'Can students use the mobile app and web app together?', a: 'Yes! Both the Android app and web app connect to the same backend and Supabase database, so scores, leaderboards, and progress sync in real time across devices.' },
   { q: 'What is Mock UN mode?', a: 'Mock UN is a premium debate simulation where students take on country delegate personas and debate global motions in a United Nations-style format, powered by ElevenLabs voice AI.' },
@@ -156,7 +156,7 @@ export default function LandingPage() {
           marginBottom: "3rem",
           padding: "0 1.5rem"
         }}>
-          G Force AI uses advanced voice AI to coach students from KG to Class 12 in real-time debates — scoring arguments, tracking growth, and building the leaders of tomorrow.
+          G Force AI uses advanced voice AI to coach students from KG to Grade 12 in real-time debates — scoring arguments, tracking growth, and building the leaders of tomorrow.
         </p>
 
         {/* Buttons */}
@@ -187,10 +187,10 @@ export default function LandingPage() {
             {[
               { icon: <Brain size={28} />, title: 'AI Debate Personas', desc: 'Students debate against carefully crafted AI opponents — from confident politicians to expert scientists — that adapt to their level.', color: '#E8392A' },
               { icon: <BarChart2 size={28} />, title: 'Real-time Scoring', desc: 'After every debate, an AI judge scores 8 dimensions including argument quality, fluency, rebuttal, and persuasiveness.', color: '#F97316' },
-              { icon: <Trophy size={28} />, title: 'Global Leaderboards', desc: 'Students compete on ELO-rated leaderboards — filterable by class, school, region, and country — driving healthy competition.', color: '#FBBF24' },
+              { icon: <Trophy size={28} />, title: 'Global Leaderboards', desc: 'Students compete on token-ranked leaderboards — filterable by grade, school, region, and country — driving healthy competition.', color: '#FBBF24' },
               { icon: <Globe size={28} />, title: 'Mock UN Mode', desc: 'An immersive simulation where students play country delegates and debate global motions in a voice-powered UN format.', color: '#E8392A' },
               { icon: <Zap size={28} />, title: 'Voice-First AI', desc: 'Powered by ElevenLabs, students speak naturally and get instant AI responses, building real speaking confidence.', color: '#F97316' },
-              { icon: <Shield size={28} />, title: 'Adaptive Levels', desc: 'Five difficulty tiers automatically matched to school class (KG → Class 12) ensure every student is appropriately challenged.', color: '#FBBF24' },
+              { icon: <Shield size={28} />, title: 'Adaptive Levels', desc: 'Five difficulty tiers automatically matched to school grade (KG → Grade 12) ensure every student is appropriately challenged.', color: '#FBBF24' },
             ].map(({ icon, title, desc, color }, i) => (
               <div key={title} className="lp-feature-card lp-reveal" style={{ '--card-delay': `${i * 80}ms`, '--card-accent': color }}>
                 <div className="lp-feature-icon" style={{ background: `${color}16` }}>
@@ -214,9 +214,9 @@ export default function LandingPage() {
           </div>
           <div className="lp-steps">
             {[
-              { num: '01', icon: <Users size={32} />, title: 'Create Your Account', desc: 'Sign up with your student ID and pick your school class. The platform automatically assigns the right debate level for you.' },
+              { num: '01', icon: <Users size={32} />, title: 'Create Your Account', desc: 'Sign up with your username and pick your grade. The platform automatically assigns the right debate level for you.' },
               { num: '02', icon: <Mic size={32} />, title: 'Pick a Debate Mode', desc: 'Choose from Ranked Debates, Persona Practice, or Mock UN. Select your topic, pick a side, and start speaking.' },
-              { num: '03', icon: <Star size={32} />, title: 'Get Scored & Improve', desc: 'Receive a detailed AI report card after every debate. Track your ELO rating, streaks, and badges as you improve over time.' },
+              { num: '03', icon: <Star size={32} />, title: 'Get Scored & Improve', desc: 'Receive a detailed AI report card after every debate. Track your Gforce Tokens, streaks, and badges as you improve over time.' },
             ].map(({ num, icon, title, desc }, i) => (
               <div key={num} className="lp-step lp-reveal" style={{ '--step-delay': `${i * 120}ms` }}>
                 <div className="lp-step-num">{num}</div>

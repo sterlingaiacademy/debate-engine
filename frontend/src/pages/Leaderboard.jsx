@@ -200,7 +200,7 @@ export default function Leaderboard({ user }) {
                       </div>
                       <p style={{ fontWeight: 800, fontSize: '1rem', textAlign: 'center', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', width: '100%' }}>{leader?.username}</p>
                       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.15rem', marginBottom: '0.5rem' }}>
-                        <p className="text-secondary text-xs" style={{ fontWeight: 700 }}>{Math.round(leader?.elo_rating)} ELO</p>
+                        <p className="text-secondary text-xs" style={{ fontWeight: 700 }}>{Math.round(leader?.gforce_tokens || 0)} Tokens</p>
                       </div>
                       <div style={{
                         width: '100%',
@@ -357,8 +357,8 @@ export default function Leaderboard({ user }) {
                </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-               <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Your ELO</span>
-               <span style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>{user.stats?.elo_rating ? Math.round(user.stats.elo_rating) : 'Unranked'}</span>
+               <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Your Gforce Tokens</span>
+               <span style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>{user.stats?.gforce_tokens ? Math.round(user.stats.gforce_tokens) : 'Unranked'}</span>
             </div>
          </div>
       )}
