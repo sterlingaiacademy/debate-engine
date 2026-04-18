@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Mic, MicOff, PhoneOff, Timer as TimerIcon, Play, MessageSquare } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Mic, MicOff, PhoneOff, Timer as TimerIcon, Play, MessageSquare, Flame, Zap } from 'lucide-react';
 import { Conversation } from '@11labs/client';
 import AIAvatar from '../components/AIAvatar';
 import GeminiWave from '../components/GeminiWave';
@@ -18,8 +18,20 @@ const TOPICS = [
 ];
 
 export default function DebateArena({ user }) {
-  const [topic] = useState(() => TOPICS[Math.floor(Math.random() * TOPICS.length)]);
+  const navigate = useNavigate();
+  const location  = useLocation();
+
+  // ── Daily Challenge state passed from DailyChallenge page ──
+  const dailyChallengeState = location.state?.dailyChallenge ? location.state : null;
+  const isDailyChallenge    = !!dailyChallengeState;
+
   const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user.classLevel);
+
+  // Topic: use daily challenge motion if available, otherwise random
+  const [topic] = useState(() =>
+    dailyChallengeState?.motion || TOPICS[Math.floor(Math.random() * TOPICS.length)]
+  );
+
   const [timer, setTimer] = useState(600);
   const [isActive, setIsActive] = useState(false);
   const [screenSleep, setScreenSleep] = useState(false);
@@ -40,7 +52,8 @@ export default function DebateArena({ user }) {
   const conversationIdRef = useRef(null);
   const initialTimerRef = useRef(600);
   const initialDailyRemainingRef = useRef(600);
-  const navigate = useNavigate();
+  // Used to auto-start daily challenge after limits are fetched
+  const [autoStartSeconds, setAutoStartSeconds] = useState(null);
 
   const wakeLockRef = useRef(null);
 
@@ -167,7 +180,18 @@ export default function DebateArena({ user }) {
           }
           initialDailyRemainingRef.current = remain;
           setMaxMinutesAvailable(Math.floor(remain / 60));
-          setStatus('config'); // Show Time Selection Modal
+
+          // ── Daily Challenge: skip config modal, auto-start with timerOverride ──
+          if (isDailyChallenge && dailyChallengeState?.timerOverride) {
+            const challengeSeconds = Math.min(dailyChallengeState.timerOverride, remain);
+            initialTimerRef.current = challengeSeconds;
+            currentTimerRef.current = challengeSeconds;
+            setTimer(challengeSeconds);
+            setSelectedDuration(Math.floor(challengeSeconds / 60));
+            setAutoStartSeconds(challengeSeconds); // triggers the auto-start effect below
+          } else {
+            setStatus('config'); // Show Time Selection Modal for normal debate
+          }
         }
       } catch(err) {
         console.error('Failed to fetch time limits', err);
@@ -182,14 +206,29 @@ export default function DebateArena({ user }) {
     };
   }, [user?.assignedAgentId, user?.studentId]);
 
-  const startDebateSession = async () => {
+  // Auto-start effect for Daily Challenge — fires after startDebateSession is defined
+  useEffect(() => {
+    if (autoStartSeconds && status !== 'active' && status !== 'connecting') {
+      const t = setTimeout(() => startDebateSession(autoStartSeconds), 400);
+      return () => clearTimeout(t);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoStartSeconds]);
+
+  // Accept optional pre-computed seconds (used by daily challenge auto-start)
+  const startDebateSession = async (presetSeconds = null) => {
     setStatus('connecting');
     try {
       await navigator.mediaDevices.getUserMedia({ audio: true });
 
       // Setup chosen timer limit
-      const limitSeconds = selectedDuration === 'custom' ? parseInt(customValue, 10) * 60 : selectedDuration * 60;
-      const sessionMax = Math.min(limitSeconds, initialDailyRemainingRef.current);
+      let sessionMax;
+      if (presetSeconds) {
+        sessionMax = Math.min(presetSeconds, initialDailyRemainingRef.current);
+      } else {
+        const limitSeconds = selectedDuration === 'custom' ? parseInt(customValue, 10) * 60 : selectedDuration * 60;
+        sessionMax = Math.min(limitSeconds, initialDailyRemainingRef.current);
+      }
       initialTimerRef.current = sessionMax;
       currentTimerRef.current = sessionMax;
       setTimer(sessionMax);
@@ -295,6 +334,22 @@ export default function DebateArena({ user }) {
 
     const finalScore = evaluation?.overallScore ?? Math.floor(Math.random() * 20) + 65;
 
+    // ── Daily Challenge completion: mark done + award 2x tokens ──
+    if (isDailyChallenge) {
+      try {
+        // Estimate normal tokens from words spoken, then double it
+        const wordCount = currentTranscript.filter(m => m.role === 'user')
+          .reduce((acc, m) => acc + (m.text?.split(' ')?.length || 0), 0);
+        const normalTokens = Math.floor(wordCount / 30) + (finalScore >= 7 ? 20 : 0);
+        const bonusTokens  = normalTokens; // 2x = double by adding same again
+        await fetch('/api/daily-challenge/complete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ studentId: user.studentId, tokensEarned: bonusTokens }),
+        }).catch(() => {});
+      } catch (_) {}
+    }
+
     // Navigate directly with evaluation data — the leaderboard write already
     // happened inside /api/evaluate (debate_users + debates tables).
     const sessionData = {
@@ -303,7 +358,8 @@ export default function DebateArena({ user }) {
       sessionDuration: initialTimerRef.current - currentTimerRef.current,
       argumentsCount: currentTranscript.filter(m => m.role === 'user').length,
       debateScore: finalScore,
-      mode: 'Debate Arena',
+      mode: isDailyChallenge ? 'Daily Challenge' : 'Debate Arena',
+      isDailyChallenge,
     };
     navigate('/results/0', { state: { sessionData, evaluation } });
   };
@@ -326,6 +382,21 @@ export default function DebateArena({ user }) {
       }}>
         <div style={{ flex: 1, overflowY: isActive ? 'hidden' : 'auto', padding: isActive ? 0 : '1.5rem', display: 'flex', flexDirection: 'column', gap: isActive ? 0 : '1rem' }}>
           
+          {/* Daily Challenge Banner — shown in config screen */}
+          {status === 'config' && isDailyChallenge && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', background: 'rgba(255,107,0,0.08)', border: '1px solid rgba(255,107,0,0.2)', borderRadius: 14, padding: '0.875rem 1.25rem', marginBottom: '1rem' }}>
+              <Flame size={20} color="#FF6B00" />
+              <div>
+                <div style={{ fontWeight: 800, fontSize: '0.875rem', color: '#FF6B00' }}>Daily Challenge Active</div>
+                <div style={{ fontSize: '0.78rem', color: 'rgba(255,107,0,0.7)', marginTop: '0.1rem' }}>Motion: "{topic}" · 2× token reward</div>
+              </div>
+              <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '0.35rem', background: 'rgba(234,179,8,0.1)', border: '1px solid rgba(234,179,8,0.3)', borderRadius: 99, padding: '0.25rem 0.6rem' }}>
+                <Zap size={13} color="#eab308" />
+                <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#eab308' }}>2×</span>
+              </div>
+            </div>
+          )}
+
           {/* Time Limit Setup UI */}
           {status === 'config' && (
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '2rem 1rem', animation: 'fadeIn 0.5s' }}>
