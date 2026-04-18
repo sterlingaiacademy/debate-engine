@@ -295,32 +295,17 @@ export default function DebateArena({ user }) {
 
     const finalScore = evaluation?.overallScore ?? Math.floor(Math.random() * 20) + 65;
 
-    // Step 2: Save session with real score
+    // Navigate directly with evaluation data — the leaderboard write already
+    // happened inside /api/evaluate (debate_users + debates tables).
     const sessionData = {
       studentId: user.studentId,
       debateTopic: topic,
       sessionDuration: initialTimerRef.current - currentTimerRef.current,
       argumentsCount: currentTranscript.filter(m => m.role === 'user').length,
       debateScore: finalScore,
-      isPersona: false,
       mode: 'Debate Arena',
-      agentId: user?.assignedAgentId || ''
     };
-
-    try {
-      const res = await fetch('/api/sessions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(sessionData),
-      });
-      const data = await res.json();
-      // Navigate with both session data AND real evaluation results
-      navigate(`/results/${data.sessionId}`, {
-        state: { sessionData, evaluation }
-      });
-    } catch {
-      navigate('/dashboard');
-    }
+    navigate('/results/0', { state: { sessionData, evaluation } });
   };
 
   const formatTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;

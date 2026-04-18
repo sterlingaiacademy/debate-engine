@@ -69,7 +69,7 @@ export default function PersonaPicker({ user }) {
   };
 
   return (
-    <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+    <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '100vh', overflowY: 'auto', padding: '2rem', paddingBottom: '6rem' }}>
 
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>

@@ -43,6 +43,7 @@ async function initDB() {
     await addColumnSafeUsers('dailyRankedTime', 'INTEGER', '0');
     await addColumnSafeUsers('dailyPersonaTime', 'INTEGER', '0');
     await addColumnSafeUsers('grade', 'TEXT', "''");
+    await addColumnSafeUsers('dailyChallengeCompleted', 'TEXT', "''"); // YYYY-MM-DD IST
 
     const addColumnSafeDebateUsers = async (col, type, def) => {
       try {
@@ -51,6 +52,22 @@ async function initDB() {
     };
     await addColumnSafeDebateUsers('grade', 'TEXT', "''");
 
+    // Argument Bank table
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS argument_bank (
+        id          SERIAL PRIMARY KEY,
+        user_id     TEXT NOT NULL,
+        motion      TEXT DEFAULT '',
+        point       TEXT DEFAULT '',
+        evidence    TEXT DEFAULT '',
+        explain     TEXT DEFAULT '',
+        link        TEXT DEFAULT '',
+        score       REAL DEFAULT 0,
+        created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    // Index for fast user lookups
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_arg_bank_user ON argument_bank(user_id, created_at DESC)`);
 
     console.log('Supabase database tables verified.');
   } catch (err) {

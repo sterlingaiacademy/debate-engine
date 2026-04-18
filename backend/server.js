@@ -400,6 +400,118 @@ app.post('/api/evaluate', async (req, res) => {
   }
 });
 
+// ─── ARGUMENT BANK ───────────────────────────────────────────────────
+// GET all saved arguments for a user
+app.get('/api/argument-bank/:studentId', async (req, res) => {
+  const studentId = req.params.studentId.replace(/"/g, '');
+  try {
+    const { rows } = await db.query(
+      `SELECT * FROM argument_bank WHERE user_id = $1 ORDER BY created_at DESC`,
+      [studentId]
+    );
+    res.json({ arguments: rows });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// POST save a new argument
+app.post('/api/argument-bank', async (req, res) => {
+  const { studentId, motion, point, evidence, explain, link, score } = req.body;
+  if (!studentId || !point) return res.status(400).json({ error: 'Missing required fields' });
+  try {
+    const { rows } = await db.query(
+      `INSERT INTO argument_bank (user_id, motion, point, evidence, explain, link, score)
+       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+      [studentId, motion || '', point, evidence || '', explain || '', link || '', score || 0]
+    );
+    res.status(201).json({ argument: rows[0] });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// DELETE a saved argument
+app.delete('/api/argument-bank/:id', async (req, res) => {
+  const { id } = req.params;
+  const { studentId } = req.body;
+  try {
+    await db.query(
+      `DELETE FROM argument_bank WHERE id = $1 AND user_id = $2`,
+      [id, studentId]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ─── DAILY CHALLENGE ─────────────────────────────────────────────────
+// GET daily challenge status for a user
+app.get('/api/daily-challenge/:studentId', async (req, res) => {
+  const studentId = req.params.studentId.replace(/"/g, '');
+  try {
+    const { rows } = await db.query(
+      `SELECT "dailyChallengeCompleted" FROM users WHERE "studentId" = $1`,
+      [studentId]
+    );
+    if (!rows.length) return res.status(404).json({ error: 'User not found' });
+    const today = getISTDateString();
+    const completed = rows[0].dailyChallengeCompleted === today;
+    res.json({ completed, today });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// POST mark daily challenge as complete — awards 2× tokens in debate_users
+app.post('/api/daily-challenge/complete', async (req, res) => {
+  const { studentId, tokensEarned } = req.body;
+  if (!studentId) return res.status(400).json({ error: 'Missing studentId' });
+  try {
+    const today = getISTDateString();
+    // Check not already completed today
+    const check = await db.query(
+      `SELECT "dailyChallengeCompleted" FROM users WHERE "studentId" = $1`,
+      [studentId]
+    );
+    if (!check.rows.length) return res.status(404).json({ error: 'User not found' });
+    if (check.rows[0].dailyChallengeCompleted === today) {
+      return res.status(409).json({ error: 'Already completed today' });
+    }
+    // Mark completed
+    await db.query(
+      `UPDATE users SET "dailyChallengeCompleted" = $1 WHERE "studentId" = $2`,
+      [today, studentId]
+    );
+    // Award bonus tokens (2× — caller sends the multiplied amount)
+    if (tokensEarned && tokensEarned > 0) {
+      await db.query(
+        `UPDATE debate_users SET gforce_tokens = gforce_tokens + $1 WHERE user_id = $2`,
+        [Math.round(tokensEarned), studentId]
+      );
+    }
+    res.json({ success: true, bonusAwarded: tokensEarned || 0 });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// POST claim vocab trainer tokens (+75 per deck — server-side idempotency via argument_bank tricks)
+app.post('/api/claim-vocab-tokens', async (req, res) => {
+  const { studentId, tokensEarned } = req.body;
+  if (!studentId || !tokensEarned) return res.status(400).json({ error: 'Missing params' });
+  try {
+    await db.query(
+      `UPDATE debate_users SET gforce_tokens = gforce_tokens + $1 WHERE user_id = $2`,
+      [Math.round(tokensEarned), studentId]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Check if running locally vs Vercel Serverless
 if (require.main === module) {
   app.listen(PORT, () => {
@@ -408,3 +520,4 @@ if (require.main === module) {
 }
 
 module.exports = app;
+

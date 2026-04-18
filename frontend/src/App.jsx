@@ -18,6 +18,9 @@ const MockUN = lazy(() => import('./pages/MockUN'));
 const Settings = lazy(() => import('./pages/Settings'));
 const ConversationalAgent = lazy(() => import('./pages/ConversationalAgent'));
 const DebateInstructions = lazy(() => import('./pages/DebateInstructions'));
+const VocabTrainer = lazy(() => import('./pages/VocabTrainer'));
+const ArgumentBuilder = lazy(() => import('./pages/ArgumentBuilder'));
+const DailyChallenge = lazy(() => import('./pages/DailyChallenge'));
 
 function App() {
   
@@ -300,6 +303,9 @@ function App() {
               <Route path="/settings" element={user ? <Settings user={user} setUser={setUser} /> : <Navigate to="/" />} />
               <Route path="/conversational-agent" element={user ? <ConversationalAgent user={user} /> : <Navigate to="/" />} />
               <Route path="/debate-instructions" element={user ? <DebateInstructions user={user} /> : <Navigate to="/" />} />
+              <Route path="/vocab-trainer" element={user ? <VocabTrainer user={user} /> : <Navigate to="/" />} />
+              <Route path="/argument-builder" element={user ? <ArgumentBuilder user={user} /> : <Navigate to="/" />} />
+              <Route path="/daily-challenge" element={user ? <DailyChallenge user={user} /> : <Navigate to="/" />} />
             </Route>
 
             {/* Catch-all → landing page */}
