@@ -3,7 +3,7 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import {
   LogOut, LayoutDashboard, Mic, BarChart2, Trophy,
   UserCircle, Users, Zap, Flame, Award, ChevronRight,
-  ChevronLeft, Target, Settings, BookOpen, PenLine
+  ChevronLeft, Target, Settings, BookOpen, Gamepad2
 } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 
@@ -24,8 +24,8 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
     { name: 'Dashboard',       path: '/dashboard',         match: '/dashboard',         icon: LayoutDashboard },
     { name: 'Daily Challenge',  path: '/daily-challenge',   match: '/daily-challenge',   icon: Flame },
     { name: 'Debate',          path: isJunior ? '/debate' : '/debate-instructions?next=/debate', match: '/debate', icon: Mic },
-    { name: 'Vocab Trainer',   path: '/vocab-trainer',     match: '/vocab-trainer',     icon: BookOpen },
-    { name: 'Argument Builder',path: '/argument-builder',  match: '/argument-builder',  icon: PenLine },
+    { name: 'Vocab Trainer',   path: '/vocab-trainer',   match: '/vocab-trainer',   icon: BookOpen },
+    { name: 'Word Scramble',   path: '/word-scramble',   match: '/word-scramble',   icon: Gamepad2 },
     !isJunior && { name: 'Analytics',   path: '/analytics',   match: '/analytics',  icon: BarChart2 },
     !isJunior && { name: 'Leaderboard', path: '/leaderboard', match: '/leaderboard', icon: Trophy },
     { name: 'Settings',   path: '/settings',    match: '/settings',   icon: Settings },

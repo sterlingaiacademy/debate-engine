@@ -19,7 +19,7 @@ const Settings = lazy(() => import('./pages/Settings'));
 const ConversationalAgent = lazy(() => import('./pages/ConversationalAgent'));
 const DebateInstructions = lazy(() => import('./pages/DebateInstructions'));
 const VocabTrainer = lazy(() => import('./pages/VocabTrainer'));
-const ArgumentBuilder = lazy(() => import('./pages/ArgumentBuilder'));
+const WordScramble = lazy(() => import('./pages/WordScramble'));
 const DailyChallenge = lazy(() => import('./pages/DailyChallenge'));
 
 function App() {
@@ -304,7 +304,7 @@ function App() {
               <Route path="/conversational-agent" element={user ? <ConversationalAgent user={user} /> : <Navigate to="/" />} />
               <Route path="/debate-instructions" element={user ? <DebateInstructions user={user} /> : <Navigate to="/" />} />
               <Route path="/vocab-trainer" element={user ? <VocabTrainer user={user} /> : <Navigate to="/" />} />
-              <Route path="/argument-builder" element={user ? <ArgumentBuilder user={user} /> : <Navigate to="/" />} />
+              <Route path="/word-scramble" element={user ? <WordScramble user={user} /> : <Navigate to="/" />} />
               <Route path="/daily-challenge" element={user ? <DailyChallenge user={user} /> : <Navigate to="/" />} />
             </Route>
 
