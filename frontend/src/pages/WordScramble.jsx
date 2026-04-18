@@ -81,9 +81,12 @@ function shuffle(arr) {
 
 /** Scramble unrevealed chars, ensuring result ≠ original order */
 function scrambleTiles(chars) {
-  if (chars.length <= 1) return chars;
+  if (chars.length <= 1) return [...chars];
   const result = shuffle(chars);
-  if (result.join('') === chars.join('') && chars.length > 1) return scrambleTiles(chars);
+  // If shuffle produced same order by coincidence, swap first two
+  if (result.join('') === chars.join('')) {
+    [result[0], result[1]] = [result[1], result[0]];
+  }
   return result;
 }
 
@@ -114,6 +117,7 @@ function GameBoard({ user, isJunior, accent, onReset }) {
   // Refs to read final values synchronously in goNext
   const scoreRef   = useRef(0);
   const correctRef = useRef(0);
+  const livesRef   = useRef(3);   // mirror of lives state for goNext
   const currentRef = useRef(rounds[0]);
 
   // ── Init round ──────────────────────────────────────────────────
@@ -151,13 +155,14 @@ function GameBoard({ user, isJunior, accent, onReset }) {
     if (guess === current.word) {
       const newScore   = score + 10;
       const newCorrect = correctCount + 1;
-      setScore(newScore);
-      setCorrectCount(newCorrect);
       scoreRef.current   = newScore;
       correctRef.current = newCorrect;
+      setScore(newScore);
+      setCorrectCount(newCorrect);
       setPhase('correct');
     } else {
       const newLives = lives - 1;
+      livesRef.current = newLives;   // keep ref in sync before state update
       setLives(newLives);
       setPhase('wrong');
     }
@@ -191,7 +196,8 @@ function GameBoard({ user, isJunior, accent, onReset }) {
 
   const goNext = () => {
     const isLast     = roundIdx >= TOTAL_ROUNDS - 1;
-    const isGameOver = lives <= 0;
+    // Use ref — lives state may not have updated yet when goNext is called
+    const isGameOver = livesRef.current <= 0;
 
     if (isLast || isGameOver) {
       const finalTokens = Math.max(1, Math.floor(scoreRef.current / 2));
@@ -248,8 +254,13 @@ function GameBoard({ user, isJunior, accent, onReset }) {
   const isCorrect = phase === 'correct';
   const isWrong   = phase === 'wrong';
 
-  const userFilledCount = slots.filter((s, i) => s !== null && !isRevealed[i]).length;
-  const totalUserSlots  = slots.filter((_, i) => !isRevealed[i]).length;
+  // Guard: isRevealed may still be [] on very first render
+  const userFilledCount = isRevealed.length > 0
+    ? slots.filter((s, i) => s !== null && !isRevealed[i]).length
+    : 0;
+  const totalUserSlots  = isRevealed.length > 0
+    ? slots.filter((_, i) => !isRevealed[i]).length
+    : 0;
 
   return (
     <div className="animate-fade-in" style={{ maxWidth: 520, margin: '0 auto', paddingBottom: '4rem' }}>
