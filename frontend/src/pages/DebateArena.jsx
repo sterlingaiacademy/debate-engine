@@ -471,7 +471,7 @@ export default function DebateArena({ user }) {
               )}
 
               <button 
-                onClick={startDebateSession} 
+                onClick={() => startDebateSession()} 
                 disabled={!selectedDuration || (selectedDuration === 'custom' && (!customValue || customValue < 1))}
                 className="btn btn-primary btn-lg" 
                 style={{ width: '100%', maxWidth: '300px', padding: '1.25rem', fontSize: '1.25rem', boxShadow: '0 8px 24px rgba(139, 92, 246, 0.3)' }}
