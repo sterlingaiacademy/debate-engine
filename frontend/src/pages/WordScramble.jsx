@@ -209,6 +209,10 @@ function GameBoard({ user, isJunior, accent, onReset }) {
         body: JSON.stringify({ studentId: user?.studentId, tokensEarned: finalTokens }),
       }).catch(() => {});
     } else {
+      // Set phase immediately to remove the Next button from DOM —
+      // prevents double-click from calling setRoundIdx twice.
+      // The init useEffect resets phase to 'playing' for the new round.
+      setPhase('transitioning');
       setRoundIdx(r => r + 1);
     }
   };
