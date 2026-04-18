@@ -279,25 +279,6 @@ export default function ConversationalAgent({ user }) {
       }).catch(e => console.error('Final time sync failed', e));
     }
 
-    const sessionData = {
-      studentId: user.studentId,
-      debateTopic: 'Super Tutor Session',
-      sessionDuration: initialTimerRef.current - currentTimerRef.current,
-      argumentsCount: transcriptRef.current.filter(m => m.role === 'user').length,
-      debateScore: 0,
-      isPersona: true,
-      mode: 'Super Tutor',
-      agentId: getAgentId()
-    };
-
-    try {
-      await fetch('/api/sessions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(sessionData),
-      });
-    } catch(e) {}
-
     setTimeout(() => {
       navigate('/dashboard');
     }, 2000);
@@ -308,7 +289,7 @@ const formatTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0
 
   return (
     <>
-      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', height: '100vh', margin: 0, padding: 0 }}>
+      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', height: '100vh', margin: 0, padding: 0, overflowY: 'auto' }}>
       {status === 'select_topic' && (
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '2rem 1rem', animation: 'fadeIn 0.5s' }}>
           <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2.25rem)', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>What do you feel like doing?</h2>

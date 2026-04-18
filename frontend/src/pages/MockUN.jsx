@@ -206,25 +206,6 @@ export default function MockUN({ user }) {
       }).catch(() => {});
     }
 
-    // Save session history for analytics
-    try {
-      const sessionData = {
-        studentId: user.studentId,
-        debateTopic: `Model UN: ${selectedTopic}`,
-        sessionDuration: initialTimerRef.current - currentTimerRef.current,
-        argumentsCount: transcriptRef.current.filter(m => m.role === 'user').length,
-        debateScore: 0,
-        isPersona: false,
-        mode: 'Model UN',
-        agentId: MOCK_UN_AGENT_ID
-      };
-      await fetch('/api/sessions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(sessionData)
-      });
-    } catch (e) { console.error('Model UN history save failed', e); }
-
     // No analysis evaluation — go straight back to dashboard
     navigate('/dashboard');
   };
@@ -393,7 +374,7 @@ export default function MockUN({ user }) {
   // ─── TIME LIMIT STEP ─────────────────────────────────────────────────────────
   if (step === 'time') {
     return (
-      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100vh', width: '100%', margin: '0 auto', maxWidth: '900px' }}>
+      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100%', margin: '0 auto', maxWidth: '900px', overflowY: 'auto', padding: '4rem 1.5rem' }}>
         <div style={{ padding: 0, overflow: 'hidden', background: 'transparent' }}>
           {/* Header */}
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
@@ -495,7 +476,7 @@ export default function MockUN({ user }) {
   // ─── TOPIC PICKER STEP ───────────────────────────────────────────────────────
   if (step === 'topics') {
     return (
-      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100vh', width: '100%', margin: '0 auto', maxWidth: '900px' }}>
+      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100%', margin: '0 auto', maxWidth: '900px', overflowY: 'auto', padding: '4rem 1.5rem' }}>
 
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>

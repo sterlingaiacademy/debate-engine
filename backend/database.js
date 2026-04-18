@@ -31,26 +31,6 @@ async function initDB() {
       )
     `);
 
-    await client.query(`
-      CREATE TABLE IF NOT EXISTS debate_sessions (
-        id SERIAL PRIMARY KEY,
-        "studentId" TEXT,
-        "debateTopic" TEXT,
-        "sessionDuration" INTEGER,
-        "argumentsCount" INTEGER,
-        "debateScore" INTEGER,
-        "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      )
-    `);
-
-    await client.query(`
-      CREATE TABLE IF NOT EXISTS analytics (
-        "studentId" TEXT PRIMARY KEY,
-        "averageScore" REAL DEFAULT 0,
-        "debatesCompleted" INTEGER DEFAULT 0,
-        "speakingTime" INTEGER DEFAULT 0
-      )
-    `);
 
     // Daily time-limit columns — add if not already present
     const addColumnSafeUsers = async (col, type, def) => {
@@ -71,15 +51,6 @@ async function initDB() {
     };
     await addColumnSafeDebateUsers('grade', 'TEXT', "''");
 
-    // Session History columns - add if not already present
-    const addColumnSafeSessions = async (col, type, def) => {
-      try {
-        await client.query(`ALTER TABLE debate_sessions ADD COLUMN IF NOT EXISTS "${col}" ${type} DEFAULT ${def}`);
-      } catch (e) { /* Already exists */ }
-    };
-
-    await addColumnSafeSessions('mode', 'TEXT', "''");
-    await addColumnSafeSessions('agentId', 'TEXT', "''");
 
     console.log('Supabase database tables verified.');
   } catch (err) {

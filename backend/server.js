@@ -59,8 +59,6 @@ app.post('/api/register', async (req, res) => {
       return res.status(500).json({ error: err.message });
     }
     
-    // Initialize analytics for new user
-    await db.query(`INSERT INTO analytics ("studentId") VALUES ($1)`, [studentId]);
     
     // --- REFERRAL & GFORCE TOKEN ECONOMY ---
     let startupTokens = 100; // Base signup bonus
@@ -219,47 +217,6 @@ app.post('/api/time-sync', async (req, res) => {
   }
 });
 
-// Debate Sessions
-app.post('/api/sessions', async (req, res) => {
-  const { studentId, debateTopic, sessionDuration, argumentsCount, debateScore, mode, agentId } = req.body;
-  
-  const query = `INSERT INTO debate_sessions ("studentId", "debateTopic", "sessionDuration", "argumentsCount", "debateScore", "mode", "agentId") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`;
-  
-  try {
-    const result = await db.query(query, [studentId, debateTopic, sessionDuration, argumentsCount, debateScore, mode || 'Ranked Match', agentId || '']);
-    const newSessionId = result.rows[0].id;
-
-    // Update analytics
-    const analyticsResult = await db.query(`SELECT * FROM analytics WHERE "studentId" = $1`, [studentId]);
-    if (analyticsResult.rows.length > 0) {
-      const row = analyticsResult.rows[0];
-      const newCompleted = row.debatesCompleted + 1;
-      const newTotalScore = (row.averageScore * row.debatesCompleted) + debateScore;
-      const newAverage = newTotalScore / newCompleted;
-      const newSpeakingTime = row.speakingTime + sessionDuration;
-      
-      await db.query(`UPDATE analytics SET "averageScore" = $1, "debatesCompleted" = $2, "speakingTime" = $3 WHERE "studentId" = $4`,
-        [newAverage, newCompleted, newSpeakingTime, studentId]
-      );
-    }
-    
-    res.status(201).json({ message: 'Session saved', sessionId: newSessionId });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Transcript History
-app.get('/api/history/:studentId', async (req, res) => {
-  const { studentId } = req.params;
-  try {
-    const query = `SELECT * FROM debate_sessions WHERE "studentId" = $1 ORDER BY "createdAt" DESC`;
-    const result = await db.query(query, [studentId]);
-    res.json(result.rows);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
 
 // Analytics (Routed via Python Profile script)
 app.get('/api/analytics/:studentId', async (req, res) => {

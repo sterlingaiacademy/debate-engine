@@ -215,26 +215,6 @@ export default function PersonaDebate({ user }) {
       }).catch(e => console.error('Final persona time sync failed', e));
     }
 
-    // Save persona session to update the daily time limit
-    try {
-      await fetch('/api/sessions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          studentId: user?.studentId,
-          debateTopic: `Persona: ${personaName}`,
-          sessionDuration: initialTimerRef.current - timer,
-          argumentsCount: transcript.filter(m => m.role === 'user').length,
-          debateScore: 0, // Personas might not grant scores or it defaults inside
-          isPersona: true,
-          mode: `Persona: ${personaName}`,
-          agentId: personaAgentId
-        }),
-      });
-    } catch (e) {
-      console.error('Error saving persona session limit', e);
-    }
-
     setTimeout(() => {
       navigate('/persona');
     }, 4500);
