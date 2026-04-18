@@ -143,7 +143,9 @@ function GameBoard({ user, isJunior, accent, onReset }) {
     if (phase !== 'playing') return;
     const current = currentRef.current;
     if (!current) return;
-    if (slots.some(s => s === null)) return; // not fully filled yet
+    // Guard: slots not yet initialized (empty array on first render)
+    if (slots.length === 0 || slots.length !== current.word.length) return;
+    if (slots.some(s => s === null)) return; // blanks still remaining
 
     const guess = slots.join('');
     if (guess === current.word) {
