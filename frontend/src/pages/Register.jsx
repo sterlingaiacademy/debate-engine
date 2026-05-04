@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { GoogleLogin } from '@react-oauth/google';
-import { Mic, UserPlus, ArrowRight, Sparkles, Zap, Trophy, Shield, KeyRound, CheckCircle2 } from 'lucide-react';
+import { useGoogleLogin } from '@react-oauth/google';
+import { Shield, ArrowRight, Sparkles, Zap, Trophy } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 const GOOGLE_SANS = "'Google Sans', 'Outfit', 'Product Sans', system-ui, sans-serif";
 import { API_BASE } from '../api';
@@ -11,20 +11,42 @@ export default function Register({ onLogin }) {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    name: '', username: '', password: '', phone: '', selectedClass: 'KG', referralCode: ''
+    selectedClass: 'KG', referralCode: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   
   const isJuniorClass = ['KG', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(formData.selectedClass);
 
-  useEffect(() => {
-    // Auto-fill referral code from ?ref= URL param
-    const refFromUrl = searchParams.get('ref');
-    if (refFromUrl) {
-      setFormData(p => ({ ...p, referralCode: refFromUrl }));
-    }
-  }, [searchParams]);
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      setLoading(true);
+      setError('');
+      try {
+        const computedClassLevel = getLevelForClass(formData.selectedClass);
+        const res = await fetch(`${API_BASE}/api/auth/google`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            access_token: tokenResponse.access_token,
+            classLevel: computedClassLevel,
+            grade: formData.selectedClass,
+            referralCode: formData.referralCode
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Google sign-up failed');
+        
+        localStorage.setItem('token', data.token);
+        onLogin(data.user);
+        navigate('/dashboard');
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    },
+    onError: () => setError('Google sign-in was unsuccessful.')
+  });
 
   const set = (field) => (e) => {
     let val = e.target.value;
@@ -190,14 +212,21 @@ export default function Register({ onLogin }) {
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'center', width: '100%', marginTop: '1rem' }}>
-               <GoogleLogin
-                  onSuccess={handleGoogleSuccess}
-                  onError={() => setError('Google sign-in was unsuccessful.')}
-                  useOneTap
-                  theme="filled_black"
-                  shape="pill"
-                  text="signup_with"
-               />
+              <button
+                type="button" onClick={() => googleLogin()} disabled={loading}
+                style={{
+                  width: '100%',
+                  padding: '1rem', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px',
+                  background: '#ffffff', color: '#000', fontWeight: 700, fontSize: '1rem', cursor: loading ? 'not-allowed' : 'pointer',
+                  fontFamily: GOOGLE_SANS, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem',
+                  boxShadow: '0 4px 14px rgba(0,0,0,0.1)', transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+                }}
+                onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(255,255,255,0.1)'; }}
+                onMouseOut={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(0,0,0,0.1)'; }}
+              >
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="G" style={{ width: 22, height: 22 }} />
+                {loading ? 'Redirecting...' : 'Sign up with Google'}
+              </button>
             </div>
           </div>
 

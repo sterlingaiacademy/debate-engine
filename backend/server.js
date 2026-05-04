@@ -98,22 +98,35 @@ app.post('/api/register', async (req, res) => {
 
 // Google Native Login / Registration
 app.post('/api/auth/google', async (req, res) => {
-  const { credential, classLevel, grade } = req.body;
-  if (!credential) {
-    return res.status(400).json({ error: 'Missing Google credential' });
+  const { credential, access_token, classLevel, grade, referralCode } = req.body;
+  if (!credential && !access_token) {
+    return res.status(400).json({ error: 'Missing Google credential or access token' });
   }
 
   try {
-    const ticket = await googleClient.verifyIdToken({
-      idToken: credential,
-      audience: process.env.GOOGLE_CLIENT_ID,
-    });
-    
-    const payload = ticket.getPayload();
-    const email = payload.email;
-    const name = payload.name;
-    const googleId = payload.sub;
-    const avatar = payload.picture;
+    let email, name, googleId, avatar;
+
+    if (credential) {
+      const ticket = await googleClient.verifyIdToken({
+        idToken: credential,
+        audience: process.env.GOOGLE_CLIENT_ID,
+      });
+      const payload = ticket.getPayload();
+      email = payload.email;
+      name = payload.name;
+      googleId = payload.sub;
+      avatar = payload.picture;
+    } else if (access_token) {
+      const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+        headers: { Authorization: `Bearer ${access_token}` }
+      });
+      if (!response.ok) throw new Error('Failed to fetch user info from Google');
+      const payload = await response.json();
+      email = payload.email;
+      name = payload.name;
+      googleId = payload.sub;
+      avatar = payload.picture;
+    }
 
     // Check if user exists by email
     const { rows } = await db.query('SELECT * FROM users WHERE email = $1', [email]);

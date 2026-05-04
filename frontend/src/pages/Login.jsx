@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { GoogleLogin } from '@react-oauth/google';
-import { Zap, Trophy, ArrowRight, Sparkles } from 'lucide-react';
+import { useGoogleLogin } from '@react-oauth/google';
+import { Zap, Trophy, Sparkles } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 
 const GOOGLE_SANS = "'Google Sans', 'Outfit', 'Product Sans', system-ui, sans-serif";
@@ -15,26 +15,29 @@ export default function Login({ onLogin }) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleGoogleSuccess = async (credentialResponse) => {
-    setLoading(true);
-    setError('');
-    try {
-      const res = await fetch(`${API_BASE}/api/auth/google`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ credential: credentialResponse.credential }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Google login failed');
-      
-      localStorage.setItem('token', data.token);
-      onLogin(data.user);
-      navigate('/dashboard');
-    } catch (err) {
-      setError(err.message);
-      setLoading(false);
-    }
-  };
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      setLoading(true);
+      setError('');
+      try {
+        const res = await fetch(`${API_BASE}/api/auth/google`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ access_token: tokenResponse.access_token }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Google login failed');
+        
+        localStorage.setItem('token', data.token);
+        onLogin(data.user);
+        navigate('/dashboard');
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    },
+    onError: () => setError('Google sign-in was unsuccessful.')
+  });
 
   return (
     <div style={{
@@ -137,15 +140,20 @@ export default function Login({ onLogin }) {
           )}
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'center', width: '100%', marginTop: '1rem' }}>
-                 <GoogleLogin
-                    onSuccess={handleGoogleSuccess}
-                    onError={() => setError('Google sign-in was unsuccessful.')}
-                    useOneTap
-                    theme="filled_black"
-                    shape="pill"
-                 />
-              </div>
+              <button
+                type="button" onClick={() => googleLogin()} disabled={loading}
+                style={{
+                  padding: '0.9rem', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px',
+                  background: '#ffffff', color: '#000', fontWeight: 700, fontSize: '1rem', cursor: loading ? 'not-allowed' : 'pointer',
+                  fontFamily: GOOGLE_SANS, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem',
+                  boxShadow: '0 4px 14px rgba(0,0,0,0.1)', transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+                }}
+                onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(255,255,255,0.1)'; }}
+                onMouseOut={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(0,0,0,0.1)'; }}
+              >
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="G" style={{ width: 22, height: 22 }} />
+                {loading ? 'Redirecting...' : 'Sign in with Google'}
+              </button>
           </div>
           
           <div style={{ marginTop: '1.75rem', textAlign: 'center', fontSize: '0.85rem', color: '#94a3b8' }}>
