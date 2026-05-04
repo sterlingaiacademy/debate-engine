@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Mic, UserPlus, ArrowRight, Sparkles, Zap, Trophy, Shield, KeyRound, CheckCircle2 } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 const GOOGLE_SANS = "'Google Sans', 'Outfit', 'Product Sans', system-ui, sans-serif";
 import { supabase } from '../supabase';
+import { API_BASE } from '../api';
 
 export default function Register({ onLogin }) {
   const [searchParams] = useSearchParams();
@@ -60,7 +61,7 @@ export default function Register({ onLogin }) {
       setIsCheckingUsername(true);
       const delayFn = setTimeout(async () => {
         try {
-          const res = await fetch(`/api/check-username/${encodeURIComponent(u)}`);
+          const res = await fetch(`${API_BASE}/api/check-username/${encodeURIComponent(u)}`);
           if (res.ok) {
             const data = await res.json();
             setUsernameAvailable(data.available);
@@ -96,7 +97,7 @@ export default function Register({ onLogin }) {
         // BUT skip this check if coming from "Add Learner" (step=details already set)
         if (session.user?.email && searchParams.get('step') !== 'details') {
           try {
-             const res = await fetch(`/api/user-by-email/${encodeURIComponent(session.user.email)}`);
+             const res = await fetch(`${API_BASE}/api/user-by-email/${encodeURIComponent(session.user.email)}`);
              if (res.ok) {
                  const data = await res.json();
                  if (data.users && data.users.length > 0) {
@@ -246,7 +247,7 @@ export default function Register({ onLogin }) {
       };
 
       // In the real app, hit your API
-      const res = await fetch('/api/register', {
+      const res = await fetch("${API_BASE}/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),

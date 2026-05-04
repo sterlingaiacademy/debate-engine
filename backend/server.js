@@ -227,7 +227,7 @@ app.get('/api/analytics/:studentId', async (req, res) => {
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     try {
       const data = await new Promise((resolve, reject) => {
-        exec(`py "${scriptPath}" "${studentId}"`, (error, stdout, stderr) => {
+        exec(`python3 "${scriptPath}" "${studentId}"`, (error, stdout, stderr) => {
           if (error) {
             console.error(`Python Analytics attempt ${attempt} exec error:`, error);
           }
@@ -274,7 +274,7 @@ app.get('/api/leaderboard', (req, res) => {
   const paramsJson = JSON.stringify({ level, timeframe, category, school, limit: parseInt(limit), offset: parseInt(offset) });
   const escapedJson = paramsJson.replace(/"/g, '\\"');
   
-  exec(`py "${scriptPath}" "${escapedJson}"`, (error, stdout, stderr) => {
+  exec(`python3 "${scriptPath}" "${escapedJson}"`, (error, stdout, stderr) => {
     if (error) {
       console.error('Python leaderboard error:', error);
       console.error('stderr:', stderr);
@@ -375,7 +375,7 @@ app.post('/api/evaluate', async (req, res) => {
     const sTopic = topic ? String(topic).replace(/"/g, '') : 'Unknown Motion';
     
     // Pass args securely. Format: py script.py transcript.txt studentId name classLevel topic
-    exec(`py "${scriptPath}" "${filename}" "${sId}" "${sName}" "${sClass}" "${sTopic}"`, (error, stdout, stderr) => {
+    exec(`python3 "${scriptPath}" "${filename}" "${sId}" "${sName}" "${sClass}" "${sTopic}"`, (error, stdout, stderr) => {
       // Clean up file
       try { fs.unlinkSync(filename); } catch (e) {}
 

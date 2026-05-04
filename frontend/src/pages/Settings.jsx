@@ -1,6 +1,7 @@
-
+﻿
 import React, { useState, useRef } from 'react';
 import { Settings as SettingsIcon, Camera, UploadCloud, Loader2 } from 'lucide-react';
+import { API_BASE } from '../api';
 
 export default function Settings({ user, setUser }) {
   const [uploading, setUploading] = useState(false);
@@ -68,7 +69,7 @@ export default function Settings({ user, setUser }) {
           const base64Avatar = canvas.toDataURL('image/jpeg', 0.7);
 
           // Upload to your Node API
-          fetch('/api/user/avatar', {
+          fetch("${API_BASE}/api/user/avatar', {
              method: 'POST',
              headers: { 'Content-Type': 'application/json' },
              body: JSON.stringify({ studentId: user.studentId || user.username, avatar: base64Avatar })

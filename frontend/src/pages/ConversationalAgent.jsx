@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mic, MicOff, PhoneOff, Timer as TimerIcon, Play, MessageSquare } from 'lucide-react';
 import { Conversation } from '@11labs/client';
@@ -6,6 +6,7 @@ import AIAvatar from '../components/AIAvatar';
 import GeminiWave from '../components/GeminiWave';
 import TranscriptView from '../components/TranscriptView';
 import TypewriterText from '../components/TypewriterText';
+import { API_BASE } from '../api';
 
 
 
@@ -138,7 +139,7 @@ export default function ConversationalAgent({ user }) {
       
       // Background sync every 15 real seconds
       if (timeSinceLastSync >= 15) {
-        fetch('/api/time-sync', {
+        fetch("${API_BASE}/api/time-sync', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ studentId: user.studentId, usedSeconds: timeSinceLastSync, isPersona: true })
@@ -162,7 +163,7 @@ export default function ConversationalAgent({ user }) {
 
     const fetchLimits = async () => {
       try {
-        const res = await fetch(`/api/time-limits/${user.studentId}`);
+        const res = await fetch(`${API_BASE}/api/time-limits/${user.studentId}`);
         if (isTerminated) return;
         if (res.ok) {
           const data = await res.json();
@@ -272,7 +273,7 @@ export default function ConversationalAgent({ user }) {
     const alreadySynced = Math.floor(elapsedTotal / 15) * 15;
     const unsavedSeconds = elapsedTotal - alreadySynced;
     if (unsavedSeconds > 0) {
-      fetch('/api/time-sync', {
+      fetch("${API_BASE}/api/time-sync', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ studentId: user.studentId, usedSeconds: unsavedSeconds, isPersona: true })

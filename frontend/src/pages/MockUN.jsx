@@ -1,9 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Play, PhoneOff, MessageSquare, Globe, ChevronRight } from 'lucide-react';
 import { Conversation } from '@11labs/client';
 import GeminiWave from '../components/GeminiWave';
 import TranscriptView from '../components/TranscriptView';
+import { API_BASE } from '../api';
 
 const MOCK_UN_AGENT_ID = 'agent_4501kngj040nfdna0c7yck5r5156';
 
@@ -52,7 +53,7 @@ export default function MockUN({ user }) {
     let cancelled = false;
     const fetchLimits = async () => {
       try {
-        const res = await fetch(`/api/time-limits/${user.studentId}`);
+        const res = await fetch(`${API_BASE}/api/time-limits/${user.studentId}`);
         if (cancelled) return;
         if (res.ok) {
           const data = await res.json();
@@ -107,7 +108,7 @@ export default function MockUN({ user }) {
       currentTimerRef.current = newTime;
       const sinceLast = Math.floor((Date.now() - lastSyncTime) / 1000);
       if (sinceLast >= 15) {
-        fetch('/api/time-sync', {
+        fetch("${API_BASE}/api/time-sync', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ studentId: user.studentId, usedSeconds: sinceLast, isPersona: false }),
@@ -199,7 +200,7 @@ export default function MockUN({ user }) {
     const alreadySynced = Math.floor(elapsed / 15) * 15;
     const unsaved = elapsed - alreadySynced;
     if (unsaved > 0) {
-      fetch('/api/time-sync', {
+      fetch("${API_BASE}/api/time-sync', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ studentId: user.studentId, usedSeconds: unsaved, isPersona: false }),

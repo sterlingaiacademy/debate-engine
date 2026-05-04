@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 import { ChevronRight, ChevronLeft, Save, Trash2, Check, AlertCircle, Zap, BookOpen, Database, PenLine } from 'lucide-react';
+import { API_BASE } from '../api';
 
 /* ── PEEL scoring heuristics (rule-based, no AI) ── */
 const EVIDENCE_KW  = ['according to','research shows','studies show','data','statistics','percent','%','survey','report','found that','published','example','instance','case','demonstrated','study','evidence','fact','experts'];
@@ -102,7 +103,7 @@ export default function ArgumentBuilder({ user }) {
 
   async function fetchBank() {
     try {
-      const r = await fetch(`/api/argument-bank/${user.studentId}`);
+      const r = await fetch(`${API_BASE}/api/argument-bank/${user.studentId}`);
       const d = await r.json();
       setSavedArgs(d.arguments || []);
     } catch {}
@@ -113,7 +114,7 @@ export default function ArgumentBuilder({ user }) {
     setSaving(true);
     const argScore = scoreArgument(values);
     try {
-      const r = await fetch('/api/argument-bank', {
+      const r = await fetch("${API_BASE}/api/argument-bank', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ studentId: user.studentId, ...values, score: argScore }),
@@ -129,7 +130,7 @@ export default function ArgumentBuilder({ user }) {
 
   async function deleteArgument(id) {
     try {
-      await fetch(`/api/argument-bank/${id}`, {
+      await fetch(`${API_BASE}/api/argument-bank/${id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ studentId: user.studentId }),

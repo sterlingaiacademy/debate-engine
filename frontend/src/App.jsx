@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { supabase } from './supabase';
+import { API_BASE } from './api';
 
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -69,7 +70,7 @@ function App() {
       return;
     }
     try {
-      const res = await fetch(`/api/user-by-email/${encodeURIComponent(email)}`);
+      const res = await fetch(`${API_BASE}/api/user-by-email/${encodeURIComponent(email)}`);
       if (res.ok) {
         const data = await res.json();
         if (data.users && data.users.length > 0) {
@@ -100,7 +101,7 @@ function App() {
 
       try {
         if (email) {
-          const res = await fetch(`/api/user-by-email/${encodeURIComponent(email)}`);
+          const res = await fetch(`${API_BASE}/api/user-by-email/${encodeURIComponent(email)}`);
           if (res.ok) {
             const data = await res.json();
             legacyUsers = data.users || [];

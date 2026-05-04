@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Mic, MicOff, PhoneOff, Timer as TimerIcon, Play, MessageSquare, Flame, Zap } from 'lucide-react';
 import { Conversation } from '@11labs/client';
@@ -6,6 +6,7 @@ import AIAvatar from '../components/AIAvatar';
 import GeminiWave from '../components/GeminiWave';
 import TranscriptView from '../components/TranscriptView';
 import TypewriterText from '../components/TypewriterText';
+import { API_BASE } from '../api';
 
 const TOPICS = [
   'Should school uniforms be mandatory?',
@@ -144,7 +145,7 @@ export default function DebateArena({ user }) {
       
       // Background sync every 15 real seconds
       if (timeSinceLastSync >= 15) {
-        fetch('/api/time-sync', {
+        fetch("${API_BASE}/api/time-sync', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ studentId: user.studentId, usedSeconds: timeSinceLastSync, isPersona: false })
@@ -169,7 +170,7 @@ export default function DebateArena({ user }) {
     const fetchLimits = async () => {
       setStatus('connecting');
       try {
-        const res = await fetch(`/api/time-limits/${user.studentId}`);
+        const res = await fetch(`${API_BASE}/api/time-limits/${user.studentId}`);
         if (isTerminated) return;
         if (res.ok) {
           const data = await res.json();
@@ -305,7 +306,7 @@ export default function DebateArena({ user }) {
     const alreadySynced = Math.floor(elapsedTotal / 15) * 15;
     const unsavedSeconds = elapsedTotal - alreadySynced;
     if (unsavedSeconds > 0) {
-      fetch('/api/time-sync', {
+      fetch("${API_BASE}/api/time-sync', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ studentId: user.studentId, usedSeconds: unsavedSeconds, isPersona: false })
@@ -314,7 +315,7 @@ export default function DebateArena({ user }) {
 
     // Step 1: Get real AI judge evaluation from transcript
     try {
-      const evalRes = await fetch('/api/evaluate', {
+      const evalRes = await fetch("${API_BASE}/api/evaluate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -342,7 +343,7 @@ export default function DebateArena({ user }) {
           .reduce((acc, m) => acc + (m.text?.split(' ')?.length || 0), 0);
         const normalTokens = Math.floor(wordCount / 30) + (finalScore >= 7 ? 20 : 0);
         const bonusTokens  = normalTokens; // 2x = double by adding same again
-        await fetch('/api/daily-challenge/complete', {
+        await fetch("${API_BASE}/api/daily-challenge/complete', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ studentId: user.studentId, tokensEarned: bonusTokens }),

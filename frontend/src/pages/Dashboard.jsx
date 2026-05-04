@@ -11,6 +11,7 @@ import {
   ResponsiveContainer, Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis
 } from 'recharts';
 import HUDCard from '../components/HUDCard';
+import { API_BASE } from '../api';
 
 /* ─── Helpers ─── */
 const formatCategory = (key) => {
@@ -171,8 +172,8 @@ export default function Dashboard({ user, setUser }) {
       setStats(cachedStats); setLoading(false);
     }
     Promise.all([
-      fetch(`/api/analytics/${activeId}`).then(r => { if (!r.ok) throw new Error(); return r.json(); }),
-      fetch(`/api/time-limits/${activeId}`).then(r => { if (!r.ok) throw new Error(); return r.json(); }).catch(() => null),
+      fetch(`${API_BASE}/api/analytics/${activeId}`).then(r => { if (!r.ok) throw new Error(); return r.json(); }),
+      fetch(`${API_BASE}/api/time-limits/${activeId}`).then(r => { if (!r.ok) throw new Error(); return r.json(); }).catch(() => null),
     ]).then(([analyticsData, timeData]) => {
       const combined = { ...analyticsData, timeLimits: timeData || { remainingRanked: 600, error: true } };
       cachedStats = combined; cachedStudentId = activeId;

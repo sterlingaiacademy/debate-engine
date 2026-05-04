@@ -10,6 +10,7 @@ import {
   ScatterChart, Scatter, ZAxis, Legend, BarChart, Bar, Cell
 } from 'recharts';
 import HUDCard from '../components/HUDCard';
+import { API_BASE } from '../api';
 
 const formatCategory = (key) => {
   const map = {
@@ -66,7 +67,7 @@ export default function Analytics({ user }) {
     'Class 1-5','Class 1','Class 2','Class 3','Class 4','Class 5','kg'].includes(user?.classLevel);
 
   useEffect(() => {
-    fetch(`/api/analytics/${user.studentId}`)
+    fetch(`${API_BASE}/api/analytics/${user.studentId}`)
       .then(r => r.json())
       .then(data => { setStats(data); setLoading(false); })
       .catch(e => { console.error(e); setStats({ error: true }); setLoading(false); });

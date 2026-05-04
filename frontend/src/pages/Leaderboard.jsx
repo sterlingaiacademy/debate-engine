@@ -3,6 +3,7 @@ import {
   Trophy, Medal, Star, Shield, Award, Gem, Sparkles, Crown,
   TrendingUp, Mic, Globe, Filter, ChevronLeft, ChevronRight, Zap, Flame
 } from 'lucide-react';
+import { API_BASE } from '../api';
 
 const TIER_COLORS = {
   Unranked: '#64748b', Bronze: '#cd7f32', Silver: '#94a3b8',
@@ -68,7 +69,7 @@ export default function Leaderboard({ user }) {
       return;
     }
     setLoading(true);
-    fetch(`/api/leaderboard?${key}`)
+    fetch(`${API_BASE}/api/leaderboard?${key}`)
       .then(r => r.ok ? r.json() : Promise.reject())
       .then(data => {
         if (cancelled) return;

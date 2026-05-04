@@ -2,17 +2,20 @@ require('dotenv').config();
 const { Pool } = require('pg');
 
 const connectionString = process.env.DATABASE_URL || 
-  'postgresql://postgres.whfmuswqbsgbmaramuhi:sterlingvoiceorders%40123@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres';
+  'postgresql://graceandforce_user:Pck/aawJlsLFZxWu3CG7aw==@localhost:5432/graceandforce_db';
+
+// Disable SSL for local connections (Vultr localhost PostgreSQL), enable for remote
+const isLocal = connectionString.includes('localhost') || connectionString.includes('127.0.0.1');
 
 const pool = new Pool({
   connectionString,
-  ssl: { rejectUnauthorized: false },
+  ssl: isLocal ? false : { rejectUnauthorized: false },
   max: 10,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 10000,
 });
 
-console.log('Connecting to Supabase PostgreSQL database...');
+console.log('Connecting to Vultr PostgreSQL database...');
 
 // Initialize tables on startup
 async function initDB() {
@@ -69,7 +72,7 @@ async function initDB() {
     // Index for fast user lookups
     await client.query(`CREATE INDEX IF NOT EXISTS idx_arg_bank_user ON argument_bank(user_id, created_at DESC)`);
 
-    console.log('Supabase database tables verified.');
+    console.log('Vultr database tables verified.');
   } catch (err) {
     console.error('DB init error:', err.message);
   } finally {

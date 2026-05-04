@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BookOpen, ChevronRight, ChevronLeft, RotateCcw, Check, X, Trophy, Zap, Star, Lock } from 'lucide-react';
 import { VOCAB_CATEGORIES, generateQuiz } from '../data/vocabCards';
+import { API_BASE } from '../api';
 
 const STORAGE_KEY = 'vocab_progress';
 
@@ -73,7 +74,7 @@ export default function VocabTrainer({ user }) {
 
     if (tokens > 0) {
       try {
-        await fetch('/api/claim-vocab-tokens', {
+        await fetch("${API_BASE}/api/claim-vocab-tokens', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ studentId: user.studentId, tokensEarned: tokens }),

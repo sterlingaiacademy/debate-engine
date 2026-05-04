@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Zap, Trophy, ArrowRight, Sparkles } from 'lucide-react';
 import logoImg from '../assets/logo.png';
@@ -6,6 +6,7 @@ import logoImg from '../assets/logo.png';
 const GOOGLE_SANS = "'Google Sans', 'Outfit', 'Product Sans', system-ui, sans-serif";
 
 import { supabase } from '../supabase';
+import { API_BASE } from '../api';
 
 export default function Login({ onLogin }) {
   const [searchParams] = useSearchParams();
@@ -96,7 +97,7 @@ export default function Login({ onLogin }) {
         navigate('/dashboard');
       } else if (method === 'credentials') {
         // Standard username/pwd against existing legacy DB
-        const res = await fetch('/api/login', {
+        const res = await fetch("${API_BASE}/api/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ studentId: username, password }),
