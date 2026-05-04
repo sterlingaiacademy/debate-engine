@@ -16,62 +16,7 @@ export default function Register({ onLogin }) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   
-  // Dynamic UI State
-  const [isCheckingUsername, setIsCheckingUsername] = useState(false);
-  const [usernameAvailable, setUsernameAvailable] = useState(null);
-  const [usernameFormatError, setUsernameFormatError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-
   const isJuniorClass = ['KG', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(formData.selectedClass);
-
-  useEffect(() => {
-    // Dynamic Password Checking
-    const p = formData.password;
-    if (p.length > 0) {
-      const hasUppercase = /[A-Z]/.test(p);
-      const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(p);
-      if (p.length < 8) setPasswordError('Needs at least 8 characters');
-      else if (!hasUppercase) setPasswordError('Needs 1 uppercase letter');
-      else if (!hasSpecialChar) setPasswordError('Needs 1 special character');
-      else setPasswordError('');
-    } else {
-      setPasswordError('');
-    }
-
-    // Dynamic Username Checking
-    const u = formData.username;
-    
-    // Structural formatting validation
-    let hasFormatError = false;
-    if (u.length > 0) {
-      if (u.startsWith('.') || u.endsWith('.')) { setUsernameFormatError('Cannot start or end with a dot'); hasFormatError = true; }
-      else if (u.includes('..')) { setUsernameFormatError('Cannot contain consecutive dots'); hasFormatError = true; }
-      else if (/^[_.]+$/.test(u)) { setUsernameFormatError('Must contain at least one letter or number'); hasFormatError = true; }
-      else { setUsernameFormatError(''); }
-    } else {
-      setUsernameFormatError('');
-    }
-
-    if (u.length >= 3 && !hasFormatError) {
-      setIsCheckingUsername(true);
-      const delayFn = setTimeout(async () => {
-        try {
-          const res = await fetch(`${API_BASE}/api/check-username/${encodeURIComponent(u)}`);
-          if (res.ok) {
-            const data = await res.json();
-            setUsernameAvailable(data.available);
-          }
-        } catch {
-          // ignore
-        } finally {
-          setIsCheckingUsername(false);
-        }
-      }, 600);
-      return () => clearTimeout(delayFn);
-    } else {
-      setUsernameAvailable(null);
-    }
-  }, [formData.username, formData.password]);
 
   useEffect(() => {
     // Auto-fill referral code from ?ref= URL param
@@ -83,13 +28,6 @@ export default function Register({ onLogin }) {
 
   const set = (field) => (e) => {
     let val = e.target.value;
-    if (field === 'username') {
-      val = val.toLowerCase().replace(/[^a-z0-9_.]/g, '').slice(0, 30);
-    }
-    if (field === 'name' && formData.username === '') {
-      setFormData((p) => ({ ...p, name: val, username: `${val.toLowerCase().replace(/[^a-z0-9_.]/g, '').slice(0, 26)}${Math.floor(Math.random() * 1000)}` }));
-      return;
-    }
     setFormData((p) => ({ ...p, [field]: val }));
   };
 
@@ -100,69 +38,6 @@ export default function Register({ onLogin }) {
     if (['Class 9', 'Class 10'].includes(cls)) return 'Level 4';
     if (['Class 11', 'Class 12'].includes(cls)) return 'Level 5';
     return 'Level 1';
-  };
-
-  // Step 3: Finalize Account Details
-  const handleSaveDetails = async () => {
-    setError('');
-    if (!formData.name || !formData.username || !formData.password) {
-      setError('Name, Username, and Password are required.');
-      return;
-    }
-
-    const u = formData.username;
-    if (u.startsWith('.') || u.endsWith('.') || u.includes('..') || /^[_.]+$/.test(u)) {
-      setError('Username format is invalid (Instagram rules).');
-      return;
-    }
-
-    const hasUppercase = /[A-Z]/.test(formData.password);
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(formData.password);
-    
-    if (formData.password.length < 8 || !hasUppercase || !hasSpecialChar) {
-      setError('Password must be at least 8 characters long, and include at least one uppercase letter and one special character.');
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const computedClassLevel = getLevelForClass(formData.selectedClass);
-      
-      const payload = {
-        name: formData.name,
-        studentId: formData.username,
-        password: formData.password,
-        classLevel: computedClassLevel,
-        grade: formData.selectedClass, 
-        referralCode: formData.referralCode,
-        authProvider: 'credentials',
-        email: null,
-        phone: null
-      };
-
-      const res = await fetch(`${API_BASE}/api/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await res.json().catch(() => ({})); 
-
-      if (!res.ok) {
-        throw new Error(data.error || 'Failed to create account. Please try again.');
-      }
-
-      // Automatically log the user in on successful registration
-      localStorage.setItem('token', data.token);
-      onLogin(data.user);
-      
-      setLoading(false);
-      navigate('/dashboard');
-
-    } catch (err) {
-      setError(err.message);
-      setLoading(false);
-    }
   };
 
   const handleGoogleSuccess = async (credentialResponse) => {
@@ -287,7 +162,7 @@ export default function Register({ onLogin }) {
             </div>
           )}
 
-          <form onSubmit={(e) => { e.preventDefault(); handleSaveDetails(); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', animation: 'fadeIn 0.3s ease' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', animation: 'fadeIn 0.3s ease' }}>
               
             {isJuniorClass && (
                <div style={{ padding: '0.85rem', background: 'rgba(249, 115, 22, 0.08)', border: '1px solid rgba(249, 115, 22, 0.2)', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -296,45 +171,15 @@ export default function Register({ onLogin }) {
                </div>
             )}
 
-            <div style={{ display: 'flex', gap: '1rem' }}>
-              <div style={{ flex: '2', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Full Name</label>
-                <input type="text" placeholder="e.g. John Doe" value={formData.name} onChange={set('name')} required
-                  style={{ padding: '0.8rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
-                />
-              </div>
-              <div style={{ flex: '1', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Grade</label>
-                <select value={formData.selectedClass} onChange={set('selectedClass')}
-                  style={{ padding: '0.8rem', background: '#0f1322', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none', cursor: 'pointer' }}>
-                  <option value="KG">KG</option>
-                  {[...Array(12)].map((_, i) => (
-                    <option key={`Class ${i + 1}`} value={`Class ${i + 1}`}>Grade {i + 1}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div style={{ display: 'flex', gap: '1rem' }}>
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Username</label>
-                <input type="text" placeholder="e.g. johndoe" value={formData.username} onChange={set('username')} required
-                  style={{ padding: '0.8rem 1rem', background: (error?.toLowerCase().includes('student id') || usernameAvailable === false || usernameFormatError) ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.03)', border: (error?.toLowerCase().includes('student id') || usernameAvailable === false || usernameFormatError) ? '1px solid rgba(239, 68, 68, 0.5)' : usernameAvailable ? '1px solid rgba(52, 211, 153, 0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
-                />
-                {usernameFormatError && <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>{usernameFormatError}</span>}
-                {isCheckingUsername && !usernameFormatError && <span style={{ color: '#94a3b8', fontSize: '0.75rem', marginTop: '0.2rem' }}>Checking...</span>}
-                {usernameAvailable === true && !isCheckingUsername && !usernameFormatError && <span style={{ color: '#34d399', fontSize: '0.75rem', marginTop: '0.2rem' }}>Username available!</span>}
-                {(usernameAvailable === false || error?.toLowerCase().includes('student id')) && !isCheckingUsername && !usernameFormatError && <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>Username already exists</span>}
-              </div>
-              
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Password</label>
-                <input type="password" placeholder="Secure password" value={formData.password} onChange={set('password')} required
-                  style={{ padding: '0.8rem 1rem', background: passwordError ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.03)', border: passwordError ? '1px solid rgba(239, 68, 68, 0.5)' : (!passwordError && formData.password.length > 0) ? '1px solid rgba(52, 211, 153, 0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
-                />
-                {passwordError && <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>{passwordError}</span>}
-                {!passwordError && formData.password.length > 0 && <span style={{ color: '#34d399', fontSize: '0.75rem', marginTop: '0.2rem' }}>Strong password!</span>}
-              </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+              <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Select Your Grade</label>
+              <select value={formData.selectedClass} onChange={set('selectedClass')}
+                style={{ padding: '0.8rem', background: '#0f1322', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none', cursor: 'pointer' }}>
+                <option value="KG">KG</option>
+                {[...Array(12)].map((_, i) => (
+                  <option key={`Class ${i + 1}`} value={`Class ${i + 1}`}>Grade {i + 1}</option>
+                ))}
+              </select>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
@@ -344,25 +189,7 @@ export default function Register({ onLogin }) {
               />
             </div>
 
-            <button
-              type="submit" disabled={loading}
-              style={{
-                marginTop: '0.5rem', padding: '1rem', border: 'none', borderRadius: '12px',
-                background: 'linear-gradient(135deg, #E8392A 0%, #F97316 100%)', color: '#fff',
-                fontWeight: 700, fontSize: '1rem', cursor: loading ? 'not-allowed' : 'pointer',
-                boxShadow: '0 4px 14px rgba(232,57,42,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem'
-              }}
-            >
-              {loading ? 'Creating Account...' : <>Complete Sign Up <ArrowRight size={18} /></>}
-            </button>
-
-            <div style={{ display: 'flex', alignItems: 'center', margin: '0.5rem 0' }}>
-              <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
-              <span style={{ padding: '0 1rem', color: '#64748b', fontSize: '0.85rem' }}>or</span>
-              <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
-            </div>
-            
-            <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', width: '100%', marginTop: '1rem' }}>
                <GoogleLogin
                   onSuccess={handleGoogleSuccess}
                   onError={() => setError('Google sign-in was unsuccessful.')}
@@ -372,7 +199,7 @@ export default function Register({ onLogin }) {
                   text="signup_with"
                />
             </div>
-          </form>
+          </div>
 
           <div style={{ marginTop: '1.75rem', textAlign: 'center', fontSize: '0.85rem', color: '#94a3b8' }}>
           Already have an account? <Link to="/login" style={{ color: '#F97316', textDecoration: 'none', fontWeight: 700 }}>Sign in</Link>

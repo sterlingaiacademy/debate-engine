@@ -12,57 +12,8 @@ export default function Login({ onLogin }) {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [usernameFormatError, setUsernameFormatError] = useState('');
-
-  useEffect(() => {
-    if (username.length > 0) {
-      if (username.startsWith('.') || username.endsWith('.')) setUsernameFormatError('Cannot start or end with a dot');
-      else if (username.includes('..')) setUsernameFormatError('Cannot contain consecutive dots');
-      else if (/^[_.]+$/.test(username)) setUsernameFormatError('Must contain at least one letter or number');
-      else setUsernameFormatError('');
-    } else {
-      setUsernameFormatError('');
-    }
-  }, [username]);
-
-  const handleSubmit = async () => {
-    setError('');
-    
-    if (!username || !password) {
-      setError('Please provide both username and password.');
-      return;
-    }
-    if (usernameFormatError) {
-      setError('Username format is invalid.');
-      return;
-    }
-
-    setLoading(true);
-    
-    try {
-        const res = await fetch(`${API_BASE}/api/login`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ studentId: username, password }),
-        });
-        
-        const data = await res.json();
-        if (!res.ok) {
-           throw new Error(data.error || 'Login failed');
-        }
-        
-        localStorage.setItem('token', data.token);
-        onLogin(data.user);
-        navigate('/dashboard');
-    } catch (err) {
-      setError(err.message);
-      setLoading(false);
-    }
-  };
 
   const handleGoogleSuccess = async (credentialResponse) => {
     setLoading(true);
@@ -185,47 +136,8 @@ export default function Login({ onLogin }) {
             </div>
           )}
 
-          <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#e2e8f0' }}>Username</label>
-                <input
-                  type="text" placeholder="e.g. johndoe" value={username} onChange={e => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_.]/g, '').slice(0, 30))}
-                  style={{ padding: '0.85rem 1rem', background: usernameFormatError ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.03)', border: usernameFormatError ? '1px solid rgba(239, 68, 68, 0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.95rem', outline: 'none' }}
-                />
-                {usernameFormatError && <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>{usernameFormatError}</span>}
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                   <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#e2e8f0' }}>Password</label>
-                   <a href="#" style={{ color: '#F97316', fontSize: '0.8rem', fontWeight: 600, textDecoration: 'none' }}>Forgot Password?</a>
-                </div>
-                <input
-                  type="password" placeholder="Enter your password" value={password} onChange={e => setPassword(e.target.value)}
-                  style={{ padding: '0.85rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.95rem', outline: 'none' }}
-                />
-              </div>
-
-              <button
-                type="submit" disabled={loading}
-                style={{
-                  marginTop: '0.5rem', padding: '0.9rem', border: 'none', borderRadius: '12px',
-                  background: 'linear-gradient(135deg, #E8392A 0%, #F97316 100%)', color: '#fff',
-                  fontWeight: 700, fontSize: '1rem', cursor: loading ? 'not-allowed' : 'pointer',
-                  boxShadow: '0 4px 14px rgba(232,57,42,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem'
-                }}
-              >
-                {loading ? 'Authenticating...' : <>Secure Sign In <ArrowRight size={18} /></>}
-              </button>
-
-              <div style={{ display: 'flex', alignItems: 'center', margin: '0.5rem 0' }}>
-                <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
-                <span style={{ padding: '0 1rem', color: '#64748b', fontSize: '0.85rem' }}>or</span>
-                <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
-              </div>
-              
-              <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', width: '100%', marginTop: '1rem' }}>
                  <GoogleLogin
                     onSuccess={handleGoogleSuccess}
                     onError={() => setError('Google sign-in was unsuccessful.')}
@@ -234,7 +146,7 @@ export default function Login({ onLogin }) {
                     shape="pill"
                  />
               </div>
-          </form>
+          </div>
           
           <div style={{ marginTop: '1.75rem', textAlign: 'center', fontSize: '0.85rem', color: '#94a3b8' }}>
             Don't have an account?{' '}

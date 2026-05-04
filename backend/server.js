@@ -140,10 +140,24 @@ app.post('/api/auth/google', async (req, res) => {
       const result = await db.query(insertQuery, [name, studentId, randomPassword, assignedClass, assignedGrade, assignedAgentId, email, avatar, 'google']);
       user = result.rows[0];
       
+      // --- REFERRAL & GFORCE TOKEN ECONOMY ---
+      let startupTokens = 100; // Base signup bonus
+      const refCode = req.body.referralCode;
+      
+      // Validate referral code
+      if (refCode && refCode.trim() !== '') {
+        const referrerCheck = await db.query(`SELECT "studentId" FROM users WHERE LOWER("studentId") = LOWER($1)`, [refCode.trim()]);
+        if (referrerCheck.rows.length > 0) {
+          startupTokens = 150; // Referred user bonus
+          // Grant referrer +200 bounty tokens
+          await db.query(`UPDATE debate_users SET gforce_tokens = gforce_tokens + 200 WHERE user_id = $1`, [referrerCheck.rows[0].studentId]);
+        }
+      }
+
       // Init token economy
       await db.query(
         `INSERT INTO debate_users (user_id, username, class, grade, gforce_tokens, avatar_url) VALUES ($1, $2, $3, $4, $5, $6)`,
-        [studentId, name, assignedClass, assignedGrade, 100, avatar]
+        [studentId, name, assignedClass, assignedGrade, startupTokens, avatar]
       );
     }
     
