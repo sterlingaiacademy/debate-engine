@@ -108,7 +108,7 @@ export default function MockUN({ user }) {
       currentTimerRef.current = newTime;
       const sinceLast = Math.floor((Date.now() - lastSyncTime) / 1000);
       if (sinceLast >= 15) {
-        fetch("${API_BASE}/api/time-sync', {
+        fetch(`${API_BASE}/api/time-sync`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ studentId: user.studentId, usedSeconds: sinceLast, isPersona: false }),
@@ -200,7 +200,7 @@ export default function MockUN({ user }) {
     const alreadySynced = Math.floor(elapsed / 15) * 15;
     const unsaved = elapsed - alreadySynced;
     if (unsaved > 0) {
-      fetch("${API_BASE}/api/time-sync', {
+      fetch(`${API_BASE}/api/time-sync`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ studentId: user.studentId, usedSeconds: unsaved, isPersona: false }),

@@ -1,6 +1,6 @@
 import paramiko
 
-def check_env():
+def fix_env():
     host = "65.20.85.75"
     port = 22
     username = "graceandforce"
@@ -12,8 +12,14 @@ def check_env():
     try:
         client.connect(host, port, username, password, timeout=10)
         
-        script = f"""
-cat /home/graceandforce/debate-engine/backend/.env
+        script = r"""
+cd /home/graceandforce/debate-engine/backend
+sed -i 's|DATABASE_URL=postgresql://graceandforce_user:Pck/aawJlsLFZxWu3CG7aw==@localhost:5432/graceandforce_db|DATABASE_URL=postgresql://graceandforce_user:Pck%2FaawJlsLFZxWu3CG7aw%3D%3D@localhost:5432/graceandforce_db|g' .env
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+pm2 restart grace-api
 """
 
         stdin, stdout, stderr = client.exec_command(script)
@@ -30,4 +36,4 @@ cat /home/graceandforce/debate-engine/backend/.env
         client.close()
 
 if __name__ == "__main__":
-    check_env()
+    fix_env()

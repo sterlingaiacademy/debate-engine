@@ -1,6 +1,6 @@
 import paramiko
 
-def check_env():
+def run_certbot():
     host = "65.20.85.75"
     port = 22
     username = "graceandforce"
@@ -13,21 +13,20 @@ def check_env():
         client.connect(host, port, username, password, timeout=10)
         
         script = f"""
-cat /home/graceandforce/debate-engine/backend/.env
+echo "{password}" | sudo -S certbot --nginx -d graceandforce.com -d www.graceandforce.com --agree-tos -m graceandforce@gmail.com --redirect --non-interactive
 """
 
         stdin, stdout, stderr = client.exec_command(script)
         
-        for line in iter(stdout.readline, ""):
-            print(line.encode('utf-8', 'ignore').decode('utf-8'), end="")
-            
-        for line in iter(stderr.readline, ""):
-            print("ERROR: " + line.encode('utf-8', 'ignore').decode('utf-8'), end="")
-            
+        out = stdout.read().decode('utf-8', 'ignore')
+        err = stderr.read().decode('utf-8', 'ignore')
+        print(out)
+        print("ERROR:", err)
+        
     except Exception as e:
         print(f"Failed to execute: {str(e)}")
     finally:
         client.close()
 
 if __name__ == "__main__":
-    check_env()
+    run_certbot()

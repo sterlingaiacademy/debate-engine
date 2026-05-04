@@ -1,6 +1,6 @@
 import paramiko
 
-def check_env():
+def fix_nginx():
     host = "65.20.85.75"
     port = 22
     username = "graceandforce"
@@ -13,7 +13,9 @@ def check_env():
         client.connect(host, port, username, password, timeout=10)
         
         script = f"""
-cat /home/graceandforce/debate-engine/backend/.env
+echo "{password}" | sudo -S rm -f /etc/nginx/sites-enabled/graceandforce.com
+echo "{password}" | sudo -S rm -f /etc/nginx/sites-available/graceandforce.com
+echo "{password}" | sudo -S systemctl reload nginx
 """
 
         stdin, stdout, stderr = client.exec_command(script)
@@ -30,4 +32,4 @@ cat /home/graceandforce/debate-engine/backend/.env
         client.close()
 
 if __name__ == "__main__":
-    check_env()
+    fix_nginx()

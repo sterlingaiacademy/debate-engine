@@ -1,6 +1,6 @@
 import paramiko
 
-def check_env():
+def check_pm2_logs():
     host = "65.20.85.75"
     port = 22
     username = "graceandforce"
@@ -13,7 +13,8 @@ def check_env():
         client.connect(host, port, username, password, timeout=10)
         
         script = f"""
-cat /home/graceandforce/debate-engine/backend/.env
+cat /home/graceandforce/.pm2/logs/grace-api-error.log | tail -n 50
+cat /home/graceandforce/.pm2/logs/grace-api-out.log | tail -n 50
 """
 
         stdin, stdout, stderr = client.exec_command(script)
@@ -30,4 +31,4 @@ cat /home/graceandforce/debate-engine/backend/.env
         client.close()
 
 if __name__ == "__main__":
-    check_env()
+    check_pm2_logs()

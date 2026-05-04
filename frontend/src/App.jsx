@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import React, { useState, useEffect, Suspense, lazy } from 'react';
-import { supabase } from './supabase';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import { API_BASE } from './api';
 
 import Login from './pages/Login';
@@ -45,43 +45,11 @@ function App() {
   const handleLogout = async () => {
     setUser(null);
     localStorage.removeItem('user');
-    await supabase.auth.signOut();
+    localStorage.removeItem('token');
   };
 
   const handleSwitchProfile = async () => {
-    // Get email from OAuth session OR from stored user object (for credential login users)
-    let email = null;
-    try {
-      const { data: { session } } = await supabase.auth.getSession();
-      email = session?.user?.email;
-    } catch (e) {}
-    // Fallback 1: use email stored in user object (credential login users)
-    if (!email) {
-      const storedUser = localStorage.getItem('user');
-      const parsed = storedUser ? JSON.parse(storedUser) : null;
-      email = parsed?.email;
-    }
-    // Fallback 2: use email from current in-memory user state
-    if (!email) {
-      email = user?.email;
-    }
-    if (!email) {
-      alert('Your account does not have multiple profiles linked to the same email. Each account has a single profile.');
-      return;
-    }
-    try {
-      const res = await fetch(`${API_BASE}/api/user-by-email/${encodeURIComponent(email)}`);
-      if (res.ok) {
-        const data = await res.json();
-        if (data.users && data.users.length > 0) {
-          setUser(null);
-          localStorage.removeItem('user');
-          setProfilesToSelect(data.users);
-        } else {
-          alert('Only one profile found for this account.');
-        }
-      }
-    } catch (e) { console.error(e); }
+    alert('You are now using direct username authentication. To switch accounts, simply log out and log in with your other username.');
   };
 
   const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel);
@@ -94,111 +62,25 @@ function App() {
   }, [themeClass]);
 
   useEffect(() => {
+    // Standard Custom JWT LocalStorage check
+    const storedUser = localStorage.getItem('user');
+    const storedToken = localStorage.getItem('token');
     
-      const hydrateUserFallback = async (session) => {
-      const email = session?.user?.email;
-      let legacyUsers = [];
-
-      try {
-        if (email) {
-          const res = await fetch(`${API_BASE}/api/user-by-email/${encodeURIComponent(email)}`);
-          if (res.ok) {
-            const data = await res.json();
-            legacyUsers = data.users || [];
-          }
-        }
-      } catch (err) {
-        console.error("Failed to fetch legacy profile", err);
-      }
-
-      if (legacyUsers.length === 0) {
-          // If no legacy profile was ever fully created, bounce them to Complete Profile
-          window.location.href = '/register?step=details';
-          return;
-      }
-
-      // If MULTIPLE profiles exist, trigger the UI!
-      if (legacyUsers.length > 1) {
-          setProfilesToSelect(legacyUsers);
-          setIsInitializing(false);
-          return;
-      }
-
-      const legacyUser = legacyUsers[0];
-
-      handleLogin({
-
-          name: legacyUser.name,
-          username: legacyUser.studentId,
-          classLevel: legacyUser.classLevel, 
-          assignedAgentId: legacyUser.assignedAgentId,
-          id: legacyUser.id || session.user.id,
-          studentId: legacyUser.studentId,
-          avatar: legacyUser.avatar,
-          email: legacyUser.email || session.user.email || null
-      });
-
-      // After successful OAuth login, naturally dump them into the dashboard if they are on root
-      if (window.location.pathname === '/') {
-         window.history.replaceState(null, '', '/dashboard');
-         window.dispatchEvent(new Event('popstate'));
-      }
-    };
-
-    // Ephemeral sessions: Clear cache synchronously before any React children mount if visiting root/login without an OAuth hash
-    const isOAuthRedirect = window.location.hash.includes('access_token');
-    if (!isOAuthRedirect && (window.location.pathname === '/' || window.location.pathname === '/login')) {
-       localStorage.removeItem('user');
+    if (storedUser && storedToken) {
+      setUser(JSON.parse(storedUser));
+    } else if (window.location.pathname !== '/' && window.location.pathname !== '/login' && !window.location.pathname.includes('/register')) {
+      // Clear invalid state
+      setUser(null);
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
     }
-
-    // Check initial native session from URL fragment before router executes
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      let activeSession = session;
-
-      if (!isOAuthRedirect && (window.location.pathname === '/' || window.location.pathname === '/login')) {
-         await supabase.auth.signOut();
-         activeSession = null;
-      }
-
-      const storedUser = localStorage.getItem('user');
-      const parsed = storedUser ? JSON.parse(storedUser) : null;
-      
-      if (activeSession && !parsed && !window.location.pathname.includes('/register')) {
-         hydrateUserFallback(activeSession).finally(() => setIsInitializing(false));
-      } else if (parsed) {
-         handleLogin(parsed);
-         setIsInitializing(false);
-      } else {
-         setIsInitializing(false);
-      }
-    });
-
-    // Listen to Supabase native Auth changes (OAuth callbacks, OTP verify)
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      const isOAuthRedirect = window.location.hash.includes('access_token');
-      if (!isOAuthRedirect && (window.location.pathname === '/' || window.location.pathname === '/login')) {
-        return; // Let the async getSession() block handle the graceful sign-out
-      }
-
-      if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session) {
-        // Sync local storage user state natively
-        const storedUser = localStorage.getItem('user');
-        const parsed = storedUser ? JSON.parse(storedUser) : null;
-        if (!parsed && !window.location.pathname.includes('/register')) {
-            hydrateUserFallback(session);
-        }
-      } else if (event === 'SIGNED_OUT') {
-        setUser(null);
-        localStorage.removeItem('user');
-      }
-    });
+    setIsInitializing(false);
 
     const handleOnline = () => setIsOffline(false);
     const handleOffline = () => setIsOffline(true);
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
     return () => {
-      subscription.unsubscribe();
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
@@ -279,8 +161,9 @@ function App() {
 
 
   return (
-    <Router>
-      <div className={themeClass}>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+      <Router>
+        <div className={themeClass}>
         <Suspense fallback={<PageLoader />}>
           <Routes>
             {/* Public landing page — root route */}
@@ -320,6 +203,7 @@ function App() {
         </div>
       )}
     </Router>
+    </GoogleOAuthProvider>
   );
 }
 

@@ -1,27 +1,21 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
 import { Zap, Trophy, ArrowRight, Sparkles } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 
 const GOOGLE_SANS = "'Google Sans', 'Outfit', 'Product Sans', system-ui, sans-serif";
 
-import { supabase } from '../supabase';
 import { API_BASE } from '../api';
 
 export default function Login({ onLogin }) {
   const [searchParams] = useSearchParams();
-  const isVerify = searchParams.get('verify') === 'true';
   const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
-  const [otp, setOtp] = useState('');
-  const [error, setError] = useState(
-    searchParams.get('error') === 'account_exists' ? 'An account with this Google email already exists. Please log in.' : ''
-  );
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [authMethod, setAuthMethod] = useState('');
   const [usernameFormatError, setUsernameFormatError] = useState('');
 
   useEffect(() => {
@@ -35,69 +29,22 @@ export default function Login({ onLogin }) {
     }
   }, [username]);
 
-  const handleSubmit = async (method) => {
+  const handleSubmit = async () => {
     setError('');
     
-    if (method === 'credentials' && (!username || !password)) {
+    if (!username || !password) {
       setError('Please provide both username and password.');
       return;
     }
-    if (method === 'credentials' && usernameFormatError) {
+    if (usernameFormatError) {
       setError('Username format is invalid.');
-      return;
-    }
-    if (method === 'phone' && !phone) {
-      setError('Please provide a valid phone number.');
-      return;
-    }
-    if (method === 'verify' && !otp) {
-      setError('Please enter the OTP.');
       return;
     }
 
     setLoading(true);
-    setAuthMethod(method);
     
     try {
-      if (method === 'google') {
-        const { error: googleError } = await supabase.auth.signInWithOAuth({
-          provider: 'google',
-          options: {
-            redirectTo: `${window.location.origin}/dashboard`,
-            queryParams: {
-              prompt: 'select_account'
-            }
-          }
-        });
-        if (googleError) throw googleError;
-      } else if (method === 'phone') {
-        const formattedPhone = phone.startsWith('+') ? phone : `+${phone}`;
-        const { error: phoneError } = await supabase.auth.signInWithOtp({
-          phone: formattedPhone,
-        });
-        if (phoneError) throw phoneError;
-        setLoading(false);
-        navigate('/login?verify=true');
-      } else if (method === 'verify') {
-        const formattedPhone = phone.startsWith('+') ? phone : `+${phone}`;
-        const { data, error: verifyError } = await supabase.auth.verifyOtp({
-          phone: formattedPhone,
-          token: otp,
-          type: 'sms'
-        });
-        if (verifyError) throw verifyError;
-        
-        // Fetch real profile from DB using the phone number
-        const phone = data.user?.phone;
-        const userId = data.user?.id;
-        
-        // Try fetching by phone (stored as email-equivalent in some setups)
-        // App.jsx hydrateUserFallback will handle this via onAuthStateChange
-        // Just navigate to dashboard and let the auth listener hydrate
-        navigate('/dashboard');
-      } else if (method === 'credentials') {
-        // Standard username/pwd against existing legacy DB
-        const res = await fetch("${API_BASE}/api/login', {
+        const res = await fetch(`${API_BASE}/api/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ studentId: username, password }),
@@ -107,13 +54,34 @@ export default function Login({ onLogin }) {
         if (!res.ok) {
            throw new Error(data.error || 'Login failed');
         }
+        
+        localStorage.setItem('token', data.token);
         onLogin(data.user);
         navigate('/dashboard');
-      }
     } catch (err) {
       setError(err.message);
       setLoading(false);
-      setAuthMethod('');
+    }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setLoading(true);
+    setError('');
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/google`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ credential: credentialResponse.credential }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Google login failed');
+      
+      localStorage.setItem('token', data.token);
+      onLogin(data.user);
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
     }
   };
 
@@ -217,51 +185,8 @@ export default function Login({ onLogin }) {
             </div>
           )}
 
-          {isVerify ? (
-            <form onSubmit={(e) => { e.preventDefault(); handleSubmit('verify'); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#e2e8f0' }}>Enter OTP</label>
-                <input
-                  type="text" placeholder="6-digit code" value={otp} onChange={e => setOtp(e.target.value)}
-                  style={{
-                    padding: '0.85rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
-                    color: '#ffffff', fontSize: '0.95rem', fontFamily: GOOGLE_SANS, outline: 'none', textAlign: 'center', letterSpacing: '0.5em'
-                  }}
-                  autoFocus
-                />
-              </div>
-              <button
-                type="submit" disabled={loading}
-                style={{
-                  padding: '0.9rem', border: 'none', borderRadius: '12px', background: 'linear-gradient(135deg, #E8392A 0%, #F97316 100%)', color: '#fff',
-                  fontWeight: 700, fontSize: '1rem', cursor: loading ? 'not-allowed' : 'pointer', fontFamily: GOOGLE_SANS,
-                  boxShadow: '0 4px 14px rgba(232,57,42,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center'
-                }}
-              >
-                {loading ? 'Verifying...' : 'Verify Login'}
-              </button>
-            </form>
-          ) : (
-            <form onSubmit={(e) => { e.preventDefault(); handleSubmit('credentials'); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               
-              <button
-                type="button" onClick={() => handleSubmit('google')} disabled={loading}
-                style={{
-                  padding: '0.9rem', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px',
-                  background: '#ffffff', color: '#000', fontWeight: 700, fontSize: '1rem', cursor: loading ? 'not-allowed' : 'pointer',
-                  fontFamily: GOOGLE_SANS, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem'
-                }}
-              >
-                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="G" style={{ width: 20, height: 20 }} />
-                {loading && authMethod === 'google' ? 'Redirecting...' : 'Sign in with Google'}
-              </button>
-
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', margin: '0.5rem 0' }}>
-                <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
-                <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>OR CONTINUE WITH USERNAME</span>
-                <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
-              </div>
-
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
                 <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#e2e8f0' }}>Username</label>
                 <input
@@ -291,10 +216,25 @@ export default function Login({ onLogin }) {
                   boxShadow: '0 4px 14px rgba(232,57,42,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem'
                 }}
               >
-                {loading && authMethod === 'credentials' ? 'Authenticating...' : <>Secure Sign In <ArrowRight size={18} /></>}
+                {loading ? 'Authenticating...' : <>Secure Sign In <ArrowRight size={18} /></>}
               </button>
-            </form>
-          )}
+
+              <div style={{ display: 'flex', alignItems: 'center', margin: '0.5rem 0' }}>
+                <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
+                <span style={{ padding: '0 1rem', color: '#64748b', fontSize: '0.85rem' }}>or</span>
+                <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
+              </div>
+              
+              <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                 <GoogleLogin
+                    onSuccess={handleGoogleSuccess}
+                    onError={() => setError('Google sign-in was unsuccessful.')}
+                    useOneTap
+                    theme="filled_black"
+                    shape="pill"
+                 />
+              </div>
+          </form>
           
           <div style={{ marginTop: '1.75rem', textAlign: 'center', fontSize: '0.85rem', color: '#94a3b8' }}>
             Don't have an account?{' '}

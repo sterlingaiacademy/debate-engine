@@ -55,7 +55,7 @@ export default function PersonaDebate({ user }) {
       
       // Background sync every 15 real seconds
       if (timeSinceLastSync >= 15) {
-        fetch("${API_BASE}/api/time-sync', {
+        fetch(`${API_BASE}/api/time-sync`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ studentId: user?.studentId, usedSeconds: timeSinceLastSync, isPersona: true })
@@ -209,7 +209,7 @@ export default function PersonaDebate({ user }) {
     const alreadySynced = Math.floor(elapsedTotal / 15) * 15;
     const unsavedSeconds = Math.max(0, elapsedTotal - alreadySynced);
     if (unsavedSeconds > 0) {
-      fetch("${API_BASE}/api/time-sync', {
+      fetch(`${API_BASE}/api/time-sync`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ studentId: user?.studentId, usedSeconds: unsavedSeconds, isPersona: true })

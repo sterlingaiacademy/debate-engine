@@ -74,7 +74,7 @@ export default function VocabTrainer({ user }) {
 
     if (tokens > 0) {
       try {
-        await fetch("${API_BASE}/api/claim-vocab-tokens', {
+        await fetch(`${API_BASE}/api/claim-vocab-tokens`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ studentId: user.studentId, tokensEarned: tokens }),

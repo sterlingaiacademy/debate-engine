@@ -69,7 +69,7 @@ export default function Settings({ user, setUser }) {
           const base64Avatar = canvas.toDataURL('image/jpeg', 0.7);
 
           // Upload to your Node API
-          fetch("${API_BASE}/api/user/avatar', {
+          fetch(`${API_BASE}/api/user/avatar`, {
              method: 'POST',
              headers: { 'Content-Type': 'application/json' },
              body: JSON.stringify({ studentId: user.studentId || user.username, avatar: base64Avatar })

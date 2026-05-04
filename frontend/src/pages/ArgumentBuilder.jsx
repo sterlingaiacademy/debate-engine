@@ -114,7 +114,7 @@ export default function ArgumentBuilder({ user }) {
     setSaving(true);
     const argScore = scoreArgument(values);
     try {
-      const r = await fetch("${API_BASE}/api/argument-bank', {
+      const r = await fetch(`${API_BASE}/api/argument-bank`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ studentId: user.studentId, ...values, score: argScore }),

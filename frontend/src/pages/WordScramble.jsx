@@ -204,7 +204,7 @@ function GameBoard({ user, isJunior, accent, onReset }) {
       const finalTokens = Math.max(1, Math.floor(scoreRef.current / 2));
       setTokensAwarded(finalTokens);
       setPhase('done');
-      fetch("${API_BASE}/api/claim-vocab-tokens', {
+      fetch(`${API_BASE}/api/claim-vocab-tokens`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ studentId: user?.studentId, tokensEarned: finalTokens }),

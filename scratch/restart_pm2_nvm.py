@@ -1,6 +1,6 @@
 import paramiko
 
-def check_env():
+def restart_pm2():
     host = "65.20.85.75"
     port = 22
     username = "graceandforce"
@@ -12,8 +12,12 @@ def check_env():
     try:
         client.connect(host, port, username, password, timeout=10)
         
-        script = f"""
-cat /home/graceandforce/debate-engine/backend/.env
+        script = r"""
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+cd /home/graceandforce/debate-engine/backend
+pm2 restart grace-api
 """
 
         stdin, stdout, stderr = client.exec_command(script)
@@ -30,4 +34,4 @@ cat /home/graceandforce/debate-engine/backend/.env
         client.close()
 
 if __name__ == "__main__":
-    check_env()
+    restart_pm2()

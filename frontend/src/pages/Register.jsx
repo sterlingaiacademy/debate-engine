@@ -1,25 +1,20 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
 import { Mic, UserPlus, ArrowRight, Sparkles, Zap, Trophy, Shield, KeyRound, CheckCircle2 } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 const GOOGLE_SANS = "'Google Sans', 'Outfit', 'Product Sans', system-ui, sans-serif";
-import { supabase } from '../supabase';
 import { API_BASE } from '../api';
 
 export default function Register({ onLogin }) {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  // 'auth' | 'verify_otp' | 'details'
-  const [step, setStep] = useState(searchParams.get('step') || 'auth');
-  
   const [formData, setFormData] = useState({
     name: '', username: '', password: '', phone: '', selectedClass: 'KG', referralCode: ''
   });
-  const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [authMethod, setAuthMethod] = useState(''); // 'google' | 'phone'
   
   // Dynamic UI State
   const [isCheckingUsername, setIsCheckingUsername] = useState(false);
@@ -79,46 +74,12 @@ export default function Register({ onLogin }) {
   }, [formData.username, formData.password]);
 
   useEffect(() => {
-    // If OAuth redirects back to /register?step=details, capture it
-    if (searchParams.get('step') === 'details') {
-      setStep('details');
-    }
     // Auto-fill referral code from ?ref= URL param
     const refFromUrl = searchParams.get('ref');
     if (refFromUrl) {
       setFormData(p => ({ ...p, referralCode: refFromUrl }));
     }
-    // Check if we have an active Supabase session
-    const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        
-        // Prevent duplicate accounts: check if legacy profile already exists
-        // BUT skip this check if coming from "Add Learner" (step=details already set)
-        if (session.user?.email && searchParams.get('step') !== 'details') {
-          try {
-             const res = await fetch(`${API_BASE}/api/user-by-email/${encodeURIComponent(session.user.email)}`);
-             if (res.ok) {
-                 const data = await res.json();
-                 if (data.users && data.users.length > 0) {
-                     // Block duplicate creation! Sign out and kick to Login.
-                     await supabase.auth.signOut();
-                     navigate('/login?error=account_exists');
-                     return;
-                 }
-             }
-          } catch (e) {
-             console.error('Failed checking duplicate profile', e);
-          }
-        }
-
-        if (searchParams.get('step') !== 'details') {
-          setStep('details');
-        }
-      }
-    };
-    checkSession();
-  }, [searchParams, navigate]);
+  }, [searchParams]);
 
   const set = (field) => (e) => {
     let val = e.target.value;
@@ -139,72 +100,6 @@ export default function Register({ onLogin }) {
     if (['Class 9', 'Class 10'].includes(cls)) return 'Level 4';
     if (['Class 11', 'Class 12'].includes(cls)) return 'Level 5';
     return 'Level 1';
-  };
-
-  // Step 1: Initial Auth Initiate
-  const handleAuthInitiate = async (method) => {
-    setError('');
-    setAuthMethod(method);
-
-    if (method === 'phone' && !formData.phone) {
-      setError('Please provide a valid phone number (e.g., +1234567890).');
-      return;
-    }
-
-    setLoading(true);
-    try {
-      if (method === 'google') {
-        // Genuine Supabase Google Auth
-        const { error: googleError } = await supabase.auth.signInWithOAuth({
-          provider: 'google',
-          options: {
-            redirectTo: `${window.location.origin}/register?step=details`,
-            queryParams: {
-              prompt: 'select_account'
-            }
-          }
-        });
-        if (googleError) throw googleError;
-        // Page will redirect momentarily
-      } else if (method === 'phone') {
-        // Genuine Supabase Phone OTP Auth
-        const formattedPhone = formData.phone.startsWith('+') ? formData.phone : `+${formData.phone}`;
-        const { error: phoneError } = await supabase.auth.signInWithOtp({
-          phone: formattedPhone,
-        });
-        if (phoneError) throw phoneError;
-        setLoading(false);
-        setStep('verify_otp');
-      }
-    } catch (err) {
-      setError(err.message);
-      setLoading(false);
-    }
-  };
-
-  // Step 2: Verify Phone OTP
-  const handleVerifyOtp = async () => {
-    setError('');
-    if (!otp) return setError('Please enter the OTP sent to your phone.');
-    
-    setLoading(true);
-    try {
-      const formattedPhone = formData.phone.startsWith('+') ? formData.phone : `+${formData.phone}`;
-      const { data, error: verifyError } = await supabase.auth.verifyOtp({
-        phone: formattedPhone,
-        token: otp,
-        type: 'sms'
-      });
-      
-      if (verifyError) throw verifyError;
-      
-      // OTP verified successfully
-      setLoading(false);
-      setStep('details');
-    } catch (err) {
-      setError(err.message);
-      setLoading(false);
-    }
   };
 
   // Step 3: Finalize Account Details
@@ -232,22 +127,20 @@ export default function Register({ onLogin }) {
     setLoading(true);
     try {
       const computedClassLevel = getLevelForClass(formData.selectedClass);
-      const { data: { session } } = await supabase.auth.getSession();
       
       const payload = {
         name: formData.name,
-        studentId: formData.username, // FIXED: was previously missing, causing backend 400 Bad Request
+        studentId: formData.username,
         password: formData.password,
         classLevel: computedClassLevel,
-        grade: formData.selectedClass, // Send the exact grade to the backend
+        grade: formData.selectedClass, 
         referralCode: formData.referralCode,
-        authProvider: authMethod,
-        email: session?.user?.email || null,
-        phone: session?.user?.phone || null
+        authProvider: 'credentials',
+        email: null,
+        phone: null
       };
 
-      // In the real app, hit your API
-      const res = await fetch("${API_BASE}/api/register', {
+      const res = await fetch(`${API_BASE}/api/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -259,13 +152,39 @@ export default function Register({ onLogin }) {
         throw new Error(data.error || 'Failed to create account. Please try again.');
       }
 
-      // We log the user out of the active Supabase session here if they used Google/Phone
-      // because the user explicitly requested they must formally log in AFTER registration.
-      await supabase.auth.signOut();
+      // Automatically log the user in on successful registration
+      localStorage.setItem('token', data.token);
+      onLogin(data.user);
       
       setLoading(false);
-      navigate('/login?success=account_created');
+      navigate('/dashboard');
 
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setLoading(true);
+    setError('');
+    try {
+      const computedClassLevel = getLevelForClass(formData.selectedClass);
+      const res = await fetch(`${API_BASE}/api/auth/google`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          credential: credentialResponse.credential,
+          classLevel: computedClassLevel,
+          grade: formData.selectedClass
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Google sign-up failed');
+      
+      localStorage.setItem('token', data.token);
+      onLogin(data.user);
+      navigate('/dashboard');
     } catch (err) {
       setError(err.message);
       setLoading(false);
@@ -316,7 +235,7 @@ export default function Register({ onLogin }) {
           </h1>
 
           <p style={{ fontSize: '1.05rem', color: '#94a3b8', lineHeight: 1.7, marginBottom: '2.5rem', fontWeight: 400 }}>
-            Join thousands of students learning to speak with Grace and Force. Securely verify your account to proceed.
+            Join thousands of students learning to speak with Grace and Force. Create your account securely to proceed.
           </p>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', marginBottom: '3rem' }}>
@@ -337,13 +256,13 @@ export default function Register({ onLogin }) {
         </div>
       </div>
 
-      {/* RIGHT PANE — Multi-Step Auth Form */}
+      {/* RIGHT PANE — Registration Form */}
       <div className="login-right-pane" style={{
         flex: 1, position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem',
       }}>
         
         <div style={{
-          width: '100%', maxWidth: step === 'details' ? '540px' : '440px',
+          width: '100%', maxWidth: '540px',
           background: 'rgba(255, 255, 255, 0.02)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
           border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '24px', padding: '2.5rem',
           boxShadow: '0 12px 40px rgba(0,0,0,0.3)', position: 'relative', transition: 'max-width 0.3s ease'
@@ -355,14 +274,10 @@ export default function Register({ onLogin }) {
 
           <div style={{ marginBottom: '1.75rem' }}>
             <h2 style={{ fontSize: '1.65rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.4rem', letterSpacing: '-0.02em' }}>
-              {step === 'auth' && "Get Started"}
-              {step === 'verify_otp' && "Verify Identity"}
-              {step === 'details' && "Complete Profile"}
+              Create Account
             </h2>
             <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>
-              {step === 'auth' && "Sign up using your secure provider."}
-              {step === 'verify_otp' && "Enter the OTP sent to your phone."}
-              {step === 'details' && "Fill in your account details below."}
+              Fill in your account details below.
             </p>
           </div>
 
@@ -372,144 +287,99 @@ export default function Register({ onLogin }) {
             </div>
           )}
 
-          {/* STEP 1: INITIAL AUTHENTICATION */}
-          {step === 'auth' && (
-            <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
+          <form onSubmit={(e) => { e.preventDefault(); handleSaveDetails(); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', animation: 'fadeIn 0.3s ease' }}>
               
-              <button
-                type="button"
-                onClick={() => handleAuthInitiate('google')}
-                disabled={loading}
-                style={{
-                  padding: '1rem', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px',
-                  background: '#ffffff', color: '#000', fontWeight: 700, fontSize: '1.05rem',
-                  cursor: loading ? 'not-allowed' : 'pointer', fontFamily: GOOGLE_SANS,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem',
-                  transition: 'transform 0.2s, background 0.2s', opacity: loading ? 0.7 : 1
-                }}
-              >
-                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="G" style={{ width: 22, height: 22 }} />
-                {loading && authMethod === 'google' ? 'Redirecting...' : 'Continue with Google'}
-              </button>
+            {isJuniorClass && (
+               <div style={{ padding: '0.85rem', background: 'rgba(249, 115, 22, 0.08)', border: '1px solid rgba(249, 115, 22, 0.2)', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <Shield size={18} color="#fb923c" />
+                  <span style={{ fontSize: '0.85rem', color: '#fdba74', fontWeight: 600 }}>Level 1 & 2 Students: Ask for parent permission.</span>
+               </div>
+            )}
 
-            </form>
-          )}
-
-          {/* STEP 2: VERIFY OTP (if phone method chosen) */}
-          {step === 'verify_otp' && (
-            <form onSubmit={(e) => { e.preventDefault(); handleVerifyOtp(); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
-               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#e2e8f0' }}>Enter OTP</label>
-                <input
-                  type="text" placeholder="6-digit code" value={otp} onChange={e => setOtp(e.target.value)} required
-                  style={{
-                    padding: '1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px',
-                    color: '#ffffff', fontSize: '1rem', fontFamily: GOOGLE_SANS, outline: 'none', textAlign: 'center', letterSpacing: '0.5em'
-                  }}
-                  autoFocus
+            <div style={{ display: 'flex', gap: '1rem' }}>
+              <div style={{ flex: '2', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Full Name</label>
+                <input type="text" placeholder="e.g. John Doe" value={formData.name} onChange={set('name')} required
+                  style={{ padding: '0.8rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
                 />
               </div>
-              <button
-                type="submit" disabled={loading}
-                style={{
-                  padding: '1rem', border: 'none', borderRadius: '12px', background: 'linear-gradient(135deg, #E8392A 0%, #F97316 100%)', color: '#fff',
-                  fontWeight: 700, fontSize: '1.05rem', cursor: loading ? 'not-allowed' : 'pointer', fontFamily: GOOGLE_SANS,
-                  boxShadow: '0 4px 14px rgba(232,57,42,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center'
-                }}
-              >
-                {loading ? 'Verifying...' : 'Verify Identity'}
-              </button>
-            </form>
-          )}
-
-          {/* STEP 3: ACCOUNT DETAILS */}
-          {step === 'details' && (
-            <form onSubmit={(e) => { e.preventDefault(); handleSaveDetails(); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', animation: 'fadeIn 0.3s ease' }}>
-              
-              <div style={{ padding: '0.85rem', background: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-                <CheckCircle2 size={18} color="#34d399" />
-                <span style={{ fontSize: '0.85rem', color: '#6ee7b7', fontWeight: 600 }}>Authentication successful!</span>
+              <div style={{ flex: '1', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Grade</label>
+                <select value={formData.selectedClass} onChange={set('selectedClass')}
+                  style={{ padding: '0.8rem', background: '#0f1322', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none', cursor: 'pointer' }}>
+                  <option value="KG">KG</option>
+                  {[...Array(12)].map((_, i) => (
+                    <option key={`Class ${i + 1}`} value={`Class ${i + 1}`}>Grade {i + 1}</option>
+                  ))}
+                </select>
               </div>
-
-              {isJuniorClass && (
-                 <div style={{ padding: '0.85rem', background: 'rgba(249, 115, 22, 0.08)', border: '1px solid rgba(249, 115, 22, 0.2)', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <Shield size={18} color="#fb923c" />
-                    <span style={{ fontSize: '0.85rem', color: '#fdba74', fontWeight: 600 }}>Level 1 & 2 Students: Ask for parent permission.</span>
-                 </div>
-              )}
-
-              <div style={{ display: 'flex', gap: '1rem' }}>
-                <div style={{ flex: '2', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                  <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Full Name</label>
-                  <input type="text" placeholder="e.g. John Doe" value={formData.name} onChange={set('name')} required
-                    style={{ padding: '0.8rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
-                  />
-                </div>
-                <div style={{ flex: '1', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                  <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Grade</label>
-                  <select value={formData.selectedClass} onChange={set('selectedClass')}
-                    style={{ padding: '0.8rem', background: '#0f1322', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none', cursor: 'pointer' }}>
-                    <option value="KG">KG</option>
-                    {[...Array(12)].map((_, i) => (
-                      <option key={`Class ${i + 1}`} value={`Class ${i + 1}`}>Grade {i + 1}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', gap: '1rem' }}>
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                  <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Username</label>
-                  <input type="text" placeholder="e.g. johndoe" value={formData.username} onChange={set('username')} required
-                    style={{ padding: '0.8rem 1rem', background: (error?.toLowerCase().includes('student id') || usernameAvailable === false || usernameFormatError) ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.03)', border: (error?.toLowerCase().includes('student id') || usernameAvailable === false || usernameFormatError) ? '1px solid rgba(239, 68, 68, 0.5)' : usernameAvailable ? '1px solid rgba(52, 211, 153, 0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
-                  />
-                  {usernameFormatError && <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>{usernameFormatError}</span>}
-                  {isCheckingUsername && !usernameFormatError && <span style={{ color: '#94a3b8', fontSize: '0.75rem', marginTop: '0.2rem' }}>Checking...</span>}
-                  {usernameAvailable === true && !isCheckingUsername && !usernameFormatError && <span style={{ color: '#34d399', fontSize: '0.75rem', marginTop: '0.2rem' }}>Username available!</span>}
-                  {(usernameAvailable === false || error?.toLowerCase().includes('student id')) && !isCheckingUsername && !usernameFormatError && <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>Username already exists</span>}
-                </div>
-                
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                  <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Password</label>
-                  <input type="password" placeholder="Secure password" value={formData.password} onChange={set('password')} required
-                    style={{ padding: '0.8rem 1rem', background: passwordError ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.03)', border: passwordError ? '1px solid rgba(239, 68, 68, 0.5)' : (!passwordError && formData.password.length > 0) ? '1px solid rgba(52, 211, 153, 0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
-                  />
-                  {passwordError && <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>{passwordError}</span>}
-                  {!passwordError && formData.password.length > 0 && <span style={{ color: '#34d399', fontSize: '0.75rem', marginTop: '0.2rem' }}>Strong password!</span>}
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Referral Code (Optional)</label>
-                <input type="text" placeholder="Enter referral code" value={formData.referralCode} onChange={set('referralCode')}
-                  style={{ padding: '0.8rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#F97316', fontSize: '0.9rem', outline: 'none', letterSpacing: '2px' }}
-                />
-              </div>
-
-              <button
-                type="submit" disabled={loading}
-                style={{
-                  marginTop: '0.5rem', padding: '1rem', border: 'none', borderRadius: '12px',
-                  background: 'linear-gradient(135deg, #E8392A 0%, #F97316 100%)', color: '#fff',
-                  fontWeight: 700, fontSize: '1rem', cursor: loading ? 'not-allowed' : 'pointer',
-                  boxShadow: '0 4px 14px rgba(232,57,42,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem'
-                }}
-              >
-                {loading ? 'Creating Account...' : <>Complete Sign Up <ArrowRight size={18} /></>}
-              </button>
-            </form>
-          )}
-
-          {step === 'auth' && (
-             <div style={{ marginTop: '1.75rem', textAlign: 'center', fontSize: '0.85rem', color: '#94a3b8' }}>
-              Already have an account? <Link to="/login" style={{ color: '#F97316', textDecoration: 'none', fontWeight: 700 }}>Sign in</Link>
-             </div>
-          )}
-          {step !== 'details' && (
-            <div style={{ marginTop: '1.25rem', textAlign: 'center' }}>
-              <Link to="/" style={{ color: '#64748b', fontSize: '0.8rem', textDecoration: 'none', fontWeight: 500 }}>&larr; Back to Home</Link>
             </div>
-          )}
+
+            <div style={{ display: 'flex', gap: '1rem' }}>
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Username</label>
+                <input type="text" placeholder="e.g. johndoe" value={formData.username} onChange={set('username')} required
+                  style={{ padding: '0.8rem 1rem', background: (error?.toLowerCase().includes('student id') || usernameAvailable === false || usernameFormatError) ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.03)', border: (error?.toLowerCase().includes('student id') || usernameAvailable === false || usernameFormatError) ? '1px solid rgba(239, 68, 68, 0.5)' : usernameAvailable ? '1px solid rgba(52, 211, 153, 0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
+                />
+                {usernameFormatError && <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>{usernameFormatError}</span>}
+                {isCheckingUsername && !usernameFormatError && <span style={{ color: '#94a3b8', fontSize: '0.75rem', marginTop: '0.2rem' }}>Checking...</span>}
+                {usernameAvailable === true && !isCheckingUsername && !usernameFormatError && <span style={{ color: '#34d399', fontSize: '0.75rem', marginTop: '0.2rem' }}>Username available!</span>}
+                {(usernameAvailable === false || error?.toLowerCase().includes('student id')) && !isCheckingUsername && !usernameFormatError && <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>Username already exists</span>}
+              </div>
+              
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Password</label>
+                <input type="password" placeholder="Secure password" value={formData.password} onChange={set('password')} required
+                  style={{ padding: '0.8rem 1rem', background: passwordError ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.03)', border: passwordError ? '1px solid rgba(239, 68, 68, 0.5)' : (!passwordError && formData.password.length > 0) ? '1px solid rgba(52, 211, 153, 0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
+                />
+                {passwordError && <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>{passwordError}</span>}
+                {!passwordError && formData.password.length > 0 && <span style={{ color: '#34d399', fontSize: '0.75rem', marginTop: '0.2rem' }}>Strong password!</span>}
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+              <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Referral Code (Optional)</label>
+              <input type="text" placeholder="Enter referral code" value={formData.referralCode} onChange={set('referralCode')}
+                style={{ padding: '0.8rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#F97316', fontSize: '0.9rem', outline: 'none', letterSpacing: '2px' }}
+              />
+            </div>
+
+            <button
+              type="submit" disabled={loading}
+              style={{
+                marginTop: '0.5rem', padding: '1rem', border: 'none', borderRadius: '12px',
+                background: 'linear-gradient(135deg, #E8392A 0%, #F97316 100%)', color: '#fff',
+                fontWeight: 700, fontSize: '1rem', cursor: loading ? 'not-allowed' : 'pointer',
+                boxShadow: '0 4px 14px rgba(232,57,42,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem'
+              }}
+            >
+              {loading ? 'Creating Account...' : <>Complete Sign Up <ArrowRight size={18} /></>}
+            </button>
+
+            <div style={{ display: 'flex', alignItems: 'center', margin: '0.5rem 0' }}>
+              <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
+              <span style={{ padding: '0 1rem', color: '#64748b', fontSize: '0.85rem' }}>or</span>
+              <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
+            </div>
+            
+            <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+               <GoogleLogin
+                  onSuccess={handleGoogleSuccess}
+                  onError={() => setError('Google sign-in was unsuccessful.')}
+                  useOneTap
+                  theme="filled_black"
+                  shape="pill"
+                  text="signup_with"
+               />
+            </div>
+          </form>
+
+          <div style={{ marginTop: '1.75rem', textAlign: 'center', fontSize: '0.85rem', color: '#94a3b8' }}>
+          Already have an account? <Link to="/login" style={{ color: '#F97316', textDecoration: 'none', fontWeight: 700 }}>Sign in</Link>
+          </div>
+          <div style={{ marginTop: '1.25rem', textAlign: 'center' }}>
+            <Link to="/" style={{ color: '#64748b', fontSize: '0.8rem', textDecoration: 'none', fontWeight: 500 }}>&larr; Back to Home</Link>
+          </div>
         </div>
 
       </div>

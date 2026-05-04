@@ -2,8 +2,13 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const path = require('path');
+const { OAuth2Client } = require('google-auth-library');
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const db = require('./database');
+
+const JWT_SECRET = process.env.JWT_SECRET || 'grace_and_force_super_secret_key_2026';
 const { exec } = require('child_process');
 const fs = require('fs');
 
@@ -79,12 +84,124 @@ app.post('/api/register', async (req, res) => {
       [studentId, name, classLevel, grade || '', startupTokens]
     );
     
+    const token = jwt.sign({ studentId, name, classLevel }, JWT_SECRET, { expiresIn: '30d' });
+    
     res.status(201).json({ 
       message: 'Account created successfully', 
-      user: { name, studentId, classLevel, assignedAgentId, email, phone } 
+      user: { name, studentId, classLevel, assignedAgentId, email, phone },
+      token
     });
   } catch (err) {
     res.status(500).json({ error: 'Server error during registration' });
+  }
+});
+
+// Google Native Login / Registration
+app.post('/api/auth/google', async (req, res) => {
+  const { credential, classLevel, grade } = req.body;
+  if (!credential) {
+    return res.status(400).json({ error: 'Missing Google credential' });
+  }
+
+  try {
+    const ticket = await googleClient.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    
+    const payload = ticket.getPayload();
+    const email = payload.email;
+    const name = payload.name;
+    const googleId = payload.sub;
+    const avatar = payload.picture;
+
+    // Check if user exists by email
+    const { rows } = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+    
+    let user;
+    if (rows.length > 0) {
+      user = rows[0];
+      // Update avatar if missing
+      if (!user.avatar && avatar) {
+         await db.query('UPDATE users SET avatar = $1 WHERE id = $2', [avatar, user.id]);
+         user.avatar = avatar;
+      }
+    } else {
+      // New User: Auto Register
+      const assignedClass = classLevel || 'Level 1';
+      const assignedGrade = grade || 'KG';
+      const studentId = email.split('@')[0] + Math.floor(Math.random() * 1000);
+      
+      let assignedAgentId = 'agent_3201kkb0dbh3fgravbhyjw4crve8'; // Level 1 agent
+      
+      const randomPassword = await bcrypt.hash(googleId + Date.now().toString(), 10);
+      
+      const insertQuery = `INSERT INTO users (name, "studentId", password, "classLevel", grade, "assignedAgentId", email, avatar, auth_provider) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`;
+      const result = await db.query(insertQuery, [name, studentId, randomPassword, assignedClass, assignedGrade, assignedAgentId, email, avatar, 'google']);
+      user = result.rows[0];
+      
+      // Init token economy
+      await db.query(
+        `INSERT INTO debate_users (user_id, username, class, grade, gforce_tokens, avatar_url) VALUES ($1, $2, $3, $4, $5, $6)`,
+        [studentId, name, assignedClass, assignedGrade, 100, avatar]
+      );
+    }
+    
+    const token = jwt.sign({ studentId: user.studentId, name: user.name, classLevel: user.classLevel }, JWT_SECRET, { expiresIn: '30d' });
+    
+    res.json({
+      message: 'Google login successful',
+      user: { 
+        name: user.name, 
+        studentId: user.studentId, 
+        classLevel: user.classLevel, 
+        assignedAgentId: user.assignedAgentId, 
+        email: user.email, 
+        avatar: user.avatar 
+      },
+      token
+    });
+  } catch (err) {
+    console.error('Google Auth Error:', err);
+    res.status(401).json({ error: 'Invalid Google credential' });
+  }
+});
+
+// Login
+app.post('/api/login', async (req, res) => {
+  const { studentId, password } = req.body;
+  if (!studentId || !password) {
+    return res.status(400).json({ error: 'Username and password are required' });
+  }
+
+  try {
+    const { rows } = await db.query('SELECT * FROM users WHERE LOWER("studentId") = LOWER($1)', [studentId]);
+    if (rows.length === 0) {
+      return res.status(401).json({ error: 'Invalid username or password' });
+    }
+    
+    const user = rows[0];
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) {
+      return res.status(401).json({ error: 'Invalid username or password' });
+    }
+    
+    const token = jwt.sign({ studentId: user.studentId, name: user.name, classLevel: user.classLevel }, JWT_SECRET, { expiresIn: '30d' });
+    
+    res.json({
+      message: 'Logged in successfully',
+      user: { 
+        name: user.name, 
+        studentId: user.studentId, 
+        classLevel: user.classLevel, 
+        assignedAgentId: user.assignedAgentId, 
+        email: user.email, 
+        phone: user.phone 
+      },
+      token
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error during login' });
   }
 });
 app.get('/api/check-username/:username', async (req, res) => {
