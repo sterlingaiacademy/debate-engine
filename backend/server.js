@@ -434,9 +434,15 @@ app.get('/api/analytics/:studentId', async (req, res) => {
       }
     }
 
-    // Badges — parse JSONB array from debate_users
+    // Badges — parse JSONB from debate_users (may be array, object {}, or null)
     let badges = [];
-    try { badges = Array.isArray(u.badges) ? u.badges : JSON.parse(u.badges || '[]'); } catch { badges = []; }
+    try {
+      const raw = u.badges;
+      if (Array.isArray(raw)) badges = raw;
+      else if (typeof raw === 'string') badges = JSON.parse(raw);
+      else if (raw && typeof raw === 'object') badges = Object.values(raw);
+    } catch { badges = []; }
+    if (!Array.isArray(badges)) badges = [];
 
     res.json({
       total_debates: u.total_debates || 0,
@@ -550,7 +556,7 @@ app.post('/api/evaluate', async (req, res) => {
       disfluency_report: { total: 0 },
       key_moments: [],
       ai_challenges_summary: [],
-      stats: { total_turns: transcript.length, total_words: transcript.reduce((acc, m) => acc + m.text.split(' ').length, 0) }
+      stats: { total_turns: transcript.length, total_words: transcript.reduce((acc, m) => acc + (m.text || '').split(' ').length, 0) }
     });
   }
 
@@ -656,8 +662,25 @@ app.post('/api/evaluate', async (req, res) => {
               const newBest = Math.max(u.best_score || 0, score);
               const newWords = (u.total_words_spoken || 0) + totalWords;
 
-              // Simple streak increment (just +1; we rely on evaluate being called once per session)
-              const newStreak = (u.current_streak || 0) + 1;
+              // Streak: get last debate date to decide increment vs reset
+              let newStreak = 1;
+              try {
+                const lastDebateRes = await db.query(
+                  `SELECT created_at FROM debates WHERE user_id = $1 ORDER BY created_at DESC LIMIT 1`,
+                  [studentId]
+                );
+                if (lastDebateRes.rows.length) {
+                  const lastDt = new Date(lastDebateRes.rows[0].created_at);
+                  const nowIST  = new Date(Date.now() + 5.5 * 3600 * 1000);
+                  const lastIST = new Date(lastDt.getTime() + 5.5 * 3600 * 1000);
+                  const deltaDays = Math.floor(nowIST / 86400000) - Math.floor(lastIST / 86400000);
+                  if (deltaDays === 0 || deltaDays === 1) {
+                    // Same day or yesterday — keep/extend streak
+                    newStreak = deltaDays === 0 ? (u.current_streak || 1) : (u.current_streak || 0) + 1;
+                  }
+                  // >1 day gap — streak resets to 1 (default)
+                }
+              } catch (_) {}
               const newLongest = Math.max(u.longest_streak || 0, newStreak);
 
               // Tokens: 1 per 30 words + 20 if score >= 7

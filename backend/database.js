@@ -128,7 +128,7 @@ async function initDB() {
     await addDU('current_streak', 'INTEGER', '0');
     await addDU('longest_streak', 'INTEGER', '0');
     await addDU('total_words_spoken', 'INTEGER', '0');
-    await addDU('badges', 'JSONB', "'{}'");
+    await addDU('badges', 'JSONB', "'[]'");
     await addDU('avatar_url', 'TEXT', "''");
 
     console.log('Vultr database tables verified.');
