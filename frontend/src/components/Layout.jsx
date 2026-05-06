@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import {
   LogOut, LayoutDashboard, Mic, BarChart2, Trophy,
-  UserCircle, Users, Zap, Flame, Award, ChevronRight,
+  UserCircle, Zap, Flame, Award, ChevronRight,
   ChevronLeft, Target, Settings, BookOpen, Gamepad2
 } from 'lucide-react';
 import logoImg from '../assets/logo.png';
@@ -342,29 +342,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
             </button>
           )}
 
-          {/* Switch accounts */}
-          {!isCollapsed && onSwitchProfile && user?.email && (
-            <button
-              onClick={onSwitchProfile}
-              style={{
-                width: '100%',
-                background: isJunior ? 'rgba(124,58,237,0.06)' : 'rgba(139,92,246,0.08)',
-                border: isJunior ? '1.5px solid rgba(124,58,237,0.15)' : '1px solid rgba(139,92,246,0.2)',
-                borderRadius: isJunior ? 99 : 9,
-                padding: '0.6rem',
-                cursor: 'pointer',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
-                color: isJunior ? '#7c3aed' : '#a78bfa',
-                fontSize: '0.8rem', fontWeight: 700,
-                transition: 'all 0.15s',
-              }}
-              onMouseEnter={e => e.currentTarget.style.background = isJunior ? 'rgba(124,58,237,0.14)' : 'rgba(139,92,246,0.16)'}
-              onMouseLeave={e => e.currentTarget.style.background = isJunior ? 'rgba(124,58,237,0.06)' : 'rgba(139,92,246,0.08)'}
-            >
-              <Users size={14} />
-              Switch Accounts
-            </button>
-          )}
+
         </div>
       </aside>
 

@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mic, MicOff, PhoneOff, Timer as TimerIcon, Play, MessageSquare } from 'lucide-react';
 import { Conversation } from '@11labs/client';
@@ -6,6 +6,7 @@ import AIAvatar from '../components/AIAvatar';
 import GeminiWave from '../components/GeminiWave';
 import TranscriptView from '../components/TranscriptView';
 import TypewriterText from '../components/TypewriterText';
+import PremiumEnrollModal from '../components/PremiumEnrollModal';
 import { API_BASE } from '../api';
 
 
@@ -451,13 +452,8 @@ const formatTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0
 
           {/* Out of Time State */}
           {status === 'out_of_time' && (
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '3rem 1.5rem', gap: '1.25rem' }}>
-              <AIAvatar isJunior={isJunior} isSpeaking={false} size={120} />
-              <div className="alert alert-warning" style={{ maxWidth: '400px', backgroundColor: '#fffbeb', color: '#b45309', border: '1px solid #fcd34d' }}>
-                <strong>Time's Up! ⏱️</strong><br/>
-                You have reached your 10-minute daily debate limit. Come back tomorrow to continue practicing!
-              </div>
-              <button onClick={() => navigate('/dashboard')} className="btn btn-primary">Back to Dashboard</button>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', overflowY: 'auto', width: '100%' }}>
+              <PremiumEnrollModal user={user} onDismiss={() => navigate('/dashboard')} />
             </div>
           )}
 

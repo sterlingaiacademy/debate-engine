@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useGoogleLogin } from '@react-oauth/google';
-import { ArrowRight, Sparkles, Zap, Trophy, Shield, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Sparkles, Zap, Trophy, Shield, CheckCircle2, X, AlertTriangle } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 const GOOGLE_SANS = "'Google Sans', 'Outfit', 'Product Sans', system-ui, sans-serif";
 import { API_BASE } from '../api';
@@ -26,6 +26,11 @@ export default function Register({ onLogin }) {
   const [passwordError, setPasswordError] = useState('');
 
   const isJuniorClass = ['KG', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(formData.selectedClass);
+
+  // Terms & Conditions gate
+  const [showTerms, setShowTerms] = useState(false);
+  const [termsAgreed, setTermsAgreed] = useState(false);
+  const [termsError, setTermsError] = useState(false);
 
   useEffect(() => {
     const refFromUrl = searchParams.get('ref');
@@ -83,6 +88,18 @@ export default function Register({ onLogin }) {
     if (['Class 9', 'Class 10'].includes(cls)) return 'Level 4';
     if (['Class 11', 'Class 12'].includes(cls)) return 'Level 5';
     return 'Level 1';
+  };
+
+  // Step 1: Open T&C first, then Google sign-in after acceptance
+  const handleGoogleButtonClick = () => {
+    setTermsError(false);
+    setShowTerms(true);
+  };
+
+  const handleTermsAccept = () => {
+    if (!termsAgreed) { setTermsError(true); return; }
+    setShowTerms(false);
+    googleLogin();
   };
 
   // Step 1: Google sign-in → fetch profile → move to details
@@ -254,7 +271,7 @@ export default function Register({ onLogin }) {
           {step === 'auth' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <button
-                type="button" onClick={() => googleLogin()} disabled={loading}
+                onClick={() => handleGoogleButtonClick()} disabled={loading}
                 style={{
                   padding: '1rem', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px',
                   background: '#ffffff', color: '#000', fontWeight: 700, fontSize: '1rem',
@@ -362,6 +379,152 @@ export default function Register({ onLogin }) {
           )}
         </div>
       </div>
+
+      {/* ── Terms & Conditions Modal Overlay ── */}
+      {showTerms && (
+        <div style={{
+          position: 'fixed', inset: 0, zIndex: 9999,
+          background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(8px)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          padding: '1rem', animation: 'fadeIn 0.25s ease',
+        }}>
+          <div style={{
+            width: '100%', maxWidth: '580px', maxHeight: '90vh',
+            background: '#0f1322', border: '1px solid rgba(255,255,255,0.08)',
+            borderRadius: '24px', display: 'flex', flexDirection: 'column',
+            boxShadow: '0 24px 60px rgba(0,0,0,0.6)',
+            overflow: 'hidden',
+          }}>
+            {/* Modal Header */}
+            <div style={{
+              padding: '1.5rem 1.75rem 1.25rem',
+              borderBottom: '1px solid rgba(255,255,255,0.06)',
+              display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem',
+              flexShrink: 0,
+            }}>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.3rem' }}>
+                  <div style={{ width: 32, height: 32, borderRadius: '8px', background: 'rgba(249,115,22,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <AlertTriangle size={16} color="#F97316" />
+                  </div>
+                  <h3 style={{ color: '#fff', fontWeight: 800, fontSize: '1.15rem', margin: 0 }}>Terms & Conditions</h3>
+                </div>
+                <p style={{ color: '#64748b', fontSize: '0.8rem', margin: 0 }}>Please read carefully before creating your account.</p>
+              </div>
+              <button onClick={() => setShowTerms(false)} style={{ background: 'rgba(255,255,255,0.05)', border: 'none', borderRadius: '8px', width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
+                <X size={16} color="#94a3b8" />
+              </button>
+            </div>
+
+            {/* Scrollable Content */}
+            <div style={{ overflowY: 'auto', padding: '1.5rem 1.75rem', flex: 1 }}>
+
+              {/* 🔴 ElevenLabs Age Policy — most important */}
+              <div style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.25)', borderRadius: '14px', padding: '1.1rem 1.25rem', marginBottom: '1.25rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                  <AlertTriangle size={15} color="#ef4444" />
+                  <span style={{ fontWeight: 800, color: '#fca5a5', fontSize: '0.875rem' }}>Important – Age Requirement (ElevenLabs Policy)</span>
+                </div>
+                <p style={{ color: '#fca5a5', fontSize: '0.82rem', margin: 0, lineHeight: 1.7 }}>
+                  Grace & Force uses <strong>ElevenLabs AI voice technology</strong>, which requires all users to be <strong>16 years or older</strong> per their Terms of Service.<br /><br />
+                  <strong>If your child is under 16:</strong> A parent or guardian must create and use the account on their behalf. <strong>Please sign in with a parent/guardian Google account.</strong>
+                </p>
+              </div>
+
+              {/* Privacy */}
+              <div style={{ marginBottom: '1.25rem' }}>
+                <h4 style={{ color: '#e2e8f0', fontWeight: 700, fontSize: '0.875rem', marginBottom: '0.6rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <Shield size={14} color="#10b981" /> Privacy & Data
+                </h4>
+                <ul style={{ color: '#94a3b8', fontSize: '0.82rem', lineHeight: 1.8, paddingLeft: '1.25rem', margin: 0 }}>
+                  <li>We <strong style={{ color: '#e2e8f0' }}>do not store</strong> any personal information about the student.</li>
+                  <li>Only the account name, username, and grade level are saved — no phone numbers, addresses, or sensitive data.</li>
+                  <li>Voice sessions are processed by ElevenLabs and are not stored on our servers.</li>
+                  <li>We do not sell or share any user data with third parties.</li>
+                </ul>
+              </div>
+
+              {/* Usage */}
+              <div style={{ marginBottom: '1.25rem' }}>
+                <h4 style={{ color: '#e2e8f0', fontWeight: 700, fontSize: '0.875rem', marginBottom: '0.6rem' }}>📋 Usage Guidelines</h4>
+                <ul style={{ color: '#94a3b8', fontSize: '0.82rem', lineHeight: 1.8, paddingLeft: '1.25rem', margin: 0 }}>
+                  <li>Grace & Force is an educational platform for debate and communication training.</li>
+                  <li>The 10-minute daily limit applies to all free accounts to ensure fair access.</li>
+                  <li>Any misuse, abusive language, or attempt to bypass limits may result in account suspension.</li>
+                  <li>This is a demo release — features and limits may change in future versions.</li>
+                </ul>
+              </div>
+
+              {/* Consent */}
+              <div style={{ marginBottom: '1rem' }}>
+                <h4 style={{ color: '#e2e8f0', fontWeight: 700, fontSize: '0.875rem', marginBottom: '0.6rem' }}>✅ Parental Consent</h4>
+                <p style={{ color: '#94a3b8', fontSize: '0.82rem', lineHeight: 1.7, margin: 0 }}>
+                  By creating an account, you confirm that either:<br />
+                  (a) The user is <strong style={{ color: '#e2e8f0' }}>16 years or older</strong> and creating their own account, OR<br />
+                  (b) A parent/guardian is creating this account on behalf of a minor and gives consent for the child to use this platform.
+                </p>
+              </div>
+            </div>
+
+            {/* Agree & Continue footer */}
+            <div style={{
+              padding: '1.25rem 1.75rem 1.5rem',
+              borderTop: '1px solid rgba(255,255,255,0.06)',
+              flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '1rem',
+            }}>
+              {/* Checkbox */}
+              <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer' }}>
+                <div
+                  onClick={() => { setTermsAgreed(p => !p); setTermsError(false); }}
+                  style={{
+                    width: 20, height: 20, borderRadius: '5px', flexShrink: 0, marginTop: '0.1rem',
+                    border: termsError ? '2px solid #ef4444' : termsAgreed ? '2px solid #10b981' : '2px solid rgba(255,255,255,0.2)',
+                    background: termsAgreed ? '#10b981' : 'transparent',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    transition: 'all 0.2s', cursor: 'pointer',
+                  }}
+                >
+                  {termsAgreed && <CheckCircle2 size={13} color="#fff" />}
+                </div>
+                <span style={{ fontSize: '0.82rem', color: '#94a3b8', lineHeight: 1.6 }}>
+                  I confirm that I have read the Terms & Conditions. If the student is under 16, I confirm that a <strong style={{ color: '#e2e8f0' }}>parent or guardian</strong> is signing in on their behalf.
+                </span>
+              </label>
+
+              {termsError && (
+                <p style={{ color: '#fca5a5', fontSize: '0.78rem', margin: 0, fontWeight: 600 }}>
+                  ⚠ You must agree to the terms before continuing.
+                </p>
+              )}
+
+              <div style={{ display: 'flex', gap: '0.75rem' }}>
+                <button
+                  onClick={() => setShowTerms(false)}
+                  style={{ flex: 1, padding: '0.8rem', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', background: 'transparent', color: '#94a3b8', fontWeight: 600, fontSize: '0.9rem', cursor: 'pointer', fontFamily: GOOGLE_SANS }}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleTermsAccept}
+                  style={{
+                    flex: 2, padding: '0.8rem', border: 'none', borderRadius: '10px',
+                    background: termsAgreed ? 'linear-gradient(135deg, #E8392A 0%, #F97316 100%)' : 'rgba(255,255,255,0.06)',
+                    color: termsAgreed ? '#fff' : '#64748b',
+                    fontWeight: 700, fontSize: '0.9rem', cursor: 'pointer',
+                    fontFamily: GOOGLE_SANS,
+                    boxShadow: termsAgreed ? '0 4px 14px rgba(232,57,42,0.35)' : 'none',
+                    transition: 'all 0.2s',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
+                  }}
+                >
+                  <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="G" style={{ width: 17, height: 17 }} />
+                  I Agree — Continue with Google
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <style>{`
         @media (max-width: 900px) { .login-left-pane { display: none !important; } }

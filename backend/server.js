@@ -362,47 +362,104 @@ app.post('/api/time-sync', async (req, res) => {
 });
 
 
-// Analytics (Routed via Python Profile script)
+// Analytics — direct Vultr DB query (replaces Python/Supabase path)
 app.get('/api/analytics/:studentId', async (req, res) => {
-  const scriptPath = path.join(__dirname, 'api_profile.py');
   const studentId = req.params.studentId.replace(/"/g, '');
-  
-  const MAX_RETRIES = 3;
-  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
-    try {
-      const data = await new Promise((resolve, reject) => {
-        exec(`python3 "${scriptPath}" "${studentId}"`, (error, stdout, stderr) => {
-          if (error) {
-            console.error(`Python Analytics attempt ${attempt} exec error:`, error);
-          }
-          try {
-            const parsed = JSON.parse(stdout);
-            if (parsed.error && parsed.error.includes('10054')) {
-              reject(new Error('Connection reset by peer (10054)'));
-              return;
-            }
-            resolve(parsed);
-          } catch (e) {
-            reject(new Error('Parse error or invalid output'));
-          }
-        });
-      });
 
-      if (data.error) {
-         // It's a valid JSON response but contains a logical error (e.g. User not found)
-         return res.json({ total_debates: 0, avg_score: 0, total_words_spoken: 0, gforce_tokens: 0, badges: [], badge_details: [] });
-      }
-      return res.json(data); // Success!
-    } catch (err) {
-      if (attempt === MAX_RETRIES) {
-        console.error('Python Analytics route failed after retries:', err.message);
-        return res.json({ total_debates: 0, avg_score: 0, total_words_spoken: 0, gforce_tokens: 0, badges: [], badge_details: [] });
-      }
-      // Wait a bit before retrying
-      await new Promise(r => setTimeout(r, 500));
+  try {
+    // Get user stats from debate_users (Vultr)
+    const userRes = await db.query(
+      `SELECT user_id, username, class, grade, gforce_tokens, current_streak, longest_streak,
+              total_debates, total_wins, avg_score, best_score, total_words_spoken, badges
+       FROM debate_users WHERE user_id = $1`,
+      [studentId]
+    );
+
+    if (!userRes.rows.length) {
+      return res.json({ total_debates: 0, avg_score: 0, total_words_spoken: 0, gforce_tokens: 0,
+        current_streak: 0, best_streak: 0, badges: [], badge_details: [], tier: { name: 'Unranked', color: '#64748b' },
+        score_trend: [], category_averages: {} });
     }
+
+    const u = userRes.rows[0];
+    const tokens = Math.round(u.gforce_tokens || 0);
+
+    // Tier calculation based on tokens
+    const tier = (() => {
+      if (tokens >= 5000) return { name: 'Grandmaster', color: '#ec4899' };
+      if (tokens >= 4000) return { name: 'Master', color: '#f97316' };
+      if (tokens >= 3000) return { name: 'Diamond', color: '#818cf8' };
+      if (tokens >= 2000) return { name: 'Platinum', color: '#38bdf8' };
+      if (tokens >= 1500) return { name: 'Gold', color: '#f59e0b' };
+      if (tokens >= 1000) return { name: 'Silver', color: '#94a3b8' };
+      if (tokens >= 500)  return { name: 'Bronze', color: '#cd7f32' };
+      return { name: 'Unranked', color: '#64748b' };
+    })();
+
+    // Get recent debates from debates table
+    const debatesRes = await db.query(
+      `SELECT debate_id, motion, side, overall_score, grade, total_turns, total_words, created_at,
+              score_argument_quality, score_rebuttal_engagement, score_clarity_coherence,
+              score_speech_fluency, score_persuasiveness, score_knowledge_evidence,
+              score_respectfulness, score_consistency_position
+       FROM debates WHERE user_id = $1 ORDER BY created_at DESC LIMIT 50`,
+      [studentId]
+    );
+    const debates = debatesRes.rows || [];
+
+    // Score trend (last 20)
+    const score_trend = debates.slice(0, 20).map(d => ({
+      overall_score: d.overall_score,
+      created_at: d.created_at,
+    }));
+
+    // Category averages
+    const CAT_MAP = {
+      'Argument Quality': 'score_argument_quality',
+      'Rebuttal & Engagement': 'score_rebuttal_engagement',
+      'Clarity & Coherence': 'score_clarity_coherence',
+      'Speech Fluency': 'score_speech_fluency',
+      'Persuasiveness': 'score_persuasiveness',
+      'Knowledge & Evidence': 'score_knowledge_evidence',
+      'Respectfulness & Tone': 'score_respectfulness',
+      'Consistency & Position': 'score_consistency_position',
+    };
+    const category_averages = {};
+    if (debates.length) {
+      for (const [name, col] of Object.entries(CAT_MAP)) {
+        const vals = debates.map(d => d[col]).filter(v => v !== null && v !== undefined);
+        if (vals.length) {
+          category_averages[name] = Math.round((vals.reduce((a, b) => a + b, 0) / vals.length) * 100) / 100;
+        }
+      }
+    }
+
+    // Badges — parse JSONB array from debate_users
+    let badges = [];
+    try { badges = Array.isArray(u.badges) ? u.badges : JSON.parse(u.badges || '[]'); } catch { badges = []; }
+
+    res.json({
+      total_debates: u.total_debates || 0,
+      avg_score: u.avg_score ? Math.round(u.avg_score * 10) / 10 : 0,
+      best_score: u.best_score || 0,
+      total_words_spoken: u.total_words_spoken || 0,
+      gforce_tokens: tokens,
+      current_streak: u.current_streak || 0,
+      best_streak: u.longest_streak || 0,
+      tier,
+      badges,
+      badge_details: [],
+      score_trend,
+      category_averages,
+    });
+  } catch (err) {
+    console.error('Analytics error:', err.message);
+    res.json({ total_debates: 0, avg_score: 0, total_words_spoken: 0, gforce_tokens: 0,
+      current_streak: 0, best_streak: 0, badges: [], badge_details: [],
+      tier: { name: 'Unranked', color: '#64748b' }, score_trend: [], category_averages: {} });
   }
 });
+
 
 // Leaderboard (Routed via Python)
 app.get('/api/leaderboard', (req, res) => {
@@ -519,7 +576,7 @@ app.post('/api/evaluate', async (req, res) => {
     const sTopic = topic ? String(topic).replace(/"/g, '') : 'Unknown Motion';
     
     // Pass args securely. Format: py script.py transcript.txt studentId name classLevel topic
-    exec(`python3 "${scriptPath}" "${filename}" "${sId}" "${sName}" "${sClass}" "${sTopic}"`, (error, stdout, stderr) => {
+    exec(`python3 "${scriptPath}" "${filename}" "${sId}" "${sName}" "${sClass}" "${sTopic}"`, async (error, stdout, stderr) => {
       // Clean up file
       try { fs.unlinkSync(filename); } catch (e) {}
 
@@ -529,20 +586,106 @@ app.post('/api/evaluate', async (req, res) => {
         return res.status(500).json({ error: 'Failed to run debate judge' });
       }
 
+      let result;
       try {
-        const result = JSON.parse(stdout);
-        res.json(result);
+        result = JSON.parse(stdout);
       } catch (parseError) {
         console.error('JSON parse error from python output:', parseError);
         console.error('Raw stdout:', stdout);
-        res.status(500).json({ error: 'Invalid output from judge' });
+        return res.status(500).json({ error: 'Invalid output from judge' });
       }
+
+      // ── Write to Vultr DB (parallel, non-blocking) ──
+      if (studentId && result && !result.error && !result.skipped) {
+        const writeToVultr = async () => {
+          try {
+            const score = result.overall_score || 0;
+            const totalWords = result.stats?.total_words || 0;
+            const totalTurns = result.stats?.total_turns || 0;
+            const catMap = {
+              'Argument Quality':        'score_argument_quality',
+              'Rebuttal & Engagement':   'score_rebuttal_engagement',
+              'Clarity & Coherence':     'score_clarity_coherence',
+              'Speech Fluency':          'score_speech_fluency',
+              'Persuasiveness':          'score_persuasiveness',
+              'Knowledge & Evidence':    'score_knowledge_evidence',
+              'Respectfulness & Tone':   'score_respectfulness',
+              'Consistency & Position':  'score_consistency_position',
+            };
+            const catScores = {};
+            for (const cat of result.categories || []) {
+              const col = catMap[cat.name];
+              if (col) catScores[col] = cat.score;
+            }
+
+            // Insert debate record
+            const debateId = require('crypto').createHash('sha256')
+              .update(`${studentId}:${Date.now()}:${score}`).digest('hex').slice(0, 16);
+
+            await db.query(
+              `INSERT INTO debates (debate_id, user_id, motion, side, overall_score, grade,
+                total_turns, total_words, score_argument_quality, score_rebuttal_engagement,
+                score_clarity_coherence, score_speech_fluency, score_persuasiveness,
+                score_knowledge_evidence, score_respectfulness, score_consistency_position,
+                full_result, class)
+               VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)
+               ON CONFLICT (debate_id) DO NOTHING`,
+              [
+                debateId, studentId, result.motion || topic || '', result.debater?.side || '',
+                score, result.grade || '', totalTurns, totalWords,
+                catScores.score_argument_quality || 0, catScores.score_rebuttal_engagement || 0,
+                catScores.score_clarity_coherence || 0, catScores.score_speech_fluency || 0,
+                catScores.score_persuasiveness || 0, catScores.score_knowledge_evidence || 0,
+                catScores.score_respectfulness || 0, catScores.score_consistency_position || 0,
+                JSON.stringify(result), classLevel || '',
+              ]
+            );
+
+            // Update debate_users stats
+            const existing = await db.query(
+              `SELECT total_debates, avg_score, best_score, total_words_spoken, current_streak,
+                      longest_streak, gforce_tokens, badges
+               FROM debate_users WHERE user_id = $1`,
+              [studentId]
+            );
+
+            if (existing.rows.length) {
+              const u = existing.rows[0];
+              const newTotal = (u.total_debates || 0) + 1;
+              const newAvg = Math.round(((u.avg_score || 0) * (u.total_debates || 0) + score) / newTotal * 100) / 100;
+              const newBest = Math.max(u.best_score || 0, score);
+              const newWords = (u.total_words_spoken || 0) + totalWords;
+
+              // Simple streak increment (just +1; we rely on evaluate being called once per session)
+              const newStreak = (u.current_streak || 0) + 1;
+              const newLongest = Math.max(u.longest_streak || 0, newStreak);
+
+              // Tokens: 1 per 30 words + 20 if score >= 7
+              const tokensEarned = Math.floor(totalWords / 30) + (score >= 7 ? 20 : 0) + (newStreak * 5);
+              const newTokens = (u.gforce_tokens || 100) + tokensEarned;
+
+              await db.query(
+                `UPDATE debate_users SET total_debates=$1, avg_score=$2, best_score=$3,
+                  total_words_spoken=$4, current_streak=$5, longest_streak=$6, gforce_tokens=$7
+                 WHERE user_id=$8`,
+                [newTotal, newAvg, newBest, newWords, newStreak, newLongest, newTokens, studentId]
+              );
+            }
+          } catch (e) {
+            console.error('Vultr debate write failed (non-critical):', e.message);
+          }
+        };
+        writeToVultr(); // fire and forget
+      }
+
+      res.json(result);
     });
   } catch (err) {
     console.error('Judge mapping error:', err);
     res.status(500).json({ error: 'Server error during evaluation' });
   }
 });
+
 
 // ─── ARGUMENT BANK ───────────────────────────────────────────────────
 // GET all saved arguments for a user
@@ -655,6 +798,29 @@ app.post('/api/claim-vocab-tokens', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// ─── PREMIUM ENROLLMENT (Demo v1 — no payment) ───────────────────────────────
+// POST /api/enroll — store student interest form for premium upgrade
+app.post('/api/enroll', async (req, res) => {
+  const { studentId, studentName, grade, parentEmail, parentPhone, message } = req.body;
+
+  if (!parentEmail || !parentPhone) {
+    return res.status(400).json({ error: 'Parent email and phone are required.' });
+  }
+
+  try {
+    await db.query(
+      `INSERT INTO enrollment_requests (student_id, student_name, grade, parent_email, parent_phone, message)
+       VALUES ($1, $2, $3, $4, $5, $6)`,
+      [studentId || null, studentName || null, grade || null, parentEmail, parentPhone, message || null]
+    );
+    res.json({ success: true, message: "Enrollment received! We'll contact you within 24–48 hours." });
+  } catch (err) {
+    console.error('Enrollment insert error:', err);
+    res.status(500).json({ error: 'Server error saving enrollment.' });
+  }
+});
+
 
 // Check if running locally vs Vercel Serverless
 if (require.main === module) {

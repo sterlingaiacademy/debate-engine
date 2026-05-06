@@ -72,7 +72,67 @@ async function initDB() {
     // Index for fast user lookups
     await client.query(`CREATE INDEX IF NOT EXISTS idx_arg_bank_user ON argument_bank(user_id, created_at DESC)`);
 
+    // Premium Enrollment Requests table
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS enrollment_requests (
+        id             SERIAL PRIMARY KEY,
+        student_id     TEXT,
+        student_name   TEXT,
+        parent_email   TEXT NOT NULL,
+        parent_phone   TEXT NOT NULL,
+        grade          TEXT,
+        message        TEXT,
+        created_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_enroll_email ON enrollment_requests(parent_email, created_at DESC)`);
+
+    // debates table (stores individual debate results for analytics)
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS debates (
+        debate_id       TEXT PRIMARY KEY,
+        user_id         TEXT NOT NULL,
+        motion          TEXT DEFAULT '',
+        side            TEXT DEFAULT '',
+        overall_score   REAL NOT NULL,
+        grade           TEXT DEFAULT '',
+        total_turns     INTEGER DEFAULT 0,
+        total_words     INTEGER DEFAULT 0,
+        score_argument_quality      REAL DEFAULT 0,
+        score_rebuttal_engagement   REAL DEFAULT 0,
+        score_clarity_coherence     REAL DEFAULT 0,
+        score_speech_fluency        REAL DEFAULT 0,
+        score_persuasiveness        REAL DEFAULT 0,
+        score_knowledge_evidence    REAL DEFAULT 0,
+        score_respectfulness        REAL DEFAULT 0,
+        score_consistency_position  REAL DEFAULT 0,
+        full_result     JSONB DEFAULT '{}'::jsonb,
+        country         TEXT DEFAULT '',
+        school          TEXT DEFAULT '',
+        class           TEXT DEFAULT '',
+        created_at      TIMESTAMPTZ DEFAULT NOW()
+      )
+    `);
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_debates_user ON debates(user_id, created_at DESC)`);
+
+    // Ensure debate_users has all needed stat columns
+    const addDU = async (col, type, def) => {
+      try {
+        await client.query(`ALTER TABLE debate_users ADD COLUMN IF NOT EXISTS "${col}" ${type} DEFAULT ${def}`);
+      } catch (e) { /* Already exists */ }
+    };
+    await addDU('total_debates', 'INTEGER', '0');
+    await addDU('total_wins', 'INTEGER', '0');
+    await addDU('best_score', 'REAL', '0');
+    await addDU('avg_score', 'REAL', '0');
+    await addDU('current_streak', 'INTEGER', '0');
+    await addDU('longest_streak', 'INTEGER', '0');
+    await addDU('total_words_spoken', 'INTEGER', '0');
+    await addDU('badges', 'JSONB', "'{}'");
+    await addDU('avatar_url', 'TEXT', "''");
+
     console.log('Vultr database tables verified.');
+
   } catch (err) {
     console.error('DB init error:', err.message);
   } finally {

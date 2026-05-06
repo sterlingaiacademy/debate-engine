@@ -165,6 +165,9 @@ export default function Dashboard({ user, setUser }) {
   const isJunior = ['Level 1','Level 2','Class 1-3','Class 3-5','KG','Class KG','KG-2',
     'Class 1-5','Class 1','Class 2','Class 3','Class 4','Class 5','kg'].includes(user?.classLevel);
 
+  // Level 1 and Level 2 only have one agent (debate only), no Super Tutor
+  const isBasicLevel = ['Level 1', 'Level 2'].includes(user?.classLevel);
+
   useEffect(() => {
     const activeId = user?.studentId || user?.username;
     if (!activeId) return;
@@ -214,7 +217,11 @@ export default function Dashboard({ user, setUser }) {
     .map(([key, val]) => ({ subject: formatCategory(key), A: val, fullMark: 10 }));
 
   const modes = isJunior ? JUNIOR_MODES : SENIOR_MODES;
-  const availableModes = modes.filter(m => !m.accessKey || m.accessKey === user?.classLevel || m.id === 'debate' || m.id === 'supertutor');
+  const availableModes = modes.filter(m => {
+    // Level 1 & 2 only have one debate agent — hide Super Tutor
+    if (isBasicLevel && m.id === 'supertutor') return false;
+    return !m.accessKey || m.accessKey === user?.classLevel || m.id === 'debate' || m.id === 'supertutor';
+  });
 
   /* ─── Chart theming ─── */
   const chartBg    = isJunior ? '#fff' : 'transparent';

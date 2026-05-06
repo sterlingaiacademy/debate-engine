@@ -1,9 +1,10 @@
-﻿import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Play, PhoneOff, MessageSquare, Globe, ChevronRight } from 'lucide-react';
 import { Conversation } from '@11labs/client';
 import GeminiWave from '../components/GeminiWave';
 import TranscriptView from '../components/TranscriptView';
+import PremiumEnrollModal from '../components/PremiumEnrollModal';
 import { API_BASE } from '../api';
 
 const MOCK_UN_AGENT_ID = 'agent_4501kngj040nfdna0c7yck5r5156';
@@ -228,12 +229,8 @@ export default function MockUN({ user }) {
   // Out of time
   if (step === 'out_of_time') {
     return (
-      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '60vh', gap: '1.5rem', textAlign: 'center', padding: '2rem' }}>
-        <span style={{ fontSize: '4rem' }}>⏱️</span>
-        <div className="alert alert-warning" style={{ maxWidth: '420px', backgroundColor: '#fffbeb', color: '#b45309', border: '1px solid #fcd34d' }}>
-          <strong>Time's Up!</strong><br />You've reached your 10-minute daily debate limit. Come back tomorrow!
-        </div>
-        <button onClick={() => navigate('/dashboard')} className="btn btn-primary">Back to Dashboard</button>
+      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', overflowY: 'auto', width: '100%', minHeight: '60vh' }}>
+        <PremiumEnrollModal user={user} onDismiss={() => navigate('/dashboard')} />
       </div>
     );
   }

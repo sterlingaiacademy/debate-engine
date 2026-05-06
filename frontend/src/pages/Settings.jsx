@@ -1,29 +1,53 @@
-﻿
+
 import React, { useState, useRef } from 'react';
-import { Settings as SettingsIcon, Camera, UploadCloud, Loader2 } from 'lucide-react';
+import { Settings as SettingsIcon, Camera, UploadCloud, Loader2, Crown, Mail, Phone, MessageSquare as MsgIcon, CheckCircle, Clock } from 'lucide-react';
 import { API_BASE } from '../api';
 
 export default function Settings({ user, setUser }) {
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null);
 
-  const handlePayment = () => {
-    if (window.Razorpay) {
-      const options = {
-        key: 'rzp_live_Sdf05PuAU9ehu9',
-        amount: '199900',
-        currency: 'INR',
-        name: 'G FORCE AI',
-        description: 'Pro Plan Upgrade',
-        handler: function(response) {
-          alert('Payment Successful!');
-        },
-        prefill: { name: user?.name, email: 'student@example.com', contact: '9999999999' },
-      };
-      const rzp1 = new window.Razorpay(options);
-      rzp1.open();
-    } else {
-      alert("Razorpay SDK not loaded yet.");
+  // Enrollment form state
+  const [enrollForm, setEnrollForm] = useState({ parentEmail: '', parentPhone: '', message: '' });
+  const [enrollSubmitting, setEnrollSubmitting] = useState(false);
+  const [enrollSubmitted, setEnrollSubmitted] = useState(false);
+  const [enrollError, setEnrollError] = useState('');
+
+  const handleEnrollChange = (e) => {
+    setEnrollForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleEnrollSubmit = async (e) => {
+    e.preventDefault();
+    if (!enrollForm.parentEmail || !enrollForm.parentPhone) {
+      setEnrollError('Please fill in Parent Email and Phone.');
+      return;
+    }
+    setEnrollError('');
+    setEnrollSubmitting(true);
+    try {
+      const res = await fetch(`${API_BASE}/api/enroll`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          studentId: user?.studentId,
+          studentName: user?.name,
+          grade: user?.classLevel,
+          parentEmail: enrollForm.parentEmail,
+          parentPhone: enrollForm.parentPhone,
+          message: enrollForm.message,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setEnrollSubmitted(true);
+      } else {
+        setEnrollError(data.error || 'Something went wrong. Please try again.');
+      }
+    } catch {
+      setEnrollError('Network error. Please check your connection.');
+    } finally {
+      setEnrollSubmitting(false);
     }
   };
 
@@ -42,22 +66,15 @@ export default function Settings({ user, setUser }) {
     reader.onload = (event) => {
        const img = new Image();
        img.onload = () => {
-          // Compress via Canvas down to small base64
           const canvas = document.createElement('canvas');
           const MAX_SIZE = 200;
           let width = img.width;
           let height = img.height;
 
           if (width > height) {
-             if (width > MAX_SIZE) {
-                height *= MAX_SIZE / width;
-                width = MAX_SIZE;
-             }
+             if (width > MAX_SIZE) { height *= MAX_SIZE / width; width = MAX_SIZE; }
           } else {
-             if (height > MAX_SIZE) {
-                width *= MAX_SIZE / height;
-                height = MAX_SIZE;
-             }
+             if (height > MAX_SIZE) { width *= MAX_SIZE / height; height = MAX_SIZE; }
           }
 
           canvas.width = width;
@@ -65,10 +82,8 @@ export default function Settings({ user, setUser }) {
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
 
-          // Get compressed JPEG
           const base64Avatar = canvas.toDataURL('image/jpeg', 0.7);
 
-          // Upload to your Node API
           fetch(`${API_BASE}/api/user/avatar`, {
              method: 'POST',
              headers: { 'Content-Type': 'application/json' },
@@ -76,7 +91,7 @@ export default function Settings({ user, setUser }) {
           })
           .then(r => r.json())
           .then(data => {
-             if(data.success) {
+             if (data.success) {
                 const updatedUser = { ...user, avatar: base64Avatar };
                 setUser(updatedUser);
                 localStorage.setItem('user', JSON.stringify(updatedUser));
@@ -88,9 +103,7 @@ export default function Settings({ user, setUser }) {
              console.error(err);
              alert("Error saving profile picture.");
           })
-          .finally(() => {
-             setUploading(false);
-          });
+          .finally(() => { setUploading(false); });
        };
        img.src = event.target.result;
     };
@@ -111,7 +124,6 @@ export default function Settings({ user, setUser }) {
              <Camera size={20} color="var(--text-secondary)" /> Profile Customization
           </h2>
           <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
-            
             <div style={{ position: 'relative', width: '100px', height: '100px', borderRadius: '50%', background: 'var(--bg-tertiary)', border: '2px dashed var(--border)', overflow: 'hidden', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                {user?.avatar ? (
                   <img src={user.avatar} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -125,10 +137,8 @@ export default function Settings({ user, setUser }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700 }}>Upload Avatar</h3>
                <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>We recommend a square image (JPEG or PNG). It will be resized automatically.</p>
-               
                <input type="file" accept="image/*" ref={fileInputRef} onChange={handleImageUpload} style={{ display: 'none' }} />
-               
-               <button 
+               <button
                  onClick={() => fileInputRef.current?.click()}
                  disabled={uploading}
                  style={{
@@ -141,36 +151,131 @@ export default function Settings({ user, setUser }) {
                  {uploading ? "Compressing & Saving..." : "Select Image"}
                </button>
             </div>
-
           </div>
         </div>
 
-        {/* Existing Billing Section */}
+        {/* Go Premium / Enrollment Section */}
         <div className="card" style={{ padding: '2rem' }}>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.5rem' }}>Plan & Billing</h2>
-          <div style={{ 
-            background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%)', 
-            border: '1px solid rgba(139, 92, 246, 0.2)', 
-            padding: '2rem', 
-            borderRadius: '12px', 
-            display: 'flex', 
-            justifyContent: 'space-between', 
-            alignItems: 'center' 
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <Crown size={20} color="#8b5cf6" /> Go Premium
+          </h2>
+
+          {/* Current plan chip + description */}
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(139,92,246,0.07) 0%, rgba(217,70,239,0.07) 100%)',
+            border: '1.5px solid rgba(139,92,246,0.2)',
+            borderRadius: '16px',
+            padding: '1.5rem',
+            marginBottom: '1.5rem',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '1rem',
           }}>
             <div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', padding: '0.25rem 0.75rem', background: 'var(--bg-tertiary)', borderRadius: '99px', fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>CURRENT PLAN</div>
-              <h3 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.25rem 0' }}>Free Plan</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: 0 }}>Basic debate access limits and standard voices.</p>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.2rem 0.75rem', background: 'rgba(139,92,246,0.12)', borderRadius: '99px', fontSize: '0.7rem', fontWeight: 800, color: '#8b5cf6', marginBottom: '0.5rem' }}>
+                <Clock size={11} /> CURRENT PLAN · FREE
+              </div>
+              <h3 style={{ fontSize: '1.4rem', fontWeight: 800, margin: '0 0 0.25rem' }}>10 mins / day</h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', margin: 0 }}>Upgrade for unlimited practice time, more AI voices & priority support.</p>
             </div>
-            <button 
-              onClick={handlePayment}
-              style={{ background: 'linear-gradient(90deg, #F97316, #E8392A)', border: 'none', padding: '0.75rem 1.5rem', borderRadius: '8px', color: '#fff', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 14px rgba(249,115,22,0.3)', transition: 'transform 0.2s' }}
-              onMouseEnter={e => e.target.style.transform = 'translateY(-2px)'}
-              onMouseLeave={e => e.target.style.transform = 'none'}
-            >
-              Upgrade to Pro Plan
-            </button>
+            <div style={{
+              background: 'linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)',
+              color: '#fff', padding: '0.4rem 1rem', borderRadius: '99px',
+              fontSize: '0.7rem', fontWeight: 800, letterSpacing: '0.04em',
+              whiteSpace: 'nowrap',
+            }}>
+              COMING SOON
+            </div>
           </div>
+
+          {/* Enrollment Form or Success */}
+          {enrollSubmitted ? (
+            <div style={{
+              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem',
+              padding: '1.75rem', borderRadius: '14px', textAlign: 'center',
+              background: 'linear-gradient(135deg, rgba(16,185,129,0.07) 0%, rgba(5,150,105,0.07) 100%)',
+              border: '1.5px solid rgba(16,185,129,0.2)',
+            }}>
+              <CheckCircle size={40} color="#10b981" />
+              <h3 style={{ fontWeight: 800, fontSize: '1.1rem', margin: 0 }}>You're on the list! 🎉</h3>
+              <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.6 }}>
+                We'll contact your parents within <strong>24–48 hours</strong> with premium access details.
+              </p>
+            </div>
+          ) : (
+            <form onSubmit={handleEnrollSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+              <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', margin: 0, fontWeight: 600 }}>
+                Interested in Premium? Fill in your parent's contact details — we'll reach out:
+              </p>
+
+              {/* Parent Email */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', background: 'var(--bg-secondary)', borderRadius: '10px', padding: '0.65rem 0.9rem', border: '1.5px solid rgba(139,92,246,0.25)' }}>
+                <Mail size={16} color="#8b5cf6" style={{ flexShrink: 0 }} />
+                <input
+                  type="email"
+                  name="parentEmail"
+                  placeholder="Parent / Guardian Email *"
+                  value={enrollForm.parentEmail}
+                  onChange={handleEnrollChange}
+                  required
+                  style={{ background: 'transparent', border: 'none', outline: 'none', fontSize: '0.9rem', color: 'var(--text-primary)', width: '100%', fontFamily: 'inherit' }}
+                />
+              </div>
+
+              {/* Parent Phone */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', background: 'var(--bg-secondary)', borderRadius: '10px', padding: '0.65rem 0.9rem', border: '1.5px solid rgba(139,92,246,0.25)' }}>
+                <Phone size={16} color="#8b5cf6" style={{ flexShrink: 0 }} />
+                <input
+                  type="tel"
+                  name="parentPhone"
+                  placeholder="Parent / Guardian Phone *"
+                  value={enrollForm.parentPhone}
+                  onChange={handleEnrollChange}
+                  required
+                  style={{ background: 'transparent', border: 'none', outline: 'none', fontSize: '0.9rem', color: 'var(--text-primary)', width: '100%', fontFamily: 'inherit' }}
+                />
+              </div>
+
+              {/* Optional Message */}
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', background: 'var(--bg-secondary)', borderRadius: '10px', padding: '0.65rem 0.9rem', border: '1px solid var(--border)' }}>
+                <MsgIcon size={16} color="var(--text-muted)" style={{ flexShrink: 0, marginTop: '0.15rem' }} />
+                <textarea
+                  name="message"
+                  placeholder="Any message for us? (optional)"
+                  value={enrollForm.message}
+                  onChange={handleEnrollChange}
+                  rows={2}
+                  style={{ background: 'transparent', border: 'none', outline: 'none', resize: 'none', fontSize: '0.9rem', color: 'var(--text-primary)', width: '100%', fontFamily: 'inherit', lineHeight: 1.5 }}
+                />
+              </div>
+
+              {enrollError && (
+                <p style={{ color: '#ef4444', fontSize: '0.8rem', margin: 0, fontWeight: 600 }}>{enrollError}</p>
+              )}
+
+              <button
+                type="submit"
+                disabled={enrollSubmitting}
+                style={{
+                  background: 'linear-gradient(90deg, #8b5cf6, #d946ef)',
+                  border: 'none', padding: '0.8rem 1.5rem', borderRadius: '10px',
+                  color: '#fff', fontWeight: 700, cursor: enrollSubmitting ? 'not-allowed' : 'pointer',
+                  opacity: enrollSubmitting ? 0.7 : 1,
+                  boxShadow: '0 4px 14px rgba(139,92,246,0.35)',
+                  transition: 'transform 0.2s',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
+                  fontSize: '0.95rem',
+                }}
+                onMouseEnter={e => { if (!enrollSubmitting) e.currentTarget.style.transform = 'translateY(-2px)'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'none'; }}
+              >
+                <Crown size={16} />
+                {enrollSubmitting ? 'Submitting…' : 'Enroll for Premium →'}
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </div>
