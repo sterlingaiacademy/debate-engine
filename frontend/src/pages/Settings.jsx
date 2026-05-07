@@ -1,6 +1,6 @@
 
 import React, { useState, useRef } from 'react';
-import { Settings as SettingsIcon, Camera, UploadCloud, Loader2, Crown, Phone, School, CheckCircle, Clock } from 'lucide-react';
+import { Settings as SettingsIcon, Camera, UploadCloud, Loader2, Crown, Phone, School, CheckCircle, Clock, User } from 'lucide-react';
 import { API_BASE } from '../api';
 
 export default function Settings({ user, setUser }) {
@@ -208,6 +208,28 @@ export default function Settings({ user, setUser }) {
               <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', margin: 0, fontWeight: 600 }}>
                 Interested in Premium? Fill in your parent's contact details — we'll reach out:
               </p>
+
+              {/* Student Name (read-only) */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', background: 'var(--bg-secondary)', borderRadius: '10px', padding: '0.65rem 0.9rem', border: '1px solid var(--border)' }}>
+                <User size={16} color="var(--text-muted)" style={{ flexShrink: 0 }} />
+                <input
+                  readOnly
+                  value={user?.name || ''}
+                  placeholder="Student Name"
+                  style={{ background: 'transparent', border: 'none', outline: 'none', fontSize: '0.9rem', color: 'var(--text-secondary)', width: '100%', fontFamily: 'inherit', cursor: 'default' }}
+                />
+              </div>
+
+              {/* Class (read-only) */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', background: 'var(--bg-secondary)', borderRadius: '10px', padding: '0.65rem 0.9rem', border: '1px solid var(--border)' }}>
+                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', flexShrink: 0 }}>🎓</span>
+                <input
+                  readOnly
+                  value={user?.classLevel || ''}
+                  placeholder="Class / Level"
+                  style={{ background: 'transparent', border: 'none', outline: 'none', fontSize: '0.9rem', color: 'var(--text-secondary)', width: '100%', fontFamily: 'inherit', cursor: 'default' }}
+                />
+              </div>
 
               {/* Parent Phone */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', background: 'var(--bg-secondary)', borderRadius: '10px', padding: '0.65rem 0.9rem', border: '1.5px solid rgba(139,92,246,0.25)' }}>
