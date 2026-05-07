@@ -181,7 +181,8 @@ app.post('/api/auth/google', async (req, res) => {
       user: { 
         name: user.name, 
         studentId: user.studentId, 
-        classLevel: user.classLevel, 
+        classLevel: user.classLevel,
+        grade: user.grade || '',
         assignedAgentId: user.assignedAgentId, 
         email: user.email, 
         avatar: user.avatar 
@@ -220,7 +221,8 @@ app.post('/api/login', async (req, res) => {
       user: { 
         name: user.name, 
         studentId: user.studentId, 
-        classLevel: user.classLevel, 
+        classLevel: user.classLevel,
+        grade: user.grade || '',
         assignedAgentId: user.assignedAgentId, 
         email: user.email, 
         phone: user.phone 
