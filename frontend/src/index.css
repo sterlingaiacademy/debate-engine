@@ -1185,7 +1185,7 @@ tbody tr:hover { background: var(--bg-tertiary); }
 /* ================================================================
    LANDING PAGE — lp-* styles (PREMIUM DARK THEME) — UNCHANGED
    ================================================================ */
-.lp-root { font-family: 'Space Grotesk','Outfit',system-ui,sans-serif; background: #06080F; color: #e2e8f0; overflow-x: hidden; }
+.lp-root { font-family: 'Google Sans', 'Plus Jakarta Sans', system-ui, sans-serif; background: #06080F; color: #e2e8f0; overflow-x: hidden; }
 
 .lp-reveal { opacity:0; transform:translateY(28px); transition: opacity 0.65s cubic-bezier(0.22,1,0.36,1), transform 0.65s cubic-bezier(0.22,1,0.36,1); transition-delay: var(--card-delay,0ms); }
 .lp-revealed { opacity:1 !important; transform:translateY(0) !important; }

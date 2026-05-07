@@ -68,7 +68,7 @@ export default function LogoSVG({ size = 48, showText = false, className = '' })
       {showText && (
         <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
           <span style={{
-            fontFamily: "'Outfit', sans-serif",
+            fontFamily: "'Google Sans', 'Plus Jakarta Sans', sans-serif",
             fontWeight: 800,
             fontSize: size * 0.35,
             color: '#1a1a1a',
@@ -77,7 +77,7 @@ export default function LogoSVG({ size = 48, showText = false, className = '' })
             G FORCE AI
           </span>
           <span style={{
-            fontFamily: "'Outfit', sans-serif",
+            fontFamily: "'Google Sans', 'Plus Jakarta Sans', sans-serif",
             fontWeight: 600,
             fontSize: size * 0.16,
             background: 'linear-gradient(135deg, #E8392A, #F97316)',

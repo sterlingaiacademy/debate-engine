@@ -3,7 +3,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useGoogleLogin } from '@react-oauth/google';
 import { ArrowRight, Sparkles, Zap, Trophy, Shield, CheckCircle2, X, AlertTriangle } from 'lucide-react';
 import logoImg from '../assets/logo.png';
-const GOOGLE_SANS = "'Google Sans', 'Outfit', 'Product Sans', system-ui, sans-serif";
+const GOOGLE_SANS = "'Google Sans', 'Plus Jakarta Sans', 'Product Sans', system-ui, sans-serif";
 import { API_BASE } from '../api';
 
 export default function Register({ onLogin }) {

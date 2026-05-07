@@ -4,7 +4,7 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { ArrowRight, Sparkles, Zap, Trophy } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 
-const GOOGLE_SANS = "'Google Sans', 'Outfit', 'Product Sans', system-ui, sans-serif";
+const GOOGLE_SANS = "'Google Sans', 'Plus Jakarta Sans', 'Product Sans', system-ui, sans-serif";
 
 import { API_BASE } from '../api';
 
