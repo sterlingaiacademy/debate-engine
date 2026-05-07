@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { API_BASE } from '../api';
-import { Crown, Clock, Mail, Phone, User, MessageSquare as MsgIcon, CheckCircle, X } from 'lucide-react';
+import { Crown, Clock, Phone, User, School, CheckCircle } from 'lucide-react';
 
 /**
  * PremiumEnrollModal
@@ -12,9 +12,8 @@ import { Crown, Clock, Mail, Phone, User, MessageSquare as MsgIcon, CheckCircle,
  */
 export default function PremiumEnrollModal({ user, onDismiss }) {
   const [form, setForm] = useState({
-    parentEmail: '',
     parentPhone: '',
-    message: '',
+    school: '',
   });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -26,8 +25,8 @@ export default function PremiumEnrollModal({ user, onDismiss }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.parentEmail || !form.parentPhone) {
-      setError('Please fill in Parent Email and Phone.');
+    if (!form.parentPhone || !form.school) {
+      setError('Please fill in Parent Phone and School.');
       return;
     }
     setError('');
@@ -40,9 +39,8 @@ export default function PremiumEnrollModal({ user, onDismiss }) {
           studentId: user?.studentId,
           studentName: user?.name,
           grade: user?.classLevel,
-          parentEmail: form.parentEmail,
           parentPhone: form.parentPhone,
-          message: form.message,
+          school: form.school,
         }),
       });
       const data = await res.json();
@@ -165,31 +163,19 @@ export default function PremiumEnrollModal({ user, onDismiss }) {
               <input
                 readOnly
                 value={user?.name || ''}
+                placeholder="Student Name"
                 style={{ background: 'transparent', border: 'none', outline: 'none', fontSize: '0.9rem', color: 'var(--text-secondary)', width: '100%', fontFamily: 'inherit' }}
               />
             </div>
 
-            {/* Grade (read-only) */}
+            {/* Class (read-only) */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', background: 'var(--bg-secondary)', borderRadius: '10px', padding: '0.65rem 0.9rem', border: '1px solid var(--border)' }}>
               <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', flexShrink: 0 }}>🎓</span>
               <input
                 readOnly
                 value={user?.classLevel || ''}
+                placeholder="Class / Level"
                 style={{ background: 'transparent', border: 'none', outline: 'none', fontSize: '0.9rem', color: 'var(--text-secondary)', width: '100%', fontFamily: 'inherit' }}
-              />
-            </div>
-
-            {/* Parent Email */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', background: 'var(--bg-primary)', borderRadius: '10px', padding: '0.65rem 0.9rem', border: '1.5px solid rgba(139,92,246,0.3)' }}>
-              <Mail size={16} color="#8b5cf6" style={{ flexShrink: 0 }} />
-              <input
-                type="email"
-                name="parentEmail"
-                placeholder="Parent / Guardian Email *"
-                value={form.parentEmail}
-                onChange={handleChange}
-                required
-                style={{ background: 'transparent', border: 'none', outline: 'none', fontSize: '0.9rem', color: 'var(--text-primary)', width: '100%', fontFamily: 'inherit' }}
               />
             </div>
 
@@ -207,20 +193,17 @@ export default function PremiumEnrollModal({ user, onDismiss }) {
               />
             </div>
 
-            {/* Message (optional) */}
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', background: 'var(--bg-primary)', borderRadius: '10px', padding: '0.65rem 0.9rem', border: '1px solid var(--border)' }}>
-              <MsgIcon size={16} color="var(--text-muted)" style={{ flexShrink: 0, marginTop: '0.15rem' }} />
-              <textarea
-                name="message"
-                placeholder="Any message for us? (optional)"
-                value={form.message}
+            {/* School */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', background: 'var(--bg-primary)', borderRadius: '10px', padding: '0.65rem 0.9rem', border: '1.5px solid rgba(139,92,246,0.3)' }}>
+              <School size={16} color="#8b5cf6" style={{ flexShrink: 0 }} />
+              <input
+                type="text"
+                name="school"
+                placeholder="School Name *"
+                value={form.school}
                 onChange={handleChange}
-                rows={2}
-                style={{
-                  background: 'transparent', border: 'none', outline: 'none', resize: 'none',
-                  fontSize: '0.9rem', color: 'var(--text-primary)', width: '100%',
-                  fontFamily: 'inherit', lineHeight: 1.5,
-                }}
+                required
+                style={{ background: 'transparent', border: 'none', outline: 'none', fontSize: '0.9rem', color: 'var(--text-primary)', width: '100%', fontFamily: 'inherit' }}
               />
             </div>
 

@@ -1,6 +1,6 @@
 
 import React, { useState, useRef } from 'react';
-import { Settings as SettingsIcon, Camera, UploadCloud, Loader2, Crown, Mail, Phone, MessageSquare as MsgIcon, CheckCircle, Clock } from 'lucide-react';
+import { Settings as SettingsIcon, Camera, UploadCloud, Loader2, Crown, Phone, School, CheckCircle, Clock } from 'lucide-react';
 import { API_BASE } from '../api';
 
 export default function Settings({ user, setUser }) {
@@ -8,7 +8,7 @@ export default function Settings({ user, setUser }) {
   const fileInputRef = useRef(null);
 
   // Enrollment form state
-  const [enrollForm, setEnrollForm] = useState({ parentEmail: '', parentPhone: '', message: '' });
+  const [enrollForm, setEnrollForm] = useState({ parentPhone: '', school: '' });
   const [enrollSubmitting, setEnrollSubmitting] = useState(false);
   const [enrollSubmitted, setEnrollSubmitted] = useState(false);
   const [enrollError, setEnrollError] = useState('');
@@ -19,8 +19,8 @@ export default function Settings({ user, setUser }) {
 
   const handleEnrollSubmit = async (e) => {
     e.preventDefault();
-    if (!enrollForm.parentEmail || !enrollForm.parentPhone) {
-      setEnrollError('Please fill in Parent Email and Phone.');
+    if (!enrollForm.parentPhone || !enrollForm.school) {
+      setEnrollError('Please fill in Parent Phone and School.');
       return;
     }
     setEnrollError('');
@@ -33,9 +33,8 @@ export default function Settings({ user, setUser }) {
           studentId: user?.studentId,
           studentName: user?.name,
           grade: user?.classLevel,
-          parentEmail: enrollForm.parentEmail,
           parentPhone: enrollForm.parentPhone,
-          message: enrollForm.message,
+          school: enrollForm.school,
         }),
       });
       const data = await res.json();
@@ -210,20 +209,6 @@ export default function Settings({ user, setUser }) {
                 Interested in Premium? Fill in your parent's contact details — we'll reach out:
               </p>
 
-              {/* Parent Email */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', background: 'var(--bg-secondary)', borderRadius: '10px', padding: '0.65rem 0.9rem', border: '1.5px solid rgba(139,92,246,0.25)' }}>
-                <Mail size={16} color="#8b5cf6" style={{ flexShrink: 0 }} />
-                <input
-                  type="email"
-                  name="parentEmail"
-                  placeholder="Parent / Guardian Email *"
-                  value={enrollForm.parentEmail}
-                  onChange={handleEnrollChange}
-                  required
-                  style={{ background: 'transparent', border: 'none', outline: 'none', fontSize: '0.9rem', color: 'var(--text-primary)', width: '100%', fontFamily: 'inherit' }}
-                />
-              </div>
-
               {/* Parent Phone */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', background: 'var(--bg-secondary)', borderRadius: '10px', padding: '0.65rem 0.9rem', border: '1.5px solid rgba(139,92,246,0.25)' }}>
                 <Phone size={16} color="#8b5cf6" style={{ flexShrink: 0 }} />
@@ -238,16 +223,17 @@ export default function Settings({ user, setUser }) {
                 />
               </div>
 
-              {/* Optional Message */}
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', background: 'var(--bg-secondary)', borderRadius: '10px', padding: '0.65rem 0.9rem', border: '1px solid var(--border)' }}>
-                <MsgIcon size={16} color="var(--text-muted)" style={{ flexShrink: 0, marginTop: '0.15rem' }} />
-                <textarea
-                  name="message"
-                  placeholder="Any message for us? (optional)"
-                  value={enrollForm.message}
+              {/* School */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', background: 'var(--bg-secondary)', borderRadius: '10px', padding: '0.65rem 0.9rem', border: '1.5px solid rgba(139,92,246,0.25)' }}>
+                <School size={16} color="#8b5cf6" style={{ flexShrink: 0 }} />
+                <input
+                  type="text"
+                  name="school"
+                  placeholder="School Name *"
+                  value={enrollForm.school}
                   onChange={handleEnrollChange}
-                  rows={2}
-                  style={{ background: 'transparent', border: 'none', outline: 'none', resize: 'none', fontSize: '0.9rem', color: 'var(--text-primary)', width: '100%', fontFamily: 'inherit', lineHeight: 1.5 }}
+                  required
+                  style={{ background: 'transparent', border: 'none', outline: 'none', fontSize: '0.9rem', color: 'var(--text-primary)', width: '100%', fontFamily: 'inherit' }}
                 />
               </div>
 

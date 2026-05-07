@@ -825,17 +825,17 @@ app.post('/api/claim-vocab-tokens', async (req, res) => {
 // ─── PREMIUM ENROLLMENT (Demo v1 — no payment) ───────────────────────────────
 // POST /api/enroll — store student interest form for premium upgrade
 app.post('/api/enroll', async (req, res) => {
-  const { studentId, studentName, grade, parentEmail, parentPhone, message } = req.body;
+  const { studentId, studentName, grade, parentPhone, school } = req.body;
 
-  if (!parentEmail || !parentPhone) {
-    return res.status(400).json({ error: 'Parent email and phone are required.' });
+  if (!parentPhone) {
+    return res.status(400).json({ error: 'Parent phone is required.' });
   }
 
   try {
     await db.query(
-      `INSERT INTO enrollment_requests (student_id, student_name, grade, parent_email, parent_phone, message)
-       VALUES ($1, $2, $3, $4, $5, $6)`,
-      [studentId || null, studentName || null, grade || null, parentEmail, parentPhone, message || null]
+      `INSERT INTO enrollment_requests (student_id, student_name, grade, parent_phone, school)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [studentId || null, studentName || null, grade || null, parentPhone, school || null]
     );
     res.json({ success: true, message: "Enrollment received! We'll contact you within 24–48 hours." });
   } catch (err) {

@@ -78,14 +78,17 @@ async function initDB() {
         id             SERIAL PRIMARY KEY,
         student_id     TEXT,
         student_name   TEXT,
-        parent_email   TEXT NOT NULL,
         parent_phone   TEXT NOT NULL,
         grade          TEXT,
-        message        TEXT,
+        school         TEXT,
         created_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    await client.query(`CREATE INDEX IF NOT EXISTS idx_enroll_email ON enrollment_requests(parent_email, created_at DESC)`);
+    // Add school column for existing deployments
+    try {
+      await client.query(`ALTER TABLE enrollment_requests ADD COLUMN IF NOT EXISTS school TEXT`);
+    } catch (e) { /* ignore */ }
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_enroll_phone ON enrollment_requests(parent_phone, created_at DESC)`);
 
     // debates table (stores individual debate results for analytics)
     await client.query(`
