@@ -225,7 +225,7 @@ export default function Settings({ user, setUser }) {
                 <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', flexShrink: 0 }}>🎓</span>
                 <input
                   readOnly
-                  value={user?.classLevel || ''}
+                  value={user?.grade || user?.classLevel || ''}
                   placeholder="Class"
                   style={{ background: 'transparent', border: 'none', outline: 'none', fontSize: '0.9rem', color: 'var(--text-secondary)', width: '100%', fontFamily: 'inherit', cursor: 'default' }}
                 />
