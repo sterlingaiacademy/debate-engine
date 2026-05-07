@@ -2,7 +2,7 @@
    GRACE & FORCE — DESIGN SYSTEM v2.0 | Game-Inspired Premium UI
    ================================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Nunito:wght@600;700;800;900&family=Outfit:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
 
 /* ================================================================
    CSS VARIABLES / DESIGN TOKENS
@@ -34,8 +34,8 @@
   --radius-lg:   16px;
   --radius-xl:   24px;
   --radius-full: 9999px;
-  --font-sans:   'Space Grotesk', 'Outfit', system-ui, sans-serif;
-  --font-junior: 'Nunito', 'Outfit', sans-serif;
+  --font-sans:   'Google Sans', 'Plus Jakarta Sans', sans-serif;
+  --font-junior: 'Google Sans', 'Plus Jakarta Sans', sans-serif;
   --transition:  0.2s ease;
 
   /* Junior palette */
