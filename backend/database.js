@@ -1,14 +1,37 @@
 require('dotenv').config();
 const { Pool } = require('pg');
 
-const connectionString = process.env.DATABASE_URL || 
+// Use individual params to avoid URL-parsing issues with special chars in password
+const dbUrl = process.env.DATABASE_URL ||
   'postgresql://graceandforce_user:Pck/aawJlsLFZxWu3CG7aw==@localhost:5432/graceandforce_db';
 
-// Disable SSL for local connections (Vultr localhost PostgreSQL), enable for remote
-const isLocal = connectionString.includes('localhost') || connectionString.includes('127.0.0.1');
+// Parse connection string manually to avoid URL encoding issues
+function parseDbUrl(url) {
+  try {
+    // Handle postgresql:// and postgres:// schemes
+    const clean = url.replace(/^postgresql:\/\//, '').replace(/^postgres:\/\//, '');
+    const [userInfo, hostInfo] = clean.split('@');
+    const [user, password] = userInfo.split(':');
+    const [hostPort, database] = hostInfo.split('/');
+    const [host, port] = hostPort.split(':');
+    return { user, password, host, port: parseInt(port) || 5432, database };
+  } catch (e) {
+    // Fallback to hardcoded local values
+    return {
+      user: 'graceandforce_user',
+      password: 'Pck/aawJlsLFZxWu3CG7aw==',
+      host: 'localhost',
+      port: 5432,
+      database: 'graceandforce_db',
+    };
+  }
+}
+
+const connParams = parseDbUrl(dbUrl);
+const isLocal = connParams.host === 'localhost' || connParams.host === '127.0.0.1';
 
 const pool = new Pool({
-  connectionString,
+  ...connParams,
   ssl: isLocal ? false : { rejectUnauthorized: false },
   max: 10,
   idleTimeoutMillis: 30000,

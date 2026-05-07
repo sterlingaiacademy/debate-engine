@@ -272,25 +272,8 @@ app.post('/api/user/avatar', async (req, res) => {
   }
 });
 
-app.post('/api/login', async (req, res) => {
-  const { studentId, password } = req.body;
-  
-  try {
-    const result = await db.query(`SELECT * FROM users WHERE LOWER("studentId") = LOWER($1)`, [studentId]);
-    const user = result.rows[0];
 
-    if (!user) return res.status(404).json({ error: 'User not found' });
 
-    const match = await bcrypt.compare(password, user.password);
-    if (!match) return res.status(401).json({ error: 'Invalid password' });
-
-    // Remove password from response
-    delete user.password;
-    res.json({ message: 'Login successful', user });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
 
 // Time Limits
 app.get('/api/time-limits/:studentId', async (req, res) => {
