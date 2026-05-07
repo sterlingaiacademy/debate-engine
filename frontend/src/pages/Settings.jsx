@@ -226,7 +226,7 @@ export default function Settings({ user, setUser }) {
                 <input
                   readOnly
                   value={user?.classLevel || ''}
-                  placeholder="Class / Level"
+                  placeholder="Class"
                   style={{ background: 'transparent', border: 'none', outline: 'none', fontSize: '0.9rem', color: 'var(--text-secondary)', width: '100%', fontFamily: 'inherit', cursor: 'default' }}
                 />
               </div>

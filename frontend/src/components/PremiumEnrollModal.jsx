@@ -174,7 +174,7 @@ export default function PremiumEnrollModal({ user, onDismiss }) {
               <input
                 readOnly
                 value={user?.classLevel || ''}
-                placeholder="Class / Level"
+                placeholder="Class"
                 style={{ background: 'transparent', border: 'none', outline: 'none', fontSize: '0.9rem', color: 'var(--text-secondary)', width: '100%', fontFamily: 'inherit' }}
               />
             </div>
