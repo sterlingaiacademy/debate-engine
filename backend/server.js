@@ -233,6 +233,37 @@ app.post('/api/login', async (req, res) => {
     res.status(500).json({ error: 'Server error during login' });
   }
 });
+
+// Enrollment request
+app.post('/api/enroll', async (req, res) => {
+  const { studentId, studentName, grade, parentPhone, school } = req.body;
+  if (!parentPhone || !school) {
+    return res.status(400).json({ error: 'Parent phone and school are required' });
+  }
+  try {
+    await db.query(
+      `CREATE TABLE IF NOT EXISTS enrollment_requests (
+        id SERIAL PRIMARY KEY,
+        student_id TEXT,
+        student_name TEXT,
+        grade TEXT,
+        school TEXT,
+        parent_phone TEXT,
+        created_at TIMESTAMPTZ DEFAULT NOW()
+      )`
+    );
+    await db.query(
+      `INSERT INTO enrollment_requests (student_id, student_name, grade, school, parent_phone)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [studentId || '', studentName || '', grade || '', school, parentPhone]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Enroll error:', err);
+    res.status(500).json({ error: 'Server error saving enrollment' });
+  }
+});
+
 app.get('/api/check-username/:username', async (req, res) => {
   try {
     const { username } = req.params;
