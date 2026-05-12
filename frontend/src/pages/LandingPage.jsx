@@ -45,7 +45,7 @@ function PricingSection() {
       price: { monthly: '₹0', yearly: '₹0' },
       period: { monthly: '', yearly: '' },
       desc: 'No credit card needed. Try it free.',
-      features: ['3 matches/day', 'All 5 levels', 'Basic AI report', 'Leaderboard', 'Android & Web'],
+      features: ['10 Minutes/day', 'All 5 levels', '3-Dimension AI report', 'Leaderboard', 'Android & Web'],
       checkColor: '#10b981',
       cta: 'Get Started',
       ctaClass: 'lp-btn-outline-dark',
