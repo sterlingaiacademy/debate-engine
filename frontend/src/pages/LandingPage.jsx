@@ -45,7 +45,7 @@ function PricingSection() {
       price: { monthly: '₹0', yearly: '₹0' },
       period: { monthly: '', yearly: '' },
       desc: 'No credit card needed. Try it free.',
-      features: ['10 Minutes/day', 'All 5 levels', '3-Dimension AI report', 'Leaderboard', 'Android & Web'],
+      features: ['3 matches/day', 'All 5 levels', 'Basic AI report', 'Leaderboard', 'Android & Web'],
       checkColor: '#10b981',
       cta: 'Get Started',
       ctaClass: 'lp-btn-outline-dark',
@@ -78,7 +78,7 @@ function PricingSection() {
       features: [
         yearly ? '22,000 min / year' : '1,800 min / month',
         '60 min per day', 'Debate Arena', 'Model UN access',
-        '8-dim AI report', 'Teacher dashboard', 'School leaderboards', 'Priority support',
+        '3-Dimension AI report', 'Teacher dashboard', 'School leaderboards', 'Priority support',
       ],
       checkColor: '#F97316',
       cta: yearly ? 'Start Max Yearly' : 'Start Max Monthly',
@@ -185,7 +185,7 @@ function PricingSection() {
 /* ─── FAQ Accordion ─── */
 const FAQS = [
   { q: 'What age group is G Force AI designed for?', a: 'G Force AI is designed for students from KG through Grade 12, with 5 adaptive difficulty levels that automatically match their school grade.' },
-  { q: 'How does the AI scoring work?', a: 'Our AI judge evaluates 8 dimensions: argument quality, rebuttal engagement, clarity, speech fluency, persuasiveness, knowledge & evidence, respectfulness, and position consistency — giving a holistic debate score.' },
+  { q: 'How does the AI scoring work?', a: 'Our AI judge evaluates 3 dimensions: argument quality, fluency, and persuasiveness — giving a holistic debate score.' },
   { q: 'Can students use the mobile app and web app together?', a: 'Yes! Both the Android app and web app connect to the same backend and Supabase database, so scores, leaderboards, and progress sync in real time across devices.' },
   { q: 'What is Model UN mode?', a: 'Model UN is a premium debate simulation where students take on country delegate personas and debate global motions in a United Nations-style format, powered by ElevenLabs voice AI.' },
   { q: 'Is there a free tier?', a: 'Yes! The Free tier includes unlimited practice debates with limited Debate Arena matches per day. School and Enterprise plans unlock unlimited Debate Arena matches, advanced analytics, and priority support.' },
@@ -333,7 +333,7 @@ export default function LandingPage() {
           <div className="lp-features-grid">
             {[
               { icon: <Brain size={28} />, title: 'AI Debate Personas', desc: 'Students debate against carefully crafted AI opponents — from confident politicians to expert scientists — that adapt to their level.', color: '#E8392A' },
-              { icon: <BarChart2 size={28} />, title: 'Real-time Scoring', desc: 'After every debate, an AI judge scores 8 dimensions including argument quality, fluency, rebuttal, and persuasiveness.', color: '#F97316' },
+              { icon: <BarChart2 size={28} />, title: 'Real-time Scoring', desc: 'After every debate, an AI judge scores 3 dimensions including argument quality, fluency, and persuasiveness.', color: '#F97316' },
               { icon: <Trophy size={28} />, title: 'Global Leaderboards', desc: 'Students compete on token-ranked leaderboards — filterable by grade, school, region, and country — driving healthy competition.', color: '#FBBF24' },
               { icon: <Globe size={28} />, title: 'Model UN Mode', desc: 'An immersive simulation where students play country delegates and debate global motions in a voice-powered UN format.', color: '#E8392A' },
               { icon: <Zap size={28} />, title: 'Voice-First AI', desc: 'Powered by ElevenLabs, students speak naturally and get instant AI responses, building real speaking confidence.', color: '#F97316' },

@@ -86,7 +86,7 @@ export default function PremiumEnrollModal({ user, onDismiss }) {
           You've used today's practice time
         </h2>
         <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.6 }}>
-          Your daily 10-minute limit has been reached.<br />
+          Your daily limit has been reached.<br />
           <strong style={{ color: 'var(--text-primary)' }}>You can continue at 12:00 AM IST tomorrow.</strong>
         </p>
 
