@@ -187,7 +187,7 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
           }
           initialDailyRemainingRef.current = remain;
           setMaxMinutesAvailable(Math.floor(remain / 60));
-          setStatus('select_topic');
+          setStatus(isSpeechCoach ? 'config' : 'select_topic');
         }
       } catch(err) {
         console.error('Failed to fetch time limits', err);
