@@ -43,7 +43,7 @@ function PricingSection() {
       name: 'Free Demo',
       badge: 'lp-plan-free',
       price: { monthly: '₹0', yearly: '₹0' },
-      period: { monthly: '/forever', yearly: '/forever' },
+      period: { monthly: '', yearly: '' },
       desc: 'No credit card needed. Try it free.',
       features: ['3 matches/day', 'All 5 levels', 'Basic AI report', 'Leaderboard', 'Android & Web'],
       checkColor: '#10b981',
