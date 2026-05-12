@@ -1,15 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import {
   LogOut, LayoutDashboard, Mic, BarChart2, Trophy,
-  UserCircle, Zap, Flame, Award, ChevronRight,
-  ChevronLeft, Target, Settings, BookOpen, Gamepad2
+  Zap, Flame, ChevronRight, ChevronLeft, Settings, BookOpen, Gamepad2, Menu, X
 } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 
 export default function Layout({ user, onLogout, onSwitchProfile }) {
   const { pathname } = useLocation();
   const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+      if (window.innerWidth > 768) setMobileMenuOpen(false);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const isJunior = ['Level 1','Level 2','Class 1-3','Class 3-5','KG','Class KG','KG-2','Class 1-5',
     'Class 1','Class 2','Class 3','Class 4','Class 5','kg'].includes(user?.classLevel);
@@ -18,7 +28,8 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
     pathname.includes('/debate') ||
     pathname.includes('agent') ||
     pathname.includes('/persona') ||
-    pathname.includes('/mock-un');
+    pathname.includes('/mock-un') ||
+    pathname.includes('/speech-coach');
 
   const navLinks = [
     { name: 'Dashboard',       path: '/dashboard',         match: '/dashboard',         icon: LayoutDashboard },
@@ -31,8 +42,6 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
     { name: 'Settings',   path: '/settings',    match: '/settings',   icon: Settings },
   ].filter(Boolean);
 
-
-  // XP-style bar: tokens relative to next tier (~5000 tokens per tier roughly)
   const tokens = user?.gforceTokens || 0;
   const xpPct  = Math.min((tokens % 5000) / 5000 * 100, 100);
 
@@ -43,8 +52,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
   };
   const tierColor = TIER_COLORS[user?.rank] || '#64748b';
 
-  /* ── Styles ── */
-  const SIDEBAR_W = isCollapsed ? 72 : 264;
+  const SIDEBAR_W = isCollapsed && !isMobile ? 72 : 264;
 
   const activeStyle = isJunior
     ? {
@@ -67,46 +75,100 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
     borderRadius: isJunior ? 99 : '0 10px 10px 0',
   };
 
-  return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', background: isJunior ? 'var(--bg-secondary)' : '#000' }}>
+  const BottomTabItem = ({ name, icon: Icon, path, isActive, isJunior }) => (
+    <Link to={path} onClick={() => setMobileMenuOpen(false)} style={{
+      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
+      textDecoration: 'none', padding: '8px 4px',
+      color: isActive ? (isJunior ? '#7c3aed' : '#FF6B00') : '#64748b',
+      flex: 1,
+      WebkitTapHighlightColor: 'transparent',
+    }}>
+      <Icon size={24} strokeWidth={isActive ? 2.5 : 2} />
+      <span style={{ fontSize: '10px', fontWeight: isActive ? 800 : 600 }}>{name}</span>
+    </Link>
+  );
 
-      {/* ─── SIDEBAR ─── */}
+  return (
+    <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', height: '100vh', overflow: 'hidden', background: isJunior ? 'var(--bg-secondary)' : '#000' }}>
+      
+      {/* Mobile Top Header (No hamburger, just logo) */}
+      {isMobile && !isFullScreenRoute && (
+        <header style={{
+          height: 60, flexShrink: 0,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          padding: '0 1.25rem',
+          background: isJunior ? 'rgba(255,255,255,0.95)' : 'rgba(10,10,10,0.95)',
+          borderBottom: isJunior ? '2px solid rgba(124,58,237,0.08)' : '1px solid rgba(255,255,255,0.06)',
+          zIndex: 60,
+        }}>
+          <Link to="/dashboard" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }} onClick={() => setMobileMenuOpen(false)}>
+            <img src={logoImg} alt="G FORCE" style={{ height: 28, width: 'auto' }} />
+            <span style={{
+              fontWeight: 900, fontSize: '1.2rem', letterSpacing: '-0.02em',
+              background: isJunior ? 'linear-gradient(135deg, #7c3aed, #e879f9)' : 'linear-gradient(135deg, #FF6B5A, #FF6B00)',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+            }}>
+              G FORCE
+            </span>
+          </Link>
+        </header>
+      )}
+
+      {/* Mobile Drawer Overlay */}
+      {isMobile && (
+        <div 
+          onClick={() => setMobileMenuOpen(false)}
+          style={{ 
+            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, 
+            background: 'rgba(0,0,0,0.5)', zIndex: 65,
+            opacity: mobileMenuOpen ? 1 : 0,
+            pointerEvents: mobileMenuOpen ? 'auto' : 'none',
+            transition: 'opacity 0.3s ease'
+          }}
+        />
+      )}
+
+      {/* SIDEBAR */}
       <aside style={{
-        width: SIDEBAR_W,
+        width: isMobile ? 280 : SIDEBAR_W,
         flexShrink: 0,
         display: 'flex',
         flexDirection: 'column',
-        transition: 'width 0.3s cubic-bezier(0.16,1,0.3,1)',
-        zIndex: 50,
+        transition: isMobile ? 'transform 0.3s cubic-bezier(0.16,1,0.3,1)' : 'width 0.3s cubic-bezier(0.16,1,0.3,1)',
+        zIndex: 70,
         overflow: 'hidden',
+        ...(isMobile ? {
+          position: 'fixed', top: 0, bottom: 0, left: 0,
+          transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(-100%)',
+        } : {
+          transform: 'none',
+        }),
         ...(isJunior ? {
-          background: 'rgba(255,255,255,0.85)',
+          background: 'rgba(255,255,255,0.95)',
           backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
           borderRight: '2px solid rgba(124,58,237,0.1)',
           boxShadow: '4px 0 24px rgba(124,58,237,0.08)',
         } : {
-          background: 'rgba(10,10,10,0.95)',
+          background: 'rgba(10,10,10,0.98)',
           backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
           borderRight: '1px solid rgba(255,255,255,0.06)',
           boxShadow: '4px 0 32px rgba(0,0,0,0.5)',
         }),
       }}>
 
-        {/* ── Logo Row ── */}
+        {/* Logo Row (Desktop/Mobile Menu Header) */}
         <div style={{
           display: 'flex', alignItems: 'center',
-          justifyContent: isCollapsed ? 'center' : 'space-between',
-          padding: isCollapsed ? '1.25rem 0' : '1.25rem 1.25rem 1.25rem 1.5rem',
+          justifyContent: isCollapsed && !isMobile ? 'center' : 'space-between',
+          padding: isCollapsed && !isMobile ? '1.25rem 0' : '1.25rem 1.25rem 1.25rem 1.5rem',
           borderBottom: isJunior ? '2px solid rgba(124,58,237,0.08)' : '1px solid rgba(255,255,255,0.05)',
           minHeight: 72,
           flexShrink: 0,
           gap: '0.5rem',
         }}>
-          <Link to="/dashboard" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', overflow: 'hidden' }}>
+          <Link to="/dashboard" onClick={() => isMobile && setMobileMenuOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', overflow: 'hidden' }}>
             <img src={logoImg} alt="G FORCE" style={{ height: 32, width: 'auto', flexShrink: 0 }} />
-            {!isCollapsed && (
+            {(!isCollapsed || isMobile) && (
               <span style={{
                 fontWeight: 900, fontSize: '1.35rem', letterSpacing: '-0.02em',
                 whiteSpace: 'nowrap', overflow: 'hidden',
@@ -120,7 +182,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
             )}
           </Link>
 
-          {!isCollapsed && (
+          {!isCollapsed && !isMobile && (
             <button
               onClick={() => setIsCollapsed(true)}
               style={{
@@ -136,10 +198,20 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
               <ChevronLeft size={14} />
             </button>
           )}
+
+          {isMobile && (
+            <button 
+              type="button"
+              onClick={() => setMobileMenuOpen(false)}
+              style={{ background: 'transparent', border: 'none', color: isJunior ? '#7c3aed' : '#fff', padding: '8px', cursor: 'pointer', WebkitTapHighlightColor: 'transparent' }}
+            >
+              <X size={24} />
+            </button>
+          )}
         </div>
 
-        {/* Collapsed expand button */}
-        {isCollapsed && (
+        {/* Collapsed expand button (Desktop only) */}
+        {!isMobile && isCollapsed && (
           <button
             onClick={() => setIsCollapsed(false)}
             style={{
@@ -162,8 +234,10 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
           flex: 1,
           display: 'flex', flexDirection: 'column',
           gap: isJunior ? '0.35rem' : '0.15rem',
-          padding: isCollapsed ? '0.5rem' : '0.75rem 0.75rem 0.75rem 0',
+          padding: isCollapsed && !isMobile ? '0.5rem' : '0.75rem 0.75rem 0.75rem 0',
           overflowY: 'auto', overflowX: 'hidden',
+          marginTop: isMobile ? '1rem' : 0,
+          paddingBottom: isMobile ? '80px' : 0,
         }}>
           {navLinks.map(({ name, path, match, icon: Icon }) => {
             const isActive = pathname.startsWith(match) || (match === '/debate' && pathname.includes('/debate'));
@@ -171,21 +245,21 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
               <Link
                 key={name}
                 to={path}
-                title={isCollapsed ? name : ''}
+                onClick={() => isMobile && setMobileMenuOpen(false)}
+                title={isCollapsed && !isMobile ? name : ''}
                 style={{
                   display: 'flex', alignItems: 'center',
-                  gap: isCollapsed ? 0 : '0.75rem',
+                  gap: isCollapsed && !isMobile ? 0 : '0.75rem',
                   padding: isJunior
-                    ? (isCollapsed ? '0.85rem' : '0.85rem 1.1rem')
-                    : (isCollapsed ? '0.85rem 0' : '0.85rem 1rem'),
-                  justifyContent: isCollapsed ? 'center' : 'flex-start',
+                    ? (isCollapsed && !isMobile ? '0.85rem' : '0.85rem 1.1rem')
+                    : (isCollapsed && !isMobile ? '0.85rem 0' : '0.85rem 1rem'),
+                  justifyContent: isCollapsed && !isMobile ? 'center' : 'flex-start',
                   fontWeight: isActive ? 800 : 600,
                   fontSize: '0.95rem',
                   textDecoration: 'none',
                   transition: 'all 0.2s ease',
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
-                  marginLeft: isJunior || isCollapsed ? 0 : 0,
                   ...(isActive ? activeStyle : inactiveStyle),
                 }}
                 onMouseEnter={e => {
@@ -208,7 +282,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
                   strokeWidth={isActive ? 2.5 : 2}
                   style={{ flexShrink: 0, color: isActive && !isJunior ? '#FF6B00' : 'currentColor' }}
                 />
-                {!isCollapsed && (
+                {(!isCollapsed || isMobile) && (
                   <span style={{ opacity: 1, transition: 'opacity 0.2s' }}>{name}</span>
                 )}
               </Link>
@@ -219,13 +293,13 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
         {/* ── Bottom Section ── */}
         <div style={{
           marginTop: 'auto',
-          padding: isCollapsed ? '1rem 0.5rem' : '1rem 1rem',
+          padding: isCollapsed && !isMobile ? '1rem 0.5rem' : '1rem 1rem',
           borderTop: isJunior ? '2px solid rgba(124,58,237,0.08)' : '1px solid rgba(255,255,255,0.05)',
           display: 'flex', flexDirection: 'column', gap: '0.75rem', flexShrink: 0,
         }}>
 
           {/* Stats pills — tokens + streak */}
-          {!isCollapsed && user && (
+          {(!isCollapsed || isMobile) && user && (
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
               <div style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem',
@@ -253,7 +327,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
           )}
 
           {/* XP / progress bar */}
-          {!isCollapsed && (
+          {(!isCollapsed || isMobile) && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: '0.7rem', fontWeight: 700, color: isJunior ? '#7c3aed' : '#475569', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
@@ -273,9 +347,9 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
           <div style={{
             display: 'flex', alignItems: 'center',
             gap: '0.75rem',
-            padding: isCollapsed ? '0.5rem' : '0.75rem',
+            padding: isCollapsed && !isMobile ? '0.5rem' : '0.75rem',
             borderRadius: isJunior ? 99 : 12,
-            justifyContent: isCollapsed ? 'center' : 'flex-start',
+            justifyContent: isCollapsed && !isMobile ? 'center' : 'flex-start',
             background: isJunior ? 'rgba(124,58,237,0.06)' : 'rgba(255,255,255,0.03)',
             border: isJunior ? '1.5px solid rgba(124,58,237,0.12)' : '1px solid rgba(255,255,255,0.05)',
           }}>
@@ -293,7 +367,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
               }
             </div>
 
-            {!isCollapsed && (
+            {(!isCollapsed || isMobile) && (
               <>
                 <div style={{ flex: 1, overflow: 'hidden' }}>
                   <div style={{ fontSize: '0.875rem', fontWeight: 800, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
@@ -323,8 +397,8 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
             )}
           </div>
 
-          {/* Collapsed logout */}
-          {isCollapsed && (
+          {/* Collapsed logout (Desktop only) */}
+          {isCollapsed && !isMobile && (
             <button
               onClick={onLogout}
               title="Logout"
@@ -342,7 +416,6 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
             </button>
           )}
 
-
         </div>
       </aside>
 
@@ -351,7 +424,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
         flex: 1,
         overflowX: 'hidden',
         overflowY: isFullScreenRoute ? 'hidden' : 'auto',
-        padding: isFullScreenRoute ? 0 : '2rem 1.5rem',
+        padding: isFullScreenRoute ? 0 : (isMobile ? '1rem 1rem 80px 1rem' : '2rem 1.5rem'),
         display: 'flex', justifyContent: 'center',
         position: 'relative', zIndex: 10,
         background: isJunior
@@ -367,6 +440,40 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
           <Outlet />
         </div>
       </main>
+
+      {/* ─── MOBILE BOTTOM NAVIGATION ─── */}
+      {isMobile && !isFullScreenRoute && (
+        <nav style={{
+          position: 'fixed', bottom: 0, left: 0, right: 0, height: 70,
+          background: isJunior ? 'rgba(255,255,255,0.98)' : 'rgba(10,10,10,0.98)',
+          backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
+          borderTop: isJunior ? '2px solid rgba(124,58,237,0.08)' : '1px solid rgba(255,255,255,0.06)',
+          display: 'flex', justifyContent: 'space-around', alignItems: 'center',
+          paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+          zIndex: 60,
+        }}>
+          <BottomTabItem name="Home" icon={LayoutDashboard} path="/dashboard" isActive={pathname === '/dashboard'} isJunior={isJunior} />
+          <BottomTabItem name="Debate" icon={Mic} path={isJunior ? '/debate' : '/debate-instructions?next=/debate'} isActive={pathname.includes('/debate')} isJunior={isJunior} />
+          <BottomTabItem name={isJunior ? "Vocab" : "Daily"} icon={isJunior ? BookOpen : Flame} path={isJunior ? '/vocab-trainer' : '/daily-challenge'} isActive={pathname.includes(isJunior ? '/vocab-trainer' : '/daily-challenge')} isJunior={isJunior} />
+          <BottomTabItem name={isJunior ? "Play" : "Rank"} icon={isJunior ? Gamepad2 : Trophy} path={isJunior ? '/word-scramble' : '/leaderboard'} isActive={pathname.includes(isJunior ? '/word-scramble' : '/leaderboard')} isJunior={isJunior} />
+          
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(true)}
+            style={{
+              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
+              background: 'transparent', border: 'none', padding: '8px 4px', cursor: 'pointer', WebkitTapHighlightColor: 'transparent',
+              color: mobileMenuOpen ? (isJunior ? '#7c3aed' : '#FF6B00') : '#64748b',
+              flex: 1,
+            }}
+          >
+            <Menu size={24} strokeWidth={mobileMenuOpen ? 2.5 : 2} />
+            <span style={{ fontSize: '10px', fontWeight: mobileMenuOpen ? 800 : 600 }}>More</span>
+          </button>
+        </nav>
+      )}
+
     </div>
   );
 }
+
