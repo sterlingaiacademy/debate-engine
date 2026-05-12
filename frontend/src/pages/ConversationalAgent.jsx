@@ -11,7 +11,9 @@ import { API_BASE } from '../api';
 
 
 
-export default function ConversationalAgent({ user, agentId: agentIdProp }) {
+export default function ConversationalAgent({ user, agentId: agentIdProp, mode }) {
+  const isSpeechCoach = mode === 'speech-coach';
+
   const getAgentId = () => {
     if (agentIdProp) return agentIdProp;  // prop override (e.g. Speech Coach)
     if (user?.classLevel === 'Level 3') return 'agent_3301knv3b67jejpsydj6bt2tf4fc';
@@ -21,7 +23,6 @@ export default function ConversationalAgent({ user, agentId: agentIdProp }) {
   };
   const agentId = getAgentId();
 
-  
   const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user.classLevel);
   const [timer, setTimer] = useState(600);
   const [isActive, setIsActive] = useState(false);
@@ -32,11 +33,21 @@ export default function ConversationalAgent({ user, agentId: agentIdProp }) {
   const transcriptRef = useRef([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [status, setStatus] = useState('select_topic');
-  const TOPICS = [
+
+  const TUTOR_TOPICS = [
     { id: 1, title: 'Chit Chat', desc: 'Just have a casual talk with your AI tutor.', icon: '💬', color: '#10b981' },
     { id: 2, title: 'Doubt Clearing', desc: 'Ask questions and clear up any doubts.', icon: '🔍', color: '#f59e0b' },
-    { id: 3, title: 'Quiz', desc: 'Test yourself with a quick quiz.', icon: '🎓', color: '#8b5cf6' }
+    { id: 3, title: 'Quiz', desc: 'Test yourself with a quick quiz.', icon: '🎓', color: '#8b5cf6' },
   ];
+
+  const SPEECH_TOPICS = [
+    { id: 1, title: 'Vocal Warm-Up', desc: 'Loosen up your voice with guided warm-up exercises.', icon: '🎙️', color: '#e879f9' },
+    { id: 2, title: 'Pronunciation', desc: 'Sharpen your diction, articulation and word clarity.', icon: '🔤', color: '#a855f7' },
+    { id: 3, title: 'Pacing & Delivery', desc: 'Work on your speed, pauses, and expressive delivery.', icon: '⏱️', color: '#f43f5e' },
+    { id: 4, title: 'Free Practice', desc: 'Open-ended speech session — talk about anything.', icon: '🎤', color: '#f97316' },
+  ];
+
+  const TOPICS = isSpeechCoach ? SPEECH_TOPICS : TUTOR_TOPICS;
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [hoveredTopic, setHoveredTopic] = useState(null); // idle | connecting | config | active | ended | error | out_of_time
   const [maxMinutesAvailable, setMaxMinutesAvailable] = useState(0);
@@ -295,9 +306,13 @@ const formatTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0
       <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', height: '100vh', margin: 0, padding: 0, overflowY: 'auto' }}>
       {status === 'select_topic' && (
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '2rem 1rem', animation: 'fadeIn 0.5s' }}>
-          <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2.25rem)', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>What do you feel like doing?</h2>
+          <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2.25rem)', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
+            {isSpeechCoach ? 'What would you like to practise?' : 'What do you feel like doing?'}
+          </h2>
           <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', marginBottom: '3rem', maxWidth: '600px' }}>
-            Whether you want to learn something new, clear up a doubt, or test yourself with a quiz — I've got you.
+            {isSpeechCoach
+              ? 'Choose a focus area and your AI Speech Coach will guide you through a personalised session.'
+              : "Whether you want to learn something new, clear up a doubt, or test yourself with a quiz — I've got you."}
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', width: '100%', maxWidth: '900px' }}>
