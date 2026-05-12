@@ -32,7 +32,7 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
   const [transcript, setTranscript] = useState([]);
   const transcriptRef = useRef([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [status, setStatus] = useState('select_topic');
+  const [status, setStatus] = useState(isSpeechCoach ? 'config' : 'select_topic');
 
   const TUTOR_TOPICS = [
     { id: 1, title: 'Chit Chat', desc: 'Just have a casual talk with your AI tutor.', icon: '💬', color: '#10b981' },
