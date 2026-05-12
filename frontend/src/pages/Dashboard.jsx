@@ -4,7 +4,7 @@ import {
   Play, Trophy, TrendingUp, BarChart2, Star, Zap, Award, Clock,
   MessageSquare, Mic, Flame, Shield, Crown, Sparkles, Target, Heart,
   Sword, BookOpen, FileText, Medal, Gem, RefreshCw, Dumbbell, MessageCircle,
-  Brain, Globe, Users, ChevronRight, Cpu
+  Brain, Globe, Users, ChevronRight, Cpu, Radio
 } from 'lucide-react';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip,
@@ -95,6 +95,18 @@ const SENIOR_MODES = [
     path: () => '/conversational-agent',
     available: true,
   },
+  {
+    id: 'speech-coach',
+    title: 'Speech Coach',
+    desc: 'Work on your vocal clarity, pacing, and delivery with your personal AI speech trainer.',
+    tag: 'SPEECH',
+    icon: Radio,
+    color: '#e879f9',
+    grad: 'linear-gradient(135deg, #1a001f, #2d0040)',
+    glow: 'rgba(232,121,249,0.25)',
+    path: () => '/speech-coach',
+    levels: ['Level 3', 'Level 4', 'Level 5'],
+  },
 ];
 
 const JUNIOR_MODES = [
@@ -102,6 +114,7 @@ const JUNIOR_MODES = [
   { id: 'mock-un', title: 'Model UN', desc: 'Be a world leader and discuss big ideas!', color: '#0ea5e9', grad: 'linear-gradient(135deg, #0ea5e9, #38bdf8)', icon: Globe, path: () => '/mock-un', accessKey: 'Level 5' },
   { id: 'persona', title: 'Famous Figures', desc: 'Debate as legendary heroes from history!', color: '#d946ef', grad: 'linear-gradient(135deg, #d946ef, #a855f7)', icon: Users, path: () => '/persona', accessKey: 'Level 4' },
   { id: 'supertutor', title: 'Super Tutor', desc: 'Ask your AI any question — it always helps!', color: '#10b981', grad: 'linear-gradient(135deg, #10b981, #34d399)', icon: Brain, path: () => '/conversational-agent' },
+  { id: 'speech-coach', title: 'Speech Coach', desc: 'Improve your speaking skills with AI voice training!', color: '#e879f9', grad: 'linear-gradient(135deg, #e879f9, #a855f7)', icon: Radio, path: () => '/speech-coach', levels: ['Level 3', 'Level 4', 'Level 5'] },
 ];
 
 const BADGE_ICON_MAP = {
@@ -151,6 +164,25 @@ const TIER_ICON_MAP = {
   Master:   <Trophy size={20} color="#f97316" strokeWidth={2} />,
   Grandmaster: <Crown size={20} color="#ec4899" strokeWidth={2} />,
 };
+
+const StatBadge = ({ icon: Icon, label, value, color, isJunior }) => (
+  <div style={{
+    display: 'flex', alignItems: 'center', gap: '0.6rem',
+    background: isJunior ? '#fff' : `${color}10`, 
+    border: `1.5px solid ${color}30`,
+    padding: '0.5rem 0.85rem', borderRadius: 16,
+    whiteSpace: 'nowrap', flexShrink: 0,
+    boxShadow: isJunior ? `0 4px 12px ${color}15` : 'none',
+  }}>
+    <div style={{ width: 28, height: 28, borderRadius: 8, background: `${color}20`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <Icon size={16} color={color} strokeWidth={2.5} />
+    </div>
+    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <div style={{ fontSize: '1rem', fontWeight: 800, color: isJunior ? 'var(--j-text)' : 'var(--text-primary)', lineHeight: 1.1 }}>{value}</div>
+      <div style={{ fontSize: '0.65rem', fontWeight: 700, color: isJunior ? '#64748b' : 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{label}</div>
+    </div>
+  </div>
+);
 
 /* ────────────────────────────────────────────────────────────────────────── */
 /*  MAIN COMPONENT                                                            */
@@ -218,8 +250,10 @@ export default function Dashboard({ user, setUser }) {
 
   const modes = isJunior ? JUNIOR_MODES : SENIOR_MODES;
   const availableModes = modes.filter(m => {
-    // Level 1 & 2 only have one debate agent — hide Super Tutor
-    if (isBasicLevel && m.id === 'supertutor') return false;
+    // Level 1 & 2 only have one debate agent — hide Super Tutor and Speech Coach
+    if (isBasicLevel && (m.id === 'supertutor' || m.id === 'speech-coach')) return false;
+    // If mode has a levels array, only show for those levels
+    if (m.levels) return m.levels.includes(user?.classLevel);
     return !m.accessKey || m.accessKey === user?.classLevel || m.id === 'debate' || m.id === 'supertutor';
   });
 
@@ -289,14 +323,6 @@ export default function Dashboard({ user, setUser }) {
         </div>
       </div>
 
-      {/* ── HUD Stat Cards ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%,180px), 1fr))', gap: '1rem' }}>
-        <HUDCard icon={Trophy}  label="Total Debates" value={stats.total_debates || 0}           color="#FF6B00" />
-        <HUDCard icon={Star}    label="Avg Score"      value={stats.avg_score ? `${stats.avg_score.toFixed(1)}` : '—'} color="#00d4ff" />
-        <HUDCard icon={Flame}   label="Best Streak"    value={`${stats.best_streak || 0}d`}       color="#f59e0b" />
-        <HUDCard icon={Zap}     label="GForce Tokens"  value={gforce.toLocaleString()}             color="#a855f7" />
-      </div>
-
       {/* ── Mode Cards ── */}
       <div>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
@@ -344,6 +370,14 @@ export default function Dashboard({ user, setUser }) {
             );
           })}
         </div>
+      </div>
+
+      {/* ── Quick Stats (Minimized) ── */}
+      <div className="no-scrollbar" style={{ display: 'flex', gap: '0.75rem', overflowX: 'auto', paddingBottom: '0.25rem' }}>
+        <StatBadge icon={Trophy} label="Total Debates" value={stats.total_debates || 0} color="#FF6B00" />
+        <StatBadge icon={Star} label="Avg Score" value={stats.avg_score ? `${stats.avg_score.toFixed(1)}` : '—'} color="#00d4ff" />
+        <StatBadge icon={Flame} label="Best Streak" value={`${stats.best_streak || 0}d`} color="#f59e0b" />
+        <StatBadge icon={Zap} label="GForce Tokens" value={gforce.toLocaleString()} color="#a855f7" />
       </div>
 
       {/* ── Charts Row ── */}
@@ -459,13 +493,6 @@ export default function Dashboard({ user, setUser }) {
         </div>
       </div>
 
-      {/* ── Quick Stats ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%,140px), 1fr))', gap: '0.75rem' }}>
-        <HUDCard icon={Trophy} label="Debates" value={stats.total_debates || 0}          color="#7c3aed" />
-        <HUDCard icon={Star}   label="Avg Score" value={stats.avg_score ? `${stats.avg_score.toFixed(1)}` : '—'} color="#f43f5e" />
-        <HUDCard icon={Zap}    label="Tokens" value={gforce.toLocaleString()}              color="#f59e0b" />
-      </div>
-
       {/* ── Mode Cards ── */}
       <div>
         <h2 style={{ fontSize: '1.15rem', fontWeight: 900, margin: '0 0 1rem', color: 'var(--j-text)' }}>Let's Practice!</h2>
@@ -502,6 +529,13 @@ export default function Dashboard({ user, setUser }) {
             );
           })}
         </div>
+      </div>
+
+      {/* ── Quick Stats (Minimized) ── */}
+      <div className="no-scrollbar" style={{ display: 'flex', gap: '0.75rem', overflowX: 'auto', paddingBottom: '0.25rem' }}>
+        <StatBadge icon={Trophy} label="Debates" value={stats.total_debates || 0} color="#7c3aed" isJunior />
+        <StatBadge icon={Star} label="Avg Score" value={stats.avg_score ? `${stats.avg_score.toFixed(1)}` : '—'} color="#f43f5e" isJunior />
+        <StatBadge icon={Zap} label="Tokens" value={gforce.toLocaleString()} color="#f59e0b" isJunior />
       </div>
 
       {/* ── Skill Radar (Junior) ── */}
