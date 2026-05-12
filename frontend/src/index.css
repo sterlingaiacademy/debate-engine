@@ -1271,7 +1271,25 @@ tbody tr:hover { background: var(--bg-tertiary); }
 .lp-pricing-features li { display:flex; align-items:center; gap:0.65rem; font-size:0.875rem; color:#e2e8f0; }
 .lp-pricing-cta { margin-top:auto; display:flex; align-items:center; justify-content:center; gap:0.4rem; width:100%; padding:0.875rem; border-radius:12px; font-weight:700; font-size:0.95rem; text-decoration:none; transition:all 0.2s; }
 
+/* Compact card variant for the 5-col grid */
+.lp-pricing-compact { padding:1.5rem 1.25rem; border-radius:18px; }
+.lp-pricing-features-compact { gap:0.45rem; margin-bottom:1.25rem; }
+.lp-pricing-features-compact li { font-size:0.78rem; gap:0.45rem; color:#cbd5e1; }
+
+/* Plan group badges inside cards */
+.lp-plan-badge { display:inline-block; border-radius:999px; padding:0.18rem 0.7rem; font-size:0.7rem; font-weight:800; letter-spacing:0.07em; text-transform:uppercase; }
+.lp-plan-free { background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.25); color:#10b981; }
+.lp-plan-pro  { background:rgba(249,115,22,0.12); border:1px solid rgba(249,115,22,0.25); color:#F97316; }
+.lp-plan-max  { background:rgba(232,57,42,0.14); border:1px solid rgba(232,57,42,0.3); color:#E8392A; }
+
+/* Landing page responsive */
+@media (max-width:1100px) { .lp-features-grid { grid-template-columns:repeat(2,1fr); } .lp-pricing-grid { grid-template-columns:1fr; gap:1rem; } .lp-pricing-featured { transform:none; } .lp-pricing-featured:hover { transform:translateY(-4px); } }
+@media (max-width:1024px) { [style*="repeat(5, 1fr)"] { grid-template-columns:repeat(3,1fr) !important; } }
+@media (max-width:700px)  { [style*="repeat(5, 1fr)"] { grid-template-columns:repeat(2,1fr) !important; } }
+@media (max-width:480px)  { [style*="repeat(5, 1fr)"] { grid-template-columns:1fr !important; } }
+
 .lp-privacy-card { background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); padding:2.5rem; border-radius:24px; color:#94a3b8; font-size:0.95rem; line-height:1.7; text-align:left; box-shadow:0 4px 20px rgba(0,0,0,0.2); }
+
 
 .lp-faq-list { max-width:760px; margin:0 auto; display:flex; flex-direction:column; }
 .lp-faq-item { border-bottom:1px solid rgba(255,255,255,0.05); cursor:pointer; user-select:none; }

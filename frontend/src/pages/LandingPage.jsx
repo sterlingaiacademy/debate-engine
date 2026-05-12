@@ -232,184 +232,142 @@ export default function LandingPage() {
 
       {/* ── PRICING ── */}
       <section className="lp-section lp-section-alt" id="pricing">
-        <div className="lp-container">
+        <div className="lp-container" style={{ maxWidth: '1200px' }}>
           <div className="lp-section-header lp-reveal">
             <span className="lp-section-badge">Pricing</span>
             <h2 className="lp-section-h2">Simple, Transparent Pricing</h2>
             <p className="lp-section-sub">Start free. Scale with your school.</p>
           </div>
 
-          {/* ── Pricing Grid: Free | Pro | Max ── */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
+          {/* ── Compact 5-card grid ── */}
+          <div className="lp-reveal" style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(5, 1fr)',
+            gap: '1rem',
+            alignItems: 'stretch',
+          }}>
 
             {/* FREE DEMO */}
-            <div className="lp-reveal" style={{ display: 'flex', justifyContent: 'center' }}>
-              <div className="lp-pricing-card" style={{ maxWidth: '360px', width: '100%' }}>
-                <div className="lp-pricing-name">Free Demo</div>
-                <div className="lp-pricing-price">
-                  <span className="lp-pricing-amount">₹0</span>
-                  <span className="lp-pricing-period">/forever</span>
-                </div>
-                <p className="lp-pricing-desc">Try G Force AI at no cost — no credit card needed.</p>
-                <ul className="lp-pricing-features">
-                  {['3 Debate Arena matches/day', 'All 5 difficulty levels', 'Basic AI scoring report', 'Global leaderboard access', 'Android & Web app'].map(f => (
-                    <li key={f}><CheckCircle size={16} color="#10b981" />{f}</li>
-                  ))}
-                </ul>
-                <Link to="/register" className="lp-pricing-cta lp-btn-outline-dark">
-                  Get Started Free <ArrowRight size={16} />
-                </Link>
+            <div className="lp-pricing-card lp-pricing-compact">
+              <div style={{ marginBottom: '0.5rem' }}>
+                <span className="lp-plan-badge lp-plan-free">Free Demo</span>
               </div>
+              <div className="lp-pricing-price" style={{ margin: '0.5rem 0' }}>
+                <span className="lp-pricing-amount" style={{ fontSize: '2rem' }}>₹0</span>
+                <span className="lp-pricing-period">/forever</span>
+              </div>
+              <p className="lp-pricing-desc" style={{ fontSize: '0.78rem', marginBottom: '0.75rem' }}>No credit card needed. Try it free.</p>
+              <ul className="lp-pricing-features lp-pricing-features-compact">
+                {['3 matches/day', 'All 5 levels', 'Basic AI report', 'Leaderboard', 'Android & Web'].map(f => (
+                  <li key={f}><CheckCircle size={13} color="#10b981" />{f}</li>
+                ))}
+              </ul>
+              <Link to="/register" className="lp-pricing-cta lp-btn-outline-dark" style={{ marginTop: 'auto', padding: '0.55rem 0.75rem', fontSize: '0.8rem' }}>
+                Get Started <ArrowRight size={14} />
+              </Link>
             </div>
 
-            {/* PRO PLAN */}
-            <div className="lp-reveal">
-              <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
-                <span style={{
-                  display: 'inline-block',
-                  background: 'linear-gradient(135deg, #E8392A22, #F9731622)',
-                  border: '1px solid rgba(232,57,42,0.35)',
-                  borderRadius: '999px',
-                  padding: '0.3rem 1.1rem',
-                  color: '#F97316',
-                  fontWeight: 700,
-                  fontSize: '0.85rem',
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase',
-                }}>Pro Plan</span>
-                <p style={{ color: '#94a3b8', fontSize: '0.9rem', marginTop: '0.4rem' }}>20 min per day</p>
+            {/* PRO MONTHLY */}
+            <div className="lp-pricing-card lp-pricing-compact">
+              <div style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
+                <span className="lp-plan-badge lp-plan-pro">Pro</span>
+                <span style={{ color: '#64748b', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}><Clock size={11} /> Monthly</span>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem', maxWidth: '760px', margin: '0 auto' }}>
-                {/* Pro Monthly */}
-                <div className="lp-pricing-card">
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                    <div className="lp-pricing-name" style={{ marginBottom: 0 }}>Monthly</div>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', color: '#64748b', fontSize: '0.8rem' }}>
-                      <Clock size={13} /> 600 min total
-                    </span>
-                  </div>
-                  <div className="lp-pricing-price">
-                    <span className="lp-pricing-amount">₹2,999</span>
-                    <span className="lp-pricing-period">/month</span>
-                  </div>
-                  <p className="lp-pricing-desc">Ideal for students wanting consistent daily practice.</p>
-                  <ul className="lp-pricing-features">
-                    {['600 minutes / month', '20 min per day', 'Unlimited practice debates', 'Detailed AI scoring report', 'Priority support', 'Android & Web app'].map(f => (
-                      <li key={f}><CheckCircle size={16} color="#10b981" />{f}</li>
-                    ))}
-                  </ul>
-                  <Link to="/register" className="lp-pricing-cta lp-btn-outline-dark">
-                    Get Pro Monthly <ArrowRight size={16} />
-                  </Link>
-                </div>
-
-                {/* Pro Yearly */}
-                <div className="lp-pricing-card" style={{ position: 'relative', borderColor: 'rgba(249,115,22,0.4)' }}>
-                  <div style={{
-                    position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)',
-                    background: 'linear-gradient(90deg, #E8392A, #F97316)',
-                    color: '#fff', borderRadius: '999px', padding: '0.2rem 0.9rem',
-                    fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.06em', whiteSpace: 'nowrap',
-                  }}>BEST VALUE</div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                    <div className="lp-pricing-name" style={{ marginBottom: 0 }}>Yearly</div>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', color: '#64748b', fontSize: '0.8rem' }}>
-                      <Calendar size={13} /> 7,300 min total
-                    </span>
-                  </div>
-                  <div className="lp-pricing-price">
-                    <span className="lp-pricing-amount">₹29,999</span>
-                    <span className="lp-pricing-period">/year</span>
-                  </div>
-                  <p className="lp-pricing-desc">Best value — save over ₹5,000 vs monthly billing.</p>
-                  <ul className="lp-pricing-features">
-                    {['7,300 minutes / year', '20 min per day', 'Unlimited practice debates', 'Detailed AI scoring report', 'Priority support', 'Android & Web app'].map(f => (
-                      <li key={f}><CheckCircle size={16} color="#F97316" />{f}</li>
-                    ))}
-                  </ul>
-                  <Link to="/register" className="lp-pricing-cta lp-btn-outline-dark" style={{ borderColor: 'rgba(249,115,22,0.5)', color: '#F97316' }}>
-                    Get Pro Yearly <ArrowRight size={16} />
-                  </Link>
-                </div>
+              <div className="lp-pricing-price" style={{ margin: '0.5rem 0' }}>
+                <span className="lp-pricing-amount" style={{ fontSize: '2rem' }}>₹2,999</span>
+                <span className="lp-pricing-period">/mo</span>
               </div>
+              <p className="lp-pricing-desc" style={{ fontSize: '0.78rem', marginBottom: '0.75rem' }}>600 min · 20 min/day</p>
+              <ul className="lp-pricing-features lp-pricing-features-compact">
+                {['600 min / month', '20 min per day', 'Unlimited practice', 'AI scoring report', 'Priority support', 'Android & Web'].map(f => (
+                  <li key={f}><CheckCircle size={13} color="#10b981" />{f}</li>
+                ))}
+              </ul>
+              <Link to="/register" className="lp-pricing-cta lp-btn-outline-dark" style={{ marginTop: 'auto', padding: '0.55rem 0.75rem', fontSize: '0.8rem' }}>
+                Get Pro Monthly <ArrowRight size={14} />
+              </Link>
             </div>
 
-            {/* MAX PLAN */}
-            <div className="lp-reveal">
-              <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
-                <span style={{
-                  display: 'inline-block',
-                  background: 'linear-gradient(135deg, #E8392A44, #F9731644)',
-                  border: '1px solid rgba(232,57,42,0.55)',
-                  borderRadius: '999px',
-                  padding: '0.3rem 1.1rem',
-                  color: '#E8392A',
-                  fontWeight: 700,
-                  fontSize: '0.85rem',
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase',
-                }}>Max Plan</span>
-                <p style={{ color: '#94a3b8', fontSize: '0.9rem', marginTop: '0.4rem' }}>60 min per day — Full power for serious debaters</p>
+            {/* PRO YEARLY */}
+            <div className="lp-pricing-card lp-pricing-compact" style={{ position: 'relative', borderColor: 'rgba(249,115,22,0.45)' }}>
+              <div style={{
+                position: 'absolute', top: '-11px', left: '50%', transform: 'translateX(-50%)',
+                background: 'linear-gradient(90deg,#E8392A,#F97316)', color: '#fff',
+                borderRadius: '999px', padding: '0.18rem 0.8rem',
+                fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.06em', whiteSpace: 'nowrap',
+              }}>BEST VALUE</div>
+              <div style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
+                <span className="lp-plan-badge lp-plan-pro">Pro</span>
+                <span style={{ color: '#64748b', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}><Calendar size={11} /> Yearly</span>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem', maxWidth: '760px', margin: '0 auto' }}>
-                {/* Max Monthly */}
-                <div className="lp-pricing-card lp-pricing-featured" style={{ '--featured-glow': 'rgba(232,57,42,0.25)' }}>
-                  <div className="lp-pricing-badge">Most Popular</div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                    <div className="lp-pricing-name" style={{ marginBottom: 0 }}>Monthly</div>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', color: '#94a3b8', fontSize: '0.8rem' }}>
-                      <Clock size={13} /> 1,800 min total
-                    </span>
-                  </div>
-                  <div className="lp-pricing-price">
-                    <span className="lp-pricing-amount">₹8,999</span>
-                    <span className="lp-pricing-period">/month</span>
-                  </div>
-                  <p className="lp-pricing-desc">For students and schools that want maximum practice time.</p>
-                  <ul className="lp-pricing-features">
-                    {['1,800 minutes / month', '60 min per day', 'Unlimited Debate Arena matches', 'Model UN access', 'Detailed 8-dimension report', 'Teacher analytics dashboard', 'Class & school leaderboards', 'Priority support'].map(f => (
-                      <li key={f}><CheckCircle size={16} color="#F97316" />{f}</li>
-                    ))}
-                  </ul>
-                  <Link to="/register" className="lp-pricing-cta lp-btn-brand">
-                    Start Max Monthly <ArrowRight size={16} />
-                  </Link>
-                </div>
+              <div className="lp-pricing-price" style={{ margin: '0.5rem 0' }}>
+                <span className="lp-pricing-amount" style={{ fontSize: '2rem' }}>₹29,999</span>
+                <span className="lp-pricing-period">/yr</span>
+              </div>
+              <p className="lp-pricing-desc" style={{ fontSize: '0.78rem', marginBottom: '0.75rem' }}>7,300 min · 20 min/day</p>
+              <ul className="lp-pricing-features lp-pricing-features-compact">
+                {['7,300 min / year', '20 min per day', 'Unlimited practice', 'AI scoring report', 'Priority support', 'Android & Web'].map(f => (
+                  <li key={f}><CheckCircle size={13} color="#F97316" />{f}</li>
+                ))}
+              </ul>
+              <Link to="/register" className="lp-pricing-cta lp-btn-outline-dark" style={{ marginTop: 'auto', padding: '0.55rem 0.75rem', fontSize: '0.8rem', borderColor: 'rgba(249,115,22,0.5)', color: '#F97316' }}>
+                Get Pro Yearly <ArrowRight size={14} />
+              </Link>
+            </div>
 
-                {/* Max Yearly */}
-                <div className="lp-pricing-card" style={{ position: 'relative', borderColor: 'rgba(232,57,42,0.4)' }}>
-                  <div style={{
-                    position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)',
-                    background: 'linear-gradient(90deg, #E8392A, #F97316)',
-                    color: '#fff', borderRadius: '999px', padding: '0.2rem 0.9rem',
-                    fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.06em', whiteSpace: 'nowrap',
-                  }}>BEST VALUE</div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                    <div className="lp-pricing-name" style={{ marginBottom: 0 }}>Yearly</div>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', color: '#64748b', fontSize: '0.8rem' }}>
-                      <Calendar size={13} /> 22,000 min total
-                    </span>
-                  </div>
-                  <div className="lp-pricing-price">
-                    <span className="lp-pricing-amount">₹89,999</span>
-                    <span className="lp-pricing-period">/year</span>
-                  </div>
-                  <p className="lp-pricing-desc">Maximum value for schools — over ₹17,000 saved.</p>
-                  <ul className="lp-pricing-features">
-                    {['22,000 minutes / year', '60 min per day', 'Unlimited Debate Arena matches', 'Model UN access', 'Detailed 8-dimension report', 'Teacher analytics dashboard', 'Class & school leaderboards', 'Priority support'].map(f => (
-                      <li key={f}><CheckCircle size={16} color="#E8392A" />{f}</li>
-                    ))}
-                  </ul>
-                  <Link to="/register" className="lp-pricing-cta lp-btn-outline-dark" style={{ borderColor: 'rgba(232,57,42,0.5)', color: '#E8392A' }}>
-                    Start Max Yearly <ArrowRight size={16} />
-                  </Link>
-                </div>
+            {/* MAX MONTHLY */}
+            <div className="lp-pricing-card lp-pricing-compact lp-pricing-featured">
+              <div className="lp-pricing-badge">Most Popular</div>
+              <div style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
+                <span className="lp-plan-badge lp-plan-max">Max</span>
+                <span style={{ color: '#94a3b8', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}><Clock size={11} /> Monthly</span>
               </div>
+              <div className="lp-pricing-price" style={{ margin: '0.5rem 0' }}>
+                <span className="lp-pricing-amount" style={{ fontSize: '2rem' }}>₹8,999</span>
+                <span className="lp-pricing-period">/mo</span>
+              </div>
+              <p className="lp-pricing-desc" style={{ fontSize: '0.78rem', marginBottom: '0.75rem' }}>1,800 min · 60 min/day</p>
+              <ul className="lp-pricing-features lp-pricing-features-compact">
+                {['1,800 min / month', '60 min per day', 'Debate Arena', 'Model UN access', '8-dim AI report', 'Teacher dashboard', 'School leaderboards', 'Priority support'].map(f => (
+                  <li key={f}><CheckCircle size={13} color="#F97316" />{f}</li>
+                ))}
+              </ul>
+              <Link to="/register" className="lp-pricing-cta lp-btn-brand" style={{ marginTop: 'auto', padding: '0.55rem 0.75rem', fontSize: '0.8rem' }}>
+                Start Max Monthly <ArrowRight size={14} />
+              </Link>
+            </div>
+
+            {/* MAX YEARLY */}
+            <div className="lp-pricing-card lp-pricing-compact" style={{ position: 'relative', borderColor: 'rgba(232,57,42,0.45)' }}>
+              <div style={{
+                position: 'absolute', top: '-11px', left: '50%', transform: 'translateX(-50%)',
+                background: 'linear-gradient(90deg,#E8392A,#F97316)', color: '#fff',
+                borderRadius: '999px', padding: '0.18rem 0.8rem',
+                fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.06em', whiteSpace: 'nowrap',
+              }}>BEST VALUE</div>
+              <div style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
+                <span className="lp-plan-badge lp-plan-max">Max</span>
+                <span style={{ color: '#64748b', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}><Calendar size={11} /> Yearly</span>
+              </div>
+              <div className="lp-pricing-price" style={{ margin: '0.5rem 0' }}>
+                <span className="lp-pricing-amount" style={{ fontSize: '2rem' }}>₹89,999</span>
+                <span className="lp-pricing-period">/yr</span>
+              </div>
+              <p className="lp-pricing-desc" style={{ fontSize: '0.78rem', marginBottom: '0.75rem' }}>22,000 min · 60 min/day</p>
+              <ul className="lp-pricing-features lp-pricing-features-compact">
+                {['22,000 min / year', '60 min per day', 'Debate Arena', 'Model UN access', '8-dim AI report', 'Teacher dashboard', 'School leaderboards', 'Priority support'].map(f => (
+                  <li key={f}><CheckCircle size={13} color="#E8392A" />{f}</li>
+                ))}
+              </ul>
+              <Link to="/register" className="lp-pricing-cta lp-btn-outline-dark" style={{ marginTop: 'auto', padding: '0.55rem 0.75rem', fontSize: '0.8rem', borderColor: 'rgba(232,57,42,0.5)', color: '#E8392A' }}>
+                Start Max Yearly <ArrowRight size={14} />
+              </Link>
             </div>
 
           </div>
         </div>
       </section>
+
 
       {/* ── FAQ ── */}
       <section className="lp-section" id="faq">
