@@ -122,8 +122,17 @@ export default function Settings({ user, setUser }) {
           <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
              <Camera size={20} color="var(--text-secondary)" /> Profile Customization
           </h2>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
-            <div style={{ position: 'relative', width: '100px', height: '100px', borderRadius: '50%', background: 'var(--bg-tertiary)', border: '2px dashed var(--border)', overflow: 'hidden', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}>
+            <div style={{
+              position: 'relative',
+              width: '100px', height: '100px',
+              flexShrink: 0,           /* ← prevents oval stretching on mobile */
+              borderRadius: '50%',
+              background: 'var(--bg-tertiary)',
+              border: '2px dashed var(--border)',
+              overflow: 'hidden',
+              display: 'flex', justifyContent: 'center', alignItems: 'center'
+            }}>
                {user?.avatar ? (
                   <img src={user.avatar} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                ) : (
@@ -133,7 +142,7 @@ export default function Settings({ user, setUser }) {
                )}
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', minWidth: '180px' }}>
                <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700 }}>Upload Avatar</h3>
                <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>We recommend a square image (JPEG or PNG). It will be resized automatically.</p>
                <input type="file" accept="image/*" ref={fileInputRef} onChange={handleImageUpload} style={{ display: 'none' }} />
