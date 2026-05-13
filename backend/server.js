@@ -96,7 +96,7 @@ app.post('/api/register', async (req, res) => {
     
     res.status(201).json({ 
       message: 'Account created successfully', 
-      user: { name, studentId, classLevel, assignedAgentId, email, phone },
+      user: { name, studentId, classLevel, assignedAgentId, email, phone, grade: grade || '' },
       token
     });
   } catch (err) {
