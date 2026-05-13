@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Heart, Zap, Trophy, RotateCcw, Check, X, Shuffle } from 'lucide-react';
 import { API_BASE } from '../api';
 
@@ -276,7 +276,7 @@ function GameBoard({ user, isJunior, accent, onReset }) {
           {[1, 2, 3].map(n => (
             <Heart key={n} size={22}
               fill={n <= lives ? '#ef4444' : 'transparent'}
-              color={n <= lives ? '#ef4444' : 'rgba(255,255,255,0.15)'}
+              color={n <= lives ? '#ef4444' : 'var(--text-muted)'}
               style={{ transition: 'all 0.3s' }} />
           ))}
         </div>
@@ -309,16 +309,16 @@ function GameBoard({ user, isJunior, accent, onReset }) {
           const isPre = isRevealed[i];
           const isFilled = char !== null;
 
-          let bg          = 'rgba(255,255,255,0.04)';
-          let borderColor = 'rgba(255,255,255,0.1)';
+          let bg          = 'var(--bg-secondary)';
+          let borderColor = 'var(--border)';
           let textColor   = 'var(--text-primary)';
           let opacity     = 1;
 
           if (isPre && isFilled) {
             // Pre-revealed letter — shown in muted style
-            bg          = 'rgba(255,255,255,0.06)';
-            borderColor = 'rgba(255,255,255,0.18)';
-            textColor   = 'rgba(255,255,255,0.5)';
+            bg          = 'var(--bg-tertiary)';
+            borderColor = 'var(--border)';
+            textColor   = 'var(--text-muted)';
           } else if (!isPre && isFilled) {
             // User-placed letter
             bg          = isCorrect ? 'rgba(16,185,129,0.15)' : isWrong ? 'rgba(239,68,68,0.15)' : `${accent}15`;
@@ -326,7 +326,7 @@ function GameBoard({ user, isJunior, accent, onReset }) {
             textColor   = isCorrect ? '#10b981' : isWrong ? '#ef4444' : accent;
           } else {
             // Empty user slot
-            borderColor = isWrong ? 'rgba(239,68,68,0.3)' : 'rgba(255,255,255,0.12)';
+            borderColor = isWrong ? 'rgba(239,68,68,0.3)' : 'var(--border)';
           }
 
           return (
@@ -351,7 +351,7 @@ function GameBoard({ user, isJunior, accent, onReset }) {
         <span style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--text-muted)' }}>
           {userFilledCount} of {totalUserSlots} blanks filled
           {isRevealed.filter(Boolean).length > 0 && (
-            <span style={{ marginLeft: '0.5rem', color: 'rgba(255,255,255,0.25)' }}>
+            <span style={{ marginLeft: '0.5rem', color: 'var(--text-muted)' }}>
               · grey letters are hints
             </span>
           )}
@@ -380,8 +380,8 @@ function GameBoard({ user, isJunior, accent, onReset }) {
             <button key={i} onClick={() => clickTile(i)} disabled={usedTiles[i]}
               style={{
                 width: 44, height: 52, borderRadius: 12,
-                background: usedTiles[i] ? 'rgba(255,255,255,0.02)' : `${accent}12`,
-                border: `2px solid ${usedTiles[i] ? 'rgba(255,255,255,0.04)' : accent + '50'}`,
+                background: usedTiles[i] ? 'var(--bg-tertiary)' : `${accent}12`,
+                border: `2px solid ${usedTiles[i] ? 'var(--border)' : accent + '50'}`,
                 color: usedTiles[i] ? 'transparent' : `${accent}`,
                 fontSize: '1.3rem', fontWeight: 900,
                 cursor: usedTiles[i] ? 'default' : 'pointer',
@@ -404,8 +404,8 @@ function GameBoard({ user, isJunior, accent, onReset }) {
         {phase === 'playing' && (
           <button onClick={clearSelection} disabled={userFilledCount === 0}
             style={{
-              background: 'rgba(255,255,255,0.05)',
-              border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12,
+              background: 'var(--bg-secondary)',
+              border: '1px solid var(--border)', borderRadius: 12,
               padding: '0.6rem 1.25rem', fontWeight: 600, fontSize: '0.875rem',
               cursor: userFilledCount > 0 ? 'pointer' : 'not-allowed',
               color: userFilledCount > 0 ? 'var(--text-primary)' : 'var(--text-muted)',
