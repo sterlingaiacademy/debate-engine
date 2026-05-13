@@ -52,6 +52,14 @@ app.post('/api/register', async (req, res) => {
   }
 
   try {
+    // Check if email already exists to prevent duplicate accounts via Google Auth
+    if (email) {
+      const emailCheck = await db.query('SELECT id FROM users WHERE email = $1', [email]);
+      if (emailCheck.rows.length > 0) {
+        return res.status(400).json({ error: 'An account with this email already exists. Please log in.' });
+      }
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const query = `INSERT INTO users (name, "studentId", password, "classLevel", grade, "assignedAgentId", email, phone, auth_provider) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
     
