@@ -113,6 +113,25 @@ export default function Register({ onLogin }) {
         });
         if (!resp.ok) throw new Error('Failed to fetch Google profile');
         const profile = await resp.json();
+
+        // ── Duplicate account check ──────────────────────────────────────
+        // Before showing the details form, verify this Google email doesn't
+        // already have an account on our platform.
+        try {
+          const existCheck = await fetch(`${API_BASE}/api/user-by-email/${encodeURIComponent(profile.email)}`);
+          if (existCheck.ok) {
+            // A 200 means the user was found → account already exists
+            setError('An account with this Google email already exists. Please sign in instead.');
+            setLoading(false);
+            return;
+          }
+          // 404 = not found → safe to proceed with registration
+        } catch (_) {
+          // If the check itself fails, we allow the flow to continue
+          // (the /api/register endpoint will catch duplicates as a fallback)
+        }
+        // ────────────────────────────────────────────────────────────────
+
         setGoogleProfile({ email: profile.email, avatar: profile.picture, name: profile.name, access_token: tokenResponse.access_token });
         // Pre-fill name from Google
         const suggestedName = profile.name || '';
@@ -262,8 +281,21 @@ export default function Register({ onLogin }) {
           </div>
 
           {error && (
-            <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#fca5a5', padding: '0.7rem 1rem', borderRadius: '10px', fontSize: '0.85rem', marginBottom: '1.25rem', fontWeight: 500 }}>
+            <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#fca5a5', padding: '0.85rem 1rem', borderRadius: '10px', fontSize: '0.85rem', marginBottom: '1.25rem', fontWeight: 500 }}>
               {error}
+              {error.includes('already exists') && (
+                <div style={{ marginTop: '0.6rem' }}>
+                  <Link to="/login" style={{
+                    display: 'inline-block', padding: '0.45rem 1.1rem',
+                    background: 'linear-gradient(135deg, #E8392A 0%, #F97316 100%)',
+                    color: '#fff', borderRadius: '8px', textDecoration: 'none',
+                    fontWeight: 700, fontSize: '0.82rem',
+                    boxShadow: '0 2px 8px rgba(232,57,42,0.35)'
+                  }}>
+                    → Sign In Instead
+                  </Link>
+                </div>
+              )}
             </div>
           )}
 
