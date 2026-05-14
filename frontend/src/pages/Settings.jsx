@@ -1,11 +1,35 @@
 
 import React, { useState, useRef } from 'react';
-import { Settings as SettingsIcon, Camera, UploadCloud, Loader2, Crown, Phone, School, CheckCircle, Clock, User } from 'lucide-react';
+import { Settings as SettingsIcon, Camera, UploadCloud, Loader2, Crown, Phone, School, CheckCircle, Clock, User, Share2, Copy, Check, Shield } from 'lucide-react';
 import { API_BASE } from '../api';
 
 export default function Settings({ user, setUser }) {
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null);
+  const [copied, setCopied] = useState(false);
+
+  // Biometrics State
+  const [biometricsEnabled, setBiometricsEnabled] = useState(false);
+  const isMobileApp = typeof window !== 'undefined' && window.isReactNativeWebView;
+
+  React.useEffect(() => {
+    if (isMobileApp) {
+      const handleStatus = (e) => setBiometricsEnabled(e.detail.enabled);
+      window.addEventListener('BIOMETRICS_STATUS', handleStatus);
+      if (window.ReactNativeWebView) {
+        window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'CHECK_BIOMETRICS_STATUS' }));
+      }
+      return () => window.removeEventListener('BIOMETRICS_STATUS', handleStatus);
+    }
+  }, [isMobileApp]);
+
+  const toggleBiometrics = () => {
+    const newValue = !biometricsEnabled;
+    setBiometricsEnabled(newValue);
+    if (window.ReactNativeWebView) {
+      window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'TOGGLE_BIOMETRICS', value: newValue }));
+    }
+  };
 
   // Enrollment form state
   const [enrollForm, setEnrollForm] = useState({ parentPhone: '', school: '' });
@@ -161,6 +185,125 @@ export default function Settings({ user, setUser }) {
             </div>
           </div>
         </div>
+
+        {/* ── Security Section (Mobile Only) ──────────────── */}
+        {isMobileApp && (
+          <div className="card" style={{ padding: '2rem' }}>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <Shield size={20} color="#10b981" /> Security Settings
+            </h2>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+              <div>
+                <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700 }}>App Lock (Biometrics / Passcode)</h3>
+                <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Require Face ID, Touch ID, or PIN to open the G-Force app.</p>
+              </div>
+              <button 
+                onClick={toggleBiometrics}
+                style={{
+                  position: 'relative',
+                  width: '56px',
+                  height: '30px',
+                  borderRadius: '15px',
+                  border: 'none',
+                  background: biometricsEnabled ? '#10b981' : 'var(--bg-tertiary)',
+                  cursor: 'pointer',
+                  transition: 'background 0.3s',
+                  flexShrink: 0,
+                  boxShadow: biometricsEnabled ? '0 0 10px rgba(16,185,129,0.4)' : 'none'
+                }}
+              >
+                <div style={{
+                  position: 'absolute',
+                  top: '3px',
+                  left: biometricsEnabled ? '29px' : '3px',
+                  width: '24px',
+                  height: '24px',
+                  borderRadius: '50%',
+                  background: '#fff',
+                  transition: 'left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+                }} />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* ── Share & Earn QR Code ─────────────────────────── */}
+        {user?.studentId && (() => {
+          const referralUrl = `https://graceandforce.in/register?ref=${encodeURIComponent(user.studentId)}`;
+          const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&color=ffffff&bgcolor=0d1117&data=${encodeURIComponent(referralUrl)}`;
+          const handleCopy = () => {
+            navigator.clipboard.writeText(referralUrl).then(() => {
+              setCopied(true);
+              setTimeout(() => setCopied(false), 2000);
+            });
+          };
+          return (
+            <div className="card" style={{ padding: '2rem' }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <Share2 size={20} color="#F97316" /> Share & Earn
+              </h2>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1.5rem', lineHeight: 1.6 }}>
+                Share your referral link — you earn <strong style={{ color: '#F97316' }}>+200 tokens</strong> when a friend joins, and they get <strong style={{ color: '#F97316' }}>+50 bonus tokens</strong> on signup.
+              </p>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}>
+                {/* QR Code */}
+                <div style={{
+                  flexShrink: 0,
+                  background: '#0d1117',
+                  border: '2px solid rgba(249,115,22,0.3)',
+                  borderRadius: '16px',
+                  padding: '12px',
+                  boxShadow: '0 4px 20px rgba(249,115,22,0.15)',
+                }}>
+                  <img
+                    src={qrSrc}
+                    alt="Referral QR Code"
+                    width={150} height={150}
+                    style={{ display: 'block', borderRadius: '8px' }}
+                  />
+                </div>
+
+                {/* Link + Copy */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', minWidth: '200px', flex: 1 }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Your referral link</span>
+                    <div style={{
+                      background: 'var(--bg-secondary)', border: '1px solid var(--border)',
+                      borderRadius: '10px', padding: '0.6rem 0.9rem',
+                      fontSize: '0.78rem', color: '#F97316',
+                      wordBreak: 'break-all', lineHeight: 1.5, fontFamily: 'monospace',
+                    }}>
+                      {referralUrl}
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={handleCopy}
+                    style={{
+                      width: 'fit-content',
+                      display: 'flex', alignItems: 'center', gap: '0.5rem',
+                      padding: '0.55rem 1.1rem', borderRadius: '8px', border: 'none',
+                      background: copied
+                        ? 'linear-gradient(135deg, #10b981, #059669)'
+                        : 'linear-gradient(135deg, #E8392A 0%, #F97316 100%)',
+                      color: '#fff', fontWeight: 700, fontSize: '0.85rem',
+                      cursor: 'pointer', transition: 'all 0.25s',
+                      boxShadow: copied ? '0 4px 12px rgba(16,185,129,0.35)' : '0 4px 12px rgba(232,57,42,0.35)',
+                    }}
+                  >
+                    {copied ? <Check size={15} /> : <Copy size={15} />}
+                    {copied ? 'Copied!' : 'Copy Link'}
+                  </button>
+
+                  <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', margin: 0, lineHeight: 1.6 }}>
+                    📱 Your friends can scan the QR code or use your link to sign up.
+                  </p>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
 
         {/* Go Premium / Enrollment Section */}
         <div className="card" style={{ padding: '2rem' }}>
