@@ -245,7 +245,7 @@ export default function LandingPage() {
           <a href="#how-it-works" className="lp-nav-link">How It Works</a>
           <a href="#pricing" className="lp-nav-link">Pricing</a>
           <a href="#faq" className="lp-nav-link">FAQ</a>
-          <a href="#refund" className="lp-nav-link">Refund Policy</a>
+          <a href="#terms" className="lp-nav-link">Terms and Conditions</a>
         </div>
         <div className="lp-nav-cta">
           <Link to="/login" className="lp-btn-ghost">Login</Link>
@@ -438,12 +438,12 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-      {/* ── REFUND POLICY ── */}
-      <section className="lp-section" id="refund">
+      {/* ── TERMS AND CONDITIONS ── */}
+      <section className="lp-section" id="terms">
         <div className="lp-container" style={{ maxWidth: '800px', margin: '0 auto' }}>
           <div className="lp-section-header lp-reveal" style={{ textAlign: 'center' }}>
-            <span className="lp-section-badge" style={{ background: 'rgba(239,68,68,0.15)', color: '#ef4444', borderColor: 'rgba(239,68,68,0.3)' }}>Refund & Cancellation</span>
-            <h2 className="lp-section-h2">Refund & Cancellation Policy</h2>
+            <span className="lp-section-badge" style={{ background: 'rgba(239,68,68,0.15)', color: '#ef4444', borderColor: 'rgba(239,68,68,0.3)' }}>Terms & Conditions</span>
+            <h2 className="lp-section-h2">Terms and Conditions</h2>
             <p className="lp-section-sub">Effective Date: May 14, 2026</p>
           </div>
           <div className="lp-reveal lp-privacy-card" style={{ fontSize: '0.9rem', color: '#cbd5e1', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
@@ -523,7 +523,7 @@ export default function LandingPage() {
             <p className="lp-footer-tagline">Building confident, articulate student leaders through the power of AI debate training.</p>
           </div>
           <div className="lp-footer-links">
-            {[['Features', '#features'], ['How It Works', '#how-it-works'], ['Pricing', '#pricing'], ['FAQ', '#faq'], ['Privacy & Terms', '#privacy'], ['Refund Policy', '#refund'], ['Login', '/login'], ['Get Started', '/register']].map(([label, href]) => (
+            {[['Features', '#features'], ['How It Works', '#how-it-works'], ['Pricing', '#pricing'], ['FAQ', '#faq'], ['Privacy & Terms', '#privacy'], ['Terms and Conditions', '#terms'], ['Login', '/login'], ['Get Started', '/register']].map(([label, href]) => (
               href.startsWith('#')
                 ? <a key={label} href={href} className="lp-footer-link">{label}</a>
                 : <Link key={label} to={href} className="lp-footer-link">{label}</Link>
