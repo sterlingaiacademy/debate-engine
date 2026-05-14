@@ -5,6 +5,7 @@ import { API_BASE } from './api';
 
 import Login from './pages/Login';
 import Register from './pages/Register';
+import GoogleCallback from './pages/GoogleCallback';
 import Dashboard from './pages/Dashboard';
 import Layout from './components/Layout';
 import LandingPage from './pages/LandingPage';
@@ -165,7 +166,6 @@ function App() {
         <div className={themeClass}>
         <Suspense fallback={<PageLoader />}>
           <Routes>
-            {/* Public landing page — root route */}
             <Route path="/" element={!user ? <LandingPage /> : <Navigate to="/dashboard" />} />
             <Route path="/login" element={!user ? <Login onLogin={handleLogin} /> : <Navigate to="/dashboard" />} />
             <Route path="/register" element={
@@ -173,6 +173,7 @@ function App() {
                 ? <Navigate to="/dashboard" />
                 : <Register onLogin={handleLogin} />
             } />
+            <Route path="/auth/google/callback" element={<GoogleCallback onLogin={handleLogin} />} />
             
             <Route element={<Layout user={user} onLogout={handleLogout} onSwitchProfile={handleSwitchProfile} />}>
               <Route path="/dashboard" element={user ? <Dashboard user={user} setUser={setUser} /> : <Navigate to="/" />} />

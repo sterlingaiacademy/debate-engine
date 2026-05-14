@@ -88,13 +88,13 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
   );
 
   return (
-    <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', height: '100vh', overflow: 'hidden', background: isJunior ? 'var(--bg-secondary)' : '#000' }}>
+    <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', height: '100dvh', overflow: 'hidden', background: isJunior ? 'var(--bg-secondary)' : '#000' }}>
       
-      {/* Mobile Top Header (No hamburger, just logo) */}
+      {/* Mobile Top Header */}
       {isMobile && !isFullScreenRoute && (
         <header style={{
           height: 60, flexShrink: 0,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           padding: '0 1.25rem',
           background: isJunior ? 'rgba(255,255,255,0.95)' : 'rgba(10,10,10,0.95)',
           borderBottom: isJunior ? '2px solid rgba(124,58,237,0.08)' : '1px solid rgba(255,255,255,0.06)',
@@ -110,6 +110,25 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
               G FORCE
             </span>
           </Link>
+          
+          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+            <div style={{
+              display: 'flex', alignItems: 'center', gap: '0.25rem',
+              background: isJunior ? 'rgba(124,58,237,0.08)' : 'rgba(139,92,246,0.1)',
+              padding: '0.35rem 0.6rem', borderRadius: 8, fontSize: '0.75rem', fontWeight: 800,
+              color: isJunior ? '#7c3aed' : '#a78bfa',
+            }}>
+               <Zap size={12} strokeWidth={2.5} /> {(tokens).toLocaleString()}
+            </div>
+            <div style={{
+              display: 'flex', alignItems: 'center', gap: '0.25rem',
+              background: isJunior ? 'rgba(249,115,22,0.08)' : 'rgba(249,115,22,0.1)',
+              padding: '0.35rem 0.6rem', borderRadius: 8, fontSize: '0.75rem', fontWeight: 800,
+              color: '#fb923c',
+            }}>
+               <Flame size={12} strokeWidth={2.5} /> {user?.streak || 0}d
+            </div>
+          </div>
         </header>
       )}
 
@@ -423,7 +442,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
         flex: 1,
         overflowX: 'hidden',
         overflowY: isFullScreenRoute ? 'hidden' : 'auto',
-        padding: isFullScreenRoute ? 0 : (isMobile ? '1rem 1rem 80px 1rem' : '2rem 1.5rem'),
+        padding: isFullScreenRoute ? 0 : (isMobile ? '1rem 1rem calc(80px + env(safe-area-inset-bottom, 0px)) 1rem' : '2rem 1.5rem'),
         display: 'flex', justifyContent: 'center',
         position: 'relative', zIndex: 10,
         background: isJunior

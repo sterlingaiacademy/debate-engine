@@ -331,7 +331,7 @@ export default function DebateArena({ user }) {
 
   return (
     <>
-      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', height: '100vh', margin: 0, padding: 0 }}>
+      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', height: '100%', margin: 0, padding: 0 }}>
       {/* Chat Window */}
       <div style={{
         flex: 1,
@@ -516,7 +516,7 @@ export default function DebateArena({ user }) {
               
               {!isJunior && <GeminiWave isSpeaking={isSpeaking} />}
 
-              <div style={{ position: 'relative', zIndex: 10, flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', marginTop: (!isJunior && showTranscript) ? '0' : '15vh' }}>
+              <div style={{ position: 'relative', zIndex: 10, flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
                 
                 {/* Transcript View Overlay (Seniors) */}
                 {!isJunior && showTranscript && (

@@ -145,7 +145,7 @@ export default function App() {
           domStorageEnabled={true}
           startInLoadingState={true}
           renderLoading={() => (
-            <View style={styles.loadingContainer}>
+            <View style={styles.webViewLoadingContainer}>
               <ActivityIndicator size="large" color="#FF6B00" />
             </View>
           )}
@@ -173,6 +173,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#000',
+  },
+  webViewLoadingContainer: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#000',
+    zIndex: 999,
   },
   lockContainer: {
     flex: 1,

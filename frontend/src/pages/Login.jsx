@@ -16,8 +16,11 @@ export default function Login({ onLogin }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [authMethod, setAuthMethod] = useState('');
+  const [authMethod, setAuthMethod] = useState(null); // 'google' | 'direct'
   const [usernameFormatError, setUsernameFormatError] = useState('');
+
+  // Add detection for mobile app
+  const isMobileApp = typeof window !== 'undefined' && window.isReactNativeWebView;
 
   useEffect(() => {
     if (username.length > 0) {
@@ -30,11 +33,11 @@ export default function Login({ onLogin }) {
     }
   }, [username]);
 
-  // Google Sign-In
+  // Google Sign-In (Web popup flow)
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      setAuthMethod('google');
       setLoading(true);
+      setAuthMethod('google');
       setError('');
       try {
         const res = await fetch(`${API_BASE}/api/auth/google`, {
@@ -44,17 +47,36 @@ export default function Login({ onLogin }) {
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Google login failed');
-
         localStorage.setItem('token', data.token);
         onLogin(data.user);
         navigate('/dashboard');
       } catch (err) {
-        setError(err.message);
+        setError(err.message || 'Google sign-in failed. Are you registered?');
+      } finally {
         setLoading(false);
+        setAuthMethod(null);
       }
     },
     onError: () => setError('Google sign-in was unsuccessful.')
   });
+
+  // Google Sign-In (Mobile redirect flow)
+  const handleMobileGoogleLogin = () => {
+    setLoading(true);
+    setAuthMethod('google');
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    const redirectUri = window.location.origin + '/auth/google/callback';
+    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=email%20profile`;
+    window.location.href = authUrl;
+  };
+
+  const handleGoogleButtonClick = () => {
+    if (isMobileApp) {
+      handleMobileGoogleLogin();
+    } else {
+      googleLogin();
+    }
+  };
 
   // Username + Password Sign-In
   const handleSubmit = async () => {
@@ -157,11 +179,18 @@ export default function Login({ onLogin }) {
           border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '24px', padding: '2.5rem',
           boxShadow: '0 12px 40px rgba(0,0,0,0.3)',
         }}>
-          <div className="mobile-logo" style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'center' }}>
-            <img src={logoImg} alt="G Force AI" style={{ height: 48, width: 'auto', objectFit: 'contain' }} />
+          <div className="mobile-logo" style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem' }}>
+            <img src={logoImg} alt="G Force AI" style={{ height: 40, width: 'auto', objectFit: 'contain' }} />
+            <span style={{
+              fontWeight: 900, fontSize: '1.8rem', letterSpacing: '-0.02em',
+              background: 'linear-gradient(135deg, #FF6B5A, #FF6B00)',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+            }}>
+              G FORCE
+            </span>
           </div>
 
-          <div style={{ marginBottom: '2rem' }}>
+          <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
             <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.5rem', letterSpacing: '-0.02em' }}>
               Welcome back
             </h2>
@@ -180,7 +209,7 @@ export default function Login({ onLogin }) {
 
             {/* Google Button */}
             <button
-              type="button" onClick={() => googleLogin()} disabled={loading}
+              type="button" onClick={() => handleGoogleButtonClick()} disabled={loading}
               style={{
                 padding: '0.9rem', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px',
                 background: '#ffffff', color: '#000', fontWeight: 700, fontSize: '1rem', cursor: loading ? 'not-allowed' : 'pointer',

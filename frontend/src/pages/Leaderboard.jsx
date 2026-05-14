@@ -44,6 +44,16 @@ export default function Leaderboard({ user }) {
   const [page,        setPage]         = useState(1);
   const limit = 50;
 
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 768 : false);
+  
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const gridCols = isMobile ? '40px 1fr 50px 60px' : '56px 1fr 100px 80px 120px';
+
   const buildKey = () => {
     const p = new URLSearchParams();
     if (timeframe !== 'all_time') p.append('timeframe', timeframe);
@@ -267,7 +277,7 @@ export default function Leaderboard({ user }) {
               {/* Table header */}
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: '56px 1fr 100px 80px 120px',
+                gridTemplateColumns: gridCols,
                 gap: '0.5rem',
                 padding: '0.6rem 1.25rem',
                 borderBottom: `1px solid ${isJunior ? 'rgba(124,58,237,0.08)' : 'rgba(255,255,255,0.05)'}`,
@@ -276,10 +286,10 @@ export default function Leaderboard({ user }) {
               }}>
                 <div style={{ textAlign: 'center' }}>Rank</div>
                 <div>Debater</div>
-                <div className="hide-mobile">Grade</div>
-                <div style={{ textAlign: 'center' }}>Debates</div>
+                {!isMobile && <div className="hide-mobile">Grade</div>}
+                <div style={{ textAlign: 'center' }}>{isMobile ? 'Matches' : 'Debates'}</div>
                 <div style={{ textAlign: 'right' }}>
-                  {category === 'global' ? 'Tokens' : category === 'top_streaks' ? 'Streak' : 'Avg Score'}
+                  {category === 'global' ? (isMobile ? 'Pts' : 'Tokens') : category === 'top_streaks' ? 'Streak' : 'Avg Score'}
                 </div>
               </div>
 
@@ -297,7 +307,7 @@ export default function Leaderboard({ user }) {
                     key={i}
                     className={`rank-row ${isMe ? 'is-me' : ''}`}
                     style={{
-                      gridTemplateColumns: '56px 1fr 100px 80px 120px',
+                      gridTemplateColumns: gridCols,
                       display: 'grid',
                       gap: '0.5rem',
                       padding: '0.75rem 1.25rem',
@@ -343,11 +353,13 @@ export default function Leaderboard({ user }) {
                     </div>
 
                     {/* Grade */}
-                    <div className="hide-mobile" style={{ display: 'flex', alignItems: 'center', fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600 }}>
-                      {leader.grade
-                        ? (leader.grade.startsWith('Class') ? leader.grade.replace('Class', 'Grade') : leader.grade)
-                        : (leader.class || '—')}
-                    </div>
+                    {!isMobile && (
+                      <div className="hide-mobile" style={{ display: 'flex', alignItems: 'center', fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                        {leader.grade
+                          ? (leader.grade.startsWith('Class') ? leader.grade.replace('Class', 'Grade') : leader.grade)
+                          : (leader.class || '—')}
+                      </div>
+                    )}
 
                     {/* Debates */}
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.9rem', color: 'var(--text-secondary)' }}>

@@ -25,6 +25,25 @@ export default function Register({ onLogin }) {
   const [usernameFormatError, setUsernameFormatError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
+  // Add detection for mobile app
+  const isMobileApp = typeof window !== 'undefined' && window.isReactNativeWebView;
+
+  // Check for pending profile from mobile redirect flow
+  useEffect(() => {
+    const pendingProfile = localStorage.getItem('pendingGoogleProfile');
+    if (pendingProfile) {
+      try {
+        const profile = JSON.parse(pendingProfile);
+        setGoogleProfile(profile);
+        const suggestedName = profile.name || '';
+        const suggestedUsername = suggestedName.toLowerCase().replace(/[^a-z0-9_.]/g, '').slice(0, 26) + Math.floor(Math.random() * 1000);
+        setFormData(p => ({ ...p, name: suggestedName, username: suggestedUsername }));
+        setStep('details');
+        localStorage.removeItem('pendingGoogleProfile');
+      } catch (e) {}
+    }
+  }, []);
+
   const isJuniorClass = ['KG', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(formData.selectedClass);
 
   // Terms & Conditions gate
@@ -96,10 +115,22 @@ export default function Register({ onLogin }) {
     setShowTerms(true);
   };
 
+  const handleMobileGoogleLogin = () => {
+    setLoading(true);
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    const redirectUri = window.location.origin + '/auth/google/callback';
+    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=email%20profile`;
+    window.location.href = authUrl;
+  };
+
   const handleTermsAccept = () => {
     if (!termsAgreed) { setTermsError(true); return; }
     setShowTerms(false);
-    googleLogin();
+    if (isMobileApp) {
+      handleMobileGoogleLogin();
+    } else {
+      googleLogin();
+    }
   };
 
   // Step 1: Google sign-in → fetch profile → move to details
