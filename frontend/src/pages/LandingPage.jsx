@@ -245,6 +245,7 @@ export default function LandingPage() {
           <a href="#how-it-works" className="lp-nav-link">How It Works</a>
           <a href="#pricing" className="lp-nav-link">Pricing</a>
           <a href="#faq" className="lp-nav-link">FAQ</a>
+          <a href="#refund" className="lp-nav-link">Refund Policy</a>
         </div>
         <div className="lp-nav-cta">
           <Link to="/login" className="lp-btn-ghost">Login</Link>
