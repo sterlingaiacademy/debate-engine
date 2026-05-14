@@ -437,6 +437,82 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+      {/* ── REFUND POLICY ── */}
+      <section className="lp-section" id="refund">
+        <div className="lp-container" style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <div className="lp-section-header lp-reveal" style={{ textAlign: 'center' }}>
+            <span className="lp-section-badge" style={{ background: 'rgba(239,68,68,0.15)', color: '#ef4444', borderColor: 'rgba(239,68,68,0.3)' }}>Refund & Cancellation</span>
+            <h2 className="lp-section-h2">Refund & Cancellation Policy</h2>
+            <p className="lp-section-sub">Effective Date: May 14, 2026</p>
+          </div>
+          <div className="lp-reveal lp-privacy-card" style={{ fontSize: '0.9rem', color: '#cbd5e1', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>1. General Policy</h3>
+              <p>Because Grace & Force provides digital educational content, AI-powered coaching systems, live mentoring, downloadable resources, cohort-based learning, speech/debate simulations, AI voice interaction systems, certifications, and personalized performance analytics, all purchases are generally considered non-refundable once substantial access or usage has begun. However, limited refund windows are available under specific conditions described below.</p>
+            </div>
+
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>2. 7-Day Satisfaction Guarantee (Annual Pro/Max Only)</h3>
+              <p>For eligible annual subscriptions (Pro or Max Yearly), users may request a refund within seven (7) calendar days from the date of enrollment if ALL the following conditions are met:</p>
+              <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem', marginTop: '0.4rem', marginBottom: '0.4rem', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+                <li>The participant has completed less than 5% of the course/program.</li>
+                <li>The participant has not attended more than one live mentoring/coaching session.</li>
+                <li>The participant has not received certification.</li>
+                <li>The participant has not violated community or platform policies.</li>
+                <li>The participant submits the request in writing to info@nanoskool.com.</li>
+              </ul>
+              <p>Refund requests outside these conditions may be denied. <strong>Note: The 7-day refund guarantee is ONLY applicable for annual billing of Pro or Max plans.</strong></p>
+            </div>
+
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>3. Non-Refundable Services</h3>
+              <p>The following purchases are strictly non-refundable: AI-generated personalized coaching reports, 1:1 mentoring sessions already completed, Debate tournament fees, MUN registrations, Certification examination fees, Custom enterprise/school solutions, Lifetime-access products, Discounted promotional purchases, Completed bootcamps, AI voice cloning/training services, Physical event tickets, and International immersion programs.</p>
+            </div>
+
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>4. Subscriptions</h3>
+              <p>Users may cancel subscriptions at any time through their account dashboard. Cancellation stops future billing only. Already processed subscription payments are non-refundable. Access continues until the current billing cycle ends.</p>
+            </div>
+
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>5. Parental Consent & Minor Accounts</h3>
+              <p>For users under the age required by local law, a parent/legal guardian must authorize purchases. Parents may request cancellation of recurring subscriptions at any time. Refunds remain subject to this policy.</p>
+            </div>
+
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>6. Cohort Programs & Live Bootcamps</h3>
+              <p>Because cohort seats are limited: 14+ days before start: 80% refund. 7–13 days before start: 50% refund. Less than 7 days: No refund. Administrative/payment gateway fees may be deducted.</p>
+            </div>
+
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>7. Missed Classes & Rescheduling</h3>
+              <p>No refunds or credits are provided for missed sessions, late arrivals, scheduling conflicts, voluntary withdrawal, internet/device issues on the user side, examination conflicts, travel limitations, or failure to participate. Users may reschedule a live coaching session if notice is given at least 24 hours before the scheduled session. Late cancellations or no-shows may result in forfeiture of the session.</p>
+            </div>
+
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>8. Platform Termination & Force Majeure</h3>
+              <p>Grace & Force reserves the right to suspend or terminate access without refund if a user engages in abuse, harassment, hate speech, malicious AI manipulation, illegal recording, academic dishonesty, impersonation, or breaches child safety policies. Grace & Force shall not be liable for interruptions or cancellations caused by natural disasters, pandemics, internet outages, cyberattacks, government restrictions, or circumstances beyond reasonable control.</p>
+            </div>
+
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>9. Chargeback Fraud Prevention</h3>
+              <p>Grace & Force maintains enrollment records, login activity, attendance logs, AI interaction logs, and digital consent records to prevent fraudulent chargebacks and comply with payment regulations.</p>
+            </div>
+
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>10. Payment Gateways & Refund Processing</h3>
+              <p>Payments processed through third-party providers (Stripe, Razorpay, Apple, Google Play, PayPal) may additionally be governed by those platforms’ refund policies. Approved refunds are processed to the original payment method and may take 7–14 business days depending on banking/payment provider timelines.</p>
+            </div>
+
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>11. Contact & Legal Governance</h3>
+              <p>Refund and cancellation requests must be submitted to: <strong>info@nanoskool.com</strong> with full name, registered email, order ID, program purchased, and reason for request. This policy shall be governed by applicable Indian law, the Digital Personal Data Protection Act (DPDP), applicable consumer protection laws, and where applicable, GDPR consumer regulations for EU/UK users.</p>
+            </div>
+
+          </div>
+        </div>
+      </section>
 
       {/* ── FOOTER ── */}
       <footer className="lp-footer">
@@ -446,7 +522,7 @@ export default function LandingPage() {
             <p className="lp-footer-tagline">Building confident, articulate student leaders through the power of AI debate training.</p>
           </div>
           <div className="lp-footer-links">
-            {[['Features', '#features'], ['How It Works', '#how-it-works'], ['Pricing', '#pricing'], ['FAQ', '#faq'], ['Privacy & Terms', '#privacy'], ['Login', '/login'], ['Get Started', '/register']].map(([label, href]) => (
+            {[['Features', '#features'], ['How It Works', '#how-it-works'], ['Pricing', '#pricing'], ['FAQ', '#faq'], ['Privacy & Terms', '#privacy'], ['Refund Policy', '#refund'], ['Login', '/login'], ['Get Started', '/register']].map(([label, href]) => (
               href.startsWith('#')
                 ? <a key={label} href={href} className="lp-footer-link">{label}</a>
                 : <Link key={label} to={href} className="lp-footer-link">{label}</Link>
