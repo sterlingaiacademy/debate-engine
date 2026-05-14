@@ -16,10 +16,10 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
 
   const getAgentId = () => {
     if (agentIdProp) return agentIdProp;  // prop override (e.g. Speech Coach)
-    if (user?.classLevel === 'Level 3') return 'agent_3301knv3b67jejpsydj6bt2tf4fc';
-    if (user?.classLevel === 'Level 4') return 'agent_7901knvcn8kkf709kzya6d9ky6yw';
-    if (user?.classLevel === 'Level 5') return 'agent_3001knvea7y3fn3tdq0r0aczs2h4';
-    return 'agent_3301knv3b67jejpsydj6bt2tf4fc';
+    if (user?.classLevel === 'Level 3') return 'agent_6401krh1qb69e2x9m3f1wsmrt7ey';
+    if (user?.classLevel === 'Level 4') return 'agent_6101krh38dtaetba5e55b1wddygt';
+    if (user?.classLevel === 'Level 5') return 'agent_2301krh4zr5bem4t90z5xtwf9vea';
+    return 'agent_6401krh1qb69e2x9m3f1wsmrt7ey';
   };
   const agentId = getAgentId();
 

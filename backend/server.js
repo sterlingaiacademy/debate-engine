@@ -37,16 +37,16 @@ app.post('/api/register', async (req, res) => {
   // Assign agent ID based on class
   let assignedAgentId = '';
   if (classLevel === 'Level 1' || classLevel === 'Class 1-3') {
-    assignedAgentId = 'agent_3201kkb0dbh3fgravbhyjw4crve8';
+    assignedAgentId = 'agent_5301krgg7x98ewm84w8aj2976zqc';
   } else if (classLevel === 'Level 2') {
-    assignedAgentId = 'agent_1201kkvd9ke5fd180zjz6ckrameq';
+    assignedAgentId = 'agent_5201krghdxhqfhtbf4yj22406vyv';
   } else if (classLevel === 'Level 4' || classLevel === 'Class 10-12') {
     // Level 4 uses senior debate agent for the standard debate tile
-    assignedAgentId = 'agent_1201kkdnn526eebs4fwb822fzgs3';
+    assignedAgentId = 'agent_9701krh2p85sfs9vyp7e6e1cqbwc';
   } else if (classLevel === 'Level 5') {
-    assignedAgentId = 'agent_3801km7h68pbfn1t8m52ny028t6w';
+    assignedAgentId = 'agent_7801krh4jfmdf9asxz901aeac0gt';
   } else if (['Level 3'].includes(classLevel)) {
-    assignedAgentId = 'agent_5601kkx9fa95e9eswcm93gdmp18h';
+    assignedAgentId = 'agent_0601krh0f23df5br0dahys0kdsbr';
   } else {
     return res.status(400).json({ error: 'Invalid class level' });
   }
@@ -153,7 +153,7 @@ app.post('/api/auth/google', async (req, res) => {
       const assignedGrade = grade || 'KG';
       const studentId = email.split('@')[0] + Math.floor(Math.random() * 1000);
       
-      let assignedAgentId = 'agent_3201kkb0dbh3fgravbhyjw4crve8'; // Level 1 agent
+      let assignedAgentId = 'agent_5301krgg7x98ewm84w8aj2976zqc'; // Level 1 agent
       
       const randomPassword = await bcrypt.hash(googleId + Date.now().toString(), 10);
       

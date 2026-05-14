@@ -28,7 +28,7 @@ async function seed() {
   const insertUser = db.prepare(`INSERT INTO users (name, "studentId", password, "classLevel", "assignedAgentId") VALUES (?, ?, ?, ?, ?)`);
   const insertAnalytics = db.prepare(`INSERT INTO analytics ("studentId", "averageScore", "debatesCompleted", "speakingTime") VALUES (?, ?, ?, ?)`);
 
-  const assignedAgentId = 'agent_1201kkdnn526eebs4fwb822fzgs3';
+  const assignedAgentId = 'agent_9701krh2p85sfs9vyp7e6e1cqbwc';
 
   db.transaction(() => {
     for (const s of realStudents) {

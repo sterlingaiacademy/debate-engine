@@ -5,19 +5,19 @@ const LEVEL_4_PERSONAS = [
   { 
     name: 'Mahatma Gandhi', 
     image: '/gandhi_avatar_1773899586119.png', 
-    agentId: 'agent_3201kkzwysdgfy0vrfet51npeds7', 
+    agentId: 'agent_9701krh3ng1medhb7cnjqynhhjnh', 
     category: 'Freedom Fighter' 
   },
   { 
     name: 'Winston Churchill', 
     image: '/churchill_avatar_1773899602534.png', 
-    agentId: 'agent_3101km26fbt9eyxayad5xwwx1740', 
+    agentId: 'agent_1101krh3zz8ff4gan1t659m93gr2', 
     category: 'Statesman' 
   },
   { 
     name: 'Abraham Lincoln', 
     image: '/lincoln_avatar_1773899618273.png', 
-    agentId: 'agent_0301km28zy3ffxattettzq8jq9zv', 
+    agentId: 'agent_6901krh4be2re97ra9zhcgs03a1r', 
     category: 'Statesman' 
   }
 ];

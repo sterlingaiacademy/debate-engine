@@ -186,7 +186,7 @@ function App() {
               <Route path="/mock-un" element={user ? <MockUN user={user} /> : <Navigate to="/" />} />
               <Route path="/settings" element={user ? <Settings user={user} setUser={setUser} /> : <Navigate to="/" />} />
               <Route path="/conversational-agent" element={user ? <ConversationalAgent user={user} /> : <Navigate to="/" />} />
-              <Route path="/speech-coach" element={user ? <ConversationalAgent user={user} agentId="agent_2601krdb98q4fwrvz73f9yxvccqc" mode="speech-coach" /> : <Navigate to="/" />} />
+              <Route path="/speech-coach" element={user ? <ConversationalAgent user={user} agentId="agent_7601krh244qdes5s5db2rjhn1kt4" mode="speech-coach" /> : <Navigate to="/" />} />
               <Route path="/debate-instructions" element={user ? <DebateInstructions user={user} /> : <Navigate to="/" />} />
               <Route path="/vocab-trainer" element={user ? <VocabTrainer user={user} /> : <Navigate to="/" />} />
               <Route path="/word-scramble" element={user ? <WordScramble user={user} /> : <Navigate to="/" />} />

@@ -7,7 +7,7 @@ import TranscriptView from '../components/TranscriptView';
 import PremiumEnrollModal from '../components/PremiumEnrollModal';
 import { API_BASE } from '../api';
 
-const MOCK_UN_AGENT_ID = 'agent_4501kngj040nfdna0c7yck5r5156';
+const MODEL_UN_AGENT_ID = 'agent_3001krh58bhcfp2r3p6nv4efm1je';
 
 const UN_TOPICS = [
   { id: 1, topic: 'Russia–Ukraine War and the Future of European Security', emoji: '🇺🇦', tag: 'Geopolitics' },
@@ -145,7 +145,7 @@ export default function MockUN({ user }) {
       window._activeElevenLabsSessions = [];
 
       Conversation.startSession({
-        agentId: MOCK_UN_AGENT_ID,
+        agentId: MODEL_UN_AGENT_ID,
         dynamicVariables: { topic: topicObj.topic },
         onConnect: () => {
           setStep('debating');
