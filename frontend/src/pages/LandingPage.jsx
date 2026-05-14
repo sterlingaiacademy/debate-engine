@@ -186,11 +186,11 @@ function PricingSection() {
 const FAQS = [
   { q: 'What age group is G Force AI designed for?', a: 'G Force AI is designed for students from KG through Grade 12, with 5 adaptive difficulty levels that automatically match their school grade.' },
   { q: 'How does the AI scoring work?', a: 'Our AI judge evaluates 3 dimensions: argument quality, fluency, and persuasiveness — giving a holistic debate score.' },
-  { q: 'Can students use the mobile app and web app together?', a: 'Yes! Both the Android app and web app connect to the same backend and Supabase database, so scores, leaderboards, and progress sync in real time across devices.' },
+  { q: 'Can students use the mobile app and web app together?', a: 'Yes! Both the Android app and web app connect to the same backend database, so scores, leaderboards, and progress sync in real time across devices.' },
   { q: 'What is Model UN mode?', a: 'Model UN is a premium debate simulation where students take on country delegate personas and debate global motions in a United Nations-style format, powered by ElevenLabs voice AI.' },
   { q: 'Is there a free tier?', a: 'Yes! The Free tier includes unlimited practice debates with limited Debate Arena matches per day. School and Enterprise plans unlock unlimited Debate Arena matches, advanced analytics, and priority support.' },
   { q: 'How do I set up G Force AI for my school?', a: "Contact us via the Enterprise plan or email us directly. We'll onboard your school, create student accounts in bulk, and provide a dedicated dashboard for teachers." },
-  { q: 'Is student data kept private?', a: 'Absolutely. All data is stored securely in Supabase (hosted on AWS). We never sell student data and comply with standard data privacy guidelines.' },
+  { q: 'Is student data kept private?', a: 'Absolutely. All data is stored securely in our private database (hosted on Vultr). We never sell student data and comply with standard data privacy guidelines.' },
 ];
 
 function FaqItem({ q, a }) {
@@ -313,7 +313,7 @@ export default function LandingPage() {
             text="Start Debating Free"
           />
           <SpinnerButton
-            href="https://whfmuswqbsgbmaramuhi.supabase.co/storage/v1/object/public/Downloads/grace-and-force.apk"
+            href="/grace-and-force.apk"
             text="Download Android App"
             icon={<Download size={18} />}
             theme="orange"

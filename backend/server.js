@@ -491,36 +491,136 @@ app.get('/api/analytics/:studentId', async (req, res) => {
 });
 
 
-// Leaderboard (Routed via Python)
-app.get('/api/leaderboard', (req, res) => {
+// Leaderboard (Native Vultr DB Query)
+app.get('/api/leaderboard', async (req, res) => {
   const level = req.query.level || '';
   const timeframe = req.query.timeframe || '';
-  const category = req.query.category || '';
+  const category = req.query.category || 'global';
   const school = req.query.school || '';
-  const limit = req.query.limit || '50';
-  const offset = req.query.offset || '0';
-  const scriptPath = path.join(__dirname, 'api_leaderboard.py');
-  
-  // Pass params as JSON to avoid argument quoting issues
-  const paramsJson = JSON.stringify({ level, timeframe, category, school, limit: parseInt(limit), offset: parseInt(offset) });
-  const escapedJson = paramsJson.replace(/"/g, '\\"');
-  
-  exec(`python3 "${scriptPath}" "${escapedJson}"`, (error, stdout, stderr) => {
-    if (error) {
-      console.error('Python leaderboard error:', error);
-      console.error('stderr:', stderr);
-      return res.status(500).json({ error: 'Failed to fetch leaderboard' });
+  const limit = parseInt(req.query.limit) || 50;
+  const offset = parseInt(req.query.offset) || 0;
+
+  try {
+    let queryStr = '';
+    let countQueryStr = '';
+    const params = [];
+    let paramIdx = 1;
+    let whereClauses = [];
+
+    // Filters
+    if (level) {
+      whereClauses.push(`class = $${paramIdx++}`);
+      params.push(level);
     }
-    
-    try {
-      const data = JSON.parse(stdout);
-      res.json(data);
-    } catch (parseError) {
-      console.error('JSON parse error from python leaderboard:', parseError);
-      console.error('Raw stdout:', stdout);
-      res.status(500).json({ error: 'Invalid output from python leaderboard service' });
+    if (school) {
+      whereClauses.push(`school ILIKE $${paramIdx++}`);
+      params.push(`%${school}%`);
     }
-  });
+
+    // Timeframe logic (if needed in future, currently ignored for simplicity or can filter by updated_at)
+    if (timeframe === 'month') {
+      whereClauses.push(`updated_at >= NOW() - INTERVAL '1 month'`);
+    } else if (timeframe === 'week') {
+      whereClauses.push(`updated_at >= NOW() - INTERVAL '1 week'`);
+    }
+
+    const whereSql = whereClauses.length ? `WHERE ${whereClauses.join(' AND ')}` : '';
+
+    if (category === 'global') {
+      queryStr = `SELECT user_id, username, class, grade, gforce_tokens, total_debates, avg_score, current_streak, longest_streak 
+                  FROM debate_users ${whereSql} 
+                  ORDER BY gforce_tokens DESC NULLS LAST LIMIT $${paramIdx} OFFSET $${paramIdx+1}`;
+      countQueryStr = `SELECT COUNT(*) FROM debate_users ${whereSql}`;
+      params.push(limit, offset);
+    } else if (category === 'top_streaks') {
+      queryStr = `SELECT user_id, username, class, grade, gforce_tokens, total_debates, avg_score, current_streak, longest_streak 
+                  FROM debate_users ${whereSql} 
+                  ORDER BY longest_streak DESC NULLS LAST, current_streak DESC NULLS LAST LIMIT $${paramIdx} OFFSET $${paramIdx+1}`;
+      countQueryStr = `SELECT COUNT(*) FROM debate_users ${whereSql}`;
+      params.push(limit, offset);
+    } else {
+      // Category averages (avg_argument, avg_rebuttal, avg_fluency)
+      const CAT_COL_MAP = {
+        'avg_argument': 'score_argument_quality',
+        'avg_rebuttal': 'score_rebuttal_engagement',
+        'avg_fluency': 'score_speech_fluency'
+      };
+      const col = CAT_COL_MAP[category];
+      if (!col) return res.status(400).json({ error: 'Invalid category' });
+
+      const debatesWhere = [];
+      const dParams = [];
+      let dParamIdx = 1;
+      if (level) { debatesWhere.push(`u.class = $${dParamIdx++}`); dParams.push(level); }
+      if (school) { debatesWhere.push(`u.school ILIKE $${dParamIdx++}`); dParams.push(`%${school}%`); }
+      if (timeframe === 'month') debatesWhere.push(`d.created_at >= NOW() - INTERVAL '1 month'`);
+      else if (timeframe === 'week') debatesWhere.push(`d.created_at >= NOW() - INTERVAL '1 week'`);
+
+      const dWhereSql = debatesWhere.length ? `WHERE ${debatesWhere.join(' AND ')}` : '';
+
+      queryStr = `
+        SELECT u.user_id, u.username, u.class, u.grade, u.gforce_tokens, u.total_debates,
+               AVG(d.${col}) as avg_score
+        FROM debate_users u
+        JOIN debates d ON u.user_id = d.user_id
+        ${dWhereSql}
+        GROUP BY u.user_id, u.username, u.class, u.grade, u.gforce_tokens, u.total_debates
+        ORDER BY avg_score DESC NULLS LAST
+        LIMIT $${dParamIdx} OFFSET $${dParamIdx+1}
+      `;
+      countQueryStr = `
+        SELECT COUNT(*) FROM (
+          SELECT u.user_id FROM debate_users u
+          JOIN debates d ON u.user_id = d.user_id
+          ${dWhereSql}
+          GROUP BY u.user_id
+        ) sub
+      `;
+      dParams.push(limit, offset);
+
+      // Overwrite params with specific query ones
+      params.length = 0;
+      params.push(...dParams);
+    }
+
+    const [rowsRes, countRes] = await Promise.all([
+      db.query(queryStr, params),
+      db.query(countQueryStr, params.slice(0, -2)) // slice off limit and offset
+    ]);
+
+    const leaders = rowsRes.rows.map((r, idx) => {
+      // Determine tier
+      const t = Math.round(r.gforce_tokens || 0);
+      let tierName = 'Unranked';
+      if (t >= 5000) tierName = 'Grandmaster';
+      else if (t >= 4000) tierName = 'Master';
+      else if (t >= 3000) tierName = 'Diamond';
+      else if (t >= 2000) tierName = 'Platinum';
+      else if (t >= 1500) tierName = 'Gold';
+      else if (t >= 1000) tierName = 'Silver';
+      else if (t >= 500)  tierName = 'Bronze';
+
+      // Parse average correctly
+      let parsedAvg = r.avg_score;
+      if (typeof parsedAvg === 'string') parsedAvg = parseFloat(parsedAvg);
+
+      return {
+        ...r,
+        avg_score: parsedAvg,
+        rank: offset + idx + 1,
+        tier: { name: tierName }
+      };
+    });
+
+    res.json({
+      leaderboard: leaders,
+      total_count: parseInt(countRes.rows[0].count, 10)
+    });
+
+  } catch (err) {
+    console.error('Leaderboard DB error:', err);
+    res.status(500).json({ error: 'Failed to fetch leaderboard' });
+  }
 });
 
 
