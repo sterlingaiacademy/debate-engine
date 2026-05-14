@@ -33,7 +33,6 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
 
   const navLinks = [
     { name: 'Dashboard',       path: '/dashboard',         match: '/dashboard',         icon: LayoutDashboard },
-    { name: 'Daily Challenge',  path: '/daily-challenge',   match: '/daily-challenge',   icon: Flame },
     { name: 'Debate',          path: isJunior ? '/debate' : '/debate-instructions?next=/debate', match: '/debate', icon: Mic },
     { name: 'Vocab Trainer',   path: '/vocab-trainer',   match: '/vocab-trainer',   icon: BookOpen },
     { name: 'Word Scramble',   path: '/word-scramble',   match: '/word-scramble',   icon: Gamepad2 },
@@ -454,7 +453,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
         }}>
           <BottomTabItem name="Home" icon={LayoutDashboard} path="/dashboard" isActive={pathname === '/dashboard'} isJunior={isJunior} />
           <BottomTabItem name="Debate" icon={Mic} path={isJunior ? '/debate' : '/debate-instructions?next=/debate'} isActive={pathname.includes('/debate')} isJunior={isJunior} />
-          <BottomTabItem name={isJunior ? "Vocab" : "Daily"} icon={isJunior ? BookOpen : Flame} path={isJunior ? '/vocab-trainer' : '/daily-challenge'} isActive={pathname.includes(isJunior ? '/vocab-trainer' : '/daily-challenge')} isJunior={isJunior} />
+          <BottomTabItem name={isJunior ? "Vocab" : "Stats"} icon={isJunior ? BookOpen : BarChart2} path={isJunior ? '/vocab-trainer' : '/analytics'} isActive={pathname.includes(isJunior ? '/vocab-trainer' : '/analytics')} isJunior={isJunior} />
           <BottomTabItem name={isJunior ? "Play" : "Rank"} icon={isJunior ? Gamepad2 : Trophy} path={isJunior ? '/word-scramble' : '/leaderboard'} isActive={pathname.includes(isJunior ? '/word-scramble' : '/leaderboard')} isJunior={isJunior} />
           
           <button
