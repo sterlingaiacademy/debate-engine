@@ -100,6 +100,8 @@ export default function MockUN({ user }) {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showTranscript, setShowTranscript] = useState(true);
   const [transcript, setTranscript] = useState([]);
+  const [isMuted, setIsMuted] = useState(false);
+  
   const transcriptRef = useRef([]);
   const conversationRef = useRef(null);
   const timerRef = useRef(null);
