@@ -266,16 +266,9 @@ export default function Dashboard({ user, setUser }) {
     if (isBasicLevel && (m.id === 'supertutor' || m.id === 'speech-coach')) return false;
     // If mode has a levels array, only show for those levels
     if (m.levels) return m.levels.includes(normalizedLevel);
-    // Bug #10 fix: accessKey was compared with === (exact match only).
-    // Model UN (accessKey: 'Level 5') should also show for Level 5.
-    // Persona (accessKey: 'Level 4') should show for Level 4 AND Level 5.
-    // Map each accessKey to its minimum required level index.
-    const LEVEL_ORDER = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5'];
+    // If mode has an accessKey, only show for that exact level
     if (m.accessKey) {
-      const userIdx = LEVEL_ORDER.indexOf(normalizedLevel);
-      const minIdx  = LEVEL_ORDER.indexOf(m.accessKey);
-      // Show if user's level is >= the minimum required level
-      return userIdx >= minIdx && userIdx !== -1;
+      return normalizedLevel === m.accessKey;
     }
     return true; // no accessKey = always available
   });
