@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) {
   const [submitting, setSubmitting] = useState(false);
   const [yearly, setYearly] = useState(true);
+  const [paymentError, setPaymentError] = useState('');
   const navigate = useNavigate();
 
   const plans = [
@@ -73,8 +74,9 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
   }, []);
 
   const handlePayment = async (plan) => {
+    setPaymentError('');
     if (!razorpayReady || !window.Razorpay) {
-      alert('Payment system is still loading. Please wait a moment and try again.');
+      setPaymentError('Payment system is still loading. Please wait a moment and try again.');
       return;
     }
     setSubmitting(true);
@@ -153,7 +155,7 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
             window.location.href = `/premium-success?plan=${plan.id}`;
           } else {
             setSubmitting(false);
-            alert('Payment verification failed: ' + verifyData.error);
+            setPaymentError('Payment verification failed: ' + verifyData.error);
           }
         },
         modal: {
@@ -175,14 +177,14 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
       const rzp = new window.Razorpay(options);
       rzp.on('payment.failed', function (response) {
         setSubmitting(false);
-        alert('Payment failed: ' + response.error.description);
+        setPaymentError('Payment failed: ' + response.error.description);
       });
       rzp.open();
       // NOTE: do NOT setSubmitting(false) here — the modal is still open
       // It resets in: handler (success), modal.ondismiss, payment.failed
     } catch (err) {
       setSubmitting(false);
-      alert('Error initiating payment: ' + err.message);
+      setPaymentError(err.message || 'Error initiating payment');
     }
   };
 
@@ -257,6 +259,13 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
           <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.6 }}>
             Unlock unlimited practice time, priority AI access, and exclusive features.
           </p>
+        </div>
+      )}
+
+      {/* ── Error Message ── */}
+      {paymentError && (
+        <div style={{ background: 'rgba(239,68,68,0.1)', color: '#ef4444', padding: '1rem', borderRadius: '12px', width: '100%', textAlign: 'center', border: '1px solid rgba(239,68,68,0.2)', fontSize: '0.9rem' }}>
+          {paymentError}
         </div>
       )}
 
