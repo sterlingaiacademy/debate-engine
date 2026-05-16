@@ -815,7 +815,7 @@ app.post('/api/evaluate', async (req, res) => {
     // Pass args securely. Format: py script.py transcript.txt studentId name classLevel topic
     pythonQueue.enqueue(() => {
       return new Promise((resolveQueue) => {
-        exec(`python3 "${scriptPath}" "${filename}" "${sId}" "${sName}" "${sClass}" "${sTopic}"`, { maxBuffer: 1024 * 1024 * 10 }, async (error, stdout, stderr) => {
+        exec(`python3 "${scriptPath}" "${filename}" "${sId}" "${sName}" "${sClass}" "${sTopic}"`, { maxBuffer: 1024 * 1024 * 10, timeout: 15000 }, async (error, stdout, stderr) => {
           resolveQueue(); // Free up the queue slot immediately after python finishes
           // The rest of the DB processing happens asynchronously outside the process limit lock
       // Clean up file

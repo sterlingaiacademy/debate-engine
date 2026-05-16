@@ -71,7 +71,14 @@ function App() {
       if (storedUser && storedToken) {
         // Bug #7 fix: JSON.parse can throw on corrupted data; catch it to avoid
         // an unhandled exception that leaves the app stuck on the spinner.
-        setUser(JSON.parse(storedUser));
+        try {
+          setUser(JSON.parse(storedUser));
+        } catch (e) {
+          console.error("Corrupted user in localStorage", e);
+          setUser(null);
+          localStorage.removeItem('user');
+          localStorage.removeItem('token');
+        }
       } else if (window.location.pathname !== '/' && window.location.pathname !== '/login' && !window.location.pathname.includes('/register')) {
         // Clear invalid state
         setUser(null);

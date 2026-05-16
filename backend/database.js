@@ -43,6 +43,11 @@ const pool = new Pool({
   connectionTimeoutMillis: 10000,
 });
 
+// Prevent Node.js process crash if PostgreSQL connection drops unexpectedly
+pool.on('error', (err, client) => {
+  console.error('Unexpected error on idle client', err);
+});
+
 console.log('Connecting to Vultr PostgreSQL database...');
 
 // Initialize tables on startup
