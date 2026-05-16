@@ -14,11 +14,23 @@ import { API_BASE } from '../api';
 export default function ConversationalAgent({ user, agentId: agentIdProp, mode }) {
   const isSpeechCoach = mode === 'speech-coach';
 
+  const getNormalizedLevel = (cls) => {
+    if (!cls) return 'Level 1';
+    if (cls.startsWith('Level ')) return cls;
+    if (['KG', 'Class 1', 'Class 2', 'Class KG', 'KG-2'].includes(cls)) return 'Level 1';
+    if (['Class 3', 'Class 4', 'Class 5'].includes(cls)) return 'Level 2';
+    if (['Class 6', 'Class 7', 'Class 8'].includes(cls)) return 'Level 3';
+    if (['Class 9', 'Class 10'].includes(cls)) return 'Level 4';
+    if (['Class 11', 'Class 12'].includes(cls)) return 'Level 5';
+    return 'Level 1';
+  };
+
   const getAgentId = () => {
     if (agentIdProp) return agentIdProp;  // prop override (e.g. Speech Coach)
-    if (user?.classLevel === 'Level 3') return 'agent_6401krh1qb69e2x9m3f1wsmrt7ey';
-    if (user?.classLevel === 'Level 4') return 'agent_6101krh38dtaetba5e55b1wddygt';
-    if (user?.classLevel === 'Level 5') return 'agent_2301krh4zr5bem4t90z5xtwf9vea';
+    const normalized = getNormalizedLevel(user?.classLevel);
+    if (normalized === 'Level 3') return 'agent_6401krh1qb69e2x9m3f1wsmrt7ey';
+    if (normalized === 'Level 4') return 'agent_6101krh38dtaetba5e55b1wddygt';
+    if (normalized === 'Level 5') return 'agent_2301krh4zr5bem4t90z5xtwf9vea';
     return 'agent_6401krh1qb69e2x9m3f1wsmrt7ey';
   };
   const agentId = getAgentId();
@@ -32,7 +44,7 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
   const [transcript, setTranscript] = useState([]);
   const transcriptRef = useRef([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [status, setStatus] = useState(isSpeechCoach ? 'config' : 'select_topic');
+  const [status, setStatus] = useState('select_topic');
 
   const TUTOR_TOPICS = [
     { id: 1, title: 'Chit Chat', desc: 'Just have a casual talk with your AI tutor.', icon: '💬', color: '#10b981' },
@@ -96,11 +108,17 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
       }
       if (navTimeoutRef.current) clearTimeout(navTimeoutRef.current);
       if (disconnectTimeoutRef.current) clearTimeout(disconnectTimeoutRef.current);
+    };
+  }, [isActive]);
+
+  // Strictly clean up session only on component unmount
+  useEffect(() => {
+    return () => {
       if (conversationRef.current) {
         try { conversationRef.current.endSession(); } catch(e){}
       }
     };
-  }, [isActive]);
+  }, []);
 
   // Activity monitor for Screen Sleep (Level 1 and 2 only)
   useEffect(() => {
@@ -194,7 +212,7 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
           }
           initialDailyRemainingRef.current = remain;
           setMaxMinutesAvailable(Math.floor(remain / 60));
-          setStatus(isSpeechCoach ? 'config' : 'select_topic');
+          setStatus('select_topic');
         }
       } catch(err) {
         console.error('Failed to fetch time limits', err);
