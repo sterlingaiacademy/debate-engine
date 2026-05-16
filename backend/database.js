@@ -66,6 +66,9 @@ async function initDB() {
         "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
+    
+    // Index for fast email lookups during login
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)`);
 
 
     // Daily time-limit columns — add if not already present
