@@ -471,7 +471,8 @@ app.post('/api/payment/create-subscription', async (req, res) => {
     res.json(subscription);
   } catch (err) {
     console.error('Razorpay Create Subscription Error:', err);
-    res.status(500).json({ error: err.message });
+    const msg = err.error?.description || err.message || 'Internal Server Error';
+    res.status(500).json({ error: msg });
   }
 });
 
@@ -505,12 +506,7 @@ app.post('/api/payment/update-subscription', async (req, res) => {
     const options = {
       plan_id: plan_id,
       schedule_change_at: 'now',
-      customer_notify: 1,
-      notes: {
-        plan: plan,
-        period: period,
-        studentId: studentId
-      }
+      customer_notify: 1
     };
     
     const subscription = await razorpayInstance.subscriptions.update(razorpay_subscription_id, options);
@@ -525,7 +521,8 @@ app.post('/api/payment/update-subscription', async (req, res) => {
     res.json(subscription);
   } catch (err) {
     console.error('Razorpay Update Subscription Error:', err);
-    res.status(500).json({ error: err.message });
+    const msg = err.error?.description || err.message || 'Internal Server Error';
+    res.status(500).json({ error: msg });
   }
 });
 
