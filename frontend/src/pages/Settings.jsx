@@ -8,7 +8,6 @@ export default function Settings({ user, setUser }) {
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null);
   const [copied, setCopied] = useState(false);
-  const [fontScale, setFontScale] = useState(localStorage.getItem('fontScale') || 'normal');
 
   // Biometrics State
   const [biometricsEnabled, setBiometricsEnabled] = useState(false);
@@ -148,36 +147,6 @@ export default function Settings({ user, setUser }) {
         </div>
 
         {/* ── Security Section (Mobile Only) ──────────────── */}
-        {/* ── Appearance / Font Size ────────────────────────────── */}
-        <div className="card settings-card">
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Type size={20} color="#3b82f6" /> Appearance
-          </h2>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-            <div>
-              <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700 }}>App Text Size</h3>
-              <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Increase text size and spacing across the entire application.</p>
-            </div>
-            <select
-              value={fontScale}
-              onChange={(e) => {
-                setFontScale(e.target.value);
-                localStorage.setItem('fontScale', e.target.value);
-                document.documentElement.style.fontSize = e.target.value === 'large' ? '18px' : (e.target.value === 'extra-large' ? '20px' : '16px');
-              }}
-              style={{
-                padding: '0.6rem 1rem', borderRadius: '10px',
-                background: 'var(--bg-secondary)', border: '1px solid var(--border)',
-                color: 'var(--text-primary)', fontWeight: 600, fontSize: '0.9rem',
-                outline: 'none', cursor: 'pointer', minWidth: '130px'
-              }}
-            >
-              <option value="normal">Default</option>
-              <option value="large">Large</option>
-              <option value="extra-large">Extra Large</option>
-            </select>
-          </div>
-        </div>
 
         {isMobileApp && (
           <div className="card settings-card">
