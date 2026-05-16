@@ -26,19 +26,19 @@ const LEVEL_5_PERSONAS = [
   { 
     name: 'Mahatma Gandhi (Senior)', 
     image: '/gandhi_avatar_1773899586119.png', 
-    agentId: 'agent_3801km7h68pbfn1t8m52ny028t6w', 
+    agentId: 'agent_9701krh3ng1medhb7cnjqynhhjnh', 
     category: 'Freedom Fighter' 
   },
   { 
     name: 'Winston Churchill (Senior)', 
     image: '/churchill_avatar_1773899602534.png', 
-    agentId: 'agent_3801km7h68pbfn1t8m52ny028t6w', 
+    agentId: 'agent_1101krh3zz8ff4gan1t659m93gr2', 
     category: 'Statesman' 
   },
   { 
     name: 'Abraham Lincoln (Senior)', 
     image: '/lincoln_avatar_1773899618273.png', 
-    agentId: 'agent_3801km7h68pbfn1t8m52ny028t6w', 
+    agentId: 'agent_6901krh4be2re97ra9zhcgs03a1r', 
     category: 'Statesman' 
   }
 ];
