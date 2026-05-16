@@ -95,6 +95,9 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
 
       if (isUpgrade) {
         // Subscription Updated! Razorpay automatically prorates and charges the vaulted card.
+        if (!subRes.ok) {
+          throw new Error(subData.error || 'Failed to update subscription on server');
+        }
         try {
           const currentUser = JSON.parse(localStorage.getItem('user')) || {};
           currentUser.subscription_plan = plan.id;
@@ -129,6 +132,7 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
             try {
               const currentUser = JSON.parse(localStorage.getItem('user')) || {};
               currentUser.subscription_plan = plan.id;
+              currentUser.subscription_period = period; // also persist the billing period
               localStorage.setItem('user', JSON.stringify(currentUser));
             } catch (e) { console.error('Failed to update local storage', e); }
             
