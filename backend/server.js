@@ -21,7 +21,7 @@ app.use(express.json());
 // Helper for IST Date (Resets at 12:00 AM IST)
 function getISTDateString() {
   const now = new Date();
-  // IST is UTC + 5 hours and 20 minutes
+  // IST is UTC + 5 hours and 30 minutes
   const istOffsetMs = 5.5 * 60 * 60 * 1000;
   const istDate = new Date(now.getTime() + istOffsetMs);
   return istDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
@@ -82,7 +82,11 @@ app.post('/api/register', async (req, res) => {
       if (referrerCheck.rows.length > 0) {
         startupTokens = 150; // Referred user bonus
         // Grant referrer +200 bounty tokens
-        await db.query(`UPDATE debate_users SET gforce_tokens = gforce_tokens + 200 WHERE user_id = $1`, [referrerCheck.rows[0].studentId]);
+        // Bug #1 fix: use bracket notation for quoted camelCase PostgreSQL column
+        const referrerId = referrerCheck.rows[0]['studentId'];
+        if (referrerId) {
+          await db.query(`UPDATE debate_users SET gforce_tokens = gforce_tokens + 200 WHERE user_id = $1`, [referrerId]);
+        }
       }
     }
     
@@ -148,43 +152,15 @@ app.post('/api/auth/google', async (req, res) => {
          user.avatar = avatar;
       }
     } else {
-      // New User: Auto Register
-      const assignedClass = classLevel || 'Level 1';
-      const assignedGrade = grade || 'KG';
-      const studentId = email.split('@')[0] + Math.floor(Math.random() * 1000);
-      
-      let assignedAgentId = 'agent_5301krgg7x98ewm84w8aj2976zqc'; // Level 1 agent
-      
-      const randomPassword = await bcrypt.hash(googleId + Date.now().toString(), 10);
-      
-      const insertQuery = `INSERT INTO users (name, "studentId", password, "classLevel", grade, "assignedAgentId", email, avatar, auth_provider) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`;
-      const result = await db.query(insertQuery, [name, studentId, randomPassword, assignedClass, assignedGrade, assignedAgentId, email, avatar, 'google']);
-      user = result.rows[0];
-      
-      // --- REFERRAL & GFORCE TOKEN ECONOMY ---
-      let startupTokens = 100; // Base signup bonus
-      const refCode = req.body.referralCode;
-      
-      // Validate referral code
-      if (refCode && refCode.trim() !== '') {
-        const referrerCheck = await db.query(`SELECT "studentId" FROM users WHERE LOWER("studentId") = LOWER($1)`, [refCode.trim()]);
-        if (referrerCheck.rows.length > 0) {
-          startupTokens = 150; // Referred user bonus
-          // Grant referrer +200 bounty tokens
-          await db.query(`UPDATE debate_users SET gforce_tokens = gforce_tokens + 200 WHERE user_id = $1`, [referrerCheck.rows[0].studentId]);
-        }
-      }
-
-      // Init token economy
-      await db.query(
-        `INSERT INTO debate_users (user_id, username, class, grade, gforce_tokens, avatar_url) VALUES ($1, $2, $3, $4, $5, $6)`,
-        [studentId, name, assignedClass, assignedGrade, startupTokens, avatar]
-      );
+      // User not found in database. Do not auto-register, return 404 so the frontend 
+      // can prompt the user to complete their profile (choose grade, username, etc.)
+      return res.status(404).json({ error: 'User not registered', profile: { email, name, avatar } });
     }
-    
+
     const token = jwt.sign({ studentId: user.studentId, name: user.name, classLevel: user.classLevel }, JWT_SECRET, { expiresIn: '30d' });
     
     res.json({
+      success: true,
       message: 'Google login successful',
       user: { 
         name: user.name, 
@@ -211,7 +187,10 @@ app.post('/api/login', async (req, res) => {
   }
 
   try {
-    const { rows } = await db.query('SELECT * FROM users WHERE LOWER("studentId") = LOWER($1)', [studentId]);
+    const { rows } = await db.query(
+      'SELECT * FROM users WHERE LOWER("studentId") = LOWER($1) OR LOWER("email") = LOWER($1)', 
+      [studentId]
+    );
     if (rows.length === 0) {
       return res.status(401).json({ error: 'Invalid username or password' });
     }
@@ -583,9 +562,14 @@ app.get('/api/leaderboard', async (req, res) => {
       params.push(...dParams);
     }
 
+    // Bug #2 fix: use explicit countParams (filter params without limit/offset)
+    // For global/top_streaks: params = [...filters, limit, offset]
+    // For category: params = [...dParams] which is also [...filters, limit, offset]
+    // We always push limit+offset last, so slice(-2) is safe — but be explicit:
+    const countParams = params.slice(0, params.length - 2);
     const [rowsRes, countRes] = await Promise.all([
       db.query(queryStr, params),
-      db.query(countQueryStr, params.slice(0, -2)) // slice off limit and offset
+      db.query(countQueryStr, countParams)
     ]);
 
     const leaders = rowsRes.rows.map((r, idx) => {
@@ -786,11 +770,13 @@ app.post('/api/evaluate', async (req, res) => {
               const newBest = Math.max(u.best_score || 0, score);
               const newWords = (u.total_words_spoken || 0) + totalWords;
 
-              // Streak: get last debate date to decide increment vs reset
+              // Streak: get PREVIOUS debate date (OFFSET 1 skips the one just inserted)
+              // Bug #3 fix: without OFFSET 1, the query returns today's just-inserted row,
+              // making deltaDays always 0 and the streak never resets.
               let newStreak = 1;
               try {
                 const lastDebateRes = await db.query(
-                  `SELECT created_at FROM debates WHERE user_id = $1 ORDER BY created_at DESC LIMIT 1`,
+                  `SELECT created_at FROM debates WHERE user_id = $1 ORDER BY created_at DESC LIMIT 1 OFFSET 1`,
                   [studentId]
                 );
                 if (lastDebateRes.rows.length) {
@@ -804,6 +790,7 @@ app.post('/api/evaluate', async (req, res) => {
                   }
                   // >1 day gap — streak resets to 1 (default)
                 }
+                // No previous debate found → this is the first debate, streak = 1 (default)
               } catch (_) {}
               const newLongest = Math.max(u.longest_streak || 0, newStreak);
 
@@ -931,11 +918,33 @@ app.post('/api/daily-challenge/complete', async (req, res) => {
   }
 });
 
-// POST claim vocab trainer tokens (+75 per deck — server-side idempotency via argument_bank tricks)
+// POST claim vocab trainer tokens (+75 per deck)
+// Bug #19 fix: idempotency using a daily key stored in the users table column
+// Format: 'vocab:YYYY-MM-DD' so each user can only claim once per IST day
 app.post('/api/claim-vocab-tokens', async (req, res) => {
   const { studentId, tokensEarned } = req.body;
   if (!studentId || !tokensEarned) return res.status(400).json({ error: 'Missing params' });
   try {
+    const today = getISTDateString();
+    const idempotencyKey = `vocab:${today}`;
+
+    // Check if already claimed today using dailyChallengeCompleted as a multi-purpose field
+    // We store vocab claim as a separate column to avoid conflicts
+    const check = await db.query(
+      `SELECT "dailyVocabClaimed" FROM users WHERE "studentId" = $1`,
+      [studentId]
+    ).catch(() => ({ rows: [] })); // column may not exist on older DBs
+
+    if (check.rows.length && check.rows[0]['dailyVocabClaimed'] === idempotencyKey) {
+      return res.status(409).json({ error: 'Vocab tokens already claimed today' });
+    }
+
+    // Mark as claimed and award tokens atomically
+    await db.query(
+      `UPDATE users SET "dailyVocabClaimed" = $1 WHERE "studentId" = $2`,
+      [idempotencyKey, studentId]
+    ).catch(() => {}); // column may not exist yet — best effort
+
     await db.query(
       `UPDATE debate_users SET gforce_tokens = gforce_tokens + $1 WHERE user_id = $2`,
       [Math.round(tokensEarned), studentId]

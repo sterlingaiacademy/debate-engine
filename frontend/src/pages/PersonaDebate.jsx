@@ -187,13 +187,15 @@ export default function PersonaDebate({ user }) {
   const toggleMute = async () => {
     try {
       if (conversationRef.current) {
-        if (typeof conversationRef.current.setVolume === 'function') {
-          await conversationRef.current.setVolume(isMuted ? 1.0 : 0.0);
+        // Bug #9 fix: use setMicMuted to mute the user's microphone,
+        // not setVolume which only mutes the AI speaker output.
+        if (typeof conversationRef.current.setMicMuted === 'function') {
+          conversationRef.current.setMicMuted(!isMuted);
         }
       }
       setIsMuted(p => !p);
     } catch(e) {
-      console.warn("Mute overlay toggle fell back to mock", e);
+      console.warn("Mute toggle failed, falling back to state only", e);
       setIsMuted(p => !p);
     }
   };

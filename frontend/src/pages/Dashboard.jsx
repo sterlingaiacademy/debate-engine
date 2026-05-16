@@ -254,7 +254,18 @@ export default function Dashboard({ user, setUser }) {
     if (isBasicLevel && (m.id === 'supertutor' || m.id === 'speech-coach')) return false;
     // If mode has a levels array, only show for those levels
     if (m.levels) return m.levels.includes(user?.classLevel);
-    return !m.accessKey || m.accessKey === user?.classLevel || m.id === 'debate' || m.id === 'supertutor';
+    // Bug #10 fix: accessKey was compared with === (exact match only).
+    // Model UN (accessKey: 'Level 5') should also show for Level 5.
+    // Persona (accessKey: 'Level 4') should show for Level 4 AND Level 5.
+    // Map each accessKey to its minimum required level index.
+    const LEVEL_ORDER = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5'];
+    if (m.accessKey) {
+      const userIdx = LEVEL_ORDER.indexOf(user?.classLevel);
+      const minIdx  = LEVEL_ORDER.indexOf(m.accessKey);
+      // Show if user's level is >= the minimum required level
+      return userIdx >= minIdx && userIdx !== -1;
+    }
+    return true; // no accessKey = always available
   });
 
   /* ─── Chart theming ─── */
@@ -272,7 +283,7 @@ export default function Dashboard({ user, setUser }) {
     <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', paddingBottom: '4rem' }}>
 
       {/* ── Hero Greeting ── */}
-      <div style={{
+      <div className="welcome-card" style={{
         position: 'relative', overflow: 'hidden',
         borderRadius: 24, padding: '2rem 2.5rem',
         background: 'linear-gradient(135deg, rgba(255,107,0,0.08) 0%, rgba(0,0,0,0) 60%)',
@@ -284,23 +295,26 @@ export default function Dashboard({ user, setUser }) {
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', position: 'relative', zIndex: 1 }}>
           <div>
-            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.4rem' }}>
+            <div style={{ fontSize: '0.65rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.2rem' }}>
               Welcome back
             </div>
-            <h1 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 900, margin: 0, letterSpacing: '-0.03em', lineHeight: 1.1 }}>
+            <h1 style={{ fontSize: 'clamp(1.4rem, 4vw, 1.75rem)', fontWeight: 900, margin: 0, letterSpacing: '-0.02em', lineHeight: 1.1 }}>
               <span className="gradient-text">{user.name}</span>
             </h1>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '0.75rem', flexWrap: 'wrap' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.2)', borderRadius: 99, padding: '0.3rem 0.8rem', fontSize: '0.82rem', fontWeight: 700, color: '#fb923c' }}>
-                <Flame size={14} strokeWidth={2.5} />
+            <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 600, marginTop: '0.2rem' }}>
+              @{user.studentId}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.5rem', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.2)', borderRadius: 99, padding: '0.2rem 0.6rem', fontSize: '0.75rem', fontWeight: 700, color: '#fb923c' }}>
+                <Flame size={12} strokeWidth={2.5} />
                 {stats.current_streak || 0} Day Streak
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: `${tier.color}15`, border: `1px solid ${tier.color}30`, borderRadius: 99, padding: '0.3rem 0.8rem', fontSize: '0.82rem', fontWeight: 700, color: tier.color }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', background: `${tier.color}15`, border: `1px solid ${tier.color}30`, borderRadius: 99, padding: '0.2rem 0.6rem', fontSize: '0.75rem', fontWeight: 700, color: tier.color }}>
                 <TierIcon />
                 {tier.name}
               </div>
               {user.classLevel && (
-                <div style={{ fontSize: '0.82rem', fontWeight: 600, color: '#475569' }}>
+                <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#475569' }}>
                   {user.grade
                     ? (user.grade.startsWith('Class') ? user.grade.replace('Class', 'Grade') : user.grade)
                     : user.classLevel}
@@ -310,12 +324,12 @@ export default function Dashboard({ user, setUser }) {
           </div>
 
           {dailyMins !== null && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', minWidth: 180 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', minWidth: 140 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.65rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 <span>Daily Time Left</span>
                 <span style={{ color: '#FF6B00' }}>{dailyMins}m</span>
               </div>
-              <div className="xp-track">
+              <div className="xp-track" style={{ height: 6 }}>
                 <div className="xp-fill" style={{ width: `${Math.min((dailyMins / 60) * 100, 100)}%` }} />
               </div>
             </div>
@@ -328,7 +342,7 @@ export default function Dashboard({ user, setUser }) {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
           <h2 style={{ fontSize: '1.1rem', fontWeight: 800, margin: 0, color: 'var(--text-primary)' }}>Choose Your Mode</h2>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%,240px), 1fr))', gap: '1rem' }}>
+        <div className="no-scrollbar modes-container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%,240px), 1fr))', gap: '1rem' }}>
           {availableModes.map((mode, i) => {
             const Icon = mode.icon;
             return (
@@ -429,7 +443,7 @@ export default function Dashboard({ user, setUser }) {
             <h2 style={{ fontSize: '1.1rem', fontWeight: 800, margin: 0, color: 'var(--text-primary)' }}>Achievements</h2>
             <span style={{ fontSize: '0.8rem', color: '#475569', fontWeight: 600 }}>{earnedBadges.length} / {ALL_BADGES.length} unlocked</span>
           </div>
-          <div style={{ overflowX: 'auto', paddingBottom: '0.5rem' }}>
+          <div className="no-scrollbar" style={{ overflowX: 'auto', paddingBottom: '0.5rem' }}>
             <div style={{ display: 'flex', gap: '0.75rem', width: 'max-content' }}>
               {displayBadges.map(badge => {
                 const isEarned = earnedSet.has(badge.id);
@@ -459,7 +473,7 @@ export default function Dashboard({ user, setUser }) {
     <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', paddingBottom: '3rem' }}>
 
       {/* ── Hero Welcome Card ── */}
-      <div style={{
+      <div className="welcome-card" style={{
         borderRadius: 28, padding: '1.75rem 2rem',
         background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 60%, #e879f9 100%)',
         color: '#fff', position: 'relative', overflow: 'hidden',
@@ -468,22 +482,25 @@ export default function Dashboard({ user, setUser }) {
         <div style={{ position: 'absolute', top: -40, right: -40, width: 180, height: 180, borderRadius: '50%', background: 'rgba(255,255,255,0.08)', pointerEvents: 'none' }} />
         <div style={{ position: 'absolute', bottom: -60, left: '30%', width: 160, height: 160, borderRadius: '50%', background: 'rgba(255,255,255,0.05)', pointerEvents: 'none' }} />
 
-        <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
-          <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(255,255,255,0.2)', border: '3px solid rgba(255,255,255,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', fontWeight: 900, flexShrink: 0 }}>
+        <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+          <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'rgba(255,255,255,0.2)', border: '2px solid rgba(255,255,255,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', fontWeight: 900, flexShrink: 0 }}>
             {user.avatar
               ? <img src={user.avatar} alt="" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
               : user.name?.charAt(0).toUpperCase()
             }
           </div>
           <div>
-            <div style={{ fontSize: '0.85rem', fontWeight: 700, opacity: 0.8, marginBottom: '0.2rem' }}>Welcome back!</div>
-            <h1 style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)', fontWeight: 900, margin: 0, letterSpacing: '-0.02em' }}>{user.name}</h1>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.4rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', background: 'rgba(255,255,255,0.2)', borderRadius: 99, padding: '0.25rem 0.65rem', fontSize: '0.82rem', fontWeight: 700 }}>
-                <Flame size={13} />
+            <div style={{ fontSize: '0.75rem', fontWeight: 700, opacity: 0.8, marginBottom: '0.1rem' }}>Welcome back!</div>
+            <h1 style={{ fontSize: 'clamp(1.4rem, 5vw, 1.75rem)', fontWeight: 900, margin: 0, letterSpacing: '-0.02em' }}>{user.name}</h1>
+            <div style={{ fontSize: '0.8rem', color: '#a78bfa', fontWeight: 700, marginTop: '0.1rem' }}>
+              @{user.studentId}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.2rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', background: 'rgba(255,255,255,0.2)', borderRadius: 99, padding: '0.2rem 0.5rem', fontSize: '0.75rem', fontWeight: 700 }}>
+                <Flame size={12} />
                 {stats.current_streak || 0} Day Streak
               </div>
-              <div style={{ fontSize: '0.82rem', fontWeight: 600, opacity: 0.8 }}>
+              <div style={{ fontSize: '0.75rem', fontWeight: 600, opacity: 0.8 }}>
                 {user.grade
                   ? (user.grade.startsWith('Class') ? user.grade.replace('Class', 'Grade') : user.grade)
                   : user.classLevel}
@@ -496,7 +513,7 @@ export default function Dashboard({ user, setUser }) {
       {/* ── Mode Cards ── */}
       <div>
         <h2 style={{ fontSize: '1.15rem', fontWeight: 900, margin: '0 0 1rem', color: 'var(--j-text)' }}>Let's Practice!</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%,200px), 1fr))', gap: '1rem' }}>
+        <div className="no-scrollbar modes-container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%,200px), 1fr))', gap: '1rem' }}>
           {availableModes.map((mode, i) => {
             const Icon = mode.icon;
             return (

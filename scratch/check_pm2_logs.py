@@ -1,34 +1,34 @@
-import paramiko
-
-def check_pm2_logs():
-    host = "65.20.85.75"
-    port = 22
-    username = "graceandforce"
-    password = "wvpi2!ZnTcV];ncy"
-
-    client = paramiko.SSHClient()
-    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    
-    try:
-        client.connect(host, port, username, password, timeout=10)
-        
-        script = f"""
-cat /home/graceandforce/.pm2/logs/grace-api-error.log | tail -n 50
-cat /home/graceandforce/.pm2/logs/grace-api-out.log | tail -n 50
 """
+check_pm2_logs.py - Check PM2 error logs on Vultr
+"""
+import paramiko
+import io
+import sys
 
-        stdin, stdout, stderr = client.exec_command(script)
-        
-        for line in iter(stdout.readline, ""):
-            print(line.encode('utf-8', 'ignore').decode('utf-8'), end="")
-            
-        for line in iter(stderr.readline, ""):
-            print("ERROR: " + line.encode('utf-8', 'ignore').decode('utf-8'), end="")
-            
-    except Exception as e:
-        print(f"Failed to execute: {str(e)}")
-    finally:
-        client.close()
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
-if __name__ == "__main__":
-    check_pm2_logs()
+HOST     = "65.20.85.75"
+PORT     = 22
+USERNAME = "graceandforce"
+PASSWORD = "wvpi2!ZnTcV];ncy"
+
+client = paramiko.SSHClient()
+client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+client.connect(HOST, PORT, USERNAME, PASSWORD, timeout=15)
+
+def run(cmd, label=""):
+    print(f"\n>>> {label or cmd}")
+    stdin, stdout, stderr = client.exec_command(
+        f'export NVM_DIR="$HOME/.nvm"; [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"; {cmd}'
+    )
+    for line in iter(stdout.readline, ""):
+        try: print("  " + line.rstrip())
+        except: pass
+    for line in iter(stderr.readline, ""):
+        try: print("  ERR: " + line.rstrip())
+        except: pass
+
+run("pm2 list", "PM2 Status")
+run("pm2 logs grace-api --lines 50 --nostream", "Last 50 PM2 log lines")
+
+client.close()

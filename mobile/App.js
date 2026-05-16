@@ -5,6 +5,17 @@ import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import * as LocalAuthentication from 'expo-local-authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as WebBrowser from 'expo-web-browser';
+import * as Linking from 'expo-linking';
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+
+GoogleSignin.configure({
+  webClientId: '624023459084-o1l7b425m8sqo35o25hf3jllrj0165oo.apps.googleusercontent.com',
+  offlineAccess: false,
+});
+
+// Ensure the browser closes correctly on redirects
+WebBrowser.maybeCompleteAuthSession();
 
 export default function App() {
   const webViewRef = useRef(null);
@@ -79,6 +90,73 @@ export default function App() {
           window.dispatchEvent(new CustomEvent('BIOMETRICS_STATUS', { detail: { enabled: ${currentVal === 'true'} } }));
           true;
         `);
+      } else if (data.type === 'GOOGLE_LOGIN_NATIVE') {
+        // True Native Google Sign-In Bottom Sheet Popup
+        try {
+          await GoogleSignin.hasPlayServices();
+          
+          // Force sign out to ensure we get a fresh idToken and the account picker shows
+          try {
+            await GoogleSignin.signOut();
+          } catch (e) {
+            // Ignore sign out errors (e.g. if not signed in)
+          }
+
+          const userInfo = await GoogleSignin.signIn();
+          // Extract idToken safely
+          const idToken = userInfo.idToken || (userInfo.data && userInfo.data.idToken);
+          
+          if (idToken && webViewRef.current) {
+            // Bug #5 fix: JSON.stringify the token before injecting to safely escape
+            // any special characters (quotes, backticks) that would break the JS string.
+            const safeToken = JSON.stringify(idToken);
+            // Inject idToken into the WebView so the web app can complete login
+            webViewRef.current.injectJavaScript(`
+              (async function() {
+                try {
+                  const res = await fetch('https://graceandforce.com/api/auth/google', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ credential: ${safeToken} })
+                  });
+                  const data = await res.json();
+                  if (res.ok) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    window.location.href = '/dashboard';
+                  } else if (res.status === 404) {
+                    // Profile needs completion (auto-registration removed)
+                    localStorage.setItem('pendingGoogleProfile', JSON.stringify({
+                        email: data.profile.email,
+                        avatar: data.profile.avatar,
+                        name: data.profile.name,
+                        access_token: ${safeToken}
+                    }));
+                    window.location.href = '/register?from=google-callback';
+                  } else {
+                    alert('Google sign-in failed: ' + (data.error || 'Unknown error'));
+                  }
+                } catch(e) {
+                  alert('Sign-in error: ' + e.message);
+                }
+              })();
+              true;
+            `);
+          } else {
+             alert('Google Sign-In Error: idToken was missing from Google response.');
+          }
+        } catch (error) {
+          if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+            // user cancelled the login flow (ignore silently)
+          } else if (error.code === statusCodes.IN_PROGRESS) {
+            // operation is in progress already
+          } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+            alert("Google Play Services not available or outdated.");
+          } else {
+            console.error(error);
+            alert("Google Sign-In Error: " + (error.message || JSON.stringify(error)));
+          }
+        }
       }
     } catch (e) {
       // Ignored
@@ -136,7 +214,7 @@ export default function App() {
         <StatusBar style="auto" />
         <WebView
           ref={webViewRef}
-          source={{ uri: 'https://graceandforce.com/' }}
+          source={{ uri: 'https://graceandforce.com/?v=2.0' }}
           style={styles.webview}
           userAgent={customUserAgent}
           allowsInlineMediaPlayback={true}
@@ -154,6 +232,7 @@ export default function App() {
           }}
           onMessage={handleMessage}
           injectedJavaScript={INJECTED_JAVASCRIPT}
+          injectedJavaScriptBeforeContentLoaded={INJECTED_JAVASCRIPT}
         />
       </SafeAreaView>
     </SafeAreaProvider>

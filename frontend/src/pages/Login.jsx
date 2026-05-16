@@ -35,6 +35,7 @@ export default function Login({ onLogin }) {
 
   // Google Sign-In (Web popup flow)
   const googleLogin = useGoogleLogin({
+    prompt: 'select_account',
     onSuccess: async (tokenResponse) => {
       setLoading(true);
       setAuthMethod('google');
@@ -60,19 +61,19 @@ export default function Login({ onLogin }) {
     onError: () => setError('Google sign-in was unsuccessful.')
   });
 
-  // Google Sign-In (Mobile redirect flow)
-  const handleMobileGoogleLogin = () => {
-    setLoading(true);
-    setAuthMethod('google');
-    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-    const redirectUri = window.location.origin + '/auth/google/callback';
-    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=email%20profile`;
-    window.location.href = authUrl;
+  const handleGoogleLogin = () => {
+    if (window.isReactNativeWebView && window.ReactNativeWebView) {
+       window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'GOOGLE_LOGIN_NATIVE' }));
+       return;
+    }
+    const clientId = '624023459084-o1l7b425m8sqo35o25hf3jllrj0165oo.apps.googleusercontent.com';
+    const redirectUri = encodeURIComponent('https://graceandforce.com/google-callback');
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=email%20profile&prompt=select_account`;
   };
 
   const handleGoogleButtonClick = () => {
     if (isMobileApp) {
-      handleMobileGoogleLogin();
+      handleGoogleLogin();
     } else {
       googleLogin();
     }
@@ -230,12 +231,12 @@ export default function Login({ onLogin }) {
               <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
             </div>
 
-            {/* Username */}
+            {/* Username / Email */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-              <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#e2e8f0' }}>Username</label>
+              <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#e2e8f0' }}>Username or Email</label>
               <input
-                type="text" placeholder="e.g. johndoe" value={username}
-                onChange={e => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_.]/g, '').slice(0, 30))}
+                type="text" placeholder="e.g. johndoe or user@email.com" value={username}
+                onChange={e => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_.@-]/g, '').slice(0, 60))}
                 style={{ padding: '0.85rem 1rem', background: usernameFormatError ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.03)', border: usernameFormatError ? '1px solid rgba(239, 68, 68, 0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.95rem', outline: 'none' }}
               />
               {usernameFormatError && <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>{usernameFormatError}</span>}
@@ -245,7 +246,8 @@ export default function Login({ onLogin }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#e2e8f0' }}>Password</label>
-                <a href="#" style={{ color: '#F97316', fontSize: '0.8rem', fontWeight: 600, textDecoration: 'none' }}>Forgot Password?</a>
+                {/* Bug #16 fix: removed href="#" "Forgot Password?" link that went nowhere.
+                    Password reset flow is not yet implemented. */}
               </div>
               <input
                 type="password" placeholder="Enter your password" value={password}
@@ -280,7 +282,17 @@ export default function Login({ onLogin }) {
 
       <style>{`
         @media (min-width: 901px) { .mobile-logo { display: none !important; } }
-        @media (max-width: 900px) { .login-left-pane { display: none !important; } }
+        @media (max-width: 900px) { 
+          .login-left-pane { display: none !important; } 
+          .login-right-pane { padding: 1rem !important; align-items: center !important; justify-content: center !important; }
+          .login-right-pane > div { 
+            padding: 1.5rem !important; 
+            border: none !important; 
+            background: transparent !important; 
+            box-shadow: none !important; 
+            backdrop-filter: none !important;
+          }
+        }
       `}</style>
     </div>
   );

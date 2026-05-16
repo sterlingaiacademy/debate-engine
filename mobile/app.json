@@ -2,6 +2,7 @@
   "expo": {
     "name": "G-Force",
     "slug": "mobile",
+    "scheme": "graceandforce",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -29,12 +30,14 @@
       ]
     },
     "plugins": [
+      "@react-native-google-signin/google-signin",
       [
         "expo-av",
         {
           "microphonePermission": "Allow Grace and Force to access your microphone for debate practice."
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "web": {
       "favicon": "./assets/favicon.png"

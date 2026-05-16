@@ -69,25 +69,34 @@ export default function Register({ onLogin }) {
       setPasswordError('');
     }
 
-    const u = formData.username;
+    const v = formData.username;
     let hasFormatError = false;
-    if (u.length > 0) {
-      if (u.startsWith('.') || u.endsWith('.')) { setUsernameFormatError('Cannot start or end with a dot'); hasFormatError = true; }
-      else if (u.includes('..')) { setUsernameFormatError('Cannot contain consecutive dots'); hasFormatError = true; }
-      else if (/^[_.]+$/.test(u)) { setUsernameFormatError('Must contain at least one letter or number'); hasFormatError = true; }
+    if (v.length > 0) {
+      if (v.startsWith('.') || v.endsWith('.')) { setUsernameFormatError('Cannot start or end with a dot'); hasFormatError = true; }
+      else if (v.includes('..')) { setUsernameFormatError('Cannot contain consecutive dots'); hasFormatError = true; }
+      else if (/^[_.]+$/.test(v)) { setUsernameFormatError('Must contain at least one letter or number'); hasFormatError = true; }
       else setUsernameFormatError('');
     } else { setUsernameFormatError(''); }
 
-    if (u.length >= 3 && !hasFormatError) {
+    if (v.length >= 3 && !hasFormatError) {
       setIsCheckingUsername(true);
+      // Bug #14 fix: abort stale fetches when the user keeps typing
+      const controller = new AbortController();
       const t = setTimeout(async () => {
         try {
-          const res = await fetch(`${API_BASE}/api/check-username/${encodeURIComponent(u)}`);
-          if (res.ok) { const d = await res.json(); setUsernameAvailable(d.available); }
-        } catch { /* ignore */ } finally { setIsCheckingUsername(false); }
+          const r = await fetch(`${API_BASE}/api/check-username/${encodeURIComponent(v)}`, {
+            signal: controller.signal,
+          });
+          const data = await r.json();
+          if (!controller.signal.aborted) setUsernameAvailable(data.available);
+        } catch (err) {
+          if (!controller.signal.aborted) setUsernameAvailable(null);
+        } finally {
+          if (!controller.signal.aborted) setIsCheckingUsername(false);
+        }
       }, 600);
-      return () => clearTimeout(t);
-    } else { setUsernameAvailable(null); }
+      return () => { clearTimeout(t); controller.abort(); setIsCheckingUsername(false); };
+    } else { setUsernameAvailable(null); setIsCheckingUsername(false); }
   }, [formData.username, formData.password]);
 
   const set = (field) => (e) => {
@@ -115,19 +124,21 @@ export default function Register({ onLogin }) {
     setShowTerms(true);
   };
 
-  const handleMobileGoogleLogin = () => {
-    setLoading(true);
-    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-    const redirectUri = window.location.origin + '/auth/google/callback';
-    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=email%20profile`;
-    window.location.href = authUrl;
+  const handleGoogleRegister = () => {
+    if (window.isReactNativeWebView && window.ReactNativeWebView) {
+       window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'GOOGLE_LOGIN_NATIVE' }));
+       return;
+    }
+    const clientId = '624023459084-o1l7b425m8sqo35o25hf3jllrj0165oo.apps.googleusercontent.com';
+    const redirectUri = encodeURIComponent('https://graceandforce.com/google-callback');
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=email%20profile&prompt=select_account`;
   };
 
   const handleTermsAccept = () => {
     if (!termsAgreed) { setTermsError(true); return; }
     setShowTerms(false);
     if (isMobileApp) {
-      handleMobileGoogleLogin();
+      handleGoogleRegister();
     } else {
       googleLogin();
     }
@@ -135,6 +146,7 @@ export default function Register({ onLogin }) {
 
   // Step 1: Google sign-in → fetch profile → move to details
   const googleLogin = useGoogleLogin({
+    prompt: 'select_account',
     onSuccess: async (tokenResponse) => {
       setLoading(true);
       setError('');
@@ -207,7 +219,7 @@ export default function Register({ onLogin }) {
         classLevel: computedClassLevel,
         grade: formData.selectedClass,
         referralCode: formData.referralCode,
-        authProvider: 'google',
+        authProvider: pendingProfile ? 'google' : 'local',
         email: googleProfile?.email || null,
         avatar: googleProfile?.avatar || null,
       };
@@ -348,8 +360,12 @@ export default function Register({ onLogin }) {
                 <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="G" style={{ width: 22, height: 22 }} />
                 {loading ? 'Loading...' : 'Continue with Google'}
               </button>
+              
+              <div style={{ textAlign: 'center', fontSize: '0.75rem', color: '#64748b', marginTop: '-0.25rem' }}>
+                Terms and conditions applied
+              </div>
 
-              <div style={{ marginTop: '1.75rem', textAlign: 'center', fontSize: '0.85rem', color: '#94a3b8' }}>
+              <div style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.85rem', color: '#94a3b8' }}>
                 Already have an account? <Link to="/login" style={{ color: '#F97316', textDecoration: 'none', fontWeight: 700 }}>Sign in</Link>
               </div>
               <div style={{ textAlign: 'center' }}>
@@ -374,7 +390,7 @@ export default function Register({ onLogin }) {
                 </div>
               )}
 
-              <div style={{ display: 'flex', gap: '1rem' }}>
+              <div className="form-row" style={{ display: 'flex', gap: '1rem' }}>
                 <div style={{ flex: '2', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
                   <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Full Name</label>
                   <input type="text" placeholder="e.g. John Doe" value={formData.name} onChange={set('name')} required
@@ -393,7 +409,7 @@ export default function Register({ onLogin }) {
                 </div>
               </div>
 
-              <div style={{ display: 'flex', gap: '1rem' }}>
+              <div className="form-row" style={{ display: 'flex', gap: '1rem' }}>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
                   <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Username</label>
                   <input type="text" placeholder="e.g. johndoe" value={formData.username} onChange={set('username')} required
@@ -590,8 +606,21 @@ export default function Register({ onLogin }) {
       )}
 
       <style>{`
-        @media (max-width: 900px) { .login-left-pane { display: none !important; } }
         @media (min-width: 901px) { .mobile-logo { display: none !important; } }
+        @media (max-width: 900px) { 
+          .login-left-pane { display: none !important; } 
+          .login-right-pane { padding: 1rem !important; align-items: center !important; justify-content: center !important; }
+          .login-right-pane > div { 
+            padding: 1.5rem !important; 
+            border: none !important; 
+            background: transparent !important; 
+            box-shadow: none !important; 
+            backdrop-filter: none !important;
+          }
+        }
+        @media (max-width: 600px) {
+          .form-row { flex-direction: column !important; gap: 0.85rem !important; }
+        }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
       `}</style>
     </div>

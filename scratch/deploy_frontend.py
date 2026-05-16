@@ -1,64 +1,57 @@
-import os
 import paramiko
-from stat import S_ISDIR
+import sys
 
-def upload_dir(sftp, local_dir, remote_dir):
-    try:
-        sftp.mkdir(remote_dir)
-    except IOError:
-        pass
-        
-    for item in os.listdir(local_dir):
-        local_path = os.path.join(local_dir, item)
-        remote_path = remote_dir + "/" + item
-        
-        if os.path.isfile(local_path):
-            sftp.put(local_path, remote_path)
-            print(f"Uploaded: {local_path} -> {remote_path}")
-        elif os.path.isdir(local_path):
-            upload_dir(sftp, local_path, remote_path)
-
-def sync_frontend():
+def deploy():
     host = "65.20.85.75"
     port = 22
     username = "graceandforce"
     password = "wvpi2!ZnTcV];ncy"
 
+    print("Connecting to Vultr server via SSH...")
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     
     try:
         client.connect(host, port, username, password, timeout=10)
-        sftp = client.open_sftp()
+        print("Connected successfully!")
         
-        # clean remote temp dir
-        client.exec_command("rm -rf /home/graceandforce/frontend_dist")
-        
-        local_dist = os.path.join(os.path.dirname(__file__), "..", "frontend", "dist")
-        remote_dist = "/home/graceandforce/frontend_dist"
-        
-        print("Uploading frontend dist...")
-        upload_dir(sftp, local_dist, remote_dist)
-        sftp.close()
-        
-        print("Deploying to Nginx web root...")
-        script = r"""
-echo 'wvpi2!ZnTcV];ncy' | sudo -S rm -rf /var/www/grace-and-force/frontend/*
-echo 'wvpi2!ZnTcV];ncy' | sudo -S cp -r /home/graceandforce/frontend_dist/* /var/www/grace-and-force/frontend/
-echo 'wvpi2!ZnTcV];ncy' | sudo -S chown -R www-data:www-data /var/www/grace-and-force/frontend
-"""
-        stdin, stdout, stderr = client.exec_command(script)
-        for line in iter(stdout.readline, ""):
-            pass
-        for line in iter(stderr.readline, ""):
-            if "password" not in line.lower():
-                print("ERROR: " + line.encode('utf-8', 'ignore').decode('utf-8'), end="")
+        script = """
+set -e
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
-        print("Frontend deployed successfully!")
+echo "=== Deploying Frontend ==="
+cd ~/debate-engine
+git pull origin main
+
+cd frontend
+npm install
+npm run build
+echo "wvpi2!ZnTcV];ncy" | sudo -S cp -r dist/* /var/www/html/
+echo "=== Frontend Deployed ==="
+"""
+        print("Executing deployment script...")
+        stdin, stdout, stderr = client.exec_command(script)
+        
+        for line in iter(stdout.readline, ""):
+            try:
+                print(line.encode('ascii', 'replace').decode('ascii'), end="")
+            except Exception:
+                pass
+            
+        for line in iter(stderr.readline, ""):
+            try:
+                print("ERROR: " + line.encode('ascii', 'replace').decode('ascii'), end="")
+            except Exception:
+                pass
+
+        exit_status = stdout.channel.recv_exit_status()
+        print(f"\\nCommand finished with exit status: {exit_status}")
+        
     except Exception as e:
-        print(f"Failed to execute: {str(e)}")
+        print(f"Failed to connect or execute: {str(e)}")
     finally:
         client.close()
 
 if __name__ == "__main__":
-    sync_frontend()
+    deploy()

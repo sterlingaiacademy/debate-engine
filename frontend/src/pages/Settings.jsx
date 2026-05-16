@@ -134,15 +134,15 @@ export default function Settings({ user, setUser }) {
   };
 
   return (
-    <div className="animate-fade-in" style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto', color: 'var(--text-primary)' }}>
+    <div className="animate-fade-in settings-container" style={{ maxWidth: '800px', margin: '0 auto', color: 'var(--text-primary)' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '2rem' }}>
          <SettingsIcon size={28} color="var(--accent)" />
          <h1 style={{ fontSize: '2rem', fontWeight: 800, margin: 0 }}>Settings</h1>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      <div className="settings-list">
         {/* Profile Picture Section */}
-        <div className="card" style={{ padding: '2rem' }}>
+        <div className="card settings-card">
           <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
              <Camera size={20} color="var(--text-secondary)" /> Profile Customization
           </h2>
@@ -188,7 +188,7 @@ export default function Settings({ user, setUser }) {
 
         {/* ── Security Section (Mobile Only) ──────────────── */}
         {isMobileApp && (
-          <div className="card" style={{ padding: '2rem' }}>
+          <div className="card settings-card">
             <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <Shield size={20} color="#10b981" /> Security Settings
             </h2>
@@ -204,12 +204,12 @@ export default function Settings({ user, setUser }) {
                   width: '56px',
                   height: '30px',
                   borderRadius: '15px',
-                  border: 'none',
-                  background: biometricsEnabled ? '#10b981' : 'var(--bg-tertiary)',
+                  border: biometricsEnabled ? 'none' : '1px solid rgba(255,255,255,0.3)',
+                  background: biometricsEnabled ? '#10b981' : 'rgba(255,255,255,0.1)',
                   cursor: 'pointer',
                   transition: 'background 0.3s',
                   flexShrink: 0,
-                  boxShadow: biometricsEnabled ? '0 0 10px rgba(16,185,129,0.4)' : 'none'
+                  boxShadow: biometricsEnabled ? '0 0 10px rgba(16,185,129,0.4)' : 'inset 0 2px 4px rgba(0,0,0,0.3)'
                 }}
               >
                 <div style={{
@@ -229,7 +229,7 @@ export default function Settings({ user, setUser }) {
 
         {/* ── Share & Earn QR Code ─────────────────────────── */}
         {user?.studentId && (() => {
-          const referralUrl = `https://graceandforce.in/register?ref=${encodeURIComponent(user.studentId)}`;
+          const referralUrl = `https://graceandforce.com/register?ref=${encodeURIComponent(user.studentId)}`;
           const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&color=ffffff&bgcolor=0d1117&data=${encodeURIComponent(referralUrl)}`;
           const handleCopy = () => {
             navigator.clipboard.writeText(referralUrl).then(() => {
@@ -238,7 +238,7 @@ export default function Settings({ user, setUser }) {
             });
           };
           return (
-            <div className="card" style={{ padding: '2rem' }}>
+            <div className="card settings-card">
               <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <Share2 size={20} color="#F97316" /> Share & Earn
               </h2>
@@ -306,7 +306,7 @@ export default function Settings({ user, setUser }) {
         })()}
 
         {/* Go Premium / Enrollment Section */}
-        <div className="card" style={{ padding: '2rem' }}>
+        <div className="card settings-card">
           <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <Crown size={20} color="#8b5cf6" /> Go Premium
           </h2>

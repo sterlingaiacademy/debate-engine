@@ -8,6 +8,8 @@ import TranscriptView from '../components/TranscriptView';
 import TypewriterText from '../components/TypewriterText';
 import PremiumEnrollModal from '../components/PremiumEnrollModal';
 import { API_BASE } from '../api';
+import logoImg from '../assets/logo.png';
+import juniorAvatar from '../assets/junior_avatar.png';
 
 const TOPICS = [
   'Should school uniforms be mandatory?',
@@ -37,7 +39,7 @@ export default function DebateArena({ user }) {
   const [transcript, setTranscript] = useState([]);
   const transcriptRef = useRef([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [status, setStatus] = useState('idle'); // idle | connecting | config | active | ended | error | out_of_time
+  const [status, setStatus] = useState('fetching_limits'); // fetching_limits | config | connecting | active | ended | error | out_of_time
   const [maxMinutesAvailable, setMaxMinutesAvailable] = useState(0);
   const [selectedDuration, setSelectedDuration] = useState(5);
   const [customValue, setCustomValue] = useState('');
@@ -46,6 +48,7 @@ export default function DebateArena({ user }) {
   const transcriptEndRef = useRef(null);
   const currentTimerRef = useRef(0);
   const hasStartedRef = useRef(false);
+  const hasEndedRef = useRef(false); // Bug #17 fix: prevent double evaluation
   const conversationIdRef = useRef(null);
   const initialTimerRef = useRef(600);
   const initialDailyRemainingRef = useRef(600);
@@ -163,7 +166,7 @@ export default function DebateArena({ user }) {
     let isTerminated = false;
 
     const fetchLimits = async () => {
-      setStatus('connecting');
+      setStatus('fetching_limits');
       try {
         const res = await fetch(`${API_BASE}/api/time-limits/${user.studentId}`);
         if (isTerminated) return;
@@ -229,8 +232,12 @@ export default function DebateArena({ user }) {
         onDisconnect: () => {
           setIsActive(false); 
           setStatus('ended');
+          // Bug #17 fix: only call handleEndDebate if not already ended
+          // (prevents double evaluation when user manually ends session)
           setTimeout(() => {
-            handleEndDebate();
+            if (!hasEndedRef.current) {
+              handleEndDebate();
+            }
           }, 500);
         },
         onMessage: (msg) => { 
@@ -266,6 +273,10 @@ export default function DebateArena({ user }) {
   };
 
   const handleEndDebate = async () => {
+    // Bug #17 fix: guard against being called twice (by user click + onDisconnect)
+    if (hasEndedRef.current) return;
+    hasEndedRef.current = true;
+
     clearInterval(timerRef.current);
     if (conversationRef.current) {
       try { await conversationRef.current.endSession(); } catch(e) {}
@@ -308,7 +319,8 @@ export default function DebateArena({ user }) {
       console.error('Evaluation failed, using fallback:', err);
     }
 
-    const finalScore = evaluation?.overallScore ?? Math.floor(Math.random() * 20) + 65;
+    // Bug #4 fix: Python judge returns `overall_score` (snake_case), not `overallScore`
+    const finalScore = evaluation?.overall_score ?? 0;
 
 
 
@@ -429,13 +441,95 @@ export default function DebateArena({ user }) {
             </div>
           )}
           
-          {/* Connecting State */}
-          {transcript.length === 0 && (status === 'connecting' || status === 'idle') && (
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', animation: 'fadeIn 0.5s' }}>
-              <AIAvatar isJunior={isJunior} isSpeaking={false} size={120} />
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-                <div className="animate-spin" style={{ width: 44, height: 44, border: '3px solid var(--border)', borderTopColor: 'var(--accent)', borderRadius: '50%' }} />
-                <p className="text-secondary font-semibold">Connecting to your debate buddy…</p>
+          {/* Fetching Limits State */}
+          {status === 'fetching_limits' && (
+            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div className="animate-spin" style={{ width: 40, height: 40, border: '3px solid var(--border)', borderTopColor: 'var(--accent)', borderRadius: '50%' }} />
+            </div>
+          )}
+
+          {/* Connecting State (Versus Screen) */}
+          {transcript.length === 0 && status === 'connecting' && (
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', width: '100%', overflow: 'hidden' }}>
+              {/* Premium Background for VS Screen */}
+              <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 50% 50%, rgba(255,107,0,0.08) 0%, transparent 60%)', zIndex: 0 }} />
+              <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 30% 30%, rgba(139,92,246,0.05) 0%, transparent 50%)', zIndex: 0 }} />
+              <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '30px 30px', opacity: 0.5, zIndex: 0 }} />
+
+              <style>{`
+                @keyframes slideRight { 
+                  0% { transform: translateX(-100px) scale(0.9); opacity: 0; } 
+                  100% { transform: translateX(0) scale(1); opacity: 1; } 
+                }
+                @keyframes slideLeft { 
+                  0% { transform: translateX(100px) scale(0.9); opacity: 0; } 
+                  100% { transform: translateX(0) scale(1); opacity: 1; } 
+                }
+                @keyframes vsPulse { 
+                  0%, 100% { transform: scale(1) rotate(-5deg); box-shadow: 0 0 20px rgba(255,107,0,0.4); } 
+                  50% { transform: scale(1.15) rotate(5deg); box-shadow: 0 0 40px rgba(255,107,0,0.8), inset 0 0 10px rgba(255,255,255,0.5); } 
+                }
+                @keyframes glowExpand {
+                  0% { width: 0; opacity: 0; }
+                  100% { width: 100%; opacity: 1; }
+                }
+                .vs-screen { display: flex; align-items: center; justify-content: center; gap: 4rem; width: 100%; max-width: 900px; padding: 2rem; position: relative; zIndex: 10; }
+                @media(max-width: 600px) { .vs-screen { flex-direction: column; gap: 2rem; } }
+              `}</style>
+
+              <div className="vs-screen">
+                {/* Connecting Line between Avatars */}
+                <div style={{ position: 'absolute', top: '50%', left: '10%', right: '10%', height: '2px', background: 'linear-gradient(90deg, transparent, rgba(255,107,0,0.5), rgba(139,92,246,0.5), transparent)', zIndex: -1, animation: 'glowExpand 1s ease-out both' }} />
+
+                {/* AI Side */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem', animation: 'slideRight 0.7s cubic-bezier(0.16,1,0.3,1) both' }}>
+                  <div style={{ 
+                    width: 140, height: 140, borderRadius: '50%', 
+                    background: isJunior ? 'linear-gradient(135deg, #f0f9ff, #e0f2fe)' : 'linear-gradient(135deg, #0f172a, #1e293b)', 
+                    border: isJunior ? 'none' : '4px solid rgba(255,107,0,0.4)', 
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', 
+                    boxShadow: '0 15px 35px rgba(0,0,0,0.4), 0 0 40px rgba(255,107,0,0.15)',
+                    position: 'relative'
+                  }}>
+                    <img src={isJunior ? juniorAvatar : logoImg} alt="AI" style={{ width: isJunior ? '100%' : '65%', height: isJunior ? '100%' : 'auto', objectFit: 'cover' }} />
+                  </div>
+                  <span style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--text-primary)', letterSpacing: '0.08em', textTransform: 'uppercase', textShadow: '0 4px 12px rgba(0,0,0,0.3)' }}>
+                    {isJunior ? 'Leo' : 'G FORCE'}
+                  </span>
+                </div>
+
+                {/* VS Badge */}
+                <div style={{
+                  width: 75, height: 75, borderRadius: '50%', background: 'linear-gradient(135deg, #FF6B00 0%, #E8392A 100%)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '2.2rem', fontWeight: 900, fontStyle: 'italic',
+                  animation: 'vsPulse 1.5s infinite ease-in-out', zIndex: 10, flexShrink: 0,
+                  border: '4px solid var(--bg-primary)'
+                }}>
+                  VS
+                </div>
+
+                {/* User Side */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem', animation: 'slideLeft 0.7s cubic-bezier(0.16,1,0.3,1) both 0.15s' }}>
+                  <div style={{ 
+                    width: 140, height: 140, borderRadius: '50%', 
+                    background: 'linear-gradient(135deg, rgba(139,92,246,0.15), rgba(139,92,246,0.3))', 
+                    border: '4px solid var(--accent)', 
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', fontWeight: 900, color: '#fff', overflow: 'hidden', 
+                    boxShadow: '0 15px 35px rgba(139,92,246,0.2), 0 0 40px rgba(139,92,246,0.15)' 
+                  }}>
+                    {user?.avatar ? <img src={user.avatar} alt="" style={{ width:'100%', height:'100%', objectFit:'cover' }} /> : user?.name?.charAt(0).toUpperCase()}
+                  </div>
+                  <span style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--text-primary)', letterSpacing: '0.08em', textTransform: 'uppercase', textShadow: '0 4px 12px rgba(0,0,0,0.3)' }}>
+                    {user?.name?.split(' ')[0] || 'You'}
+                  </span>
+                </div>
+              </div>
+              
+              <div style={{ marginTop: '3.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', animation: 'fadeIn 1s both 0.8s', zIndex: 10 }}>
+                <div className="animate-spin" style={{ width: 40, height: 40, border: '4px solid var(--border)', borderTopColor: 'var(--accent)', borderRadius: '50%' }} />
+                <p style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.15em', background: 'linear-gradient(90deg, var(--accent), #e879f9)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                  Entering Arena
+                </p>
               </div>
             </div>
           )}
@@ -523,11 +617,9 @@ export default function DebateArena({ user }) {
                   <TranscriptView transcript={transcript} agentName="G FORCE" />
                 )}
 
-                {isJunior && (
-                  <div style={{ position: 'relative', marginBottom: '2rem' }}>
-                    <AIAvatar isJunior={isJunior} isSpeaking={isSpeaking} interactionCount={transcript.length} size={window.innerWidth < 640 ? 140 : 240} />
-                  </div>
-                )}
+                <div style={{ position: 'relative', marginBottom: '2rem' }}>
+                  <AIAvatar isJunior={isJunior} isSpeaking={isSpeaking} interactionCount={transcript.length} size={window.innerWidth < 640 ? 140 : 200} />
+                </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
                   <h3 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0, color: 'var(--text-primary)' }}>
@@ -542,8 +634,9 @@ export default function DebateArena({ user }) {
               </div>
 
               <div style={{
-                display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: 'auto', marginBottom: '2rem', zIndex: 10,
-                background: isJunior ? 'rgba(255,255,255,0.5)' : 'rgba(30,41,59,0.5)', 
+                position: 'absolute', bottom: 'calc(env(safe-area-inset-bottom, 0px) + 1.5rem)', zIndex: 50,
+                display: 'flex', alignItems: 'center', gap: '0.75rem', 
+                background: isJunior ? 'rgba(255,255,255,0.7)' : 'rgba(30,41,59,0.8)', 
                 backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)',
                 padding: '0.75rem', borderRadius: '40px', 
                 boxShadow: '0 8px 32px rgba(0,0,0,0.3)', border: isJunior ? '1px solid rgba(139,92,246,0.2)' : '1px solid rgba(255,255,255,0.08)'

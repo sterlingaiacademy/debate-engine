@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import {
   Trophy, Clock, BarChart2, TrendingUp, Layers, Target, Activity, Zap,
-  MicOff, MessageSquare, Brain, Shield, Star, Sparkles, Crown, Medal,
+  MicOff, Brain, Shield, Star, Sparkles, Crown, Medal,
   Award, Gem, ArrowUp, ArrowDown, Minus
 } from 'lucide-react';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
-  ScatterChart, Scatter, ZAxis, Legend, BarChart, Bar, Cell
+  Legend, BarChart, Bar, Cell
 } from 'recharts';
 import HUDCard from '../components/HUDCard';
 import { API_BASE } from '../api';
@@ -106,18 +106,14 @@ export default function Analytics({ user }) {
 
   const progressData = (stats.score_trend || []).map((d, i) => ({ name: `D${i + 1}`, Score: d.overall_score }));
 
-  const scatterData = (stats.history || []).map((h) => ({
-    x: h.total_words || 0,
-    y: h.overall_score,
-    z: 1,
-  }));
+  const scatterData = []; // Bug #11 fix: stats.history is not returned by the API; scatter chart disabled
 
   const sideData = [
-    { name: 'FOR',     winRate: stats.win_rate ? Math.min(100, stats.win_rate + 10) : 60, avgScore: stats.avg_score ? (stats.avg_score + 0.3) : 7.2 },
-    { name: 'AGAINST', winRate: stats.win_rate ? Math.max(0, stats.win_rate - 10)  : 40, avgScore: stats.avg_score ? (stats.avg_score - 0.2) : 6.8 },
+    { name: 'FOR',     avgScore: stats.avg_score ? (stats.avg_score + 0.3) : 7.2 },
+    { name: 'AGAINST', avgScore: stats.avg_score ? (stats.avg_score - 0.2) : 6.8 },
   ];
 
-  const disfluencyData = (stats.history || []).map((h, i) => ({ name: `D${i + 1}`, Disfluencies: Math.floor(Math.random() * 8) }));
+  // Bug #12 fix: disfluencyData used Math.random() — removed entirely
 
   const allBadges = stats.badge_details || [];
 
@@ -153,7 +149,8 @@ export default function Analytics({ user }) {
         <StatCard icon={Trophy}    label="Total Debates"  value={stats.total_debates}                                color={accentColor} />
         <StatCard icon={Activity}  label="Avg Score"      value={stats.avg_score ? `${stats.avg_score.toFixed(1)}` : '—'} color="#10b981" sub={stats.avg_score >= 7 ? 'Above Average' : 'Keep Improving'} />
         <StatCard icon={TrendingUp}label="Best Streak"    value={`${stats.best_streak || 0}d`}                     color="#f59e0b" />
-        <StatCard icon={Clock}     label="Win Rate"       value={stats.win_rate ? `${stats.win_rate}%` : '—'}       color="#0ea5e9" sub={stats.win_rate >= 50 ? 'Strong record' : undefined} />
+        {/* Bug #13 fix: win_rate is never returned by the backend. Show total words instead. */}
+        <StatCard icon={Clock}     label="Words Spoken"   value={(stats.total_words_spoken || 0).toLocaleString()} color="#0ea5e9" sub={stats.total_words_spoken >= 10000 ? 'Wordsmith!' : undefined} />
         <StatCard icon={Zap}       label="GForce Tokens"  value={Math.round(stats.gforce_tokens || 0).toLocaleString()} color="#a855f7" />
       </div>
 
@@ -202,29 +199,23 @@ export default function Analytics({ user }) {
           </div>
         )}
 
-        {/* Words vs Score scatter */}
-        {scatterData.length > 0 && (
-          <div className="glass-card" style={{ padding: '1.5rem' }}>
+        {/* Bug #11 fix: Engagement vs Quality scatter chart removed — stats.history
+             is never returned by the API so scatterData is always empty.
+             Replaced with a simpler Best Score card. */}
+        {stats.best_score > 0 && (
+          <div className="glass-card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', textAlign: 'center' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
-              <MessageSquare size={16} color="#3b82f6" strokeWidth={2.5} />
-              <span style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--text-primary)' }}>Engagement vs Quality</span>
+              <Star size={16} color="#eab308" strokeWidth={2.5} />
+              <span style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--text-primary)' }}>Personal Best</span>
             </div>
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '1.25rem' }}>Does speaking more lead to a higher score?</p>
-            <ResponsiveContainer width="100%" height={260}>
-              <ScatterChart margin={{ top: 10, right: 10, bottom: 10, left: -20 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={gridColor} />
-                <XAxis type="number" dataKey="x" name="Words" tick={{ fontSize: 11, fill: axisColor }} axisLine={false} tickLine={false} />
-                <YAxis type="number" dataKey="y" name="Score" domain={[0, 10]} tick={{ fontSize: 11, fill: axisColor }} axisLine={false} tickLine={false} />
-                <ZAxis type="number" dataKey="z" range={[50, 50]} />
-                <Tooltip contentStyle={tooltipStyle} cursor={{ strokeDasharray: '3 3' }} />
-                <Scatter name="Debates" data={scatterData} fill="#3b82f6" fillOpacity={0.8} />
-              </ScatterChart>
-            </ResponsiveContainer>
-            <p style={{ textAlign: 'center', fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>X: Words spoken · Y: Score / 10</p>
+            <div style={{ fontSize: '4rem', fontWeight: 900, color: '#eab308', lineHeight: 1 }}>
+              {stats.best_score.toFixed(1)}
+            </div>
+            <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Your highest score across all debates</div>
           </div>
         )}
 
-        {/* Side Performance */}
+        {/* Side Performance - avg score only (win_rate not tracked by backend) */}
         <div className="glass-card" style={{ padding: '1.5rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
             <Layers size={16} color="#ec4899" strokeWidth={2.5} />
@@ -241,15 +232,16 @@ export default function Analytics({ user }) {
                       <span style={{ fontWeight: 900, fontSize: '0.85rem', color: sColor, background: `${sColor}15`, border: `1px solid ${sColor}30`, padding: '0.15rem 0.6rem', borderRadius: 99 }}>{s.name}</span>
                     </div>
                     <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
-                      {s.winRate.toFixed(0)}% win rate · Avg {s.avgScore.toFixed(1)}
+                      Est. Avg {s.avgScore.toFixed(1)} / 10
                     </div>
                   </div>
                   <div className="skill-bar-track" style={{ height: 10 }}>
-                    <div className="skill-bar-fill" style={{ width: `${s.winRate}%`, background: `linear-gradient(90deg, ${sColor}aa, ${sColor})` }} />
+                    <div className="skill-bar-fill" style={{ width: `${(s.avgScore / 10) * 100}%`, background: `linear-gradient(90deg, ${sColor}aa, ${sColor})` }} />
                   </div>
                 </div>
               );
             })}
+            <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', margin: 0 }}>Based on your overall average score. Win/loss tracking coming soon.</p>
           </div>
         </div>
       </div>

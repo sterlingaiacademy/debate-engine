@@ -48,9 +48,10 @@ export default function GoogleCallback({ onLogin }) {
         
         const data = await res.json();
         
-        if (res.ok && data.success) {
+        if (res.ok) {
+            localStorage.setItem('token', data.token);
             onLogin(data.user);
-            navigate('/');
+            navigate('/dashboard');
         } else {
             localStorage.setItem('pendingGoogleProfile', JSON.stringify({
                 email: profile.email,

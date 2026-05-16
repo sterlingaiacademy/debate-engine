@@ -10,8 +10,13 @@ function parseDbUrl(url) {
   try {
     // Handle postgresql:// and postgres:// schemes
     const clean = url.replace(/^postgresql:\/\//, '').replace(/^postgres:\/\//, '');
-    const [userInfo, hostInfo] = clean.split('@');
-    const [user, password] = userInfo.split(':');
+    const atIdx = clean.lastIndexOf('@');
+    const userInfo = clean.slice(0, atIdx);
+    const hostInfo = clean.slice(atIdx + 1);
+    // Bug #6 fix: split only on the FIRST colon so passwords containing ':' are not truncated
+    const colonIdx = userInfo.indexOf(':');
+    const user = userInfo.slice(0, colonIdx);
+    const password = userInfo.slice(colonIdx + 1);
     const [hostPort, database] = hostInfo.split('/');
     const [host, port] = hostPort.split(':');
     return { user, password, host, port: parseInt(port) || 5432, database };
@@ -70,12 +75,39 @@ async function initDB() {
     await addColumnSafeUsers('dailyPersonaTime', 'INTEGER', '0');
     await addColumnSafeUsers('grade', 'TEXT', "''");
     await addColumnSafeUsers('dailyChallengeCompleted', 'TEXT', "''"); // YYYY-MM-DD IST
+    await addColumnSafeUsers('dailyVocabClaimed', 'TEXT', "''"); // vocab:YYYY-MM-DD idempotency key
 
     const addColumnSafeDebateUsers = async (col, type, def) => {
       try {
         await client.query(`ALTER TABLE debate_users ADD COLUMN IF NOT EXISTS "${col}" ${type} DEFAULT ${def}`);
       } catch (e) { /* Already exists */ }
     };
+
+    // Bug #21 fix: create debate_users table BEFORE trying to ALTER it.
+    // On fresh deployments the table doesn't exist yet, making every ALTER fail silently.
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS debate_users (
+        id           SERIAL PRIMARY KEY,
+        user_id      TEXT UNIQUE NOT NULL,
+        username     TEXT DEFAULT '',
+        class        TEXT DEFAULT '',
+        grade        TEXT DEFAULT '',
+        gforce_tokens REAL DEFAULT 100,
+        total_debates INTEGER DEFAULT 0,
+        total_wins   INTEGER DEFAULT 0,
+        best_score   REAL DEFAULT 0,
+        avg_score    REAL DEFAULT 0,
+        current_streak INTEGER DEFAULT 0,
+        longest_streak INTEGER DEFAULT 0,
+        total_words_spoken INTEGER DEFAULT 0,
+        badges       JSONB DEFAULT '[]',
+        avatar_url   TEXT DEFAULT '',
+        school       TEXT DEFAULT '',
+        country      TEXT DEFAULT '',
+        updated_at   TIMESTAMPTZ DEFAULT NOW()
+      )
+    `);
+
     await addColumnSafeDebateUsers('grade', 'TEXT', "''");
 
     // Argument Bank table

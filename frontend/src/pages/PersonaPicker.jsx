@@ -97,11 +97,22 @@ export default function PersonaPicker({ user }) {
         </span>
       </div>
 
-      {/* Grid */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
-        gap: '1rem',
+      {/* Carousel */}
+      <style>{`
+        .carousel-hide-scroll::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
+      <div className="carousel-hide-scroll" style={{
+        display: 'flex',
+        overflowX: 'auto',
+        scrollSnapType: 'x mandatory',
+        gap: '1.5rem',
+        paddingBottom: '2rem',
+        paddingLeft: 'max(1rem, calc(50vw - 110px))',
+        paddingRight: 'max(1rem, calc(50vw - 110px))',
+        scrollbarWidth: 'none',
+        msOverflowStyle: 'none',
       }}>
         {(user?.classLevel === 'Level 5' ? LEVEL_5_PERSONAS : LEVEL_4_PERSONAS).map((persona) => {
           const isLive = !!persona.agentId;
@@ -115,17 +126,20 @@ export default function PersonaPicker({ user }) {
               title={isLive ? `Talk to ${persona.name}` : 'Coming Soon'}
               style={{
                 cursor: isLive ? 'pointer' : 'not-allowed',
+                scrollSnapAlign: 'center',
+                flexShrink: 0,
+                width: '220px',
                 border: `2px solid ${isLive ? colors.border : 'rgba(255,255,255,0.05)'}`,
-                borderRadius: '16px',
-                padding: '1.25rem 0.75rem 1rem',
+                borderRadius: '24px',
+                padding: '2rem 1rem 1.5rem',
                 background: isLive ? colors.bg : 'rgba(255,255,255,0.02)',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                gap: '0.625rem',
+                gap: '1rem',
                 textAlign: 'center',
                 transition: 'transform 0.18s, box-shadow 0.18s, background 0.18s',
-                boxShadow: isLive ? `0 2px 12px ${colors.border}15` : 'none',
+                boxShadow: isLive ? `0 8px 32px ${colors.border}25` : 'none',
                 opacity: isLive ? 1 : 0.65,
                 position: 'relative',
               }}
@@ -153,21 +167,22 @@ export default function PersonaPicker({ user }) {
 
               {/* Avatar / Image */}
               <div style={{
-                width: 72, height: 72,
+                width: 96, height: 96,
                 borderRadius: '50%',
                 background: isLive ? `linear-gradient(135deg, ${colors.border}33, ${colors.border}66)` : 'rgba(255,255,255,0.05)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                border: `2px solid ${isLive ? colors.border : 'rgba(255,255,255,0.1)'}`,
+                border: `3px solid ${isLive ? colors.border : 'rgba(255,255,255,0.1)'}`,
                 flexShrink: 0,
-                overflow: 'hidden'
+                overflow: 'hidden',
+                boxShadow: `0 8px 24px ${colors.border}40`,
               }}>
                 <img src={persona.image} alt={persona.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
 
               {/* Name */}
               <p style={{
-                fontWeight: 700,
-                fontSize: '0.8rem',
+                fontWeight: 800,
+                fontSize: '1rem',
                 lineHeight: 1.3,
                 color: isLive ? colors.text : '#64748b',
                 margin: 0,
@@ -177,9 +192,9 @@ export default function PersonaPicker({ user }) {
 
               {/* Category tag */}
               <span style={{
-                fontSize: '0.68rem',
-                fontWeight: 600,
-                padding: '0.15rem 0.5rem',
+                fontSize: '0.75rem',
+                fontWeight: 700,
+                padding: '0.25rem 0.75rem',
                 borderRadius: '999px',
                 background: isLive ? `${colors.border}22` : 'rgba(255,255,255,0.03)',
                 color: isLive ? colors.text : 'rgba(255,255,255,0.5)',
@@ -190,8 +205,8 @@ export default function PersonaPicker({ user }) {
 
               {/* CTA */}
               <span style={{
-                fontSize: '0.72rem',
-                fontWeight: 700,
+                fontSize: '0.85rem',
+                fontWeight: 800,
                 color: isLive ? colors.text : '#94a3b8',
                 marginTop: '0.1rem',
               }}>

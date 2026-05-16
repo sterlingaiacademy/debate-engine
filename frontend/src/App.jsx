@@ -63,13 +63,22 @@ function App() {
 
   useEffect(() => {
     // Standard Custom JWT LocalStorage check
-    const storedUser = localStorage.getItem('user');
-    const storedToken = localStorage.getItem('token');
-    
-    if (storedUser && storedToken) {
-      setUser(JSON.parse(storedUser));
-    } else if (window.location.pathname !== '/' && window.location.pathname !== '/login' && !window.location.pathname.includes('/register')) {
-      // Clear invalid state
+    try {
+      const storedUser = localStorage.getItem('user');
+      const storedToken = localStorage.getItem('token');
+      
+      if (storedUser && storedToken) {
+        // Bug #7 fix: JSON.parse can throw on corrupted data; catch it to avoid
+        // an unhandled exception that leaves the app stuck on the spinner.
+        setUser(JSON.parse(storedUser));
+      } else if (window.location.pathname !== '/' && window.location.pathname !== '/login' && !window.location.pathname.includes('/register')) {
+        // Clear invalid state
+        setUser(null);
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+      }
+    } catch (e) {
+      // Corrupted localStorage — clear it and start fresh
       setUser(null);
       localStorage.removeItem('user');
       localStorage.removeItem('token');
@@ -174,6 +183,7 @@ function App() {
                 : <Register onLogin={handleLogin} />
             } />
             <Route path="/auth/google/callback" element={<GoogleCallback onLogin={handleLogin} />} />
+            <Route path="/google-callback" element={<GoogleCallback onLogin={handleLogin} />} />
             
             <Route element={<Layout user={user} onLogout={handleLogout} onSwitchProfile={handleSwitchProfile} />}>
               <Route path="/dashboard" element={user ? <Dashboard user={user} setUser={setUser} /> : <Navigate to="/" />} />

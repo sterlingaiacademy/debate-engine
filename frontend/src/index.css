@@ -394,6 +394,31 @@ body {
 .z-10     { z-index: 10; }
 .z-50     { z-index: 50; }
 
+/* Hide scrollbars completely on mobile */
+@media (max-width: 900px) {
+  *::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
+  }
+  * {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+.no-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
 .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
 .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; }
 .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; }
@@ -577,6 +602,62 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; }
 .theme-junior .mode-card:hover {
   box-shadow: 0 16px 40px rgba(124,58,237,0.15);
   border-color: rgba(124,58,237,0.25);
+}
+
+/* ================================================================
+   SETTINGS LAYOUT
+   ================================================================ */
+.settings-container {
+  padding: 2rem;
+  padding-bottom: 7rem;
+}
+.settings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.settings-card {
+  padding: 2rem;
+}
+
+/* ================================================================
+   DASHBOARD MOBILE-SPECIFIC LAYOUT
+   ================================================================ */
+@media (max-width: 900px) {
+  .settings-container {
+    padding: 0 !important;
+    padding-bottom: 6rem !important;
+  }
+  .settings-list {
+    gap: 0 !important;
+  }
+  .settings-card {
+    padding: 1.5rem 1.25rem !important;
+    border-radius: 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-top: none !important;
+    margin-bottom: 0 !important;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .welcome-card {
+    border-radius: 20px !important;
+    padding: 1.25rem 1.5rem !important;
+  }
+  .modes-container {
+    display: flex !important;
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1rem;
+    flex-wrap: nowrap !important;
+    gap: 1rem;
+  }
+  .modes-container > div {
+    flex: 0 0 280px !important;
+    scroll-snap-align: start;
+  }
 }
 
 /* ================================================================

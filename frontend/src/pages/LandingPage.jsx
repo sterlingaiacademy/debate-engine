@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import logoImg from '../assets/logo.png';
 import { GradientBars } from '../components/ui/gradient-bars';
 import { TrustElements } from '../components/ui/trust-elements';
@@ -210,6 +210,25 @@ function FaqItem({ q, a }) {
 
 /* ─── MAIN COMPONENT ─── */
 export default function LandingPage() {
+  const isMobileApp = window.isReactNativeWebView || window.navigator.userAgent.includes('GraceAndForce');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // The WebView injects window.isReactNativeWebView asynchronously
+    // We check periodically for the first 2 seconds
+    const checkTimer = setInterval(() => {
+      if (window.isReactNativeWebView || window.navigator.userAgent.includes('GraceAndForce')) {
+        navigate('/login', { replace: true });
+      }
+    }, 100);
+    setTimeout(() => clearInterval(checkTimer), 2000);
+    return () => clearInterval(checkTimer);
+  }, [navigate]);
+
+  if (isMobileApp) {
+    return <Navigate to="/login" replace />;
+  }
+
   useReveal();
   const [navHidden, setNavHidden] = useState(false);
 

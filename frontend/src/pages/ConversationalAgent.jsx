@@ -315,7 +315,23 @@ const formatTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0
               : "Whether you want to learn something new, clear up a doubt, or test yourself with a quiz — I've got you."}
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', width: '100%', maxWidth: '900px' }}>
+          <style>{`
+            .carousel-hide-scroll::-webkit-scrollbar {
+              display: none;
+            }
+          `}</style>
+          <div className="carousel-hide-scroll" style={{ 
+            display: 'flex', 
+            overflowX: 'auto',
+            scrollSnapType: 'x mandatory',
+            gap: '1.5rem', 
+            width: '100%', 
+            paddingBottom: '2rem',
+            paddingLeft: 'max(1rem, calc(50vw - 140px))',
+            paddingRight: 'max(1rem, calc(50vw - 140px))',
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+          }}>
             {TOPICS.map(topic => (
               <div 
                 key={topic.id}
@@ -323,6 +339,9 @@ const formatTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0
                 onMouseLeave={() => setHoveredTopic(null)}
                 onClick={() => handleTopicSelect(topic)}
                 style={{
+                  scrollSnapAlign: 'center',
+                  flexShrink: 0,
+                  width: '280px',
                   background: 'var(--bg-primary)', 
                   border: `2px solid ${hoveredTopic === topic.id ? topic.color : 'var(--border)'}`, 
                   borderRadius: '24px', 
