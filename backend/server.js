@@ -309,6 +309,23 @@ app.get('/api/user-by-email/:email', async (req, res) => {
   }
 });
 
+// Get Latest User Profile (for syncing subscription status)
+app.get('/api/me/:studentId', async (req, res) => {
+  try {
+    const { studentId } = req.params;
+    const { rows } = await db.query(
+      `SELECT name, "studentId", "classLevel", grade, "assignedAgentId", email, avatar, phone, subscription_plan, subscription_period FROM users WHERE "studentId" = $1`,
+      [studentId]
+    );
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.json({ user: rows[0] });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Upload Avatar
 app.post('/api/user/avatar', async (req, res) => {
   const { studentId, avatar } = req.body;

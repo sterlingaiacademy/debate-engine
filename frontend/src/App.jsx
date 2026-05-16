@@ -58,6 +58,23 @@ function App() {
 
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
 
+  // Sync user profile on mount
+  useEffect(() => {
+    if (user?.studentId) {
+      fetch(`${API_BASE}/api/me/${user.studentId}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.user) {
+            // Merge with existing user data (to keep token if we stored it there, though we use localStorage)
+            const updatedUser = { ...user, ...data.user };
+            setUser(updatedUser);
+            localStorage.setItem('user', JSON.stringify(updatedUser));
+          }
+        })
+        .catch(err => console.error("Failed to sync user profile:", err));
+    }
+  }, []);
+
   useEffect(() => {
     const scale = localStorage.getItem('fontScale');
     if (scale) {
