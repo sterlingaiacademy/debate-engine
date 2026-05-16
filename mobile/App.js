@@ -222,6 +222,21 @@ export default function App() {
           javaScriptEnabled={true}
           domStorageEnabled={true}
           startInLoadingState={true}
+          originWhitelist={['*']}
+          onShouldStartLoadWithRequest={(request) => {
+            const url = request.url;
+            // Standard web URLs should load normally in the WebView
+            if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('about:blank')) {
+              return true;
+            }
+            // Custom schemes (upi://, intent://, etc.) should be opened by the native OS
+            Linking.canOpenURL(url).then((supported) => {
+              if (supported) {
+                Linking.openURL(url);
+              }
+            }).catch(err => console.error('Error opening URL', err));
+            return false;
+          }}
           renderLoading={() => (
             <View style={styles.webViewLoadingContainer}>
               <ActivityIndicator size="large" color="#FF6B00" />

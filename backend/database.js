@@ -74,6 +74,8 @@ async function initDB() {
     await addColumnSafeUsers('dailyRankedTime', 'INTEGER', '0');
     await addColumnSafeUsers('dailyPersonaTime', 'INTEGER', '0');
     await addColumnSafeUsers('grade', 'TEXT', "''");
+    await addColumnSafeUsers('subscription_plan', 'TEXT', "'free'"); // 'free', 'pro', 'max'
+    await addColumnSafeUsers('subscription_period', 'TEXT', "''"); // 'monthly', 'yearly'
     await addColumnSafeUsers('dailyChallengeCompleted', 'TEXT', "''"); // YYYY-MM-DD IST
     await addColumnSafeUsers('dailyVocabClaimed', 'TEXT', "''"); // vocab:YYYY-MM-DD idempotency key
 

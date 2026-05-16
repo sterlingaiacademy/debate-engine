@@ -22,6 +22,7 @@ const ConversationalAgent = lazy(() => import('./pages/ConversationalAgent'));
 const DebateInstructions = lazy(() => import('./pages/DebateInstructions'));
 const VocabTrainer = lazy(() => import('./pages/VocabTrainer'));
 const WordScramble = lazy(() => import('./pages/WordScramble'));
+const PremiumSuccess = lazy(() => import('./pages/PremiumSuccess'));
 
 function App() {
   
@@ -195,6 +196,8 @@ function App() {
               <Route path="/persona-debate" element={user ? <PersonaDebate user={user} /> : <Navigate to="/" />} />
               <Route path="/mock-un" element={user ? <MockUN user={user} /> : <Navigate to="/" />} />
               <Route path="/settings" element={user ? <Settings user={user} setUser={setUser} /> : <Navigate to="/" />} />
+              <Route path="/pro-dashboard" element={user ? <PremiumSuccess user={user} plan="pro" /> : <Navigate to="/" />} />
+              <Route path="/max-dashboard" element={user ? <PremiumSuccess user={user} plan="max" /> : <Navigate to="/" />} />
               <Route path="/conversational-agent" element={user ? <ConversationalAgent user={user} /> : <Navigate to="/" />} />
               <Route path="/speech-coach" element={user ? <ConversationalAgent user={user} agentId="agent_7601krh244qdes5s5db2rjhn1kt4" mode="speech-coach" /> : <Navigate to="/" />} />
               <Route path="/debate-instructions" element={user ? <DebateInstructions user={user} /> : <Navigate to="/" />} />

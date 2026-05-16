@@ -2,6 +2,7 @@
 import React, { useState, useRef } from 'react';
 import { Settings as SettingsIcon, Camera, UploadCloud, Loader2, Crown, Phone, School, CheckCircle, Clock, User, Share2, Copy, Check, Shield } from 'lucide-react';
 import { API_BASE } from '../api';
+import PremiumEnrollModal from '../components/PremiumEnrollModal';
 
 export default function Settings({ user, setUser }) {
   const [uploading, setUploading] = useState(false);
@@ -31,48 +32,7 @@ export default function Settings({ user, setUser }) {
     }
   };
 
-  // Enrollment form state
-  const [enrollForm, setEnrollForm] = useState({ parentPhone: '', school: '' });
-  const [enrollSubmitting, setEnrollSubmitting] = useState(false);
-  const [enrollSubmitted, setEnrollSubmitted] = useState(false);
-  const [enrollError, setEnrollError] = useState('');
-
-  const handleEnrollChange = (e) => {
-    setEnrollForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleEnrollSubmit = async (e) => {
-    e.preventDefault();
-    if (!enrollForm.parentPhone || !enrollForm.school) {
-      setEnrollError('Please fill in Parent Phone and School.');
-      return;
-    }
-    setEnrollError('');
-    setEnrollSubmitting(true);
-    try {
-      const res = await fetch(`${API_BASE}/api/enroll`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          studentId: user?.studentId,
-          studentName: user?.name,
-          grade: user?.classLevel,
-          parentPhone: enrollForm.parentPhone,
-          school: enrollForm.school,
-        }),
-      });
-      const data = await res.json();
-      if (res.ok && data.success) {
-        setEnrollSubmitted(true);
-      } else {
-        setEnrollError(data.error || 'Something went wrong. Please try again.');
-      }
-    } catch {
-      setEnrollError('Network error. Please check your connection.');
-    } finally {
-      setEnrollSubmitting(false);
-    }
-  };
+  // Enrollment logic moved to PremiumEnrollModal
 
   const handleImageUpload = (e) => {
     const file = e.target.files?.[0];
@@ -341,101 +301,8 @@ export default function Settings({ user, setUser }) {
             </div>
           </div>
 
-          {/* Enrollment Form or Success */}
-          {enrollSubmitted ? (
-            <div style={{
-              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem',
-              padding: '1.75rem', borderRadius: '14px', textAlign: 'center',
-              background: 'linear-gradient(135deg, rgba(16,185,129,0.07) 0%, rgba(5,150,105,0.07) 100%)',
-              border: '1.5px solid rgba(16,185,129,0.2)',
-            }}>
-              <CheckCircle size={40} color="#10b981" />
-              <h3 style={{ fontWeight: 800, fontSize: '1.1rem', margin: 0 }}>You're on the list! 🎉</h3>
-              <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.6 }}>
-                We'll contact your parents within <strong>24–48 hours</strong> with premium access details.
-              </p>
-            </div>
-          ) : (
-            <form onSubmit={handleEnrollSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-              <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', margin: 0, fontWeight: 600 }}>
-                Interested in Premium? Fill in your parent's contact details — we'll reach out:
-              </p>
-
-              {/* Student Name (read-only) */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', background: 'var(--bg-secondary)', borderRadius: '10px', padding: '0.65rem 0.9rem', border: '1px solid var(--border)' }}>
-                <User size={16} color="var(--text-muted)" style={{ flexShrink: 0 }} />
-                <input
-                  readOnly
-                  value={user?.name || ''}
-                  placeholder="Student Name"
-                  style={{ background: 'transparent', border: 'none', outline: 'none', fontSize: '0.9rem', color: 'var(--text-secondary)', width: '100%', fontFamily: 'inherit', cursor: 'default' }}
-                />
-              </div>
-
-              {/* Class (read-only) */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', background: 'var(--bg-secondary)', borderRadius: '10px', padding: '0.65rem 0.9rem', border: '1px solid var(--border)' }}>
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', flexShrink: 0 }}>🎓</span>
-                <input
-                  readOnly
-                  value={user?.grade || user?.classLevel || ''}
-                  placeholder="Class"
-                  style={{ background: 'transparent', border: 'none', outline: 'none', fontSize: '0.9rem', color: 'var(--text-secondary)', width: '100%', fontFamily: 'inherit', cursor: 'default' }}
-                />
-              </div>
-
-              {/* Parent Phone */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', background: 'var(--bg-secondary)', borderRadius: '10px', padding: '0.65rem 0.9rem', border: '1.5px solid rgba(139,92,246,0.25)' }}>
-                <Phone size={16} color="#8b5cf6" style={{ flexShrink: 0 }} />
-                <input
-                  type="tel"
-                  name="parentPhone"
-                  placeholder="Parent / Guardian Phone *"
-                  value={enrollForm.parentPhone}
-                  onChange={handleEnrollChange}
-                  required
-                  style={{ background: 'transparent', border: 'none', outline: 'none', fontSize: '0.9rem', color: 'var(--text-primary)', width: '100%', fontFamily: 'inherit' }}
-                />
-              </div>
-
-              {/* School */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', background: 'var(--bg-secondary)', borderRadius: '10px', padding: '0.65rem 0.9rem', border: '1.5px solid rgba(139,92,246,0.25)' }}>
-                <School size={16} color="#8b5cf6" style={{ flexShrink: 0 }} />
-                <input
-                  type="text"
-                  name="school"
-                  placeholder="School Name *"
-                  value={enrollForm.school}
-                  onChange={handleEnrollChange}
-                  required
-                  style={{ background: 'transparent', border: 'none', outline: 'none', fontSize: '0.9rem', color: 'var(--text-primary)', width: '100%', fontFamily: 'inherit' }}
-                />
-              </div>
-
-              {enrollError && (
-                <p style={{ color: '#ef4444', fontSize: '0.8rem', margin: 0, fontWeight: 600 }}>{enrollError}</p>
-              )}
-
-              <button
-                type="submit"
-                disabled={enrollSubmitting}
-                style={{
-                  background: 'linear-gradient(90deg, #8b5cf6, #d946ef)',
-                  border: 'none', padding: '0.8rem 1.5rem', borderRadius: '10px',
-                  color: '#fff', fontWeight: 700, cursor: enrollSubmitting ? 'not-allowed' : 'pointer',
-                  opacity: enrollSubmitting ? 0.7 : 1,
-                  boxShadow: '0 4px 14px rgba(139,92,246,0.35)',
-                  transition: 'transform 0.2s',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
-                  fontSize: '0.95rem',
-                }}
-                onMouseEnter={e => { if (!enrollSubmitting) e.currentTarget.style.transform = 'translateY(-2px)'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'none'; }}
-              >
-                <Crown size={16} />
-                {enrollSubmitting ? 'Submitting…' : 'Enroll for Premium →'}
-              </button>
-            </form>
-          )}
+          {/* Premium Enroll Modal Component */}
+          <PremiumEnrollModal user={user} mode="settings" onDismiss={() => {}} />
         </div>
       </div>
     </div>

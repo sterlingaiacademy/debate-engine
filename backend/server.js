@@ -11,6 +11,13 @@ const db = require('./database');
 const JWT_SECRET = process.env.JWT_SECRET || 'grace_and_force_super_secret_key_2026';
 const { exec } = require('child_process');
 const fs = require('fs');
+const crypto = require('crypto');
+const Razorpay = require('razorpay');
+
+const razorpayInstance = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID || 'rzp_live_SpxzVJVdO5A5xr',
+  key_secret: process.env.RAZORPAY_SECRET || 'KTWnYhmt800Y7TSQ6Cc6TBpF'
+});
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -169,7 +176,8 @@ app.post('/api/auth/google', async (req, res) => {
         grade: user.grade || '',
         assignedAgentId: user.assignedAgentId, 
         email: user.email, 
-        avatar: user.avatar 
+        avatar: user.avatar,
+        subscriptionPlan: user.subscription_plan || 'free'
       },
       token
     });
@@ -212,7 +220,8 @@ app.post('/api/login', async (req, res) => {
         grade: user.grade || '',
         assignedAgentId: user.assignedAgentId, 
         email: user.email, 
-        phone: user.phone 
+        phone: user.phone,
+        subscriptionPlan: user.subscription_plan || 'free'
       },
       token
     });
@@ -264,7 +273,7 @@ app.get('/api/check-username/:username', async (req, res) => {
 app.get('/api/user-by-email/:email', async (req, res) => {
   try {
     const { email } = req.params;
-    const { rows } = await db.query(`SELECT id, name, "studentId", "classLevel", "assignedAgentId", avatar, grade FROM users WHERE email = $1`, [email]);
+    const { rows } = await db.query(`SELECT id, name, "studentId", "classLevel", "assignedAgentId", avatar, grade, subscription_plan, subscription_period FROM users WHERE email = $1`, [email]);
     if (rows.length === 0) {
       return res.status(404).json({ error: 'User not found' });
     }
@@ -313,9 +322,11 @@ app.get('/api/time-limits/:studentId', async (req, res) => {
       user.dailyPersonaTime = 0;
     }
     
-    // Calculate remaining limits (600 seconds = 10 minutes)
-    // The user requested a single shared 10-minute pool across all levels for both Ranked and Persona
-    const LIMIT = 600;
+    // Calculate remaining limits
+    let LIMIT = 600; // Free: 10 minutes
+    if (user.subscription_plan === 'pro') LIMIT = 1200; // Pro: 20 minutes
+    if (user.subscription_plan === 'max') LIMIT = 3600; // Max: 60 minutes
+    
     const used = (user.dailyRankedTime || 0) + (user.dailyPersonaTime || 0);
     const sharedRemaining = Math.max(0, LIMIT - used);
     
@@ -326,7 +337,9 @@ app.get('/api/time-limits/:studentId', async (req, res) => {
       remainingRanked,
       remainingPersona,
       dailyRankedTime: user.dailyRankedTime || 0,
-      dailyPersonaTime: user.dailyPersonaTime || 0
+      dailyPersonaTime: user.dailyPersonaTime || 0,
+      subscriptionPlan: user.subscription_plan || 'free',
+      limitTotal: LIMIT
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -360,6 +373,79 @@ app.post('/api/time-sync', async (req, res) => {
     
     res.json({ success: true });
   } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+// Payment API
+app.post('/api/payment/create-order', async (req, res) => {
+  try {
+    const { amount, currency = 'INR', receipt } = req.body;
+    
+    if (!amount) {
+      return res.status(400).json({ error: 'Amount is required' });
+    }
+    
+    const options = {
+      amount: amount * 100, // amount in smallest currency unit (paise)
+      currency,
+      receipt: receipt || `receipt_${Date.now()}`
+    };
+    
+    const order = await razorpayInstance.orders.create(options);
+    if (!order) return res.status(500).json({ error: 'Some error occurred while creating order' });
+    
+    res.json(order);
+  } catch (err) {
+    console.error('Razorpay Create Order Error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/payment/verify', async (req, res) => {
+  try {
+    const { 
+      razorpayOrderId, 
+      razorpayPaymentId, 
+      signature, 
+      studentId, 
+      plan, 
+      period 
+    } = req.body;
+    
+    if (!razorpayOrderId || !razorpayPaymentId || !signature) {
+      return res.status(400).json({ error: 'Missing payment details' });
+    }
+    
+    // Verify signature
+    const secret = process.env.RAZORPAY_SECRET || 'KTWnYhmt800Y7TSQ6Cc6TBpF';
+    const body = razorpayOrderId + "|" + razorpayPaymentId;
+    const expectedSignature = crypto
+      .createHmac("sha256", secret)
+      .update(body.toString())
+      .digest("hex");
+      
+    // Because we might not have the correct secret locally right now,
+    // if the signature doesn't match but we have a dummy secret, we might fail.
+    // We will enforce signature check, so the user MUST set RAZORPAY_SECRET.
+    const isValid = expectedSignature === signature;
+    if (!isValid && secret !== 'fallback_secret') {
+      return res.status(400).json({ error: 'Invalid payment signature' });
+    } else if (!isValid && secret === 'fallback_secret') {
+      // Allow bypass ONLY if secret is still the dummy one (for testing if they haven't set it yet)
+      console.warn("WARNING: Bypassing signature verification because RAZORPAY_SECRET is not set.");
+    }
+    
+    // Payment verified, update database
+    await db.query(
+      `UPDATE users SET subscription_plan = $1, subscription_period = $2 WHERE "studentId" = $3`,
+      [plan, period, studentId]
+    );
+    
+    res.json({ success: true, message: 'Payment verified and plan updated successfully' });
+  } catch (err) {
+    console.error('Razorpay Verify Error:', err);
     res.status(500).json({ error: err.message });
   }
 });
