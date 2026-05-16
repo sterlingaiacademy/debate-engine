@@ -30,28 +30,29 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
   ];
 
   // Dynamically filter available plans based on what the user already has
+  // NOTE: Use subscription_plan for UI filtering (shows correct options visually).
+  // The actual payment endpoint (create vs upgrade) is separately guarded by subscription_status.
   const availablePlans = plans.filter(p => {
-    // Only restrict options if the user has a genuinely ACTIVE subscription
-    // If status is cancelled, halted, created, or missing — treat them as a new subscriber
-    const hasActiveSub = user?.subscription_plan &&
-                         user.subscription_plan !== 'free' &&
-                         user?.subscription_status === 'active';
+    // If user has no plan or a free plan, show everything
+    if (!user?.subscription_plan || user?.subscription_plan === 'free') return true;
 
-    if (!hasActiveSub) return true;
-    
     const currentPlan = user.subscription_plan;
     const currentPeriod = user.subscription_period || 'monthly';
     const selectedPeriod = yearly ? 'yearly' : 'monthly';
 
     // If user is on MAX
     if (currentPlan === 'max') {
+      // Always hide Pro (downgrade)
       if (p.id === 'pro') return false;
+      // Show Max ONLY as an upgrade path: monthly → yearly
       if (p.id === 'max') return currentPeriod === 'monthly' && selectedPeriod === 'yearly';
     }
 
     // If user is on PRO
     if (currentPlan === 'pro') {
+      // Always show Max (upgrade)
       if (p.id === 'max') return true;
+      // Show Pro ONLY as monthly → yearly upgrade
       if (p.id === 'pro') return currentPeriod === 'monthly' && selectedPeriod === 'yearly';
     }
 
