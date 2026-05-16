@@ -522,6 +522,18 @@ app.post('/api/payment/update-subscription', async (req, res) => {
   } catch (err) {
     console.error('Razorpay Update Subscription Error:', err);
     const msg = err.error?.description || err.message || 'Internal Server Error';
+    
+    // Auto-fix desynced database state if Razorpay says the subscription is dead
+    if (msg.includes('not in Authenticated or Active state')) {
+      try {
+        await db.query(
+          `UPDATE users SET subscription_status = 'inactive', subscription_plan = 'free', subscription_period = '' WHERE "studentId" = $1`,
+          [req.body.studentId]
+        );
+      } catch (dbErr) { console.error('Auto-fix DB error:', dbErr); }
+      return res.status(400).json({ error: 'Your previous subscription has expired or is invalid. We have refreshed your account status. Please refresh this page and select your plan again to start a new subscription.' });
+    }
+    
     res.status(500).json({ error: msg });
   }
 });
