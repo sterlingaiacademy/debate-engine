@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LogOut, LayoutDashboard, Mic, BarChart2, Trophy,
-  Zap, Flame, ChevronRight, ChevronLeft, Settings, BookOpen, Gamepad2, Menu, X
+  Zap, Flame, ChevronRight, ChevronLeft, Settings, BookOpen, Gamepad2, Menu, X, Crown
 } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 
 export default function Layout({ user, onLogout, onSwitchProfile }) {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -358,6 +359,47 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
               <div className="xp-track">
                 <div className="xp-fill" style={{ width: `${xpPct}%` }} />
               </div>
+            </div>
+          )}
+
+          {/* Sidebar Upgrade Banner */}
+          {(!user?.subscription_plan || user?.subscription_plan === 'free') && (
+            <div
+              onClick={() => {
+                if (isMobile) setMobileMenuOpen(false);
+                navigate('/settings');
+              }}
+              style={{
+                margin: (!isCollapsed || isMobile) ? '0.5rem 0.5rem 1rem' : '0.5rem 0 1rem',
+                background: 'linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)',
+                borderRadius: (!isCollapsed || isMobile) ? 14 : 10,
+                padding: (!isCollapsed || isMobile) ? '0.75rem' : '0.65rem',
+                cursor: 'pointer',
+                display: 'flex', alignItems: 'center',
+                justifyContent: (!isCollapsed || isMobile) ? 'space-between' : 'center',
+                boxShadow: '0 4px 12px rgba(139,92,246,0.3)',
+                transition: 'transform 0.2s',
+              }}
+              onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
+              onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+              title="Upgrade to Pro"
+            >
+              {(!isCollapsed || isMobile) ? (
+                <>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                    <div style={{ background: 'rgba(255,255,255,0.2)', padding: '0.3rem', borderRadius: '50%', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Crown size={16} strokeWidth={2.5} />
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                      <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.01em', lineHeight: 1.1 }}>Upgrade Plan</span>
+                      <span style={{ fontSize: '0.65rem', fontWeight: 600, color: 'rgba(255,255,255,0.9)', marginTop: '0.1rem' }}>Unlock all features</span>
+                    </div>
+                  </div>
+                  <ChevronRight size={16} color="#fff" strokeWidth={3} />
+                </>
+              ) : (
+                <Crown size={20} color="#fff" strokeWidth={2.5} />
+              )}
             </div>
           )}
 
