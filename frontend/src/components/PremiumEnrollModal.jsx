@@ -48,7 +48,7 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
       const orderRes = await fetch(`${API_BASE}/api/payment/create-order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount })
+        body: JSON.stringify({ plan: plan.id, period, studentId: user?.studentId })
       });
       const orderData = await orderRes.json();
       
@@ -70,10 +70,7 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
             body: JSON.stringify({
               razorpayOrderId: response.razorpay_order_id,
               razorpayPaymentId: response.razorpay_payment_id,
-              signature: response.razorpay_signature,
-              studentId: user?.studentId,
-              plan: plan.id,
-              period
+              signature: response.razorpay_signature
             })
           });
           const verifyData = await verifyRes.json();

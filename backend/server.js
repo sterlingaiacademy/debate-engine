@@ -381,16 +381,26 @@ app.post('/api/time-sync', async (req, res) => {
 // Payment API
 app.post('/api/payment/create-order', async (req, res) => {
   try {
-    const { amount, currency = 'INR', receipt } = req.body;
+    const { plan, period = 'yearly', currency = 'INR', receipt, studentId } = req.body;
     
-    if (!amount) {
-      return res.status(400).json({ error: 'Amount is required' });
+    if (!plan || !studentId) {
+      return res.status(400).json({ error: 'Plan and studentId are required' });
     }
+    
+    let amount = 0;
+    if (plan === 'pro') amount = period === 'yearly' ? 29999 : 2999;
+    else if (plan === 'max') amount = period === 'yearly' ? 89999 : 8999;
+    else return res.status(400).json({ error: 'Invalid plan' });
     
     const options = {
       amount: amount * 100, // amount in smallest currency unit (paise)
       currency,
-      receipt: receipt || `receipt_${Date.now()}`
+      receipt: receipt || `receipt_${Date.now()}`,
+      notes: {
+        plan: plan,
+        period: period,
+        studentId: studentId
+      }
     };
     
     const order = await razorpayInstance.orders.create(options);
@@ -408,10 +418,7 @@ app.post('/api/payment/verify', async (req, res) => {
     const { 
       razorpayOrderId, 
       razorpayPaymentId, 
-      signature, 
-      studentId, 
-      plan, 
-      period 
+      signature
     } = req.body;
     
     if (!razorpayOrderId || !razorpayPaymentId || !signature) {
@@ -437,6 +444,14 @@ app.post('/api/payment/verify', async (req, res) => {
       console.warn("WARNING: Bypassing signature verification because RAZORPAY_SECRET is not set.");
     }
     
+    // Securely fetch order from Razorpay to get the plan and studentId
+    const order = await razorpayInstance.orders.fetch(razorpayOrderId);
+    if (!order || !order.notes || !order.notes.plan || !order.notes.studentId) {
+       return res.status(400).json({ error: 'Invalid order metadata. Contact support.' });
+    }
+    
+    const { plan, period, studentId } = order.notes;
+
     // Payment verified, update database
     await db.query(
       `UPDATE users SET subscription_plan = $1, subscription_period = $2 WHERE "studentId" = $3`,
