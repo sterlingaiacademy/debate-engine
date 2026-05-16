@@ -199,8 +199,18 @@ export default function Dashboard({ user, setUser }) {
   const isJunior = ['Level 1','Level 2','Class 1-3','Class 3-5','KG','Class KG','KG-2',
     'Class 1-5','Class 1','Class 2','Class 3','Class 4','Class 5','kg'].includes(user?.classLevel);
 
-  // Level 1 and Level 2 only have one agent (debate only), no Super Tutor
-  const isBasicLevel = ['Level 1', 'Level 2'].includes(user?.classLevel);
+  const getNormalizedLevel = (cls) => {
+    if (!cls) return 'Level 1';
+    if (cls.startsWith('Level ')) return cls;
+    if (['KG', 'Class 1', 'Class 2', 'Class KG', 'KG-2'].includes(cls)) return 'Level 1';
+    if (['Class 3', 'Class 4', 'Class 5'].includes(cls)) return 'Level 2';
+    if (['Class 6', 'Class 7', 'Class 8'].includes(cls)) return 'Level 3';
+    if (['Class 9', 'Class 10'].includes(cls)) return 'Level 4';
+    if (['Class 11', 'Class 12'].includes(cls)) return 'Level 5';
+    return 'Level 1';
+  };
+  const normalizedLevel = getNormalizedLevel(user?.classLevel);
+  const isBasicLevel = ['Level 1', 'Level 2'].includes(normalizedLevel);
 
   useEffect(() => {
     const activeId = user?.studentId || user?.username;
@@ -255,14 +265,14 @@ export default function Dashboard({ user, setUser }) {
     // Level 1 & 2 only have one debate agent — hide Super Tutor and Speech Coach
     if (isBasicLevel && (m.id === 'supertutor' || m.id === 'speech-coach')) return false;
     // If mode has a levels array, only show for those levels
-    if (m.levels) return m.levels.includes(user?.classLevel);
+    if (m.levels) return m.levels.includes(normalizedLevel);
     // Bug #10 fix: accessKey was compared with === (exact match only).
     // Model UN (accessKey: 'Level 5') should also show for Level 5.
     // Persona (accessKey: 'Level 4') should show for Level 4 AND Level 5.
     // Map each accessKey to its minimum required level index.
     const LEVEL_ORDER = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5'];
     if (m.accessKey) {
-      const userIdx = LEVEL_ORDER.indexOf(user?.classLevel);
+      const userIdx = LEVEL_ORDER.indexOf(normalizedLevel);
       const minIdx  = LEVEL_ORDER.indexOf(m.accessKey);
       // Show if user's level is >= the minimum required level
       return userIdx >= minIdx && userIdx !== -1;
