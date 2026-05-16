@@ -20,6 +20,66 @@ const UN_TOPICS = [
   { id: 8, topic: 'Reform of the UN Security Council', emoji: '🏛️', tag: 'Governance' },
   { id: 9, topic: 'Regulation of Big Tech and Digital Sovereignty', emoji: '💻', tag: 'Digital Policy' },
   { id: 10, topic: 'Sustainable Development Goals (SDGs) and Global Inequality', emoji: '⚖️', tag: 'Development' },
+  { id: 11, topic: 'Global Standards for Ethical Artificial Intelligence in Education', emoji: '🎓', tag: 'Future Governance' },
+  { id: 12, topic: 'International Cooperation for Cybersecurity and Digital Safety', emoji: '🛡️', tag: 'Future Governance' },
+  { id: 13, topic: 'Building Responsible Global Frameworks for Quantum Computing', emoji: '⚛️', tag: 'Future Governance' },
+  { id: 14, topic: 'Strengthening International Disaster Response Systems', emoji: '🚨', tag: 'Future Governance' },
+  { id: 15, topic: 'Future of Multilingualism and Indigenous Language Preservation', emoji: '🗣️', tag: 'Future Governance' },
+  { id: 16, topic: 'Creating Global Guidelines for Deepfake and Synthetic Media Regulation', emoji: '🎭', tag: 'Future Governance' },
+  { id: 17, topic: 'Global Governance of Autonomous Transportation Systems', emoji: '🚗', tag: 'Future Governance' },
+  { id: 18, topic: 'Ethical Use of Facial Recognition and Biometric Technologies', emoji: '👁️', tag: 'Future Governance' },
+  { id: 19, topic: 'Digital Identity Protection and Online Privacy Rights', emoji: '🔐', tag: 'Future Governance' },
+  { id: 20, topic: 'Future of International Cooperation in Space Exploration', emoji: '🚀', tag: 'Future Governance' },
+  { id: 21, topic: 'Ocean Plastic Pollution and Global Waste Management', emoji: '🌊', tag: 'Sustainability' },
+  { id: 22, topic: 'Sustainable Smart Cities for the Next Generation', emoji: '🏙️', tag: 'Sustainability' },
+  { id: 23, topic: 'Water Security and Groundwater Conservation', emoji: '💧', tag: 'Sustainability' },
+  { id: 24, topic: 'Global Cooperation for Reforestation and Biodiversity Protection', emoji: '🌲', tag: 'Sustainability' },
+  { id: 25, topic: 'Climate-Resilient Agriculture and Food Security', emoji: '🌾', tag: 'Sustainability' },
+  { id: 26, topic: 'Renewable Energy Transition in Developing Nations', emoji: '☀️', tag: 'Sustainability' },
+  { id: 27, topic: 'Sustainable Fashion and Reduction of Textile Waste', emoji: '👗', tag: 'Sustainability' },
+  { id: 28, topic: 'Urban Heat Islands and Climate-Adaptive Infrastructure', emoji: '🌡️', tag: 'Sustainability' },
+  { id: 29, topic: 'Future of Electric Mobility and Sustainable Transportation', emoji: '⚡', tag: 'Sustainability' },
+  { id: 30, topic: 'Global Strategies for Clean Air and Pollution Reduction', emoji: '💨', tag: 'Sustainability' },
+  { id: 31, topic: 'Mental Health Support Systems for Youth in the Digital Age', emoji: '🧠', tag: 'Health & Society' },
+  { id: 32, topic: 'Combating Loneliness and Social Isolation Among Young People', emoji: '🤝', tag: 'Health & Society' },
+  { id: 33, topic: 'Ethical Challenges of Human Genetic Engineering', emoji: '🧬', tag: 'Health & Society' },
+  { id: 34, topic: 'Global Access to Affordable Healthcare Technologies', emoji: '🏥', tag: 'Health & Society' },
+  { id: 35, topic: 'Future of Nutrition, Food Technology, and Public Health', emoji: '🥗', tag: 'Health & Society' },
+  { id: 36, topic: 'Balancing Technology Use and Human Wellbeing in Schools', emoji: '📱', tag: 'Health & Society' },
+  { id: 37, topic: 'International Collaboration Against Online Misinformation', emoji: '📰', tag: 'Health & Society' },
+  { id: 38, topic: 'Protection of Children in the Era of AI and Social Media', emoji: '🛡️', tag: 'Health & Society' },
+  { id: 39, topic: 'Promoting Inclusive Education for Neurodiverse Learners', emoji: '🧩', tag: 'Health & Society' },
+  { id: 40, topic: 'Preparing Humanity for Future Pandemics Through Global Cooperation', emoji: '🩺', tag: 'Health & Society' },
+  { id: 41, topic: 'Global Regulation of Autonomous AI Systems and Human Oversight', emoji: '⚖️', tag: 'AI Ethics' },
+  { id: 42, topic: 'Ethical Boundaries of AI in Education, Surveillance, and Governance', emoji: '🏫', tag: 'AI Ethics' },
+  { id: 43, topic: 'Preventing Bias, Manipulation, and Misinformation in Generative AI', emoji: '🕵️', tag: 'AI Ethics' },
+  { id: 44, topic: 'Planetary Strategies for Climate Adaptation and Ecological Restoration', emoji: '🌱', tag: 'Future Earth' },
+  { id: 45, topic: 'Global Water Security and Sustainable Resource Management', emoji: '🚰', tag: 'Future Earth' },
+  { id: 46, topic: 'Balancing Economic Growth with Biodiversity Preservation', emoji: '🦋', tag: 'Future Earth' },
+  { id: 47, topic: 'Role of Youth Leadership in Solving Global Challenges', emoji: '🌟', tag: 'Youth Diplomacy' },
+  { id: 48, topic: 'Building Cross-Cultural Dialogue in the Age of Digital Polarization', emoji: '🌐', tag: 'Youth Diplomacy' },
+  { id: 49, topic: 'Preparing Future Generations for Ethical Leadership and Global Citizenship', emoji: '🎓', tag: 'Youth Diplomacy' },
+  { id: 50, topic: 'International Laws for Lunar Colonization and Space Resources', emoji: '🌕', tag: 'Space Governance' },
+  { id: 51, topic: 'Preventing Militarization of Outer Space', emoji: '🛰️', tag: 'Space Governance' },
+  { id: 52, topic: 'Global Cooperation for Interplanetary Exploration and Research', emoji: '🌌', tag: 'Space Governance' },
+  { id: 53, topic: 'Ethical Regulation of Human Gene Editing and CRISPR Technologies', emoji: '🧬', tag: 'Bioethics' },
+  { id: 54, topic: 'Bioethics of AI-Driven Healthcare and Predictive Diagnostics', emoji: '🩺', tag: 'Bioethics' },
+  { id: 55, topic: 'Global Governance of Synthetic Biology and Human Enhancement', emoji: '🦾', tag: 'Bioethics' },
+  { id: 56, topic: 'Protecting Human Identity and Privacy in the Digital Era', emoji: '🔒', tag: 'Digital Civilization' },
+  { id: 57, topic: 'Governance of Virtual Societies, Metaverse Economies, and Digital Citizenship', emoji: '🕶️', tag: 'Digital Civilization' },
+  { id: 58, topic: 'Combating Digital Addiction and Protecting Human Attention', emoji: '📵', tag: 'Digital Civilization' },
+  { id: 59, topic: 'Designing Sustainable AI-Powered Smart Cities', emoji: '🌇', tag: 'Future Cities' },
+  { id: 60, topic: 'Urban Planning for Climate Resilience and Public Wellbeing', emoji: '🏡', tag: 'Future Cities' },
+  { id: 61, topic: 'Future Mobility Systems and Sustainable Transportation Infrastructure', emoji: '🚄', tag: 'Future Cities' },
+  { id: 62, topic: 'Governance Frameworks for Artificial General Intelligence (AGI)', emoji: '🧠', tag: 'UN 2050' },
+  { id: 63, topic: 'Preparing Humanity for Climate Migration and Population Shifts', emoji: '🚶', tag: 'UN 2050' },
+  { id: 64, topic: 'The Future of Work, Universal Basic Income, and Human Purpose', emoji: '💼', tag: 'UN 2050' },
+  { id: 65, topic: 'Global Preparedness Against Future Pandemics and Biosecurity Threats', emoji: '☣️', tag: 'Planetary Security' },
+  { id: 66, topic: 'Protecting Critical Infrastructure from Cyber Warfare and AI Attacks', emoji: '💻', tag: 'Planetary Security' },
+  { id: 67, topic: 'International Cooperation Against Asteroid and Space Threats', emoji: '☄️', tag: 'Planetary Security' },
+  { id: 68, topic: 'Protecting Human Creativity in the Era of Generative AI', emoji: '🎨', tag: 'Creative Economy' },
+  { id: 69, topic: 'Future of Creative Industries, Digital Ownership, and Intellectual Property', emoji: '©️', tag: 'Creative Economy' },
+  { id: 70, topic: 'Building Creative Economies Through Arts, Media, Gaming, and Storytelling', emoji: '🎮', tag: 'Creative Economy' }
 ];
 
 // step: 'time' | 'topics' | 'debating' | 'evaluating' | 'error' | 'out_of_time'
@@ -31,6 +91,8 @@ export default function MockUN({ user }) {
   const [customValue, setCustomValue] = useState('');
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [hoveredTopic, setHoveredTopic] = useState(null);
+  const [customTopicMode, setCustomTopicMode] = useState(false);
+  const [customTopicInput, setCustomTopicInput] = useState('');
 
   // Debate state
   const [timer, setTimer] = useState(300);
@@ -530,7 +592,85 @@ export default function MockUN({ user }) {
         </div>
 
         {/* Topic Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1.25rem', width: '100%', maxWidth: '750px', margin: '0 auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1.25rem', width: '100%', maxWidth: '750px', margin: '0 auto', marginBottom: '2rem' }}>
+          
+          {/* Custom Topic Selection */}
+          {!customTopicMode ? (
+            <div 
+              onClick={() => setCustomTopicMode(true)}
+              onMouseEnter={() => setHoveredTopic('custom_btn')}
+              onMouseLeave={() => setHoveredTopic(null)}
+              style={{
+                display: 'flex', alignItems: 'center', gap: '1rem',
+                padding: '1.25rem 1.5rem', borderRadius: '16px', cursor: 'pointer',
+                background: hoveredTopic === 'custom_btn'
+                  ? 'linear-gradient(135deg, rgba(251,191,36,0.08) 0%, rgba(217,119,6,0.05) 100%)'
+                  : 'var(--bg-secondary)',
+                border: hoveredTopic === 'custom_btn' ? '1px solid rgba(251,191,36,0.35)' : '1px solid var(--border)',
+                transition: 'all 0.2s ease',
+                transform: hoveredTopic === 'custom_btn' ? 'translateY(-2px)' : 'translateY(0)',
+                boxShadow: hoveredTopic === 'custom_btn' ? '0 8px 24px rgba(217,119,6,0.12)' : '0 2px 4px rgba(0,0,0,0.05)',
+              }}
+            >
+              <div style={{
+                width: 4, height: 48, borderRadius: '4px', flexShrink: 0,
+                background: hoveredTopic === 'custom_btn' ? 'linear-gradient(180deg, #fbbf24, #d97706)' : 'var(--border)',
+                transition: 'background 0.2s',
+              }} />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <span style={{
+                  fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em',
+                  color: hoveredTopic === 'custom_btn' ? '#d97706' : 'var(--text-muted)',
+                  display: 'block', marginBottom: '0.25rem', transition: 'color 0.2s',
+                }}>Create Your Own</span>
+                <span style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-primary)' }}>Custom Topic ✨</span>
+              </div>
+              <ChevronRight size={18} color={hoveredTopic === 'custom_btn' ? '#d97706' : 'var(--text-muted)'} style={{ transition: 'color 0.2s' }} />
+            </div>
+          ) : (
+            <div style={{
+              display: 'flex', flexDirection: 'column', gap: '1rem',
+              padding: '1.5rem', borderRadius: '16px',
+              background: 'linear-gradient(135deg, rgba(251,191,36,0.08) 0%, rgba(217,119,6,0.05) 100%)',
+              border: '1px solid rgba(251,191,36,0.35)',
+              boxShadow: '0 8px 24px rgba(217,119,6,0.12)',
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: '0.9rem', fontWeight: 700, color: '#d97706', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Enter Custom Topic</span>
+                <button onClick={() => setCustomTopicMode(false)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: '0.85rem' }}>Cancel</button>
+              </div>
+              <input 
+                autoFocus
+                type="text" 
+                placeholder="e.g., The impact of microplastics on marine ecosystems..." 
+                value={customTopicInput}
+                onChange={e => setCustomTopicInput(e.target.value)}
+                style={{
+                  width: '100%', padding: '1rem', borderRadius: '12px',
+                  background: 'var(--bg-primary)', border: '1px solid var(--border)',
+                  color: 'var(--text-primary)', fontSize: '1rem',
+                  outline: 'none'
+                }}
+              />
+              <button 
+                disabled={!customTopicInput.trim()}
+                onClick={() => {
+                  handleTopicSelect({ id: 'custom', topic: customTopicInput.trim(), emoji: '✨', tag: 'Custom Topic' });
+                }}
+                className="btn btn-primary"
+                style={{ alignSelf: 'flex-end', opacity: !customTopicInput.trim() ? 0.5 : 1 }}
+              >
+                Debate This Topic
+              </button>
+            </div>
+          )}
+
+          <div style={{ display: 'flex', alignItems: 'center', margin: '0.5rem 0' }}>
+            <div style={{ flex: 1, height: '1px', background: 'var(--border)' }} />
+            <span style={{ padding: '0 1rem', color: 'var(--text-muted)', fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>OR CHOOSE A PRESET</span>
+            <div style={{ flex: 1, height: '1px', background: 'var(--border)' }} />
+          </div>
+
           {UN_TOPICS.map(t => (
             <div
               key={t.id}
