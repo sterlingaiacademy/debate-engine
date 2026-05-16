@@ -59,6 +59,13 @@ function App() {
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
 
   useEffect(() => {
+    const scale = localStorage.getItem('fontScale');
+    if (scale) {
+      document.documentElement.style.fontSize = scale === 'large' ? '18px' : (scale === 'extra-large' ? '20px' : '16px');
+    }
+  }, []);
+
+  useEffect(() => {
     document.body.className = themeClass;
   }, [themeClass]);
 
