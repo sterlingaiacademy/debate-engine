@@ -17,9 +17,10 @@ export default function PersonaDebate({ user }) {
   const personaImage = searchParams.get('image') || '/gandhi_avatar_1773899586119.png';
   const agentId = searchParams.get('agentId');
 
+  const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel);
   const [transcript, setTranscript] = useState([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [showTranscript, setShowTranscript] = useState(true);
+  const [showTranscript, setShowTranscript] = useState(!isJunior);
   const [isMuted, setIsMuted] = useState(false);
   const [status, setStatus] = useState('idle'); // idle | connecting | config | active | ended | error | out_of_time
   const [maxMinutesAvailable, setMaxMinutesAvailable] = useState(0);
@@ -29,7 +30,7 @@ export default function PersonaDebate({ user }) {
   const transcriptEndRef = useRef(null);
   const currentTimerRef = useRef(0);
 
-  const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel);
+
   const [timer, setTimer] = useState(600);
   const initialTimerRef = useRef(600);
   const initialDailyRemainingRef = useRef(600);

@@ -34,7 +34,7 @@ export default function DebateArena({ user }) {
   const [timer, setTimer] = useState(600);
   const [isActive, setIsActive] = useState(false);
   const [screenSleep, setScreenSleep] = useState(false);
-  const [showTranscript, setShowTranscript] = useState(true);
+  const [showTranscript, setShowTranscript] = useState(!isJunior);
   const [isMuted, setIsMuted] = useState(false);
   const [transcript, setTranscript] = useState([]);
   const transcriptRef = useRef([]);
