@@ -5,6 +5,7 @@ import {
   Zap, Flame, ChevronRight, ChevronLeft, Settings, BookOpen, Gamepad2, Menu, X, Crown
 } from 'lucide-react';
 import logoImg from '../assets/logo.png';
+import PremiumEnrollModal from './PremiumEnrollModal';
 
 export default function Layout({ user, onLogout, onSwitchProfile }) {
   const { pathname } = useLocation();
@@ -12,6 +13,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showPremiumModal, setShowPremiumModal] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -367,7 +369,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
             <div
               onClick={() => {
                 if (isMobile) setMobileMenuOpen(false);
-                navigate('/settings');
+                setShowPremiumModal(true);
               }}
               style={{
                 margin: (!isCollapsed || isMobile) ? '0.5rem 0.5rem 1rem' : '0.5rem 0 1rem',
@@ -537,6 +539,13 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
           </button>
         </nav>
       )}
+
+    {/* Sidebar Premium Modal */}
+    {showPremiumModal && (
+      <div style={{ position: 'fixed', inset: 0, zIndex: 99999, display: 'flex', flexDirection: 'column', background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', overflowY: 'auto' }}>
+        <PremiumEnrollModal user={user} onDismiss={() => setShowPremiumModal(false)} />
+      </div>
+    )}
 
     </div>
   );
