@@ -444,6 +444,55 @@ app.post('/api/payment/create-subscription', async (req, res) => {
   }
 });
 
+// Subscription Upgrades & Proration
+app.post('/api/payment/update-subscription', async (req, res) => {
+  try {
+    const { plan, period = 'yearly', studentId } = req.body;
+    
+    if (!plan || !studentId) {
+      return res.status(400).json({ error: 'Plan and studentId are required' });
+    }
+
+    // Get user's active subscription
+    const userRes = await db.query('SELECT razorpay_subscription_id, subscription_status FROM users WHERE "studentId" = $1', [studentId]);
+    if (userRes.rows.length === 0) return res.status(404).json({ error: 'User not found' });
+    
+    const { razorpay_subscription_id, subscription_status } = userRes.rows[0];
+    if (!razorpay_subscription_id || subscription_status !== 'active') {
+      return res.status(400).json({ error: 'User does not have an active subscription to upgrade' });
+    }
+    
+    let plan_id;
+    if (plan === 'pro' && period === 'monthly') plan_id = process.env.PLAN_PRO_MONTHLY;
+    else if (plan === 'pro' && period === 'yearly') plan_id = process.env.PLAN_PRO_YEARLY;
+    else if (plan === 'max' && period === 'monthly') plan_id = process.env.PLAN_MAX_MONTHLY;
+    else if (plan === 'max' && period === 'yearly') plan_id = process.env.PLAN_MAX_YEARLY;
+    else return res.status(400).json({ error: 'Invalid plan or period' });
+
+    if (!plan_id) return res.status(500).json({ error: 'Plan ID not configured on server' });
+    
+    const options = {
+      plan_id: plan_id,
+      schedule_change_at: 'now',
+      customer_notify: 1
+    };
+    
+    const subscription = await razorpayInstance.subscriptions.update(razorpay_subscription_id, options);
+    if (!subscription) return res.status(500).json({ error: 'Error updating subscription' });
+    
+    // Update our DB to reflect the new plan immediately
+    await db.query(
+      `UPDATE users SET subscription_plan = $1, subscription_period = $2 WHERE "studentId" = $3`,
+      [plan, period, studentId]
+    );
+    
+    res.json(subscription);
+  } catch (err) {
+    console.error('Razorpay Update Subscription Error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.post('/api/payment/verify-subscription', async (req, res) => {
   try {
     const { 

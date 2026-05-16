@@ -27,7 +27,7 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
       gradient: 'linear-gradient(135deg, #f97316 0%, #e8392a 100%)',
       icon: <Sparkles size={20} color="#fff" />
     }
-  ];
+  ].filter(p => !(user?.subscription_plan === 'pro' && p.id === 'pro') && !(user?.subscription_plan === 'max'));
 
   // Load Razorpay Script
   useEffect(() => {
@@ -44,17 +44,31 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
       const amount = yearly ? plan.yearlyPrice : plan.monthlyPrice;
       const period = yearly ? 'yearly' : 'monthly';
 
-      // 1. Create subscription
-      const subRes = await fetch(`${API_BASE}/api/payment/create-subscription`, {
+      const isUpgrade = user?.subscription_plan && user.subscription_plan !== 'free';
+      const endpoint = isUpgrade ? `${API_BASE}/api/payment/update-subscription` : `${API_BASE}/api/payment/create-subscription`;
+
+      // 1. Create or Update subscription
+      const subRes = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ plan: plan.id, period, studentId: user?.studentId || user?.username })
       });
       const subData = await subRes.json();
       
-      if (!subRes.ok) throw new Error(subData.error || 'Failed to create subscription');
+      if (!subRes.ok) throw new Error(subData.error || `Failed to ${isUpgrade ? 'update' : 'create'} subscription`);
 
-      // 2. Open Razorpay Checkout
+      if (isUpgrade) {
+        // Subscription Updated! Razorpay automatically prorates and charges the vaulted card.
+        try {
+          const currentUser = JSON.parse(localStorage.getItem('user')) || {};
+          currentUser.subscription_plan = plan.id;
+          localStorage.setItem('user', JSON.stringify(currentUser));
+        } catch (e) { console.error('Failed to update local storage', e); }
+        window.location.href = `/premium-success?plan=${plan.id}`;
+        return;
+      }
+
+      // 2. Open Razorpay Checkout for NEW subscriptions
       const options = {
         key: 'rzp_live_SpxzVJVdO5A5xr', // Public Key
         name: 'G Force AI',
