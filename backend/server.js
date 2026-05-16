@@ -314,7 +314,7 @@ app.get('/api/me/:studentId', async (req, res) => {
   try {
     const { studentId } = req.params;
     const { rows } = await db.query(
-      `SELECT name, "studentId", "classLevel", grade, "assignedAgentId", email, avatar, phone, subscription_plan, subscription_period FROM users WHERE "studentId" = $1`,
+      `SELECT name, "studentId", "classLevel", grade, "assignedAgentId", email, avatar, phone, subscription_plan, subscription_period, subscription_status FROM users WHERE "studentId" = $1`,
       [studentId]
     );
     if (rows.length === 0) {

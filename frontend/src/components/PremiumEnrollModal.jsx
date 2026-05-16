@@ -31,26 +31,27 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
 
   // Dynamically filter available plans based on what the user already has
   const availablePlans = plans.filter(p => {
-    // If user has no plan or a free plan, show everything
-    if (!user?.subscription_plan || user?.subscription_plan === 'free') return true;
+    // Only restrict options if the user has a genuinely ACTIVE subscription
+    // If status is cancelled, halted, created, or missing — treat them as a new subscriber
+    const hasActiveSub = user?.subscription_plan &&
+                         user.subscription_plan !== 'free' &&
+                         user?.subscription_status === 'active';
+
+    if (!hasActiveSub) return true;
     
     const currentPlan = user.subscription_plan;
-    const currentPeriod = user.subscription_period || 'monthly'; // default to monthly if unknown
+    const currentPeriod = user.subscription_period || 'monthly';
     const selectedPeriod = yearly ? 'yearly' : 'monthly';
 
     // If user is on MAX
     if (currentPlan === 'max') {
-      // Hide Pro entirely
       if (p.id === 'pro') return false;
-      // Show Max ONLY if they are upgrading to Yearly
       if (p.id === 'max') return currentPeriod === 'monthly' && selectedPeriod === 'yearly';
     }
 
     // If user is on PRO
     if (currentPlan === 'pro') {
-      // They can always upgrade to Max
       if (p.id === 'max') return true;
-      // Show Pro ONLY if they are upgrading to Yearly
       if (p.id === 'pro') return currentPeriod === 'monthly' && selectedPeriod === 'yearly';
     }
 
@@ -80,7 +81,11 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
       const amount = yearly ? plan.yearlyPrice : plan.monthlyPrice;
       const period = yearly ? 'yearly' : 'monthly';
 
-      const isUpgrade = user?.subscription_plan && user.subscription_plan !== 'free';
+      // isUpgrade = true only when the user has a genuinely active subscription on the server
+      // We rely on subscription_status synced from /api/me, NOT just the plan name in localStorage
+      const isUpgrade = user?.subscription_plan &&
+                        user.subscription_plan !== 'free' &&
+                        user?.subscription_status === 'active';
       const endpoint = isUpgrade ? `${API_BASE}/api/payment/update-subscription` : `${API_BASE}/api/payment/create-subscription`;
 
       // 1. Create or Update subscription
