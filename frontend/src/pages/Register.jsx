@@ -498,14 +498,14 @@ export default function Register({ onLogin }) {
             {/* Scrollable Content */}
             <div style={{ overflowY: 'auto', padding: '1.5rem 1.75rem', flex: 1 }}>
 
-              {/* 🔴 ElevenLabs Age Policy — most important */}
+              {/* Age Policy */}
               <div style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.25)', borderRadius: '14px', padding: '1.1rem 1.25rem', marginBottom: '1.25rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
                   <AlertTriangle size={15} color="#ef4444" />
-                  <span style={{ fontWeight: 800, color: '#fca5a5', fontSize: '0.875rem' }}>Important – Age Requirement (ElevenLabs Policy)</span>
+                  <span style={{ fontWeight: 800, color: '#fca5a5', fontSize: '0.875rem' }}>Important – Age Requirement</span>
                 </div>
                 <p style={{ color: '#fca5a5', fontSize: '0.82rem', margin: 0, lineHeight: 1.7 }}>
-                  Grace & Force uses <strong>ElevenLabs AI voice technology</strong>, which requires all users to be <strong>16 years or older</strong> per their Terms of Service.<br /><br />
+                  Grace & Force uses <strong>advanced AI voice technology</strong>, which requires all users to be <strong>16 years or older</strong> per our Terms of Service.<br /><br />
                   <strong>If your child is under 16:</strong> A parent or guardian must create and use the account on their behalf. <strong>Please sign in with a parent/guardian Google account.</strong>
                 </p>
               </div>
@@ -518,7 +518,7 @@ export default function Register({ onLogin }) {
                 <ul style={{ color: '#94a3b8', fontSize: '0.82rem', lineHeight: 1.8, paddingLeft: '1.25rem', margin: 0 }}>
                   <li>We <strong style={{ color: '#e2e8f0' }}>do not store</strong> any personal information about the student.</li>
                   <li>Only the account name, username, and grade level are saved — no phone numbers, addresses, or sensitive data.</li>
-                  <li>Voice sessions are processed by ElevenLabs and are not stored on our servers.</li>
+                  <li>Voice sessions are processed securely by our AI provider and are not stored on our servers.</li>
                   <li>We do not sell or share any user data with third parties.</li>
                 </ul>
               </div>

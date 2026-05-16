@@ -187,7 +187,7 @@ const FAQS = [
   { q: 'What age group is G Force AI designed for?', a: 'G Force AI is designed for students from KG through Grade 12, with 5 adaptive difficulty levels that automatically match their school grade.' },
   { q: 'How does the AI scoring work?', a: 'Our AI judge evaluates 3 dimensions: argument quality, fluency, and persuasiveness — giving a holistic debate score.' },
   { q: 'Can students use the mobile app and web app together?', a: 'Yes! Both the Android app and web app connect to the same backend database, so scores, leaderboards, and progress sync in real time across devices.' },
-  { q: 'What is Model UN mode?', a: 'Model UN is a premium debate simulation where students take on country delegate personas and debate global motions in a United Nations-style format, powered by ElevenLabs voice AI.' },
+  { q: 'What is Model UN mode?', a: 'Model UN is a premium debate simulation where students take on country delegate personas and debate global motions in a United Nations-style format, powered by our advanced AI voice system.' },
   { q: 'Is there a free tier?', a: 'Yes! The Free tier includes unlimited practice debates with limited Debate Arena matches per day. School and Enterprise plans unlock unlimited Debate Arena matches, advanced analytics, and priority support.' },
   { q: 'How do I set up G Force AI for my school?', a: "Contact us via the Enterprise plan or email us directly. We'll onboard your school, create student accounts in bulk, and provide a dedicated dashboard for teachers." },
   { q: 'Is student data kept private?', a: 'Absolutely. All data is stored securely in our private database (hosted on Vultr). We never sell student data and comply with standard data privacy guidelines.' },
@@ -356,7 +356,7 @@ export default function LandingPage() {
               { icon: <BarChart2 size={28} />, title: 'Real-time Scoring', desc: 'After every debate, an AI judge scores 3 dimensions including argument quality, fluency, and persuasiveness.', color: '#F97316' },
               { icon: <Trophy size={28} />, title: 'Global Leaderboards', desc: 'Students compete on token-ranked leaderboards — filterable by grade, school, region, and country — driving healthy competition.', color: '#FBBF24' },
               { icon: <Globe size={28} />, title: 'Model UN Mode', desc: 'An immersive simulation where students play country delegates and debate global motions in a voice-powered UN format.', color: '#E8392A' },
-              { icon: <Zap size={28} />, title: 'Voice-First AI', desc: 'Powered by ElevenLabs, students speak naturally and get instant AI responses, building real speaking confidence.', color: '#F97316' },
+              { icon: <Zap size={28} />, title: 'Voice-First AI', desc: 'Students speak naturally and get instant AI responses using our advanced voice AI engine, building real speaking confidence.', color: '#F97316' },
               { icon: <Shield size={28} />, title: 'Adaptive Levels', desc: 'Five difficulty tiers automatically matched to school grade (KG → Grade 12) ensure every student is appropriately challenged.', color: '#FBBF24' },
             ].map(({ icon, title, desc, color }, i) => (
               <div key={title} className="lp-feature-card lp-reveal" style={{ '--card-delay': `${i * 80}ms`, '--card-accent': color }}>
