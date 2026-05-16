@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Play, PhoneOff, MessageSquare, Globe, ChevronRight, Mic, MicOff } from 'lucide-react';
+import { PhoneOff, MessageSquare, Globe, ChevronRight, Mic, MicOff } from 'lucide-react';
 import { Conversation } from '@11labs/client';
 import GeminiWave from '../components/GeminiWave';
 import TranscriptView from '../components/TranscriptView';
@@ -203,6 +203,7 @@ export default function MockUN({ user }) {
     setTranscript([]);
     transcriptRef.current = [];
     setIsMuted(false);
+    setIsSpeaking(false);
 
     try {
       await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -267,6 +268,8 @@ export default function MockUN({ user }) {
   };
 
   const handleTimeUp = async () => {
+    if (isEndingRef.current) return; // prevent double-fire
+    isEndingRef.current = true;
     clearInterval(timerRef.current);
     if (conversationRef.current) {
       try { await conversationRef.current.endSession(); } catch {}
@@ -394,7 +397,7 @@ export default function MockUN({ user }) {
                 <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#fbbf24', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
                   Model UN &nbsp;•&nbsp;
                 </span>
-                <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.65)', maxWidth: '500px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.65)', maxWidth: 'min(500px, 50vw)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {selectedTopic}
                 </span>
               </div>
@@ -560,13 +563,13 @@ export default function MockUN({ user }) {
               >Custom</button>
             </div>
 
-            {selectedDuration === 'custom' && (
+            {selectedDuration === 'custom' && maxMinutesAvailable >= 1 && (
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', width: '100%', maxWidth: '300px', animation: 'fadeIn 0.3s' }}>
                 <span style={{ fontSize: '3.5rem', fontWeight: 800, color: '#d97706', lineHeight: 1 }}>
                   {customValue || 1}<span style={{ fontSize: '1.25rem', color: 'var(--text-secondary)' }}>m</span>
                 </span>
                 <input
-                  type="range" min={1} max={maxMinutesAvailable}
+                  type="range" min={1} max={Math.max(1, maxMinutesAvailable)}
                   value={customValue || 1}
                   onChange={e => { setCustomValue(parseInt(e.target.value, 10)); setSelectedDuration('custom'); }}
                   style={{ width: '100%', cursor: 'pointer', accentColor: '#d97706', height: '8px', borderRadius: '4px' }}
