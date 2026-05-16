@@ -163,7 +163,7 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
 
       if (newTime <= 0) {
         clearInterval(timerRef.current);
-        handleEndDebate();
+        handleTimeUp();
       }
     }, 1000);
     return () => clearInterval(timerRef.current);
@@ -273,6 +273,26 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
   };
 
   
+  const handleTimeUp = async () => {
+    clearInterval(timerRef.current);
+    if (conversationRef.current) {
+      try { await conversationRef.current.endSession(); } catch(e) {}
+    }
+    setIsActive(false);
+    setStatus('out_of_time');
+
+    const elapsedTotal = initialTimerRef.current - currentTimerRef.current;
+    const alreadySynced = Math.floor(elapsedTotal / 15) * 15;
+    const unsavedSeconds = elapsedTotal - alreadySynced;
+    if (unsavedSeconds > 0) {
+      fetch(`${API_BASE}/api/time-sync`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ studentId: user.studentId, usedSeconds: unsavedSeconds, isPersona: true })
+      }).catch(e => console.error('Final time sync failed', e));
+    }
+  };
+
   const handleEndDebate = async () => {
     clearInterval(timerRef.current);
     if (conversationRef.current) {

@@ -154,7 +154,7 @@ export default function DebateArena({ user }) {
 
       if (newTime <= 0) {
         clearInterval(timerRef.current);
-        handleEndDebate();
+        handleTimeUp();
       }
     }, 1000);
     return () => clearInterval(timerRef.current);
@@ -269,6 +269,29 @@ export default function DebateArena({ user }) {
     } catch(e) {
       console.warn("Mute overlay toggle fell back to mock", e);
       setIsMuted(p => !p);
+    }
+  };
+
+  const handleTimeUp = async () => {
+    if (hasEndedRef.current) return;
+    hasEndedRef.current = true;
+
+    clearInterval(timerRef.current);
+    if (conversationRef.current) {
+      try { await conversationRef.current.endSession(); } catch(e) {}
+    }
+    setIsActive(false);
+    setStatus('out_of_time');
+
+    const elapsedTotal = initialTimerRef.current - currentTimerRef.current;
+    const alreadySynced = Math.floor(elapsedTotal / 15) * 15;
+    const unsavedSeconds = elapsedTotal - alreadySynced;
+    if (unsavedSeconds > 0) {
+      fetch(`${API_BASE}/api/time-sync`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ studentId: user.studentId, usedSeconds: unsavedSeconds, isPersona: false })
+      }).catch(e => console.error('Final time sync failed', e));
     }
   };
 

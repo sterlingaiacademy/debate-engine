@@ -391,10 +391,15 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
                   <div style={{ fontSize: '0.875rem', fontWeight: 800, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                     {user?.name}
                   </div>
-                  <div style={{ fontSize: '0.7rem', color: isJunior ? '#7c3aed' : '#475569', fontWeight: 600 }}>
-                    {user?.grade
-                      ? (user.grade.startsWith('Class') ? user.grade.replace('Class', 'Grade') : user.grade)
-                      : user?.classLevel}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <div style={{ fontSize: '0.7rem', color: isJunior ? '#7c3aed' : '#475569', fontWeight: 600 }}>
+                      {user?.grade
+                        ? (user.grade.startsWith('Class') ? user.grade.replace('Class', 'Grade') : user.grade)
+                        : user?.classLevel}
+                    </div>
+                    <div style={{ fontSize: '0.55rem', fontWeight: 800, background: isJunior ? '#7c3aed' : '#FF6B00', color: '#fff', padding: '0.1rem 0.3rem', borderRadius: 4, letterSpacing: '0.05em' }}>
+                      {user?.subscription_plan === 'max' ? 'MAX' : user?.subscription_plan === 'pro' ? 'PRO' : 'DEMO'}
+                    </div>
                   </div>
                 </div>
                 <button

@@ -67,7 +67,7 @@ export default function PersonaDebate({ user }) {
 
       if (newTime <= 0) {
         clearInterval(timerRef.current);
-        handleEnd();
+        handleTimeUp();
       }
     }, 1000);
 
@@ -197,6 +197,25 @@ export default function PersonaDebate({ user }) {
     } catch(e) {
       console.warn("Mute toggle failed, falling back to state only", e);
       setIsMuted(p => !p);
+    }
+  };
+
+  const handleTimeUp = async () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    setStatus('out_of_time');
+    if (conversationRef.current) {
+      try { await conversationRef.current.endSession(); } catch { /* ignore */ }
+    }
+
+    const elapsedTotal = initialTimerRef.current - currentTimerRef.current;
+    const alreadySynced = Math.floor(elapsedTotal / 15) * 15;
+    const unsavedSeconds = Math.max(0, elapsedTotal - alreadySynced);
+    if (unsavedSeconds > 0) {
+      fetch(`${API_BASE}/api/time-sync`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ studentId: user?.studentId, usedSeconds: unsavedSeconds, isPersona: true })
+      }).catch(e => console.error('Final persona time sync failed', e));
     }
   };
 

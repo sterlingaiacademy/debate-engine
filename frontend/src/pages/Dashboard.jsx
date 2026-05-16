@@ -314,10 +314,15 @@ export default function Dashboard({ user, setUser }) {
                 {tier.name}
               </div>
               {user.classLevel && (
-                <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#475569' }}>
-                  {user.grade
-                    ? (user.grade.startsWith('Class') ? user.grade.replace('Class', 'Grade') : user.grade)
-                    : user.classLevel}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#475569' }}>
+                    {user.grade
+                      ? (user.grade.startsWith('Class') ? user.grade.replace('Class', 'Grade') : user.grade)
+                      : user.classLevel}
+                  </div>
+                  <div style={{ fontSize: '0.65rem', fontWeight: 800, background: 'rgba(255,107,0,0.15)', border: '1px solid rgba(255,107,0,0.3)', color: '#FF6B00', padding: '0.1rem 0.4rem', borderRadius: 4, letterSpacing: '0.05em' }}>
+                    {user?.subscription_plan === 'max' ? 'MAX' : user?.subscription_plan === 'pro' ? 'PRO' : 'DEMO'}
+                  </div>
                 </div>
               )}
             </div>
@@ -500,10 +505,15 @@ export default function Dashboard({ user, setUser }) {
                 <Flame size={12} />
                 {stats.current_streak || 0} Day Streak
               </div>
-              <div style={{ fontSize: '0.75rem', fontWeight: 600, opacity: 0.8 }}>
-                {user.grade
-                  ? (user.grade.startsWith('Class') ? user.grade.replace('Class', 'Grade') : user.grade)
-                  : user.classLevel}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <div style={{ fontSize: '0.75rem', fontWeight: 600, opacity: 0.8 }}>
+                  {user.grade
+                    ? (user.grade.startsWith('Class') ? user.grade.replace('Class', 'Grade') : user.grade)
+                    : user.classLevel}
+                </div>
+                <div style={{ fontSize: '0.65rem', fontWeight: 800, background: '#fff', color: '#7c3aed', padding: '0.1rem 0.4rem', borderRadius: 4, letterSpacing: '0.05em' }}>
+                  {user?.subscription_plan === 'max' ? 'MAX' : user?.subscription_plan === 'pro' ? 'PRO' : 'DEMO'}
+                </div>
               </div>
             </div>
           </div>

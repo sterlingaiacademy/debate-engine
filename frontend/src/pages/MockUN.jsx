@@ -116,7 +116,7 @@ export default function MockUN({ user }) {
         }).catch(() => {});
         lastSyncTime = Date.now();
       }
-      if (newTime <= 0) { clearInterval(timerRef.current); handleEndDebate(); }
+      if (newTime <= 0) { clearInterval(timerRef.current); handleTimeUp(); }
     }, 1000);
     return () => clearInterval(timerRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -186,6 +186,26 @@ export default function MockUN({ user }) {
       });
     } catch (err) {
       setStep('error');
+    }
+  };
+
+  const handleTimeUp = async () => {
+    clearInterval(timerRef.current);
+    if (conversationRef.current) {
+      try { await conversationRef.current.endSession(); } catch {}
+    }
+    setIsActive(false);
+    setStep('out_of_time');
+
+    const elapsed = initialTimerRef.current - currentTimerRef.current;
+    const alreadySynced = Math.floor(elapsed / 15) * 15;
+    const unsaved = elapsed - alreadySynced;
+    if (unsaved > 0) {
+      fetch(`${API_BASE}/api/time-sync`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ studentId: user.studentId, usedSeconds: unsaved, isPersona: false }),
+      }).catch(() => {});
     }
   };
 
