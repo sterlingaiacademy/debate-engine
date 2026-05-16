@@ -83,6 +83,8 @@ async function initDB() {
     await addColumnSafeUsers('subscription_period', 'TEXT', "''"); // 'monthly', 'yearly'
     await addColumnSafeUsers('dailyChallengeCompleted', 'TEXT', "''"); // YYYY-MM-DD IST
     await addColumnSafeUsers('dailyVocabClaimed', 'TEXT', "''"); // vocab:YYYY-MM-DD idempotency key
+    await addColumnSafeUsers('razorpay_subscription_id', 'TEXT', "''"); // Razorpay subscription ID
+    await addColumnSafeUsers('subscription_status', 'TEXT', "''"); // 'active', 'halted', 'cancelled', 'created'
 
     const addColumnSafeDebateUsers = async (col, type, def) => {
       try {

@@ -400,24 +400,28 @@ app.post('/api/time-sync', async (req, res) => {
 });
 
 
-// Payment API
-app.post('/api/payment/create-order', async (req, res) => {
+// Payment API (Subscriptions)
+app.post('/api/payment/create-subscription', async (req, res) => {
   try {
-    const { plan, period = 'yearly', currency = 'INR', receipt, studentId } = req.body;
+    const { plan, period = 'yearly', studentId } = req.body;
     
     if (!plan || !studentId) {
       return res.status(400).json({ error: 'Plan and studentId are required' });
     }
     
-    let amount = 0;
-    if (plan === 'pro') amount = period === 'yearly' ? 29999 : 2999;
-    else if (plan === 'max') amount = period === 'yearly' ? 89999 : 8999;
-    else return res.status(400).json({ error: 'Invalid plan' });
+    let plan_id;
+    if (plan === 'pro' && period === 'monthly') plan_id = process.env.PLAN_PRO_MONTHLY;
+    else if (plan === 'pro' && period === 'yearly') plan_id = process.env.PLAN_PRO_YEARLY;
+    else if (plan === 'max' && period === 'monthly') plan_id = process.env.PLAN_MAX_MONTHLY;
+    else if (plan === 'max' && period === 'yearly') plan_id = process.env.PLAN_MAX_YEARLY;
+    else return res.status(400).json({ error: 'Invalid plan or period' });
+
+    if (!plan_id) return res.status(500).json({ error: 'Plan ID not configured on server' });
     
     const options = {
-      amount: amount * 100, // amount in smallest currency unit (paise)
-      currency,
-      receipt: receipt || `receipt_${Date.now()}`,
+      plan_id: plan_id,
+      customer_notify: 1,
+      total_count: period === 'yearly' ? 10 : 120, // 10 years roughly
       notes: {
         plan: plan,
         period: period,
@@ -425,64 +429,109 @@ app.post('/api/payment/create-order', async (req, res) => {
       }
     };
     
-    const order = await razorpayInstance.orders.create(options);
-    if (!order) return res.status(500).json({ error: 'Some error occurred while creating order' });
+    const subscription = await razorpayInstance.subscriptions.create(options);
+    if (!subscription) return res.status(500).json({ error: 'Error creating subscription' });
     
-    res.json(order);
+    await db.query(
+      `UPDATE users SET razorpay_subscription_id = $1, subscription_status = 'created' WHERE "studentId" = $2`,
+      [subscription.id, studentId]
+    );
+    
+    res.json(subscription);
   } catch (err) {
-    console.error('Razorpay Create Order Error:', err);
+    console.error('Razorpay Create Subscription Error:', err);
     res.status(500).json({ error: err.message });
   }
 });
 
-app.post('/api/payment/verify', async (req, res) => {
+app.post('/api/payment/verify-subscription', async (req, res) => {
   try {
     const { 
-      razorpayOrderId, 
-      razorpayPaymentId, 
-      signature
+      razorpay_payment_id, 
+      razorpay_subscription_id, 
+      razorpay_signature
     } = req.body;
     
-    if (!razorpayOrderId || !razorpayPaymentId || !signature) {
+    if (!razorpay_payment_id || !razorpay_subscription_id || !razorpay_signature) {
       return res.status(400).json({ error: 'Missing payment details' });
     }
     
-    // Verify signature
     const secret = process.env.RAZORPAY_SECRET || 'KTWnYhmt800Y7TSQ6Cc6TBpF';
-    const body = razorpayOrderId + "|" + razorpayPaymentId;
+    const body = razorpay_payment_id + "|" + razorpay_subscription_id;
     const expectedSignature = crypto
       .createHmac("sha256", secret)
       .update(body.toString())
       .digest("hex");
       
-    // Because we might not have the correct secret locally right now,
-    // if the signature doesn't match but we have a dummy secret, we might fail.
-    // We will enforce signature check, so the user MUST set RAZORPAY_SECRET.
-    const isValid = expectedSignature === signature;
-    if (!isValid && secret !== 'fallback_secret') {
+    if (expectedSignature !== razorpay_signature) {
       return res.status(400).json({ error: 'Invalid payment signature' });
-    } else if (!isValid && secret === 'fallback_secret') {
-      // Allow bypass ONLY if secret is still the dummy one (for testing if they haven't set it yet)
-      console.warn("WARNING: Bypassing signature verification because RAZORPAY_SECRET is not set.");
     }
     
-    // Securely fetch order from Razorpay to get the plan and studentId
-    const order = await razorpayInstance.orders.fetch(razorpayOrderId);
-    if (!order || !order.notes || !order.notes.plan || !order.notes.studentId) {
-       return res.status(400).json({ error: 'Invalid order metadata. Contact support.' });
+    const subscription = await razorpayInstance.subscriptions.fetch(razorpay_subscription_id);
+    if (!subscription || !subscription.notes || !subscription.notes.studentId) {
+       return res.status(400).json({ error: 'Invalid subscription metadata. Contact support.' });
     }
     
-    const { plan, period, studentId } = order.notes;
+    const { plan, period, studentId } = subscription.notes;
 
-    // Payment verified, update database
     await db.query(
-      `UPDATE users SET subscription_plan = $1, subscription_period = $2 WHERE "studentId" = $3`,
-      [plan, period, studentId]
+      `UPDATE users SET subscription_plan = $1, subscription_period = $2, subscription_status = 'active', razorpay_subscription_id = $3 WHERE "studentId" = $4`,
+      [plan, period, razorpay_subscription_id, studentId]
     );
     
-    res.json({ success: true, message: 'Payment verified and plan updated successfully' });
+    res.json({ success: true, message: 'Subscription verified and plan updated successfully' });
   } catch (err) {
-    console.error('Razorpay Verify Error:', err);
+    console.error('Razorpay Verify Subscription Error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Razorpay Webhook
+app.post('/api/webhook/razorpay', express.raw({type: 'application/json'}), async (req, res) => {
+  try {
+    const secret = process.env.RAZORPAY_WEBHOOK_SECRET || process.env.RAZORPAY_SECRET || 'KTWnYhmt800Y7TSQ6Cc6TBpF';
+    const signature = req.headers['x-razorpay-signature'];
+    
+    // If we use express.raw, req.body is a Buffer. Otherwise it's parsed JSON.
+    // To verify signature reliably, we need raw body string.
+    // If it's already an object, JSON.stringify might reorder keys.
+    const bodyStr = Buffer.isBuffer(req.body) ? req.body.toString('utf8') : JSON.stringify(req.body);
+
+    const expectedSignature = crypto.createHmac('sha256', secret)
+                                    .update(bodyStr)
+                                    .digest('hex');
+                                    
+    if (signature !== expectedSignature) {
+      console.error('Webhook signature mismatch');
+      return res.status(400).json({ error: 'Invalid signature' });
+    }
+
+    const payload = Buffer.isBuffer(req.body) ? JSON.parse(bodyStr) : req.body;
+    const event = payload.event;
+    
+    if (event === 'subscription.charged') {
+      const subscription = payload.payload.subscription.entity;
+      const { plan, period, studentId } = subscription.notes;
+      if (studentId) {
+        await db.query(
+          `UPDATE users SET subscription_plan = $1, subscription_period = $2, subscription_status = 'active', razorpay_subscription_id = $3 WHERE "studentId" = $4`,
+          [plan, period, subscription.id, studentId]
+        );
+      }
+    } else if (event === 'subscription.halted' || event === 'subscription.cancelled' || event === 'subscription.completed') {
+      const subscription = payload.payload.subscription.entity;
+      const studentId = subscription.notes.studentId;
+      if (studentId) {
+        await db.query(
+          `UPDATE users SET subscription_plan = 'free', subscription_period = '', subscription_status = $1 WHERE "studentId" = $2`,
+          [event.split('.')[1], studentId]
+        );
+      }
+    }
+    
+    res.json({ status: 'ok' });
+  } catch (err) {
+    console.error('Webhook error:', err);
     res.status(500).json({ error: err.message });
   }
 });

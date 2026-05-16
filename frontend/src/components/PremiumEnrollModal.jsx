@@ -44,33 +44,31 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
       const amount = yearly ? plan.yearlyPrice : plan.monthlyPrice;
       const period = yearly ? 'yearly' : 'monthly';
 
-      // 1. Create order
-      const orderRes = await fetch(`${API_BASE}/api/payment/create-order`, {
+      // 1. Create subscription
+      const subRes = await fetch(`${API_BASE}/api/payment/create-subscription`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ plan: plan.id, period, studentId: user?.studentId || user?.username })
       });
-      const orderData = await orderRes.json();
+      const subData = await subRes.json();
       
-      if (!orderRes.ok) throw new Error(orderData.error || 'Failed to create order');
+      if (!subRes.ok) throw new Error(subData.error || 'Failed to create subscription');
 
       // 2. Open Razorpay Checkout
       const options = {
         key: 'rzp_live_SpxzVJVdO5A5xr', // Public Key
-        amount: orderData.amount,
-        currency: orderData.currency,
         name: 'G Force AI',
         description: `Upgrade to ${plan.name} (${period})`,
-        order_id: orderData.id,
+        subscription_id: subData.id,
         handler: async function (response) {
           // 3. Verify Payment
-          const verifyRes = await fetch(`${API_BASE}/api/payment/verify`, {
+          const verifyRes = await fetch(`${API_BASE}/api/payment/verify-subscription`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              razorpayOrderId: response.razorpay_order_id,
-              razorpayPaymentId: response.razorpay_payment_id,
-              signature: response.razorpay_signature
+              razorpay_subscription_id: response.razorpay_subscription_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature
             })
           });
           const verifyData = await verifyRes.json();

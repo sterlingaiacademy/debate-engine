@@ -51,7 +51,7 @@ def main():
     print("\n>>> Uploading backend files via SFTP...")
     sftp = client.open_sftp()
     local_backend = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'backend'))
-    for fname in ['server.js', 'database.js', 'package.json']:
+    for fname in ['server.js', 'database.js', 'package.json', '.env']:
         local_path  = os.path.join(local_backend, fname)
         remote_path = f"{APP_DIR}/backend/{fname}"
         print(f"  {fname} -> {remote_path}")
@@ -60,7 +60,7 @@ def main():
     print("  Backend files uploaded OK.")
 
     # 2. Restart PM2 with new backend
-    run(client, "pm2 restart grace-api", "Restart PM2 backend")
+    run(client, "pm2 restart grace-api --update-env", "Restart PM2 backend")
 
     # 3. Git fetch + reset to get latest frontend source (handles forced pushes)
     run(client, f"cd {APP_DIR} && git fetch origin main && git reset --hard origin/main", "Git fetch + hard reset latest (frontend source)")
