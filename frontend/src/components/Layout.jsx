@@ -275,7 +275,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
         <nav style={{
           flex: 1,
           display: 'flex', flexDirection: 'column',
-          gap: isMobile ? '0.25rem' : (isJunior ? '0.35rem' : '0.15rem'),
+          gap: isMobile ? '0.45rem' : (isJunior ? '0.35rem' : '0.15rem'),
           padding: isMobile ? '1.5rem 1.25rem 80px 1.25rem' : (isCollapsed && !isMobile ? '0.5rem' : '0.75rem 0.75rem 0.75rem 0'),
           overflowY: 'auto', overflowX: 'hidden',
           marginTop: isMobile ? '1rem' : 0,
@@ -298,7 +298,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
                   display: 'flex', alignItems: 'center',
                   gap: isMobile ? '1rem' : (isCollapsed && !isMobile ? 0 : '0.75rem'),
                   padding: isMobile 
-                    ? '0.85rem 1.25rem'
+                    ? '1.05rem 1.25rem'
                     : (isJunior
                       ? (isCollapsed && !isMobile ? '0.85rem' : '0.85rem 1.1rem')
                       : (isCollapsed && !isMobile ? '0.85rem 0' : '0.85rem 1rem')),
