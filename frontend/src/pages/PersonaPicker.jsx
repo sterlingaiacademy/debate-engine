@@ -94,7 +94,7 @@ export default function PersonaPicker({ user }) {
           </span>
         </div>
         <div>
-          <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)', fontWeight: 800, margin: 0 }}>🎭 Choose a Persona</h2>
+          <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)', fontWeight: 800, margin: 0 }}>Choose a Persona</h2>
           <p className="text-secondary" style={{ margin: '0.2rem 0 0', fontSize: '0.9rem' }}>
             Pick a leader and start a live voice conversation
           </p>
