@@ -74,7 +74,7 @@ const SENIOR_MODES = [
   },
   {
     id: 'persona',
-    title: 'Persona Debate',
+    title: 'Wisdom Arena',
     desc: 'Step into the shoes of historical legends — debate as Einstein, Gandhi, or Cleopatra.',
     tag: 'ROLEPLAY',
     icon: Users,

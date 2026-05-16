@@ -90,7 +90,7 @@ export default function PersonaPicker({ user }) {
             <ArrowLeft size={16} /> Back
           </button>
           <span className="badge badge-blue" style={{ fontSize: '0.75rem' }}>
-            {user?.grade ? (user.grade.startsWith('Class') ? user.grade.replace('Class', 'Grade') : user.grade) : (user?.classLevel || 'Grade 4')} • Persona Mode
+            {user?.grade ? (user.grade.startsWith('Class') ? user.grade.replace('Class', 'Grade') : user.grade) : (user?.classLevel || 'Grade 4')} • Wisdom Arena
           </span>
         </div>
         <div>
