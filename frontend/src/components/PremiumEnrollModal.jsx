@@ -151,6 +151,21 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
         </>
       )}
 
+      {/* ── Upgrade Banner (Manual Trigger) ── */}
+      {mode === 'upgrade' && (
+        <div style={{ textAlign: 'center', marginBottom: '0.5rem', animation: 'fadeIn 0.4s ease' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 64, height: 64, borderRadius: '50%', background: 'rgba(139,92,246,0.1)', color: '#8b5cf6', marginBottom: '1rem' }}>
+            <Crown size={32} />
+          </div>
+          <h2 style={{ fontSize: '1.75rem', fontWeight: 900, color: 'var(--text-primary)', margin: '0 0 0.5rem', letterSpacing: '-0.02em' }}>
+            Upgrade to Premium
+          </h2>
+          <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.6 }}>
+            Unlock unlimited practice time, priority AI access, and exclusive features.
+          </p>
+        </div>
+      )}
+
       {/* ── Toggle ── */}
       <div style={{ display: 'flex', background: 'rgba(255,255,255,0.06)', borderRadius: '999px', border: '1px solid rgba(255,255,255,0.1)', padding: '4px', gap: '4px' }}>
         <button onClick={() => setYearly(false)} style={{

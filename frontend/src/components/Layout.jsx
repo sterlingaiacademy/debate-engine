@@ -543,7 +543,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
     {/* Sidebar Premium Modal */}
     {showPremiumModal && (
       <div style={{ position: 'fixed', inset: 0, zIndex: 99999, display: 'flex', flexDirection: 'column', background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', overflowY: 'auto' }}>
-        <PremiumEnrollModal user={user} onDismiss={() => setShowPremiumModal(false)} />
+        <PremiumEnrollModal user={user} mode="upgrade" onDismiss={() => setShowPremiumModal(false)} />
       </div>
     )}
 
