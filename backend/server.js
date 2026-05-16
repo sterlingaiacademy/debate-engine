@@ -631,8 +631,8 @@ app.post('/api/webhook/razorpay', async (req, res) => {
       const studentId = notes.studentId;
       if (studentId) {
         await db.query(
-          `UPDATE users SET subscription_plan = 'free', subscription_period = '', subscription_status = $1 WHERE "studentId" = $2`,
-          [event.split('.')[1], studentId]
+          `UPDATE users SET subscription_plan = 'free', subscription_period = '', subscription_status = $1 WHERE "studentId" = $2 AND razorpay_subscription_id = $3`,
+          [event.split('.')[1], studentId, subscription.id]
         );
       }
     }
