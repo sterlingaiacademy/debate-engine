@@ -95,9 +95,12 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ plan: plan.id, period, studentId: user?.studentId || user?.username })
       });
-      const subData = await subRes.json();
+      const isJson = subRes.headers.get('content-type')?.includes('application/json');
+      const subData = isJson ? await subRes.json() : null;
       
-      if (!subRes.ok) throw new Error(subData.error || `Failed to ${isUpgrade ? 'update' : 'create'} subscription`);
+      if (!subRes.ok) {
+        throw new Error(subData?.error || `Server error (${subRes.status}). Please try again.`);
+      }
 
       if (isUpgrade) {
         // Subscription Updated! Razorpay automatically prorates and charges the vaulted card.
@@ -134,8 +137,10 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
               period: period
             })
           });
-          const verifyData = await verifyRes.json();
-          if (verifyRes.ok && verifyData.success) {
+          const isVerifyJson = verifyRes.headers.get('content-type')?.includes('application/json');
+          const verifyData = isVerifyJson ? await verifyRes.json() : null;
+
+          if (verifyRes.ok && verifyData?.success) {
             // Update local storage so the global app state picks it up on reload
             try {
               const currentUser = JSON.parse(localStorage.getItem('user')) || {};

@@ -1,34 +1,12 @@
-import paramiko
-
-def restart_pm2():
-    host = "65.20.85.75"
-    port = 22
-    username = "graceandforce"
-    password = "wvpi2!ZnTcV];ncy"
-
-    client = paramiko.SSHClient()
-    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    
-    try:
-        client.connect(host, port, username, password, timeout=10)
-        
-        script = r"""
-export PATH=$PATH:/home/graceandforce/.nvm/versions/node/v20.18.3/bin:/home/graceandforce/.npm-global/bin
-pm2 restart grace-api
-"""
-
-        stdin, stdout, stderr = client.exec_command(script)
-        
-        for line in iter(stdout.readline, ""):
-            print(line.encode('utf-8', 'ignore').decode('utf-8'), end="")
-            
-        for line in iter(stderr.readline, ""):
-            print("ERROR: " + line.encode('utf-8', 'ignore').decode('utf-8'), end="")
-            
-    except Exception as e:
-        print(f"Failed to execute: {str(e)}")
-    finally:
-        client.close()
-
-if __name__ == "__main__":
-    restart_pm2()
+import paramiko, sys
+c = paramiko.SSHClient()
+c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+c.connect('65.20.85.75', 22, 'graceandforce', 'wvpi2!ZnTcV];ncy')
+def run(cmd):
+    print(f"\n>>> {cmd}")
+    stdin, stdout, stderr = c.exec_command('export NVM_DIR="$HOME/.nvm"; [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"; ' + cmd)
+    for line in iter(stdout.readline, ""): sys.stdout.buffer.write(line.encode('utf-8'))
+    for line in iter(stderr.readline, ""): sys.stdout.buffer.write(line.encode('utf-8'))
+run('pm2 restart grace-api')
+run('pm2 logs grace-api --lines 20 --nostream')
+c.close()
