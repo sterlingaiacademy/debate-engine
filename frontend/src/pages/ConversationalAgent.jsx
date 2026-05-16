@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Mic, MicOff, PhoneOff, Timer as TimerIcon, Play, MessageSquare } from 'lucide-react';
+import { Mic, MicOff, PhoneOff, Timer as TimerIcon, Play, MessageSquare, ArrowRight } from 'lucide-react';
 import { Conversation } from '@11labs/client';
 import AIAvatar from '../components/AIAvatar';
 import GeminiWave from '../components/GeminiWave';
@@ -309,11 +309,14 @@ const formatTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0
           <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2.25rem)', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
             {isSpeechCoach ? 'What would you like to practise?' : 'What do you feel like doing?'}
           </h2>
-          <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', marginBottom: '3rem', maxWidth: '600px' }}>
+          <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', marginBottom: '1.5rem', maxWidth: '600px' }}>
             {isSpeechCoach
               ? 'Choose a focus area and your AI Speech Coach will guide you through a personalised session.'
               : "Whether you want to learn something new, clear up a doubt, or test yourself with a quiz — I've got you."}
           </p>
+          <div style={{ fontSize: '0.85rem', color: '#10b981', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '1.5rem', opacity: 0.8 }}>
+            Swipe left to explore more <ArrowRight size={14} />
+          </div>
 
           <style>{`
             .carousel-hide-scroll::-webkit-scrollbar {

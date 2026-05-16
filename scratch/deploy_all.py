@@ -62,8 +62,8 @@ def main():
     # 2. Restart PM2 with new backend
     run(client, "pm2 restart grace-api", "Restart PM2 backend")
 
-    # 3. Git stash + pull to get latest frontend source
-    run(client, f"cd {APP_DIR} && git stash && git pull origin main", "Git stash + pull latest (frontend source)")
+    # 3. Git fetch + reset to get latest frontend source (handles forced pushes)
+    run(client, f"cd {APP_DIR} && git fetch origin main && git reset --hard origin/main", "Git fetch + hard reset latest (frontend source)")
 
     # 4. Rebuild frontend
     run(client, f"cd {APP_DIR}/frontend && npm install", "npm install frontend")

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Mic, Lock } from 'lucide-react';
 
 const LEVEL_4_PERSONAS = [
   { 
@@ -69,20 +69,24 @@ export default function PersonaPicker({ user }) {
   };
 
   return (
-    <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '100vh', overflowY: 'auto', padding: '2rem', paddingBottom: '6rem' }}>
+    <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '100vh', overflowY: 'auto', padding: '1.5rem 1rem', paddingBottom: '6rem' }}>
 
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-        <button onClick={() => navigate('/dashboard')} className="btn btn-secondary btn-sm" style={{ gap: '0.375rem' }}>
-          <ArrowLeft size={16} /> Back
-        </button>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
+          <button onClick={() => navigate('/dashboard')} className="btn btn-secondary btn-sm" style={{ gap: '0.375rem' }}>
+            <ArrowLeft size={16} /> Back
+          </button>
+          <span className="badge badge-blue" style={{ fontSize: '0.75rem' }}>
+            {user?.grade ? (user.grade.startsWith('Class') ? user.grade.replace('Class', 'Grade') : user.grade) : (user?.classLevel || 'Grade 4')} • Persona Mode
+          </span>
+        </div>
         <div>
-          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: 0 }}>🎭 Choose a Persona</h2>
+          <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)', fontWeight: 800, margin: 0 }}>🎭 Choose a Persona</h2>
           <p className="text-secondary" style={{ margin: '0.2rem 0 0', fontSize: '0.9rem' }}>
             Pick a leader and start a live voice conversation
           </p>
         </div>
-        <span className="badge badge-blue" style={{ marginLeft: 'auto' }}>{user?.grade ? (user.grade.startsWith('Class') ? user.grade.replace('Class', 'Grade') : user.grade) : (user?.classLevel || 'Grade 4')} • Persona Mode</span>
       </div>
 
       {/* Legend */}
@@ -128,53 +132,53 @@ export default function PersonaPicker({ user }) {
                 cursor: isLive ? 'pointer' : 'not-allowed',
                 scrollSnapAlign: 'center',
                 flexShrink: 0,
-                width: '220px',
+                width: '260px',
                 border: `2px solid ${isLive ? colors.border : 'rgba(255,255,255,0.05)'}`,
                 borderRadius: '24px',
-                padding: '2rem 1rem 1.5rem',
-                background: isLive ? colors.bg : 'rgba(255,255,255,0.02)',
+                padding: '2rem 1.5rem',
+                background: isLive ? `linear-gradient(160deg, ${colors.bg} 0%, rgba(0,0,0,0.5) 100%)` : 'rgba(255,255,255,0.02)',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                gap: '1rem',
+                justifyContent: 'center',
+                gap: '1.25rem',
                 textAlign: 'center',
-                transition: 'transform 0.18s, box-shadow 0.18s, background 0.18s',
-                boxShadow: isLive ? `0 8px 32px ${colors.border}25` : 'none',
+                transition: 'transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s',
+                boxShadow: isLive ? `0 12px 32px ${colors.border}25` : 'none',
                 opacity: isLive ? 1 : 0.65,
                 position: 'relative',
               }}
               onMouseEnter={e => {
                 if (!isLive) return;
-                e.currentTarget.style.transform = 'translateY(-4px) scale(1.02)';
-                e.currentTarget.style.boxShadow = `0 10px 28px ${colors.border}40`;
-                e.currentTarget.style.background = `rgba(${colors.bg.substring(5, colors.bg.length - 6)}, 0.15)`;
+                e.currentTarget.style.transform = 'translateY(-6px) scale(1.02)';
+                e.currentTarget.style.boxShadow = `0 16px 40px ${colors.border}40`;
               }}
               onMouseLeave={e => {
+                if (!isLive) return;
                 e.currentTarget.style.transform = '';
-                e.currentTarget.style.boxShadow = isLive ? `0 2px 12px ${colors.border}15` : 'none';
-                e.currentTarget.style.background = isLive ? colors.bg : 'rgba(255,255,255,0.02)';
+                e.currentTarget.style.boxShadow = `0 12px 32px ${colors.border}25`;
               }}
             >
               {/* LIVE dot */}
               {isLive && (
                 <span style={{
-                  position: 'absolute', top: 10, right: 10,
-                  width: 9, height: 9, borderRadius: '50%',
+                  position: 'absolute', top: 18, right: 18,
+                  width: 10, height: 10, borderRadius: '50%',
                   background: '#10b981',
-                  boxShadow: '0 0 6px #10b981',
+                  boxShadow: '0 0 10px #10b981',
                 }} />
               )}
 
               {/* Avatar / Image */}
               <div style={{
-                width: 96, height: 96,
+                width: 130, height: 130,
                 borderRadius: '50%',
-                background: isLive ? `linear-gradient(135deg, ${colors.border}33, ${colors.border}66)` : 'rgba(255,255,255,0.05)',
+                background: isLive ? `linear-gradient(135deg, ${colors.border}55, ${colors.border}11)` : 'rgba(255,255,255,0.05)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                border: `3px solid ${isLive ? colors.border : 'rgba(255,255,255,0.1)'}`,
+                border: `4px solid ${isLive ? colors.border : 'rgba(255,255,255,0.1)'}`,
                 flexShrink: 0,
                 overflow: 'hidden',
-                boxShadow: `0 8px 24px ${colors.border}40`,
+                boxShadow: isLive ? `0 8px 30px ${colors.border}60` : 'none',
               }}>
                 <img src={persona.image} alt={persona.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
@@ -204,14 +208,20 @@ export default function PersonaPicker({ user }) {
               </span>
 
               {/* CTA */}
-              <span style={{
-                fontSize: '0.85rem',
+              <div style={{
+                marginTop: '0.25rem',
+                width: '100%',
+                padding: '0.75rem',
+                borderRadius: '12px',
+                background: isLive ? colors.border : 'rgba(255,255,255,0.05)',
+                color: isLive ? '#000' : 'rgba(255,255,255,0.5)',
                 fontWeight: 800,
-                color: isLive ? colors.text : '#94a3b8',
-                marginTop: '0.1rem',
+                fontSize: '0.95rem',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
+                boxShadow: isLive ? `0 4px 14px ${colors.border}40` : 'none',
               }}>
-                {isLive ? '🎙️ Talk Now' : '🔒 Soon'}
-              </span>
+                {isLive ? <><Mic size={16} /> Talk Now</> : <><Lock size={16} /> Coming Soon</>}
+              </div>
             </button>
           );
         })}

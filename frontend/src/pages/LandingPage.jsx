@@ -427,33 +427,183 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── PRIVACY & TERMS ── */}
+                  {/* ── PRIVACY POLICY ── */}
       <section className="lp-section lp-section-alt" id="privacy">
         <div className="lp-container" style={{ maxWidth: '800px', margin: '0 auto' }}>
           <div className="lp-section-header lp-reveal" style={{ textAlign: 'center' }}>
             <span className="lp-section-badge" style={{ background: 'rgba(16,185,129,0.15)', color: '#10b981', borderColor: 'rgba(16,185,129,0.3)' }}>Data & Privacy</span>
-            <h2 className="lp-section-h2">Your Data is Safe With Us</h2>
-            <p className="lp-section-sub">We prioritize the security and privacy of our students above all else.</p>
+            <h2 className="lp-section-h2">Global Privacy Policy</h2>
+            <p className="lp-section-sub">Last Updated: 17 May 2026</p>
           </div>
-          <div className="lp-reveal lp-privacy-card">
-            <p style={{ marginBottom: '1.5rem' }}>
-              <strong style={{ color: '#e2e8f0', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', fontSize: '1.05rem' }}>
-                <Shield size={20} color="#10b981" /> No Student Data Storage
-              </strong>
-              We do not track, log, or permanently store any sensitive student metrics, personal information, or chat transcripts. All AI debates are processed securely over encrypted channels and deleted from our evaluation servers immediately after the session concludes.
-            </p>
-            <p style={{ marginBottom: '1.5rem' }}>
-              <strong style={{ color: '#e2e8f0', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', fontSize: '1.05rem' }}>
-                <Shield size={20} color="#10b981" /> Strict Educational Privacy
-              </strong>
-              G Force AI adheres rigidly to COPPA guidelines and foremost educational privacy standards. We provide a completely locked-down environment ensuring maximum safety for students of all ages.
-            </p>
-            <p>
-              <strong style={{ color: '#e2e8f0', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', fontSize: '1.05rem' }}>
-                <CheckCircle size={20} color="#10b981" /> Educational Terms of Use
-              </strong>
-              By using our service, you agree to our standard terms which dictate that our platform is exclusively meant for educational growth and debate practice.
-            </p>
+          <div className="lp-reveal lp-privacy-card" style={{ fontSize: '0.9rem', color: '#cbd5e1', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            <div>
+              <p style={{ color: '#fff', fontSize: '1.05rem', fontWeight: 'bold' }}>G FORCE AI</p>
+              <p>Global Privacy Policy for Debate and Speech Coaching App<br/>
+              Voice-first platform | AI coaching | TTS | Leaderboards | Progress monitoring | Users 16+<br/>
+              Effective Date: 15 May 2026<br/>
+              Contact: info@nanoskool.com</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>1. Scope and Acceptance</h3>
+              <p style={{ marginBottom: "0.5rem" }}>This Privacy Policy explains how G Force AI / Grace & Force AI (“G Force”, “we”, “our”, or “us”) collects, uses, stores, protects, shares, and deletes personal data when users access our website, mobile apps, AI debate coach, speech coach, voice-first practice tools, text-to-speech features, leaderboards, competitions, live cohorts, dashboards, and related services.</p>
+              <p style={{ marginBottom: "0.5rem" }}>By creating an account, using the app, subscribing to a plan, joining a cohort, participating in a leaderboard, uploading content, using voice features, or accessing any G Force AI service, you confirm that you have read and accepted this Privacy Policy.</p>
+              <p style={{ marginBottom: "0.5rem" }}>If you are under the applicable legal age of majority but above 16, you may use the platform only with appropriate parental/legal guardian awareness, consent, and supervision where required by law.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>2. Eligibility: 16+ Platform and Parental Responsibility</h3>
+              <p style={{ marginBottom: "0.5rem" }}>G Force AI is intended for users aged 16 years and above. The platform is not intended for unsupervised use by children below 16 years of age.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Parents and legal guardians are solely responsible for ensuring that minor students do not misuse the platform, create unauthorized accounts, submit personal data, upload voice/audio/content, participate in leaderboards, or make purchases without parental consent, lawful authority, and supervision.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Where a parent, school, coach, or institution permits a minor to use the platform, that adult or institution is responsible for obtaining all legally required permissions and for supervising safe, lawful, and age-appropriate use.</p>
+              <p style={{ marginBottom: "0.5rem" }}>We reserve the right to suspend, restrict, or delete accounts where we reasonably believe age, consent, safety, or legal requirements are not satisfied.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>3. Information We Collect</h3>
+              <p style={{ marginBottom: "0.5rem" }}>Account and identity data: name, email address, phone number, username, password/authentication data, country, city, school/institution, grade/class, age confirmation, parent/guardian details where required, and profile details voluntarily provided.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Voice, audio, and speech data: microphone input, practice recordings, debate simulations, pronunciation samples, speech transcripts, voice interaction logs, fluency metrics, pause/filler-word patterns, pace, tone, pitch, confidence indicators, TTS interaction history, and related coaching analytics.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Learning and progress data: scores, badges, practice history, leaderboard position, ranking history, streaks, assignments, feedback, improvement trends, AI-generated coaching recommendations, debate rubrics, MUN/diplomacy practice results, and certification progress.</p>
+              <p style={{ marginBottom: "0.5rem" }}>User-generated content: speeches, debate arguments, prompts, chat messages, essays, documents, profile content, uploaded files, comments, competition entries, and public/shared submissions.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Technical data: IP address, device identifiers, browser, operating system, app version, crash logs, cookies, session data, approximate location, language settings, and usage analytics.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Payment and transaction data: plan type, subscription status, invoices, payment confirmation, tax data, transaction IDs, and limited payment metadata. We do not store full card numbers when payments are processed by third-party payment gateways.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>4. Sensitive Data and Prohibited Uploads</h3>
+              <p style={{ marginBottom: "0.5rem" }}>Users must not upload highly sensitive information such as medical records, biometric identity documents, banking passwords, government identity numbers, private legal documents, confidential third-party information, or intimate personal content unless specifically requested through a lawful and secure process.</p>
+              <p style={{ marginBottom: "0.5rem" }}>G Force AI is not a medical, psychological, psychiatric, legal, immigration, financial, or therapeutic platform. Voice-confidence, emotion, sentiment, fluency, or communication analytics are educational indicators only and must not be treated as diagnosis or professional advice.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>5. How We Use Personal Data</h3>
+              <p style={{ marginBottom: "0.5rem" }}>We use personal data to create and manage accounts, deliver AI speech and debate coaching, generate personalized feedback, enable TTS and voice-first interactions, maintain leaderboards, track progress, issue certificates, provide live cohort services, process payments, and offer customer support.</p>
+              <p style={{ marginBottom: "0.5rem" }}>We may use data to improve platform quality, personalize learning pathways, detect misuse, prevent fraud, secure accounts, troubleshoot bugs, measure app performance, conduct internal research, and improve AI coaching accuracy.</p>
+              <p style={{ marginBottom: "0.5rem" }}>We may use anonymized or aggregated data for product improvement, educational research, business analytics, and public impact reporting, provided such data does not directly identify a user.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>6. Voice Data, Recordings, Transcripts and TTS</h3>
+              <p style={{ marginBottom: "0.5rem" }}>G Force AI is a voice-first coaching platform. By using microphone, recording, TTS, pronunciation, debate simulation, or speech-analysis tools, users authorize us to process voice, audio, transcript, and related performance data for app functionality.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Recordings may be used for playback, progress monitoring, rubric scoring, AI feedback, quality control, safety review, dispute resolution, and service improvement.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Users should assume that voice interactions may be converted into text transcripts and analyzed by automated systems.</p>
+              <p style={{ marginBottom: "0.5rem" }}>We will not use a user’s identifiable voice recording in public advertising, promotional materials, or external showcases without separate permission, unless the user has independently made the content public through platform features.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>7. Leaderboards, Rankings and Public Display</h3>
+              <p style={{ marginBottom: "0.5rem" }}>The platform may include leaderboards, challenge rankings, badges, certificates, cohort scoreboards, tournament displays, and public or semi-public achievement pages.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Depending on settings and program design, leaderboard data may display name, username, institution, city/country, score, badge, rank, cohort, or achievement level.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Users and parents/guardians understand that participation in competitions, rankings, public challenges, and leaderboards may involve visibility to other participants, coaches, institutions, or the public.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Where privacy controls are available, users should manage display-name and profile-visibility settings carefully.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>8. AI Systems and Automated Feedback</h3>
+              <p style={{ marginBottom: "0.5rem" }}>G Force AI uses AI systems, speech-recognition tools, text-to-speech systems, language models, scoring engines, and recommendation systems to generate debate feedback, speech coaching, practice prompts, role-play simulations, progress insights, and learning suggestions.</p>
+              <p style={{ marginBottom: "0.5rem" }}>AI-generated outputs may be inaccurate, incomplete, biased, delayed, or unsuitable for a specific context. They are educational aids and do not replace human judgment, teachers, parents, coaches, or professional advisors.</p>
+              <p style={{ marginBottom: "0.5rem" }}>We may use automated tools to detect abusive content, unsafe behavior, academic dishonesty, impersonation, spam, or violations of our terms. Human review may be used where appropriate.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>9. Legal Basis for Processing</h3>
+              <p style={{ marginBottom: "0.5rem" }}>Depending on jurisdiction, we process data based on consent, contractual necessity, legitimate interests, compliance with legal obligations, protection of users and platform integrity, educational service delivery, and, where applicable, parental or institutional authorization.</p>
+              <p style={{ marginBottom: "0.5rem" }}>For India, processing is intended to align with the Digital Personal Data Protection Act, 2023, including notice, consent, legitimate uses, data-principal rights, and children’s data requirements where applicable.</p>
+              <p style={{ marginBottom: "0.5rem" }}>For EU/UK users, processing is intended to align with GDPR/UK GDPR principles including lawfulness, fairness, transparency, purpose limitation, data minimization, accuracy, storage limitation, integrity, confidentiality, and accountability.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>10. Children, Minors and Guardian Consent</h3>
+              <p style={{ marginBottom: "0.5rem" }}>The platform is designed for users aged 16 and above. We do not knowingly provide unrestricted accounts to children below 16 without appropriate parental, guardian, school, or institutional authorization where required by law.</p>
+              <p style={{ marginBottom: "0.5rem" }}>In India, a person below 18 may be treated as a child for certain personal-data purposes. Where the law requires verifiable parental consent, the parent/legal guardian or authorized institution must ensure such consent is validly obtained before the minor uses the platform.</p>
+              <p style={{ marginBottom: "0.5rem" }}>In the EU/UK and other jurisdictions, digital-consent age may vary. Parents, guardians, schools, and institutions are responsible for ensuring lawful consent and supervision for student users below the applicable age threshold.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Parents or legal guardians may contact us to request review, correction, restriction, or deletion of a minor’s personal data, subject to verification and legal limits.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>11. Data Sharing and Third-Party Processors</h3>
+              <p style={{ marginBottom: "0.5rem" }}>We may share data with trusted service providers such as cloud hosting providers, AI API providers, speech-to-text and text-to-speech providers, analytics tools, payment processors, customer support tools, email/SMS tools, security vendors, certification partners, and school/institution partners.</p>
+              <p style={{ marginBottom: "0.5rem" }}>We require service providers to process data only for authorized purposes and to maintain reasonable security safeguards.</p>
+              <p style={{ marginBottom: "0.5rem" }}>We may share data with schools, coaches, cohort administrators, tournament organizers, or institutional customers where the user joins through or participates in an institutional program.</p>
+              <p style={{ marginBottom: "0.5rem" }}>We may disclose data if required by law, court order, regulator request, safety investigation, fraud prevention, legal claim, merger, acquisition, restructuring, or protection of rights and safety.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>12. No Sale of Personal Data</h3>
+              <p style={{ marginBottom: "0.5rem" }}>We do not sell personal data as a standalone data-broker business.</p>
+              <p style={{ marginBottom: "0.5rem" }}>We do not knowingly sell or share personal data of minors for behavioral advertising.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Advertising, analytics, and tracking practices, if introduced, will be disclosed through cookie notices or consent mechanisms where required by law.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>13. Cookies, Analytics and Tracking</h3>
+              <p style={{ marginBottom: "0.5rem" }}>We may use cookies, pixels, SDKs, analytics tools, and similar technologies to maintain sessions, remember preferences, measure engagement, detect fraud, improve platform performance, and support marketing attribution.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Users can manage browser cookies through browser settings. Some features may not work properly if cookies are disabled.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Where required, users may be presented with cookie consent tools or opt-out mechanisms.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>14. International Data Transfers</h3>
+              <p style={{ marginBottom: "0.5rem" }}>Because G Force AI may operate globally, personal data may be processed in countries other than the user’s country of residence.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Where required, we may rely on contractual safeguards, adequacy decisions, consent, legitimate operational necessity, or other lawful mechanisms for international transfers.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Users understand that privacy laws may differ across countries, but we aim to apply reasonable security and privacy safeguards across our operations.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>15. Data Retention</h3>
+              <p style={{ marginBottom: "0.5rem" }}>We retain personal data only for as long as reasonably necessary for educational service delivery, account operation, legal compliance, dispute resolution, fraud prevention, security, billing, certification validation, and product improvement.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Voice recordings and transcripts may be retained for progress history, review, coaching, safety, or quality purposes unless deleted under applicable settings, account deletion, institutional agreement, or legal request.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Anonymized or aggregated data may be retained indefinitely for research, analytics, platform improvement, and reporting.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>16. User Rights</h3>
+              <p style={{ marginBottom: "0.5rem" }}>Depending on applicable law, users may have rights to access personal data, correct inaccurate data, delete data, withdraw consent, restrict processing, object to processing, request portability, opt out of certain sharing, or complain to a regulator.</p>
+              <p style={{ marginBottom: "0.5rem" }}>To exercise rights, email info@nanoskool.com with your name, registered email, account details, and request type.</p>
+              <p style={{ marginBottom: "0.5rem" }}>We may verify identity before fulfilling requests and may refuse or limit requests where permitted by law, including for fraud prevention, legal claims, platform safety, certification records, billing obligations, or technical impossibility.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>17. Account Deletion and Data Export</h3>
+              <p style={{ marginBottom: "0.5rem" }}>Users may request account deletion by contacting info@nanoskool.com or through in-app controls where available.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Account deletion may remove access to practice history, leaderboards, certificates, subscriptions, AI feedback, and cohort records.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Some data may remain in backups, legal records, transaction logs, abuse-prevention systems, anonymized datasets, or institutional records for a limited or legally necessary period.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>18. Security Measures</h3>
+              <p style={{ marginBottom: "0.5rem" }}>We use commercially reasonable administrative, technical, and organizational safeguards including access controls, encryption where appropriate, audit logs, secure authentication, vendor review, monitoring, backup controls, and role-based internal access.</p>
+              <p style={{ marginBottom: "0.5rem" }}>No internet platform can guarantee absolute security. Users are responsible for strong passwords, device safety, account confidentiality, and avoiding unsafe uploads or sharing of login credentials.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>19. User Responsibilities</h3>
+              <p style={{ marginBottom: "0.5rem" }}>Users must use the platform lawfully, respectfully, and safely. Users must not submit illegal, abusive, defamatory, hateful, sexually explicit, violent, confidential, infringing, or privacy-violating content.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Users must not impersonate others, manipulate leaderboards, misuse AI tools, scrape platform data, reverse engineer systems, share accounts, record others without permission, or upload third-party voice/content without authorization.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Parents and guardians are responsible for monitoring minor users, preventing misuse, ensuring lawful consent, and reviewing the suitability of AI-generated content for the student.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>20. School and Institutional Use</h3>
+              <p style={{ marginBottom: "0.5rem" }}>Where G Force AI is used through a school, college, coaching center, employer, NGO, or institution, that organization may control enrollment, access, leaderboards, dashboards, assignments, competitions, analytics, and reporting.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Institutions are responsible for obtaining required student/parent permissions, ensuring lawful use, and communicating program-specific privacy notices where applicable.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Institutional contracts may contain additional data-processing terms. In case of conflict, the signed institutional agreement may govern specific institutional data processing.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>21. Community, Competitions and Public Events</h3>
+              <p style={{ marginBottom: "0.5rem" }}>If users participate in debates, MUN simulations, public-speaking contests, tournaments, showcases, webinars, livestreams, or public events, their name, image, voice, school, ranking, certificate, or performance may be visible depending on the event format and consent terms.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Separate event consent, media release, competition terms, or institutional approvals may apply.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>22. Changes to This Policy</h3>
+              <p style={{ marginBottom: "0.5rem" }}>We may update this Privacy Policy from time to time to reflect product changes, legal updates, security improvements, or operational needs.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Material changes may be communicated through email, app notice, website notice, or account alert. Continued use after changes means acceptance of the updated policy.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>23. Contact</h3>
+              <p style={{ marginBottom: "0.5rem" }}>For privacy questions, data requests, parental requests, school privacy coordination, or legal notices, contact: info@nanoskool.com</p>
+              <p style={{ marginBottom: "0.5rem" }}>Privacy & Compliance Team, G Force AI / Grace & Force AI, Nanoskool Education Pvt Ltd, Wework Prestige Atlanta, Koramangala  Bengaluru, India</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>24. Legal Governance</h3>
+              <p style={{ marginBottom: "0.5rem" }}>This Privacy Policy shall be governed by applicable Indian law, the Digital Personal Data Protection Act, 2023, applicable consumer protection laws, and where applicable, GDPR, UK GDPR, COPPA, and other relevant privacy laws based on user location and service context.</p>
+              <p style={{ marginBottom: "0.5rem" }}>Disputes relating to privacy, platform use, data processing, payments, subscriptions, AI outputs, competitions, or digital services shall be subject to the jurisdiction and dispute-resolution mechanism stated in the G Force AI Terms of Service.</p>
+            </div>
+            <div>
+              <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>Appendix 1: Practical Privacy Controls Recommended for G Force AI Product Team</h3>
+              <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+                <li>Age gate: require users to confirm they are 16+ and provide country of residence during onboarding.</li>
+                <li>Parent/guardian flow: for users below legal adult age, provide guardian consent capture or institutional authorization workflow where applicable.</li>
+                <li>Voice consent: show a clear microphone/recording notice before first recording and during live recording sessions.</li>
+                <li>Display-name safety: allow students to use display names rather than full legal names on leaderboards.</li>
+                <li>Leaderboard privacy: give schools/admins controls for private, cohort-only, institution-only, or public leaderboards.</li>
+                <li>Recording deletion: provide account-level or institution-level deletion settings for recordings and transcripts where feasible.</li>
+                <li>AI transparency: clearly label AI-generated feedback and prevent it from being treated as medical, legal, psychological, or employment advice.</li>
+                <li>Data export/deletion: provide simple email or in-app rights-request process.</li>
+                <li>No public promotion: do not use student recordings/images/voice in marketing without separate consent.</li>
+                <li>Access controls: role-based dashboards for students, parents, coaches, schools, and admins.</li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
