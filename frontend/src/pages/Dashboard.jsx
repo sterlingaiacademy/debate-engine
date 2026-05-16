@@ -70,7 +70,7 @@ const SENIOR_MODES = [
     grad: 'linear-gradient(135deg, #00101a, #001f36)',
     glow: 'rgba(0,212,255,0.25)',
     path: () => '/debate-instructions?next=/mock-un',
-    accessKey: 'Level 5',
+    levels: ['Level 3', 'Level 4', 'Level 5'],
   },
   {
     id: 'persona',
@@ -82,7 +82,7 @@ const SENIOR_MODES = [
     grad: 'linear-gradient(135deg, #0d001a, #1b0036)',
     glow: 'rgba(168,85,247,0.3)',
     path: () => '/debate-instructions?next=/persona',
-    accessKey: 'Level 4',
+    levels: ['Level 3', 'Level 4', 'Level 5'],
   },
   {
     id: 'supertutor',
@@ -112,8 +112,8 @@ const SENIOR_MODES = [
 
 const JUNIOR_MODES = [
   { id: 'debate', title: 'Debate Practice', desc: 'Talk with your AI friend and practice speaking!', color: '#7c3aed', grad: 'linear-gradient(135deg, #7c3aed, #a855f7)', icon: Mic, path: () => '/debate' },
-  { id: 'mock-un', title: 'Model UN', desc: 'Be a world leader and discuss big ideas!', color: '#0ea5e9', grad: 'linear-gradient(135deg, #0ea5e9, #38bdf8)', icon: Globe, path: () => '/mock-un', accessKey: 'Level 5' },
-  { id: 'persona', title: 'Famous Figures', desc: 'Debate as legendary heroes from history!', color: '#d946ef', grad: 'linear-gradient(135deg, #d946ef, #a855f7)', icon: Users, path: () => '/persona', accessKey: 'Level 4' },
+  { id: 'mock-un', title: 'Model UN', desc: 'Be a world leader and discuss big ideas!', color: '#0ea5e9', grad: 'linear-gradient(135deg, #0ea5e9, #38bdf8)', icon: Globe, path: () => '/mock-un', levels: ['Level 3', 'Level 4', 'Level 5'] },
+  { id: 'persona', title: 'Famous Figures', desc: 'Debate as legendary heroes from history!', color: '#d946ef', grad: 'linear-gradient(135deg, #d946ef, #a855f7)', icon: Users, path: () => '/persona', levels: ['Level 3', 'Level 4', 'Level 5'] },
   { id: 'supertutor', title: 'Super Tutor', desc: 'Ask your AI any question — it always helps!', color: '#10b981', grad: 'linear-gradient(135deg, #10b981, #34d399)', icon: Brain, path: () => '/conversational-agent' },
   { id: 'speech-coach', title: 'Speech Coach', desc: 'Improve your speaking skills with AI voice training!', color: '#e879f9', grad: 'linear-gradient(135deg, #e879f9, #a855f7)', icon: Radio, path: () => '/speech-coach', levels: ['Level 3', 'Level 4', 'Level 5'] },
 ];
