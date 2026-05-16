@@ -132,8 +132,10 @@ export default function PersonaDebate({ user }) {
             return;
           }
           initialDailyRemainingRef.current = remain;
-          setMaxMinutesAvailable(Math.floor(remain / 60));
+          setMaxMinutesAvailable(Math.max(1, Math.floor(remain / 60)));
           setStatus('config'); // Switch to Time Selection Modal Mode
+        } else {
+          if (!isTerminated) setStatus('error');
         }
       } catch(err) {
         console.error('Failed to fetch time limits', err);
@@ -147,6 +149,15 @@ export default function PersonaDebate({ user }) {
       isTerminated = true;
     };
   }, [agentId, user?.studentId]);
+
+  // Clean up ElevenLabs session strictly when component unmounts
+  useEffect(() => {
+    return () => {
+      if (conversationRef.current) {
+        try { conversationRef.current.endSession(); } catch (e) { console.error('Cleanup error', e); }
+      }
+    };
+  }, []);
 
   const startDebateSession = async () => {
     let localSession = null;

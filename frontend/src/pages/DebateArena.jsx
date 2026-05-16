@@ -178,9 +178,11 @@ export default function DebateArena({ user }) {
             return;
           }
           initialDailyRemainingRef.current = remain;
-          setMaxMinutesAvailable(Math.floor(remain / 60));
+          setMaxMinutesAvailable(Math.max(1, Math.floor(remain / 60)));
 
           setStatus('config'); // Show Time Selection Modal for normal debate
+        } else {
+          if (!isTerminated) setStatus('error');
         }
       } catch(err) {
         console.error('Failed to fetch time limits', err);
@@ -194,6 +196,15 @@ export default function DebateArena({ user }) {
       isTerminated = true;
     };
   }, [user?.assignedAgentId, user?.studentId]);
+
+  // Clean up ElevenLabs session strictly when component unmounts
+  useEffect(() => {
+    return () => {
+      if (conversationRef.current) {
+        try { conversationRef.current.endSession(); } catch (e) { console.error('Cleanup error', e); }
+      }
+    };
+  }, []);
 
   const startDebateSession = async (presetSeconds = null) => {
     setStatus('connecting');
