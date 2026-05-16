@@ -82,8 +82,8 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
               localStorage.setItem('user', JSON.stringify(currentUser));
             } catch (e) { console.error('Failed to update local storage', e); }
             
-            // Force a full page reload to the success page to completely refresh React state
-            window.location.href = `/${plan.id}-dashboard`;
+            // Navigate to the success page (stays within the app — user stays logged in)
+            window.location.href = `/premium-success?plan=${plan.id}`;
           } else {
             alert('Payment verification failed: ' + verifyData.error);
           }

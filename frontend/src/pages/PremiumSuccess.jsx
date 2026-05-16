@@ -1,10 +1,11 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Crown, Sparkles, Home, Trophy, Mic } from 'lucide-react';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { Crown, Sparkles, Home, Mic } from 'lucide-react';
 
 export default function PremiumSuccess({ plan }) {
   const location = useLocation();
-  const statePlan = location.state?.plan || plan || 'pro';
+  const [searchParams] = useSearchParams();
+  const statePlan = searchParams.get('plan') || location.state?.plan || plan || 'pro';
   
   const isMax = statePlan === 'max';
   
