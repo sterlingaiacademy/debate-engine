@@ -9,6 +9,8 @@ import { API_BASE } from '../api';
 
 const MODEL_UN_AGENT_ID = 'agent_3001krh58bhcfp2r3p6nv4efm1je';
 
+const PROFANITY_REGEX = /\b(fuck|shit|bitch|asshole|cunt|dick|pussy|whore|slut|faggot|nigger|nigga|bastard|cock|penis|vagina|porn|sex)\b/i;
+
 const UN_TOPICS = [
   { id: 1, topic: 'Russia–Ukraine War and the Future of European Security', emoji: '🇺🇦', tag: 'Geopolitics' },
   { id: 2, topic: 'Israel–Palestine Conflict and the Two-State Solution', emoji: '🕊️', tag: 'Peace & Security' },
@@ -93,6 +95,7 @@ export default function MockUN({ user }) {
   const [hoveredTopic, setHoveredTopic] = useState(null);
   const [customTopicMode, setCustomTopicMode] = useState(false);
   const [customTopicInput, setCustomTopicInput] = useState('');
+  const [customTopicError, setCustomTopicError] = useState('');
 
   // Debate state
   const [timer, setTimer] = useState(300);
@@ -646,18 +649,29 @@ export default function MockUN({ user }) {
                 type="text" 
                 placeholder="e.g., The impact of microplastics on marine ecosystems..." 
                 value={customTopicInput}
-                onChange={e => setCustomTopicInput(e.target.value)}
+                onChange={e => {
+                  setCustomTopicInput(e.target.value);
+                  if (customTopicError) setCustomTopicError('');
+                }}
                 style={{
                   width: '100%', padding: '1rem', borderRadius: '12px',
-                  background: 'var(--bg-primary)', border: '1px solid var(--border)',
+                  background: 'var(--bg-primary)', border: `1px solid ${customTopicError ? '#ef4444' : 'var(--border)'}`,
                   color: 'var(--text-primary)', fontSize: '1rem',
                   outline: 'none'
                 }}
               />
+              {customTopicError && (
+                <span style={{ color: '#ef4444', fontSize: '0.85rem', fontWeight: 600 }}>{customTopicError}</span>
+              )}
               <button 
                 disabled={!customTopicInput.trim()}
                 onClick={() => {
-                  handleTopicSelect({ id: 'custom', topic: customTopicInput.trim(), emoji: '✨', tag: 'Custom Topic' });
+                  const input = customTopicInput.trim();
+                  if (PROFANITY_REGEX.test(input)) {
+                    setCustomTopicError('Please choose an appropriate topic for debate.');
+                    return;
+                  }
+                  handleTopicSelect({ id: 'custom', topic: input, emoji: '✨', tag: 'Custom Topic' });
                 }}
                 className="btn btn-primary"
                 style={{ alignSelf: 'flex-end', opacity: !customTopicInput.trim() ? 0.5 : 1 }}
