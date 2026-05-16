@@ -699,7 +699,7 @@ export default function MockUN({ user }) {
 
           <div style={{ display: 'flex', alignItems: 'center', margin: '0.5rem 0' }}>
             <div style={{ flex: 1, height: '1px', background: 'var(--border)' }} />
-            <span style={{ padding: '0 1rem', color: 'var(--text-primary)', fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', opacity: 0.6 }}>OR CHOOSE A PRESET</span>
+            <span style={{ padding: '0 1rem', color: 'var(--text-primary)', fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', opacity: 0.6 }}>OR CHOOSE A PRESET TOPIC</span>
             <div style={{ flex: 1, height: '1px', background: 'var(--border)' }} />
           </div>
 
