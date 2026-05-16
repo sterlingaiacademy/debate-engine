@@ -38,7 +38,7 @@ const isLocal = connParams.host === 'localhost' || connParams.host === '127.0.0.
 const pool = new Pool({
   ...connParams,
   ssl: isLocal ? false : { rejectUnauthorized: false },
-  max: 10,
+  max: 50, // Increased for 5000 users launch
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 10000,
 });
