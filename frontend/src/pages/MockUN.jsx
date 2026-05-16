@@ -446,7 +446,11 @@ export default function MockUN({ user }) {
                     const nextMute = !isMuted;
                     setIsMuted(nextMute);
                     if (conversationRef.current) {
-                      try { await conversationRef.current.setVolume({ volume: nextMute ? 0 : 1 }); } catch (e) { console.error('Mute error', e); }
+                      try { 
+                        if (typeof conversationRef.current.setMicMuted === 'function') {
+                          conversationRef.current.setMicMuted(nextMute);
+                        }
+                      } catch (e) { console.error('Mute error', e); }
                     }
                   }}
                   className="btn"
