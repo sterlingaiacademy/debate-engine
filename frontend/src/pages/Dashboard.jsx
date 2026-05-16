@@ -506,6 +506,7 @@ export default function Dashboard({ user, setUser }) {
         </div>
       )}
     </div>
+    </>
   );
 
   /* ══════════════════════════════════════════════════════════
