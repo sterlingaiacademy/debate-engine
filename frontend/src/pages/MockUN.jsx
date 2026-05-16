@@ -113,6 +113,7 @@ export default function MockUN({ user }) {
   const initialDailyRemainingRef = useRef(600);
   const conversationIdRef = useRef(null);
   const agentHasSpokenRef = useRef(false);
+  const isEndingRef = useRef(false); // prevents double-fire from onDisconnect
 
   const wakeLockRef = useRef(null);
 
@@ -196,6 +197,12 @@ export default function MockUN({ user }) {
   const handleTopicSelect = async (topicObj) => {
     setSelectedTopic(topicObj.topic);
     setStep('connecting');
+    // reset session state for a fresh debate
+    agentHasSpokenRef.current = false;
+    isEndingRef.current = false;
+    setTranscript([]);
+    transcriptRef.current = [];
+    setIsMuted(false);
 
     try {
       await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -219,8 +226,11 @@ export default function MockUN({ user }) {
           setIsActive(true);
         },
         onDisconnect: () => {
-          setIsActive(false);
-          handleEndDebate();
+          // Only handle disconnect if we didn't already end intentionally
+          if (!isEndingRef.current) {
+            setIsActive(false);
+            handleEndDebate();
+          }
         },
         onMessage: (msg) => {
           setTranscript(p => {
@@ -277,6 +287,8 @@ export default function MockUN({ user }) {
   };
 
   const handleEndDebate = async () => {
+    if (isEndingRef.current) return; // prevent double-fire
+    isEndingRef.current = true;
     clearInterval(timerRef.current);
     if (conversationRef.current) {
       try { await conversationRef.current.endSession(); } catch {}
@@ -351,7 +363,7 @@ export default function MockUN({ user }) {
         </div>
         <div>
           <h3 style={{ fontWeight: 800, fontSize: '1.5rem', marginBottom: '0.5rem' }}>Connecting to Model UN…</h3>
-          <p style={{ color: 'var(--text-secondary)' }}>Topic: <strong>{selectedTopic}</strong></p>
+          <p style={{ color: 'var(--text-secondary)' }}>Topic: <strong>{selectedTopic || '...'}</strong></p>
         </div>
       </div>
     );
@@ -597,7 +609,7 @@ export default function MockUN({ user }) {
             </span>
           </div>
           <h2 style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 800, marginBottom: '0.5rem' }}>Choose Your Topic</h2>
-          <p style={{ color: 'var(--text-secondary)', margin: 0 }}>Select a global issue to debate. Your AI opponent will argue the opposing position.</p>
+          <p style={{ color: 'var(--text-secondary)', margin: 0 }}>Select a global issue to debate. Your AI opponent will take the opposing position.</p>
         </div>
 
         {/* Topic Cards */}
@@ -687,7 +699,7 @@ export default function MockUN({ user }) {
 
           <div style={{ display: 'flex', alignItems: 'center', margin: '0.5rem 0' }}>
             <div style={{ flex: 1, height: '1px', background: 'var(--border)' }} />
-            <span style={{ padding: '0 1rem', color: 'var(--text-muted)', fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>OR CHOOSE A PRESET</span>
+            <span style={{ padding: '0 1rem', color: 'var(--text-primary)', fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', opacity: 0.6 }}>OR CHOOSE A PRESET</span>
             <div style={{ flex: 1, height: '1px', background: 'var(--border)' }} />
           </div>
 
