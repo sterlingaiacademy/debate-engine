@@ -45,7 +45,11 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({
+  verify: (req, res, buf) => {
+    req.rawBody = buf;
+  }
+}));
 
 // Helper for IST Date (Resets at 12:00 AM IST)
 function getISTDateString() {
@@ -474,7 +478,12 @@ app.post('/api/payment/update-subscription', async (req, res) => {
     const options = {
       plan_id: plan_id,
       schedule_change_at: 'now',
-      customer_notify: 1
+      customer_notify: 1,
+      notes: {
+        plan: plan,
+        period: period,
+        studentId: studentId
+      }
     };
     
     const subscription = await razorpayInstance.subscriptions.update(razorpay_subscription_id, options);
@@ -536,15 +545,13 @@ app.post('/api/payment/verify-subscription', async (req, res) => {
 });
 
 // Razorpay Webhook
-app.post('/api/webhook/razorpay', express.raw({type: 'application/json'}), async (req, res) => {
+app.post('/api/webhook/razorpay', async (req, res) => {
   try {
     const secret = process.env.RAZORPAY_WEBHOOK_SECRET || process.env.RAZORPAY_SECRET || 'KTWnYhmt800Y7TSQ6Cc6TBpF';
     const signature = req.headers['x-razorpay-signature'];
     
-    // If we use express.raw, req.body is a Buffer. Otherwise it's parsed JSON.
-    // To verify signature reliably, we need raw body string.
-    // If it's already an object, JSON.stringify might reorder keys.
-    const bodyStr = Buffer.isBuffer(req.body) ? req.body.toString('utf8') : JSON.stringify(req.body);
+    // Use the raw body buffered by express.json middleware for accurate signature verification
+    const bodyStr = req.rawBody ? req.rawBody.toString('utf8') : JSON.stringify(req.body);
 
     const expectedSignature = crypto.createHmac('sha256', secret)
                                     .update(bodyStr)
@@ -555,7 +562,7 @@ app.post('/api/webhook/razorpay', express.raw({type: 'application/json'}), async
       return res.status(400).json({ error: 'Invalid signature' });
     }
 
-    const payload = Buffer.isBuffer(req.body) ? JSON.parse(bodyStr) : req.body;
+    const payload = req.body; // Since express.json() parsed it, req.body is an object
     const event = payload.event;
     
     if (event === 'subscription.charged') {
