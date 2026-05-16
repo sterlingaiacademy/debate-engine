@@ -8,7 +8,11 @@ import logoImg from '../assets/logo.png';
 import PremiumEnrollModal from './PremiumEnrollModal';
 
 export default function Layout({ user, onLogout, onSwitchProfile }) {
-  const { pathname } = useLocation();
+  const location = useLocation();
+  const { pathname, search } = location;
+  const searchParams = new URLSearchParams(search);
+  const nextParam = searchParams.get('next');
+
   const navigate = useNavigate();
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -278,7 +282,13 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
           paddingBottom: isMobile ? '80px' : 0,
         }}>
           {navLinks.map(({ name, path, match, icon: Icon }) => {
-            const isActive = pathname.startsWith(match) || (match === '/debate' && pathname.includes('/debate'));
+            const isCurrentRoute = pathname.startsWith(match);
+            const isInstructionRoute = pathname === '/debate-instructions';
+            const matchesInstruction = isInstructionRoute && (
+              (match === '/debate' && (!nextParam || nextParam.startsWith('/debate'))) ||
+              (match !== '/debate' && nextParam?.startsWith(match))
+            );
+            const isActive = isCurrentRoute || matchesInstruction;
             return (
               <Link
                 key={name}
