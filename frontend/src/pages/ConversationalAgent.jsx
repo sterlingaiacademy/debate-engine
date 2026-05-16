@@ -27,7 +27,7 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
   const [timer, setTimer] = useState(600);
   const [isActive, setIsActive] = useState(false);
   const [screenSleep, setScreenSleep] = useState(false);
-  const [showTranscript, setShowTranscript] = useState(false);
+  const [showTranscript, setShowTranscript] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
   const [transcript, setTranscript] = useState([]);
   const transcriptRef = useRef([]);

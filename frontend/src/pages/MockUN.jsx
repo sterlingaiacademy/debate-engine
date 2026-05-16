@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Play, PhoneOff, MessageSquare, Globe, ChevronRight } from 'lucide-react';
+import { Play, PhoneOff, MessageSquare, Globe, ChevronRight, Mic, MicOff } from 'lucide-react';
 import { Conversation } from '@11labs/client';
 import GeminiWave from '../components/GeminiWave';
 import TranscriptView from '../components/TranscriptView';
@@ -36,7 +36,7 @@ export default function MockUN({ user }) {
   const [timer, setTimer] = useState(300);
   const [isActive, setIsActive] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [showTranscript, setShowTranscript] = useState(false);
+  const [showTranscript, setShowTranscript] = useState(true);
   const [transcript, setTranscript] = useState([]);
   const transcriptRef = useRef([]);
   const conversationRef = useRef(null);
@@ -372,6 +372,27 @@ export default function MockUN({ user }) {
                   display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0,
                 }} title="Toggle Transcript">
                   <MessageSquare size={24} />
+                </button>
+
+                <button
+                  onClick={async () => {
+                    const nextMute = !isMuted;
+                    setIsMuted(nextMute);
+                    if (conversationRef.current) {
+                      try { await conversationRef.current.setVolume({ volume: nextMute ? 0 : 1 }); } catch (e) { console.error('Mute error', e); }
+                    }
+                  }}
+                  className="btn"
+                  style={{
+                    background: isMuted ? 'rgba(239,68,68,0.2)' : 'var(--bg-secondary)',
+                    color: isMuted ? '#ef4444' : 'var(--text-primary)',
+                    border: isMuted ? '1px solid rgba(239,68,68,0.3)' : 'none',
+                    borderRadius: '50%', width: '56px', height: '56px',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0,
+                  }}
+                  title={isMuted ? "Unmute Agent" : "Mute Agent"}
+                >
+                  {isMuted ? <MicOff size={24} /> : <Mic size={24} />}
                 </button>
 
                 <button onClick={handleEndDebate} className="btn" style={{
