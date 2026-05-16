@@ -941,6 +941,8 @@ app.post('/api/evaluate', async (req, res) => {
 
       res.json(result);
     });
+    });
+    });
   } catch (err) {
     console.error('Judge mapping error:', err);
     res.status(500).json({ error: 'Server error during evaluation' });
