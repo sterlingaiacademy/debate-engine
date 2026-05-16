@@ -58,15 +58,23 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
   });
 
   // Load Razorpay Script
+  const [razorpayReady, setRazorpayReady] = useState(typeof window !== 'undefined' && !!window.Razorpay);
   useEffect(() => {
+    if (window.Razorpay) { setRazorpayReady(true); return; } // already loaded
     const script = document.createElement('script');
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
     script.async = true;
+    script.onload = () => setRazorpayReady(true);
+    script.onerror = () => console.error('Failed to load Razorpay SDK');
     document.body.appendChild(script);
-    return () => { document.body.removeChild(script); };
+    return () => { if (document.body.contains(script)) document.body.removeChild(script); };
   }, []);
 
   const handlePayment = async (plan) => {
+    if (!razorpayReady || !window.Razorpay) {
+      alert('Payment system is still loading. Please wait a moment and try again.');
+      return;
+    }
     setSubmitting(true);
     try {
       const amount = yearly ? plan.yearlyPrice : plan.monthlyPrice;
@@ -99,7 +107,7 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
 
       // 2. Open Razorpay Checkout for NEW subscriptions
       const options = {
-        key: 'rzp_live_SpxzVJVdO5A5xr', // Public Key
+        key: 'rzp_live_SpxzVJVdO5A5xr', // Public Key — safe to expose client-side
         name: 'G Force AI',
         description: `Upgrade to ${plan.name} (${period})`,
         subscription_id: subData.id,
@@ -111,7 +119,8 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
             body: JSON.stringify({
               razorpay_subscription_id: response.razorpay_subscription_id,
               razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature
+              razorpay_signature: response.razorpay_signature,
+              studentId: user?.studentId || user?.username
             })
           });
           const verifyData = await verifyRes.json();
@@ -126,7 +135,14 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
             // Navigate to the success page (stays within the app — user stays logged in)
             window.location.href = `/premium-success?plan=${plan.id}`;
           } else {
+            setSubmitting(false);
             alert('Payment verification failed: ' + verifyData.error);
+          }
+        },
+        modal: {
+          ondismiss: () => {
+            // User closed the Razorpay modal without paying — reset button state
+            setSubmitting(false);
           }
         },
         prefill: {
@@ -141,13 +157,15 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
 
       const rzp = new window.Razorpay(options);
       rzp.on('payment.failed', function (response) {
+        setSubmitting(false);
         alert('Payment failed: ' + response.error.description);
       });
       rzp.open();
+      // NOTE: do NOT setSubmitting(false) here — the modal is still open
+      // It resets in: handler (success), modal.ondismiss, payment.failed
     } catch (err) {
-      alert('Error initiating payment: ' + err.message);
-    } finally {
       setSubmitting(false);
+      alert('Error initiating payment: ' + err.message);
     }
   };
 
@@ -266,16 +284,16 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
             </div>
             
             <button
-              disabled={submitting}
+              disabled={submitting || !razorpayReady}
               onClick={() => handlePayment(plan)}
               style={{
                 width: '100%', padding: '0.75rem', borderRadius: '12px', border: 'none',
                 background: plan.gradient, color: '#fff', fontWeight: 700, fontSize: '0.95rem',
-                cursor: submitting ? 'not-allowed' : 'pointer', opacity: submitting ? 0.7 : 1,
+                cursor: (submitting || !razorpayReady) ? 'not-allowed' : 'pointer', opacity: (submitting || !razorpayReady) ? 0.7 : 1,
                 boxShadow: '0 4px 14px rgba(0,0,0,0.2)', transition: 'transform 0.2s',
               }}
             >
-              {submitting ? 'Processing...' : `Upgrade to ${plan.name} ${yearly ? 'Yearly' : 'Monthly'}`}
+              {!razorpayReady ? 'Loading...' : submitting ? 'Processing...' : `Upgrade to ${plan.name} ${yearly ? 'Yearly' : 'Monthly'}`}
             </button>
           </div>
           ))

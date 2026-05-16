@@ -530,7 +530,8 @@ app.post('/api/payment/verify-subscription', async (req, res) => {
     const { 
       razorpay_payment_id, 
       razorpay_subscription_id, 
-      razorpay_signature
+      razorpay_signature,
+      studentId: bodyStudentId  // optional fallback from frontend
     } = req.body;
     
     if (!razorpay_payment_id || !razorpay_subscription_id || !razorpay_signature) {
@@ -549,12 +550,20 @@ app.post('/api/payment/verify-subscription', async (req, res) => {
     }
     
     const subscription = await razorpayInstance.subscriptions.fetch(razorpay_subscription_id);
-    if (!subscription || !subscription.notes || !subscription.notes.studentId) {
-       return res.status(400).json({ error: 'Invalid subscription metadata. Contact support.' });
+    if (!subscription) {
+      return res.status(400).json({ error: 'Could not fetch subscription. Contact support.' });
+    }
+
+    const notes = subscription.notes || {};
+    // Use notes.studentId from Razorpay; fall back to the one sent from the frontend
+    const studentId = notes.studentId || bodyStudentId;
+    const plan = notes.plan;
+    const period = notes.period;
+
+    if (!studentId) {
+      return res.status(400).json({ error: 'Cannot identify user for this subscription. Contact support.' });
     }
     
-    const { plan, period, studentId } = subscription.notes;
-
     await db.query(
       `UPDATE users SET subscription_plan = $1, subscription_period = $2, subscription_status = 'active', razorpay_subscription_id = $3 WHERE "studentId" = $4`,
       [plan, period, razorpay_subscription_id, studentId]
@@ -570,7 +579,13 @@ app.post('/api/payment/verify-subscription', async (req, res) => {
 // Razorpay Webhook
 app.post('/api/webhook/razorpay', async (req, res) => {
   try {
-    const secret = process.env.RAZORPAY_WEBHOOK_SECRET || process.env.RAZORPAY_SECRET || 'KTWnYhmt800Y7TSQ6Cc6TBpF';
+    // IMPORTANT: RAZORPAY_WEBHOOK_SECRET must be set separately from RAZORPAY_SECRET in .env
+    // The webhook secret is configured in the Razorpay dashboard under Webhooks settings.
+    const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
+    if (!secret) {
+      console.error('RAZORPAY_WEBHOOK_SECRET is not configured! Webhook rejected.');
+      return res.status(500).json({ error: 'Webhook secret not configured on server' });
+    }
     const signature = req.headers['x-razorpay-signature'];
     
     // Use the raw body buffered by express.json middleware for accurate signature verification
