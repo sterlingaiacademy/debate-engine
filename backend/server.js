@@ -609,7 +609,16 @@ app.post('/api/webhook/razorpay', async (req, res) => {
     if (event === 'subscription.charged') {
       const subscription = payload.payload.subscription.entity;
       const notes = subscription.notes || {};
-      const { plan, period, studentId } = notes;
+      const studentId = notes.studentId;
+      
+      let plan = 'free';
+      let period = 'monthly';
+      const pId = subscription.plan_id;
+      if (pId === process.env.PLAN_PRO_MONTHLY) { plan = 'pro'; period = 'monthly'; }
+      else if (pId === process.env.PLAN_PRO_YEARLY) { plan = 'pro'; period = 'yearly'; }
+      else if (pId === process.env.PLAN_MAX_MONTHLY) { plan = 'max'; period = 'monthly'; }
+      else if (pId === process.env.PLAN_MAX_YEARLY) { plan = 'max'; period = 'yearly'; }
+      
       if (studentId) {
         await db.query(
           `UPDATE users SET subscription_plan = $1, subscription_period = $2, subscription_status = 'active', razorpay_subscription_id = $3 WHERE "studentId" = $4`,
