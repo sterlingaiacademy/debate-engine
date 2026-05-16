@@ -435,7 +435,7 @@ export default function LandingPage() {
             <h2 className="lp-section-h2">Global Privacy Policy</h2>
             <p className="lp-section-sub">Last Updated: 17 May 2026</p>
           </div>
-          <div className="lp-reveal lp-privacy-card" style={{ fontSize: '0.9rem', color: '#cbd5e1', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          <div className="lp-privacy-card" style={{ fontSize: '0.9rem', color: '#cbd5e1', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <div>
               <p style={{ color: '#fff', fontSize: '1.05rem', fontWeight: 'bold' }}>G FORCE AI</p>
               <p>Global Privacy Policy for Debate and Speech Coaching App<br/>
@@ -615,7 +615,7 @@ export default function LandingPage() {
             <h2 className="lp-section-h2">Terms and Conditions</h2>
             <p className="lp-section-sub">Effective Date: May 14, 2026</p>
           </div>
-          <div className="lp-reveal lp-privacy-card" style={{ fontSize: '0.9rem', color: '#cbd5e1', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          <div className="lp-privacy-card" style={{ fontSize: '0.9rem', color: '#cbd5e1', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             
             <div>
               <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.4rem' }}>1. General Policy</h3>
