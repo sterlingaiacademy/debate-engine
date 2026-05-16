@@ -576,7 +576,7 @@ export default function MockUN({ user }) {
           ))}
         </div>
 
-        <button onClick={() => setStep('time')} style={{ alignSelf: 'center', background: 'none', border: 'none', color: 'var(--text-secondary)', fontSize: '0.9rem', cursor: 'pointer', fontWeight: 600, textDecoration: 'underline' }}>
+        <button onClick={() => setStep('time')} className="btn btn-secondary" style={{ alignSelf: 'center', fontSize: '0.85rem', padding: '0.5rem 1rem' }}>
           ← Change Time Limit
         </button>
       </div>
