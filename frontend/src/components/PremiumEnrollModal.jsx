@@ -90,6 +90,7 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
         try {
           const currentUser = JSON.parse(localStorage.getItem('user')) || {};
           currentUser.subscription_plan = plan.id;
+          currentUser.subscription_period = period;
           localStorage.setItem('user', JSON.stringify(currentUser));
         } catch (e) { console.error('Failed to update local storage', e); }
         window.location.href = `/premium-success?plan=${plan.id}`;
