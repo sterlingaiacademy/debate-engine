@@ -299,21 +299,25 @@ export default function Settings({ user, setUser }) {
           )}
 
           {user?.subscription_plan === 'pro' && (
-            <div style={{
-              background: 'linear-gradient(135deg, rgba(168,85,247,0.1) 0%, rgba(217,70,239,0.1) 100%)',
-              border: '2px solid rgba(168,85,247,0.3)',
-              borderRadius: '16px',
-              padding: '2rem',
-              textAlign: 'center',
-            }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.4rem 1rem', background: 'rgba(168,85,247,0.2)', borderRadius: '99px', fontSize: '0.85rem', fontWeight: 800, color: '#c084fc', marginBottom: '1rem' }}>
-                <Crown size={14} /> CURRENT PLAN · PRO
+            <>
+              <div style={{
+                background: 'linear-gradient(135deg, rgba(168,85,247,0.1) 0%, rgba(217,70,239,0.1) 100%)',
+                border: '2px solid rgba(168,85,247,0.3)',
+                borderRadius: '16px',
+                padding: '2rem',
+                textAlign: 'center',
+                marginBottom: '1.5rem',
+              }}>
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.4rem 1rem', background: 'rgba(168,85,247,0.2)', borderRadius: '99px', fontSize: '0.85rem', fontWeight: 800, color: '#c084fc', marginBottom: '1rem' }}>
+                  <Crown size={14} /> CURRENT PLAN · PRO
+                </div>
+                <h3 style={{ fontSize: '1.5rem', fontWeight: 800, margin: '0 0 0.5rem' }}>You are a Pro Member! 🎉</h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', margin: 0, maxWidth: '400px', marginInline: 'auto' }}>
+                  You have 20 minutes of daily practice time, access to premium features, and priority support.
+                </p>
               </div>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, margin: '0 0 0.5rem' }}>You are a Pro Member! 🎉</h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', margin: 0, maxWidth: '400px', marginInline: 'auto' }}>
-                You have 20 minutes of daily practice time, access to premium features, and priority support.
-              </p>
-            </div>
+              <PremiumEnrollModal user={user} mode="settings" onDismiss={() => {}} />
+            </>
           )}
 
           {user?.subscription_plan === 'max' && (
