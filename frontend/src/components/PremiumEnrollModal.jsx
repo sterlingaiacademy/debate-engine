@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { API_BASE } from '../api';
-import { Crown, Clock, Sparkles, CheckCircle } from 'lucide-react';
+import { Crown, Clock, Sparkles, CheckCircle, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) {
@@ -114,7 +114,25 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
     <div style={{
       flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start',
       padding: '2.5rem 1.5rem', gap: '1.5rem', overflowY: 'auto', maxWidth: '520px', margin: '0 auto', width: '100%',
+      position: 'relative'
     }}>
+      {/* ── Close Button (if overlay) ── */}
+      {mode !== 'settings' && (
+        <button
+          onClick={onDismiss}
+          style={{
+            position: 'absolute', top: '1.5rem', right: '1.5rem',
+            background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '50%',
+            width: 36, height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center',
+            color: 'var(--text-secondary)', cursor: 'pointer', transition: 'all 0.2s', zIndex: 10
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.2)'; e.currentTarget.style.color = '#fff'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
+        >
+          <X size={20} strokeWidth={2.5} />
+        </button>
+      )}
+
       {/* ── Daily Limit Banner ── */}
       {mode === 'limit' && (
         <>
