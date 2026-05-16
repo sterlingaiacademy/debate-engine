@@ -48,7 +48,7 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
       const orderRes = await fetch(`${API_BASE}/api/payment/create-order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan: plan.id, period, studentId: user?.studentId })
+        body: JSON.stringify({ plan: plan.id, period, studentId: user?.studentId || user?.username })
       });
       const orderData = await orderRes.json();
       
@@ -75,9 +75,15 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
           });
           const verifyData = await verifyRes.json();
           if (verifyRes.ok && verifyData.success) {
-            // Update successful! Redirect to Dashboard
-            onDismiss(); // Close modal
-            navigate(`/${plan.id}-dashboard`, { state: { plan: plan.id } });
+            // Update local storage so the global app state picks it up on reload
+            try {
+              const currentUser = JSON.parse(localStorage.getItem('user')) || {};
+              currentUser.subscription_plan = plan.id;
+              localStorage.setItem('user', JSON.stringify(currentUser));
+            } catch (e) { console.error('Failed to update local storage', e); }
+            
+            // Force a full page reload to the success page to completely refresh React state
+            window.location.href = `/${plan.id}-dashboard`;
           } else {
             alert('Payment verification failed: ' + verifyData.error);
           }
