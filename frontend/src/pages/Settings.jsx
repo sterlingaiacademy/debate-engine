@@ -321,22 +321,26 @@ export default function Settings({ user, setUser }) {
           )}
 
           {user?.subscription_plan === 'max' && (
-            <div style={{
-              background: 'linear-gradient(135deg, rgba(249,115,22,0.1) 0%, rgba(234,88,12,0.1) 100%)',
-              border: '2px solid rgba(249,115,22,0.4)',
-              borderRadius: '16px',
-              padding: '2rem',
-              textAlign: 'center',
-              boxShadow: '0 4px 24px rgba(249,115,22,0.1)',
-            }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.4rem 1rem', background: 'rgba(249,115,22,0.2)', borderRadius: '99px', fontSize: '0.85rem', fontWeight: 800, color: '#fb923c', marginBottom: '1rem' }}>
-                <Crown size={14} /> CURRENT PLAN · MAX
+            <>
+              <div style={{
+                background: 'linear-gradient(135deg, rgba(249,115,22,0.1) 0%, rgba(234,88,12,0.1) 100%)',
+                border: '2px solid rgba(249,115,22,0.4)',
+                borderRadius: '16px',
+                padding: '2rem',
+                textAlign: 'center',
+                boxShadow: '0 4px 24px rgba(249,115,22,0.1)',
+                marginBottom: '1.5rem',
+              }}>
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.4rem 1rem', background: 'rgba(249,115,22,0.2)', borderRadius: '99px', fontSize: '0.85rem', fontWeight: 800, color: '#fb923c', marginBottom: '1rem' }}>
+                  <Crown size={14} /> CURRENT PLAN · MAX
+                </div>
+                <h3 style={{ fontSize: '1.5rem', fontWeight: 800, margin: '0 0 0.5rem', color: '#fb923c' }}>You are a Max Member! 🚀</h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', margin: 0, maxWidth: '400px', marginInline: 'auto' }}>
+                  You have UNLIMITED daily practice time, 100% access to all AI personas, and the ultimate G-Force experience.
+                </p>
               </div>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, margin: '0 0 0.5rem', color: '#fb923c' }}>You are a Max Member! 🚀</h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', margin: 0, maxWidth: '400px', marginInline: 'auto' }}>
-                You have UNLIMITED daily practice time, 100% access to all AI personas, and the ultimate G-Force experience.
-              </p>
-            </div>
+              <PremiumEnrollModal user={user} mode="settings" onDismiss={() => {}} />
+            </>
           )}
         </div>
       </div>

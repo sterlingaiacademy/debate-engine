@@ -27,7 +27,35 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
       gradient: 'linear-gradient(135deg, #f97316 0%, #e8392a 100%)',
       icon: <Sparkles size={20} color="#fff" />
     }
-  ].filter(p => !(user?.subscription_plan === 'pro' && p.id === 'pro') && !(user?.subscription_plan === 'max'));
+  ];
+
+  // Dynamically filter available plans based on what the user already has
+  const availablePlans = plans.filter(p => {
+    // If user has no plan or a free plan, show everything
+    if (!user?.subscription_plan || user?.subscription_plan === 'free') return true;
+    
+    const currentPlan = user.subscription_plan;
+    const currentPeriod = user.subscription_period || 'monthly'; // default to monthly if unknown
+    const selectedPeriod = yearly ? 'yearly' : 'monthly';
+
+    // If user is on MAX
+    if (currentPlan === 'max') {
+      // Hide Pro entirely
+      if (p.id === 'pro') return false;
+      // Show Max ONLY if they are upgrading to Yearly
+      if (p.id === 'max') return currentPeriod === 'monthly' && selectedPeriod === 'yearly';
+    }
+
+    // If user is on PRO
+    if (currentPlan === 'pro') {
+      // They can always upgrade to Max
+      if (p.id === 'max') return true;
+      // Show Pro ONLY if they are upgrading to Yearly
+      if (p.id === 'pro') return currentPeriod === 'monthly' && selectedPeriod === 'yearly';
+    }
+
+    return true;
+  });
 
   // Load Razorpay Script
   useEffect(() => {
@@ -212,11 +240,16 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
 
       {/* ── Plans ── */}
       <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        {plans.map(plan => (
-          <div key={plan.id} style={{
-            background: 'var(--bg-secondary)', border: '1px solid var(--border)', borderRadius: '20px',
-            padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '1rem'
-          }}>
+        {availablePlans.length === 0 ? (
+          <div style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.9rem', padding: '1rem' }}>
+            You are already on the highest plan for this billing cycle!
+          </div>
+        ) : (
+          availablePlans.map(plan => (
+            <div key={plan.id} style={{
+              background: 'var(--bg-secondary)', border: '1px solid var(--border)', borderRadius: '20px',
+              padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '1rem'
+            }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               <div style={{ width: 40, height: 40, borderRadius: '12px', background: plan.gradient, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {plan.icon}
@@ -241,10 +274,11 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
                 boxShadow: '0 4px 14px rgba(0,0,0,0.2)', transition: 'transform 0.2s',
               }}
             >
-              {submitting ? 'Processing...' : `Upgrade to ${plan.name}`}
+              {submitting ? 'Processing...' : `Upgrade to ${plan.name} ${yearly ? 'Yearly' : 'Monthly'}`}
             </button>
           </div>
-        ))}
+          ))
+        )}
       </div>
 
       {mode === 'limit' && (
