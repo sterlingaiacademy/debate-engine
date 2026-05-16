@@ -109,14 +109,10 @@ export default function PersonaPicker({ user }) {
       `}</style>
       <div className="carousel-hide-scroll" style={{
         display: 'flex',
-        overflowX: 'auto',
-        scrollSnapType: 'x mandatory',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
         gap: '1.5rem',
         paddingBottom: '2rem',
-        paddingLeft: 'max(1rem, calc(50vw - 110px))',
-        paddingRight: 'max(1rem, calc(50vw - 110px))',
-        scrollbarWidth: 'none',
-        msOverflowStyle: 'none',
       }}>
         {(user?.classLevel === 'Level 5' ? LEVEL_5_PERSONAS : LEVEL_4_PERSONAS).map((persona) => {
           const isLive = !!persona.agentId;
