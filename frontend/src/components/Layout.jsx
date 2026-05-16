@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LogOut, LayoutDashboard, Mic, BarChart2, Trophy,
-  Zap, Flame, ChevronRight, ChevronLeft, Settings, BookOpen, Gamepad2, Menu, X, Crown
+  Zap, Flame, ChevronRight, ChevronLeft, Settings, BookOpen, Gamepad2, Menu, X, Crown, Globe, Users, Brain, Radio
 } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 import PremiumEnrollModal from './PremiumEnrollModal';
@@ -34,9 +34,26 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
     pathname.includes('/mock-un') ||
     pathname.includes('/speech-coach');
 
+  const getNormalizedLevel = (cls) => {
+    if (!cls) return 'Level 1';
+    if (cls.startsWith('Level ')) return cls;
+    if (['KG', 'Class 1', 'Class 2', 'Class KG', 'KG-2'].includes(cls)) return 'Level 1';
+    if (['Class 3', 'Class 4', 'Class 5'].includes(cls)) return 'Level 2';
+    if (['Class 6', 'Class 7', 'Class 8'].includes(cls)) return 'Level 3';
+    if (['Class 9', 'Class 10'].includes(cls)) return 'Level 4';
+    if (['Class 11', 'Class 12'].includes(cls)) return 'Level 5';
+    return 'Level 1';
+  };
+  const normalizedLevel = getNormalizedLevel(user?.classLevel);
+  const isLevel3Plus = ['Level 3', 'Level 4', 'Level 5'].includes(normalizedLevel);
+
   const navLinks = [
     { name: 'Dashboard',       path: '/dashboard',         match: '/dashboard',         icon: LayoutDashboard },
-    { name: 'Debate',          path: isJunior ? '/debate' : '/debate-instructions?next=/debate', match: '/debate', icon: Mic },
+    { name: 'Debate Arena',    path: isJunior ? '/debate' : '/debate-instructions?next=/debate', match: '/debate', icon: Mic },
+    isLevel3Plus && { name: 'Model UN', path: isJunior ? '/mock-un' : '/debate-instructions?next=/mock-un', match: '/mock-un', icon: Globe },
+    isLevel3Plus && { name: 'Wisdom Arena', path: isJunior ? '/persona' : '/debate-instructions?next=/persona', match: '/persona', icon: Users },
+    { name: 'Super Tutor', path: '/conversational-agent', match: '/conversational-agent', icon: Brain },
+    isLevel3Plus && { name: 'Speech Coach', path: '/speech-coach', match: '/speech-coach', icon: Radio },
     { name: 'Vocab Trainer',   path: '/vocab-trainer',   match: '/vocab-trainer',   icon: BookOpen },
     { name: 'Word Scramble',   path: '/word-scramble',   match: '/word-scramble',   icon: Gamepad2 },
     !isJunior && { name: 'Analytics',   path: '/analytics',   match: '/analytics',  icon: BarChart2 },
