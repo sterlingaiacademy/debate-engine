@@ -275,11 +275,10 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
         <nav style={{
           flex: 1,
           display: 'flex', flexDirection: 'column',
-          gap: isJunior ? '0.35rem' : '0.15rem',
-          padding: isCollapsed && !isMobile ? '0.5rem' : '0.75rem 0.75rem 0.75rem 0',
+          gap: isMobile ? '0.65rem' : (isJunior ? '0.35rem' : '0.15rem'),
+          padding: isMobile ? '1.5rem 1.25rem 80px 1.25rem' : (isCollapsed && !isMobile ? '0.5rem' : '0.75rem 0.75rem 0.75rem 0'),
           overflowY: 'auto', overflowX: 'hidden',
           marginTop: isMobile ? '1rem' : 0,
-          paddingBottom: isMobile ? '80px' : 0,
         }}>
           {navLinks.map(({ name, path, match, icon: Icon }) => {
             const isCurrentRoute = pathname === match || pathname.startsWith(`${match}/`) || pathname.startsWith(`${match}?`);
@@ -297,15 +296,15 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
                 title={isCollapsed && !isMobile ? name : ''}
                 style={{
                   display: 'flex', alignItems: 'center',
-                  gap: isCollapsed && !isMobile ? 0 : '0.75rem',
+                  gap: isMobile ? '1rem' : (isCollapsed && !isMobile ? 0 : '0.75rem'),
                   padding: isMobile 
-                    ? '1.15rem 1.25rem'
+                    ? '1.25rem 1.5rem'
                     : (isJunior
                       ? (isCollapsed && !isMobile ? '0.85rem' : '0.85rem 1.1rem')
                       : (isCollapsed && !isMobile ? '0.85rem 0' : '0.85rem 1rem')),
                   justifyContent: isCollapsed && !isMobile ? 'center' : 'flex-start',
                   fontWeight: isActive ? 800 : 600,
-                  fontSize: '0.95rem',
+                  fontSize: isMobile ? '1.1rem' : '0.95rem',
                   textDecoration: 'none',
                   transition: 'all 0.2s ease',
                   whiteSpace: 'nowrap',
@@ -328,7 +327,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
                 }}
               >
                 <Icon
-                  size={20}
+                  size={isMobile ? 24 : 20}
                   strokeWidth={isActive ? 2.5 : 2}
                   style={{ flexShrink: 0, color: isActive && !isJunior ? '#FF6B00' : 'currentColor' }}
                 />
