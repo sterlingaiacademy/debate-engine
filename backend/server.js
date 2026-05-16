@@ -129,7 +129,7 @@ app.post('/api/register', async (req, res) => {
     
     res.status(201).json({ 
       message: 'Account created successfully', 
-      user: { name, studentId, classLevel, assignedAgentId, email, phone, grade: grade || '' },
+      user: { name, studentId, classLevel, assignedAgentId, email, phone, grade: grade || '', subscription_plan: 'free' },
       token
     });
   } catch (err) {
@@ -199,7 +199,7 @@ app.post('/api/auth/google', async (req, res) => {
         assignedAgentId: user.assignedAgentId, 
         email: user.email, 
         avatar: user.avatar,
-        subscriptionPlan: user.subscription_plan || 'free'
+        subscription_plan: user.subscription_plan || 'free'
       },
       token
     });
@@ -243,7 +243,7 @@ app.post('/api/login', async (req, res) => {
         assignedAgentId: user.assignedAgentId, 
         email: user.email, 
         phone: user.phone,
-        subscriptionPlan: user.subscription_plan || 'free'
+        subscription_plan: user.subscription_plan || 'free'
       },
       token
     });
@@ -360,7 +360,7 @@ app.get('/api/time-limits/:studentId', async (req, res) => {
       remainingPersona,
       dailyRankedTime: user.dailyRankedTime || 0,
       dailyPersonaTime: user.dailyPersonaTime || 0,
-      subscriptionPlan: user.subscription_plan || 'free',
+      subscription_plan: user.subscription_plan || 'free',
       limitTotal: LIMIT
     });
   } catch (err) {
