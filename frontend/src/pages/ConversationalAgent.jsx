@@ -62,6 +62,8 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
   const initialTimerRef = useRef(600);
   const initialDailyRemainingRef = useRef(600);
   const navigate = useNavigate();
+  const navTimeoutRef = useRef(null);
+  const disconnectTimeoutRef = useRef(null);
 
   const wakeLockRef = useRef(null);
 
@@ -91,6 +93,11 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
       if (wakeLockRef.current) {
         wakeLockRef.current.release();
         wakeLockRef.current = null;
+      }
+      if (navTimeoutRef.current) clearTimeout(navTimeoutRef.current);
+      if (disconnectTimeoutRef.current) clearTimeout(disconnectTimeoutRef.current);
+      if (conversationRef.current) {
+        try { conversationRef.current.endSession(); } catch(e){}
       }
     };
   }, [isActive]);
@@ -236,7 +243,8 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
         onDisconnect: () => {
           setIsActive(false); 
           setStatus('ended');
-          setTimeout(() => {
+          if (disconnectTimeoutRef.current) clearTimeout(disconnectTimeoutRef.current);
+          disconnectTimeoutRef.current = setTimeout(() => {
             handleEndDebate();
           }, 500);
         },
@@ -313,7 +321,8 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
       }).catch(e => console.error('Final time sync failed', e));
     }
 
-    setTimeout(() => {
+    if (navTimeoutRef.current) clearTimeout(navTimeoutRef.current);
+    navTimeoutRef.current = setTimeout(() => {
       navigate('/dashboard');
     }, 2000);
   };

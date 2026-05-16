@@ -34,6 +34,7 @@ export default function PersonaDebate({ user }) {
   const [timer, setTimer] = useState(600);
   const initialTimerRef = useRef(600);
   const initialDailyRemainingRef = useRef(600);
+  const navTimeoutRef = useRef(null);
   const timerRef = useRef(null);
   const isActive = status === 'active';
 
@@ -157,6 +158,9 @@ export default function PersonaDebate({ user }) {
       if (conversationRef.current) {
         try { conversationRef.current.endSession(); } catch (e) { console.error('Cleanup error', e); }
       }
+      if (navTimeoutRef.current) {
+        clearTimeout(navTimeoutRef.current);
+      }
     };
   }, []);
 
@@ -250,7 +254,8 @@ export default function PersonaDebate({ user }) {
       }).catch(e => console.error('Final persona time sync failed', e));
     }
 
-    setTimeout(() => {
+    if (navTimeoutRef.current) clearTimeout(navTimeoutRef.current);
+    navTimeoutRef.current = setTimeout(() => {
       navigate('/persona');
     }, 4500);
   };
