@@ -56,8 +56,8 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
     { name: 'Debate Arena',    path: isJunior ? '/debate' : '/debate-instructions?next=/debate', match: '/debate', icon: Mic },
     isLevel3Plus && { name: 'Model UN', path: isJunior ? '/mock-un' : '/debate-instructions?next=/mock-un', match: '/mock-un', icon: Globe },
     isLevel3Plus && { name: 'Wisdom Arena', path: isJunior ? '/persona' : '/debate-instructions?next=/persona', match: '/persona', icon: Users },
-    { name: 'Super Tutor', path: '/conversational-agent', match: '/conversational-agent', icon: Brain },
-    isLevel3Plus && { name: 'Speech Coach', path: '/speech-coach', match: '/speech-coach', icon: Radio },
+    { name: 'Super Tutor', path: isJunior ? '/conversational-agent' : '/debate-instructions?next=/conversational-agent', match: '/conversational-agent', icon: Brain },
+    isLevel3Plus && { name: 'Speech Coach', path: isJunior ? '/speech-coach' : '/debate-instructions?next=/speech-coach', match: '/speech-coach', icon: Radio },
     { name: 'Vocab Trainer',   path: '/vocab-trainer',   match: '/vocab-trainer',   icon: BookOpen },
     { name: 'Word Scramble',   path: '/word-scramble',   match: '/word-scramble',   icon: Gamepad2 },
     !isJunior && { name: 'Analytics',   path: '/analytics',   match: '/analytics',  icon: BarChart2 },
@@ -298,9 +298,11 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
                 style={{
                   display: 'flex', alignItems: 'center',
                   gap: isCollapsed && !isMobile ? 0 : '0.75rem',
-                  padding: isJunior
-                    ? (isCollapsed && !isMobile ? '0.85rem' : '0.85rem 1.1rem')
-                    : (isCollapsed && !isMobile ? '0.85rem 0' : '0.85rem 1rem'),
+                  padding: isMobile 
+                    ? '1.15rem 1.25rem'
+                    : (isJunior
+                      ? (isCollapsed && !isMobile ? '0.85rem' : '0.85rem 1.1rem')
+                      : (isCollapsed && !isMobile ? '0.85rem 0' : '0.85rem 1rem')),
                   justifyContent: isCollapsed && !isMobile ? 'center' : 'flex-start',
                   fontWeight: isActive ? 800 : 600,
                   fontSize: '0.95rem',
