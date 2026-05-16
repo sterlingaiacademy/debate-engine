@@ -129,7 +129,9 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
               razorpay_subscription_id: response.razorpay_subscription_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
-              studentId: user?.studentId || user?.username
+              studentId: user?.studentId || user?.username,
+              plan: plan.id,
+              period: period
             })
           });
           const verifyData = await verifyRes.json();

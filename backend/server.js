@@ -531,7 +531,9 @@ app.post('/api/payment/verify-subscription', async (req, res) => {
       razorpay_payment_id, 
       razorpay_subscription_id, 
       razorpay_signature,
-      studentId: bodyStudentId  // optional fallback from frontend
+      studentId: bodyStudentId,  // optional fallback from frontend
+      plan: bodyPlan,
+      period: bodyPeriod
     } = req.body;
     
     if (!razorpay_payment_id || !razorpay_subscription_id || !razorpay_signature) {
@@ -555,10 +557,10 @@ app.post('/api/payment/verify-subscription', async (req, res) => {
     }
 
     const notes = subscription.notes || {};
-    // Use notes.studentId from Razorpay; fall back to the one sent from the frontend
+    // Use notes from Razorpay; fall back to the ones sent from the frontend
     const studentId = notes.studentId || bodyStudentId;
-    const plan = notes.plan;
-    const period = notes.period;
+    const plan = notes.plan || bodyPlan;
+    const period = notes.period || bodyPeriod;
 
     if (!studentId) {
       return res.status(400).json({ error: 'Cannot identify user for this subscription. Contact support.' });
