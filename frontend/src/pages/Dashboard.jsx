@@ -12,6 +12,7 @@ import {
 } from 'recharts';
 import HUDCard from '../components/HUDCard';
 import { API_BASE } from '../api';
+import PremiumEnrollModal from '../components/PremiumEnrollModal';
 
 /* ─── Helpers ─── */
 const formatCategory = (key) => {
@@ -193,6 +194,7 @@ export default function Dashboard({ user, setUser }) {
     (user?.studentId || user?.username) === cachedStudentId ? cachedStats : null
   );
   const [loading, setLoading] = useState(!stats);
+  const [showPremiumModal, setShowPremiumModal] = useState(false);
 
   const isJunior = ['Level 1','Level 2','Class 1-3','Class 3-5','KG','Class KG','KG-2',
     'Class 1-5','Class 1','Class 2','Class 3','Class 4','Class 5','kg'].includes(user?.classLevel);
@@ -280,7 +282,13 @@ export default function Dashboard({ user, setUser }) {
      SENIOR DASHBOARD
   ══════════════════════════════════════════════════════════ */
   if (!isJunior) return (
-    <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', paddingBottom: '4rem' }}>
+    <>
+      {showPremiumModal && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', flexDirection: 'column', background: 'rgba(0,0,0,0.85)', overflowY: 'auto' }}>
+          <PremiumEnrollModal user={user} onDismiss={() => setShowPremiumModal(false)} />
+        </div>
+      )}
+      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', paddingBottom: '4rem' }}>
 
       {/* ── Hero Greeting ── */}
       <div className="welcome-card" style={{
@@ -340,6 +348,35 @@ export default function Dashboard({ user, setUser }) {
             </div>
           )}
         </div>
+
+        {/* Demo Account Upgrade Banner (Senior) */}
+        {(!user?.subscription_plan || user?.subscription_plan === 'free') && (
+          <div 
+            onClick={() => setShowPremiumModal(true)}
+            style={{ 
+              position: 'relative', zIndex: 2, marginTop: '2rem', padding: '1rem 1.25rem', borderRadius: 16, cursor: 'pointer',
+              background: 'linear-gradient(135deg, rgba(255,107,0,0.1), rgba(255,107,0,0.05))',
+              border: '1px solid rgba(255,107,0,0.3)',
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem',
+              transition: 'all 0.2s', boxShadow: '0 8px 24px rgba(255,107,0,0.1)'
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255,107,0,0.15), rgba(255,107,0,0.08))'; e.currentTarget.style.borderColor = 'rgba(255,107,0,0.5)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255,107,0,0.1), rgba(255,107,0,0.05))'; e.currentTarget.style.borderColor = 'rgba(255,107,0,0.3)'; }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+              <div style={{ background: 'rgba(255,107,0,0.2)', color: '#FF6B00', width: 40, height: 40, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <Crown size={22} strokeWidth={2.5} />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <span style={{ fontSize: '1rem', fontWeight: 900, color: '#FF6B00', letterSpacing: '-0.01em' }}>Demo Account</span>
+                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Upgrade to Pro to unlock unlimited time and features!</span>
+              </div>
+            </div>
+            <div style={{ background: '#FF6B00', color: '#fff', padding: '0.6rem 1.25rem', borderRadius: 99, fontSize: '0.85rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.4rem', boxShadow: '0 4px 12px rgba(255,107,0,0.3)' }}>
+              Upgrade Now <ChevronRight size={16} />
+            </div>
+          </div>
+        )}
       </div>
 
       {/* ── Mode Cards ── */}
@@ -475,7 +512,13 @@ export default function Dashboard({ user, setUser }) {
      JUNIOR DASHBOARD
   ══════════════════════════════════════════════════════════ */
   return (
-    <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', paddingBottom: '3rem' }}>
+    <>
+      {showPremiumModal && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', flexDirection: 'column', background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', overflowY: 'auto' }}>
+          <PremiumEnrollModal user={user} onDismiss={() => setShowPremiumModal(false)} />
+        </div>
+      )}
+      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', paddingBottom: '3rem' }}>
 
       {/* ── Hero Welcome Card ── */}
       <div className="welcome-card" style={{
@@ -518,6 +561,34 @@ export default function Dashboard({ user, setUser }) {
             </div>
           </div>
         </div>
+
+        {/* Demo Account Upgrade Banner (Junior) */}
+        {(!user?.subscription_plan || user?.subscription_plan === 'free') && (
+          <div 
+            onClick={() => setShowPremiumModal(true)}
+            style={{ 
+              position: 'relative', zIndex: 2, marginTop: '1.5rem', padding: '1rem 1.25rem', borderRadius: 20, cursor: 'pointer',
+              background: 'rgba(255,255,255,0.15)', border: '2px solid rgba(255,255,255,0.4)',
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.15)', transition: 'all 0.2s'
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.25)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.15)'; e.currentTarget.style.transform = 'translateY(0)'; }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+              <div style={{ background: '#fff', color: '#7c3aed', width: 44, height: 44, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+                <Crown size={24} strokeWidth={2.5} />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <span style={{ fontSize: '1.05rem', fontWeight: 900, color: '#fff', textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>Demo Account</span>
+                <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'rgba(255,255,255,0.9)' }}>Upgrade to Pro for unlimited fun!</span>
+              </div>
+            </div>
+            <div style={{ background: '#fff', color: '#7c3aed', padding: '0.6rem 1.25rem', borderRadius: 99, fontSize: '0.85rem', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '0.4rem', boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }}>
+              Upgrade <ChevronRight size={16} strokeWidth={3} />
+            </div>
+          </div>
+        )}
       </div>
 
       {/* ── Mode Cards ── */}
@@ -609,5 +680,6 @@ export default function Dashboard({ user, setUser }) {
         </div>
       )}
     </div>
+    </>
   );
 }
