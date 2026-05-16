@@ -9,7 +9,7 @@ const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const db = require('./database');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'grace_and_force_super_secret_key_2026';
-const { exec } = require('child_process');
+const { execFile } = require('child_process');
 const fs = require('fs');
 const crypto = require('crypto');
 const Razorpay = require('razorpay');
@@ -972,7 +972,7 @@ app.post('/api/evaluate', async (req, res) => {
     // Pass args securely. Format: py script.py transcript.txt studentId name classLevel topic
     pythonQueue.enqueue(() => {
       return new Promise((resolveQueue) => {
-        exec(`python3 "${scriptPath}" "${filename}" "${sId}" "${sName}" "${sClass}" "${sTopic}"`, { maxBuffer: 1024 * 1024 * 10, timeout: 15000 }, async (error, stdout, stderr) => {
+        execFile('python3', [scriptPath, filename, sId, sName, sClass, sTopic], { maxBuffer: 1024 * 1024 * 10, timeout: 15000 }, async (error, stdout, stderr) => {
           resolveQueue(); // Free up the queue slot immediately after python finishes
           // The rest of the DB processing happens asynchronously outside the process limit lock
       // Clean up file
@@ -1225,11 +1225,10 @@ app.post('/api/claim-vocab-tokens', async (req, res) => {
       return res.status(409).json({ error: 'Vocab tokens already claimed today' });
     }
 
-    // Mark as claimed and award tokens atomically
     await db.query(
       `UPDATE users SET "dailyVocabClaimed" = $1 WHERE "studentId" = $2`,
       [idempotencyKey, studentId]
-    ).catch(() => {}); // column may not exist yet — best effort
+    );
 
     await db.query(
       `UPDATE debate_users SET gforce_tokens = gforce_tokens + $1 WHERE user_id = $2`,
