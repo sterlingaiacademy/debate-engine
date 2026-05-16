@@ -282,7 +282,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
           paddingBottom: isMobile ? '80px' : 0,
         }}>
           {navLinks.map(({ name, path, match, icon: Icon }) => {
-            const isCurrentRoute = pathname.startsWith(match);
+            const isCurrentRoute = pathname === match || pathname.startsWith(`${match}/`) || pathname.startsWith(`${match}?`);
             const isInstructionRoute = pathname === '/debate-instructions';
             const matchesInstruction = isInstructionRoute && (
               (match === '/debate' && (!nextParam || nextParam.startsWith('/debate'))) ||

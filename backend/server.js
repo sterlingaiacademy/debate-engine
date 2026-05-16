@@ -413,6 +413,12 @@ app.post('/api/payment/create-subscription', async (req, res) => {
       return res.status(400).json({ error: 'Plan and studentId are required' });
     }
     
+    // Check if user already has an active subscription
+    const userRes = await db.query('SELECT subscription_status FROM users WHERE "studentId" = $1', [studentId]);
+    if (userRes.rows.length > 0 && userRes.rows[0].subscription_status === 'active') {
+      return res.status(400).json({ error: 'User already has an active subscription. Please use the upgrade flow instead.' });
+    }
+    
     let plan_id;
     if (plan === 'pro' && period === 'monthly') plan_id = process.env.PLAN_PRO_MONTHLY;
     else if (plan === 'pro' && period === 'yearly') plan_id = process.env.PLAN_PRO_YEARLY;
@@ -567,7 +573,8 @@ app.post('/api/webhook/razorpay', async (req, res) => {
     
     if (event === 'subscription.charged') {
       const subscription = payload.payload.subscription.entity;
-      const { plan, period, studentId } = subscription.notes;
+      const notes = subscription.notes || {};
+      const { plan, period, studentId } = notes;
       if (studentId) {
         await db.query(
           `UPDATE users SET subscription_plan = $1, subscription_period = $2, subscription_status = 'active', razorpay_subscription_id = $3 WHERE "studentId" = $4`,
@@ -576,7 +583,8 @@ app.post('/api/webhook/razorpay', async (req, res) => {
       }
     } else if (event === 'subscription.halted' || event === 'subscription.cancelled' || event === 'subscription.completed') {
       const subscription = payload.payload.subscription.entity;
-      const studentId = subscription.notes.studentId;
+      const notes = subscription.notes || {};
+      const studentId = notes.studentId;
       if (studentId) {
         await db.query(
           `UPDATE users SET subscription_plan = 'free', subscription_period = '', subscription_status = $1 WHERE "studentId" = $2`,
