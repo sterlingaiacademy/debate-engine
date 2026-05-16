@@ -350,7 +350,7 @@ export default function Dashboard({ user, setUser }) {
         </div>
 
         {/* Demo Account Upgrade Banner (Senior) */}
-        {(!user?.subscription_plan || user?.subscription_plan === 'free') && (
+        {(!user?.subscription_plan || user?.subscription_plan === 'free') && stats?.timeLimits && stats.timeLimits.remainingRanked <= 0 && (
           <div 
             onClick={() => setShowPremiumModal(true)}
             style={{ 
@@ -564,7 +564,7 @@ export default function Dashboard({ user, setUser }) {
         </div>
 
         {/* Demo Account Upgrade Banner (Junior) */}
-        {(!user?.subscription_plan || user?.subscription_plan === 'free') && (
+        {(!user?.subscription_plan || user?.subscription_plan === 'free') && stats?.timeLimits && stats.timeLimits.remainingRanked <= 0 && (
           <div 
             onClick={() => setShowPremiumModal(true)}
             style={{ 
