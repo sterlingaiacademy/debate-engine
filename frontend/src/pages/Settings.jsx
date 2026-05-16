@@ -272,37 +272,68 @@ export default function Settings({ user, setUser }) {
           </h2>
 
           {/* Current plan chip + description */}
-          <div style={{
-            background: 'linear-gradient(135deg, rgba(139,92,246,0.07) 0%, rgba(217,70,239,0.07) 100%)',
-            border: '1.5px solid rgba(139,92,246,0.2)',
-            borderRadius: '16px',
-            padding: '1.5rem',
-            marginBottom: '1.5rem',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '1rem',
-          }}>
-            <div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.2rem 0.75rem', background: 'rgba(139,92,246,0.12)', borderRadius: '99px', fontSize: '0.7rem', fontWeight: 800, color: '#8b5cf6', marginBottom: '0.5rem' }}>
-                <Clock size={11} /> CURRENT PLAN · FREE
+          {(!user?.subscription_plan || user?.subscription_plan === 'free') && (
+            <>
+              <div style={{
+                background: 'linear-gradient(135deg, rgba(139,92,246,0.07) 0%, rgba(217,70,239,0.07) 100%)',
+                border: '1.5px solid rgba(139,92,246,0.2)',
+                borderRadius: '16px',
+                padding: '1.5rem',
+                marginBottom: '1.5rem',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: '1rem',
+              }}>
+                <div>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.2rem 0.75rem', background: 'rgba(139,92,246,0.12)', borderRadius: '99px', fontSize: '0.7rem', fontWeight: 800, color: '#8b5cf6', marginBottom: '0.5rem' }}>
+                    <Clock size={11} /> CURRENT PLAN · FREE
+                  </div>
+                  <h3 style={{ fontSize: '1.4rem', fontWeight: 800, margin: '0 0 0.25rem' }}>10 mins / day</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', margin: 0 }}>Upgrade for unlimited practice time, more AI voices & priority support.</p>
+                </div>
               </div>
-              <h3 style={{ fontSize: '1.4rem', fontWeight: 800, margin: '0 0 0.25rem' }}>10 mins / day</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', margin: 0 }}>Upgrade for unlimited practice time, more AI voices & priority support.</p>
-            </div>
-            <div style={{
-              background: 'linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)',
-              color: '#fff', padding: '0.4rem 1rem', borderRadius: '99px',
-              fontSize: '0.7rem', fontWeight: 800, letterSpacing: '0.04em',
-              whiteSpace: 'nowrap',
-            }}>
-              COMING SOON
-            </div>
-          </div>
+              <PremiumEnrollModal user={user} mode="settings" onDismiss={() => {}} />
+            </>
+          )}
 
-          {/* Premium Enroll Modal Component */}
-          <PremiumEnrollModal user={user} mode="settings" onDismiss={() => {}} />
+          {user?.subscription_plan === 'pro' && (
+            <div style={{
+              background: 'linear-gradient(135deg, rgba(168,85,247,0.1) 0%, rgba(217,70,239,0.1) 100%)',
+              border: '2px solid rgba(168,85,247,0.3)',
+              borderRadius: '16px',
+              padding: '2rem',
+              textAlign: 'center',
+            }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.4rem 1rem', background: 'rgba(168,85,247,0.2)', borderRadius: '99px', fontSize: '0.85rem', fontWeight: 800, color: '#c084fc', marginBottom: '1rem' }}>
+                <Crown size={14} /> CURRENT PLAN · PRO
+              </div>
+              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, margin: '0 0 0.5rem' }}>You are a Pro Member! 🎉</h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', margin: 0, maxWidth: '400px', marginInline: 'auto' }}>
+                You have 20 minutes of daily practice time, access to premium features, and priority support.
+              </p>
+            </div>
+          )}
+
+          {user?.subscription_plan === 'max' && (
+            <div style={{
+              background: 'linear-gradient(135deg, rgba(249,115,22,0.1) 0%, rgba(234,88,12,0.1) 100%)',
+              border: '2px solid rgba(249,115,22,0.4)',
+              borderRadius: '16px',
+              padding: '2rem',
+              textAlign: 'center',
+              boxShadow: '0 4px 24px rgba(249,115,22,0.1)',
+            }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.4rem 1rem', background: 'rgba(249,115,22,0.2)', borderRadius: '99px', fontSize: '0.85rem', fontWeight: 800, color: '#fb923c', marginBottom: '1rem' }}>
+                <Crown size={14} /> CURRENT PLAN · MAX
+              </div>
+              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, margin: '0 0 0.5rem', color: '#fb923c' }}>You are a Max Member! 🚀</h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', margin: 0, maxWidth: '400px', marginInline: 'auto' }}>
+                You have UNLIMITED daily practice time, 100% access to all AI personas, and the ultimate G-Force experience.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>
