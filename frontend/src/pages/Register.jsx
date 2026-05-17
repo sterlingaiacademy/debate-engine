@@ -219,7 +219,7 @@ export default function Register({ onLogin }) {
         classLevel: computedClassLevel,
         grade: formData.selectedClass,
         referralCode: formData.referralCode,
-        authProvider: pendingProfile ? 'google' : 'local',
+        authProvider: googleProfile ? 'google' : 'local',
         email: googleProfile?.email || null,
         avatar: googleProfile?.avatar || null,
       };
