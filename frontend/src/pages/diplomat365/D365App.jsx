@@ -12,11 +12,11 @@ import PremiumEnrollModal from '../../components/PremiumEnrollModal';
 const getNormalizedLevel = (cls) => {
   if (!cls) return 'Level 1';
   if (cls.startsWith('Level ')) return cls;
-  if (['KG','Class 1','Class 2','Class KG','KG-2'].includes(cls)) return 'Level 1';
-  if (['Class 3','Class 4','Class 5'].includes(cls)) return 'Level 2';
-  if (['Class 6','Class 7','Class 8'].includes(cls)) return 'Level 3';
-  if (['Class 9','Class 10'].includes(cls)) return 'Level 4';
-  if (['Class 11','Class 12'].includes(cls)) return 'Level 5';
+  if (['KG','Class 1','Class 2','Class KG','KG-2','Grade 1','Grade 2'].includes(cls)) return 'Level 1';
+  if (['Class 3','Class 4','Class 5','Grade 3','Grade 4','Grade 5'].includes(cls)) return 'Level 2';
+  if (['Class 6','Class 7','Class 8','Grade 6','Grade 7','Grade 8'].includes(cls)) return 'Level 3';
+  if (['Class 9','Class 10','Grade 9','Grade 10'].includes(cls)) return 'Level 4';
+  if (['Class 11','Class 12','Grade 11','Grade 12'].includes(cls)) return 'Level 5';
   return 'Level 1';
 };
 
