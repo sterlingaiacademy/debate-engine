@@ -4,7 +4,7 @@
   "description": "Voice AI Debate Platform",
   "scripts": {
     "start": "cd backend && node server.js",
-    "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend"
+    "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend && node backend/build-diplomat365-days.js && node backend/migrate-diplomat365.js"
   },
   "engines": {
     "node": ">=18.0.0"

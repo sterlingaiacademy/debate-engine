@@ -1241,6 +1241,251 @@ app.post('/api/claim-vocab-tokens', async (req, res) => {
 });
 
 
+// ══════════════════════════════════════════════════════════════════════════════
+// DIPLOMAT 365 ROUTES  — /api/d365/*
+// ══════════════════════════════════════════════════════════════════════════════
+
+const { gradeSubmission } = require('./diplomat365-grader');
+const d365DaysPath = path.join(__dirname, 'data', 'diplomat365-days.json');
+
+// Cache curriculum in memory at startup (365 rows, ~200KB)
+let D365_DAYS = null;
+try {
+  if (fs.existsSync(d365DaysPath)) {
+    D365_DAYS = JSON.parse(fs.readFileSync(d365DaysPath, 'utf8'));
+  }
+} catch (e) {
+  console.warn('diplomat365-days.json not found — run build-diplomat365-days.js');
+}
+
+// Helper — get or create user progress row
+async function getOrCreateProgress(userId) {
+  let res = await db.query('SELECT * FROM d365_user_progress WHERE user_id = $1', [userId]);
+  if (!res.rows.length) {
+    await db.query(
+      `INSERT INTO d365_user_progress (user_id, current_day, streak, missed_days_in_row, longest_streak, tokens, badges)
+       VALUES ($1, 1, 0, 0, 0, 0, '[]') ON CONFLICT (user_id) DO NOTHING`,
+      [userId]
+    );
+    res = await db.query('SELECT * FROM d365_user_progress WHERE user_id = $1', [userId]);
+  }
+  return res.rows[0];
+}
+
+// GET /api/d365/days/:n — one curriculum day
+app.get('/api/d365/days/:n', (req, res) => {
+  const n = parseInt(req.params.n);
+  if (!D365_DAYS) return res.status(503).json({ error: 'Curriculum not loaded. Run build-diplomat365-days.js first.' });
+  const day = D365_DAYS.find(d => d.dayNumber === n);
+  if (!day) return res.status(404).json({ error: 'Day not found' });
+  res.json(day);
+});
+
+// GET /api/d365/progress/:userId — full user progress
+app.get('/api/d365/progress/:userId', async (req, res) => {
+  try {
+    const prog = await getOrCreateProgress(req.params.userId);
+    res.json({
+      currentDay: prog.current_day || 1,
+      streak: prog.streak || 0,
+      missedDaysInRow: prog.missed_days_in_row || 0,
+      longestStreak: prog.longest_streak || 0,
+      tokens: prog.tokens || 0,
+      lastCheckin: prog.last_checkin,
+      badges: prog.badges || [],
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/d365/attempts/:userId — recent attempts
+app.get('/api/d365/attempts/:userId', async (req, res) => {
+  try {
+    const limit = Math.min(parseInt(req.query.limit) || 10, 50);
+    const { rows } = await db.query(
+      `SELECT day_number, stars, total_score, feedback, created_at
+       FROM d365_attempts WHERE user_id = $1 ORDER BY created_at DESC LIMIT $2`,
+      [req.params.userId, limit]
+    );
+    res.json({ attempts: rows });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// POST /api/d365/rubric/grade — submit text → grade → unlock
+app.post('/api/d365/rubric/grade', async (req, res) => {
+  const { userId, dayNumber, text } = req.body;
+  if (!userId || !dayNumber || !text) {
+    return res.status(400).json({ error: 'userId, dayNumber, and text are required' });
+  }
+
+  // Verify user is pro/max
+  try {
+    const userRes = await db.query(`SELECT subscription_plan FROM users WHERE "studentId" = $1`, [userId]);
+    if (!userRes.rows.length) return res.status(404).json({ error: 'User not found' });
+    const plan = userRes.rows[0].subscription_plan;
+    if (!['pro', 'max'].includes(plan)) {
+      return res.status(403).json({ error: 'Diplomat 365 requires a Pro or Max subscription.' });
+    }
+  } catch (e) {
+    return res.status(500).json({ error: 'Could not verify subscription' });
+  }
+
+  const dayData = D365_DAYS ? D365_DAYS.find(d => d.dayNumber === parseInt(dayNumber)) : null;
+  const result = gradeSubmission(text, dayData);
+
+  try {
+    // Save attempt
+    await db.query(
+      `INSERT INTO d365_attempts
+         (user_id, day_number, submission_text, stars, total_score,
+          dim_persuasion, dim_evidence, dim_policy_knowledge, dim_diplomatic_register, dim_voice_delivery,
+          feedback, unlocked_next)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`,
+      [
+        userId, dayNumber, text.slice(0, 5000),
+        result.stars, result.totalScore,
+        result.dims.persuasion, result.dims.evidence, result.dims.policyKnowledge,
+        result.dims.diplomaticRegister, result.dims.voiceDelivery,
+        result.feedback, result.unlocked,
+      ]
+    );
+
+    // Update progress
+    const prog = await getOrCreateProgress(userId);
+    let newCurrentDay = prog.current_day;
+    let newStreak = prog.streak;
+    let newMissed = prog.missed_days_in_row;
+    let newLongest = prog.longest_streak;
+    let newTokens = prog.tokens;
+    let badges = Array.isArray(prog.badges) ? [...prog.badges] : [];
+
+    const today = new Date().toISOString().split('T')[0];
+    const lastDate = prog.last_checkin ? new Date(prog.last_checkin).toISOString().split('T')[0] : null;
+
+    // Streak engine
+    if (lastDate !== today) {
+      if (!lastDate) {
+        newStreak = 1; newMissed = 0;
+      } else {
+        const diffDays = Math.round((new Date(today) - new Date(lastDate)) / 86400000);
+        if (diffDays === 1)      { newStreak += 1; newMissed = 0; }
+        else if (diffDays === 2) { newStreak += 1; newMissed = 1; }
+        else if (diffDays === 3) { newStreak += 1; newMissed = 2; }
+        else                     { newStreak = 1;  newMissed = 0; }
+      }
+      newLongest = Math.max(newLongest, newStreak);
+
+      // Badge: streak milestones
+      if (newStreak >= 7  && !badges.includes('streak_7'))  badges.push('streak_7');
+      if (newStreak >= 14 && !badges.includes('streak_14')) badges.push('streak_14');
+      if (newStreak >= 30 && !badges.includes('streak_30')) { badges.push('streak_30'); newTokens += 1; }
+    }
+
+    // Unlock next day
+    if (result.unlocked && parseInt(dayNumber) >= prog.current_day) {
+      newCurrentDay = parseInt(dayNumber) + 1;
+      if (!badges.includes('first_day') && newCurrentDay >= 2) badges.push('first_day');
+      if (!badges.includes('week_1')    && newCurrentDay >= 8) badges.push('week_1');
+    }
+
+    await db.query(
+      `UPDATE d365_user_progress SET
+         current_day = $1, streak = $2, missed_days_in_row = $3,
+         longest_streak = $4, tokens = $5, last_checkin = $6,
+         badges = $7, updated_at = NOW()
+       WHERE user_id = $8`,
+      [newCurrentDay, newStreak, newMissed, newLongest, newTokens, today, JSON.stringify(badges), userId]
+    );
+
+    res.json({
+      ...result,
+      newStreak,
+      newTokens,
+      newCurrentDay,
+    });
+  } catch (err) {
+    console.error('D365 grade error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// POST /api/d365/streak/checkin — daily check-in without grading
+app.post('/api/d365/streak/checkin', async (req, res) => {
+  const { userId } = req.body;
+  if (!userId) return res.status(400).json({ error: 'userId required' });
+  try {
+    const prog = await getOrCreateProgress(userId);
+    res.json({ streak: prog.streak, missedDaysInRow: prog.missed_days_in_row });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/d365/cohort/:ageBand — survival curve + percentile
+app.get('/api/d365/cohort/:ageBand', async (req, res) => {
+  try {
+    const ageBand = decodeURIComponent(req.params.ageBand);
+
+    // Get all users who have attempted at least 1 day in this age band
+    // (age band is stored per day; we approximate by joining users table classLevel)
+    const { rows } = await db.query(`
+      SELECT up.user_id, up.current_day, up.streak
+      FROM d365_user_progress up
+      JOIN users u ON u."studentId" = up.user_id
+      WHERE up.current_day > 1
+      ORDER BY up.current_day DESC
+      LIMIT 500
+    `);
+
+    const totalUsers = rows.length;
+    const avgDay = totalUsers > 0 ? Math.round(rows.reduce((a, r) => a + r.current_day, 0) / totalUsers) : 0;
+
+    // Build survival curve: for each month checkpoint, how many still going
+    const survivalCurve = Array.from({ length: 12 }, (_, i) => {
+      const monthStart = Math.round((i / 12) * 365) + 1;
+      const stillActive = rows.filter(r => r.current_day >= monthStart).length;
+      return {
+        month: i + 1,
+        remaining: totalUsers > 0 ? Math.round((stillActive / totalUsers) * 100) : 0,
+      };
+    });
+
+    res.json({ totalUsers, avgDay, survivalCurve, yourPercentile: null });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/d365/cohort/:ageBand/vienna — top 3 + top 30
+app.get('/api/d365/cohort/:ageBand/vienna', async (req, res) => {
+  try {
+    const { rows } = await db.query(`
+      SELECT up.user_id,
+             SUBSTRING(up.user_id, 1, 6) AS anon_id,
+             up.current_day,
+             up.streak,
+             up.tokens,
+             (up.current_day::float / 365 * 50
+              + (up.streak::float / 365) * 20
+              + (up.tokens::float / 12) * 20) AS vienna_score
+      FROM d365_user_progress up
+      ORDER BY vienna_score DESC
+      LIMIT 30
+    `);
+    res.json({
+      top3:  rows.slice(0, 3).map(r => ({ anonId: r.anon_id, viennaScore: Math.round(r.vienna_score), day: r.current_day })),
+      top30: rows.map(r => ({ anonId: r.anon_id, viennaScore: Math.round(r.vienna_score), day: r.current_day })),
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ── End Diplomat 365 Routes ──────────────────────────────────────────────────
+
 // Check if running locally vs Vercel Serverless
 if (require.main === module) {
   app.listen(PORT, () => {

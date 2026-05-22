@@ -1394,3 +1394,75 @@ tbody tr:hover { background: var(--bg-tertiary); }
 @media (max-width:1024px) { .lp-features-grid { grid-template-columns:repeat(2,1fr); } .lp-pricing-grid { grid-template-columns:1fr; gap:1rem; } .lp-pricing-featured { transform:none; } .lp-pricing-featured:hover { transform:translateY(-4px); } }
 @media (max-width:860px) { .lp-hero { flex-direction:column; padding:6.5rem 1.5rem 3.5rem; text-align:center; } .lp-hero-visual { flex:none; } .lp-hero-btns { justify-content:center; } .lp-hero-stats { justify-content:center; } .lp-hero-badge { margin:0 auto 1.5rem; } .lp-steps { flex-direction:column; } .lp-step-connector { display:none; } .lp-nav-links { display:none; } .lp-features-grid { grid-template-columns:1fr; } }
 @media (max-width:640px) { .lp-nav { padding:1rem 1.25rem; } .lp-section { padding:4rem 1.25rem; } .lp-hero { padding:6rem 1.25rem 3rem; } .lp-feature-card { display:flex; flex-direction:column; align-items:center; text-align:center; } .lp-pricing-card { display:flex; flex-direction:column; align-items:center; text-align:center; } .lp-footer-top { align-items:center; text-align:center; } .lp-footer-tagline { text-align:center; } .lp-footer-links { justify-content:center; } .lp-footer { padding:2.5rem 1.25rem 1.5rem; } .lp-footer-bottom { flex-direction:column; gap:0.5rem; text-align:center; } .lp-privacy-card { padding:1.5rem; border-radius:16px; } }
+
+/* ================================================================
+   DIPLOMAT 365 — Design System Extension
+   Tokens: UN blue, diplomatic gold, deep navy
+   ================================================================ */
+
+:root {
+  --d365-blue:       #009edb;
+  --d365-blue-glow:  rgba(0,158,219,0.25);
+  --d365-gold:       #D4A017;
+  --d365-gold-glow:  rgba(212,160,23,0.25);
+  --d365-navy:       #0a1628;
+  --d365-navy-card:  rgba(10,22,40,0.6);
+}
+
+/* Orbit idle animation for lock screen hero */
+@keyframes orbIdle {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50%       { transform: scale(1.15); opacity: 1; }
+}
+
+/* Badge unlock pop */
+@keyframes badgeUnlock {
+  0%   { transform: scale(0.8); opacity: 0; }
+  70%  { transform: scale(1.08); }
+  100% { transform: scale(1);   opacity: 1; }
+}
+
+/* Fade-in for page mounts */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in { animation: fadeIn 0.35s cubic-bezier(0.16,1,0.3,1) both; }
+
+/* Badge grid slots */
+.badge-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1rem 0.75rem;
+  border-radius: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.badge-slot.earned {
+  background: rgba(212,160,23,0.06);
+  border: 1px solid rgba(212,160,23,0.2);
+}
+.badge-slot.earned:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(212,160,23,0.15);
+}
+.badge-slot.locked {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  opacity: 0.5;
+}
+.badge-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.25rem;
+}
+
+/* Spin utility (reused from existing, ensure it exists) */
+@keyframes spin { to { transform: rotate(360deg); } }
+.animate-spin { animation: spin 0.8s linear infinite; }
+
