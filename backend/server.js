@@ -1495,3 +1495,80 @@ if (require.main === module) {
 
 module.exports = app;
 
+
+// ══════════════════════════════════════════════════════════════════════════════
+// MUN 30-DAY ROUTES  — /api/mun30/*
+// ══════════════════════════════════════════════════════════════════════════════
+
+const mun30Days = (() => {
+  try {
+    const p = require('path').join(__dirname, 'data', 'mun30-days.json');
+    return require(p);
+  } catch { return []; }
+})();
+
+// GET /api/mun30/day/:n — one curriculum day
+app.get('/api/mun30/day/:n', (req, res) => {
+  const n = parseInt(req.params.n, 10);
+  const day = mun30Days.find(d => d.dayNumber === n);
+  if (!day) return res.status(404).json({ error: 'Day not found' });
+  res.json(day);
+});
+
+// GET /api/mun30/progress/:userId
+app.get('/api/mun30/progress/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const r = await db.query(
+      'SELECT * FROM mun30_user_progress WHERE user_id=$1', [userId]
+    );
+    if (!r.rows.length) {
+      await db.query(
+        'INSERT INTO mun30_user_progress (user_id) VALUES ($1) ON CONFLICT DO NOTHING', [userId]
+      );
+      return res.json({ userId, currentDay: 1, streak: 0, tokens: 0, badges: [] });
+    }
+    const row = r.rows[0];
+    res.json({ userId, currentDay: row.current_day, streak: row.streak, tokens: row.tokens, badges: row.badges });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+// POST /api/mun30/submit — grade submission + unlock
+app.post('/api/mun30/submit', async (req, res) => {
+  try {
+    const { userId, dayNumber, submission } = req.body;
+    if (!userId || !dayNumber || !submission) return res.status(400).json({ error: 'Missing fields' });
+
+    const day = mun30Days.find(d => d.dayNumber === parseInt(dayNumber, 10));
+    const { gradeSubmission: gradeMUN } = require('./diplomat365-grader');
+
+    // Map MUN30 phase to slot type for the grader
+    const phaseToSlot = { 1: 'Concept Day', 2: 'Drill Day', 3: 'Debate Day', 4: 'Assessment Day' };
+    const phase = day?.phase || 1;
+    const slot = phaseToSlot[phase] || 'Concept Day';
+
+    const result = gradeMUN(submission, { dayNumber: parseInt(dayNumber, 10), slot });
+
+    // Save attempt
+    await db.query(
+      'INSERT INTO mun30_attempts (user_id, day_number, submission, stars, total_score, feedback, unlocked_next) VALUES ($1,$2,$3,$4,$5,$6,$7)',
+      [userId, dayNumber, submission, result.stars, result.totalScore, result.feedback, result.unlocked]
+    );
+
+    // Update progress if unlocked
+    if (result.unlocked) {
+      const next = parseInt(dayNumber, 10) + 1;
+      await db.query(`
+        INSERT INTO mun30_user_progress (user_id, current_day, streak, last_checkin, updated_at)
+        VALUES ($1, $2, 1, CURRENT_DATE, NOW())
+        ON CONFLICT (user_id) DO UPDATE SET
+          current_day  = GREATEST(mun30_user_progress.current_day, $2),
+          streak       = CASE WHEN mun30_user_progress.last_checkin = CURRENT_DATE - 1 THEN mun30_user_progress.streak + 1 ELSE 1 END,
+          last_checkin = CURRENT_DATE,
+          updated_at   = NOW()
+      `, [userId, next]);
+    }
+
+    res.json(result);
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});

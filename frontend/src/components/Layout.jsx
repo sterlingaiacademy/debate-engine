@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LogOut, LayoutDashboard, Mic, BarChart2, Trophy,
-  Zap, Flame, ChevronRight, ChevronLeft, Settings, BookOpen, Gamepad2, Menu, X, Crown, Globe, Users, Brain, Radio, Scroll
+  Zap, Flame, ChevronRight, ChevronLeft, Settings, BookOpen, Gamepad2, Menu, X, Crown, Globe, Users, Brain, Radio, Scroll, Target
 } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 import PremiumEnrollModal from './PremiumEnrollModal';
@@ -51,6 +51,11 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
   const normalizedLevel = getNormalizedLevel(user?.classLevel);
   const isLevel3Plus = ['Level 3', 'Level 4', 'Level 5'].includes(normalizedLevel);
 
+  const plan = user?.subscription_plan;
+  const isPro  = ['pro', 'max'].includes(plan);  // MUN30 access
+  const isMax  = plan === 'max';                   // D365 access
+  const isFree = !isPro;                           // lock screen for both
+
   const navLinks = [
     { name: 'Dashboard',       path: '/dashboard',         match: '/dashboard',         icon: LayoutDashboard },
     { name: 'Debate Arena',    path: isJunior ? '/debate' : '/debate-instructions?next=/debate', match: '/debate', icon: Mic },
@@ -58,7 +63,10 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
     isLevel3Plus && { name: 'Wisdom Arena', path: isJunior ? '/persona' : '/debate-instructions?next=/persona', match: '/persona', icon: Users },
     { name: 'Super Tutor', path: isJunior ? '/conversational-agent' : '/debate-instructions?next=/conversational-agent', match: '/conversational-agent', icon: Brain },
     isLevel3Plus && { name: 'Speech Coach', path: isJunior ? '/speech-coach' : '/debate-instructions?next=/speech-coach', match: '/speech-coach', icon: Radio },
-    { name: 'Diplomat 365', path: '/diplomat365', match: '/diplomat365', icon: Scroll },
+    // MUN 30-Day — Pro & Max full access; Free sees it locked
+    { name: 'MUN 30-Day', path: '/mun30', match: '/mun30', icon: Target, locked: isFree, plan: 'Pro' },
+    // Diplomat 365 — Max only full access; Pro & Free see it locked
+    { name: 'Diplomat 365', path: '/diplomat365', match: '/diplomat365', icon: Scroll, locked: !isMax, plan: 'Max' },
     { name: 'Vocab Trainer',   path: '/vocab-trainer',   match: '/vocab-trainer',   icon: BookOpen },
     { name: 'Word Scramble',   path: '/word-scramble',   match: '/word-scramble',   icon: Gamepad2 },
     !isJunior && { name: 'Analytics',   path: '/analytics',   match: '/analytics',  icon: BarChart2 },
@@ -281,7 +289,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
           overflowY: 'auto', overflowX: 'hidden',
           marginTop: isMobile ? '1rem' : 0,
         }}>
-          {navLinks.map(({ name, path, match, icon: Icon }) => {
+          {navLinks.map(({ name, path, match, icon: Icon, locked, plan: requiredPlan }) => {
             const isCurrentRoute = pathname === match || pathname.startsWith(`${match}/`) || pathname.startsWith(`${match}?`);
             const isInstructionRoute = pathname === '/debate-instructions';
             const matchesInstruction = isInstructionRoute && (
@@ -310,6 +318,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
                   transition: 'all 0.2s ease',
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
+                  opacity: locked ? 0.6 : 1,
                   ...(isActive ? activeStyle : inactiveStyle),
                 }}
                 onMouseEnter={e => {
@@ -333,7 +342,19 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
                   style={{ flexShrink: 0, color: isActive && !isJunior ? '#FF6B00' : 'currentColor' }}
                 />
                 {(!isCollapsed || isMobile) && (
-                  <span style={{ opacity: 1, transition: 'opacity 0.2s' }}>{name}</span>
+                  <span style={{ opacity: 1, transition: 'opacity 0.2s', flex: 1 }}>{name}</span>
+                )}
+                {/* Lock badge for premium-gated items */}
+                {locked && (!isCollapsed || isMobile) && (
+                  <span style={{
+                    fontSize: '0.55rem', fontWeight: 800, padding: '0.15rem 0.4rem',
+                    borderRadius: 99, letterSpacing: '0.06em', flexShrink: 0,
+                    background: requiredPlan === 'Max' ? 'rgba(212,160,23,0.15)' : 'rgba(99,102,241,0.15)',
+                    color: requiredPlan === 'Max' ? '#D4A017' : '#818cf8',
+                    border: `1px solid ${requiredPlan === 'Max' ? 'rgba(212,160,23,0.3)' : 'rgba(99,102,241,0.3)'}`,
+                  }}>
+                    🔒 {requiredPlan}
+                  </span>
                 )}
               </Link>
             );

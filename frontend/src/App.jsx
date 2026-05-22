@@ -24,6 +24,7 @@ const VocabTrainer = lazy(() => import('./pages/VocabTrainer'));
 const WordScramble = lazy(() => import('./pages/WordScramble'));
 const PremiumSuccess = lazy(() => import('./pages/PremiumSuccess'));
 const Diplomat365 = lazy(() => import('./pages/diplomat365/D365App'));
+const MUN30 = lazy(() => import('./pages/mun30/MUN30App'));
 
 function App() {
   
@@ -228,6 +229,7 @@ function App() {
               <Route path="/vocab-trainer" element={user ? <VocabTrainer user={user} /> : <Navigate to="/" />} />
               <Route path="/word-scramble" element={user ? <WordScramble user={user} /> : <Navigate to="/" />} />
               <Route path="/diplomat365/*" element={user ? <Diplomat365 user={user} /> : <Navigate to="/" />} />
+              <Route path="/mun30/*" element={user ? <MUN30 user={user} /> : <Navigate to="/" />} />
             </Route>
 
             {/* Catch-all → landing page */}
