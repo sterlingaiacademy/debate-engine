@@ -108,7 +108,7 @@ async function migrate() {
         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)
         ON CONFLICT (day_number) DO UPDATE SET
           theme = EXCLUDED.theme, drill = EXCLUDED.drill,
-          slot = EXCLUDED.slot, updated_at = NOW()
+          slot = EXCLUDED.slot
       `, [
         d.dayNumber, d.week, d.subweek, d.level, d.ageBand, d.levelLabel,
         d.theme, d.slot, d.slotDesc, d.headline, d.drill,
