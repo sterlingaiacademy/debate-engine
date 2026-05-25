@@ -373,6 +373,14 @@ app.get('/api/time-limits/:studentId', async (req, res) => {
     let LIMIT = 600; // Free: 10 minutes
     if (user.subscription_plan === 'pro') LIMIT = 1200; // Pro: 20 minutes
     if (user.subscription_plan === 'max') LIMIT = 3600; // Max: 60 minutes
+
+    // Check active coupons for today
+    const couponsRes = await db.query(`SELECT coupon_code FROM user_coupons WHERE user_id = $1 AND effect_date = $2`, [studentId, currentDateIST]);
+    const activeCoupons = couponsRes.rows.map(r => r.coupon_code.toUpperCase());
+    
+    if (activeCoupons.includes('GFORCE10')) {
+      LIMIT += 600; // +10 minutes
+    }
     
     const used = (user.dailyRankedTime || 0) + (user.dailyPersonaTime || 0);
     const sharedRemaining = Math.max(0, LIMIT - used);
@@ -421,6 +429,43 @@ app.post('/api/time-sync', async (req, res) => {
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+// Coupons API
+app.post('/api/coupons/redeem', async (req, res) => {
+  try {
+    const { studentId, couponCode } = req.body;
+    if (!studentId || !couponCode) return res.status(400).json({ error: 'Missing required params' });
+
+    const code = couponCode.toUpperCase().trim();
+    
+    // Only support GFORCE10 for now
+    if (code !== 'GFORCE10') {
+      return res.status(400).json({ error: 'Invalid coupon code.' });
+    }
+
+    // Check if already redeemed
+    const checkRes = await db.query(`SELECT id FROM user_coupons WHERE user_id = $1 AND coupon_code = $2`, [studentId, code]);
+    if (checkRes.rows.length > 0) {
+      return res.status(400).json({ error: 'You have already redeemed this coupon.' });
+    }
+
+    const currentDateIST = getISTDateString();
+
+    // Insert redemption
+    await db.query(
+      `INSERT INTO user_coupons (user_id, coupon_code, effect_date) VALUES ($1, $2, $3)`,
+      [studentId, code, currentDateIST]
+    );
+
+    res.json({ success: true, message: 'Coupon redeemed successfully! You get +10 minutes for today.' });
+  } catch (err) {
+    if (err.code === '23505') { // Unique constraint violation
+      res.status(400).json({ error: 'You have already redeemed this coupon.' });
+    } else {
+      res.status(500).json({ error: err.message });
+    }
   }
 });
 

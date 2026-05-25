@@ -8,6 +8,8 @@ export default function Settings({ user, setUser }) {
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null);
   const [copied, setCopied] = useState(false);
+  const [couponCode, setCouponCode] = useState('');
+  const [couponStatus, setCouponStatus] = useState({ loading: false, msg: '', type: '' });
 
   // Biometrics State
   const [biometricsEnabled, setBiometricsEnabled] = useState(false);
@@ -33,6 +35,27 @@ export default function Settings({ user, setUser }) {
   };
 
   // Enrollment logic moved to PremiumEnrollModal
+
+  const handleRedeemCoupon = async () => {
+    if (!couponCode.trim()) return;
+    setCouponStatus({ loading: true, msg: '', type: '' });
+    try {
+      const res = await fetch(`${API_BASE}/api/coupons/redeem`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ studentId: user.studentId || user.username, couponCode })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setCouponStatus({ loading: false, msg: data.message, type: 'success' });
+        setCouponCode('');
+      } else {
+        setCouponStatus({ loading: false, msg: data.error || 'Failed to redeem coupon', type: 'error' });
+      }
+    } catch (err) {
+      setCouponStatus({ loading: false, msg: 'Network error', type: 'error' });
+    }
+  };
 
   const handleImageUpload = (e) => {
     const file = e.target.files?.[0];
@@ -265,6 +288,52 @@ export default function Settings({ user, setUser }) {
             </div>
           );
         })()}
+
+        {/* ── Coupon Code Section ─────────────────────────── */}
+        <div className="card settings-card">
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <Crown size={20} color="#D4A017" /> Redeem Coupon
+          </h2>
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1.5rem', lineHeight: 1.6 }}>
+            Have a special promo code? Enter it below to unlock extra practice time or premium features.
+          </p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+            <input
+              type="text"
+              placeholder="e.g. GFORCE10"
+              value={couponCode}
+              onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+              style={{
+                flex: 1, minWidth: '200px', background: 'var(--bg-secondary)', border: '1px solid var(--border)',
+                color: 'var(--text-primary)', padding: '0.8rem 1rem', borderRadius: '12px', fontSize: '1rem',
+                fontFamily: 'monospace', textTransform: 'uppercase', outline: 'none'
+              }}
+            />
+            <button
+              onClick={handleRedeemCoupon}
+              disabled={couponStatus.loading || !couponCode.trim()}
+              style={{
+                background: couponCode.trim() ? 'linear-gradient(135deg, #10b981, #059669)' : 'var(--bg-tertiary)',
+                color: couponCode.trim() ? '#fff' : 'var(--text-muted)', border: 'none',
+                padding: '0.85rem 1.5rem', borderRadius: '12px', fontSize: '0.95rem', fontWeight: 700,
+                cursor: couponStatus.loading || !couponCode.trim() ? 'not-allowed' : 'pointer',
+                transition: 'all 0.2s'
+              }}
+            >
+              {couponStatus.loading ? <Loader2 className="animate-spin" size={18} /> : 'Apply Code'}
+            </button>
+          </div>
+          {couponStatus.msg && (
+            <div style={{
+              marginTop: '1rem', padding: '0.75rem 1rem', borderRadius: '8px', fontSize: '0.85rem', fontWeight: 600,
+              background: couponStatus.type === 'success' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)',
+              color: couponStatus.type === 'success' ? '#10b981' : '#ef4444',
+              border: `1px solid ${couponStatus.type === 'success' ? 'rgba(16, 185, 129, 0.3)' : 'rgba(239, 68, 68, 0.3)'}`
+            }}>
+              {couponStatus.msg}
+            </div>
+          )}
+        </div>
 
         {/* Go Premium / Enrollment Section */}
         <div className="card settings-card">

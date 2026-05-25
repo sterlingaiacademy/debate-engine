@@ -186,6 +186,17 @@ async function initDB() {
     await client.query(`CREATE INDEX IF NOT EXISTS idx_debates_user ON debates(user_id, created_at DESC)`);
 
     // Ensure debate_users has all needed stat columns
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS user_coupons (
+        id SERIAL PRIMARY KEY,
+        user_id TEXT NOT NULL,
+        coupon_code TEXT NOT NULL,
+        effect_date TEXT NOT NULL,
+        created_at TIMESTAMPTZ DEFAULT NOW(),
+        UNIQUE (user_id, coupon_code)
+      )
+    `);
+
     const addDU = async (col, type, def) => {
       try {
         await client.query(`ALTER TABLE debate_users ADD COLUMN IF NOT EXISTS "${col}" ${type} DEFAULT ${def}`);
