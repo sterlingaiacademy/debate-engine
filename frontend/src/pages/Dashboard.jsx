@@ -377,19 +377,35 @@ export default function Dashboard({ user, setUser }) {
               {/* Redeem Coupon Tag */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', position: 'relative' }}>
                 {!showCoupon ? (
-                  <button onClick={() => setShowCoupon(true)} style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', background: 'rgba(168,85,247,0.1)', border: '1px solid rgba(168,85,247,0.3)', borderRadius: 99, padding: '0.2rem 0.6rem', fontSize: '0.75rem', fontWeight: 800, color: '#a855f7', cursor: 'pointer', transition: 'all 0.2s' }}>
-                    + Redeem Code
+                  <button
+                    onClick={() => setShowCoupon(true)}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: '0.3rem',
+                      background: 'rgba(255,107,0,0.08)', border: '1px solid rgba(255,107,0,0.2)',
+                      borderRadius: 99, padding: '0.2rem 0.65rem',
+                      fontSize: '0.75rem', fontWeight: 700, color: '#FF6B00',
+                      cursor: 'pointer', transition: 'all 0.2s', letterSpacing: '0.01em',
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,107,0,0.15)'; e.currentTarget.style.borderColor = 'rgba(255,107,0,0.4)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,107,0,0.08)'; e.currentTarget.style.borderColor = 'rgba(255,107,0,0.2)'; }}
+                  >
+                    🎟 Redeem
                   </button>
                 ) : (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(168,85,247,0.3)', borderRadius: 99, padding: '0.15rem 0.25rem 0.15rem 0.6rem', animation: 'fadeIn 0.2s' }}>
+                  <div style={{
+                    display: 'flex', alignItems: 'center', gap: '0.3rem',
+                    background: 'rgba(255,107,0,0.06)', border: '1px solid rgba(255,107,0,0.25)',
+                    borderRadius: 99, padding: '0.15rem 0.3rem 0.15rem 0.65rem',
+                    animation: 'fadeIn 0.2s'
+                  }}>
                     <input
                       type="text"
-                      placeholder="CODE"
+                      placeholder="ENTER CODE"
                       value={couponCode}
                       onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
                       style={{
-                        background: 'transparent', border: 'none', color: '#fff', width: '70px', fontSize: '0.75rem',
-                        fontFamily: 'monospace', textTransform: 'uppercase', outline: 'none'
+                        background: 'transparent', border: 'none', color: '#FF6B00', width: '90px', fontSize: '0.72rem',
+                        fontFamily: 'monospace', textTransform: 'uppercase', outline: 'none', letterSpacing: '0.05em',
                       }}
                       autoFocus
                       onBlur={() => { if (!couponCode && !couponStatus.loading) setShowCoupon(false); }}
@@ -399,10 +415,11 @@ export default function Dashboard({ user, setUser }) {
                       onClick={handleRedeemCoupon}
                       disabled={couponStatus.loading || !couponCode.trim()}
                       style={{
-                        background: couponCode.trim() ? '#10b981' : 'rgba(255,255,255,0.1)',
-                        color: '#fff', border: 'none', padding: '0.2rem 0.6rem', borderRadius: 99, fontSize: '0.7rem', fontWeight: 800,
+                        background: couponCode.trim() ? '#FF6B00' : 'rgba(255,255,255,0.08)',
+                        color: '#fff', border: 'none', padding: '0.2rem 0.65rem', borderRadius: 99,
+                        fontSize: '0.7rem', fontWeight: 800,
                         cursor: couponStatus.loading || !couponCode.trim() ? 'not-allowed' : 'pointer',
-                        transition: 'background 0.2s'
+                        transition: 'background 0.2s', opacity: couponCode.trim() ? 1 : 0.5,
                       }}
                     >
                       {couponStatus.loading ? '...' : 'APPLY'}
@@ -410,7 +427,14 @@ export default function Dashboard({ user, setUser }) {
                   </div>
                 )}
                 {couponStatus.msg && (
-                  <div style={{ position: 'absolute', top: '120%', left: 0, whiteSpace: 'nowrap', fontSize: '0.65rem', fontWeight: 700, padding: '0.2rem 0.5rem', borderRadius: 4, background: couponStatus.type === 'success' ? 'rgba(16,185,129,0.15)' : 'rgba(239,68,68,0.15)', color: couponStatus.type === 'success' ? '#10b981' : '#ef4444', border: `1px solid ${couponStatus.type === 'success' ? 'rgba(16,185,129,0.3)' : 'rgba(239,68,68,0.3)'}`, zIndex: 10 }}>
+                  <div style={{
+                    position: 'absolute', top: '120%', left: 0, whiteSpace: 'nowrap',
+                    fontSize: '0.65rem', fontWeight: 700, padding: '0.25rem 0.6rem', borderRadius: 6,
+                    background: couponStatus.type === 'success' ? 'rgba(16,185,129,0.15)' : 'rgba(239,68,68,0.15)',
+                    color: couponStatus.type === 'success' ? '#10b981' : '#ef4444',
+                    border: `1px solid ${couponStatus.type === 'success' ? 'rgba(16,185,129,0.3)' : 'rgba(239,68,68,0.3)'}`,
+                    zIndex: 10
+                  }}>
                     {couponStatus.msg}
                   </div>
                 )}
