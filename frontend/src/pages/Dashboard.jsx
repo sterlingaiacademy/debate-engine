@@ -224,9 +224,10 @@ export default function Dashboard({ user, setUser }) {
             }
           }));
         }
-        setTimeout(() => setShowCoupon(false), 2000);
+        setTimeout(() => { setShowCoupon(false); setCouponStatus({ loading: false, msg: '', type: '' }); }, 2500);
       } else {
         setCouponStatus({ loading: false, msg: data.error || 'Failed to redeem', type: 'error' });
+        setTimeout(() => setCouponStatus({ loading: false, msg: '', type: '' }), 3000);
       }
     } catch (err) {
       setCouponStatus({ loading: false, msg: 'Network error', type: 'error' });
