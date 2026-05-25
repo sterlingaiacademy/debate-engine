@@ -195,6 +195,43 @@ export default function Dashboard({ user, setUser }) {
   );
   const [loading, setLoading] = useState(!stats);
   const [showPremiumModal, setShowPremiumModal] = useState(false);
+  const [showCoupon, setShowCoupon] = useState(false);
+  const [couponCode, setCouponCode] = useState('');
+  const [couponStatus, setCouponStatus] = useState({ loading: false, msg: '', type: '' });
+
+  const handleRedeemCoupon = async () => {
+    if (!couponCode.trim()) return;
+    setCouponStatus({ loading: true, msg: '', type: '' });
+    try {
+      const activeId = user?.studentId || user?.username;
+      const res = await fetch(`${API_BASE}/api/coupons/redeem`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ studentId: activeId, couponCode })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setCouponStatus({ loading: false, msg: data.message, type: 'success' });
+        setCouponCode('');
+        // Optimistically update time by 10 mins
+        if (stats && stats.timeLimits && !stats.timeLimits.error) {
+          setStats(prev => ({
+            ...prev,
+            timeLimits: {
+              ...prev.timeLimits,
+              remainingRanked: prev.timeLimits.remainingRanked + 600,
+              limitTotal: prev.timeLimits.limitTotal + 600
+            }
+          }));
+        }
+        setTimeout(() => setShowCoupon(false), 2000);
+      } else {
+        setCouponStatus({ loading: false, msg: data.error || 'Failed to redeem', type: 'error' });
+      }
+    } catch (err) {
+      setCouponStatus({ loading: false, msg: 'Network error', type: 'error' });
+    }
+  };
 
   const isJunior = ['Level 1','Level 2','Class 1-3','Class 3-5','KG','Class KG','KG-2',
     'Class 1-5','Class 1','Class 2','Class 3','Class 4','Class 5','kg'].includes(user?.classLevel);
@@ -340,14 +377,54 @@ export default function Dashboard({ user, setUser }) {
           </div>
 
           {dailyMins !== null && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', minWidth: 140 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.65rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', minWidth: 160 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.65rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 <span>Daily Time Left</span>
-                <span style={{ color: '#FF6B00' }}>{dailyMins}m</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  {!showCoupon && (
+                    <button onClick={() => setShowCoupon(true)} style={{ background: 'none', border: 'none', padding: 0, color: '#a855f7', fontSize: '0.65rem', fontWeight: 800, cursor: 'pointer', textTransform: 'uppercase' }}>
+                      + Redeem
+                    </button>
+                  )}
+                  <span style={{ color: '#FF6B00' }}>{dailyMins}m</span>
+                </div>
               </div>
               <div className="xp-track" style={{ height: 6 }}>
                 <div className="xp-fill" style={{ width: `${Math.min((dailyMins / 60) * 100, 100)}%` }} />
               </div>
+              {showCoupon && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', marginTop: '0.2rem', animation: 'fadeIn 0.2s' }}>
+                  <div style={{ display: 'flex', gap: '0.3rem' }}>
+                    <input
+                      type="text"
+                      placeholder="Promo Code"
+                      value={couponCode}
+                      onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                      style={{
+                        flex: 1, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
+                        color: '#fff', padding: '0.3rem 0.5rem', borderRadius: 6, fontSize: '0.75rem',
+                        fontFamily: 'monospace', textTransform: 'uppercase', outline: 'none'
+                      }}
+                    />
+                    <button
+                      onClick={handleRedeemCoupon}
+                      disabled={couponStatus.loading || !couponCode.trim()}
+                      style={{
+                        background: couponCode.trim() ? '#10b981' : 'rgba(255,255,255,0.1)',
+                        color: '#fff', border: 'none', padding: '0 0.6rem', borderRadius: 6, fontSize: '0.75rem', fontWeight: 700,
+                        cursor: couponStatus.loading || !couponCode.trim() ? 'not-allowed' : 'pointer',
+                      }}
+                    >
+                      {couponStatus.loading ? '...' : 'Apply'}
+                    </button>
+                  </div>
+                  {couponStatus.msg && (
+                    <div style={{ fontSize: '0.65rem', fontWeight: 600, color: couponStatus.type === 'success' ? '#10b981' : '#ef4444' }}>
+                      {couponStatus.msg}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           )}
         </div>
