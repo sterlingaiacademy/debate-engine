@@ -66,7 +66,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
     // MUN 30-Day — Pro & Max full access; Free sees it locked
     { name: 'MUN 30 Boot Camp', path: '/mun30', match: '/mun30', icon: Target, locked: isFree, plan: 'Pro' },
     // Diplomat 365 — Max only full access; Pro & Free see it locked
-    { name: 'Diplomat 365 Boot Camp', path: '/diplomat365', match: '/diplomat365', icon: Scroll, locked: !isMax, plan: 'Max' },
+    { name: 'D365 Boot Camp', path: '/diplomat365', match: '/diplomat365', icon: Scroll, locked: !isMax, plan: 'Max' },
     { name: 'Vocab Trainer',   path: '/vocab-trainer',   match: '/vocab-trainer',   icon: BookOpen },
     { name: 'Word Scramble',   path: '/word-scramble',   match: '/word-scramble',   icon: Gamepad2 },
     !isJunior && { name: 'Analytics',   path: '/analytics',   match: '/analytics',  icon: BarChart2 },
@@ -342,18 +342,18 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
                   style={{ flexShrink: 0, color: isActive && !isJunior ? '#FF6B00' : 'currentColor' }}
                 />
                 {(!isCollapsed || isMobile) && (
-                  <span style={{ opacity: 1, transition: 'opacity 0.2s', flex: 1 }}>{name}</span>
+                  <span style={{ opacity: 1, transition: 'opacity 0.2s', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{name}</span>
                 )}
-                {/* Lock badge for premium-gated items */}
+                {/* Lock badge — emoji only to save horizontal space */}
                 {locked && (!isCollapsed || isMobile) && (
-                  <span style={{
-                    fontSize: '0.55rem', fontWeight: 800, padding: '0.15rem 0.4rem',
-                    borderRadius: 99, letterSpacing: '0.06em', flexShrink: 0,
-                    background: requiredPlan === 'Max' ? 'rgba(212,160,23,0.15)' : 'rgba(99,102,241,0.15)',
-                    color: requiredPlan === 'Max' ? '#D4A017' : '#818cf8',
-                    border: `1px solid ${requiredPlan === 'Max' ? 'rgba(212,160,23,0.3)' : 'rgba(99,102,241,0.3)'}`,
-                  }}>
-                    🔒 {requiredPlan}
+                  <span
+                    title={`${requiredPlan} plan required`}
+                    style={{
+                      fontSize: '0.75rem', flexShrink: 0, marginLeft: '0.2rem',
+                      opacity: 0.85,
+                    }}
+                  >
+                    🔒
                   </span>
                 )}
               </Link>
