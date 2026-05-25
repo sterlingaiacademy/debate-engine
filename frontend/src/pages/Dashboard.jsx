@@ -381,15 +381,15 @@ export default function Dashboard({ user, setUser }) {
                     onClick={() => setShowCoupon(true)}
                     style={{
                       display: 'flex', alignItems: 'center', gap: '0.3rem',
-                      background: 'rgba(255,107,0,0.08)', border: '1px solid rgba(255,107,0,0.2)',
-                      borderRadius: 99, padding: '0.2rem 0.65rem',
-                      fontSize: '0.75rem', fontWeight: 700, color: '#FF6B00',
-                      cursor: 'pointer', transition: 'all 0.2s', letterSpacing: '0.01em',
+                      background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.2)',
+                      borderRadius: 99, padding: '0.2rem 0.6rem',
+                      fontSize: '0.75rem', fontWeight: 700, color: '#fb923c',
+                      cursor: 'pointer', transition: 'all 0.2s',
                     }}
-                    onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,107,0,0.15)'; e.currentTarget.style.borderColor = 'rgba(255,107,0,0.4)'; }}
-                    onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,107,0,0.08)'; e.currentTarget.style.borderColor = 'rgba(255,107,0,0.2)'; }}
+                    onMouseEnter={e => { e.currentTarget.style.background = 'rgba(249,115,22,0.18)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = 'rgba(249,115,22,0.1)'; }}
                   >
-                    🎟 Redeem
+                    Redeem
                   </button>
                 ) : (
                   <div style={{
