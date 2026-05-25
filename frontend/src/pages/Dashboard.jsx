@@ -353,7 +353,7 @@ export default function Dashboard({ user, setUser }) {
               @{user.studentId}
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.5rem', flexWrap: 'wrap' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.2)', borderRadius: 99, padding: '0.2rem 0.6rem', fontSize: '0.75rem', fontWeight: 700, color: '#fb923c', lineHeight: 1 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 5, background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.2)', borderRadius: 99, padding: '3px 10px', fontSize: 12, fontWeight: 700, color: '#fb923c', lineHeight: 1, height: 26, boxSizing: 'border-box' }}>
                 <Flame size={12} strokeWidth={2.5} />
                 {stats.current_streak || 0} Day Streak
               </div>
@@ -380,12 +380,12 @@ export default function Dashboard({ user, setUser }) {
                   <div
                     onClick={() => setShowCoupon(true)}
                     style={{
-                      display: 'flex', alignItems: 'center',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
                       background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.2)',
-                      borderRadius: 99, padding: '0.2rem 0.6rem',
-                      fontSize: '0.75rem', fontWeight: 700, color: '#fb923c',
+                      borderRadius: 99, padding: '3px 10px',
+                      fontSize: 12, fontWeight: 700, color: '#fb923c',
                       cursor: 'pointer', transition: 'all 0.2s', whiteSpace: 'nowrap', flexShrink: 0,
-                      lineHeight: 1,
+                      lineHeight: 1, height: 26, boxSizing: 'border-box',
                     }}
                     onMouseEnter={e => { e.currentTarget.style.background = 'rgba(249,115,22,0.18)'; }}
                     onMouseLeave={e => { e.currentTarget.style.background = 'rgba(249,115,22,0.1)'; }}
