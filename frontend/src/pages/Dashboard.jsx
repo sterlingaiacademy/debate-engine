@@ -373,58 +373,60 @@ export default function Dashboard({ user, setUser }) {
                   </div>
                 </div>
               )}
-            </div>
-          </div>
-
-          {dailyMins !== null && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', minWidth: 160 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.65rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                <span>Daily Time Left</span>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  {!showCoupon && (
-                    <button onClick={() => setShowCoupon(true)} style={{ background: 'none', border: 'none', padding: 0, color: '#a855f7', fontSize: '0.65rem', fontWeight: 800, cursor: 'pointer', textTransform: 'uppercase' }}>
-                      + Redeem
-                    </button>
-                  )}
-                  <span style={{ color: '#FF6B00' }}>{dailyMins}m</span>
-                </div>
-              </div>
-              <div className="xp-track" style={{ height: 6 }}>
-                <div className="xp-fill" style={{ width: `${Math.min((dailyMins / 60) * 100, 100)}%` }} />
-              </div>
-              {showCoupon && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', marginTop: '0.2rem', animation: 'fadeIn 0.2s' }}>
-                  <div style={{ display: 'flex', gap: '0.3rem' }}>
+              
+              {/* Redeem Coupon Tag */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', position: 'relative' }}>
+                {!showCoupon ? (
+                  <button onClick={() => setShowCoupon(true)} style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', background: 'rgba(168,85,247,0.1)', border: '1px solid rgba(168,85,247,0.3)', borderRadius: 99, padding: '0.2rem 0.6rem', fontSize: '0.75rem', fontWeight: 800, color: '#a855f7', cursor: 'pointer', transition: 'all 0.2s' }}>
+                    + Redeem Code
+                  </button>
+                ) : (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(168,85,247,0.3)', borderRadius: 99, padding: '0.15rem 0.25rem 0.15rem 0.6rem', animation: 'fadeIn 0.2s' }}>
                     <input
                       type="text"
-                      placeholder="Promo Code"
+                      placeholder="CODE"
                       value={couponCode}
                       onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
                       style={{
-                        flex: 1, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
-                        color: '#fff', padding: '0.3rem 0.5rem', borderRadius: 6, fontSize: '0.75rem',
+                        background: 'transparent', border: 'none', color: '#fff', width: '70px', fontSize: '0.75rem',
                         fontFamily: 'monospace', textTransform: 'uppercase', outline: 'none'
                       }}
+                      autoFocus
+                      onBlur={() => { if (!couponCode && !couponStatus.loading) setShowCoupon(false); }}
+                      onKeyDown={(e) => e.key === 'Enter' && handleRedeemCoupon()}
                     />
                     <button
                       onClick={handleRedeemCoupon}
                       disabled={couponStatus.loading || !couponCode.trim()}
                       style={{
                         background: couponCode.trim() ? '#10b981' : 'rgba(255,255,255,0.1)',
-                        color: '#fff', border: 'none', padding: '0 0.6rem', borderRadius: 6, fontSize: '0.75rem', fontWeight: 700,
+                        color: '#fff', border: 'none', padding: '0.2rem 0.6rem', borderRadius: 99, fontSize: '0.7rem', fontWeight: 800,
                         cursor: couponStatus.loading || !couponCode.trim() ? 'not-allowed' : 'pointer',
+                        transition: 'background 0.2s'
                       }}
                     >
-                      {couponStatus.loading ? '...' : 'Apply'}
+                      {couponStatus.loading ? '...' : 'APPLY'}
                     </button>
                   </div>
-                  {couponStatus.msg && (
-                    <div style={{ fontSize: '0.65rem', fontWeight: 600, color: couponStatus.type === 'success' ? '#10b981' : '#ef4444' }}>
-                      {couponStatus.msg}
-                    </div>
-                  )}
-                </div>
-              )}
+                )}
+                {couponStatus.msg && (
+                  <div style={{ position: 'absolute', top: '120%', left: 0, whiteSpace: 'nowrap', fontSize: '0.65rem', fontWeight: 700, padding: '0.2rem 0.5rem', borderRadius: 4, background: couponStatus.type === 'success' ? 'rgba(16,185,129,0.15)' : 'rgba(239,68,68,0.15)', color: couponStatus.type === 'success' ? '#10b981' : '#ef4444', border: `1px solid ${couponStatus.type === 'success' ? 'rgba(16,185,129,0.3)' : 'rgba(239,68,68,0.3)'}`, zIndex: 10 }}>
+                    {couponStatus.msg}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {dailyMins !== null && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', minWidth: 140 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.65rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                <span>Daily Time Left</span>
+                <span style={{ color: '#FF6B00' }}>{dailyMins}m</span>
+              </div>
+              <div className="xp-track" style={{ height: 6 }}>
+                <div className="xp-fill" style={{ width: `${Math.min((dailyMins / 60) * 100, 100)}%` }} />
+              </div>
             </div>
           )}
         </div>
