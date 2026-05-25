@@ -66,7 +66,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
     // MUN 30-Day — Pro & Max full access; Free sees it locked
     { name: 'MUN 30 Boot Camp', path: '/mun30', match: '/mun30', icon: Target, locked: isFree, plan: 'Pro' },
     // Diplomat 365 — Max only full access; Pro & Free see it locked
-    { name: 'D365 Boot Camp', path: '/diplomat365', match: '/diplomat365', icon: Scroll, locked: !isMax, plan: 'Max' },
+    { name: 'Diplomat 365', path: '/diplomat365', match: '/diplomat365', icon: Scroll, locked: !isMax, plan: 'Max' },
     { name: 'Vocab Trainer',   path: '/vocab-trainer',   match: '/vocab-trainer',   icon: BookOpen },
     { name: 'Word Scramble',   path: '/word-scramble',   match: '/word-scramble',   icon: Gamepad2 },
     !isJunior && { name: 'Analytics',   path: '/analytics',   match: '/analytics',  icon: BarChart2 },
