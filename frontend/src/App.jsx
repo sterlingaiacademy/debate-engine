@@ -229,7 +229,7 @@ function App() {
               <Route path="/vocab-trainer" element={user ? <VocabTrainer user={user} /> : <Navigate to="/" />} />
               <Route path="/word-scramble" element={user ? <WordScramble user={user} /> : <Navigate to="/" />} />
               <Route path="/diplomat365/*" element={user ? (user.subscription_plan === 'max' ? <Diplomat365 user={user} /> : <Navigate to="/dashboard" />) : <Navigate to="/" />} />
-              <Route path="/mun30/*" element={user ? <MUN30 user={user} /> : <Navigate to="/" />} />
+              <Route path="/mun30/*" element={user ? (['pro','max'].includes(user.subscription_plan) ? <MUN30 user={user} /> : <Navigate to="/dashboard" />) : <Navigate to="/" />} />
             </Route>
 
             {/* Catch-all → landing page */}
