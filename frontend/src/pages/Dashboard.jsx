@@ -227,7 +227,7 @@ export default function Dashboard({ user, setUser }) {
         setTimeout(() => { setShowCoupon(false); setCouponStatus({ loading: false, msg: '', type: '' }); }, 2500);
       } else {
         setCouponStatus({ loading: false, msg: data.error || 'Failed to redeem', type: 'error' });
-        setTimeout(() => setCouponStatus({ loading: false, msg: '', type: '' }), 3000);
+        setTimeout(() => { setShowCoupon(false); setCouponStatus({ loading: false, msg: '', type: '' }); }, 2500);
       }
     } catch (err) {
       setCouponStatus({ loading: false, msg: 'Network error', type: 'error' });
@@ -393,6 +393,19 @@ export default function Dashboard({ user, setUser }) {
                   >
                     Redeem
                   </div>
+                ) : couponStatus.msg ? (
+                  // Inline success/error message inside the pill
+                  <div style={{
+                    display: 'flex', alignItems: 'center',
+                    background: couponStatus.type === 'success' ? 'rgba(16,185,129,0.12)' : 'rgba(239,68,68,0.12)',
+                    border: `1px solid ${couponStatus.type === 'success' ? 'rgba(16,185,129,0.3)' : 'rgba(239,68,68,0.3)'}`,
+                    borderRadius: 99, padding: '3px 10px',
+                    fontSize: 12, fontWeight: 700,
+                    color: couponStatus.type === 'success' ? '#10b981' : '#ef4444',
+                    lineHeight: 1, height: 26, boxSizing: 'border-box', whiteSpace: 'nowrap',
+                  }}>
+                    {couponStatus.msg}
+                  </div>
                 ) : (
                   <div style={{
                     display: 'flex', alignItems: 'center', gap: '0.3rem',
@@ -426,18 +439,6 @@ export default function Dashboard({ user, setUser }) {
                     >
                       {couponStatus.loading ? '...' : 'APPLY'}
                     </button>
-                  </div>
-                )}
-                {couponStatus.msg && (
-                  <div style={{
-                    position: 'absolute', top: '120%', left: 0, whiteSpace: 'nowrap',
-                    fontSize: '0.65rem', fontWeight: 700, padding: '0.25rem 0.6rem', borderRadius: 6,
-                    background: couponStatus.type === 'success' ? 'rgba(16,185,129,0.15)' : 'rgba(239,68,68,0.15)',
-                    color: couponStatus.type === 'success' ? '#10b981' : '#ef4444',
-                    border: `1px solid ${couponStatus.type === 'success' ? 'rgba(16,185,129,0.3)' : 'rgba(239,68,68,0.3)'}`,
-                    zIndex: 10
-                  }}>
-                    {couponStatus.msg}
                   </div>
                 )}
               </div>
