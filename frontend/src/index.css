@@ -620,10 +620,20 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; }
   padding: 2rem;
 }
 
+.results-main-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) 2fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
 /* ================================================================
    DASHBOARD MOBILE-SPECIFIC LAYOUT
    ================================================================ */
 @media (max-width: 900px) {
+  .results-main-grid {
+    grid-template-columns: 1fr;
+  }
   .settings-container {
     padding: 0 !important;
     padding-bottom: 6rem !important;

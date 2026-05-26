@@ -278,7 +278,7 @@ export default function Results({ user }) {
       </div>
 
       {/* ── Main Grid ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(280px,1fr) 2fr', gap: '1.25rem', alignItems: 'start' }}>
+      <div className="results-main-grid">
 
         {/* Left Column */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
