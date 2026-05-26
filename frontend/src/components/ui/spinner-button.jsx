@@ -12,7 +12,11 @@ const SpinnerButton = ({ text, href, to, icon: Icon, onClick, theme = 'slate' })
       navigate(to);
     } else if (href) {
       e.preventDefault();
-      window.open(href, '_blank', 'noopener,noreferrer');
+      if (href.endsWith('.apk')) {
+        window.location.href = href;
+      } else {
+        window.open(href, '_blank', 'noopener,noreferrer');
+      }
     }
   };
 
