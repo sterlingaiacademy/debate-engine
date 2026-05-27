@@ -374,15 +374,23 @@ app.get('/api/time-limits/:studentId', async (req, res) => {
     if (user.subscription_plan === 'pro') LIMIT = 1200; // Pro: 20 minutes
     if (user.subscription_plan === 'max') LIMIT = 3600; // Max: 60 minutes
 
-    // Check active coupons for today
-    const couponsRes = await db.query(`SELECT coupon_code FROM user_coupons WHERE user_id = $1 AND effect_date = $2`, [studentId, currentDateIST]);
-    const activeCoupons = couponsRes.rows.map(r => r.coupon_code.toUpperCase());
-    
-    if (activeCoupons.includes('GFORCE10')) {
+    // Check active coupons:
+    // GFORCE10 — resets at midnight IST (date-based)
+    const gforce10Res = await db.query(
+      `SELECT coupon_code FROM user_coupons WHERE user_id = $1 AND coupon_code = 'GFORCE10' AND effect_date = $2`,
+      [studentId, currentDateIST]
+    );
+    if (gforce10Res.rows.length > 0) {
       LIMIT += 600; // +10 minutes
     }
-    if (activeCoupons.includes('VVIP30')) {
-      LIMIT += 1800; // +30 minutes (VVIP exclusive)
+
+    // VVIP30 — 24-hour rolling window from time of redemption
+    const vvip30Res = await db.query(
+      `SELECT coupon_code FROM user_coupons WHERE user_id = $1 AND coupon_code = 'VVIP30' AND redeemed_at > NOW() - INTERVAL '24 hours'`,
+      [studentId]
+    );
+    if (vvip30Res.rows.length > 0) {
+      LIMIT += 1800; // +30 minutes (VVIP exclusive, 24hr rolling)
     }
     
     const used = (user.dailyRankedTime || 0) + (user.dailyPersonaTime || 0);
@@ -460,9 +468,9 @@ app.post('/api/coupons/redeem', async (req, res) => {
 
     const currentDateIST = getISTDateString();
 
-    // Insert redemption
+    // Insert redemption (redeemed_at defaults to NOW() for 24hr rolling coupons)
     await db.query(
-      `INSERT INTO user_coupons (user_id, coupon_code, effect_date) VALUES ($1, $2, $3)`,
+      `INSERT INTO user_coupons (user_id, coupon_code, effect_date, redeemed_at) VALUES ($1, $2, $3, NOW())`,
       [studentId, code, currentDateIST]
     );
 
