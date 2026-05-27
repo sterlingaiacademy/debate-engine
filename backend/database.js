@@ -192,10 +192,15 @@ async function initDB() {
         user_id TEXT NOT NULL,
         coupon_code TEXT NOT NULL,
         effect_date TEXT NOT NULL,
+        redeemed_at TIMESTAMPTZ DEFAULT NOW(),
         created_at TIMESTAMPTZ DEFAULT NOW(),
         UNIQUE (user_id, coupon_code)
       )
     `);
+    // Add redeemed_at to existing deployments (safe no-op if column already exists)
+    try {
+      await client.query(`ALTER TABLE user_coupons ADD COLUMN IF NOT EXISTS redeemed_at TIMESTAMPTZ DEFAULT NOW()`);
+    } catch (e) { /* Already exists */ }
 
     const addDU = async (col, type, def) => {
       try {
