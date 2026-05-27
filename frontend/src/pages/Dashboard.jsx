@@ -213,14 +213,15 @@ export default function Dashboard({ user, setUser }) {
       if (res.ok && data.success) {
         setCouponStatus({ loading: false, msg: data.message, type: 'success' });
         setCouponCode('');
-        // Optimistically update time by 10 mins
+        // Optimistically update time based on coupon bonus
         if (stats && stats.timeLimits && !stats.timeLimits.error) {
+          const bonusSeconds = couponCode.toUpperCase() === 'VVIP30' ? 1800 : 600;
           setStats(prev => ({
             ...prev,
             timeLimits: {
               ...prev.timeLimits,
-              remainingRanked: prev.timeLimits.remainingRanked + 600,
-              limitTotal: prev.timeLimits.limitTotal + 600
+              remainingRanked: prev.timeLimits.remainingRanked + bonusSeconds,
+              limitTotal: prev.timeLimits.limitTotal + bonusSeconds
             }
           }));
         }
