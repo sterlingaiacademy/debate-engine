@@ -381,6 +381,9 @@ app.get('/api/time-limits/:studentId', async (req, res) => {
     if (activeCoupons.includes('GFORCE10')) {
       LIMIT += 600; // +10 minutes
     }
+    if (activeCoupons.includes('VVIP30')) {
+      LIMIT += 1800; // +30 minutes (VVIP exclusive)
+    }
     
     const used = (user.dailyRankedTime || 0) + (user.dailyPersonaTime || 0);
     const sharedRemaining = Math.max(0, LIMIT - used);
@@ -440,8 +443,12 @@ app.post('/api/coupons/redeem', async (req, res) => {
 
     const code = couponCode.toUpperCase().trim();
     
-    // Only support GFORCE10 for now
-    if (code !== 'GFORCE10') {
+    // Supported coupons
+    const VALID_COUPONS = {
+      'GFORCE10': '+10 minutes for today',
+      'VVIP30':   '+30 minutes for today (VVIP exclusive)',
+    };
+    if (!VALID_COUPONS[code]) {
       return res.status(400).json({ error: 'Invalid coupon code.' });
     }
 
@@ -459,7 +466,10 @@ app.post('/api/coupons/redeem', async (req, res) => {
       [studentId, code, currentDateIST]
     );
 
-    res.json({ success: true, message: 'Coupon redeemed successfully! You get +10 minutes for today.' });
+    const successMsg = code === 'VVIP30'
+      ? 'VVIP coupon redeemed! You get +30 minutes for today. 🎉'
+      : 'Coupon redeemed successfully! You get +10 minutes for today.';
+    res.json({ success: true, message: successMsg });
   } catch (err) {
     if (err.code === '23505') { // Unique constraint violation
       res.status(400).json({ error: 'You have already redeemed this coupon.' });
