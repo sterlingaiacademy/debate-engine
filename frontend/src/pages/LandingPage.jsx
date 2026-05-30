@@ -702,6 +702,17 @@ export default function LandingPage() {
             <span>© 2026 G Force AI. All rights reserved.</span>
             <span>Crafting Leaders</span>
           </div>
+          <div style={{
+            textAlign: 'center',
+            marginTop: '1rem',
+            paddingTop: '1rem',
+            borderTop: '1px solid rgba(255,255,255,0.06)',
+            fontSize: '0.78rem',
+            color: 'rgba(148,163,184,0.6)',
+            letterSpacing: '0.03em',
+          }}>
+            Powered by <span style={{ color: 'rgba(249,115,22,0.85)', fontWeight: 600 }}>Nanoskool Education Private Limited</span>
+          </div>
         </div>
       </footer>
     </div>
