@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { API_BASE } from '../api';
 import { X, CheckCircle, ChevronRight, Loader } from 'lucide-react';
 
@@ -181,12 +182,14 @@ export default function BootcampModal({ user, onDismiss }) {
     }
   };
 
-  return (
+  return createPortal(
     <div style={{
-      position: 'fixed', inset: 0, zIndex: 10000,
+      position: 'fixed', inset: 0, zIndex: 2147483647,
       background: 'rgba(0,0,0,0.90)', backdropFilter: 'blur(8px)',
       display: 'flex', alignItems: 'flex-start', justifyContent: 'center',
-      overflowY: 'auto', padding: '1.5rem 1rem 4rem',
+      overflowY: 'auto',
+      padding: 'max(1.5rem, env(safe-area-inset-top, 1.5rem)) 1rem max(4rem, env(safe-area-inset-bottom, 4rem))',
+      WebkitOverflowScrolling: 'touch',
     }}>
       <div style={{
         width: '100%', maxWidth: 580, borderRadius: 24,
@@ -520,6 +523,7 @@ export default function BootcampModal({ user, onDismiss }) {
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
