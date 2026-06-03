@@ -1652,6 +1652,11 @@ async function ensureBootcampTable() {
       phone TEXT NOT NULL,
       school TEXT,
       grade TEXT,
+      city TEXT,
+      category TEXT,
+      achievements TEXT,
+      hear_about TEXT,
+      questions TEXT,
       cohort TEXT DEFAULT 'cohort-1',
       payment_status TEXT DEFAULT 'pending',
       razorpay_order_id TEXT,
@@ -1660,13 +1665,19 @@ async function ensureBootcampTable() {
       registered_at TIMESTAMPTZ DEFAULT NOW()
     )
   `);
+  // Add new columns if table already existed without them
+  const cols = ['city TEXT', 'category TEXT', 'achievements TEXT', 'hear_about TEXT', 'questions TEXT'];
+  for (const col of cols) {
+    const colName = col.split(' ')[0];
+    await db.query(`ALTER TABLE bootcamp_registrations ADD COLUMN IF NOT EXISTS ${col}`).catch(() => {});
+  }
 }
 ensureBootcampTable().catch(console.error);
 
 // POST /api/bootcamp/register — Create Razorpay order + save pending registration
 app.post('/api/bootcamp/register', async (req, res) => {
   try {
-    const { studentId, name, email, phone, school, grade } = req.body;
+    const { studentId, name, email, phone, school, grade, city, category, achievements, hearAbout, questions } = req.body;
     if (!name || !phone) return res.status(400).json({ error: 'Name and phone are required' });
 
     // Check if already paid for this phone number
@@ -1685,14 +1696,20 @@ app.post('/api/bootcamp/register', async (req, res) => {
       amount: amountPaise,
       currency: 'INR',
       receipt: `bootcamp_${Date.now()}`,
-      notes: { programme: 'G-Talk Cohort 1', studentId: studentId || '', name, phone, school: school || '', grade: grade || '' },
+      notes: { programme: 'G-Talk Cohort 1', studentId: studentId || '', name, phone, school: school || '', grade: grade || '', city: city || '', category: category || '' },
     });
 
-    // Save pending registration
+    // Save pending registration with all fields
     const insertRes = await db.query(
-      `INSERT INTO bootcamp_registrations (student_id, name, email, phone, school, grade, razorpay_order_id, amount)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`,
-      [studentId || '', name, email || null, phone, school || '', grade || '', order.id, amountPaise]
+      `INSERT INTO bootcamp_registrations
+         (student_id, name, email, phone, school, grade, city, category, achievements, hear_about, questions, razorpay_order_id, amount)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING id`,
+      [
+        studentId || '', name, email || null, phone,
+        school || '', grade || '', city || '', category || '',
+        achievements || '', hearAbout || '', questions || '',
+        order.id, amountPaise
+      ]
     );
 
     res.json({ success: true, orderId: order.id, amount: amountPaise, registrationId: insertRes.rows[0].id });
@@ -1731,11 +1748,13 @@ app.post('/api/bootcamp/verify-payment', async (req, res) => {
   }
 });
 
-// GET /api/bootcamp/registrations — Admin: list all paid registrations
+// GET /api/bootcamp/registrations — Admin: list all registrations
 app.get('/api/bootcamp/registrations', async (req, res) => {
   try {
     const result = await db.query(
-      `SELECT id, student_id, name, email, phone, school, grade, cohort, payment_status, razorpay_order_id, razorpay_payment_id, amount, registered_at
+      `SELECT id, student_id, name, email, phone, school, grade, city, category,
+              achievements, hear_about, questions, cohort, payment_status,
+              razorpay_order_id, razorpay_payment_id, amount, registered_at
        FROM bootcamp_registrations
        ORDER BY registered_at DESC`
     );
