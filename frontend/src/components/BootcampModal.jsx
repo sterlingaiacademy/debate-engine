@@ -167,7 +167,7 @@ export default function BootcampModal({ user, onDismiss }) {
         notes: { programme: 'G-Talk Cohort 1', school: form.school, grade: form.grade, city: form.city },
       };
 
-      setStep('paying');
+      // No setStep('paying') here, just keep the button disabled with setSubmitting(true)
       const rzp = new window.Razorpay(options);
       rzp.on('payment.failed', (response) => {
         setSubmitting(false);
@@ -184,7 +184,7 @@ export default function BootcampModal({ user, onDismiss }) {
 
   return createPortal(
     <div style={{
-      position: 'fixed', inset: 0, zIndex: 2147483647,
+      position: 'fixed', inset: 0, zIndex: 99999,
       background: 'rgba(0,0,0,0.90)', backdropFilter: 'blur(8px)',
       display: 'flex', alignItems: 'flex-start', justifyContent: 'center',
       overflowY: 'auto',
@@ -460,15 +460,6 @@ export default function BootcampModal({ user, onDismiss }) {
               <div style={{ fontSize: '0.7rem', color: '#334155', textAlign: 'center', marginTop: '0.65rem' }}>
                 🔒 Secure · Limited Seats · Instant Confirmation
               </div>
-            </div>
-          )}
-
-          {/* ── PAYING STEP ── */}
-          {step === 'paying' && (
-            <div style={{ textAlign: 'center', padding: '3rem 1rem' }}>
-              <Loader size={44} color="#FF6B00" style={{ animation: 'spin 1s linear infinite', marginBottom: '1.25rem' }} />
-              <h3 style={{ color: '#fff', fontWeight: 800, fontSize: '1.2rem', margin: '0 0 0.5rem' }}>Opening Payment...</h3>
-              <p style={{ color: '#64748b', fontSize: '0.85rem' }}>Please complete the payment in the Razorpay window.</p>
             </div>
           )}
 
