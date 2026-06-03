@@ -1635,3 +1635,114 @@ app.post('/api/mun30/submit', async (req, res) => {
     res.json(result);
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
+
+
+// ──────────────────────────────────────────────────────────────────────────────
+// BOOTCAMP — G-Talk Cohort 1 Registration API
+// ──────────────────────────────────────────────────────────────────────────────
+
+// Ensure bootcamp_registrations table exists
+async function ensureBootcampTable() {
+  await db.query(`
+    CREATE TABLE IF NOT EXISTS bootcamp_registrations (
+      id SERIAL PRIMARY KEY,
+      student_id TEXT,
+      name TEXT NOT NULL,
+      email TEXT,
+      phone TEXT NOT NULL,
+      school TEXT,
+      grade TEXT,
+      cohort TEXT DEFAULT 'cohort-1',
+      payment_status TEXT DEFAULT 'pending',
+      razorpay_order_id TEXT,
+      razorpay_payment_id TEXT,
+      amount INTEGER DEFAULT 49900,
+      registered_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `);
+}
+ensureBootcampTable().catch(console.error);
+
+// POST /api/bootcamp/register — Create Razorpay order + save pending registration
+app.post('/api/bootcamp/register', async (req, res) => {
+  try {
+    const { studentId, name, email, phone, school, grade } = req.body;
+    if (!name || !phone) return res.status(400).json({ error: 'Name and phone are required' });
+
+    // Check if already paid for this phone number
+    const existing = await db.query(
+      `SELECT id, payment_status FROM bootcamp_registrations WHERE phone = $1 AND cohort = 'cohort-1' AND payment_status = 'paid'`,
+      [phone]
+    );
+    if (existing.rows.length > 0) {
+      return res.status(400).json({ error: 'This phone number has already registered for Cohort 1.' });
+    }
+
+    const amountPaise = 49900; // ₹499 in paise
+
+    // Create Razorpay Order
+    const order = await razorpayInstance.orders.create({
+      amount: amountPaise,
+      currency: 'INR',
+      receipt: `bootcamp_${Date.now()}`,
+      notes: { programme: 'G-Talk Cohort 1', studentId: studentId || '', name, phone, school: school || '', grade: grade || '' },
+    });
+
+    // Save pending registration
+    const insertRes = await db.query(
+      `INSERT INTO bootcamp_registrations (student_id, name, email, phone, school, grade, razorpay_order_id, amount)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`,
+      [studentId || '', name, email || null, phone, school || '', grade || '', order.id, amountPaise]
+    );
+
+    res.json({ success: true, orderId: order.id, amount: amountPaise, registrationId: insertRes.rows[0].id });
+  } catch (err) {
+    console.error('Bootcamp register error:', err);
+    const msg = err.error?.description || err.message || 'Internal Server Error';
+    res.status(500).json({ error: msg });
+  }
+});
+
+// POST /api/bootcamp/verify-payment — Verify Razorpay signature + mark as paid
+app.post('/api/bootcamp/verify-payment', async (req, res) => {
+  try {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, registrationId } = req.body;
+    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !registrationId) {
+      return res.status(400).json({ error: 'Missing payment details' });
+    }
+
+    const secret = process.env.RAZORPAY_SECRET || 'KTWnYhmt800Y7TSQ6Cc6TBpF';
+    const body = razorpay_order_id + '|' + razorpay_payment_id;
+    const expectedSignature = crypto.createHmac('sha256', secret).update(body).digest('hex');
+
+    if (expectedSignature !== razorpay_signature) {
+      return res.status(400).json({ error: 'Invalid payment signature' });
+    }
+
+    await db.query(
+      `UPDATE bootcamp_registrations SET payment_status = 'paid', razorpay_payment_id = $1 WHERE id = $2`,
+      [razorpay_payment_id, registrationId]
+    );
+
+    res.json({ success: true, message: 'Registration confirmed! Welcome to G-Talk Cohort 1.' });
+  } catch (err) {
+    console.error('Bootcamp verify error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/bootcamp/registrations — Admin: list all paid registrations
+app.get('/api/bootcamp/registrations', async (req, res) => {
+  try {
+    const result = await db.query(
+      `SELECT id, student_id, name, email, phone, school, grade, cohort, payment_status, razorpay_order_id, razorpay_payment_id, amount, registered_at
+       FROM bootcamp_registrations
+       ORDER BY registered_at DESC`
+    );
+    const paid = result.rows.filter(r => r.payment_status === 'paid').length;
+    res.json({ total: result.rows.length, paid, registrations: result.rows });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
