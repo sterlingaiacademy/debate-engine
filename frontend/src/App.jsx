@@ -25,6 +25,7 @@ const WordScramble = lazy(() => import('./pages/WordScramble'));
 const PremiumSuccess = lazy(() => import('./pages/PremiumSuccess'));
 const Diplomat365 = lazy(() => import('./pages/diplomat365/D365App'));
 const MUN30 = lazy(() => import('./pages/mun30/MUN30App'));
+const GTalkCohort = lazy(() => import('./pages/GTalkCohort'));
 import UpgradeRequired from './pages/UpgradeRequired';
 
 function App() {
@@ -231,6 +232,7 @@ function App() {
               <Route path="/word-scramble" element={user ? <WordScramble user={user} /> : <Navigate to="/" />} />
               <Route path="/diplomat365/*" element={user ? (user.subscription_plan === 'max' ? <Diplomat365 user={user} /> : <Navigate to="/upgrade?feature=diplomat365" />) : <Navigate to="/" />} />
               <Route path="/mun30/*" element={user ? (['pro','max'].includes(user.subscription_plan) ? <MUN30 user={user} /> : <Navigate to="/upgrade?feature=mun30" />) : <Navigate to="/" />} />
+              <Route path="/gtalk-cohort" element={user ? <GTalkCohort user={user} /> : <Navigate to="/" />} />
               <Route path="/upgrade" element={user ? <UpgradeRequired user={user} /> : <Navigate to="/" />} />
             </Route>
 
