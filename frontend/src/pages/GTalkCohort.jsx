@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import BootcampModal from '../components/BootcampModal';
 import {
   Mic, Calendar, Clock, Star, ChevronRight, CheckCircle,
   Users, Award, BookOpen, Zap, ArrowRight, Play, Shield,
@@ -65,19 +66,16 @@ const TESTIMONIALS = [
 export default function GTalkCohort({ user }) {
   const [registering, setRegistering] = useState(false);
   const [registered, setRegistered] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleRegister = () => {
-    setRegistering(true);
-    // Redirect to payment / registration flow
-    setTimeout(() => {
-      window.open('https://graceandforce.com/register-gtalk', '_blank');
-      setRegistering(false);
-    }, 800);
+    setShowModal(true);
   };
 
   const pctFull = Math.round(((COHORT_DETAILS.seats - COHORT_DETAILS.seatsLeft) / COHORT_DETAILS.seats) * 100);
 
   return (
+    <>
     <div
       className="animate-fade-in"
       style={{ display: 'flex', flexDirection: 'column', gap: '2rem', paddingBottom: '4rem' }}
@@ -362,5 +360,7 @@ export default function GTalkCohort({ user }) {
         </button>
       </div>
     </div>
+    {showModal && <BootcampModal user={user} onDismiss={() => setShowModal(false)} />}
+    </>
   );
 }
