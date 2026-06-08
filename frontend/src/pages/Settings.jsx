@@ -10,8 +10,6 @@ export default function Settings({ user, setUser }) {
   const [copied, setCopied] = useState(false);
   const [couponCode, setCouponCode] = useState('');
   const [couponStatus, setCouponStatus] = useState({ loading: false, msg: '', type: '' });
-  const [schoolCode, setSchoolCode] = useState('');
-  const [schoolCodeStatus, setSchoolCodeStatus] = useState({ loading: false, msg: '', type: '' });
 
   // Biometrics State
   const [biometricsEnabled, setBiometricsEnabled] = useState(false);
@@ -56,31 +54,6 @@ export default function Settings({ user, setUser }) {
       }
     } catch (err) {
       setCouponStatus({ loading: false, msg: 'Network error', type: 'error' });
-    }
-  };
-
-  const handleRedeemSchoolCode = async () => {
-    if (!schoolCode.trim()) return;
-    setSchoolCodeStatus({ loading: true, msg: '', type: '' });
-    try {
-      const res = await fetch(`${API_BASE}/api/school-coupons/redeem`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ studentId: user.studentId || user.username, code: schoolCode.trim() })
-      });
-      const data = await res.json();
-      if (res.ok && data.success) {
-        setSchoolCodeStatus({ loading: false, msg: data.message, type: 'success' });
-        setSchoolCode('');
-        // Update user plan in local state + localStorage
-        const updatedUser = { ...user, subscription_plan: data.plan, subscription_status: 'active' };
-        setUser(updatedUser);
-        localStorage.setItem('user', JSON.stringify(updatedUser));
-      } else {
-        setSchoolCodeStatus({ loading: false, msg: data.error || 'Failed to redeem code', type: 'error' });
-      }
-    } catch (err) {
-      setSchoolCodeStatus({ loading: false, msg: 'Network error. Please try again.', type: 'error' });
     }
   };
 
@@ -358,55 +331,6 @@ export default function Settings({ user, setUser }) {
               border: `1px solid ${couponStatus.type === 'success' ? 'rgba(16, 185, 129, 0.3)' : 'rgba(239, 68, 68, 0.3)'}`
             }}>
               {couponStatus.msg}
-            </div>
-          )}
-        </div>
-
-        {/* ── School Code Section ─────────────────────────── */}
-        <div className="card settings-card">
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <School size={20} color="#3b82f6" /> Redeem School Code
-          </h2>
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1.5rem', lineHeight: 1.6 }}>
-            Got a code from your school? Enter it below to instantly activate your plan — no payment needed.
-          </p>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-            <input
-              type="text"
-              id="school-code-input"
-              placeholder="e.g. GFPRO-A3X9-K2M7"
-              value={schoolCode}
-              onChange={(e) => setSchoolCode(e.target.value.toUpperCase())}
-              onKeyDown={(e) => e.key === 'Enter' && handleRedeemSchoolCode()}
-              style={{
-                flex: 1, minWidth: '200px', background: 'var(--bg-secondary)', border: '1px solid var(--border)',
-                color: 'var(--text-primary)', padding: '0.8rem 1rem', borderRadius: '12px', fontSize: '1rem',
-                fontFamily: 'monospace', textTransform: 'uppercase', outline: 'none', letterSpacing: '0.05em'
-              }}
-            />
-            <button
-              id="school-code-apply-btn"
-              onClick={handleRedeemSchoolCode}
-              disabled={schoolCodeStatus.loading || !schoolCode.trim()}
-              style={{
-                background: schoolCode.trim() ? 'linear-gradient(135deg, #3b82f6, #2563eb)' : 'var(--bg-tertiary)',
-                color: schoolCode.trim() ? '#fff' : 'var(--text-muted)', border: 'none',
-                padding: '0.85rem 1.5rem', borderRadius: '12px', fontSize: '0.95rem', fontWeight: 700,
-                cursor: schoolCodeStatus.loading || !schoolCode.trim() ? 'not-allowed' : 'pointer',
-                transition: 'all 0.2s', display: 'flex', alignItems: 'center', gap: '0.5rem'
-              }}
-            >
-              {schoolCodeStatus.loading ? <Loader2 className="animate-spin" size={18} /> : '🏫 Activate'}
-            </button>
-          </div>
-          {schoolCodeStatus.msg && (
-            <div style={{
-              marginTop: '1rem', padding: '0.75rem 1rem', borderRadius: '8px', fontSize: '0.85rem', fontWeight: 600,
-              background: schoolCodeStatus.type === 'success' ? 'rgba(59, 130, 246, 0.1)' : 'rgba(239, 68, 68, 0.1)',
-              color: schoolCodeStatus.type === 'success' ? '#3b82f6' : '#ef4444',
-              border: `1px solid ${schoolCodeStatus.type === 'success' ? 'rgba(59,130,246,0.3)' : 'rgba(239,68,68,0.3)'}`
-            }}>
-              {schoolCodeStatus.msg}
             </div>
           )}
         </div>

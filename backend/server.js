@@ -473,13 +473,28 @@ app.post('/api/coupons/redeem', async (req, res) => {
     if (!studentId || !couponCode) return res.status(400).json({ error: 'Missing required params' });
 
     const code = couponCode.toUpperCase().trim();
-    
-    // Supported coupons
+
+    // ── School coupon codes (GFPRO-XXXX-XXXX / GFMAX-XXXX-XXXX) ──
+    if (code.startsWith('GFPRO-') || code.startsWith('GFMAX-')) {
+      await ensureSchoolCouponsTable();
+      const couponRes = await db.query(`SELECT * FROM gforce.school_coupons WHERE code = $1`, [code]);
+      if (couponRes.rows.length === 0) return res.status(400).json({ error: 'Invalid code. Please check and try again.' });
+      const coupon = couponRes.rows[0];
+      if (coupon.is_used) return res.status(400).json({ error: 'This code has already been used.' });
+      if (coupon.expires_at && new Date(coupon.expires_at) < new Date()) return res.status(400).json({ error: 'This code has expired.' });
+      const alreadyUpgraded = await db.query(`SELECT id FROM gforce.school_coupons WHERE used_by = $1`, [studentId]);
+      if (alreadyUpgraded.rows.length > 0) return res.status(400).json({ error: 'You have already redeemed a school code.' });
+      await db.query(`UPDATE gforce.school_coupons SET is_used = TRUE, used_by = $1, used_at = NOW() WHERE code = $2`, [studentId, code]);
+      await db.query(`UPDATE gforce.users SET subscription_plan = $1, subscription_status = 'active' WHERE "studentId" = $2`, [coupon.plan, studentId]);
+      return res.json({ success: true, plan: coupon.plan, message: `🎉 Code activated! Your account is now on ${coupon.plan.toUpperCase()} plan.` });
+    }
+
+    // ── Regular coupons ──
     const VALID_COUPONS = {
-      'GFORCE10':  '+10 minutes for today',
-      'VVIP30':    '+30 minutes for today (VVIP exclusive)',
-      'TOPUP499':  '+2.5 hours for today',
-      'TOPUP999':  '+5 hours for today',
+      'GFORCE10': '+10 minutes for today',
+      'VVIP30':   '+30 minutes for today (VVIP exclusive)',
+      'TOPUP499': '+60 mins for 30 days',
+      'TOPUP999': '+120 mins for 30 days',
     };
     if (!VALID_COUPONS[code]) {
       return res.status(400).json({ error: 'Invalid coupon code.' });
@@ -517,9 +532,9 @@ app.post('/api/coupons/redeem', async (req, res) => {
     }
 
     const MSG_MAP = {
-      'VVIP30':   'VVIP coupon redeemed! You get +30 minutes for today. 🎉',
-      'TOPUP499': 'Top-up redeemed! +2.5 hours added for today. ⚡',
-      'TOPUP999': 'Top-up redeemed! +5 hours added for today. ⚡',
+      'VVIP30':   'VVIP coupon redeemed! +30 minutes added for today. 🎉',
+      'TOPUP499': 'Top-up redeemed! +60 mins added. Valid for 30 days. ⚡',
+      'TOPUP999': 'Top-up redeemed! +120 mins added. Valid for 30 days. ⚡',
     };
     const successMsg = MSG_MAP[code] || 'Coupon redeemed successfully! You get +10 minutes for today.';
     res.json({ success: true, message: successMsg });
