@@ -482,8 +482,6 @@ app.post('/api/coupons/redeem', async (req, res) => {
       const coupon = couponRes.rows[0];
       if (coupon.is_used) return res.status(400).json({ error: 'This code has already been used.' });
       if (coupon.expires_at && new Date(coupon.expires_at) < new Date()) return res.status(400).json({ error: 'This code has expired.' });
-      const alreadyUpgraded = await db.query(`SELECT id FROM gforce.school_coupons WHERE used_by = $1`, [studentId]);
-      if (alreadyUpgraded.rows.length > 0) return res.status(400).json({ error: 'You have already redeemed a school code.' });
       await db.query(`UPDATE gforce.school_coupons SET is_used = TRUE, used_by = $1, used_at = NOW() WHERE code = $2`, [studentId, code]);
       await db.query(`UPDATE gforce.users SET subscription_plan = $1, subscription_status = 'active' WHERE "studentId" = $2`, [coupon.plan, studentId]);
       return res.json({ success: true, plan: coupon.plan, message: `🎉 Code activated! Your account is now on ${coupon.plan.toUpperCase()} plan.` });
@@ -697,14 +695,6 @@ app.post('/api/school-coupons/redeem', async (req, res) => {
       return res.status(400).json({ error: 'This code has expired.' });
     }
 
-    // Check student hasn't already used a school coupon
-    const alreadyUpgraded = await db.query(
-      `SELECT id FROM gforce.school_coupons WHERE used_by = $1`,
-      [studentId]
-    );
-    if (alreadyUpgraded.rows.length > 0) {
-      return res.status(400).json({ error: 'You have already redeemed a school code.' });
-    }
 
     // Mark code as used
     await db.query(
