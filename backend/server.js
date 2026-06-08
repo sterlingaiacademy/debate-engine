@@ -590,6 +590,131 @@ app.post('/api/payment/verify-topup', async (req, res) => {
 });
 
 
+// ─────────────────────────────────────────────
+// School Bulk Coupon System
+// ─────────────────────────────────────────────
+
+// Ensure school_coupons table exists
+async function ensureSchoolCouponsTable() {
+  await db.query(`
+    CREATE TABLE IF NOT EXISTS gforce.school_coupons (
+      id SERIAL PRIMARY KEY,
+      code TEXT NOT NULL UNIQUE,
+      school_name TEXT NOT NULL,
+      plan TEXT NOT NULL DEFAULT 'pro',
+      batch_id TEXT NOT NULL,
+      is_used BOOLEAN DEFAULT FALSE,
+      used_by TEXT,
+      used_at TIMESTAMPTZ,
+      expires_at TIMESTAMPTZ,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `);
+}
+
+// Admin: Generate N school coupon codes
+// POST /api/admin/generate-school-coupons
+// Body: { adminSecret, schoolName, plan, count, expiryDays }
+app.post('/api/admin/generate-school-coupons', async (req, res) => {
+  try {
+    const { adminSecret, schoolName, plan = 'pro', count = 20, expiryDays = 365 } = req.body;
+
+    // Simple admin secret check
+    const ADMIN_SECRET = process.env.ADMIN_SECRET || 'gforce_admin_2026';
+    if (adminSecret !== ADMIN_SECRET) {
+      return res.status(403).json({ error: 'Unauthorized' });
+    }
+    if (!schoolName) return res.status(400).json({ error: 'schoolName is required' });
+    if (count < 1 || count > 500) return res.status(400).json({ error: 'count must be between 1 and 500' });
+
+    await ensureSchoolCouponsTable();
+
+    const batchId = `SCHOOL-${Date.now()}`;
+    const expiresAt = new Date(Date.now() + expiryDays * 24 * 60 * 60 * 1000);
+    const codes = [];
+
+    for (let i = 0; i < count; i++) {
+      // e.g. GFPRO-A3X9-K2M7
+      const part1 = crypto.randomBytes(2).toString('hex').toUpperCase();
+      const part2 = crypto.randomBytes(2).toString('hex').toUpperCase();
+      const code = `GF${plan.toUpperCase()}-${part1}-${part2}`;
+      await db.query(
+        `INSERT INTO gforce.school_coupons (code, school_name, plan, batch_id, expires_at) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (code) DO NOTHING`,
+        [code, schoolName, plan, batchId, expiresAt]
+      );
+      codes.push(code);
+    }
+
+    res.json({ success: true, batchId, schoolName, plan, count: codes.length, expiresAt, codes });
+  } catch (err) {
+    console.error('Generate school coupons error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Student: Redeem a school coupon code → upgrades their plan
+// POST /api/school-coupons/redeem
+// Body: { studentId, code }
+app.post('/api/school-coupons/redeem', async (req, res) => {
+  try {
+    const { studentId, code } = req.body;
+    if (!studentId || !code) return res.status(400).json({ error: 'studentId and code are required' });
+
+    await ensureSchoolCouponsTable();
+
+    const cleanCode = code.trim().toUpperCase();
+
+    // Fetch the coupon
+    const couponRes = await db.query(
+      `SELECT * FROM gforce.school_coupons WHERE code = $1`,
+      [cleanCode]
+    );
+    if (couponRes.rows.length === 0) {
+      return res.status(400).json({ error: 'Invalid code. Please check and try again.' });
+    }
+
+    const coupon = couponRes.rows[0];
+
+    if (coupon.is_used) {
+      return res.status(400).json({ error: 'This code has already been used.' });
+    }
+    if (coupon.expires_at && new Date(coupon.expires_at) < new Date()) {
+      return res.status(400).json({ error: 'This code has expired.' });
+    }
+
+    // Check student hasn't already used a school coupon
+    const alreadyUpgraded = await db.query(
+      `SELECT id FROM gforce.school_coupons WHERE used_by = $1`,
+      [studentId]
+    );
+    if (alreadyUpgraded.rows.length > 0) {
+      return res.status(400).json({ error: 'You have already redeemed a school code.' });
+    }
+
+    // Mark code as used
+    await db.query(
+      `UPDATE gforce.school_coupons SET is_used = TRUE, used_by = $1, used_at = NOW() WHERE code = $2`,
+      [studentId, cleanCode]
+    );
+
+    // Upgrade user's plan
+    await db.query(
+      `UPDATE gforce.users SET subscription_plan = $1, subscription_status = 'active' WHERE "studentId" = $2`,
+      [coupon.plan, studentId]
+    );
+
+    res.json({
+      success: true,
+      plan: coupon.plan,
+      schoolName: coupon.school_name,
+      message: `🎉 Success! Your account has been upgraded to ${coupon.plan.toUpperCase()} plan by ${coupon.school_name}.`
+    });
+  } catch (err) {
+    console.error('Redeem school coupon error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Payment API (Subscriptions)
 app.post('/api/payment/create-subscription', async (req, res) => {
   try {
