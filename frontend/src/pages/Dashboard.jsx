@@ -13,8 +13,6 @@ import {
 import HUDCard from '../components/HUDCard';
 import { API_BASE } from '../api';
 import PremiumEnrollModal from '../components/PremiumEnrollModal';
-import BootcampBanner from '../components/BootcampBanner';
-import BootcampModal from '../components/BootcampModal';
 
 /* ─── Helpers ─── */
 const formatCategory = (key) => {
@@ -197,7 +195,6 @@ export default function Dashboard({ user, setUser }) {
   );
   const [loading, setLoading] = useState(!stats);
   const [showPremiumModal, setShowPremiumModal] = useState(false);
-  const [showBootcamp, setShowBootcamp] = useState(false);
   const [showCoupon, setShowCoupon] = useState(false);
   const [couponCode, setCouponCode] = useState('');
   const [couponStatus, setCouponStatus] = useState({ loading: false, msg: '', type: '' });
@@ -333,7 +330,6 @@ export default function Dashboard({ user, setUser }) {
           <PremiumEnrollModal user={user} onDismiss={() => setShowPremiumModal(false)} />
         </div>
       )}
-      {showBootcamp && <BootcampModal user={user} onDismiss={() => setShowBootcamp(false)} />}
       <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', paddingBottom: '4rem' }}>
 
       {/* ── Hero Greeting ── */}
@@ -493,9 +489,6 @@ export default function Dashboard({ user, setUser }) {
         )}
       </div>
 
-      {/* ── Bootcamp Banner ── */}
-      <BootcampBanner onClick={() => setShowBootcamp(true)} />
-
       {/* ── Mode Cards ── */}
       <div>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
@@ -636,7 +629,6 @@ export default function Dashboard({ user, setUser }) {
           <PremiumEnrollModal user={user} onDismiss={() => setShowPremiumModal(false)} />
         </div>
       )}
-      {showBootcamp && <BootcampModal user={user} onDismiss={() => setShowBootcamp(false)} />}
       <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', paddingBottom: '3rem' }}>
 
       {/* ── Hero Welcome Card ── */}
@@ -709,9 +701,6 @@ export default function Dashboard({ user, setUser }) {
           </div>
         )}
       </div>
-
-      {/* ── Bootcamp Banner ── */}
-      <BootcampBanner onClick={() => setShowBootcamp(true)} />
 
       {/* ── Mode Cards ── */}
       <div>
