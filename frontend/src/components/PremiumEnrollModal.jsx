@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { API_BASE } from '../api';
-import { Crown, Clock, Sparkles, CheckCircle, X } from 'lucide-react';
+import { Crown, Clock, Sparkles, CheckCircle, X, BatteryCharging, Zap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) {
   const [submitting, setSubmitting] = useState(false);
   const [yearly, setYearly] = useState(true);
   const [paymentError, setPaymentError] = useState('');
+  const [topupSubmitting, setTopupSubmitting] = useState(false);
+  const [topupSuccess, setTopupSuccess] = useState('');
   const navigate = useNavigate();
 
   const plans = [
@@ -72,6 +74,68 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
     document.body.appendChild(script);
     return () => { if (document.body.contains(script)) document.body.removeChild(script); };
   }, []);
+
+  const handleTopUp = async (amount, hours) => {
+    setPaymentError('');
+    if (!razorpayReady || !window.Razorpay) {
+      setPaymentError('Payment system loading. Please try again.');
+      return;
+    }
+    setTopupSubmitting(true);
+    try {
+      const studentId = user?.studentId || user?.username;
+      const orderRes = await fetch(`${API_BASE}/api/payment/create-topup-order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount, studentId }),
+      });
+      const orderData = await orderRes.json();
+      if (!orderRes.ok) throw new Error(orderData.error || 'Failed to create order');
+
+      const options = {
+        key: 'rzp_live_SpxzVJVdO5A5xr',
+        amount: amount * 100,
+        currency: 'INR',
+        name: 'G Force AI',
+        description: `Top Up — ${hours}`,
+        order_id: orderData.id,
+        handler: async (response) => {
+          const verifyRes = await fetch(`${API_BASE}/api/payment/verify-topup`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+              studentId, amount,
+            }),
+          });
+          const verifyData = await verifyRes.json();
+          if (verifyRes.ok && verifyData.success) {
+            setTopupSubmitting(false);
+            setTopupSuccess(`⚡ ${hours} added! You can continue practising now.`);
+            setTimeout(() => window.location.reload(), 2000);
+          } else {
+            setTopupSubmitting(false);
+            setPaymentError('Top-up verification failed: ' + (verifyData.error || 'Unknown error'));
+          }
+        },
+        modal: { ondismiss: () => setTopupSubmitting(false) },
+        prefill: { name: user?.name, email: user?.email || '', contact: user?.phone || '' },
+        theme: { color: amount === 999 ? '#8b5cf6' : '#f97316' },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.on('payment.failed', (r) => {
+        setTopupSubmitting(false);
+        setPaymentError('Payment failed: ' + r.error.description);
+      });
+      rzp.open();
+    } catch (err) {
+      setTopupSubmitting(false);
+      setPaymentError(err.message || 'Error initiating payment');
+    }
+  };
 
   const handlePayment = async (plan) => {
     setPaymentError('');
@@ -236,11 +300,62 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
             </div>
           </div>
 
+          {/* ── Top Up Section ── */}
+          {topupSuccess ? (
+            <div style={{
+              width: '100%', background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.25)',
+              borderRadius: 16, padding: '1rem 1.25rem', textAlign: 'center',
+              fontSize: '0.9rem', fontWeight: 700, color: '#10b981',
+            }}>
+              {topupSuccess}
+            </div>
+          ) : (
+            <div style={{ width: '100%' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.85rem' }}>
+                <BatteryCharging size={16} color="#fb923c" strokeWidth={2.5} />
+                <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#fb923c' }}>Quick Top-Up — Continue Now</span>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.65rem' }}>
+                {[{ amount: 499, hours: '2.5 hrs', emoji: '⚡' }, { amount: 999, hours: '5 hrs', emoji: '🚀', popular: true }].map(t => (
+                  <button
+                    key={t.amount}
+                    onClick={() => handleTopUp(t.amount, t.hours)}
+                    disabled={topupSubmitting || !razorpayReady}
+                    style={{
+                      position: 'relative',
+                      background: t.popular
+                        ? 'linear-gradient(135deg, rgba(139,92,246,0.15), rgba(168,85,247,0.08))'
+                        : 'linear-gradient(135deg, rgba(249,115,22,0.12), rgba(251,146,60,0.06))',
+                      border: t.popular ? '1px solid rgba(139,92,246,0.3)' : '1px solid rgba(249,115,22,0.25)',
+                      borderRadius: 14, padding: '0.85rem 0.75rem',
+                      cursor: topupSubmitting ? 'not-allowed' : 'pointer',
+                      opacity: topupSubmitting ? 0.7 : 1,
+                      transition: 'all 0.2s', textAlign: 'center',
+                    }}
+                  >
+                    {t.popular && (
+                      <div style={{
+                        position: 'absolute', top: -8, left: '50%', transform: 'translateX(-50%)',
+                        background: 'linear-gradient(135deg, #8b5cf6, #a855f7)',
+                        borderRadius: 99, fontSize: '0.55rem', fontWeight: 800, color: '#fff',
+                        padding: '0.1rem 0.55rem', letterSpacing: '0.05em', whiteSpace: 'nowrap',
+                      }}>BEST VALUE</div>
+                    )}
+                    <div style={{ fontSize: '1.3rem', marginBottom: '0.25rem' }}>{t.emoji}</div>
+                    <div style={{ fontSize: '1rem', fontWeight: 900, color: 'var(--text-primary)' }}>₹{t.amount}</div>
+                    <div style={{ fontSize: '0.75rem', fontWeight: 700, color: t.popular ? '#a78bfa' : '#fb923c' }}>+{t.hours}</div>
+                    <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>one-time</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* ── Divider ── */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', width: '100%' }}>
             <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
             <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
-              OR UPGRADE TO CONTINUE INSTANTLY
+              OR UPGRADE FOR DAILY TIME
             </span>
             <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
           </div>
@@ -256,9 +371,43 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
           <h2 style={{ fontSize: '1.75rem', fontWeight: 900, color: 'var(--text-primary)', margin: '0 0 0.5rem', letterSpacing: '-0.02em' }}>
             Upgrade to Premium
           </h2>
-          <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.6 }}>
+          <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', margin: '0 0 1.25rem', lineHeight: 1.6 }}>
             Unlock unlimited practice time, priority AI access, and exclusive features.
           </p>
+          {/* Top-up section on upgrade modal */}
+          <div style={{
+            background: 'rgba(249,115,22,0.06)', border: '1px solid rgba(249,115,22,0.15)',
+            borderRadius: 16, padding: '1rem', textAlign: 'left', marginBottom: '0',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
+              <BatteryCharging size={15} color="#fb923c" strokeWidth={2.5} />
+              <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#fb923c' }}>Need time today? Quick Top-Up</span>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
+              {[{ amount: 499, hours: '2.5 hrs', emoji: '⚡' }, { amount: 999, hours: '5 hrs', emoji: '🚀' }].map(t => (
+                <button
+                  key={t.amount}
+                  onClick={() => handleTopUp(t.amount, t.hours)}
+                  disabled={topupSubmitting || !razorpayReady}
+                  style={{
+                    background: 'rgba(249,115,22,0.08)', border: '1px solid rgba(249,115,22,0.2)',
+                    borderRadius: 10, padding: '0.65rem 0.5rem',
+                    cursor: topupSubmitting ? 'not-allowed' : 'pointer', transition: 'all 0.2s',
+                    opacity: topupSubmitting ? 0.7 : 1, textAlign: 'center',
+                  }}
+                  onMouseEnter={e => { if (!topupSubmitting) e.currentTarget.style.background = 'rgba(249,115,22,0.14)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(249,115,22,0.08)'; }}
+                >
+                  <div style={{ fontSize: '1.1rem' }}>{t.emoji}</div>
+                  <div style={{ fontSize: '0.9rem', fontWeight: 900, color: 'var(--text-primary)' }}>₹{t.amount}</div>
+                  <div style={{ fontSize: '0.7rem', fontWeight: 700, color: '#fb923c' }}>+{t.hours}</div>
+                </button>
+              ))}
+            </div>
+            {topupSuccess && (
+              <div style={{ marginTop: '0.6rem', fontSize: '0.82rem', fontWeight: 700, color: '#10b981', textAlign: 'center' }}>{topupSuccess}</div>
+            )}
+          </div>
         </div>
       )}
 

@@ -392,6 +392,28 @@ app.get('/api/time-limits/:studentId', async (req, res) => {
     if (vvip30Res.rows.length > 0) {
       LIMIT += 1800; // +30 minutes (VVIP exclusive, 24hr rolling)
     }
+
+    // Topup credits (paid one-time top-ups and free topup coupons) — date-based
+    try {
+      await db.query(`
+        CREATE TABLE IF NOT EXISTS topup_credits (
+          id SERIAL PRIMARY KEY,
+          user_id TEXT NOT NULL,
+          bonus_seconds INTEGER NOT NULL,
+          effect_date TEXT NOT NULL,
+          source TEXT DEFAULT 'payment',
+          razorpay_payment_id TEXT,
+          created_at TIMESTAMPTZ DEFAULT NOW()
+        )
+      `);
+      const topupRes = await db.query(
+        `SELECT COALESCE(SUM(bonus_seconds), 0) AS total_bonus FROM topup_credits WHERE user_id = $1 AND effect_date = $2`,
+        [studentId, currentDateIST]
+      );
+      LIMIT += parseInt(topupRes.rows[0].total_bonus || 0);
+    } catch (topupErr) {
+      console.error('Topup credits error:', topupErr.message);
+    }
     
     const used = (user.dailyRankedTime || 0) + (user.dailyPersonaTime || 0);
     const sharedRemaining = Math.max(0, LIMIT - used);
@@ -453,8 +475,10 @@ app.post('/api/coupons/redeem', async (req, res) => {
     
     // Supported coupons
     const VALID_COUPONS = {
-      'GFORCE10': '+10 minutes for today',
-      'VVIP30':   '+30 minutes for today (VVIP exclusive)',
+      'GFORCE10':  '+10 minutes for today',
+      'VVIP30':    '+30 minutes for today (VVIP exclusive)',
+      'TOPUP499':  '+2.5 hours for today',
+      'TOPUP999':  '+5 hours for today',
     };
     if (!VALID_COUPONS[code]) {
       return res.status(400).json({ error: 'Invalid coupon code.' });
@@ -474,9 +498,28 @@ app.post('/api/coupons/redeem', async (req, res) => {
       [studentId, code, currentDateIST]
     );
 
-    const successMsg = code === 'VVIP30'
-      ? 'VVIP coupon redeemed! You get +30 minutes for today. 🎉'
-      : 'Coupon redeemed successfully! You get +10 minutes for today.';
+    // For topup coupons, also insert into topup_credits
+    if (code === 'TOPUP499' || code === 'TOPUP999') {
+      const bonusSeconds = code === 'TOPUP499' ? 9000 : 18000;
+      await db.query(`
+        CREATE TABLE IF NOT EXISTS topup_credits (
+          id SERIAL PRIMARY KEY, user_id TEXT NOT NULL, bonus_seconds INTEGER NOT NULL,
+          effect_date TEXT NOT NULL, source TEXT DEFAULT 'coupon',
+          razorpay_payment_id TEXT, created_at TIMESTAMPTZ DEFAULT NOW()
+        )
+      `);
+      await db.query(
+        `INSERT INTO topup_credits (user_id, bonus_seconds, effect_date, source) VALUES ($1, $2, $3, 'coupon')`,
+        [studentId, bonusSeconds, currentDateIST]
+      );
+    }
+
+    const MSG_MAP = {
+      'VVIP30':   'VVIP coupon redeemed! You get +30 minutes for today. 🎉',
+      'TOPUP499': 'Top-up redeemed! +2.5 hours added for today. ⚡',
+      'TOPUP999': 'Top-up redeemed! +5 hours added for today. ⚡',
+    };
+    const successMsg = MSG_MAP[code] || 'Coupon redeemed successfully! You get +10 minutes for today.';
     res.json({ success: true, message: successMsg });
   } catch (err) {
     if (err.code === '23505') { // Unique constraint violation
@@ -484,6 +527,62 @@ app.post('/api/coupons/redeem', async (req, res) => {
     } else {
       res.status(500).json({ error: err.message });
     }
+  }
+});
+
+// Top-Up Payment API (one-time Razorpay Orders)
+app.post('/api/payment/create-topup-order', async (req, res) => {
+  try {
+    const { amount, studentId } = req.body;
+    if (!amount || !studentId) return res.status(400).json({ error: 'amount and studentId are required' });
+    if (![499, 999].includes(Number(amount))) return res.status(400).json({ error: 'Invalid amount. Use 499 or 999.' });
+
+    const order = await razorpayInstance.orders.create({
+      amount: Number(amount) * 100, // paise
+      currency: 'INR',
+      receipt: `topup_${studentId}_${Date.now()}`,
+      notes: { studentId, topup_amount: String(amount) }
+    });
+    res.json(order);
+  } catch (err) {
+    console.error('Create topup order error:', err);
+    res.status(500).json({ error: err.error?.description || err.message });
+  }
+});
+
+app.post('/api/payment/verify-topup', async (req, res) => {
+  try {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, studentId, amount } = req.body;
+    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !studentId) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    const secret = process.env.RAZORPAY_SECRET || 'KTWnYhmt800Y7TSQ6Cc6TBpF';
+    const body = razorpay_order_id + '|' + razorpay_payment_id;
+    const expectedSig = require('crypto').createHmac('sha256', secret).update(body).digest('hex');
+    if (expectedSig !== razorpay_signature) {
+      return res.status(400).json({ error: 'Invalid payment signature' });
+    }
+
+    const bonusSeconds = Number(amount) === 999 ? 18000 : 9000;
+    const currentDateIST = getISTDateString();
+
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS topup_credits (
+        id SERIAL PRIMARY KEY, user_id TEXT NOT NULL, bonus_seconds INTEGER NOT NULL,
+        effect_date TEXT NOT NULL, source TEXT DEFAULT 'payment',
+        razorpay_payment_id TEXT, created_at TIMESTAMPTZ DEFAULT NOW()
+      )
+    `);
+    await db.query(
+      `INSERT INTO topup_credits (user_id, bonus_seconds, effect_date, source, razorpay_payment_id) VALUES ($1, $2, $3, 'payment', $4)`,
+      [studentId, bonusSeconds, currentDateIST, razorpay_payment_id]
+    );
+
+    res.json({ success: true, bonusSeconds, message: `+${bonusSeconds / 3600} hours added successfully!` });
+  } catch (err) {
+    console.error('Verify topup error:', err);
+    res.status(500).json({ error: err.message });
   }
 });
 
