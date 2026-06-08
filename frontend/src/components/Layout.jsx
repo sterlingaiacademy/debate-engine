@@ -470,7 +470,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
             </button>
           )}
 
-          {/* Sidebar Upgrade Banner */}}
+          {/* Sidebar Upgrade Banner */}
           {(!user?.subscription_plan || user?.subscription_plan === 'free') && (
             <div
               onClick={() => {
