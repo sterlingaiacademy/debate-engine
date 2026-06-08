@@ -213,17 +213,24 @@ export default function Dashboard({ user, setUser }) {
       if (res.ok && data.success) {
         setCouponStatus({ loading: false, msg: data.message, type: 'success' });
         setCouponCode('');
-        // Optimistically update time based on coupon bonus
-        if (stats && stats.timeLimits && !stats.timeLimits.error) {
-          const bonusSeconds = couponCode.toUpperCase() === 'VVIP30' ? 1800 : 600;
-          setStats(prev => ({
-            ...prev,
-            timeLimits: {
-              ...prev.timeLimits,
-              remainingRanked: prev.timeLimits.remainingRanked + bonusSeconds,
-              limitTotal: prev.timeLimits.limitTotal + bonusSeconds
-            }
-          }));
+        // School/plan upgrade code
+        if (data.plan) {
+          const updatedUser = { ...user, subscription_plan: data.plan, subscription_status: 'active' };
+          if (setUser) setUser(updatedUser);
+          localStorage.setItem('user', JSON.stringify(updatedUser));
+        } else {
+          // Regular time coupon — optimistically add seconds
+          if (stats && stats.timeLimits && !stats.timeLimits.error) {
+            const bonusSeconds = couponCode.toUpperCase() === 'VVIP30' ? 1800 : 600;
+            setStats(prev => ({
+              ...prev,
+              timeLimits: {
+                ...prev.timeLimits,
+                remainingRanked: prev.timeLimits.remainingRanked + bonusSeconds,
+                limitTotal: prev.timeLimits.limitTotal + bonusSeconds
+              }
+            }));
+          }
         }
         setTimeout(() => { setShowCoupon(false); setCouponStatus({ loading: false, msg: '', type: '' }); }, 2500);
       } else {
