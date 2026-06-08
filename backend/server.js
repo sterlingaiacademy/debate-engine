@@ -501,7 +501,7 @@ app.post('/api/coupons/redeem', async (req, res) => {
 
     // For topup coupons, also insert into topup_credits (30-day validity)
     if (code === 'TOPUP499' || code === 'TOPUP999') {
-      const bonusSeconds = code === 'TOPUP499' ? 9000 : 18000;
+      const bonusSeconds = code === 'TOPUP499' ? 3600 : 7200;
       await db.query(`
         CREATE TABLE IF NOT EXISTS topup_credits (
           id SERIAL PRIMARY KEY, user_id TEXT NOT NULL, bonus_seconds INTEGER NOT NULL,
@@ -566,7 +566,7 @@ app.post('/api/payment/verify-topup', async (req, res) => {
       return res.status(400).json({ error: 'Invalid payment signature' });
     }
 
-    const bonusSeconds = Number(amount) === 999 ? 18000 : 9000;
+    const bonusSeconds = Number(amount) === 999 ? 7200 : 3600;
     const currentDateIST = getISTDateString();
 
     await db.query(`

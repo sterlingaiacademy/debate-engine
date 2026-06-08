@@ -316,7 +316,7 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
                 <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#fb923c' }}>Quick Top-Up — Continue Now</span>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.65rem' }}>
-                {[{ amount: 499, hours: '2.5 hrs', emoji: '⚡' }, { amount: 999, hours: '5 hrs', emoji: '🚀', popular: true }].map(t => (
+                {[{ amount: 499, hours: '60 mins', emoji: '⚡' }, { amount: 999, hours: '120 mins', emoji: '🚀', popular: true }].map(t => (
                   <button
                     key={t.amount}
                     onClick={() => handleTopUp(t.amount, t.hours)}
@@ -384,7 +384,7 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
               <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#fb923c' }}>Need time today? Quick Top-Up</span>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
-              {[{ amount: 499, hours: '2.5 hrs', emoji: '⚡' }, { amount: 999, hours: '5 hrs', emoji: '🚀' }].map(t => (
+              {[{ amount: 499, hours: '60 mins', emoji: '⚡' }, { amount: 999, hours: '120 mins', emoji: '🚀' }].map(t => (
                 <button
                   key={t.amount}
                   onClick={() => handleTopUp(t.amount, t.hours)}
