@@ -344,7 +344,7 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
                     <div style={{ fontSize: '1.3rem', marginBottom: '0.25rem' }}>{t.emoji}</div>
                     <div style={{ fontSize: '1rem', fontWeight: 900, color: 'var(--text-primary)' }}>₹{t.amount}</div>
                     <div style={{ fontSize: '0.75rem', fontWeight: 700, color: t.popular ? '#a78bfa' : '#fb923c' }}>+{t.hours}</div>
-                    <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>one-time</div>
+                    <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>30 days</div>
                   </button>
                 ))}
               </div>

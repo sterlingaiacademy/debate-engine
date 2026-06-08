@@ -393,7 +393,7 @@ app.get('/api/time-limits/:studentId', async (req, res) => {
       LIMIT += 1800; // +30 minutes (VVIP exclusive, 24hr rolling)
     }
 
-    // Topup credits (paid one-time top-ups and free topup coupons) — date-based
+    // Topup credits (paid one-time top-ups and free topup coupons) — valid for 30 days
     try {
       await db.query(`
         CREATE TABLE IF NOT EXISTS topup_credits (
@@ -403,12 +403,13 @@ app.get('/api/time-limits/:studentId', async (req, res) => {
           effect_date TEXT NOT NULL,
           source TEXT DEFAULT 'payment',
           razorpay_payment_id TEXT,
-          created_at TIMESTAMPTZ DEFAULT NOW()
+          created_at TIMESTAMPTZ DEFAULT NOW(),
+          expires_at TIMESTAMPTZ DEFAULT NOW() + INTERVAL '30 days'
         )
       `);
       const topupRes = await db.query(
-        `SELECT COALESCE(SUM(bonus_seconds), 0) AS total_bonus FROM topup_credits WHERE user_id = $1 AND effect_date = $2`,
-        [studentId, currentDateIST]
+        `SELECT COALESCE(SUM(bonus_seconds), 0) AS total_bonus FROM topup_credits WHERE user_id = $1 AND (expires_at IS NULL OR expires_at > NOW())`,
+        [studentId]
       );
       LIMIT += parseInt(topupRes.rows[0].total_bonus || 0);
     } catch (topupErr) {
@@ -498,18 +499,19 @@ app.post('/api/coupons/redeem', async (req, res) => {
       [studentId, code, currentDateIST]
     );
 
-    // For topup coupons, also insert into topup_credits
+    // For topup coupons, also insert into topup_credits (30-day validity)
     if (code === 'TOPUP499' || code === 'TOPUP999') {
       const bonusSeconds = code === 'TOPUP499' ? 9000 : 18000;
       await db.query(`
         CREATE TABLE IF NOT EXISTS topup_credits (
           id SERIAL PRIMARY KEY, user_id TEXT NOT NULL, bonus_seconds INTEGER NOT NULL,
           effect_date TEXT NOT NULL, source TEXT DEFAULT 'coupon',
-          razorpay_payment_id TEXT, created_at TIMESTAMPTZ DEFAULT NOW()
+          razorpay_payment_id TEXT, created_at TIMESTAMPTZ DEFAULT NOW(),
+          expires_at TIMESTAMPTZ DEFAULT NOW() + INTERVAL '30 days'
         )
       `);
       await db.query(
-        `INSERT INTO topup_credits (user_id, bonus_seconds, effect_date, source) VALUES ($1, $2, $3, 'coupon')`,
+        `INSERT INTO topup_credits (user_id, bonus_seconds, effect_date, source, expires_at) VALUES ($1, $2, $3, 'coupon', NOW() + INTERVAL '30 days')`,
         [studentId, bonusSeconds, currentDateIST]
       );
     }
@@ -571,15 +573,16 @@ app.post('/api/payment/verify-topup', async (req, res) => {
       CREATE TABLE IF NOT EXISTS topup_credits (
         id SERIAL PRIMARY KEY, user_id TEXT NOT NULL, bonus_seconds INTEGER NOT NULL,
         effect_date TEXT NOT NULL, source TEXT DEFAULT 'payment',
-        razorpay_payment_id TEXT, created_at TIMESTAMPTZ DEFAULT NOW()
+        razorpay_payment_id TEXT, created_at TIMESTAMPTZ DEFAULT NOW(),
+        expires_at TIMESTAMPTZ DEFAULT NOW() + INTERVAL '30 days'
       )
     `);
     await db.query(
-      `INSERT INTO topup_credits (user_id, bonus_seconds, effect_date, source, razorpay_payment_id) VALUES ($1, $2, $3, 'payment', $4)`,
+      `INSERT INTO topup_credits (user_id, bonus_seconds, effect_date, source, razorpay_payment_id, expires_at) VALUES ($1, $2, $3, 'payment', $4, NOW() + INTERVAL '30 days')`,
       [studentId, bonusSeconds, currentDateIST, razorpay_payment_id]
     );
 
-    res.json({ success: true, bonusSeconds, message: `+${bonusSeconds / 3600} hours added successfully!` });
+    res.json({ success: true, bonusSeconds, message: `+${bonusSeconds / 3600} hours added! Valid for 30 days.` });
   } catch (err) {
     console.error('Verify topup error:', err);
     res.status(500).json({ error: err.message });

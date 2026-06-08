@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LogOut, LayoutDashboard, Mic, BarChart2, Trophy,
-  Zap, Flame, ChevronRight, ChevronLeft, Settings, BookOpen, Gamepad2, Menu, X, Crown, Globe, Users, Brain, Radio, Scroll, Target, Presentation, BatteryCharging
+  Zap, Flame, ChevronRight, ChevronLeft, Settings, BookOpen, Gamepad2, Menu, X, Crown, Globe, Users, Brain, Radio, Scroll, Target, Presentation
 } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 import PremiumEnrollModal from './PremiumEnrollModal';
-import TopUpModal from './TopUpModal';
+
 
 export default function Layout({ user, onLogout, onSwitchProfile }) {
   const location = useLocation();
@@ -19,7 +19,6 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showPremiumModal, setShowPremiumModal] = useState(false);
-  const [showTopUp, setShowTopUp] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -417,59 +416,6 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
             </div>
           )}
 
-          {/* Top Up Button */}
-          {(!isCollapsed || isMobile) && (
-            <div
-              onClick={() => {
-                if (isMobile) setMobileMenuOpen(false);
-                setShowTopUp(true);
-              }}
-              style={{
-                margin: '0 0 0.5rem',
-                background: 'linear-gradient(135deg, rgba(249,115,22,0.12) 0%, rgba(251,146,60,0.08) 100%)',
-                border: '1px solid rgba(249,115,22,0.25)',
-                borderRadius: 12,
-                padding: '0.65rem 0.85rem',
-                cursor: 'pointer',
-                display: 'flex', alignItems: 'center',
-                justifyContent: 'space-between',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(135deg, rgba(249,115,22,0.2) 0%, rgba(251,146,60,0.12) 100%)'; e.currentTarget.style.borderColor = 'rgba(249,115,22,0.45)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(135deg, rgba(249,115,22,0.12) 0%, rgba(251,146,60,0.08) 100%)'; e.currentTarget.style.borderColor = 'rgba(249,115,22,0.25)'; }}
-              title="Top Up Time"
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
-                <div style={{ background: 'rgba(249,115,22,0.15)', padding: '0.28rem', borderRadius: '50%', color: '#fb923c', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <BatteryCharging size={14} strokeWidth={2.5} />
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#fb923c', letterSpacing: '-0.01em', lineHeight: 1.1 }}>Top Up</span>
-                  <span style={{ fontSize: '0.6rem', fontWeight: 600, color: 'rgba(251,146,60,0.75)', marginTop: '0.05rem' }}>Add practice time</span>
-                </div>
-              </div>
-              <ChevronRight size={14} color="#fb923c" strokeWidth={2.5} />
-            </div>
-          )}
-          {isCollapsed && !isMobile && (
-            <button
-              onClick={() => setShowTopUp(true)}
-              title="Top Up Time"
-              style={{
-                width: '100%', background: 'rgba(249,115,22,0.1)',
-                border: '1px solid rgba(249,115,22,0.2)',
-                color: '#fb923c', cursor: 'pointer',
-                display: 'flex', justifyContent: 'center',
-                padding: '0.65rem', borderRadius: 10,
-                transition: 'all 0.2s', marginBottom: '0.5rem',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(249,115,22,0.18)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(249,115,22,0.1)'; }}
-            >
-              <BatteryCharging size={16} />
-            </button>
-          )}
-
           {/* Sidebar Upgrade Banner */}
           {(!user?.subscription_plan || user?.subscription_plan === 'free') && (
             <div
@@ -651,15 +597,6 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
       <div style={{ position: 'fixed', inset: 0, zIndex: 99999, display: 'flex', flexDirection: 'column', background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', overflowY: 'auto' }}>
         <PremiumEnrollModal user={user} mode="upgrade" onDismiss={() => setShowPremiumModal(false)} />
       </div>
-    )}
-
-    {/* Top Up Modal */}
-    {showTopUp && (
-      <TopUpModal
-        user={user}
-        onDismiss={() => setShowTopUp(false)}
-        onSuccess={() => { setShowTopUp(false); window.location.reload(); }}
-      />
     )}
 
     </div>

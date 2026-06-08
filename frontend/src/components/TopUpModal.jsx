@@ -13,6 +13,7 @@ const TOPUP_PLANS = [
     gradient: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
     glow: 'rgba(249,115,22,0.35)',
     badge: '⚡',
+    validity: '30 days',
   },
   {
     id: 999,
@@ -25,6 +26,7 @@ const TOPUP_PLANS = [
     glow: 'rgba(139,92,246,0.35)',
     badge: '🚀',
     popular: true,
+    validity: '30 days',
   },
 ];
 
@@ -223,7 +225,7 @@ export default function TopUpModal({ user, onDismiss, onSuccess }) {
             Add More Practice Time
           </h2>
           <p style={{ fontSize: '0.875rem', color: '#64748b', margin: 0 }}>
-            One-time purchase · Valid for today · Instant activation
+            One-time purchase · Valid for 30 days · Instant activation
           </p>
         </div>
 
@@ -382,7 +384,7 @@ export default function TopUpModal({ user, onDismiss, onSuccess }) {
 
         {/* Footer note */}
         <p style={{ textAlign: 'center', fontSize: '0.72rem', color: '#334155', margin: '1rem 0 0' }}>
-          Secure payment via Razorpay · One-time charge · No subscription
+          Secure payment via Razorpay · One-time charge · Valid for 30 days · No subscription
         </p>
       </div>
     </div>
