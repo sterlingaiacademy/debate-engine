@@ -225,7 +225,7 @@ export default function TopUpModal({ user, onDismiss, onSuccess }) {
             Add More Practice Time
           </h2>
           <p style={{ fontSize: '0.875rem', color: '#64748b', margin: 0 }}>
-            One-time purchase · Valid for 30 days · Instant activation
+            Recharge anytime · Valid for 30 days · Instant activation
           </p>
         </div>
 
@@ -384,7 +384,7 @@ export default function TopUpModal({ user, onDismiss, onSuccess }) {
 
         {/* Footer note */}
         <p style={{ textAlign: 'center', fontSize: '0.72rem', color: '#334155', margin: '1rem 0 0' }}>
-          Secure payment via Razorpay · One-time charge · Valid for 30 days · No subscription
+          Secure payment via Razorpay · Recharge anytime · Valid for 30 days · No subscription
         </p>
       </div>
     </div>
