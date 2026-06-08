@@ -218,6 +218,11 @@ export default function Dashboard({ user, setUser }) {
           const updatedUser = { ...user, subscription_plan: data.plan, subscription_status: 'active' };
           if (setUser) setUser(updatedUser);
           localStorage.setItem('user', JSON.stringify(updatedUser));
+          // Clear stats cache so dashboard re-fetches fresh time limits on return
+          cachedStats = null;
+          cachedStudentId = null;
+          // Navigate to the congratulations page (same as Razorpay flow)
+          setTimeout(() => navigate(`/premium-success?plan=${data.plan}`), 800);
         } else {
           // Regular time coupon — optimistically add seconds
           if (stats && stats.timeLimits && !stats.timeLimits.error) {
@@ -231,8 +236,8 @@ export default function Dashboard({ user, setUser }) {
               }
             }));
           }
+          setTimeout(() => { setShowCoupon(false); setCouponStatus({ loading: false, msg: '', type: '' }); }, 2500);
         }
-        setTimeout(() => { setShowCoupon(false); setCouponStatus({ loading: false, msg: '', type: '' }); }, 2500);
       } else {
         setCouponStatus({ loading: false, msg: data.error || 'Failed to redeem', type: 'error' });
         setTimeout(() => { setShowCoupon(false); setCouponStatus({ loading: false, msg: '', type: '' }); }, 2500);
