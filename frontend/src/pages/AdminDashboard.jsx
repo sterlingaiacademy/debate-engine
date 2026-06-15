@@ -5,12 +5,12 @@ import { API_BASE } from '../api';
 const FONT = "'Plus Jakarta Sans', 'Google Sans', system-ui, sans-serif";
 
 const SECTIONS = [
-  { id: 'overview', label: 'Overview', icon: '📊' },
-  { id: 'users', label: 'Users', icon: '👥' },
-  { id: 'subscriptions', label: 'Subscriptions', icon: '💎' },
-  { id: 'debates', label: 'Debates', icon: '⚔️' },
-  { id: 'bootcamp', label: 'Bootcamp', icon: '🎓' },
-  { id: 'coupons', label: 'School Coupons', icon: '🏫' },
+  { id: 'overview', label: 'Overview' },
+  { id: 'users', label: 'Users' },
+  { id: 'subscriptions', label: 'Subscriptions' },
+  { id: 'debates', label: 'Debates' },
+  { id: 'bootcamp', label: 'Bootcamp' },
+  { id: 'coupons', label: 'School Coupons' },
 ];
 
 const PLAN_COLORS = { free: '#64748b', pro: '#3b82f6', max: '#f97316' };
@@ -40,7 +40,7 @@ function StatusDot({ status }) {
   );
 }
 
-function StatCard({ icon, label, value, sub, color = '#F97316', trend }) {
+function StatCard({ label, value, sub, color = '#F97316', trend }) {
   return (
     <div style={{
       background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)',
@@ -54,7 +54,6 @@ function StatCard({ icon, label, value, sub, color = '#F97316', trend }) {
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: color }} />
       {/* glow */}
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: `radial-gradient(ellipse at top left, ${color}12 0%, transparent 60%)`, pointerEvents: 'none' }} />
-      <div style={{ fontSize: '1.6rem', marginBottom: '0.6rem' }}>{icon}</div>
       <div style={{ fontSize: '2rem', fontWeight: 800, color: '#fff', lineHeight: 1 }}>{value ?? '—'}</div>
       <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginTop: '0.35rem', fontWeight: 500 }}>{label}</div>
       {sub && <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.2rem' }}>{sub}</div>}
@@ -143,18 +142,18 @@ function OverviewSection({ stats }) {
 
   return (
     <div>
-      <SectionTitle>📊 Platform Overview</SectionTitle>
+      <SectionTitle>Platform Overview</SectionTitle>
 
       {/* Main KPI grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
-        <StatCard icon="👤" label="Total Users" value={fmt(u.total)} sub={`+${u.newToday} today · +${u.newThisWeek} this week`} color="#3b82f6" />
-        <StatCard icon="💎" label="Pro Subscribers" value={fmt(s.byPlan.pro)} sub="Active learners on Pro" color="#3b82f6" />
-        <StatCard icon="🔥" label="Max Subscribers" value={fmt(s.byPlan.max)} sub="Premium max plan" color="#F97316" />
-        <StatCard icon="✅" label="Active Subscriptions" value={fmt(s.byStatus.active)} sub="Paying users right now" color="#10b981" />
-        <StatCard icon="⚔️" label="Total Debates" value={fmt(d.total)} sub={`${d.today} today · ${d.thisWeek} this week`} color="#8b5cf6" />
-        <StatCard icon="📈" label="Avg Debate Score" value={d.avgScore > 0 ? d.avgScore.toFixed(1) : '—'} sub="Out of 10 across all debates" color="#f59e0b" />
-        <StatCard icon="🎓" label="Bootcamp Registrations" value={fmt(b.paid)} sub={`${b.total} total · ₹${fmt(b.revenue)} revenue`} color="#ec4899" />
-        <StatCard icon="🪙" label="G-Force Tokens Issued" value={fmt(stats.gforceTokensIssued)} sub="Total across all users" color="#f59e0b" />
+        <StatCard label="Total Users" value={fmt(u.total)} sub={`+${u.newToday} today · +${u.newThisWeek} this week`} color="#3b82f6" />
+        <StatCard label="Pro Subscribers" value={fmt(s.byPlan.pro)} sub="Active learners on Pro" color="#3b82f6" />
+        <StatCard label="Max Subscribers" value={fmt(s.byPlan.max)} sub="Premium max plan" color="#F97316" />
+        <StatCard label="Active Subscriptions" value={fmt(s.byStatus.active)} sub="Paying users right now" color="#10b981" />
+        <StatCard label="Total Debates" value={fmt(d.total)} sub={`${d.today} today · ${d.thisWeek} this week`} color="#8b5cf6" />
+        <StatCard label="Avg Debate Score" value={d.avgScore > 0 ? d.avgScore.toFixed(1) : '—'} sub="Out of 10 across all debates" color="#f59e0b" />
+        <StatCard label="Bootcamp Registrations" value={fmt(b.paid)} sub={`${b.total} total · ₹${fmt(b.revenue)} revenue`} color="#ec4899" />
+        <StatCard label="G-Force Tokens Issued" value={fmt(stats.gforceTokensIssued)} sub="Total across all users" color="#f59e0b" />
       </div>
 
       {/* Two-column: Users by level + Subscription breakdown */}
@@ -261,7 +260,7 @@ function UsersSection({ adminToken, apiBase }) {
 
   return (
     <div>
-      <SectionTitle>👥 All Users</SectionTitle>
+      <SectionTitle>All Users</SectionTitle>
 
       {/* Filters */}
       <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.25rem', flexWrap: 'wrap', alignItems: 'center' }}>
@@ -335,17 +334,17 @@ function SubscriptionsSection({ stats }) {
 
   return (
     <div>
-      <SectionTitle>💎 Subscriptions</SectionTitle>
+      <SectionTitle>Subscriptions</SectionTitle>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
-        <StatCard icon="🆓" label="Free Users" value={s.byPlan.free} color="#64748b" />
-        <StatCard icon="💙" label="Pro Plan" value={s.byPlan.pro} color="#3b82f6" />
-        <StatCard icon="🔥" label="Max Plan" value={s.byPlan.max} color="#F97316" />
-        <StatCard icon="✅" label="Active" value={s.byStatus.active} color="#10b981" />
-        <StatCard icon="⛔" label="Halted" value={s.byStatus.halted} color="#ef4444" />
-        <StatCard icon="❌" label="Cancelled" value={s.byStatus.cancelled} color="#f59e0b" />
-        <StatCard icon="📅" label="Monthly" value={s.byPeriod.monthly} color="#8b5cf6" />
-        <StatCard icon="🗓️" label="Yearly" value={s.byPeriod.yearly} color="#06b6d4" />
+        <StatCard label="Free Users" value={s.byPlan.free} color="#64748b" />
+        <StatCard label="Pro Plan" value={s.byPlan.pro} color="#3b82f6" />
+        <StatCard label="Max Plan" value={s.byPlan.max} color="#F97316" />
+        <StatCard label="Active" value={s.byStatus.active} color="#10b981" />
+        <StatCard label="Halted" value={s.byStatus.halted} color="#ef4444" />
+        <StatCard label="Cancelled" value={s.byStatus.cancelled} color="#f59e0b" />
+        <StatCard label="Monthly" value={s.byPeriod.monthly} color="#8b5cf6" />
+        <StatCard label="Yearly" value={s.byPeriod.yearly} color="#06b6d4" />
       </div>
 
       <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
@@ -383,14 +382,14 @@ function DebatesSection({ stats }) {
   const d = stats.debates;
   return (
     <div>
-      <SectionTitle>⚔️ Debates</SectionTitle>
+      <SectionTitle>Debates</SectionTitle>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
-        <StatCard icon="⚔️" label="Total Debates" value={fmt(d.total)} color="#8b5cf6" />
-        <StatCard icon="📈" label="Avg Score" value={d.avgScore > 0 ? d.avgScore.toFixed(1) : '—'} sub="Out of 10" color="#f59e0b" />
-        <StatCard icon="🗓️" label="Debates Today" value={d.today} color="#10b981" />
-        <StatCard icon="📅" label="This Week" value={d.thisWeek} color="#3b82f6" />
-        <StatCard icon="📝" label="Total Words Spoken" value={fmt(d.totalWords)} color="#ec4899" />
+        <StatCard label="Total Debates" value={fmt(d.total)} color="#8b5cf6" />
+        <StatCard label="Avg Score" value={d.avgScore > 0 ? d.avgScore.toFixed(1) : '—'} sub="Out of 10" color="#f59e0b" />
+        <StatCard label="Debates Today" value={d.today} color="#10b981" />
+        <StatCard label="This Week" value={d.thisWeek} color="#3b82f6" />
+        <StatCard label="Total Words Spoken" value={fmt(d.totalWords)} color="#ec4899" />
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', marginBottom: '1.5rem' }}>
@@ -459,13 +458,13 @@ function BootcampSection({ stats, adminToken, apiBase }) {
 
   return (
     <div>
-      <SectionTitle>🎓 Bootcamp Registrations</SectionTitle>
+      <SectionTitle>Bootcamp Registrations</SectionTitle>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
-        <StatCard icon="📋" label="Total Registrations" value={b.total} color="#8b5cf6" />
-        <StatCard icon="✅" label="Paid" value={b.paid} sub="Confirmed seats" color="#10b981" />
-        <StatCard icon="⏳" label="Pending" value={b.pending} color="#f59e0b" />
-        <StatCard icon="💰" label="Revenue" value={`₹${fmt(b.revenue)}`} sub="From bootcamp registrations" color="#ec4899" />
+        <StatCard label="Total Registrations" value={b.total} color="#8b5cf6" />
+        <StatCard label="Paid" value={b.paid} sub="Confirmed seats" color="#10b981" />
+        <StatCard label="Pending" value={b.pending} color="#f59e0b" />
+        <StatCard label="Revenue" value={`₹${fmt(b.revenue)}`} sub="From bootcamp registrations" color="#ec4899" />
       </div>
 
       {/* By Grade */}
@@ -542,12 +541,12 @@ function CouponsSection({ stats }) {
   const sc = stats.schoolCoupons;
   return (
     <div>
-      <SectionTitle>🏫 School Coupons</SectionTitle>
+      <SectionTitle>School Coupons</SectionTitle>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
-        <StatCard icon="🎟️" label="Total Codes Generated" value={sc.total} color="#8b5cf6" />
-        <StatCard icon="✅" label="Used" value={sc.used} sub="Activated by students" color="#10b981" />
-        <StatCard icon="⏳" label="Unused" value={sc.unused} sub="Still available" color="#f59e0b" />
+        <StatCard label="Total Codes Generated" value={sc.total} color="#8b5cf6" />
+        <StatCard label="Used" value={sc.used} sub="Activated by students" color="#10b981" />
+        <StatCard label="Unused" value={sc.unused} sub="Still available" color="#f59e0b" />
       </div>
 
       {sc.batches.length > 0 ? (
@@ -647,28 +646,28 @@ export default function AdminDashboard() {
 
       {/* ── SIDEBAR ── */}
       <aside style={{
-        width: sidebarOpen ? 240 : 64, flexShrink: 0, position: 'fixed', top: 0, left: 0, bottom: 0,
+        width: sidebarOpen ? 240 : 90, flexShrink: 0, position: 'fixed', top: 0, left: 0, bottom: 0,
         background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
         borderRight: '1px solid rgba(255,255,255,0.06)', zIndex: 100,
-        display: 'flex', flexDirection: 'column', transition: 'width 0.3s cubic-bezier(0.16,1,0.3,1)', overflow: 'hidden',
+        display: 'flex', flexDirection: 'column', transition: 'width 0.3s cubic-bezier(0.16,1,0.3,1)', overflow: 'visible',
       }}>
         {/* Logo */}
-        <div style={{ padding: '1.25rem 1rem', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        <div style={{ padding: '1.25rem 1.25rem', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <div style={{ width: 36, height: 36, borderRadius: 10, background: 'linear-gradient(135deg,#E8392A,#F97316)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: '1rem', fontWeight: 900, color: '#fff' }}>G</div>
-          {sidebarOpen && <div>
+          <div style={{ opacity: sidebarOpen ? 1 : 0, transition: 'opacity 0.2s', overflow: 'hidden', whiteSpace: 'nowrap' }}>
             <div style={{ fontSize: '0.9rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.01em' }}>G Force</div>
             <div style={{ fontSize: '0.68rem', color: '#64748b', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Admin Panel</div>
-          </div>}
+          </div>
         </div>
 
-        {/* Toggle */}
+        {/* Toggle (Moved to float on the border) */}
         <button onClick={() => setSidebarOpen(!sidebarOpen)}
-          style={{ position: 'absolute', top: '1.1rem', right: sidebarOpen ? '0.75rem' : '0.5rem', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8, width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#94a3b8', fontSize: '0.7rem', transition: 'right 0.3s' }}>
-          {sidebarOpen ? '◀' : '▶'}
+          style={{ position: 'absolute', top: '1.65rem', right: '-14px', background: '#0f172a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '50%', width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#94a3b8', fontSize: '0.7rem', zIndex: 101, transition: 'transform 0.3s', transform: sidebarOpen ? 'rotate(0deg)' : 'rotate(180deg)' }}>
+          ◀
         </button>
 
         {/* Nav */}
-        <nav style={{ flex: 1, padding: '1rem 0.75rem', display: 'flex', flexDirection: 'column', gap: '0.25rem', overflowY: 'auto' }}>
+        <nav style={{ flex: 1, padding: '1rem 0.75rem', display: 'flex', flexDirection: 'column', gap: '0.25rem', overflowY: 'auto', overflowX: 'hidden' }}>
           {SECTIONS.map(s => {
             const active = activeSection === s.id;
             return (
@@ -686,8 +685,11 @@ export default function AdminDashboard() {
                 onMouseEnter={e => { if (!active) { e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.color = '#e2e8f0'; } }}
                 onMouseLeave={e => { if (!active) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#94a3b8'; } }}
               >
-                <span style={{ fontSize: '1rem', flexShrink: 0 }}>{s.icon}</span>
-                {sidebarOpen && <span style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>{s.label}</span>}
+                {sidebarOpen ? (
+                  <span style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>{s.label}</span>
+                ) : (
+                  <span style={{ fontSize: '0.75rem', fontWeight: 800, width: 24, textAlign: 'center' }}>{s.label.substring(0,2).toUpperCase()}</span>
+                )}
               </button>
             );
           })}
@@ -697,14 +699,13 @@ export default function AdminDashboard() {
         <div style={{ padding: '0.75rem', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
           <button onClick={handleLogout}
             style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.6rem 0.85rem', borderRadius: 10, border: 'none', background: 'rgba(239,68,68,0.08)', color: '#ef4444', cursor: 'pointer', fontFamily: FONT, fontSize: '0.875rem', fontWeight: 600, justifyContent: sidebarOpen ? 'flex-start' : 'center' }}>
-            <span style={{ fontSize: '1rem' }}>🚪</span>
-            {sidebarOpen && 'Logout'}
+            {sidebarOpen ? 'Logout' : <span style={{fontSize:'0.75rem', fontWeight:800}}>LO</span>}
           </button>
         </div>
       </aside>
 
       {/* ── MAIN CONTENT ── */}
-      <main style={{ flex: 1, marginLeft: sidebarOpen ? 240 : 64, transition: 'margin-left 0.3s cubic-bezier(0.16,1,0.3,1)', position: 'relative', zIndex: 1, minHeight: '100vh' }}>
+      <main style={{ flex: 1, minWidth: 0, marginLeft: sidebarOpen ? 240 : 90, transition: 'margin-left 0.3s cubic-bezier(0.16,1,0.3,1)', position: 'relative', zIndex: 1, minHeight: '100vh' }}>
         {/* Header */}
         <header style={{
           position: 'sticky', top: 0, zIndex: 50,
@@ -714,7 +715,7 @@ export default function AdminDashboard() {
         }}>
           <div>
             <h1 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>
-              {SECTIONS.find(s => s.id === activeSection)?.icon} {SECTIONS.find(s => s.id === activeSection)?.label}
+              {SECTIONS.find(s => s.id === activeSection)?.label}
             </h1>
             {lastRefresh && <div style={{ fontSize: '0.72rem', color: '#475569', marginTop: '0.1rem' }}>
               Last refreshed at {lastRefresh.toLocaleTimeString('en-IN')}
@@ -722,11 +723,11 @@ export default function AdminDashboard() {
           </div>
           <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
             <div style={{ fontSize: '0.78rem', color: '#64748b', padding: '0.3rem 0.75rem', background: 'rgba(255,255,255,0.03)', borderRadius: 8, border: '1px solid rgba(255,255,255,0.06)' }}>
-              🔐 Admin
+              Admin
             </div>
             <button onClick={fetchStats} disabled={loading}
               style={{ padding: '0.45rem 1rem', background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.2)', borderRadius: 10, color: '#F97316', fontSize: '0.82rem', fontWeight: 700, cursor: loading ? 'wait' : 'pointer', fontFamily: FONT }}>
-              {loading ? '⏳ Loading…' : '🔄 Refresh'}
+              {loading ? 'Loading…' : 'Refresh'}
             </button>
           </div>
         </header>
