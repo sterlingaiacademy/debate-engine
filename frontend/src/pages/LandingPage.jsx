@@ -711,7 +711,7 @@ export default function LandingPage() {
             color: 'rgba(148,163,184,0.6)',
             letterSpacing: '0.03em',
           }}>
-            Powered by <span style={{ color: 'rgba(249,115,22,0.85)', fontWeight: 600 }}>Nanoskool Education Private Limited</span>
+            Powered by <span style={{ color: 'rgba(249,115,22,0.85)', fontWeight: 600 }}>Eduhex Technologies Private Limited</span>
           </div>
         </div>
       </footer>
