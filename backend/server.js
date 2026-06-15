@@ -1781,7 +1781,266 @@ app.get('/api/d365/cohort/:ageBand/vienna', async (req, res) => {
 
 // ── End Diplomat 365 Routes ──────────────────────────────────────────────────
 
-// Check if running locally vs Vercel Serverless
+// ══════════════════════════════════════════════════════════════════════════════
+// ADMIN ROUTES — /api/admin/*
+// ══════════════════════════════════════════════════════════════════════════════
+
+// POST /api/admin/login — verifies admin username/password, returns token
+app.post('/api/admin/login', async (req, res) => {
+  const { username, password } = req.body;
+  const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'gfadmin';
+  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'gforce_admin_2026';
+  if (!username || !password) return res.status(400).json({ error: 'Username and password required' });
+  if (username !== ADMIN_USERNAME || password !== ADMIN_PASSWORD) {
+    return res.status(401).json({ error: 'Invalid admin credentials' });
+  }
+  const token = jwt.sign({ role: 'admin', username }, JWT_SECRET, { expiresIn: '12h' });
+  res.json({ success: true, token, isAdmin: true });
+});
+
+// Middleware: verify admin JWT
+function requireAdmin(req, res, next) {
+  const auth = req.headers['authorization'] || '';
+  const token = auth.replace('Bearer ', '').trim();
+  if (!token) return res.status(401).json({ error: 'No admin token provided' });
+  try {
+    const payload = jwt.verify(token, JWT_SECRET);
+    if (payload.role !== 'admin') return res.status(403).json({ error: 'Forbidden' });
+    next();
+  } catch (e) {
+    return res.status(401).json({ error: 'Invalid or expired admin token' });
+  }
+}
+
+// GET /api/admin/stats — comprehensive platform stats
+app.get('/api/admin/stats', requireAdmin, async (req, res) => {
+  try {
+    // === USERS ===
+    const totalUsersRes = await db.query(`SELECT COUNT(*) AS count FROM users`);
+    const totalUsers = parseInt(totalUsersRes.rows[0].count);
+
+    const todayIST = getISTDateString();
+    const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+    const monthAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+
+    const newTodayRes = await db.query(`SELECT COUNT(*) AS count FROM users WHERE "createdAt"::date = $1::date`, [todayIST]);
+    const newWeekRes = await db.query(`SELECT COUNT(*) AS count FROM users WHERE "createdAt" >= $1`, [weekAgo]);
+    const newMonthRes = await db.query(`SELECT COUNT(*) AS count FROM users WHERE "createdAt" >= $1`, [monthAgo]);
+
+    // === SUBSCRIPTIONS ===
+    const planRes = await db.query(`
+      SELECT subscription_plan, subscription_status, subscription_period, COUNT(*) AS count
+      FROM users GROUP BY subscription_plan, subscription_status, subscription_period
+    `);
+
+    let planCounts = { free: 0, pro: 0, max: 0 };
+    let statusCounts = { active: 0, inactive: 0, halted: 0, cancelled: 0 };
+    let periodCounts = { monthly: 0, yearly: 0 };
+    planRes.rows.forEach(r => {
+      const plan = r.subscription_plan || 'free';
+      const status = r.subscription_status || 'inactive';
+      const period = r.subscription_period || '';
+      const cnt = parseInt(r.count);
+      if (planCounts[plan] !== undefined) planCounts[plan] += cnt; else planCounts.free += cnt;
+      if (status === 'active') statusCounts.active += cnt;
+      else if (status === 'halted') statusCounts.halted += cnt;
+      else if (status === 'cancelled') statusCounts.cancelled += cnt;
+      else statusCounts.inactive += cnt;
+      if (period === 'monthly') periodCounts.monthly += cnt;
+      else if (period === 'yearly') periodCounts.yearly += cnt;
+    });
+
+    // Users by class level
+    const byLevelRes = await db.query(`SELECT "classLevel", COUNT(*) AS count FROM users GROUP BY "classLevel" ORDER BY count DESC`);
+
+    // === DEBATES ===
+    const debateStatsRes = await db.query(`
+      SELECT COUNT(*) AS total, ROUND(AVG(overall_score)::numeric, 1) AS avg_score,
+             SUM(total_words) AS total_words
+      FROM debates
+    `);
+    const debateTodayRes = await db.query(`SELECT COUNT(*) AS count FROM debates WHERE created_at >= NOW() - INTERVAL '24 hours'`);
+    const debateWeekRes = await db.query(`SELECT COUNT(*) AS count FROM debates WHERE created_at >= NOW() - INTERVAL '7 days'`);
+    const debateByLevelRes = await db.query(`
+      SELECT class, COUNT(*) AS total, ROUND(AVG(overall_score)::numeric, 1) AS avg_score
+      FROM debates GROUP BY class ORDER BY total DESC LIMIT 10
+    `);
+
+    // === BOOTCAMP ===
+    const bootcampRes = await db.query(`
+      SELECT COUNT(*) AS total,
+             SUM(CASE WHEN payment_status = 'paid' THEN 1 ELSE 0 END) AS paid,
+             SUM(CASE WHEN payment_status = 'pending' THEN 1 ELSE 0 END) AS pending
+      FROM bootcamp_registrations
+    `);
+    const bootcampByGradeRes = await db.query(`
+      SELECT grade, COUNT(*) AS count, SUM(CASE WHEN payment_status = 'paid' THEN 1 ELSE 0 END) AS paid
+      FROM bootcamp_registrations GROUP BY grade ORDER BY count DESC LIMIT 10
+    `);
+    const bootcampRevenue = (parseInt(bootcampRes.rows[0]?.paid || 0)) * 499;
+
+    // === SCHOOL COUPONS ===
+    let schoolCoupons = { total: 0, used: 0, unused: 0, batches: [] };
+    try {
+      const scRes = await db.query(`
+        SELECT school_name, plan, COUNT(*) AS total,
+               SUM(CASE WHEN is_used THEN 1 ELSE 0 END) AS used,
+               SUM(CASE WHEN NOT is_used THEN 1 ELSE 0 END) AS unused,
+               MAX(created_at) AS created_at
+        FROM gforce.school_coupons GROUP BY school_name, plan ORDER BY created_at DESC
+      `);
+      scRes.rows.forEach(r => {
+        schoolCoupons.total += parseInt(r.total);
+        schoolCoupons.used += parseInt(r.used);
+        schoolCoupons.unused += parseInt(r.unused);
+      });
+      schoolCoupons.batches = scRes.rows.map(r => ({
+        school: r.school_name, plan: r.plan,
+        total: parseInt(r.total), used: parseInt(r.used), unused: parseInt(r.unused),
+        created_at: r.created_at
+      }));
+    } catch (e) { /* table may not exist yet */ }
+
+    // === GFORCE TOKENS ===
+    const tokenRes = await db.query(`SELECT COALESCE(SUM(gforce_tokens),0) AS total FROM debate_users`);
+
+    // === RECENT USERS ===
+    const recentUsersRes = await db.query(`
+      SELECT name, "studentId", email, phone, "classLevel", grade,
+             subscription_plan, subscription_status, "createdAt"
+      FROM users ORDER BY "createdAt" DESC LIMIT 20
+    `);
+
+    // === RECENT SUBSCRIPTIONS ===
+    const recentSubsRes = await db.query(`
+      SELECT name, "studentId", email, subscription_plan, subscription_period,
+             subscription_status, razorpay_subscription_id, "createdAt"
+      FROM users WHERE subscription_plan != 'free' AND subscription_plan IS NOT NULL
+      ORDER BY "createdAt" DESC LIMIT 20
+    `);
+
+    // === TOP DEBATES ===
+    const topDebatesRes = await db.query(`
+      SELECT d.user_id, u.name, d.motion, d.overall_score, d.class, d.created_at
+      FROM debates d LEFT JOIN users u ON u."studentId" = d.user_id
+      ORDER BY d.created_at DESC LIMIT 15
+    `);
+
+    res.json({
+      users: {
+        total: totalUsers,
+        newToday: parseInt(newTodayRes.rows[0].count),
+        newThisWeek: parseInt(newWeekRes.rows[0].count),
+        newThisMonth: parseInt(newMonthRes.rows[0].count),
+        byLevel: byLevelRes.rows,
+      },
+      subscriptions: {
+        byPlan: planCounts,
+        byStatus: statusCounts,
+        byPeriod: periodCounts,
+      },
+      debates: {
+        total: parseInt(debateStatsRes.rows[0]?.total || 0),
+        avgScore: parseFloat(debateStatsRes.rows[0]?.avg_score || 0),
+        totalWords: parseInt(debateStatsRes.rows[0]?.total_words || 0),
+        today: parseInt(debateTodayRes.rows[0].count),
+        thisWeek: parseInt(debateWeekRes.rows[0].count),
+        byLevel: debateByLevelRes.rows,
+      },
+      bootcamp: {
+        total: parseInt(bootcampRes.rows[0]?.total || 0),
+        paid: parseInt(bootcampRes.rows[0]?.paid || 0),
+        pending: parseInt(bootcampRes.rows[0]?.pending || 0),
+        revenue: bootcampRevenue,
+        byGrade: bootcampByGradeRes.rows,
+      },
+      schoolCoupons,
+      gforceTokensIssued: Math.round(parseFloat(tokenRes.rows[0]?.total || 0)),
+      recentUsers: recentUsersRes.rows,
+      recentSubscriptions: recentSubsRes.rows,
+      recentDebates: topDebatesRes.rows,
+    });
+  } catch (err) {
+    console.error('Admin stats error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/admin/users — paginated user list with search + filter
+app.get('/api/admin/users', requireAdmin, async (req, res) => {
+  try {
+    const page = Math.max(1, parseInt(req.query.page) || 1);
+    const limit = Math.min(50, parseInt(req.query.limit) || 20);
+    const offset = (page - 1) * limit;
+    const search = req.query.search ? `%${req.query.search}%` : null;
+    const planFilter = req.query.plan || null;
+    const levelFilter = req.query.level || null;
+
+    let conditions = [];
+    let params = [];
+    let idx = 1;
+
+    if (search) {
+      conditions.push(`(LOWER(name) LIKE LOWER($${idx}) OR LOWER("studentId") LIKE LOWER($${idx}) OR LOWER(COALESCE(email,'')) LIKE LOWER($${idx}))`);
+      params.push(search); idx++;
+    }
+    if (planFilter && planFilter !== 'all') {
+      conditions.push(`subscription_plan = $${idx}`);
+      params.push(planFilter); idx++;
+    }
+    if (levelFilter && levelFilter !== 'all') {
+      conditions.push(`"classLevel" = $${idx}`);
+      params.push(levelFilter); idx++;
+    }
+
+    const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
+
+    const countRes = await db.query(`SELECT COUNT(*) AS count FROM users ${where}`, params);
+    const usersRes = await db.query(
+      `SELECT name, "studentId", email, phone, "classLevel", grade,
+              subscription_plan, subscription_period, subscription_status, "createdAt"
+       FROM users ${where} ORDER BY "createdAt" DESC LIMIT $${idx} OFFSET $${idx + 1}`,
+      [...params, limit, offset]
+    );
+
+    res.json({
+      total: parseInt(countRes.rows[0].count),
+      page,
+      limit,
+      users: usersRes.rows,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/admin/bootcamp — paginated bootcamp registrations
+app.get('/api/admin/bootcamp', requireAdmin, async (req, res) => {
+  try {
+    const page = Math.max(1, parseInt(req.query.page) || 1);
+    const limit = 20;
+    const offset = (page - 1) * limit;
+    const status = req.query.status || null;
+
+    const where = status && status !== 'all' ? `WHERE payment_status = $1` : '';
+    const params = status && status !== 'all' ? [status] : [];
+
+    const countRes = await db.query(`SELECT COUNT(*) AS count FROM bootcamp_registrations ${where}`, params);
+    const rows = await db.query(
+      `SELECT id, student_id, name, email, phone, school, grade, city, category,
+              payment_status, razorpay_payment_id, amount, registered_at
+       FROM bootcamp_registrations ${where} ORDER BY registered_at DESC
+       LIMIT $${params.length + 1} OFFSET $${params.length + 2}`,
+      [...params, limit, offset]
+    );
+
+    res.json({ total: parseInt(countRes.rows[0].count), page, limit, registrations: rows.rows });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

@@ -9,6 +9,7 @@ import GoogleCallback from './pages/GoogleCallback';
 import Dashboard from './pages/Dashboard';
 import Layout from './components/Layout';
 import LandingPage from './pages/LandingPage';
+import AdminDashboard from './pages/AdminDashboard';
 
 const DebateArena = lazy(() => import('./pages/DebateArena'));
 const Results = lazy(() => import('./pages/Results'));
@@ -204,6 +205,7 @@ function App() {
         <div className={themeClass}>
         <Suspense fallback={<PageLoader />}>
           <Routes>
+            <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/" element={!user ? <LandingPage /> : <Navigate to="/dashboard" />} />
             <Route path="/login" element={!user ? <Login onLogin={handleLogin} /> : <Navigate to="/dashboard" />} />
             <Route path="/register" element={

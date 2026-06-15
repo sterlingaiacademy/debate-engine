@@ -88,6 +88,22 @@ export default function Login({ onLogin }) {
     setAuthMethod('credentials');
     setLoading(true);
     try {
+      // ── Check admin credentials first ──
+      const adminRes = await fetch(`${API_BASE}/api/admin/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+      if (adminRes.ok) {
+        const adminData = await adminRes.json();
+        if (adminData.isAdmin) {
+          localStorage.setItem('adminToken', adminData.token);
+          navigate('/admin');
+          return;
+        }
+      }
+
+      // ── Regular user login ──
       const res = await fetch(`${API_BASE}/api/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -104,6 +120,7 @@ export default function Login({ onLogin }) {
       setLoading(false);
     }
   };
+
 
   return (
     <div style={{
