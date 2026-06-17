@@ -91,6 +91,7 @@ export default function MockUN({ user }) {
   const [maxMinutesAvailable, setMaxMinutesAvailable] = useState(0);
   const [selectedDuration, setSelectedDuration] = useState(5);
   const [customValue, setCustomValue] = useState('');
+  const [isStarting, setIsStarting] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [hoveredTopic, setHoveredTopic] = useState(null);
   const [customTopicMode, setCustomTopicMode] = useState(false);
@@ -197,6 +198,8 @@ export default function MockUN({ user }) {
   };
 
   const handleTopicSelect = async (topicObj) => {
+    if (isStarting) return;
+    setIsStarting(true);
     setSelectedTopic(topicObj.topic);
     setStep('connecting');
     // reset session state for a fresh debate
@@ -267,9 +270,11 @@ export default function MockUN({ user }) {
         conversationRef.current = sessionInstance;
       }).catch(() => {
         setStep('error');
+        setIsStarting(false);
       });
     } catch (err) {
       setStep('error');
+      setIsStarting(false);
     }
   };
 

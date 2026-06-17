@@ -65,6 +65,7 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
   const [maxMinutesAvailable, setMaxMinutesAvailable] = useState(0);
   const [selectedDuration, setSelectedDuration] = useState(5);
   const [customValue, setCustomValue] = useState('');
+  const [isStarting, setIsStarting] = useState(false);
   const conversationRef = useRef(null);
   const timerRef = useRef(null);
   const transcriptEndRef = useRef(null);
@@ -231,6 +232,8 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
   const handleTopicSelect = (topic) => { setSelectedTopic(topic); setStatus('config'); };
 
   const startDebateSession = async () => {
+    if (isStarting) return;
+    setIsStarting(true);
     setStatus('connecting');
     try {
       await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -286,7 +289,9 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
       window._activeElevenLabsSessions.push(localSession);
       conversationRef.current = localSession;
     } catch (err) {
+      console.error('Failed to start session:', err);
       setStatus('error');
+      setIsStarting(false);
     }
   };
 
