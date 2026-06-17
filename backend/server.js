@@ -2256,3 +2256,67 @@ app.get('/api/bootcamp/registrations', async (req, res) => {
   }
 });
 
+
+// ══════════════════════════════════════════════════════════════════════════════
+// UN QUIZ CONTEST ROUTES
+// ══════════════════════════════════════════════════════════════════════════════
+
+async function ensureQuizRegistrationsTable() {
+  await db.query(`
+    CREATE TABLE IF NOT EXISTS quiz_registrations (
+      id SERIAL PRIMARY KEY,
+      student_id TEXT,
+      full_name TEXT NOT NULL,
+      email TEXT NOT NULL,
+      mobile TEXT NOT NULL,
+      class_grade TEXT NOT NULL,
+      school_name TEXT NOT NULL,
+      city TEXT,
+      registered_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `);
+}
+
+// POST /api/quiz/register
+app.post('/api/quiz/register', async (req, res) => {
+  try {
+    const { studentId, fullName, email, mobile, classGrade, schoolName, city } = req.body;
+    if (!fullName || !email || !mobile || !classGrade || !schoolName) {
+      return res.status(400).json({ error: 'All required fields must be filled.' });
+    }
+    await ensureQuizRegistrationsTable();
+    if (studentId) {
+      const dup = await db.query(`SELECT id FROM quiz_registrations WHERE student_id = $1`, [studentId]);
+      if (dup.rows.length > 0) {
+        return res.status(409).json({ error: 'already_registered', message: 'You have already registered for the UN Quiz Contest.' });
+      }
+    }
+    const emailDup = await db.query(`SELECT id FROM quiz_registrations WHERE email = $1`, [email]);
+    if (emailDup.rows.length > 0) {
+      return res.status(409).json({ error: 'already_registered', message: 'This email is already registered for the UN Quiz Contest.' });
+    }
+    const result = await db.query(
+      `INSERT INTO quiz_registrations (student_id, full_name, email, mobile, class_grade, school_name, city)
+       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id, registered_at`,
+      [studentId || null, fullName, email, mobile, classGrade, schoolName, city || '']
+    );
+    res.json({ success: true, registrationId: result.rows[0].id, registeredAt: result.rows[0].registered_at });
+  } catch (err) {
+    console.error('Quiz register error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/quiz/registrations — Admin
+app.get('/api/quiz/registrations', requireAdmin, async (req, res) => {
+  try {
+    await ensureQuizRegistrationsTable();
+    const result = await db.query(
+      `SELECT id, student_id, full_name, email, mobile, class_grade, school_name, city, registered_at
+       FROM quiz_registrations ORDER BY registered_at DESC`
+    );
+    res.json({ total: result.rows.length, registrations: result.rows });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});

@@ -11,6 +11,7 @@ const SECTIONS = [
   { id: 'debates', label: 'Debates' },
   { id: 'bootcamp', label: 'Bootcamp' },
   { id: 'coupons', label: 'School Coupons' },
+  { id: 'quiz', label: 'UN Quiz' },
 ];
 
 const PLAN_COLORS = { free: '#64748b', pro: '#3b82f6', max: '#f97316' };
@@ -154,6 +155,7 @@ function OverviewSection({ stats }) {
         <StatCard label="Avg Debate Score" value={d.avgScore > 0 ? d.avgScore.toFixed(1) : '—'} sub="Out of 10 across all debates" color="#f59e0b" />
         <StatCard label="Bootcamp Registrations" value={fmt(b.paid)} sub={`${b.total} total · ₹${fmt(b.revenue)} revenue`} color="#ec4899" />
         <StatCard label="G-Force Tokens Issued" value={fmt(stats.gforceTokensIssued)} sub="Total across all users" color="#f59e0b" />
+        {stats.quizRegistrations !== undefined && <StatCard label="UN Quiz Registrants" value={fmt(stats.quizRegistrations)} sub="Total contest registrations" color="#3b82f6" />}
       </div>
 
       {/* Two-column: Users by level + Subscription breakdown */}
@@ -590,6 +592,95 @@ function CouponsSection({ stats }) {
 }
 
 // ══════════════════════════════════════════════════
+// SECTION: UN Quiz Registrations
+// ══════════════════════════════════════════════════
+function QuizSection({ adminToken, apiBase }) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    setLoading(true);
+    fetch(`${apiBase}/api/quiz/registrations`, {
+      headers: { Authorization: `Bearer ${adminToken}` }
+    })
+      .then(r => r.json())
+      .then(d => { setData(d); setLoading(false); })
+      .catch(() => setLoading(false));
+  }, [adminToken, apiBase]);
+
+  if (loading) return <div style={{ textAlign: 'center', padding: '3rem', color: '#64748b' }}>Loading...</div>;
+  if (!data) return null;
+
+  const filtered = (data.registrations || []).filter(r => {
+    if (!search) return true;
+    const q = search.toLowerCase();
+    return (
+      r.full_name?.toLowerCase().includes(q) ||
+      r.email?.toLowerCase().includes(q) ||
+      r.school_name?.toLowerCase().includes(q) ||
+      r.mobile?.includes(q) ||
+      r.class_grade?.toLowerCase().includes(q)
+    );
+  });
+
+  return (
+    <div>
+      <SectionTitle>UN Quiz Contest Registrations</SectionTitle>
+
+      {/* Stats */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+        <StatCard label="Total Registrations" value={data.total} color="#3b82f6" />
+      </div>
+
+      {/* Search */}
+      <div style={{ marginBottom: '1.25rem' }}>
+        <input
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder="Search by name, email, school, mobile..."
+          style={{
+            width: '100%', maxWidth: 420, background: 'rgba(255,255,255,0.04)',
+            border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10,
+            padding: '0.65rem 1rem', color: '#e2e8f0', fontSize: '0.9rem',
+            fontFamily: FONT, outline: 'none', boxSizing: 'border-box',
+          }}
+        />
+      </div>
+
+      {/* Table */}
+      <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 800 }}>
+            <TableHead cols={['#', 'Full Name', 'Email', 'Mobile', 'Class/Grade', 'School', 'City', 'Registered At']} />
+            <tbody>
+              {filtered.length === 0 ? (
+                <tr>
+                  <td colSpan={8} style={{ textAlign: 'center', padding: '2.5rem', color: '#475569' }}>
+                    {search ? 'No results matching your search.' : 'No registrations yet.'}
+                  </td>
+                </tr>
+              ) : filtered.map((r, i) => (
+                <TableRow key={r.id} idx={i}>
+                  <TD>{i + 1}</TD>
+                  <TD>{r.full_name}</TD>
+                  <TD>{r.email}</TD>
+                  <TD mono>{r.mobile}</TD>
+                  <TD>{r.class_grade}</TD>
+                  <TD>{r.school_name}</TD>
+                  <TD>{r.city || '—'}</TD>
+                  <TD>{fmtDate(r.registered_at)}</TD>
+                </TableRow>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════════════════════
 // MAIN ADMIN DASHBOARD
 // ══════════════════════════════════════════════════
 export default function AdminDashboard() {
@@ -754,6 +845,7 @@ export default function AdminDashboard() {
               {activeSection === 'debates' && <DebatesSection stats={stats} />}
               {activeSection === 'bootcamp' && <BootcampSection stats={stats} adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'coupons' && <CouponsSection stats={stats} />}
+              {activeSection === 'quiz' && <QuizSection adminToken={adminToken} apiBase={apiBase} />}
             </>
           ) : null}
         </div>
