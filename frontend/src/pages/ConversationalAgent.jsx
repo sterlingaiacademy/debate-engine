@@ -263,10 +263,10 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
             if (convId) conversationIdRef.current = convId;
           } catch (e) {}
         },
-        onDisconnect: () => {
-          // Only treat as a real end if we didn't intentionally end the session
+        onDisconnect: (info) => {
+          console.warn("ElevenLabs Disconnected:", info);
+          alert("Connection dropped by ElevenLabs server. If this happens exactly after 5 seconds, your ElevenLabs Agent's 'Inactivity Timeout' or 'Turn Timeout' is closing the call.");
           if (isEndingRef.current) return;
-          // Wait 2s before treating disconnect as session end (handles transient drops)
           if (disconnectTimeoutRef.current) clearTimeout(disconnectTimeoutRef.current);
           disconnectTimeoutRef.current = setTimeout(() => {
             if (!isEndingRef.current) {
@@ -283,7 +283,11 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
             return newT;
           });
         },
-        onError: (err) => { setStatus('error'); },
+        onError: (err) => { 
+          console.error("ElevenLabs Error:", err);
+          alert("ElevenLabs Error: " + (err?.message || JSON.stringify(err)));
+          setStatus('error'); 
+        },
         onModeChange: (m) => { setIsSpeaking(m.mode === 'speaking'); }
       });
 
