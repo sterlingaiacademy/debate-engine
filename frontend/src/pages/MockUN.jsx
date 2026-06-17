@@ -114,6 +114,7 @@ export default function MockUN({ user }) {
   const conversationIdRef = useRef(null);
   const agentHasSpokenRef = useRef(false);
   const isEndingRef = useRef(false); // prevents double-fire from onDisconnect
+  const disconnectTimeoutRef = useRef(null);
 
   const wakeLockRef = useRef(null);
 
@@ -161,6 +162,7 @@ export default function MockUN({ user }) {
       active = false;
       wakeLockRef.current?.release();
       wakeLockRef.current = null;
+      if (disconnectTimeoutRef.current) clearTimeout(disconnectTimeoutRef.current);
     };
   }, [isActive]);
 
@@ -228,10 +230,14 @@ export default function MockUN({ user }) {
         },
         onDisconnect: () => {
           // Only handle disconnect if we didn't already end intentionally
-          if (!isEndingRef.current) {
-            setIsActive(false);
-            handleEndDebate();
-          }
+          if (isEndingRef.current) return;
+          if (disconnectTimeoutRef.current) clearTimeout(disconnectTimeoutRef.current);
+          disconnectTimeoutRef.current = setTimeout(() => {
+            if (!isEndingRef.current) {
+              setIsActive(false);
+              handleEndDebate();
+            }
+          }, 2000);
         },
         onMessage: (msg) => {
           setTranscript(p => {
@@ -270,6 +276,7 @@ export default function MockUN({ user }) {
   const handleTimeUp = async () => {
     if (isEndingRef.current) return; // prevent double-fire
     isEndingRef.current = true;
+    if (disconnectTimeoutRef.current) clearTimeout(disconnectTimeoutRef.current);
     clearInterval(timerRef.current);
     if (conversationRef.current) {
       try { await conversationRef.current.endSession(); } catch {}
@@ -292,6 +299,7 @@ export default function MockUN({ user }) {
   const handleEndDebate = async () => {
     if (isEndingRef.current) return; // prevent double-fire
     isEndingRef.current = true;
+    if (disconnectTimeoutRef.current) clearTimeout(disconnectTimeoutRef.current);
     clearInterval(timerRef.current);
     if (conversationRef.current) {
       try { await conversationRef.current.endSession(); } catch {}

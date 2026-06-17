@@ -76,6 +76,7 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
   const navigate = useNavigate();
   const navTimeoutRef = useRef(null);
   const disconnectTimeoutRef = useRef(null);
+  const isEndingRef = useRef(false); // prevents spurious onDisconnect from ending session
 
   const wakeLockRef = useRef(null);
 
@@ -259,12 +260,17 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
           } catch (e) {}
         },
         onDisconnect: () => {
-          setIsActive(false); 
-          setStatus('ended');
+          // Only treat as a real end if we didn't intentionally end the session
+          if (isEndingRef.current) return;
+          // Wait 2s before treating disconnect as session end (handles transient drops)
           if (disconnectTimeoutRef.current) clearTimeout(disconnectTimeoutRef.current);
           disconnectTimeoutRef.current = setTimeout(() => {
-            handleEndDebate();
-          }, 500);
+            if (!isEndingRef.current) {
+              setIsActive(false);
+              setStatus('ended');
+              handleEndDebate();
+            }
+          }, 2000);
         },
         onMessage: (msg) => { 
           setTranscript(p => {
@@ -300,6 +306,9 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
 
   
   const handleTimeUp = async () => {
+    if (isEndingRef.current) return;
+    isEndingRef.current = true;
+    if (disconnectTimeoutRef.current) clearTimeout(disconnectTimeoutRef.current);
     clearInterval(timerRef.current);
     if (conversationRef.current) {
       try { await conversationRef.current.endSession(); } catch(e) {}
@@ -320,6 +329,9 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
   };
 
   const handleEndDebate = async () => {
+    if (isEndingRef.current) return;
+    isEndingRef.current = true;
+    if (disconnectTimeoutRef.current) clearTimeout(disconnectTimeoutRef.current);
     clearInterval(timerRef.current);
     if (conversationRef.current) {
       try { await conversationRef.current.endSession(); } catch(e) {}
