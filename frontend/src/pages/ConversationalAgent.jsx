@@ -236,7 +236,8 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
     setIsStarting(true);
     setStatus('connecting');
     try {
-      await navigator.mediaDevices.getUserMedia({ audio: true });
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      stream.getTracks().forEach(t => t.stop()); // Stop pre-check stream so ElevenLabs can use mic cleanly
 
       // Setup chosen timer limit
       const limitSeconds = selectedDuration === 'custom' ? parseInt(customValue, 10) * 60 : selectedDuration * 60;

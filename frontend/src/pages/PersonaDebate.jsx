@@ -169,7 +169,8 @@ export default function PersonaDebate({ user }) {
     setStatus('connecting');
 
     try {
-      await navigator.mediaDevices.getUserMedia({ audio: true });
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      stream.getTracks().forEach(t => t.stop());
       
       // Setup chosen timer limit
       const limitSeconds = selectedDuration === 'custom' ? parseInt(customValue, 10) * 60 : selectedDuration * 60;
