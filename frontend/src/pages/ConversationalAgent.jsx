@@ -108,7 +108,6 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
         wakeLockRef.current.release();
         wakeLockRef.current = null;
       }
-      if (navTimeoutRef.current) clearTimeout(navTimeoutRef.current);
       if (disconnectTimeoutRef.current) clearTimeout(disconnectTimeoutRef.current);
     };
   }, [isActive]);
@@ -119,6 +118,7 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
       if (conversationRef.current) {
         try { conversationRef.current.endSession(); } catch(e){}
       }
+      if (navTimeoutRef.current) clearTimeout(navTimeoutRef.current);
     };
   }, []);
 
@@ -265,7 +265,6 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
         },
         onDisconnect: (info) => {
           console.warn("ElevenLabs Disconnected:", info);
-          alert("Connection dropped by ElevenLabs server. If this happens exactly after 5 seconds, your ElevenLabs Agent's 'Inactivity Timeout' or 'Turn Timeout' is closing the call.");
           if (isEndingRef.current) return;
           if (disconnectTimeoutRef.current) clearTimeout(disconnectTimeoutRef.current);
           disconnectTimeoutRef.current = setTimeout(() => {

@@ -234,7 +234,6 @@ export default function MockUN({ user }) {
         },
         onDisconnect: (info) => {
           console.warn("ElevenLabs Disconnected:", info);
-          alert("Connection dropped by ElevenLabs server. If this happens exactly after 5 seconds, your ElevenLabs Agent's 'Inactivity Timeout' or 'Turn Timeout' is closing the call.");
           if (isEndingRef.current) return;
           if (disconnectTimeoutRef.current) clearTimeout(disconnectTimeoutRef.current);
           disconnectTimeoutRef.current = setTimeout(() => {
