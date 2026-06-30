@@ -30,6 +30,7 @@ const HEAR_ABOUT_OPTIONS = [
   'Social Media (Instagram, Facebook, etc.)',
   'School/Institution Announcement',
   'Referral from a Friend/Colleague',
+  'Reference',
   'Online Search Engine',
   'Previous Participant',
 ];
@@ -65,8 +66,9 @@ export default function BootcampModal({ user, onDismiss, cohort = 'cohort-1' }) 
   const [form, setForm] = useState({
     name: user?.name || '',
     email: user?.email || '',
-    phone: '',
-    school: '',
+    phone: user?.phone || '',
+    countryCode: '+91',
+    school: user?.school_name || '',
     grade: user?.grade || user?.classLevel || '',
     city: '',
     category: '',
@@ -95,7 +97,7 @@ export default function BootcampModal({ user, onDismiss, cohort = 'cohort-1' }) 
     const e = {};
     if (!form.name.trim()) e.name = 'Required';
     if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'Enter a valid email';
-    if (!form.phone.trim() || !/^\d{10}$/.test(form.phone.trim())) e.phone = 'Enter a valid 10-digit WhatsApp number';
+    if (!form.phone.trim()) e.phone = 'Enter a valid number';
     if (!form.school.trim()) e.school = 'Required';
     if (!form.grade.trim()) e.grade = 'Required';
     if (!form.city.trim()) e.city = 'Required';
@@ -119,7 +121,7 @@ export default function BootcampModal({ user, onDismiss, cohort = 'cohort-1' }) 
           cohort,
           name: form.name.trim(),
           email: form.email.trim(),
-          phone: form.phone.trim(),
+          phone: `${form.countryCode} ${form.phone.trim()}`,
           school: form.school.trim(),
           grade: form.grade.trim(),
           city: form.city.trim(),
@@ -163,7 +165,7 @@ export default function BootcampModal({ user, onDismiss, cohort = 'cohort-1' }) 
           setSubmitting(false);
         },
         modal: { ondismiss: () => { setSubmitting(false); setStep('form'); } },
-        prefill: { name: form.name, email: form.email, contact: form.phone },
+        prefill: { name: form.name, email: form.email, contact: `${form.countryCode}${form.phone}` },
         theme: { color: '#FF6B00' },
         notes: { programme: 'G-Talk Cohort 1', school: form.school, grade: form.grade, city: form.city },
       };
@@ -321,11 +323,26 @@ export default function BootcampModal({ user, onDismiss, cohort = 'cohort-1' }) 
                 {/* WhatsApp */}
                 <div>
                   <label style={labelStyle}>WhatsApp Number *</label>
-                  <input
-                    type="tel" placeholder="10-digit mobile number" value={form.phone}
-                    onChange={e => setForm(f => ({ ...f, phone: e.target.value.replace(/\D/g, '').slice(0, 10) }))}
-                    style={inputStyle(errors.phone)}
-                  />
+                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <select
+                      value={form.countryCode}
+                      onChange={set('countryCode')}
+                      style={{ ...inputStyle(false), width: '90px', padding: '0.7rem 0.5rem', cursor: 'pointer' }}
+                    >
+                      <option value="+91">+91</option>
+                      <option value="+1">+1</option>
+                      <option value="+44">+44</option>
+                      <option value="+971">+971</option>
+                      <option value="+65">+65</option>
+                      <option value="+61">+61</option>
+                    </select>
+                    <input
+                      placeholder="Enter mobile number"
+                      value={form.phone}
+                      onChange={set('phone')}
+                      style={{ ...inputStyle(errors.phone), flex: 1 }}
+                    />
+                  </div>
                   {errors.phone && <div style={errorStyle}>{errors.phone}</div>}
                 </div>
 

@@ -5,7 +5,7 @@ import { API_BASE } from '../api';
 
 const ROLES = ['Teacher', 'MUN Coordinator', 'Principal', 'Other'];
 const EXPERIENCES = ['0-2 years', '3-5 years', '5+ years'];
-const HEAR_ABOUT = ['Social Media', 'Email Newsletter', 'Colleague/Friend', 'Other'];
+const HEAR_ABOUT = ['Social Media', 'Email Newsletter', 'Colleague/Friend', 'Reference', 'Other'];
 
 export default function MUNMentorRegister({ user }) {
   const navigate = useNavigate();
@@ -13,6 +13,7 @@ export default function MUNMentorRegister({ user }) {
     fullName: user?.name || '',
     email: user?.email || '',
     mobile: user?.phone || '',
+    countryCode: '+91',
     schoolName: user?.school || '',
     city: '',
     role: '',
@@ -57,7 +58,7 @@ export default function MUNMentorRegister({ user }) {
           userId: user?.studentId || user?.username || null,
           fullName: form.fullName,
           email: form.email,
-          mobile: form.mobile,
+          mobile: `${form.countryCode} ${form.mobile.trim()}`,
           role: form.role,
           schoolName: form.schoolName,
           city: form.city,
@@ -116,7 +117,7 @@ export default function MUNMentorRegister({ user }) {
         prefill: {
           name: form.fullName,
           email: form.email,
-          contact: form.mobile,
+          contact: `${form.countryCode}${form.mobile.trim()}`,
         },
         theme: {
           color: '#F97316'
@@ -326,9 +327,19 @@ export default function MUNMentorRegister({ user }) {
               <input name="fullName" value={form.fullName} onChange={handleChange} placeholder="Your full name" style={fieldStyle} {...focusHandlers} required />
             </div>
             <div>
-              <label style={labelStyle}>Mobile Number *</label>
-              <input name="mobile" type="tel" value={form.mobile} onChange={handleChange} placeholder="Mobile number" style={fieldStyle} {...focusHandlers} required />
+            <label style={labelStyle}>WhatsApp Number *</label>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <select name="countryCode" value={form.countryCode} onChange={handleChange} style={{ ...fieldStyle, width: '90px', padding: '0.7rem 0.5rem', cursor: 'pointer' }} {...focusHandlers}>
+                <option value="+91">+91</option>
+                <option value="+1">+1</option>
+                <option value="+44">+44</option>
+                <option value="+971">+971</option>
+                <option value="+65">+65</option>
+                <option value="+61">+61</option>
+              </select>
+              <input type="tel" name="mobile" value={form.mobile} onChange={handleChange} placeholder="Enter mobile number" style={{ ...fieldStyle, flex: 1 }} {...focusHandlers} />
             </div>
+          </div>
           </div>
 
           <div>

@@ -9,7 +9,7 @@ const SECTIONS = [
   { id: 'users', label: 'Users' },
   { id: 'subscriptions', label: 'Subscriptions' },
   { id: 'debates', label: 'Debates' },
-  { id: 'bootcamp', label: 'Bootcamp' },
+  { id: 'bootcamp', label: 'Cohort 2.0' },
   { id: 'coupons', label: 'School Coupons' },
   { id: 'munMentor', label: 'MUN Mentor Master Class' },
 ];
@@ -441,7 +441,7 @@ function BootcampSection({ stats, adminToken, apiBase }) {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [statusFilter, setStatusFilter] = useState('all');
-  const [cohortFilter, setCohortFilter] = useState('all');
+  const [cohortFilter, setCohortFilter] = useState('cohort-2');
 
   const fetchBootcamp = useCallback(async () => {
     setLoading(true);
