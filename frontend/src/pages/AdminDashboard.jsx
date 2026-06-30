@@ -436,12 +436,13 @@ function DebatesSection({ stats }) {
 // SECTION: Bootcamp
 // ══════════════════════════════════════════════════
 function BootcampSection({ stats, adminToken, apiBase }) {
-  const b = stats.bootcamp;
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [statusFilter, setStatusFilter] = useState('all');
   const [cohortFilter, setCohortFilter] = useState('cohort-2');
+
+  const b = data?.stats || stats.bootcamp;
 
   const fetchBootcamp = useCallback(async () => {
     setLoading(true);

@@ -2042,7 +2042,17 @@ app.get('/api/admin/bootcamp', requireAdmin, async (req, res) => {
 
     const where = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
 
-    const countRes = await db.query(`SELECT COUNT(*) AS count FROM bootcamp_registrations ${where}`, params);
+    const countRes = await db.query(`
+      SELECT COUNT(*) AS count,
+             SUM(CASE WHEN payment_status = 'paid' THEN 1 ELSE 0 END) AS paid,
+             SUM(CASE WHEN payment_status = 'pending' THEN 1 ELSE 0 END) AS pending
+      FROM bootcamp_registrations ${where}
+    `, params);
+    
+    const gradeRes = await db.query(`
+      SELECT grade, COUNT(*) AS count, SUM(CASE WHEN payment_status = 'paid' THEN 1 ELSE 0 END) AS paid
+      FROM bootcamp_registrations ${where} GROUP BY grade ORDER BY count DESC LIMIT 10
+    `, params);
     const rows = await db.query(
       `SELECT id, student_id, name, email, phone, school, grade, city, category,
               payment_status, razorpay_payment_id, amount, registered_at
@@ -2051,7 +2061,23 @@ app.get('/api/admin/bootcamp', requireAdmin, async (req, res) => {
       [...params, limit, offset]
     );
 
-    res.json({ total: parseInt(countRes.rows[0].count), page, limit, registrations: rows.rows });
+    const statsTotal = parseInt(countRes.rows[0].count || 0);
+    const statsPaid = parseInt(countRes.rows[0].paid || 0);
+    const statsPending = parseInt(countRes.rows[0].pending || 0);
+
+    res.json({
+      stats: {
+        total: statsTotal,
+        paid: statsPaid,
+        pending: statsPending,
+        revenue: statsPaid * 499,
+        byGrade: gradeRes.rows
+      },
+      total: statsTotal,
+      page,
+      limit,
+      registrations: rows.rows,
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
