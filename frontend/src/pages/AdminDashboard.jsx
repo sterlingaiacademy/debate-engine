@@ -439,7 +439,7 @@ function BootcampSection({ stats, adminToken, apiBase }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [statusFilter] = useState('paid');
   const [cohortFilter, setCohortFilter] = useState('cohort-2');
 
   const b = data?.stats || stats.bootcamp;
@@ -466,9 +466,7 @@ function BootcampSection({ stats, adminToken, apiBase }) {
       <SectionTitle>Bootcamp Registrations</SectionTitle>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
-        <StatCard label="Total Registrations" value={b.total} color="#8b5cf6" />
-        <StatCard label="Paid" value={b.paid} sub="Confirmed seats" color="#10b981" />
-        <StatCard label="Pending" value={b.pending} color="#f59e0b" />
+        <StatCard label="Paid Registrations" value={b.paid || b.total} color="#10b981" />
         <StatCard label="Revenue" value={`₹${fmt(b.revenue)}`} sub="From bootcamp registrations" color="#ec4899" />
       </div>
 
@@ -480,7 +478,7 @@ function BootcampSection({ stats, adminToken, apiBase }) {
             {b.byGrade.map(r => (
               <div key={r.grade} style={{ padding: '0.5rem 1rem', background: 'rgba(255,255,255,0.04)', borderRadius: 10, border: '1px solid rgba(255,255,255,0.07)' }}>
                 <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Grade {r.grade || '?'}</div>
-                <div style={{ fontSize: '1rem', fontWeight: 800, color: '#fff' }}>{r.count} <span style={{ fontSize: '0.72rem', color: '#10b981', fontWeight: 700 }}>({r.paid} paid)</span></div>
+                <div style={{ fontSize: '1rem', fontWeight: 800, color: '#fff' }}>{r.count}</div>
               </div>
             ))}
           </div>
@@ -495,14 +493,7 @@ function BootcampSection({ stats, adminToken, apiBase }) {
           <option value="cohort-1">Cohort 1</option>
           <option value="cohort-2">Cohort 2</option>
         </select>
-
-        <select value={statusFilter} onChange={e => { setStatusFilter(e.target.value); setPage(1); }}
-          style={{ padding: '0.5rem 0.9rem', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, color: '#fff', fontSize: '0.875rem', cursor: 'pointer', outline: 'none' }}>
-          <option value="all">All Registrations</option>
-          <option value="paid">Paid Only</option>
-          <option value="pending">Pending Only</option>
-        </select>
-        {data && <span style={{ color: '#64748b', fontSize: '0.82rem' }}>{data.total} records</span>}
+        {data && <span style={{ color: '#64748b', fontSize: '0.82rem' }}>{data.total} paid records</span>}
       </div>
 
       <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
