@@ -153,18 +153,75 @@ export default function MUNMentorRegister({ user }) {
   return (
     <div style={{ maxWidth: 720, margin: '0 auto', paddingBottom: '4rem' }}>
 
-      {/* ── POSTER IMAGE ── */}
+      {/* ── PROGRAMME DETAILS (Extracted from Poster) ── */}
       <div style={{
-        borderRadius: 20, overflow: 'hidden', marginBottom: '2rem',
-        border: '1px solid rgba(255,255,255,0.08)',
-        boxShadow: '0 8px 48px rgba(0,0,0,0.6)',
-        lineHeight: 0,
+        background: 'linear-gradient(145deg, #0f172a 0%, #1e293b 100%)',
+        borderRadius: 24, padding: '3rem 2rem', marginBottom: '2.5rem',
+        border: '1px solid rgba(255,255,255,0.05)',
+        position: 'relative', overflow: 'hidden',
+        boxShadow: '0 10px 30px rgba(0,0,0,0.4)',
       }}>
-        <img
-          src="/mun-mentor-poster.jpg"
-          alt="MUN Mentor Master Class"
-          style={{ width: '100%', height: 'auto', display: 'block' }}
-        />
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 4, background: 'linear-gradient(90deg, #FBBF24, #F97316)' }} />
+        
+        {/* Header */}
+        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(251,191,36,0.1)', color: '#FBBF24', padding: '0.5rem 1.2rem', borderRadius: 99, fontSize: '0.85rem', fontWeight: 800, letterSpacing: '0.1em', border: '1px solid rgba(251,191,36,0.2)', marginBottom: '1.5rem' }}>
+            <Award size={16} /> CERTIFICATE PROGRAMME
+          </div>
+          <h1 style={{ fontSize: '3rem', fontWeight: 900, color: '#fff', margin: '0 0 0.5rem', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
+            MUN Mentor <br/><span style={{ color: '#FBBF24' }}>Master Class</span>
+          </h1>
+          <p style={{ color: '#94a3b8', fontSize: '1.2rem', fontWeight: 600, letterSpacing: '0.05em' }}>
+            INSPIRE LEADERS. SHAPE THE FUTURE.
+          </p>
+          <p style={{ color: '#cbd5e1', fontSize: '1.05rem', margin: '1rem auto 0', maxWidth: 500, lineHeight: 1.6 }}>
+            Exclusive training for Teachers & MUN Coordinators.
+          </p>
+        </div>
+
+        {/* Info Grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '3rem' }}>
+          <div style={{ background: 'rgba(255,255,255,0.03)', padding: '1.5rem', borderRadius: 16, border: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>
+            <Calendar size={32} color="#FBBF24" style={{ margin: '0 auto 1rem' }} />
+            <div style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.2rem' }}>Duration</div>
+            <div style={{ fontSize: '1.25rem', color: '#fff', fontWeight: 800 }}>10 Days</div>
+          </div>
+          <div style={{ background: 'rgba(255,255,255,0.03)', padding: '1.5rem', borderRadius: 16, border: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>
+            <Clock size={32} color="#00d4ff" style={{ margin: '0 auto 1rem' }} />
+            <div style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.2rem' }}>Schedule</div>
+            <div style={{ fontSize: '1.1rem', color: '#fff', fontWeight: 800 }}>Fridays & Saturdays <br/>Evening</div>
+          </div>
+          <div style={{ background: 'rgba(255,255,255,0.03)', padding: '1.5rem', borderRadius: 16, border: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>
+            <div style={{ width: 32, height: 32, borderRadius: '50%', border: '2px solid #10b981', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', fontWeight: 900, margin: '0 auto 1rem' }}>₹</div>
+            <div style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.2rem' }}>Fee</div>
+            <div style={{ fontSize: '1.25rem', color: '#10b981', fontWeight: 800 }}>INR 999/-</div>
+          </div>
+        </div>
+
+        {/* Benefits & Gains */}
+        <div>
+          <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#fff', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '0.8rem', marginBottom: '1.5rem' }}>
+            What You Will Gain
+          </h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem' }}>
+            {[
+              { icon: BookOpen, title: 'Comprehensive MUN Knowledge', desc: 'From basics to advanced strategies' },
+              { icon: Monitor, title: 'Committee Management Skills', desc: 'Plan, organize and run successful MUNs' },
+              { icon: Users, title: 'Student Mentorship Techniques', desc: 'Nurture confident global citizens' },
+              { icon: Globe, title: 'Global Educator Network', desc: 'Connect, collaborate and grow' }
+            ].map((item, i) => (
+              <div key={i} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                <div style={{ width: 40, height: 40, borderRadius: 12, background: 'rgba(251,191,36,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <item.icon size={20} color="#FBBF24" />
+                </div>
+                <div>
+                  <div style={{ color: '#fff', fontWeight: 700, fontSize: '0.95rem', marginBottom: '0.2rem' }}>{item.title}</div>
+                  <div style={{ color: '#94a3b8', fontSize: '0.85rem', lineHeight: 1.4 }}>{item.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* ── REGISTRATION FORM ── */}
