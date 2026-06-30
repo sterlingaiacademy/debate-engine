@@ -681,6 +681,91 @@ function QuizSection({ adminToken, apiBase }) {
 }
 
 // ══════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
+// SECTION: MUN Mentor Master Class Registrations
+// ══════════════════════════════════════════════════
+function MunMentorSection({ adminToken, apiBase }) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [statusFilter, setStatusFilter] = useState('all');
+
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${apiBase}/api/munmentor/registrations`, {
+        headers: { Authorization: `Bearer ${adminToken}` }
+      });
+      const d = await res.json();
+      setData(d);
+    } catch (e) { console.error(e); }
+    setLoading(false);
+  }, [adminToken, apiBase]);
+
+  useEffect(() => { fetchData(); }, [fetchData]);
+
+  const regs = data?.registrations || [];
+  const filtered = statusFilter === 'all' ? regs : regs.filter(r => r.payment_status === statusFilter);
+
+  return (
+    <div>
+      <SectionTitle>MUN Mentor Master Class</SectionTitle>
+      
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+        <StatCard label="Total Registrations" value={regs.length} color="#FBBF24" />
+        <StatCard label="Paid" value={regs.filter(r => r.payment_status === 'paid').length} color="#10b981" />
+        <StatCard label="Revenue" value={`₹${regs.filter(r => r.payment_status === 'paid').reduce((a,b) => a + (b.amount/100), 0).toLocaleString()}`} color="#10b981" />
+      </div>
+
+      <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem', alignItems: 'center' }}>
+        <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)}
+          style={{ padding: '0.5rem 0.9rem', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, color: '#fff', fontSize: '0.875rem', cursor: 'pointer', outline: 'none' }}>
+          <option value="all">All Registrations</option>
+          <option value="paid">Paid Only</option>
+          <option value="pending">Pending Only</option>
+        </select>
+        <span style={{ color: '#64748b', fontSize: '0.82rem' }}>{filtered.length} records</span>
+      </div>
+
+      <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
+        {loading ? (
+          <div style={{ textAlign: 'center', padding: '3rem', color: '#64748b' }}>Loading…</div>
+        ) : (
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <TableHead cols={['Name', 'Email', 'Phone', 'Role', 'Experience', 'School/Inst.', 'City', 'Status', 'Registered']} />
+              <tbody>
+                {filtered.map((r, i) => (
+                  <TableRow key={r.id} idx={i}>
+                    <TD>{r.full_name}</TD>
+                    <TD>{r.email || '—'}</TD>
+                    <TD mono>{r.mobile}</TD>
+                    <TD>{r.role || '—'}</TD>
+                    <TD>{r.experience_years || '—'}</TD>
+                    <TD>{r.school_name || '—'}</TD>
+                    <TD>{r.city || '—'}</TD>
+                    <TD>
+                      <span style={{ padding: '2px 8px', borderRadius: 99, fontSize: '0.72rem', fontWeight: 700,
+                        background: r.payment_status === 'paid' ? 'rgba(16,185,129,0.12)' : 'rgba(245,158,11,0.12)',
+                        color: r.payment_status === 'paid' ? '#10b981' : '#f59e0b',
+                        border: `1px solid ${r.payment_status === 'paid' ? '#10b98130' : '#f59e0b30'}`,
+                      }}>
+                        {r.payment_status}
+                      </span>
+                    </TD>
+                    <TD>{fmtDate(r.registered_at)}</TD>
+                  </TableRow>
+                ))}
+                {!filtered.length && <tr><td colSpan={9} style={{ textAlign: 'center', padding: '2rem', color: '#64748b' }}>No registrations found</td></tr>}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════════════════════
 // MAIN ADMIN DASHBOARD
 // ══════════════════════════════════════════════════
 export default function AdminDashboard() {
@@ -846,6 +931,7 @@ export default function AdminDashboard() {
               {activeSection === 'bootcamp' && <BootcampSection stats={stats} adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'coupons' && <CouponsSection stats={stats} />}
               {activeSection === 'quiz' && <QuizSection adminToken={adminToken} apiBase={apiBase} />}
+              {activeSection === 'munMentor' && <MunMentorSection adminToken={adminToken} apiBase={apiBase} />}
             </>
           ) : null}
         </div>

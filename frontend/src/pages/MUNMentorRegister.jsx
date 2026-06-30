@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Calendar, Clock, Monitor, Award, ChevronRight, CheckCircle2, Globe, Users, BookOpen } from 'lucide-react';
 import { API_BASE } from '../api';
 
-const ROLES = [
-  'Teacher', 'MUN Coordinator', 'Principal', 'Other'
-];
+const ROLES = ['Teacher', 'MUN Coordinator', 'Principal', 'Other'];
+const EXPERIENCES = ['0-2 years', '3-5 years', '5+ years'];
+const HEAR_ABOUT = ['Social Media', 'Email Newsletter', 'Colleague/Friend', 'Other'];
 
 export default function MUNMentorRegister({ user }) {
   const navigate = useNavigate();
@@ -16,17 +16,35 @@ export default function MUNMentorRegister({ user }) {
     schoolName: user?.school || '',
     city: '',
     role: '',
+    experience: '',
+    reason: '',
+    hearAbout: '',
   });
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState(null);
   const [errorMsg, setErrorMsg] = useState('');
+  const [razorpayReady, setRazorpayReady] = useState(typeof window !== 'undefined' && !!window.Razorpay);
+
+  useEffect(() => {
+    if (window.Razorpay) { setRazorpayReady(true); return; }
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.async = true;
+    script.onload = () => setRazorpayReady(true);
+    document.body.appendChild(script);
+    return () => { if (document.body.contains(script)) document.body.removeChild(script); };
+  }, []);
 
   const handleChange = (e) => setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.fullName || !form.email || !form.mobile || !form.role || !form.schoolName) {
+    if (!form.fullName || !form.email || !form.mobile || !form.role || !form.schoolName || !form.experience) {
       setErrorMsg('Please fill in all required fields.');
+      return;
+    }
+    if (!razorpayReady) {
+      setErrorMsg('Payment gateway is still loading. Please wait a moment.');
       return;
     }
     setSubmitting(true);
@@ -43,19 +61,77 @@ export default function MUNMentorRegister({ user }) {
           role: form.role,
           schoolName: form.schoolName,
           city: form.city,
+          experience: form.experience,
+          reason: form.reason,
+          hearAbout: form.hearAbout,
         }),
       });
       const data = await res.json();
-      if (res.ok && data.success) {
-        setStatus('success');
-      } else if (res.status === 409) {
+      
+      if (res.status === 409) {
         setStatus('already');
-      } else {
-        setErrorMsg(data.error || 'Registration failed. Please try again.');
+        setSubmitting(false);
+        return;
       }
-    } catch {
-      setErrorMsg('Network error. Please try again.');
-    } finally {
+      
+      if (!res.ok) throw new Error(data.error || 'Failed to initialize payment.');
+
+      const options = {
+        key: 'rzp_live_SpxzVJVdO5A5xr',
+        amount: data.amount,
+        currency: 'INR',
+        name: 'MUN Mentor Master Class',
+        description: 'Certificate Programme Registration',
+        order_id: data.orderId,
+        handler: async function (response) {
+          try {
+            const verifyRes = await fetch(`${API_BASE}/api/munmentor/verify-payment`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                registrationId: data.registrationId,
+              }),
+            });
+            const verifyData = await verifyRes.json();
+            if (verifyRes.ok && verifyData.success) {
+              setStatus('success');
+            } else {
+              setErrorMsg('Payment verification failed. Please contact support.');
+            }
+          } catch {
+            setErrorMsg('Payment verification error. Please contact support.');
+          } finally {
+            setSubmitting(false);
+          }
+        },
+        modal: {
+          ondismiss: function() {
+            setSubmitting(false);
+            setErrorMsg('Payment was cancelled. Please try again.');
+          }
+        },
+        prefill: {
+          name: form.fullName,
+          email: form.email,
+          contact: form.mobile,
+        },
+        theme: {
+          color: '#F97316'
+        }
+      };
+      
+      const rzp = new window.Razorpay(options);
+      rzp.on('payment.failed', function (response) {
+        setErrorMsg(`Payment Failed: ${response.error.description}`);
+        setSubmitting(false);
+      });
+      rzp.open();
+      
+    } catch (err) {
+      setErrorMsg(err.message || 'Network error. Please try again.');
       setSubmitting(false);
     }
   };
@@ -102,7 +178,7 @@ export default function MUNMentorRegister({ user }) {
             Registration Successful!
           </h2>
           <p style={{ color: '#94a3b8', fontSize: '1.05rem', lineHeight: 1.6, margin: '0 0 2.5rem' }}>
-            Thank you for registering for the <strong>MUN Mentor Master Class</strong>. We will contact you soon with further details.
+            Thank you for registering for the <strong>MUN Mentor Master Class</strong>. Your payment was successful and we will contact you soon with further details.
           </p>
           <button
             onClick={() => navigate('/dashboard')}
@@ -132,7 +208,7 @@ export default function MUNMentorRegister({ user }) {
             Already Registered
           </h2>
           <p style={{ color: '#94a3b8', fontSize: '0.95rem', lineHeight: 1.65, margin: '0 0 2.5rem' }}>
-            You have already registered for the MUN Mentor Master Class.
+            You have already registered and paid for the MUN Mentor Master Class.
           </p>
           <button
             onClick={() => navigate('/dashboard')}
@@ -233,16 +309,17 @@ export default function MUNMentorRegister({ user }) {
       }}>
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg, #FBBF24, #F97316)' }} />
 
-        <div style={{ marginBottom: '2rem' }}>
+        <div style={{ marginBottom: '2.5rem' }}>
           <h2 style={{ fontSize: '1.35rem', fontWeight: 900, color: '#fff', margin: '0 0 0.35rem', letterSpacing: '-0.02em' }}>
             Register for the Master Class
           </h2>
           <p style={{ color: '#475569', fontSize: '0.85rem', margin: 0, lineHeight: 1.5 }}>
-            Fill in your details below to register. We will reach out to you with the payment link for the INR 999/- fee.
+            Fill in your details below to register. You will be prompted to complete the payment of INR 999 securely via Razorpay.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.4rem' }}>
+          
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem' }}>
             <div>
               <label style={labelStyle}>Full Name *</label>
@@ -270,14 +347,40 @@ export default function MUNMentorRegister({ user }) {
               </select>
             </div>
             <div>
+              <label style={labelStyle}>Years of Experience *</label>
+              <select name="experience" value={form.experience} onChange={handleChange} style={{ ...fieldStyle, cursor: 'pointer' }} {...focusHandlers} required>
+                <option value="" style={{ background: '#0a0a0a' }}>Select experience level</option>
+                {EXPERIENCES.map(e => (
+                  <option key={e} value={e} style={{ background: '#0a0a0a' }}>{e}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem' }}>
+            <div>
+              <label style={labelStyle}>School / Institution Name *</label>
+              <input name="schoolName" value={form.schoolName} onChange={handleChange} placeholder="Full name of your school" style={fieldStyle} {...focusHandlers} required />
+            </div>
+            <div>
               <label style={labelStyle}>City</label>
               <input name="city" value={form.city} onChange={handleChange} placeholder="Your city" style={fieldStyle} {...focusHandlers} />
             </div>
           </div>
+          
+          <div>
+            <label style={labelStyle}>Why do you want to join this Master Class?</label>
+            <textarea name="reason" value={form.reason} onChange={handleChange} placeholder="Briefly describe your goals..." style={{ ...fieldStyle, minHeight: '80px', resize: 'vertical' }} {...focusHandlers} />
+          </div>
 
           <div>
-            <label style={labelStyle}>School / Institution Name *</label>
-            <input name="schoolName" value={form.schoolName} onChange={handleChange} placeholder="Full name of your school" style={fieldStyle} {...focusHandlers} required />
+            <label style={labelStyle}>How did you hear about us?</label>
+            <select name="hearAbout" value={form.hearAbout} onChange={handleChange} style={{ ...fieldStyle, cursor: 'pointer' }} {...focusHandlers}>
+              <option value="" style={{ background: '#0a0a0a' }}>Select an option</option>
+              {HEAR_ABOUT.map(h => (
+                <option key={h} value={h} style={{ background: '#0a0a0a' }}>{h}</option>
+              ))}
+            </select>
           </div>
 
           {errorMsg && (
@@ -288,19 +391,21 @@ export default function MUNMentorRegister({ user }) {
 
           <button
             type="submit"
-            disabled={submitting}
+            disabled={submitting || !razorpayReady}
             style={{
-              background: submitting ? 'rgba(251,191,36,0.5)' : 'linear-gradient(135deg, #FBBF24, #F59E0B)',
-              color: '#1a1a1a', border: 'none', padding: '1rem 2rem',
-              borderRadius: 12, fontWeight: 900, fontSize: '1rem',
-              cursor: submitting ? 'not-allowed' : 'pointer',
+              background: (submitting || !razorpayReady) ? 'rgba(251,191,36,0.5)' : 'linear-gradient(135deg, #FBBF24, #F59E0B)',
+              color: '#1a1a1a', border: 'none', padding: '1.1rem 2rem',
+              borderRadius: 12, fontWeight: 900, fontSize: '1.05rem',
+              cursor: (submitting || !razorpayReady) ? 'not-allowed' : 'pointer',
               boxShadow: '0 4px 20px rgba(251,191,36,0.3)',
               transition: 'all 0.2s',
               letterSpacing: '0.02em',
-              marginTop: '0.5rem'
+              marginTop: '1rem',
+              display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem'
             }}
           >
-            {submitting ? 'Registering...' : 'Complete Registration'}
+            {!razorpayReady ? 'Loading Gateway...' : submitting ? 'Processing...' : 'Register & Pay INR 999'} 
+            {(!submitting && razorpayReady) && <ChevronRight size={18} strokeWidth={2.5} />}
           </button>
         </form>
       </div>

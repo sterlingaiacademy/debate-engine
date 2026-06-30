@@ -2334,37 +2334,92 @@ async function ensureMunMentorRegistrationsTable() {
       school_name TEXT NOT NULL,
       city TEXT,
       role TEXT NOT NULL,
+      experience_years TEXT,
+      reason TEXT,
+      hear_about TEXT,
+      payment_status TEXT DEFAULT 'pending',
+      razorpay_order_id TEXT,
+      razorpay_payment_id TEXT,
+      amount INTEGER DEFAULT 99900,
       registered_at TIMESTAMPTZ DEFAULT NOW()
     )
   `);
+  // Add new columns if table already existed without them
+  const cols = ['experience_years TEXT', 'reason TEXT', 'hear_about TEXT', 'payment_status TEXT DEFAULT \'pending\'', 'razorpay_order_id TEXT', 'razorpay_payment_id TEXT', 'amount INTEGER DEFAULT 99900'];
+  for (const col of cols) {
+    const colName = col.split(' ')[0];
+    await db.query(`ALTER TABLE mun_mentor_registrations ADD COLUMN IF NOT EXISTS ${col}`).catch(() => {});
+  }
 }
+ensureMunMentorRegistrationsTable().catch(console.error);
 
 // POST /api/munmentor/register
 app.post('/api/munmentor/register', async (req, res) => {
   try {
-    const { userId, fullName, email, mobile, schoolName, city, role } = req.body;
+    const { userId, fullName, email, mobile, schoolName, city, role, experience, reason, hearAbout } = req.body;
     if (!fullName || !email || !mobile || !schoolName || !role) {
       return res.status(400).json({ error: 'All required fields must be filled.' });
     }
-    await ensureMunMentorRegistrationsTable();
-    if (userId) {
-      const dup = await db.query(`SELECT id FROM mun_mentor_registrations WHERE user_id = $1`, [userId]);
-      if (dup.rows.length > 0) {
-        return res.status(409).json({ error: 'already_registered', message: 'You have already registered for the MUN Mentor Master Class.' });
-      }
-    }
-    const emailDup = await db.query(`SELECT id FROM mun_mentor_registrations WHERE email = $1`, [email]);
-    if (emailDup.rows.length > 0) {
-      return res.status(409).json({ error: 'already_registered', message: 'This email is already registered.' });
-    }
-    const result = await db.query(
-      `INSERT INTO mun_mentor_registrations (user_id, full_name, email, mobile, school_name, city, role)
-       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id, registered_at`,
-      [userId || null, fullName, email, mobile, schoolName, city || '', role]
+    
+    // Check if already paid for this email
+    const emailDup = await db.query(
+      `SELECT id FROM mun_mentor_registrations WHERE email = $1 AND payment_status = 'paid'`, 
+      [email]
     );
-    res.json({ success: true, registrationId: result.rows[0].id, registeredAt: result.rows[0].registered_at });
+    if (emailDup.rows.length > 0) {
+      return res.status(409).json({ error: 'already_registered', message: 'This email is already registered and paid for the MUN Mentor Master Class.' });
+    }
+
+    const amountPaise = 99900; // ₹999 in paise
+
+    // Create Razorpay Order
+    const order = await razorpayInstance.orders.create({
+      amount: amountPaise,
+      currency: 'INR',
+      receipt: `munmentor_${Date.now()}`,
+      notes: { programme: 'MUN Mentor Master Class', userId: userId || '', fullName, mobile, school: schoolName || '' },
+    });
+
+    const result = await db.query(
+      `INSERT INTO mun_mentor_registrations 
+        (user_id, full_name, email, mobile, school_name, city, role, experience_years, reason, hear_about, razorpay_order_id, amount)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id, registered_at`,
+      [
+        userId || null, fullName, email, mobile, schoolName, city || '', role,
+        experience || '', reason || '', hearAbout || '', order.id, amountPaise
+      ]
+    );
+    res.json({ success: true, orderId: order.id, amount: amountPaise, registrationId: result.rows[0].id });
   } catch (err) {
     console.error('MUN Mentor register error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// POST /api/munmentor/verify-payment
+app.post('/api/munmentor/verify-payment', async (req, res) => {
+  try {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, registrationId } = req.body;
+    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !registrationId) {
+      return res.status(400).json({ error: 'Missing payment details' });
+    }
+
+    const secret = process.env.RAZORPAY_SECRET || 'KTWnYhmt800Y7TSQ6Cc6TBpF';
+    const body = razorpay_order_id + '|' + razorpay_payment_id;
+    const expectedSignature = crypto.createHmac('sha256', secret).update(body).digest('hex');
+
+    if (expectedSignature !== razorpay_signature) {
+      return res.status(400).json({ error: 'Invalid payment signature' });
+    }
+
+    await db.query(
+      `UPDATE mun_mentor_registrations SET payment_status = 'paid', razorpay_payment_id = $1 WHERE id = $2`,
+      [razorpay_payment_id, registrationId]
+    );
+
+    res.json({ success: true, message: 'Registration confirmed! Welcome to the MUN Mentor Master Class.' });
+  } catch (err) {
+    console.error('MUN Mentor verify error:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -2374,7 +2429,8 @@ app.get('/api/munmentor/registrations', requireAdmin, async (req, res) => {
   try {
     await ensureMunMentorRegistrationsTable();
     const result = await db.query(
-      `SELECT id, user_id, full_name, email, mobile, school_name, city, role, registered_at
+      `SELECT id, user_id, full_name, email, mobile, school_name, city, role, 
+              experience_years, reason, hear_about, payment_status, razorpay_payment_id, amount, registered_at
        FROM mun_mentor_registrations ORDER BY registered_at DESC`
     );
     res.json({ total: result.rows.length, registrations: result.rows });
