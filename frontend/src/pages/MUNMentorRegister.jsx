@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Calendar, Clock, Monitor, Award, ChevronRight, CheckCircle2, Globe, Users, BookOpen } from 'lucide-react';
 import { API_BASE } from '../api';
+import { COUNTRY_CODES } from '../countryCodes';
 
 const ROLES = ['Teacher', 'MUN Coordinator', 'Principal', 'Other'];
 const EXPERIENCES = ['0-2 years', '3-5 years', '5+ years'];
@@ -330,12 +331,11 @@ export default function MUNMentorRegister({ user }) {
             <label style={labelStyle}>WhatsApp Number *</label>
             <div style={{ display: 'flex', gap: '0.5rem' }}>
               <select name="countryCode" value={form.countryCode} onChange={handleChange} style={{ ...fieldStyle, width: '90px', padding: '0.7rem 0.5rem', cursor: 'pointer' }} {...focusHandlers}>
-                <option value="+91" style={{ background: '#0a0a0a', color: '#fff' }}>+91</option>
-                <option value="+1" style={{ background: '#0a0a0a', color: '#fff' }}>+1</option>
-                <option value="+44" style={{ background: '#0a0a0a', color: '#fff' }}>+44</option>
-                <option value="+971" style={{ background: '#0a0a0a', color: '#fff' }}>+971</option>
-                <option value="+65" style={{ background: '#0a0a0a', color: '#fff' }}>+65</option>
-                <option value="+61" style={{ background: '#0a0a0a', color: '#fff' }}>+61</option>
+                {COUNTRY_CODES.map((c, i) => (
+                  <option key={i} value={c.code} style={{ background: '#0a0a0a', color: '#fff' }}>
+                    {c.code}
+                  </option>
+                ))}
               </select>
               <input type="tel" name="mobile" value={form.mobile} onChange={handleChange} placeholder="Enter mobile number" style={{ ...fieldStyle, flex: 1 }} {...focusHandlers} />
             </div>
