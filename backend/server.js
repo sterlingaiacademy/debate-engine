@@ -1870,14 +1870,18 @@ app.get('/api/admin/stats', requireAdmin, async (req, res) => {
     const bootcampRes = await db.query(`
       SELECT COUNT(*) AS total,
              SUM(CASE WHEN payment_status = 'paid' THEN 1 ELSE 0 END) AS paid,
-             SUM(CASE WHEN payment_status = 'pending' THEN 1 ELSE 0 END) AS pending
-      FROM bootcamp_registrations
+             SUM(CASE WHEN payment_status = 'pending' THEN 1 ELSE 0 END) AS pending,
+             cohort
+      FROM bootcamp_registrations GROUP BY cohort
     `);
     const bootcampByGradeRes = await db.query(`
       SELECT grade, COUNT(*) AS count, SUM(CASE WHEN payment_status = 'paid' THEN 1 ELSE 0 END) AS paid
       FROM bootcamp_registrations GROUP BY grade ORDER BY count DESC LIMIT 10
     `);
-    const bootcampRevenue = (parseInt(bootcampRes.rows[0]?.paid || 0)) * 499;
+    const bootcampTotal = bootcampRes.rows.reduce((sum, row) => sum + parseInt(row.total || 0), 0);
+    const bootcampPaid = bootcampRes.rows.reduce((sum, row) => sum + parseInt(row.paid || 0), 0);
+    const bootcampPending = bootcampRes.rows.reduce((sum, row) => sum + parseInt(row.pending || 0), 0);
+    const bootcampRevenue = bootcampPaid * 499;
 
     // === SCHOOL COUPONS ===
     let schoolCoupons = { total: 0, used: 0, unused: 0, batches: [] };
@@ -1948,11 +1952,12 @@ app.get('/api/admin/stats', requireAdmin, async (req, res) => {
         byLevel: debateByLevelRes.rows,
       },
       bootcamp: {
-        total: parseInt(bootcampRes.rows[0]?.total || 0),
-        paid: parseInt(bootcampRes.rows[0]?.paid || 0),
-        pending: parseInt(bootcampRes.rows[0]?.pending || 0),
+        total: bootcampTotal,
+        paid: bootcampPaid,
+        pending: bootcampPending,
         revenue: bootcampRevenue,
         byGrade: bootcampByGradeRes.rows,
+        cohorts: bootcampRes.rows,
       },
       schoolCoupons,
       gforceTokensIssued: Math.round(parseFloat(tokenRes.rows[0]?.total || 0)),
@@ -2022,8 +2027,20 @@ app.get('/api/admin/bootcamp', requireAdmin, async (req, res) => {
     const offset = (page - 1) * limit;
     const status = req.query.status || null;
 
-    const where = status && status !== 'all' ? `WHERE payment_status = $1` : '';
-    const params = status && status !== 'all' ? [status] : [];
+    const cohortFilter = req.query.cohort || 'all';
+
+    let conditions = [];
+    let params = [];
+    if (status && status !== 'all') {
+      params.push(status);
+      conditions.push(`payment_status = $${params.length}`);
+    }
+    if (cohortFilter !== 'all') {
+      params.push(cohortFilter);
+      conditions.push(`cohort = $${params.length}`);
+    }
+
+    const where = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
 
     const countRes = await db.query(`SELECT COUNT(*) AS count FROM bootcamp_registrations ${where}`, params);
     const rows = await db.query(
@@ -2168,13 +2185,13 @@ ensureBootcampTable().catch(console.error);
 // POST /api/bootcamp/register — Create Razorpay order + save pending registration
 app.post('/api/bootcamp/register', async (req, res) => {
   try {
-    const { studentId, name, email, phone, school, grade, city, category, achievements, hearAbout, questions } = req.body;
+    const { studentId, name, email, phone, school, grade, city, category, achievements, hearAbout, questions, cohort = 'cohort-1' } = req.body;
     if (!name || !phone) return res.status(400).json({ error: 'Name and phone are required' });
 
     // Check if already paid for this phone number
     const existing = await db.query(
-      `SELECT id, payment_status FROM bootcamp_registrations WHERE phone = $1 AND cohort = 'cohort-1' AND payment_status = 'paid'`,
-      [phone]
+      `SELECT id, payment_status FROM bootcamp_registrations WHERE phone = $1 AND cohort = $2 AND payment_status = 'paid'`,
+      [phone, cohort]
     );
     if (existing.rows.length > 0) {
       return res.status(400).json({ error: 'This phone number has already registered for Cohort 1.' });
@@ -2187,19 +2204,19 @@ app.post('/api/bootcamp/register', async (req, res) => {
       amount: amountPaise,
       currency: 'INR',
       receipt: `bootcamp_${Date.now()}`,
-      notes: { programme: 'G-Talk Cohort 1', studentId: studentId || '', name, phone, school: school || '', grade: grade || '', city: city || '', category: category || '' },
+      notes: { programme: 'G-Talk ' + cohort, studentId: studentId || '', name, phone, school: school || '', grade: grade || '', city: city || '', category: category || '' },
     });
 
     // Save pending registration with all fields
     const insertRes = await db.query(
       `INSERT INTO bootcamp_registrations
-         (student_id, name, email, phone, school, grade, city, category, achievements, hear_about, questions, razorpay_order_id, amount)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING id`,
+         (student_id, name, email, phone, school, grade, city, category, achievements, hear_about, questions, razorpay_order_id, amount, cohort)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14) RETURNING id`,
       [
         studentId || '', name, email || null, phone,
         school || '', grade || '', city || '', category || '',
         achievements || '', hearAbout || '', questions || '',
-        order.id, amountPaise
+        order.id, amountPaise, cohort
       ]
     );
 

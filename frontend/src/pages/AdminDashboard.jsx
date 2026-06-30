@@ -441,12 +441,14 @@ function BootcampSection({ stats, adminToken, apiBase }) {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [statusFilter, setStatusFilter] = useState('all');
+  const [cohortFilter, setCohortFilter] = useState('all');
 
   const fetchBootcamp = useCallback(async () => {
     setLoading(true);
     try {
       const params = new URLSearchParams({ page });
       if (statusFilter !== 'all') params.set('status', statusFilter);
+      if (cohortFilter !== 'all') params.set('cohort', cohortFilter);
       const res = await fetch(`${apiBase}/api/admin/bootcamp?${params}`, {
         headers: { Authorization: `Bearer ${adminToken}` }
       });
@@ -454,7 +456,7 @@ function BootcampSection({ stats, adminToken, apiBase }) {
       setData(d);
     } catch (e) { console.error(e); }
     setLoading(false);
-  }, [page, statusFilter, adminToken, apiBase]);
+  }, [page, statusFilter, cohortFilter, adminToken, apiBase]);
 
   useEffect(() => { fetchBootcamp(); }, [fetchBootcamp]);
 
@@ -486,6 +488,13 @@ function BootcampSection({ stats, adminToken, apiBase }) {
 
       {/* Registrations table */}
       <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem', alignItems: 'center' }}>
+        <select value={cohortFilter} onChange={e => { setCohortFilter(e.target.value); setPage(1); }}
+          style={{ padding: '0.5rem 0.9rem', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, color: '#fff', fontSize: '0.875rem', cursor: 'pointer', outline: 'none' }}>
+          <option value="all">All Cohorts</option>
+          <option value="cohort-1">Cohort 1</option>
+          <option value="cohort-2">Cohort 2</option>
+        </select>
+
         <select value={statusFilter} onChange={e => { setStatusFilter(e.target.value); setPage(1); }}
           style={{ padding: '0.5rem 0.9rem', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, color: '#fff', fontSize: '0.875rem', cursor: 'pointer', outline: 'none' }}>
           <option value="all">All Registrations</option>

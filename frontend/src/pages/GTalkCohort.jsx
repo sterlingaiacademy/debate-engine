@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 
 const COHORT_DETAILS = {
-  name: 'G-Talk Cohort 1',
+  name: 'G-Talk Cohort 2',
   tagline: 'Speech & Debate Bootcamp',
   price: '₹499',
   originalPrice: '₹4,999',
@@ -360,7 +360,7 @@ export default function GTalkCohort({ user }) {
         </button>
       </div>
     </div>
-    {showModal && <BootcampModal user={user} onDismiss={() => setShowModal(false)} />}
+    {showModal && <BootcampModal user={user} onDismiss={() => setShowModal(false)} cohort="cohort-2" />}
     </>
   );
 }

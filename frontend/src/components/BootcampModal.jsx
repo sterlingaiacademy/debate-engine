@@ -60,7 +60,7 @@ const labelStyle = {
 
 const errorStyle = { color: '#ef4444', fontSize: '0.72rem', marginTop: '0.25rem' };
 
-export default function BootcampModal({ user, onDismiss }) {
+export default function BootcampModal({ user, onDismiss, cohort = 'cohort-1' }) {
   const [step, setStep] = useState('info'); // 'info' | 'form' | 'paying' | 'success'
   const [form, setForm] = useState({
     name: user?.name || '',
@@ -116,6 +116,7 @@ export default function BootcampModal({ user, onDismiss }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           studentId: user?.studentId || user?.username || '',
+          cohort,
           name: form.name.trim(),
           email: form.email.trim(),
           phone: form.phone.trim(),

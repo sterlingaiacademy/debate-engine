@@ -559,7 +559,7 @@ export default function Dashboard({ user, setUser }) {
           
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
             <span style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.12em', color: '#a855f7', background: 'rgba(168,85,247,0.1)', border: '1px solid rgba(168,85,247,0.22)', padding: '0.2rem 0.65rem', borderRadius: 99 }}>
-              LIVE COHORT
+              LIVE COHORT 2.0
             </span>
             <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(168,85,247,0.1)', border: '1px solid rgba(168,85,247,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Users size={16} color="#a855f7" strokeWidth={2.5} />
@@ -567,7 +567,7 @@ export default function Dashboard({ user, setUser }) {
           </div>
 
           <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fff', marginBottom: '0.25rem', letterSpacing: '-0.01em' }}>
-            G-Talk <span style={{ color: '#a855f7' }}>Cohort 1.0</span>
+            G-Talk <span style={{ color: '#a855f7' }}>Cohort 2</span>
           </div>
           <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '1rem', lineHeight: 1.5 }}>
             Master Public Speaking & Debating with live online sessions, interactive exercises, and peer feedback.
