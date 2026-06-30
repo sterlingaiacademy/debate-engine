@@ -2360,6 +2360,7 @@ app.post('/api/munmentor/register', async (req, res) => {
     if (!fullName || !email || !mobile || !schoolName || !role) {
       return res.status(400).json({ error: 'All required fields must be filled.' });
     }
+    await ensureMunMentorRegistrationsTable();
     
     // Check if already paid for this email
     const emailDup = await db.query(
