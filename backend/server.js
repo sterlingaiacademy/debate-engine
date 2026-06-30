@@ -2320,3 +2320,65 @@ app.get('/api/quiz/registrations', requireAdmin, async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// --- MUN Mentor Master Class Registrations ---
+
+async function ensureMunMentorRegistrationsTable() {
+  await db.query(`
+    CREATE TABLE IF NOT EXISTS mun_mentor_registrations (
+      id SERIAL PRIMARY KEY,
+      user_id TEXT REFERENCES users(student_id),
+      full_name TEXT NOT NULL,
+      email TEXT NOT NULL,
+      mobile TEXT NOT NULL,
+      school_name TEXT NOT NULL,
+      city TEXT,
+      role TEXT NOT NULL,
+      registered_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `);
+}
+
+// POST /api/munmentor/register
+app.post('/api/munmentor/register', async (req, res) => {
+  try {
+    const { userId, fullName, email, mobile, schoolName, city, role } = req.body;
+    if (!fullName || !email || !mobile || !schoolName || !role) {
+      return res.status(400).json({ error: 'All required fields must be filled.' });
+    }
+    await ensureMunMentorRegistrationsTable();
+    if (userId) {
+      const dup = await db.query(`SELECT id FROM mun_mentor_registrations WHERE user_id = $1`, [userId]);
+      if (dup.rows.length > 0) {
+        return res.status(409).json({ error: 'already_registered', message: 'You have already registered for the MUN Mentor Master Class.' });
+      }
+    }
+    const emailDup = await db.query(`SELECT id FROM mun_mentor_registrations WHERE email = $1`, [email]);
+    if (emailDup.rows.length > 0) {
+      return res.status(409).json({ error: 'already_registered', message: 'This email is already registered.' });
+    }
+    const result = await db.query(
+      `INSERT INTO mun_mentor_registrations (user_id, full_name, email, mobile, school_name, city, role)
+       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id, registered_at`,
+      [userId || null, fullName, email, mobile, schoolName, city || '', role]
+    );
+    res.json({ success: true, registrationId: result.rows[0].id, registeredAt: result.rows[0].registered_at });
+  } catch (err) {
+    console.error('MUN Mentor register error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/munmentor/registrations — Admin
+app.get('/api/munmentor/registrations', requireAdmin, async (req, res) => {
+  try {
+    await ensureMunMentorRegistrationsTable();
+    const result = await db.query(
+      `SELECT id, user_id, full_name, email, mobile, school_name, city, role, registered_at
+       FROM mun_mentor_registrations ORDER BY registered_at DESC`
+    );
+    res.json({ total: result.rows.length, registrations: result.rows });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});

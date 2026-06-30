@@ -501,71 +501,42 @@ export default function Dashboard({ user, setUser }) {
         )}
       </div>
 
-      {/* ── Event Tiles (UN Quiz + Cohort) ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%,280px), 1fr))', gap: '1rem' }}>
-        {/* UN Quiz Contest Tile */}
+      {/* ── Event Tiles (MUN Mentor Master Class) ── */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem' }}>
+        {/* MUN Mentor Master Class Tile */}
         <div
-          onClick={() => navigate('/quiz-register')}
+          onClick={() => navigate('/mun-mentor')}
           style={{
             borderRadius: 18, padding: '1.4rem 1.5rem', cursor: 'pointer',
             background: 'linear-gradient(135deg, #0c0e1a 0%, #0e1525 100%)',
-            border: '1px solid rgba(249,115,22,0.18)',
+            border: '1px solid rgba(251,191,36,0.18)',
             position: 'relative', overflow: 'hidden',
             transition: 'transform 0.25s, box-shadow 0.25s',
             boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
           }}
-          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(249,115,22,0.2)'; }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(251,191,36,0.2)'; }}
           onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)'; }}
         >
-          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #E8392A, #F97316, #FBBF24)' }} />
-          <div style={{ position: 'absolute', top: -40, right: -40, width: 130, height: 130, borderRadius: '50%', background: 'radial-gradient(circle, rgba(249,115,22,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #FBBF24, #F97316)' }} />
+          <div style={{ position: 'absolute', top: -40, right: -40, width: 130, height: 130, borderRadius: '50%', background: 'radial-gradient(circle, rgba(251,191,36,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
+          
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
-            <span style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.12em', color: '#F97316', background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.22)', padding: '0.2rem 0.65rem', borderRadius: 99 }}>CONTEST</span>
-            <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Globe size={16} color="#F97316" strokeWidth={2.5} />
+            <span style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.12em', color: '#FBBF24', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.22)', padding: '0.2rem 0.65rem', borderRadius: 99 }}>
+              MASTER CLASS
+            </span>
+            <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Award size={16} color="#FBBF24" strokeWidth={2.5} />
             </div>
           </div>
-          <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fff', marginBottom: '0.25rem', letterSpacing: '-0.01em' }}>
-            UN <span style={{ color: '#FBBF24' }}>Quiz</span> Contest
-          </div>
-          <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '1rem', lineHeight: 1.5 }}>
-            28 June 2026 &bull; 10:00 AM IST &bull; Online &mdash; Win exciting prizes!
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#F97316' }}>
-            Register Now <ChevronRight size={14} />
-          </div>
-        </div>
 
-        {/* Cohort Tile */}
-        <div
-          onClick={() => navigate('/gtalk-cohort')}
-          style={{
-            borderRadius: 18, padding: '1.4rem 1.5rem', cursor: 'pointer',
-            background: 'linear-gradient(135deg, #0c0e1a 0%, #0e1525 100%)',
-            border: '1px solid rgba(0,212,255,0.15)',
-            position: 'relative', overflow: 'hidden',
-            transition: 'transform 0.25s, box-shadow 0.25s',
-            boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
-          }}
-          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(0,212,255,0.15)'; }}
-          onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)'; }}
-        >
-          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #00d4ff, #10b981)' }} />
-          <div style={{ position: 'absolute', top: -40, right: -40, width: 130, height: 130, borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
-            <span style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.12em', color: '#00d4ff', background: 'rgba(0,212,255,0.08)', border: '1px solid rgba(0,212,255,0.2)', padding: '0.2rem 0.65rem', borderRadius: 99 }}>COHORT</span>
-            <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(0,212,255,0.08)', border: '1px solid rgba(0,212,255,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Users size={16} color="#00d4ff" strokeWidth={2.5} />
-            </div>
-          </div>
           <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fff', marginBottom: '0.25rem', letterSpacing: '-0.01em' }}>
-            G-Talk <span style={{ color: '#00d4ff' }}>Cohort</span>
+            MUN <span style={{ color: '#FBBF24' }}>Mentor</span> Master Class
           </div>
           <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '1rem', lineHeight: 1.5 }}>
-            Live group debate coaching. Practice with peers and experts.
+            A Certificate Programme for Teachers & MUN Coordinators. Duration: 10 Days • Fridays & Saturdays Evening.
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#00d4ff' }}>
-            Join Cohort <ChevronRight size={14} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#FBBF24' }}>
+            Register Now <ChevronRight size={14} />
           </div>
         </div>
       </div>
