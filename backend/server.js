@@ -2327,7 +2327,7 @@ async function ensureMunMentorRegistrationsTable() {
   await db.query(`
     CREATE TABLE IF NOT EXISTS mun_mentor_registrations (
       id SERIAL PRIMARY KEY,
-      user_id TEXT REFERENCES users(student_id),
+      user_id TEXT,
       full_name TEXT NOT NULL,
       email TEXT NOT NULL,
       mobile TEXT NOT NULL,
