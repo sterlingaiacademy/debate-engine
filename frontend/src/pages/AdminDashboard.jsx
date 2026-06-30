@@ -11,7 +11,7 @@ const SECTIONS = [
   { id: 'debates', label: 'Debates' },
   { id: 'bootcamp', label: 'Bootcamp' },
   { id: 'coupons', label: 'School Coupons' },
-  { id: 'quiz', label: 'UN Quiz' },
+  { id: 'munMentor', label: 'MUN Mentor Master Class' },
 ];
 
 const PLAN_COLORS = { free: '#64748b', pro: '#3b82f6', max: '#f97316' };
@@ -930,7 +930,6 @@ export default function AdminDashboard() {
               {activeSection === 'debates' && <DebatesSection stats={stats} />}
               {activeSection === 'bootcamp' && <BootcampSection stats={stats} adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'coupons' && <CouponsSection stats={stats} />}
-              {activeSection === 'quiz' && <QuizSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'munMentor' && <MunMentorSection adminToken={adminToken} apiBase={apiBase} />}
             </>
           ) : null}
