@@ -503,6 +503,43 @@ export default function Dashboard({ user, setUser }) {
 
       {/* ── Event Tiles ── */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+        {/* Mini MUN Sunday Tile */}
+        <div
+          onClick={() => navigate('/mini-mun')}
+          style={{
+            borderRadius: 18, padding: '1.4rem 1.5rem', cursor: 'pointer',
+            background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+            border: '1px solid rgba(59,130,246,0.18)',
+            position: 'relative', overflow: 'hidden',
+            transition: 'transform 0.25s, box-shadow 0.25s',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(59,130,246,0.2)'; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)'; }}
+        >
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #3b82f6, #ef4444)' }} />
+          <div style={{ position: 'absolute', top: -40, right: -40, width: 130, height: 130, borderRadius: '50%', background: 'radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
+          
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
+            <span style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.12em', color: '#3b82f6', background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.22)', padding: '0.2rem 0.65rem', borderRadius: 99 }}>
+              LIVE SESSIONS
+            </span>
+            <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Globe size={16} color="#3b82f6" strokeWidth={2.5} />
+            </div>
+          </div>
+
+          <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fff', marginBottom: '0.25rem', letterSpacing: '-0.01em' }}>
+            <span style={{ color: '#3b82f6' }}>Mini</span> MUN <span style={{ color: '#ef4444' }}>Sunday</span>
+          </div>
+          <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '1rem', lineHeight: 1.5 }}>
+            MUN lessons for students every Sunday 10am to 11am. Practice speech, debate, and diplomacy!
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#3b82f6' }}>
+            Register Now (₹99) <ChevronRight size={14} />
+          </div>
+        </div>
+
         {/* MUN Mentor Master Class Tile */}
         <div
           onClick={() => navigate('/mun-mentor')}
