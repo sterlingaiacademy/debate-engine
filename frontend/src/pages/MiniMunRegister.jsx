@@ -12,7 +12,7 @@ export default function MiniMunRegister({ user }) {
     mobile: user?.phone || '',
     countryCode: '+91',
     schoolName: user?.school || '',
-    grade: user?.classLevel || '',
+    grade: '',
     city: '',
   });
   const [submitting, setSubmitting] = useState(false);
