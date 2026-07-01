@@ -2482,3 +2482,83 @@ app.get('/api/munmentor/registrations', requireAdmin, async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// POST /api/minimun/register
+app.post('/api/minimun/register', async (req, res) => {
+  try {
+    const { userId, studentName, email, mobile, schoolName, grade, city } = req.body;
+    if (!studentName || !email || !mobile || !schoolName || !grade || !city) {
+      return res.status(400).json({ error: 'All required fields must be filled.' });
+    }
+    
+    const emailDup = await db.query(
+      `SELECT id FROM mini_mun_registrations WHERE email = $1 AND payment_status = 'paid'`, 
+      [email]
+    );
+    if (emailDup.rows.length > 0) {
+      return res.status(409).json({ error: 'already_registered', message: 'This email is already registered and paid for the Mini MUN Sunday.' });
+    }
+
+    const amountPaise = 9900; // ₹99 in paise
+
+    const order = await razorpayInstance.orders.create({
+      amount: amountPaise,
+      currency: 'INR',
+      receipt: `minimun_${Date.now()}`,
+      notes: { programme: 'Mini MUN Sunday', userId: userId || '', studentName, mobile, school: schoolName || '' },
+    });
+
+    const result = await db.query(
+      `INSERT INTO mini_mun_registrations 
+        (user_id, student_name, email, mobile, school_name, grade, city, razorpay_order_id, amount)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id, registered_at`,
+      [userId || null, studentName, email, mobile, schoolName, grade, city, order.id, amountPaise]
+    );
+    res.json({ success: true, orderId: order.id, amount: amountPaise, registrationId: result.rows[0].id });
+  } catch (err) {
+    console.error('Mini MUN register error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// POST /api/minimun/verify-payment
+app.post('/api/minimun/verify-payment', async (req, res) => {
+  try {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, registrationId } = req.body;
+    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !registrationId) {
+      return res.status(400).json({ error: 'Missing payment details' });
+    }
+
+    const secret = process.env.RAZORPAY_SECRET || 'KTWnYhmt800Y7TSQ6Cc6TBpF';
+    const body = razorpay_order_id + '|' + razorpay_payment_id;
+    const expectedSignature = crypto.createHmac('sha256', secret).update(body).digest('hex');
+
+    if (expectedSignature !== razorpay_signature) {
+      return res.status(400).json({ error: 'Invalid payment signature' });
+    }
+
+    await db.query(
+      `UPDATE mini_mun_registrations SET payment_status = 'paid', razorpay_payment_id = $1 WHERE id = $2`,
+      [razorpay_payment_id, registrationId]
+    );
+
+    res.json({ success: true, message: 'Registration confirmed! Welcome to Mini MUN Sunday.' });
+  } catch (err) {
+    console.error('Mini MUN verify error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/minimun/registrations — Admin
+app.get('/api/minimun/registrations', requireAdmin, async (req, res) => {
+  try {
+    const result = await db.query(
+      `SELECT id, user_id, student_name, email, mobile, school_name, grade, city, 
+              payment_status, razorpay_payment_id, amount, registered_at
+       FROM mini_mun_registrations ORDER BY registered_at DESC`
+    );
+    res.json({ total: result.rows.length, registrations: result.rows });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});

@@ -28,6 +28,7 @@ const Diplomat365 = lazy(() => import('./pages/diplomat365/D365App'));
 const MUN30 = lazy(() => import('./pages/mun30/MUN30App'));
 const GTalkCohort = lazy(() => import('./pages/GTalkCohort'));
 const MUNMentorRegister = lazy(() => import('./pages/MUNMentorRegister'));
+const MiniMunRegister = lazy(() => import('./pages/MiniMunRegister'));
 import UpgradeRequired from './pages/UpgradeRequired';
 
 function App() {
@@ -237,6 +238,7 @@ function App() {
               <Route path="/mun30/*" element={user ? (['pro','max'].includes(user.subscription_plan) ? <MUN30 user={user} /> : <Navigate to="/upgrade?feature=mun30" />) : <Navigate to="/" />} />
               <Route path="/cohort" element={user ? <GTalkCohort user={user} /> : <Navigate to="/" />} />
               <Route path="/mun-mentor" element={user ? <MUNMentorRegister user={user} /> : <Navigate to="/" />} />
+              <Route path="/mini-mun" element={user ? <MiniMunRegister user={user} /> : <Navigate to="/" />} />
               <Route path="/upgrade" element={user ? <UpgradeRequired user={user} /> : <Navigate to="/" />} />
             </Route>
 

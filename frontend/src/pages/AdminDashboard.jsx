@@ -12,6 +12,7 @@ const SECTIONS = [
   { id: 'bootcamp', label: 'Cohort 2.0' },
   { id: 'coupons', label: 'School Coupons' },
   { id: 'munMentor', label: 'MUN Mentor Master Class' },
+  { id: 'minimun', label: 'Mini MUN Sunday' },
 ];
 
 const PLAN_COLORS = { free: '#64748b', pro: '#3b82f6', max: '#f97316' };
@@ -757,6 +758,79 @@ function MunMentorSection({ adminToken, apiBase }) {
   );
 }
 
+// SECTION: Mini MUN Sunday Registrations
+// ══════════════════════════════════════════════════
+function MiniMunSection({ adminToken, apiBase }) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${apiBase}/api/minimun/registrations`, {
+        headers: { Authorization: `Bearer ${adminToken}` }
+      });
+      const d = await res.json();
+      setData(d);
+    } catch (e) { console.error(e); }
+    setLoading(false);
+  }, [adminToken, apiBase]);
+
+  useEffect(() => { fetchData(); }, [fetchData]);
+
+  const regs = (data?.registrations || []).filter(r => r.payment_status === 'paid');
+
+  return (
+    <div>
+      <SectionTitle>Mini MUN Sunday</SectionTitle>
+      
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+        <StatCard label="Paid Registrations" value={regs.length} color="#3b82f6" />
+        <StatCard label="Revenue" value={`₹${regs.reduce((a,b) => a + (b.amount/100), 0).toLocaleString()}`} color="#3b82f6" />
+      </div>
+
+      <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem', alignItems: 'center' }}>
+        <span style={{ color: '#64748b', fontSize: '0.82rem', fontWeight: 700 }}>{regs.length} PAID REGISTRATIONS</span>
+      </div>
+
+      <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
+        {loading ? (
+          <div style={{ textAlign: 'center', padding: '3rem', color: '#64748b' }}>Loading…</div>
+        ) : (
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <TableHead cols={['Name', 'Email', 'Phone', 'Grade', 'School/Inst.', 'City', 'Status', 'Registered']} />
+              <tbody>
+                {regs.map((r, i) => (
+                  <TableRow key={r.id} idx={i}>
+                    <TD>{r.student_name}</TD>
+                    <TD>{r.email || '—'}</TD>
+                    <TD mono>{r.mobile}</TD>
+                    <TD>{r.grade || '—'}</TD>
+                    <TD>{r.school_name || '—'}</TD>
+                    <TD>{r.city || '—'}</TD>
+                    <TD>
+                      <span style={{ padding: '2px 8px', borderRadius: 99, fontSize: '0.72rem', fontWeight: 700,
+                        background: r.payment_status === 'paid' ? 'rgba(59,130,246,0.12)' : 'rgba(245,158,11,0.12)',
+                        color: r.payment_status === 'paid' ? '#3b82f6' : '#f59e0b',
+                        border: `1px solid ${r.payment_status === 'paid' ? '#3b82f630' : '#f59e0b30'}`,
+                      }}>
+                        {r.payment_status}
+                      </span>
+                    </TD>
+                    <TD>{fmtDate(r.registered_at)}</TD>
+                  </TableRow>
+                ))}
+                {!regs.length && <tr><td colSpan={8} style={{ textAlign: 'center', padding: '2rem', color: '#64748b' }}>No paid registrations found</td></tr>}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ══════════════════════════════════════════════════
 // MAIN ADMIN DASHBOARD
 // ══════════════════════════════════════════════════
@@ -921,8 +995,9 @@ export default function AdminDashboard() {
               {activeSection === 'subscriptions' && <SubscriptionsSection stats={stats} />}
               {activeSection === 'debates' && <DebatesSection stats={stats} />}
               {activeSection === 'bootcamp' && <BootcampSection stats={stats} adminToken={adminToken} apiBase={apiBase} />}
-              {activeSection === 'coupons' && <CouponsSection stats={stats} />}
+              {activeSection === 'school' && <SchoolCouponsSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'munMentor' && <MunMentorSection adminToken={adminToken} apiBase={apiBase} />}
+              {activeSection === 'minimun' && <MiniMunSection adminToken={adminToken} apiBase={apiBase} />}
             </>
           ) : null}
         </div>
