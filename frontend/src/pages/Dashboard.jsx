@@ -533,7 +533,7 @@ export default function Dashboard({ user, setUser }) {
             <span style={{ color: '#3b82f6' }}>Mini</span> MUN <span style={{ color: '#ef4444' }}>Sunday</span>
           </div>
           <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '1rem', lineHeight: 1.5 }}>
-            MUN lessons for students every Sunday 10am to 11am. Practice speech, debate, and diplomacy!
+            MUN lessons for students from 10am to 11am. Practice speech, debate, and diplomacy!
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#3b82f6' }}>
             Register Now (₹99) <ChevronRight size={14} />
