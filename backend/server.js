@@ -2491,13 +2491,6 @@ app.post('/api/minimun/register', async (req, res) => {
       return res.status(400).json({ error: 'All required fields must be filled.' });
     }
     
-    const emailDup = await db.query(
-      `SELECT id FROM mini_mun_registrations WHERE email = $1 AND payment_status = 'paid'`, 
-      [email]
-    );
-    if (emailDup.rows.length > 0) {
-      return res.status(409).json({ error: 'already_registered', message: 'This email is already registered and paid for the Mini MUN Sunday.' });
-    }
 
     const amountPaise = 9900; // ₹99 in paise
 
@@ -2537,10 +2530,22 @@ app.post('/api/minimun/verify-payment', async (req, res) => {
       return res.status(400).json({ error: 'Invalid payment signature' });
     }
 
-    await db.query(
-      `UPDATE mini_mun_registrations SET payment_status = 'paid', razorpay_payment_id = $1 WHERE id = $2`,
+    const regRes = await db.query(
+      `UPDATE mini_mun_registrations SET payment_status = 'paid', razorpay_payment_id = $1 WHERE id = $2 RETURNING user_id`,
       [razorpay_payment_id, registrationId]
     );
+
+    const userId = regRes.rows[0]?.user_id;
+    if (userId) {
+      // Add 1800 seconds (30 mins) to time_limits
+      await db.query(`
+        INSERT INTO time_limits (student_id, remaining_ranked, limit_total)
+        VALUES ($1, 1800, 1800)
+        ON CONFLICT (student_id) DO UPDATE SET
+          remaining_ranked = time_limits.remaining_ranked + 1800,
+          limit_total = time_limits.limit_total + 1800
+      `, [userId]);
+    }
 
     res.json({ success: true, message: 'Registration confirmed! Welcome to Mini MUN Sunday.' });
   } catch (err) {

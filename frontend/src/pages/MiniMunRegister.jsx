@@ -247,7 +247,7 @@ export default function MiniMunRegister({ user }) {
           </h1>
           
           <p style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', color: '#94a3b8', margin: '0 auto 2.5rem', maxWidth: 650, lineHeight: 1.6 }}>
-            Develop Public Speaking, Learn Diplomacy, Enhance Critical Thinking and Build Teamwork every Sunday.
+            Practical MUN lessons and techniques. Develop Public Speaking, Learn Diplomacy, Enhance Critical Thinking and Build Teamwork every Sunday.
           </p>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'center' }}>
