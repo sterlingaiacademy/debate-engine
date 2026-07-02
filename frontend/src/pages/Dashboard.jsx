@@ -4,7 +4,7 @@ import {
   Play, Trophy, TrendingUp, BarChart2, Star, Zap, Award, Clock,
   MessageSquare, Mic, Flame, Shield, Crown, Sparkles, Target, Heart,
   Sword, BookOpen, FileText, Medal, Gem, RefreshCw, Dumbbell, MessageCircle,
-  Brain, Globe, Users, ChevronRight, Cpu, Radio
+  Brain, Globe, Users, ChevronRight, Cpu, Radio, CheckCircle2
 } from 'lucide-react';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip,
@@ -263,6 +263,17 @@ export default function Dashboard({ user, setUser }) {
   const normalizedLevel = getNormalizedLevel(user?.classLevel);
   const isBasicLevel = ['Level 1', 'Level 2'].includes(normalizedLevel);
 
+  const [minimunRegistered, setMinimunRegistered] = useState(false);
+
+  useEffect(() => {
+    if (user?.email) {
+      fetch(`${API_BASE}/api/minimun/status/${user.email}`)
+        .then(res => res.json())
+        .then(data => setMinimunRegistered(data.registered))
+        .catch(console.error);
+    }
+  }, [user?.email]);
+
   useEffect(() => {
     const activeId = user?.studentId || user?.username;
     if (!activeId) return;
@@ -505,17 +516,31 @@ export default function Dashboard({ user, setUser }) {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
         {/* Mini MUN Sunday Tile */}
         <div
-          onClick={() => navigate('/mini-mun')}
+          onClick={() => {
+            if (!minimunRegistered) navigate('/mini-mun');
+          }}
           style={{
-            borderRadius: 18, padding: '1.4rem 1.5rem', cursor: 'pointer',
+            borderRadius: 18, padding: '1.4rem 1.5rem', 
+            cursor: minimunRegistered ? 'default' : 'pointer',
+            opacity: minimunRegistered ? 0.9 : 1,
             background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
             border: '1px solid rgba(59,130,246,0.18)',
             position: 'relative', overflow: 'hidden',
             transition: 'transform 0.25s, box-shadow 0.25s',
             boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
           }}
-          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(59,130,246,0.2)'; }}
-          onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)'; }}
+          onMouseEnter={e => { 
+            if (!minimunRegistered) {
+              e.currentTarget.style.transform = 'translateY(-3px)'; 
+              e.currentTarget.style.boxShadow = '0 12px 40px rgba(59,130,246,0.2)'; 
+            }
+          }}
+          onMouseLeave={e => { 
+            if (!minimunRegistered) {
+              e.currentTarget.style.transform = ''; 
+              e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)'; 
+            }
+          }}
         >
           <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #3b82f6, #ef4444)' }} />
           <div style={{ position: 'absolute', top: -40, right: -40, width: 130, height: 130, borderRadius: '50%', background: 'radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
@@ -535,8 +560,12 @@ export default function Dashboard({ user, setUser }) {
           <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '1rem', lineHeight: 1.5 }}>
             MUN lessons for students from 10am to 11am. Practice speech, debate, and diplomacy!
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#3b82f6' }}>
-            Register Now (₹99) <ChevronRight size={14} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: minimunRegistered ? '#10b981' : '#3b82f6' }}>
+            {minimunRegistered ? (
+              <>Registered for this week! <CheckCircle2 size={14} /></>
+            ) : (
+              <>Register Now (₹99) <ChevronRight size={14} /></>
+            )}
           </div>
         </div>
 

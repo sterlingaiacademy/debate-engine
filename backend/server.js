@@ -2564,6 +2564,22 @@ app.post('/api/minimun/verify-payment', async (req, res) => {
   }
 });
 
+// GET /api/minimun/status/:email
+app.get('/api/minimun/status/:email', async (req, res) => {
+  try {
+    const email = req.params.email;
+    const result = await db.query(
+      `SELECT id FROM mini_mun_registrations 
+       WHERE email = $1 AND payment_status = 'paid' 
+       AND registered_at > NOW() - INTERVAL '6 days'`,
+      [email]
+    );
+    res.json({ registered: result.rows.length > 0 });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // GET /api/minimun/registrations — Admin
 app.get('/api/minimun/registrations', requireAdmin, async (req, res) => {
   try {
