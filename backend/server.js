@@ -2537,14 +2537,24 @@ app.post('/api/minimun/verify-payment', async (req, res) => {
 
     const userId = regRes.rows[0]?.user_id;
     if (userId) {
-      // Add 1800 seconds (30 mins) to time_limits
       await db.query(`
-        INSERT INTO time_limits (student_id, remaining_ranked, limit_total)
-        VALUES ($1, 1800, 1800)
-        ON CONFLICT (student_id) DO UPDATE SET
-          remaining_ranked = time_limits.remaining_ranked + 1800,
-          limit_total = time_limits.limit_total + 1800
-      `, [userId]);
+        CREATE TABLE IF NOT EXISTS topup_credits (
+          id SERIAL PRIMARY KEY,
+          user_id TEXT NOT NULL,
+          bonus_seconds INTEGER NOT NULL,
+          effect_date TEXT NOT NULL,
+          source TEXT DEFAULT 'payment',
+          razorpay_payment_id TEXT,
+          created_at TIMESTAMPTZ DEFAULT NOW(),
+          expires_at TIMESTAMPTZ DEFAULT NOW() + INTERVAL '30 days'
+        )
+      `);
+      
+      const effectDate = new Date().toISOString().slice(0, 10);
+      await db.query(`
+        INSERT INTO topup_credits (user_id, bonus_seconds, effect_date, source, razorpay_payment_id)
+        VALUES ($1, 1800, $2, 'minimun', $3)
+      `, [userId, effectDate, razorpay_payment_id]);
     }
 
     res.json({ success: true, message: 'Registration confirmed! Welcome to Mini MUN Sunday.' });
