@@ -73,7 +73,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
     !isJunior && { name: 'Analytics',   path: '/analytics',   match: '/analytics',  icon: BarChart2 },
     !isJunior && { name: 'Leaderboard', path: '/leaderboard', match: '/leaderboard', icon: Trophy },
     { name: 'UN Quiz Contest', path: '/quiz-register', match: '/quiz-register', icon: FileQuestion },
-    { name: 'Cohort',         path: '/gtalk-cohort', match: '/gtalk-cohort', icon: Presentation },
+    { name: 'Cohort 2.0',     path: '/cohort', match: '/cohort', icon: Presentation },
     { name: 'Settings',   path: '/settings',    match: '/settings',   icon: Settings },
   ].filter(Boolean);
 
