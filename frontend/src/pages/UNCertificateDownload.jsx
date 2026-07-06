@@ -63,7 +63,7 @@ export default function UNCertificateDownload() {
       // Usually, names are placed somewhere in the middle. We'll estimate it.
       // y is measured from the bottom of the page in PDF space.
       const x = (width / 2) - (textWidth / 2);
-      const y = 280; // Lowered to sit on the line
+      const y = 260; // Lowered further
       
       firstPage.drawText(name, {
         x: x,
@@ -77,8 +77,8 @@ export default function UNCertificateDownload() {
       const eventText = "Model UN Quiz";
       const eventSize = 18;
       firstPage.drawText(eventText, {
-        x: 470, // Moved right to center on dots
-        y: 253, // Lowered to sit on line
+        x: 490, 
+        y: 235, 
         size: eventSize,
         font: font,
         color: rgb(0.1, 0.1, 0.1),
@@ -88,8 +88,8 @@ export default function UNCertificateDownload() {
       const dateText = "5 July 2026";
       const dateSize = 16;
       firstPage.drawText(dateText, {
-        x: 380, // Moved right
-        y: 215, // Lowered to sit on line
+        x: 450, 
+        y: 200, 
         size: dateSize,
         font: font,
         color: rgb(0.1, 0.1, 0.1),
@@ -99,8 +99,8 @@ export default function UNCertificateDownload() {
       if (id) {
         const idSize = 14;
         firstPage.drawText(id, {
-          x: 725, // Moved slightly right
-          y: 375, // Lowered to sit on line
+          x: 720, 
+          y: 365, 
           size: idSize,
           font: font,
           color: rgb(0.1, 0.1, 0.1),
