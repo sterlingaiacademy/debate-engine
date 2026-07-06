@@ -89,7 +89,7 @@ export default function UNCertificateDownload() {
       const dateSize = 16;
       firstPage.drawText(dateText, {
         x: 250, 
-        y: 234, 
+        y: 238, 
         size: dateSize,
         font: font,
         color: rgb(0.1, 0.1, 0.1),
@@ -99,7 +99,7 @@ export default function UNCertificateDownload() {
       if (id) {
         const idSize = 16;
         firstPage.drawText(id, {
-          x: 710, 
+          x: 695, 
           y: 378, 
           size: idSize,
           font: font,
