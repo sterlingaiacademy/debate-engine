@@ -12,12 +12,15 @@ console.log("First 5 rows:");
 console.log(data.slice(0, 5));
 
 const jsonOutput = {};
+let counter = 1;
 data.forEach(row => {
   if (row.length >= 3) {
     const name = row[1];
     const email = row[2];
     if (typeof email === 'string' && email.includes('@')) {
-      jsonOutput[email.toLowerCase().trim()] = { name: name.trim() };
+      const idStr = `MINIMUN-M1-${counter.toString().padStart(3, '0')}`;
+      jsonOutput[email.toLowerCase().trim()] = { name: name.trim(), id: idStr };
+      counter++;
     }
   }
 });

@@ -77,7 +77,7 @@ export default function MiniMunMod1CertificateDownload() {
       const eventText = "Mini MUN Master Class - Module 1 : The World of Diplomacy";
       const eventSize = 16;
       firstPage.drawText(eventText, {
-        x: 290, 
+        x: 310, 
         y: 269, 
         size: eventSize,
         font: font,
@@ -110,7 +110,7 @@ export default function MiniMunMod1CertificateDownload() {
       // 5. Save and trigger download
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-      saveAs(blob, `UN_Quiz_Certificate_${name.replace(/\\s+/g, '_')}.pdf`);
+      saveAs(blob, `UN_Quiz_Certificate_${name.replace(/\s+/g, '_')}.pdf`);
       
       setSuccessMsg('Certificate downloaded successfully!');
       setEmail('');
