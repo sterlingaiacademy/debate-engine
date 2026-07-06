@@ -99,7 +99,7 @@ export default function UNCertificateDownload() {
       if (id) {
         const idSize = 16;
         firstPage.drawText(id, {
-          x: 715, 
+          x: 705, 
           y: 378, 
           size: idSize,
           font: font,
