@@ -31,7 +31,7 @@ export default function UNCertificateDownload() {
         throw new Error(data.error || 'Failed to fetch certificate status');
       }
       
-      const { name, type } = data.student;
+      const { name, type, id } = data.student;
       
       // 2. Fetch the corresponding PDF template
       const pdfUrl = type === 'appreciation' 
@@ -63,7 +63,7 @@ export default function UNCertificateDownload() {
       // Usually, names are placed somewhere in the middle. We'll estimate it.
       // y is measured from the bottom of the page in PDF space.
       const x = (width / 2) - (textWidth / 2);
-      const y = height / 2 - 10; // Adjust this if the name is too high/low
+      const y = 265; // Moved down from center
       
       firstPage.drawText(name, {
         x: x,
@@ -72,6 +72,41 @@ export default function UNCertificateDownload() {
         font: font,
         color: rgb(0.1, 0.1, 0.1),
       });
+
+      // "Model UN Quiz"
+      const eventText = "Model UN Quiz";
+      const eventSize = 18;
+      const eventWidth = font.widthOfTextAtSize(eventText, eventSize);
+      firstPage.drawText(eventText, {
+        x: 520, // Estimated x position on the line
+        y: 205, // Estimated y position
+        size: eventSize,
+        font: font,
+        color: rgb(0.1, 0.1, 0.1),
+      });
+
+      // Date "28 June 2026"
+      const dateText = "28 June 2026";
+      const dateSize = 16;
+      firstPage.drawText(dateText, {
+        x: 350,
+        y: 155,
+        size: dateSize,
+        font: font,
+        color: rgb(0.1, 0.1, 0.1),
+      });
+
+      // ID
+      if (id) {
+        const idSize = 14;
+        firstPage.drawText(id, {
+          x: 730,
+          y: 290,
+          size: idSize,
+          font: font,
+          color: rgb(0.1, 0.1, 0.1),
+        });
+      }
       
       // 5. Save and trigger download
       const pdfBytes = await pdfDoc.save();
