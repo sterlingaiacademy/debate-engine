@@ -85,8 +85,8 @@ export default function UNCertificateDownload() {
         color: rgb(0.1, 0.1, 0.1),
       });
 
-      // Date "28 June 2026"
-      const dateText = "28 June 2026";
+      // Date "5 July 2026"
+      const dateText = "5 July 2026";
       const dateSize = 16;
       firstPage.drawText(dateText, {
         x: 350,
