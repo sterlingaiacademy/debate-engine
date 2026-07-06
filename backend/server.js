@@ -2426,35 +2426,27 @@ app.post('/api/munmentor/register', async (req, res) => {
     }
     await ensureMunMentorRegistrationsTable();
     
-    // Check if already paid for this email
+    // Check if already registered for this email
     const emailDup = await db.query(
-      `SELECT id FROM mun_mentor_registrations WHERE email = $1 AND payment_status = 'paid'`, 
+      `SELECT id FROM mun_mentor_registrations WHERE email = $1`, 
       [email]
     );
     if (emailDup.rows.length > 0) {
-      return res.status(409).json({ error: 'already_registered', message: 'This email is already registered and paid for the MUN Mentor Master Class.' });
+      return res.status(409).json({ error: 'already_registered', message: 'This email is already registered.' });
     }
 
-    const amountPaise = 99900; // ₹999 in paise
-
-    // Create Razorpay Order
-    const order = await razorpayInstance.orders.create({
-      amount: amountPaise,
-      currency: 'INR',
-      receipt: `munmentor_${Date.now()}`,
-      notes: { programme: 'MUN Mentor Master Class', userId: userId || '', fullName, mobile, school: schoolName || '' },
-    });
+    const amountPaise = 0; // Free
 
     const result = await db.query(
       `INSERT INTO mun_mentor_registrations 
-        (user_id, full_name, email, mobile, school_name, city, role, experience_years, reason, hear_about, razorpay_order_id, amount)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id, registered_at`,
+        (user_id, full_name, email, mobile, school_name, city, role, experience_years, reason, hear_about, razorpay_order_id, amount, payment_status)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, 'free') RETURNING id, registered_at`,
       [
         userId || null, fullName, email, mobile, schoolName, city || '', role,
-        experience || '', reason || '', hearAbout || '', order.id, amountPaise
+        experience || '', reason || '', hearAbout || '', 'free_registration', amountPaise
       ]
     );
-    res.json({ success: true, orderId: order.id, amount: amountPaise, registrationId: result.rows[0].id });
+    res.json({ success: true, amount: amountPaise, registrationId: result.rows[0].id });
   } catch (err) {
     console.error('MUN Mentor register error:', err);
     res.status(500).json({ error: err.message });
@@ -2519,7 +2511,7 @@ app.post('/api/minimun/register', async (req, res) => {
       amount: amountPaise,
       currency: 'INR',
       receipt: `minimun_${Date.now()}`,
-      notes: { programme: 'Mini MUN Sunday', userId: userId || '', studentName, mobile, school: schoolName || '' },
+      notes: { programme: 'Mini MUN Master Class Module-2', userId: userId || '', studentName, mobile, school: schoolName || '' },
     });
 
     const result = await db.query(

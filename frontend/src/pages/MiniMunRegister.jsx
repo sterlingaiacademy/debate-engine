@@ -170,7 +170,7 @@ export default function MiniMunRegister({ user }) {
             Registration Successful!
           </h2>
           <p style={{ color: '#94a3b8', fontSize: '1.05rem', lineHeight: 1.6, margin: '0 0 2.5rem' }}>
-            Thank you for registering for <strong>Mini MUN Sunday</strong>. Your payment was successful and we will contact you soon with your Zoom details.
+            Thank you for registering for <strong>Mini MUN Master Class Module-2</strong>. Your payment was successful and we will contact you soon with your Zoom details.
           </p>
           <button
             onClick={() => navigate('/dashboard')}
@@ -203,7 +203,7 @@ export default function MiniMunRegister({ user }) {
             Already Registered
           </h2>
           <p style={{ color: '#94a3b8', fontSize: '1.05rem', lineHeight: 1.6, margin: '0 0 2.5rem' }}>
-            You have already registered for Mini MUN Sunday with this email address. We look forward to seeing you!
+            You have already registered for Mini MUN Master Class Module-2 with this email address. We look forward to seeing you!
           </p>
           <button onClick={() => navigate('/dashboard')} style={{ background: '#3b82f6', color: '#fff', border: 'none', padding: '1rem 2.5rem', borderRadius: 99, fontWeight: 800, cursor: 'pointer' }}>
             Back to Dashboard
@@ -243,7 +243,7 @@ export default function MiniMunRegister({ user }) {
           </div>
           
           <h1 style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 900, color: '#fff', margin: '0 0 1rem', lineHeight: 1.1, letterSpacing: '-0.02em' }}>
-            <span style={{ color: '#1d4ed8' }}>MINI</span> MUN <span style={{ color: '#ef4444' }}>SUNDAY</span>
+            <span style={{ color: '#1d4ed8' }}>MINI MUN</span> MASTER CLASS <br/><span style={{ color: '#ef4444' }}>MODULE-2</span>
           </h1>
           
           <p style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', color: '#94a3b8', margin: '0 auto 2.5rem', maxWidth: 650, lineHeight: 1.6 }}>
@@ -254,8 +254,8 @@ export default function MiniMunRegister({ user }) {
             <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, padding: '1rem 1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               <Clock size={24} color="#3b82f6" />
               <div style={{ textAlign: 'left' }}>
-                <div style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 700, textTransform: 'uppercase' }}>Time</div>
-                <div style={{ color: '#fff', fontWeight: 700, fontSize: '1rem' }}>10:00 AM - 11:00 AM</div>
+                <div style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 700, textTransform: 'uppercase' }}>Date & Time</div>
+                <div style={{ color: '#fff', fontWeight: 700, fontSize: '1rem' }}>12 July 2026 | 10:00 AM - 11:00 AM</div>
               </div>
             </div>
             <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, padding: '1rem 1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
