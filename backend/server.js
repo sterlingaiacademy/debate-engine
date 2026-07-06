@@ -2365,8 +2365,6 @@ app.get('/api/quiz/registrations', requireAdmin, async (req, res) => {
 });
 
 // GET /api/quiz/certificate-status/:email
-const fs = require('fs');
-const path = require('path');
 app.get('/api/quiz/certificate-status/:email', (req, res) => {
   try {
     const email = req.params.email.toLowerCase().trim();
