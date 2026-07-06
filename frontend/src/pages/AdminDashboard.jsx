@@ -847,6 +847,38 @@ function MiniMunSection({ adminToken, apiBase }) {
           </div>
         )}
       </div>
+
+      {/* Multiple Payments Section */}
+      {multiplePaidUsers.length > 0 && (
+        <div style={{ marginTop: '3rem' }}>
+          <SectionTitle>Multiple Payments Detected (All Modules)</SectionTitle>
+          <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem', alignItems: 'center' }}>
+            <span style={{ color: '#ef4444', fontSize: '0.82rem', fontWeight: 700 }}>{multiplePaidUsers.length} USERS PAID MORE THAN ONCE</span>
+          </div>
+          <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <TableHead cols={['Name', 'Email', 'Phone', 'Times Paid', 'Amounts']} />
+                <tbody>
+                  {multiplePaidUsers.map((r, i) => (
+                    <TableRow key={i} idx={i}>
+                      <TD>{r.name}</TD>
+                      <TD>{r.email}</TD>
+                      <TD mono>{r.phone}</TD>
+                      <TD>
+                        <span style={{ background: 'rgba(239,68,68,0.1)', color: '#ef4444', padding: '0.2rem 0.6rem', borderRadius: 99, fontWeight: 700, fontSize: '0.8rem' }}>
+                          {r.count} times
+                        </span>
+                      </TD>
+                      <TD>{r.amounts}</TD>
+                    </TableRow>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
