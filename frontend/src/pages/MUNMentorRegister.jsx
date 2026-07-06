@@ -192,14 +192,9 @@ export default function MUNMentorRegister({ user }) {
         {/* Info Grid */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '3rem' }}>
           <div style={{ background: 'rgba(255,255,255,0.03)', padding: '1.5rem', borderRadius: 16, border: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>
-            <Calendar size={32} color="#FBBF24" style={{ margin: '0 auto 1rem' }} />
-            <div style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.2rem' }}>Duration</div>
-            <div style={{ fontSize: '1.25rem', color: '#fff', fontWeight: 800 }}>10 Days</div>
-          </div>
-          <div style={{ background: 'rgba(255,255,255,0.03)', padding: '1.5rem', borderRadius: 16, border: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>
             <Clock size={32} color="#00d4ff" style={{ margin: '0 auto 1rem' }} />
             <div style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.2rem' }}>Schedule</div>
-            <div style={{ fontSize: '1.1rem', color: '#fff', fontWeight: 800 }}>Fridays & Saturdays <br/>Evening</div>
+            <div style={{ fontSize: '1.1rem', color: '#fff', fontWeight: 800 }}>Friday <br/>Evening</div>
           </div>
           <div style={{ background: 'rgba(255,255,255,0.03)', padding: '1.5rem', borderRadius: 16, border: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>
             <div style={{ width: 32, height: 32, borderRadius: '50%', border: '2px solid #10b981', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', fontWeight: 900, margin: '0 auto 1rem' }}>₹</div>
