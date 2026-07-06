@@ -2507,6 +2507,16 @@ app.post('/api/minimun/register', async (req, res) => {
 
     const amountPaise = 9900; // ₹99 in paise
 
+    await db.query(`ALTER TABLE mini_mun_registrations ADD COLUMN IF NOT EXISTS module INTEGER DEFAULT 1`).catch(console.error);
+
+    const emailDup = await db.query(
+      `SELECT id FROM mini_mun_registrations WHERE email = $1 AND payment_status = 'paid' AND module = 2`,
+      [email]
+    );
+    if (emailDup.rows.length > 0) {
+      return res.status(409).json({ error: 'already_registered', message: 'This email is already registered.' });
+    }
+
     const order = await razorpayInstance.orders.create({
       amount: amountPaise,
       currency: 'INR',
@@ -2516,8 +2526,8 @@ app.post('/api/minimun/register', async (req, res) => {
 
     const result = await db.query(
       `INSERT INTO mini_mun_registrations 
-        (user_id, student_name, email, mobile, school_name, grade, city, razorpay_order_id, amount)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id, registered_at`,
+        (user_id, student_name, email, mobile, school_name, grade, city, razorpay_order_id, amount, module)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, 2) RETURNING id, registered_at`,
       [userId || null, studentName, email, mobile, schoolName, grade, city, order.id, amountPaise]
     );
     res.json({ success: true, orderId: order.id, amount: amountPaise, registrationId: result.rows[0].id });
@@ -2596,9 +2606,10 @@ app.get('/api/minimun/status/:email', async (req, res) => {
 // GET /api/minimun/registrations — Admin
 app.get('/api/minimun/registrations', requireAdmin, async (req, res) => {
   try {
+    await db.query(`ALTER TABLE mini_mun_registrations ADD COLUMN IF NOT EXISTS module INTEGER DEFAULT 1`).catch(console.error);
     const result = await db.query(
       `SELECT id, user_id, student_name, email, mobile, school_name, grade, city, 
-              payment_status, razorpay_payment_id, amount, registered_at
+              payment_status, razorpay_payment_id, amount, registered_at, module
        FROM mini_mun_registrations ORDER BY registered_at DESC`
     );
     res.json({ total: result.rows.length, registrations: result.rows });

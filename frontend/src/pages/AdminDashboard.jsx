@@ -778,7 +778,7 @@ function MiniMunSection({ adminToken, apiBase }) {
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
-  const regs = (data?.registrations || []).filter(r => r.payment_status === 'paid');
+  const regs = (data?.registrations || []).filter(r => r.payment_status === 'paid' && r.module === 2);
 
   return (
     <div>
