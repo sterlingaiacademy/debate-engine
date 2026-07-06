@@ -50,7 +50,7 @@ export default function UNCertificateDownload() {
       const firstPage = pages[0];
       
       // 4. Embed font and set text
-      const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+      const font = await pdfDoc.embedFont(StandardFonts.TimesRoman);
       
       // The dimensions of the PDF page
       const { width, height } = firstPage.getSize();
@@ -61,9 +61,9 @@ export default function UNCertificateDownload() {
       // Draw the text in the center horizontally
       // Note: The Y coordinate needs to be adjusted based on the specific template design.
       // Usually, names are placed somewhere in the middle. We'll estimate it.
-      // y is measured from the bottom of the page in PDF space.
+      // Name (Y=300, horizontally centered)
       const x = (width / 2) - (textWidth / 2);
-      const y = 260; // Lowered further
+      const y = 300; 
       
       firstPage.drawText(name, {
         x: x,
@@ -73,34 +73,34 @@ export default function UNCertificateDownload() {
         color: rgb(0.1, 0.1, 0.1),
       });
 
-      // "Model UN Quiz"
+      // "Model UN Quiz" (Y=265, X=400)
       const eventText = "Model UN Quiz";
-      const eventSize = 18;
+      const eventSize = 16;
       firstPage.drawText(eventText, {
-        x: 490, 
-        y: 235, 
+        x: 400, 
+        y: 265, 
         size: eventSize,
         font: font,
         color: rgb(0.1, 0.1, 0.1),
       });
 
-      // Date "5 July 2026"
+      // Date "5 July 2026" (Y=230, X=250)
       const dateText = "5 July 2026";
       const dateSize = 16;
       firstPage.drawText(dateText, {
-        x: 450, 
-        y: 200, 
+        x: 250, 
+        y: 230, 
         size: dateSize,
         font: font,
         color: rgb(0.1, 0.1, 0.1),
       });
 
-      // ID
+      // ID (Y=375, X=720)
       if (id) {
-        const idSize = 14;
+        const idSize = 16;
         firstPage.drawText(id, {
           x: 720, 
-          y: 365, 
+          y: 375, 
           size: idSize,
           font: font,
           color: rgb(0.1, 0.1, 0.1),
