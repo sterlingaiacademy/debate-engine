@@ -6,7 +6,7 @@ export default function CertificatesHub() {
   const navigate = useNavigate();
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0f172a', padding: '2rem 1rem' }}>
+    <div style={{ padding: '2rem 1rem' }}>
       <div style={{ maxWidth: 1000, margin: '0 auto', width: '100%' }}>
         
         <div style={{ marginBottom: '2.5rem' }}>

@@ -124,7 +124,7 @@ export default function UNCertificateDownload() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0f172a', padding: '2rem 1rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <div style={{ padding: '2rem 1rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <div style={{ maxWidth: 500, width: '100%', background: '#1e293b', borderRadius: 24, padding: '2.5rem', boxShadow: '0 20px 40px rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.05)', position: 'relative' }}>
         
         <button 
