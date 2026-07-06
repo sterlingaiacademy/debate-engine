@@ -18,7 +18,7 @@ data.forEach(row => {
     const name = row[1];
     const email = row[2];
     if (typeof email === 'string' && email.includes('@')) {
-      const idStr = `MINIMUN-M1-${counter.toString().padStart(3, '0')}`;
+      const idStr = `MM1-${counter.toString().padStart(3, '0')}`;
       jsonOutput[email.toLowerCase().trim()] = { name: name.trim(), id: idStr };
       counter++;
     }
