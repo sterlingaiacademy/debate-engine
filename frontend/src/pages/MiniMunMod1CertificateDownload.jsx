@@ -77,7 +77,7 @@ export default function MiniMunMod1CertificateDownload() {
       const eventText = "Mini MUN Master Class - Module 1 : The World of Diplomacy";
       const eventSize = 16;
       firstPage.drawText(eventText, {
-        x: 230, 
+        x: 265, 
         y: 269, 
         size: eventSize,
         font: font,
