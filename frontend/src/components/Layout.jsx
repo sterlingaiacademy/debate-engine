@@ -72,7 +72,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
     { name: 'Word Scramble',   path: '/word-scramble',   match: '/word-scramble',   icon: Gamepad2 },
     !isJunior && { name: 'Analytics',   path: '/analytics',   match: '/analytics',  icon: BarChart2 },
     !isJunior && { name: 'Leaderboard', path: '/leaderboard', match: '/leaderboard', icon: Trophy },
-    { name: 'UN Quiz Certificate', path: '/quiz-certificate', match: '/quiz-certificate', icon: Award },
+    { name: 'Certificates', path: '/certificates', match: '/certificates', icon: Award },
     { name: 'Cohort 2.0',     path: '/cohort', match: '/cohort', icon: Presentation },
     { name: 'Settings',   path: '/settings',    match: '/settings',   icon: Settings },
   ].filter(Boolean);

@@ -128,7 +128,7 @@ export default function UNCertificateDownload() {
       <div style={{ maxWidth: 500, width: '100%', background: '#1e293b', borderRadius: 24, padding: '2.5rem', boxShadow: '0 20px 40px rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.05)', position: 'relative' }}>
         
         <button 
-          onClick={() => navigate('/')}
+          onClick={() => navigate('/certificates')}
           style={{ position: 'absolute', top: '1.5rem', left: '1.5rem', background: 'none', border: 'none', color: '#64748b', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.9rem', fontWeight: 600 }}
         >
           <ChevronLeft size={18} /> Back
