@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LogOut, LayoutDashboard, Mic, BarChart2, Trophy,
-  Zap, Flame, ChevronRight, ChevronLeft, Settings, BookOpen, Gamepad2, Menu, X, Crown, Globe, Users, Brain, Radio, Scroll, Target, Presentation, FileQuestion
+  Zap, Flame, ChevronRight, ChevronLeft, Settings, BookOpen, Gamepad2, Menu, X, Crown, Globe, Users, Brain, Radio, Scroll, Target, Presentation, FileQuestion, Award
 } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 import PremiumEnrollModal from './PremiumEnrollModal';
@@ -72,7 +72,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
     { name: 'Word Scramble',   path: '/word-scramble',   match: '/word-scramble',   icon: Gamepad2 },
     !isJunior && { name: 'Analytics',   path: '/analytics',   match: '/analytics',  icon: BarChart2 },
     !isJunior && { name: 'Leaderboard', path: '/leaderboard', match: '/leaderboard', icon: Trophy },
-    { name: 'UN Quiz Contest', path: '/quiz-register', match: '/quiz-register', icon: FileQuestion },
+    { name: 'UN Quiz Certificate', path: '/quiz-certificate', match: '/quiz-certificate', icon: Award },
     { name: 'Cohort 2.0',     path: '/cohort', match: '/cohort', icon: Presentation },
     { name: 'Settings',   path: '/settings',    match: '/settings',   icon: Settings },
   ].filter(Boolean);

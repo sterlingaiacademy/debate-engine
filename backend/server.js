@@ -2364,6 +2364,29 @@ app.get('/api/quiz/registrations', requireAdmin, async (req, res) => {
   }
 });
 
+// GET /api/quiz/certificate-status/:email
+const fs = require('fs');
+const path = require('path');
+app.get('/api/quiz/certificate-status/:email', (req, res) => {
+  try {
+    const email = req.params.email.toLowerCase().trim();
+    const certPath = path.join(__dirname, 'quiz_certificates.json');
+    if (!fs.existsSync(certPath)) {
+       return res.status(404).json({ error: 'Certificates data not found.' });
+    }
+    const data = JSON.parse(fs.readFileSync(certPath, 'utf8'));
+    const student = data.find(s => s.email === email);
+    
+    if (!student) {
+      return res.status(404).json({ error: 'No certificate found for this email address. Please make sure you are using the exact email you registered with.' });
+    }
+    
+    res.json({ success: true, student });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // --- MUN Mentor Master Class Registrations ---
 
 async function ensureMunMentorRegistrationsTable() {

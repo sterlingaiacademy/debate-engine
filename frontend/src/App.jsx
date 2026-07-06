@@ -29,6 +29,7 @@ const MUN30 = lazy(() => import('./pages/mun30/MUN30App'));
 const GTalkCohort = lazy(() => import('./pages/GTalkCohort'));
 const MUNMentorRegister = lazy(() => import('./pages/MUNMentorRegister'));
 const MiniMunRegister = lazy(() => import('./pages/MiniMunRegister'));
+const UNCertificateDownload = lazy(() => import('./pages/UNCertificateDownload'));
 import UpgradeRequired from './pages/UpgradeRequired';
 
 function App() {
@@ -239,6 +240,7 @@ function App() {
               <Route path="/cohort" element={user ? <GTalkCohort user={user} /> : <Navigate to="/" />} />
               <Route path="/mun-mentor" element={user ? <MUNMentorRegister user={user} /> : <Navigate to="/" />} />
               <Route path="/mini-mun" element={user ? <MiniMunRegister user={user} /> : <Navigate to="/" />} />
+              <Route path="/quiz-certificate" element={user ? <UNCertificateDownload /> : <Navigate to="/" />} />
               <Route path="/upgrade" element={user ? <UpgradeRequired user={user} /> : <Navigate to="/" />} />
             </Route>
 
