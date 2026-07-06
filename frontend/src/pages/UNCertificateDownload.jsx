@@ -73,34 +73,34 @@ export default function UNCertificateDownload() {
         color: rgb(0.1, 0.1, 0.1),
       });
 
-      // "Model UN Quiz" (Y=265, X=400)
+      // "Model UN Quiz"
       const eventText = "Model UN Quiz";
       const eventSize = 16;
       firstPage.drawText(eventText, {
         x: 400, 
-        y: 265, 
+        y: 269, 
         size: eventSize,
         font: font,
         color: rgb(0.1, 0.1, 0.1),
       });
 
-      // Date "5 July 2026" (Y=230, X=250)
+      // Date "5 July 2026"
       const dateText = "5 July 2026";
       const dateSize = 16;
       firstPage.drawText(dateText, {
         x: 250, 
-        y: 230, 
+        y: 234, 
         size: dateSize,
         font: font,
         color: rgb(0.1, 0.1, 0.1),
       });
 
-      // ID (Y=375, X=720)
+      // ID
       if (id) {
         const idSize = 16;
         firstPage.drawText(id, {
-          x: 720, 
-          y: 375, 
+          x: 710, 
+          y: 378, 
           size: idSize,
           font: font,
           color: rgb(0.1, 0.1, 0.1),
