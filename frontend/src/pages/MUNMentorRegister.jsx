@@ -176,7 +176,7 @@ export default function MUNMentorRegister({ user }) {
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(251,191,36,0.1)', color: '#FBBF24', padding: '0.5rem 1.2rem', borderRadius: 99, fontSize: '0.85rem', fontWeight: 800, letterSpacing: '0.1em', border: '1px solid rgba(251,191,36,0.2)', marginBottom: '1.5rem' }}>
-            <Award size={16} /> CERTIFICATE PROGRAMME
+            <Award size={16} /> MASTER CLASS
           </div>
           <h1 style={{ fontSize: '3rem', fontWeight: 900, color: '#fff', margin: '0 0 0.5rem', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
             MUN Mentor <br/><span style={{ color: '#FBBF24' }}>Master Class</span>

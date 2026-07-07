@@ -599,7 +599,7 @@ export default function Dashboard({ user, setUser }) {
             MUN <span style={{ color: '#FBBF24' }}>Mentor</span> Master Class
           </div>
           <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '1rem', lineHeight: 1.5 }}>
-            A Certificate Programme for Teachers & MUN Coordinators. Duration: 10 Days • Fridays & Saturdays Evening.
+            A Master Class for Teachers & MUN Coordinators. Friday Evening.
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#FBBF24' }}>
             Register Now <ChevronRight size={14} />
