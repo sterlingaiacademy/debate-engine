@@ -596,7 +596,7 @@ export default function Dashboard({ user, setUser }) {
           </div>
 
           <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fff', marginBottom: '0.25rem', letterSpacing: '-0.01em' }}>
-            MUN <span style={{ color: '#FBBF24' }}>Mentor</span> Master Class
+            MUN <span style={{ color: '#FBBF24' }}>Mentor</span> Masterclass for Teachers
           </div>
           <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '1rem', lineHeight: 1.5 }}>
             A Master Class for Teachers & MUN Coordinators. Friday Evening.

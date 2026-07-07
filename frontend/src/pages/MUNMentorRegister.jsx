@@ -179,7 +179,7 @@ export default function MUNMentorRegister({ user }) {
             <Award size={16} /> MASTER CLASS
           </div>
           <h1 style={{ fontSize: '3rem', fontWeight: 900, color: '#fff', margin: '0 0 0.5rem', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
-            MUN Mentor <br/><span style={{ color: '#FBBF24' }}>Master Class</span>
+            MUN Mentor <br/><span style={{ color: '#FBBF24' }}>Masterclass for Teachers</span>
           </h1>
           <p style={{ color: '#94a3b8', fontSize: '1.2rem', fontWeight: 600, letterSpacing: '0.05em' }}>
             INSPIRE LEADERS. SHAPE THE FUTURE.
