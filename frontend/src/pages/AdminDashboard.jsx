@@ -12,7 +12,7 @@ const SECTIONS = [
   { id: 'bootcamp', label: 'Cohort 2.0' },
   { id: 'coupons', label: 'School Coupons' },
   { id: 'munMentor', label: 'MUN Mentor Master Class' },
-  { id: 'minimun', label: 'Mini MUN Module-2' },
+  { id: 'minimun', label: 'Mini MUN Module-3' },
 ];
 
 const PLAN_COLORS = { free: '#64748b', pro: '#3b82f6', max: '#f97316' };
@@ -802,7 +802,7 @@ function MiniMunSection({ adminToken, apiBase }) {
 
   return (
     <div>
-      <SectionTitle>Mini MUN Master Class Module-2</SectionTitle>
+      <SectionTitle>Mini MUN Master Class Module-3</SectionTitle>
       
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
         <StatCard label="Paid Registrations" value={regs.length} color="#3b82f6" />
