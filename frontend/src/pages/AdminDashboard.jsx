@@ -802,7 +802,7 @@ function MiniMunSection({ adminToken, apiBase }) {
 
   return (
     <div>
-      <SectionTitle>Mini MUN Master Class Module-2</SectionTitle>
+      <SectionTitle>Mini MUN Master Class Registrations (All Modules)</SectionTitle>
       
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
         <StatCard label="Paid Registrations" value={regs.length} color="#3b82f6" />
@@ -819,7 +819,7 @@ function MiniMunSection({ adminToken, apiBase }) {
         ) : (
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-              <TableHead cols={['Name', 'Email', 'Phone', 'Grade', 'School/Inst.', 'City', 'Status', 'Registered']} />
+              <TableHead cols={['Name', 'Email', 'Phone', 'Grade', 'School/Inst.', 'City', 'Status', 'Module', 'Registered']} />
               <tbody>
                 {regs.map((r, i) => (
                   <TableRow key={r.id} idx={i}>
@@ -838,10 +838,11 @@ function MiniMunSection({ adminToken, apiBase }) {
                         {r.payment_status}
                       </span>
                     </TD>
+                    <TD style={{ fontWeight: 800, color: '#fbbf24' }}>M{r.module || 1}</TD>
                     <TD>{fmtDate(r.registered_at)}</TD>
                   </TableRow>
                 ))}
-                {!regs.length && <tr><td colSpan={8} style={{ textAlign: 'center', padding: '2rem', color: '#64748b' }}>No paid registrations found</td></tr>}
+                {!regs.length && <tr><td colSpan={9} style={{ textAlign: 'center', padding: '2rem', color: '#64748b' }}>No paid registrations found</td></tr>}
               </tbody>
             </table>
           </div>
