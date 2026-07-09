@@ -170,7 +170,7 @@ export default function MiniMunRegister({ user }) {
             Registration Successful!
           </h2>
           <p style={{ color: '#94a3b8', fontSize: '1.05rem', lineHeight: 1.6, margin: '0 0 2.5rem' }}>
-            Thank you for registering for <strong>Mini MUN Master Class Module-3</strong>. Your payment was successful and we will contact you soon with your Zoom details.
+            Thank you for registering for <strong>Mini MUN Master Class Module-2</strong>. Your payment was successful and we will contact you soon with your Zoom details.
           </p>
           <button
             onClick={() => navigate('/dashboard')}
@@ -203,7 +203,7 @@ export default function MiniMunRegister({ user }) {
             Already Registered
           </h2>
           <p style={{ color: '#94a3b8', fontSize: '1.05rem', lineHeight: 1.6, margin: '0 0 2.5rem' }}>
-            You have already registered for Mini MUN Master Class Module-3 with this email address. We look forward to seeing you!
+            You have already registered for Mini MUN Master Class Module-2 with this email address. We look forward to seeing you!
           </p>
           <button onClick={() => navigate('/dashboard')} style={{ background: '#3b82f6', color: '#fff', border: 'none', padding: '1rem 2.5rem', borderRadius: 99, fontWeight: 800, cursor: 'pointer' }}>
             Back to Dashboard
