@@ -32,6 +32,7 @@ const MiniMunRegister = lazy(() => import('./pages/MiniMunRegister'));
 const UNCertificateDownload = lazy(() => import('./pages/UNCertificateDownload'));
 const CertificatesHub = lazy(() => import('./pages/CertificatesHub'));
 const MiniMunMod1CertificateDownload = lazy(() => import('./pages/MiniMunMod1CertificateDownload'));
+const MiniMunMod2CertificateDownload = lazy(() => import('./pages/MiniMunMod2CertificateDownload'));
 import UpgradeRequired from './pages/UpgradeRequired';
 
 function App() {
@@ -246,6 +247,7 @@ function App() {
               <Route path="/certificates/model-un-quiz" element={user ? <UNCertificateDownload /> : <Navigate to="/" />} />
               <Route path="/quiz-certificate" element={user ? <UNCertificateDownload /> : <Navigate to="/" />} />
               <Route path="/minimun-mod1-certificate" element={user ? <MiniMunMod1CertificateDownload /> : <Navigate to="/" />} />
+              <Route path="/minimun-mod2-certificate" element={user ? <MiniMunMod2CertificateDownload /> : <Navigate to="/" />} />
               <Route path="/upgrade" element={user ? <UpgradeRequired user={user} /> : <Navigate to="/" />} />
             </Route>
 
