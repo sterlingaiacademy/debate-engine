@@ -780,10 +780,9 @@ function MiniMunSection({ adminToken, apiBase }) {
 
   const regs = (data?.registrations || []).filter(r => r.payment_status === 'paid' && r.module === 2);
 
-  // Compute multiple payments
-  const allPaid = (data?.registrations || []).filter(r => r.payment_status === 'paid');
+  // Compute multiple payments for the current module
   const multiMap = {};
-  allPaid.forEach(r => {
+  regs.forEach(r => {
     if (!r.email) return;
     const e = r.email.toLowerCase().trim();
     if (!multiMap[e]) {
@@ -802,7 +801,7 @@ function MiniMunSection({ adminToken, apiBase }) {
 
   return (
     <div>
-      <SectionTitle>Mini MUN Master Class Registrations (All Modules)</SectionTitle>
+      <SectionTitle>Mini MUN Master Class Registrations (Module 2)</SectionTitle>
       
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
         <StatCard label="Paid Registrations" value={regs.length} color="#3b82f6" />
@@ -852,7 +851,7 @@ function MiniMunSection({ adminToken, apiBase }) {
       {/* Multiple Payments Section */}
       {multiplePaidUsers.length > 0 && (
         <div style={{ marginTop: '3rem' }}>
-          <SectionTitle>Multiple Payments Detected (All Modules)</SectionTitle>
+          <SectionTitle>Multiple Payments Detected (Module 2)</SectionTitle>
           <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem', alignItems: 'center' }}>
             <span style={{ color: '#ef4444', fontSize: '0.82rem', fontWeight: 700 }}>{multiplePaidUsers.length} USERS PAID MORE THAN ONCE</span>
           </div>

@@ -930,6 +930,52 @@ app.post('/api/webhook/razorpay', async (req, res) => {
           [event.split('.')[1], studentId, subscription.id]
         );
       }
+    } else if (event === 'order.paid') {
+      const order = payload.payload.order.entity;
+      const orderId = order.id;
+      const payment = payload.payload.payment?.entity;
+      const paymentId = payment?.id || null;
+
+      if (orderId) {
+        // Update bootcamp_registrations
+        await db.query(
+          `UPDATE bootcamp_registrations SET payment_status = 'paid', razorpay_payment_id = COALESCE($1, razorpay_payment_id) WHERE razorpay_order_id = $2 AND payment_status != 'paid'`,
+          [paymentId, orderId]
+        );
+
+        // Update mun_mentor_registrations
+        await db.query(
+          `UPDATE mun_mentor_registrations SET payment_status = 'paid', razorpay_payment_id = COALESCE($1, razorpay_payment_id) WHERE razorpay_order_id = $2 AND payment_status != 'paid'`,
+          [paymentId, orderId]
+        );
+
+        // Update mini_mun_registrations and allocate topup credits if applicable
+        const regRes = await db.query(
+          `UPDATE mini_mun_registrations SET payment_status = 'paid', razorpay_payment_id = COALESCE($1, razorpay_payment_id) WHERE razorpay_order_id = $2 AND payment_status != 'paid' RETURNING user_id`,
+          [paymentId, orderId]
+        );
+
+        const userId = regRes.rows[0]?.user_id;
+        if (userId) {
+          await db.query(`
+            CREATE TABLE IF NOT EXISTS topup_credits (
+              id SERIAL PRIMARY KEY,
+              user_id TEXT NOT NULL,
+              bonus_seconds INTEGER NOT NULL,
+              effect_date TEXT NOT NULL,
+              source TEXT DEFAULT 'payment',
+              razorpay_payment_id TEXT,
+              created_at TIMESTAMPTZ DEFAULT NOW(),
+              expires_at TIMESTAMPTZ DEFAULT NOW() + INTERVAL '30 days'
+            )
+          `);
+          const effectDate = new Date().toISOString().slice(0, 10);
+          await db.query(`
+            INSERT INTO topup_credits (user_id, bonus_seconds, effect_date, source, razorpay_payment_id)
+            VALUES ($1, 1800, $2, 'minimun', $3)
+          `, [userId, effectDate, paymentId]);
+        }
+      }
     }
     
     res.json({ status: 'ok' });
