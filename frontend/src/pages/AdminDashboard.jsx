@@ -12,7 +12,7 @@ const SECTIONS = [
   { id: 'bootcamp', label: 'Cohort 2.0' },
   { id: 'coupons', label: 'School Coupons' },
   { id: 'munMentor', label: 'MUN Mentor Master Class' },
-  { id: 'minimun', label: 'Mini MUN Module-2' },
+  { id: 'minimun', label: 'Mini MUN Module-3' },
 ];
 
 const PLAN_COLORS = { free: '#64748b', pro: '#3b82f6', max: '#f97316' };
@@ -801,7 +801,7 @@ function MiniMunSection({ adminToken, apiBase }) {
 
   return (
     <div>
-      <SectionTitle>Mini MUN Master Class Registrations (Module 2)</SectionTitle>
+      <SectionTitle>Mini MUN Master Class Registrations (All Modules)</SectionTitle>
       
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
         <StatCard label="Paid Registrations" value={regs.length} color="#3b82f6" />
@@ -851,7 +851,7 @@ function MiniMunSection({ adminToken, apiBase }) {
       {/* Multiple Payments Section */}
       {multiplePaidUsers.length > 0 && (
         <div style={{ marginTop: '3rem' }}>
-          <SectionTitle>Multiple Payments Detected (Module 2)</SectionTitle>
+          <SectionTitle>Multiple Payments Detected (All Modules)</SectionTitle>
           <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem', alignItems: 'center' }}>
             <span style={{ color: '#ef4444', fontSize: '0.82rem', fontWeight: 700 }}>{multiplePaidUsers.length} USERS PAID MORE THAN ONCE</span>
           </div>

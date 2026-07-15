@@ -2596,7 +2596,7 @@ app.post('/api/minimun/register', async (req, res) => {
     await db.query(`ALTER TABLE mini_mun_registrations ADD COLUMN IF NOT EXISTS module INTEGER DEFAULT 1`).catch(console.error);
 
     const emailDup = await db.query(
-      `SELECT id FROM mini_mun_registrations WHERE email = $1 AND payment_status = 'paid' AND module = 2`,
+      `SELECT id FROM mini_mun_registrations WHERE email = $1 AND payment_status = 'paid' AND module = 3`,
       [email]
     );
     if (emailDup.rows.length > 0) {
@@ -2607,13 +2607,13 @@ app.post('/api/minimun/register', async (req, res) => {
       amount: amountPaise,
       currency: 'INR',
       receipt: `minimun_${Date.now()}`,
-      notes: { programme: 'Mini MUN Master Class Module-2', userId: userId || '', studentName, mobile, school: schoolName || '' },
+      notes: { programme: 'Mini MUN Master Class Module-3', userId: userId || '', studentName, mobile, school: schoolName || '' },
     });
 
     const result = await db.query(
       `INSERT INTO mini_mun_registrations 
         (user_id, student_name, email, mobile, school_name, grade, city, razorpay_order_id, amount, module)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, 2) RETURNING id, registered_at`,
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, 3) RETURNING id, registered_at`,
       [userId || null, studentName, email, mobile, schoolName, grade, city, order.id, amountPaise]
     );
     res.json({ success: true, orderId: order.id, amount: amountPaise, registrationId: result.rows[0].id });
@@ -2680,7 +2680,7 @@ app.get('/api/minimun/status/:email', async (req, res) => {
     const result = await db.query(
       `SELECT id FROM mini_mun_registrations 
        WHERE email = $1 AND payment_status = 'paid' 
-       AND module = 2`,
+       AND module = 3`,
       [email]
     );
     res.json({ registered: result.rows.length > 0 });

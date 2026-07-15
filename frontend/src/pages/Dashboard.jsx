@@ -555,10 +555,10 @@ export default function Dashboard({ user, setUser }) {
           </div>
 
           <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fff', marginBottom: '0.25rem', letterSpacing: '-0.01em' }}>
-            <span style={{ color: '#3b82f6' }}>Mini</span> MUN <span style={{ color: '#ef4444' }}>Sunday</span>
+            <span style={{ color: '#3b82f6' }}>Mini</span> MUN <span style={{ color: '#ef4444' }}>Module 3</span>
           </div>
           <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '1rem', lineHeight: 1.5 }}>
-            MUN lessons for students from 10am to 11am. Practice speech, debate, and diplomacy!
+            Master Class: Research Like A Diplomat. Sunday 19th July 2026.
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: minimunRegistered ? '#10b981' : '#3b82f6' }}>
             {minimunRegistered ? (
