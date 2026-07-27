@@ -232,6 +232,12 @@ app.post('/api/login', async (req, res) => {
     }
     
     const user = rows[0];
+    
+    // If the user has no password, they likely registered via Google
+    if (!user.password) {
+      return res.status(401).json({ error: 'This account was created with Google. Please log in using the Google button.' });
+    }
+
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) {
       return res.status(401).json({ error: 'Invalid username or password' });
