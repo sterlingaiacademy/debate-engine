@@ -263,7 +263,7 @@ export default function SpeechAnalysis({ user }) {
           if (!tokenRes.ok) throw new Error('Failed to get realtime token');
           const { token } = await tokenRes.json();
 
-          const socket = new WebSocket(`wss://api.assemblyai.com/v2/realtime/ws?sample_rate=16000&token=${token}`);
+          const socket = new WebSocket(`wss://streaming.assemblyai.com/v3/ws?speech_model=universal-3-5-pro&sample_rate=16000&token=${token}`);
           socketRef.current = socket;
 
           socket.onmessage = (message) => {
@@ -298,28 +298,45 @@ export default function SpeechAnalysis({ user }) {
           socket.onopen = () => {
             setLiveTranscript('Listening... Your speech will appear here in real-time.');
             navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-              const recordRTC = new RecordRTC(stream, {
-                type: 'audio',
-                mimeType: 'audio/webm;codecs=pcm',
-                recorderType: StereoAudioRecorder,
-                timeSlice: 250,
-                desiredSampRate: 16000,
-                numberOfAudioChannels: 1,
-                bufferSize: 4096,
-                audioBitsPerSecond: 128000,
-                ondataavailable: (blob) => {
-                  if (socket.readyState === WebSocket.OPEN) {
-                    const reader = new FileReader();
-                    reader.onload = () => {
-                      const base64data = reader.result.split(',')[1];
-                      socket.send(JSON.stringify({ audio_data: base64data }));
-                    };
-                    reader.readAsDataURL(blob);
+              const audioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
+              const source = audioContext.createMediaStreamSource(stream);
+              const processor = audioContext.createScriptProcessor(4096, 1, 1);
+
+              source.connect(processor);
+              processor.connect(audioContext.destination);
+
+              processor.onaudioprocess = (e) => {
+                if (socket.readyState === WebSocket.OPEN) {
+                  const inputData = e.inputBuffer.getChannelData(0);
+                  const pcm16 = new Int16Array(inputData.length);
+                  for (let i = 0; i < inputData.length; i++) {
+                    let s = Math.max(-1, Math.min(1, inputData[i]));
+                    pcm16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
                   }
-                },
-              });
-              recordRTC.startRecording();
-              recordRTCRef.current = recordRTC;
+                  const buffer = new ArrayBuffer(pcm16.length * 2);
+                  const view = new DataView(buffer);
+                  for (let i = 0; i < pcm16.length; i++) {
+                    view.setInt16(i * 2, pcm16[i], true);
+                  }
+                  let binary = '';
+                  const bytes = new Uint8Array(buffer);
+                  for (let i = 0; i < bytes.byteLength; i++) {
+                    binary += String.fromCharCode(bytes[i]);
+                  }
+                  const base64 = btoa(binary);
+                  socket.send(JSON.stringify({ audio_data: base64 }));
+                }
+              };
+
+              recordRTCRef.current = {
+                stopRecording: () => {
+                  try {
+                    processor.disconnect();
+                    source.disconnect();
+                    audioContext.close();
+                  } catch (e) {}
+                }
+              };
             }).catch(err => {
               console.error('Microphone error for RecordRTC:', err);
             });

@@ -258,10 +258,8 @@ router.get('/realtime-token', async (req, res) => {
     if (!process.env.ASSEMBLYAI_API_KEY) {
       return res.status(500).json({ error: 'Missing AssemblyAI API key.' });
     }
-    const { AssemblyAI } = require('assemblyai');
-    const aai = new AssemblyAI({ apiKey: process.env.ASSEMBLYAI_API_KEY });
-    const token = await aai.realtime.createTemporaryToken({ expires_in: 3600 });
-    res.json({ token });
+    // AssemblyAI v3 streaming uses the API key directly in the token parameter
+    res.json({ token: process.env.ASSEMBLYAI_API_KEY });
   } catch (err) {
     console.error('Failed to generate realtime token:', err.message);
     res.status(500).json({ error: 'Token generation failed' });
