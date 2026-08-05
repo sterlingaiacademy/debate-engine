@@ -4,7 +4,7 @@ import {
   Play, Trophy, TrendingUp, BarChart2, Star, Zap, Award, Clock,
   MessageSquare, Mic, Flame, Shield, Crown, Sparkles, Target, Heart,
   Sword, BookOpen, FileText, Medal, Gem, RefreshCw, Dumbbell, MessageCircle,
-  Brain, Globe, Users, ChevronRight, Cpu, Radio, CheckCircle2, Flag
+  Brain, Globe, Users, ChevronRight, Cpu, Radio, CheckCircle2, Flag, X
 } from 'lucide-react';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip,
@@ -13,6 +13,43 @@ import {
 import HUDCard from '../components/HUDCard';
 import { API_BASE } from '../api';
 import PremiumEnrollModal from '../components/PremiumEnrollModal';
+
+const ThinkQuestModal = ({ onDismiss, onSubmit }) => {
+  const [code, setCode] = useState('');
+  return (
+    <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 99999, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)', animation: 'fadeIn 0.2s' }}>
+      <div style={{ width: '90%', maxWidth: '400px', background: 'linear-gradient(135deg, #1f0505 0%, #3d0a0a 100%)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: 24, padding: '2rem', position: 'relative', boxShadow: '0 24px 60px rgba(0,0,0,0.5)', animation: 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)' }}>
+        <button onClick={onDismiss} style={{ position: 'absolute', top: 16, right: 16, background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: 32, height: 32, borderRadius: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <X size={18} />
+        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+          <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Star size={24} color="#ef4444" strokeWidth={2.5} />
+          </div>
+          <div>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 900, color: '#fff', margin: 0, letterSpacing: '-0.02em' }}>ThinkQuest <span style={{ color: '#ef4444' }}>Olympiad</span></h2>
+            <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginTop: '0.15rem' }}>Enter your School Code to join</div>
+          </div>
+        </div>
+        <input 
+          type="text" 
+          placeholder="ENTER SCHOOL CODE" 
+          value={code} 
+          onChange={e => setCode(e.target.value.toUpperCase())}
+          style={{ width: '100%', padding: '1rem 1.25rem', borderRadius: 12, background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(239,68,68,0.4)', color: '#fff', fontSize: '1rem', fontWeight: 700, letterSpacing: '0.1em', textAlign: 'center', marginBottom: '1.5rem', outline: 'none' }}
+          autoFocus
+        />
+        <button 
+          onClick={() => onSubmit(code)}
+          disabled={!code.trim()}
+          style={{ width: '100%', padding: '1rem', borderRadius: 12, background: code.trim() ? '#ef4444' : 'rgba(239,68,68,0.3)', color: '#fff', fontSize: '1.05rem', fontWeight: 800, border: 'none', cursor: code.trim() ? 'pointer' : 'not-allowed', transition: 'all 0.2s' }}
+        >
+          Access Arena
+        </button>
+      </div>
+    </div>
+  );
+};
 
 /* ─── Helpers ─── */
 const formatCategory = (key) => {
@@ -208,6 +245,7 @@ export default function Dashboard({ user, setUser }) {
   );
   const [loading, setLoading] = useState(!stats);
   const [showPremiumModal, setShowPremiumModal] = useState(false);
+  const [showThinkQuestModal, setShowThinkQuestModal] = useState(false);
   const [showCoupon, setShowCoupon] = useState(false);
   const [couponCode, setCouponCode] = useState('');
   const [couponStatus, setCouponStatus] = useState({ loading: false, msg: '', type: '' });
@@ -369,7 +407,7 @@ export default function Dashboard({ user, setUser }) {
       <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', paddingBottom: '4rem' }}>
 
       {/* ── Hero Greeting ── */}
-      <div className="welcome-card" style={{
+      <div className="welcome-card animate-fade-in" style={{
         position: 'relative', overflow: 'hidden',
         borderRadius: 24, padding: '2rem 2.5rem',
         background: 'linear-gradient(135deg, rgba(255,107,0,0.08) 0%, rgba(0,0,0,0) 60%)',
@@ -381,7 +419,7 @@ export default function Dashboard({ user, setUser }) {
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-            <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'linear-gradient(135deg, #FF6B00 0%, #f97316 100%)', border: '2px solid rgba(255,107,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', fontWeight: 900, color: '#fff', flexShrink: 0, boxShadow: '0 8px 24px rgba(255,107,0,0.3)' }}>
+            <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(255,255,255,0.2)', border: '2px solid rgba(255,255,255,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', fontWeight: 900, color: '#fff', flexShrink: 0, boxShadow: '0 8px 24px rgba(0,0,0,0.1)' }}>
               {user.avatar
                 ? <img src={user.avatar} alt="" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
                 : user.name?.charAt(0).toUpperCase()
@@ -389,14 +427,14 @@ export default function Dashboard({ user, setUser }) {
             </div>
             <div>
               <div style={{ fontSize: '0.65rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.2rem' }}>
-              Welcome back
-            </div>
-            <h1 style={{ fontSize: 'clamp(1.4rem, 4vw, 1.75rem)', fontWeight: 900, margin: 0, letterSpacing: '-0.02em', lineHeight: 1.1 }}>
-              <span className="gradient-text">{user.name}</span>
-            </h1>
-            <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 600, marginTop: '0.2rem' }}>
-              @{user.studentId}
-            </div>
+                Welcome back
+              </div>
+              <h1 style={{ fontSize: 'clamp(1.4rem, 4vw, 1.75rem)', fontWeight: 900, margin: 0, letterSpacing: '-0.02em', lineHeight: 1.1 }}>
+                <span className="gradient-text">{user.name}</span>
+              </h1>
+              <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 600, marginTop: '0.2rem' }}>
+                @{user.studentId}
+              </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.5rem', flexWrap: 'wrap' }}>
 
               {user.classLevel && (
@@ -456,7 +494,7 @@ export default function Dashboard({ user, setUser }) {
                       value={couponCode}
                       onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
                       style={{
-                        background: 'transparent', border: 'none', color: '#FF6B00', width: '90px', fontSize: '0.72rem',
+                        background: 'transparent', border: 'none', color: '#ffedd5', width: '90px', fontSize: '0.72rem',
                         fontFamily: 'monospace', textTransform: 'uppercase', outline: 'none', letterSpacing: '0.05em',
                       }}
                       autoFocus
@@ -467,11 +505,10 @@ export default function Dashboard({ user, setUser }) {
                       onClick={handleRedeemCoupon}
                       disabled={couponStatus.loading || !couponCode.trim()}
                       style={{
-                        background: couponCode.trim() ? '#FF6B00' : 'rgba(255,255,255,0.08)',
-                        color: '#fff', border: 'none', padding: '0.2rem 0.65rem', borderRadius: 99,
-                        fontSize: '0.7rem', fontWeight: 800,
-                        cursor: couponStatus.loading || !couponCode.trim() ? 'not-allowed' : 'pointer',
-                        transition: 'background 0.2s', opacity: couponCode.trim() ? 1 : 0.5,
+                        background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.2)',
+                        color: '#fb923c', padding: '0.2rem 0.6rem', borderRadius: 99,
+                        fontSize: '0.65rem', fontWeight: 800, cursor: 'pointer',
+                        opacity: couponStatus.loading || !couponCode.trim() ? 0.5 : 1
                       }}
                     >
                       {couponStatus.loading ? '...' : 'APPLY'}
@@ -485,12 +522,12 @@ export default function Dashboard({ user, setUser }) {
 
           {dailyMins !== null && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', minWidth: 140 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.65rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.65rem', fontWeight: 700, color: 'rgba(255,255,255,0.8)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 <span>Daily Time Left</span>
-                <span style={{ color: '#FF6B00' }}>{dailyMins}m</span>
+                <span style={{ color: '#fff' }}>{dailyMins}m</span>
               </div>
-              <div className="xp-track" style={{ height: 6 }}>
-                <div className="xp-fill" style={{ width: `${Math.min((dailyMins / 60) * 100, 100)}%` }} />
+              <div className="xp-track" style={{ height: 6, background: 'rgba(0,0,0,0.2)' }}>
+                <div className="xp-fill" style={{ width: `${Math.min((dailyMins / 60) * 100, 100)}%`, background: '#fff' }} />
               </div>
             </div>
           )}
@@ -502,24 +539,24 @@ export default function Dashboard({ user, setUser }) {
             onClick={() => setShowPremiumModal(true)}
             style={{ 
               position: 'relative', zIndex: 2, marginTop: '2rem', padding: '1rem 1.25rem', borderRadius: 16, cursor: 'pointer',
-              background: 'linear-gradient(135deg, rgba(255,107,0,0.1), rgba(255,107,0,0.05))',
-              border: '1px solid rgba(255,107,0,0.3)',
+              background: 'rgba(255,255,255,0.15)',
+              border: '1px solid rgba(255,255,255,0.3)',
               display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem',
-              transition: 'all 0.2s', boxShadow: '0 8px 24px rgba(255,107,0,0.1)'
+              transition: 'all 0.2s', boxShadow: '0 8px 24px rgba(0,0,0,0.1)'
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255,107,0,0.15), rgba(255,107,0,0.08))'; e.currentTarget.style.borderColor = 'rgba(255,107,0,0.5)'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255,107,0,0.1), rgba(255,107,0,0.05))'; e.currentTarget.style.borderColor = 'rgba(255,107,0,0.3)'; }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.25)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.15)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)'; }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-              <div style={{ background: 'rgba(255,107,0,0.2)', color: '#FF6B00', width: 40, height: 40, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <div style={{ background: 'rgba(255,255,255,0.2)', color: '#fff', width: 40, height: 40, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                 <Crown size={22} strokeWidth={2.5} />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <span style={{ fontSize: '1rem', fontWeight: 900, color: '#FF6B00', letterSpacing: '-0.01em' }}>Demo Account</span>
-                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Upgrade to Pro to unlock unlimited time and features!</span>
+                <span style={{ fontSize: '1rem', fontWeight: 900, color: '#fff', letterSpacing: '-0.01em' }}>Demo Account</span>
+                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'rgba(255,255,255,0.8)' }}>Upgrade to Pro to unlock unlimited time and features!</span>
               </div>
             </div>
-            <div style={{ background: '#FF6B00', color: '#fff', padding: '0.6rem 1.25rem', borderRadius: 99, fontSize: '0.85rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.4rem', boxShadow: '0 4px 12px rgba(255,107,0,0.3)' }}>
+            <div style={{ background: '#fff', color: '#FF6B00', padding: '0.6rem 1.25rem', borderRadius: 99, fontSize: '0.85rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.4rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
               Upgrade Now <ChevronRight size={16} />
             </div>
           </div>
@@ -577,10 +614,8 @@ export default function Dashboard({ user, setUser }) {
 
             {/* ── Event Tiles ── */}
       <div style={{ marginTop: '2rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-          <h2 style={{ fontSize: '1.1rem', fontWeight: 800, margin: 0, color: 'var(--text-primary)' }}>Events & Challenges</h2>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1rem' }}>Upcoming Events</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem', marginBottom: '2rem' }}>
           
           {/* G-Talk Cohort 2 */}
         <div
@@ -693,7 +728,7 @@ export default function Dashboard({ user, setUser }) {
 
         {/* ThinkQuest Olympiad */}
         <div
-          onClick={() => navigate('/thinkquest')}
+          onClick={() => setShowThinkQuestModal(true)}
           style={{
             borderRadius: 18, padding: '1.4rem 1.5rem', cursor: 'pointer',
             background: 'linear-gradient(135deg, #1f0505 0%, #3d0a0a 100%)',
@@ -765,7 +800,7 @@ export default function Dashboard({ user, setUser }) {
 
         {/* Speak English Without Fear */}
         <div
-          onClick={() => navigate('/speak-english-without-fear')}
+          onClick={() => navigate('/english-session')}
           style={{
             borderRadius: 18, padding: '1.4rem 1.5rem', cursor: 'pointer',
             background: 'linear-gradient(135deg, #042f2e 0%, #0f766e 100%)',
@@ -836,8 +871,17 @@ export default function Dashboard({ user, setUser }) {
         </div>
       </div>
       </div>
-
     </div>
+
+      {showThinkQuestModal && (
+        <ThinkQuestModal
+          onDismiss={() => setShowThinkQuestModal(false)}
+          onSubmit={(code) => {
+            setShowThinkQuestModal(false);
+            navigate('/olympiad/practice');
+          }}
+        />
+      )}
     </>
   );
 
@@ -957,8 +1001,17 @@ export default function Dashboard({ user, setUser }) {
           })}
         </div>
       </div>
-
     </div>
+
+      {showThinkQuestModal && (
+        <ThinkQuestModal
+          onDismiss={() => setShowThinkQuestModal(false)}
+          onSubmit={(code) => {
+            setShowThinkQuestModal(false);
+            navigate('/olympiad/practice');
+          }}
+        />
+      )}
     </>
   );
 }
