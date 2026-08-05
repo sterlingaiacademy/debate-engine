@@ -836,7 +836,7 @@ export default function Dashboard({ user, setUser }) {
 
         {/* Great India Freedom Challenge */}
         <div
-          onClick={() => navigate('/freedom-challenge')}
+          onClick={() => navigate('/freedom-quiz')}
           style={{
             borderRadius: 18, padding: '1.4rem 1.5rem', cursor: 'pointer',
             background: 'linear-gradient(135deg, #431407 0%, #1a0500 100%)',
