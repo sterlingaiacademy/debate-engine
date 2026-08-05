@@ -391,10 +391,7 @@ export default function Dashboard({ user, setUser }) {
               @{user.studentId}
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.5rem', flexWrap: 'wrap' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', background: `${tier.color}15`, border: `1px solid ${tier.color}30`, borderRadius: 99, padding: '0.2rem 0.6rem', fontSize: '0.75rem', fontWeight: 700, color: tier.color }}>
-                <TierIcon />
-                {tier.name}
-              </div>
+
               {user.classLevel && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                   <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#475569' }}>
