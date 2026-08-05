@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LogOut, LayoutDashboard, Mic, BarChart2, Trophy,
@@ -11,6 +11,13 @@ import PremiumEnrollModal from './PremiumEnrollModal';
 export default function Layout({ user, onLogout, onSwitchProfile }) {
   const location = useLocation();
   const { pathname, search } = location;
+  const mainScrollRef = useRef(null);
+
+  useLayoutEffect(() => {
+    if (mainScrollRef.current) {
+      mainScrollRef.current.scrollTop = 0;
+    }
+  }, [pathname]);
   const searchParams = new URLSearchParams(search);
   const nextParam = searchParams.get('next');
 
@@ -486,7 +493,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
       </aside>
 
       {/* ─── MAIN CONTENT ─── */}
-      <main id="main-scroll-container" style={{
+      <main ref={mainScrollRef} id="main-scroll-container" style={{
         flex: 1,
         overflowX: 'hidden',
         overflowY: isFullScreenRoute ? 'hidden' : 'auto',
