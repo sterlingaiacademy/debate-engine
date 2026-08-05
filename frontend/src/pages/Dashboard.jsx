@@ -391,10 +391,6 @@ export default function Dashboard({ user, setUser }) {
               @{user.studentId}
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.5rem', flexWrap: 'wrap' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 5, background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.2)', borderRadius: 99, padding: '3px 10px', fontSize: 12, fontWeight: 700, color: '#fb923c', lineHeight: 1, height: 26, boxSizing: 'border-box' }}>
-                <Flame size={12} strokeWidth={2.5} />
-                {stats.current_streak || 0} Day Streak
-              </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', background: `${tier.color}15`, border: `1px solid ${tier.color}30`, borderRadius: 99, padding: '0.2rem 0.6rem', fontSize: '0.75rem', fontWeight: 700, color: tier.color }}>
                 <TierIcon />
                 {tier.name}
@@ -830,83 +826,6 @@ export default function Dashboard({ user, setUser }) {
         </div>
       </div>
 
-      {/* ── Quick Stats (Minimized) ── */}
-      <div className="no-scrollbar" style={{ display: 'flex', gap: '0.75rem', overflowX: 'auto', paddingBottom: '0.25rem' }}>
-        <StatBadge icon={Trophy} label="Total Debates" value={stats.total_debates || 0} color="#FF6B00" />
-        <StatBadge icon={Star} label="Avg Score" value={stats.avg_score ? `${stats.avg_score.toFixed(1)}` : '—'} color="#00d4ff" />
-        <StatBadge icon={Flame} label="Best Streak" value={`${stats.best_streak || 0}d`} color="#f59e0b" />
-        <StatBadge icon={Zap} label="GForce Tokens" value={gforce.toLocaleString()} color="#a855f7" />
-      </div>
-
-      {/* ── Charts Row ── */}
-      {(skillData.length > 0 || recentScoresData.length > 0) && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%,320px), 1fr))', gap: '1.25rem' }}>
-
-          {/* Radar — Skill Profile */}
-          {skillData.length >= 3 && (
-            <div className="glass-card" style={{ padding: '1.5rem' }}>
-              <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.25rem' }}>Skill Profile</div>
-              <div style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--text-primary)', marginBottom: '1.25rem' }}>Debate Skills Radar</div>
-              <ResponsiveContainer width="100%" height={220}>
-                <RadarChart data={skillData} margin={{ top: 0, right: 20, bottom: 0, left: 20 }}>
-                  <PolarGrid stroke={gridColor} />
-                  <PolarAngleAxis dataKey="subject" tick={{ fill: axisColor, fontSize: 11, fontWeight: 600 }} />
-                  <PolarRadiusAxis domain={[0, 10]} tick={false} axisLine={false} />
-                  <Radar name="You" dataKey="A" stroke={radarStroke} fill={radarFill} strokeWidth={2} dot={{ fill: radarStroke, r: 3 }} />
-                </RadarChart>
-              </ResponsiveContainer>
-            </div>
-          )}
-
-          {/* Line — Score Trend */}
-          {recentScoresData.length > 0 && (
-            <div className="glass-card" style={{ padding: '1.5rem' }}>
-              <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.25rem' }}>Performance</div>
-              <div style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--text-primary)', marginBottom: '1.25rem' }}>Score Trend</div>
-              <ResponsiveContainer width="100%" height={220}>
-                <LineChart data={recentScoresData} margin={{ top: 5, right: 10, bottom: 5, left: -20 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
-                  <XAxis dataKey="name" tick={{ fill: axisColor, fontSize: 11 }} axisLine={false} tickLine={false} />
-                  <YAxis domain={[0, 10]} tick={{ fill: axisColor, fontSize: 11 }} axisLine={false} tickLine={false} />
-                  <RechartsTooltip
-                    contentStyle={{ background: '#0d0d0d', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, color: '#f1f5f9' }}
-                    formatter={(v) => [v.toFixed(1), 'Score']}
-                  />
-                  <Line type="monotone" dataKey="score" stroke={lineColor} strokeWidth={2.5} dot={{ fill: lineColor, r: 4, strokeWidth: 0 }} activeDot={{ r: 6, strokeWidth: 0 }} />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* ── Badges ── */}
-      {displayBadges.length > 0 && (
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-            <h2 style={{ fontSize: '1.1rem', fontWeight: 800, margin: 0, color: 'var(--text-primary)' }}>Achievements</h2>
-            <span style={{ fontSize: '0.8rem', color: '#475569', fontWeight: 600 }}>{earnedBadges.length} / {ALL_BADGES.length} unlocked</span>
-          </div>
-          <div className="no-scrollbar" style={{ overflowX: 'auto', paddingBottom: '0.5rem' }}>
-            <div style={{ display: 'flex', gap: '0.75rem', width: 'max-content' }}>
-              {displayBadges.map(badge => {
-                const isEarned = earnedSet.has(badge.id);
-                const BIcon = BADGE_ICON_MAP[badge.id] || Star;
-                return (
-                  <div key={badge.id} className={`badge-slot ${isEarned ? 'earned' : 'locked'}`} title={badge.desc}>
-                    <div className="badge-icon-wrap" style={{ background: isEarned ? `${badge.color}18` : 'rgba(255,255,255,0.04)', border: `1px solid ${isEarned ? badge.color + '35' : 'rgba(255,255,255,0.06)'}`, color: badge.color }}>
-                      <BIcon size={24} strokeWidth={2} color={isEarned ? badge.color : '#475569'} />
-                    </div>
-                    <span style={{ fontSize: '0.7rem', fontWeight: 700, color: isEarned ? '#e2e8f0' : '#334155', textAlign: 'center', maxWidth: 76, lineHeight: 1.25 }}>
-                      {badge.name}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
     </>
   );
@@ -947,10 +866,6 @@ export default function Dashboard({ user, setUser }) {
               @{user.studentId}
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.2rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', background: 'rgba(255,255,255,0.2)', borderRadius: 99, padding: '0.2rem 0.5rem', fontSize: '0.75rem', fontWeight: 700 }}>
-                <Flame size={12} />
-                {stats.current_streak || 0} Day Streak
-              </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                 <div style={{ fontSize: '0.75rem', fontWeight: 600, opacity: 0.8 }}>
                   {user.grade
@@ -1032,56 +947,6 @@ export default function Dashboard({ user, setUser }) {
         </div>
       </div>
 
-      {/* ── Quick Stats (Minimized) ── */}
-      <div className="no-scrollbar" style={{ display: 'flex', gap: '0.75rem', overflowX: 'auto', paddingBottom: '0.25rem' }}>
-        <StatBadge icon={Trophy} label="Debates" value={stats.total_debates || 0} color="#7c3aed" isJunior />
-        <StatBadge icon={Star} label="Avg Score" value={stats.avg_score ? `${stats.avg_score.toFixed(1)}` : '—'} color="#f43f5e" isJunior />
-        <StatBadge icon={Zap} label="Tokens" value={gforce.toLocaleString()} color="#f59e0b" isJunior />
-      </div>
-
-      {/* ── Skill Radar (Junior) ── */}
-      {skillData.length >= 3 && (
-        <div className="card" style={{ padding: '1.5rem' }}>
-          <h3 style={{ fontSize: '1rem', fontWeight: 800, marginBottom: '1.25rem', color: 'var(--j-text)' }}>Your Skills</h3>
-          <ResponsiveContainer width="100%" height={220}>
-            <RadarChart data={skillData} margin={{ top: 0, right: 20, bottom: 0, left: 20 }}>
-              <PolarGrid stroke={gridColor} />
-              <PolarAngleAxis dataKey="subject" tick={{ fill: '#7c3aed', fontSize: 11, fontWeight: 700 }} />
-              <PolarRadiusAxis domain={[0, 10]} tick={false} axisLine={false} />
-              <Radar name="You" dataKey="A" stroke="#7c3aed" fill="rgba(124,58,237,0.12)" strokeWidth={2.5} dot={{ fill: '#7c3aed', r: 3 }} />
-            </RadarChart>
-          </ResponsiveContainer>
-        </div>
-      )}
-
-      {/* ── Badges ── */}
-      {displayBadges.length > 0 && (
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.875rem' }}>
-            <h2 style={{ fontSize: '1.1rem', fontWeight: 900, margin: 0, color: 'var(--j-text)' }}>Your Badges</h2>
-            <span style={{ fontSize: '0.8rem', color: '#a78bfa', fontWeight: 700 }}>{earnedBadges.length} earned</span>
-          </div>
-          <div style={{ overflowX: 'auto', paddingBottom: '0.5rem' }}>
-            <div style={{ display: 'flex', gap: '0.75rem', width: 'max-content' }}>
-              {displayBadges.map(badge => {
-                const isEarned = earnedSet.has(badge.id);
-                const BIcon = BADGE_ICON_MAP[badge.id] || Star;
-                return (
-                  <div key={badge.id} className={`badge-slot ${isEarned ? 'earned' : 'locked'}`} title={badge.desc}
-                    style={isEarned ? { animation: 'badgeUnlock 0.5s cubic-bezier(0.16,1,0.3,1) both' } : {}}>
-                    <div className="badge-icon-wrap" style={{ background: `${badge.color}15`, border: `1.5px solid ${badge.color}30`, borderRadius: 14 }}>
-                      <BIcon size={24} strokeWidth={2} color={isEarned ? badge.color : '#a78bfa'} />
-                    </div>
-                    <span style={{ fontSize: '0.68rem', fontWeight: 800, color: isEarned ? 'var(--j-text)' : '#a78bfa', textAlign: 'center', maxWidth: 76, lineHeight: 1.25 }}>
-                      {badge.name}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
     </>
   );
