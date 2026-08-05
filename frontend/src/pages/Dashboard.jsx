@@ -531,7 +531,7 @@ export default function Dashboard({ user, setUser }) {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
           <h2 style={{ fontSize: '1.1rem', fontWeight: 800, margin: 0, color: 'var(--text-primary)' }}>Choose Your Mode</h2>
         </div>
-        <div className="no-scrollbar modes-container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%,240px), 1fr))', gap: '1rem' }}>
+        <div className="no-scrollbar modes-container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '1rem' }}>
           {availableModes.map((mode, i) => {
             const Icon = mode.icon;
             return (
@@ -576,9 +576,13 @@ export default function Dashboard({ user, setUser }) {
       </div>
 
             {/* ── Event Tiles ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))', gap: '1rem', marginBottom: '2rem' }}>
-        
-        {/* G-Talk Cohort 2 */}
+      <div style={{ marginTop: '2rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+          <h2 style={{ fontSize: '1.1rem', fontWeight: 800, margin: 0, color: 'var(--text-primary)' }}>Events & Challenges</h2>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+          
+          {/* G-Talk Cohort 2 */}
         <div
           onClick={() => navigate('/cohort')}
           style={{
@@ -829,6 +833,7 @@ export default function Dashboard({ user, setUser }) {
             Register Now <ChevronRight size={14} />
           </div>
         </div>
+      </div>
       </div>
 
     </div>
