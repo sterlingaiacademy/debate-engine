@@ -1,10 +1,18 @@
 import { useEffect, useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import logoImg from '../assets/logo.png';
+import indraImg from '../assets/Indra m nair.png';
+import mallikaImg from '../assets/Ms Mallika Sen.png';
+import maithraaImg from '../assets/KPS Maithraa.png';
+import christianImg from '../assets/Christian Nwigwe.png';
+import anushaImg from '../assets/Anusha Fulgaonkar.png';
+import sruthyImg from '../assets/sruthy v raj.png';
+import himaniImg from '../assets/miss himani bakshi.png';
 import { GradientBars } from '../components/ui/gradient-bars';
 import { TrustElements } from '../components/ui/trust-elements';
 import ShinyButton from '../components/ui/shiny-button';
 import SpinnerButton from '../components/ui/spinner-button';
+import { AnimatedTestimonials } from '../components/ui/animated-testimonials';
 import {
   Mic, Zap, Trophy, BarChart2, Globe, Star, ChevronDown,
   CheckCircle, ArrowRight, Play, Shield, Brain, Sparkles, Users, Download, Clock, Calendar
@@ -264,7 +272,7 @@ export default function LandingPage() {
           <a href="#how-it-works" className="lp-nav-link">How It Works</a>
           <a href="#pricing" className="lp-nav-link">Pricing</a>
           <a href="#faq" className="lp-nav-link">FAQ</a>
-          <a href="#terms" className="lp-nav-link">Terms and Conditions</a>
+          <Link to="/olympiad/school-registration" className="lp-nav-link" style={{ color: '#F97316', fontWeight: 600 }}>Register School</Link>
         </div>
         <div className="lp-nav-cta">
           <Link to="/login" className="lp-btn-ghost">Login</Link>
@@ -331,12 +339,13 @@ export default function LandingPage() {
           <SpinnerButton
             to="/register"
             text="Start Debating Free"
+            theme="orange"
           />
+
           <SpinnerButton
             href="/grace-and-force.apk"
             text="Download Android App"
             icon={<Download size={18} />}
-            theme="orange"
           />
         </div>
 
@@ -394,6 +403,61 @@ export default function LandingPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── TESTIMONIALS ── */}
+      <section className="lp-section" id="testimonials">
+        <div className="lp-container">
+          <div className="lp-section-header lp-reveal">
+            <span className="lp-section-badge">Testimonials</span>
+            <h2 className="lp-section-h2">What Our Users Say</h2>
+            <p className="lp-section-sub">Real experiences. Real growth. Real leaders in the making.</p>
+          </div>
+          <AnimatedTestimonials testimonials={[
+            {
+              quote: "The activities and speech practice at Graceandforce.com helped me organize my thoughts, think critically, and present my ideas with confidence. I especially enjoy the interactive debates and challenges because they make learning exciting. Every session motivates me to improve, and today I feel much more confident expressing myself. I proudly recommend Graceandforce.com to every student who wants to become a better communicator and future leader.",
+              name: "INDRA M NAIR",
+              designation: "Grade 8, Al Saad Indian School, Abu Dhabi",
+              src: indraImg,
+            },
+            {
+              quote: "Graceandforce.com is an excellent platform for developing confident speakers. Its instant feedback and scoring help learners improve continuously, while the judgment-free practice environment encourages them to speak without fear. The structured debates, audience-based tone guidance, and progress tracking make learning meaningful and measurable. Most importantly, students can practice anytime at their own convenience, making it a truly effective platform for building communication and critical thinking skills.",
+              name: "Ms Mallika Sen",
+              designation: "Vice Principal, Delhi Public School-Hyderabad",
+              src: mallikaImg,
+            },
+            {
+              quote: "What I appreciate most about GraceandFORCE.com is that it has made me more confident in expressing my opinions. The regular practice sessions encouraged me to think independently and communicate with clarity. The debate and Model UN activities challenged me to analyse issues from different perspectives and defend my ideas with logic and confidence. It is not just a speaking platform—it is a place where students learn to become informed, responsible, and articulate individuals. I would happily recommend GraceandFORCE.com to every student who wants to develop skills that will be valuable throughout life.",
+              name: "KPS Maithraa",
+              designation: "Grade XI, Kovai Public School, Tamil Nadu",
+              src: maithraaImg,
+            },
+            {
+              quote: "GraceandFORCE.com has become much more than just an app on my device—it has become my learning companion. It helps me prepare confidently for debates, public speaking, and real-life situations by strengthening my reasoning, critical thinking, and communication skills. The AI-powered practice sessions provide valuable feedback that motivates me to improve every day. I truly enjoy using the platform and would highly recommend it to students and young leaders who want to become confident speakers and better thinkers. It's an amazing platform, and I absolutely love it!",
+              name: "Christian Nwigwe",
+              designation: "University of Port Harcourt, Choba, Rivers State, Nigeria",
+              src: christianImg,
+            },
+            {
+              quote: "Graceandforce.com has helped me learn many new things in a fun way. I really enjoy practising on it and participating in the quizzes because they are interesting and help me improve my knowledge and confidence. Every practice motivates me to think, learn, and do better. The mentors are inspiring and encouraging, which makes every session enjoyable. I feel more confident than before, and I always look forward to the next activities of Graceandforce.com. I would happily recommend Graceandforce.com to every student who wants to learn, grow, and build confidence.",
+              name: "Anusha Fulgaonkar",
+              designation: "The Stepping Stone School, Chinchwad, Pune",
+              src: anushaImg,
+            },
+            {
+              quote: "GraceandForce.com is an innovative and engaging platform that helps students strengthen their communication, public speaking and critical-thinking skills through meaningful practice. Its learner-friendly approach builds confidence and prepares students to express their ideas with clarity and purpose.",
+              name: "Sruthy V Raj",
+              designation: "PGT, FITJEE Global School, Vellore, Tamil Nadu",
+              src: sruthyImg,
+            },
+            {
+              quote: "Graceandforce.com is one of the few platforms that truly empowers children to discover their voice. Through AI-powered speech practice, debate, and Model UN experiences, it nurtures confidence, critical thinking, and leadership in an engaging way. Every child deserves opportunities like these to grow into articulate and responsible global citizens.",
+              name: "Ms Himani Bakshi",
+              designation: "PGT English, Modern School, Barakhamba Road, New Delhi",
+              src: himaniImg,
+            }
+          ]} />
         </div>
       </section>
 

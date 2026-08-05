@@ -1,0 +1,183 @@
+--- Step 10509 : multi_replace_file_content ---
+Instruction: Remove the "Is your school not registered yet?" block from the Olympiad Join modal in Dashboard.jsx
+Chunk Lines 465-475
+Target: "            \n            <div style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.85rem', color: '#94a3b8' }}>\n              Is your school not registered yet? <br />\n              <span \n                onClick={() => navigate('/olympiad/school-registration')}\n                style={{ color: '#fca5a5', cursor: 'pointer', textDecoration: 'underline', fontWeight: 600 }}\n              >\n                Register your school here\n              </span>\n            </div>\n          </div>\n        </div>"
+Replacement: '          </div>\n        </div>'
+Chunk Lines 1260-1271
+Target: "\n            <div style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.85rem', color: '#94a3b8' }}>\n              Is your school not registered yet? <br />\n              <span \n                onClick={() => navigate('/olympiad/school-registration')}\n                style={{ color: '#fca5a5', cursor: 'pointer', textDecoration: 'underline', fontWeight: 600 }}\n              >\n                Register your school here\n              </span>\n            </div>\n          </div>\n        </div>"
+Replacement: '          </div>\n        </div>'
+
+
+--- Step 10641 : replace_file_content ---
+Instruction: Update state initialization to check localStorage
+Lines 4-6
+Target: "  const [loginId, setLoginId] = useState('');\n  const [loggedIn, setLoggedIn] = useState(false);"
+Replacement: "  const [loginId, setLoginId] = useState(localStorage.getItem('coordinatorId') || '');\n  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem('coordinatorId'));"
+
+
+--- Step 10644 : replace_file_content ---
+Instruction: Clear coordinatorId from localStorage on logout
+Lines 50-50
+Target: "        <button onClick={() => setLoggedIn(false)} style={{ padding: '0.5rem 1rem', background: 'transparent', border: '1px solid #334155', color: '#CBD5E1', borderRadius: '0.5rem', cursor: 'pointer' }}>Logout</button>"
+Replacement: "        <button onClick={() => { localStorage.removeItem('coordinatorId'); setLoggedIn(false); setLoginId(''); }} style={{ padding: '0.5rem 1rem', background: 'transparent', border: '1px solid #334155', color: '#CBD5E1', borderRadius: '0.5rem', cursor: 'pointer' }}>Logout</button>"
+
+
+--- Step 10762 : multi_replace_file_content ---
+Instruction: Use fetch instead of axios to fix build error
+Chunk Lines 2-3
+Target: "import axios from 'axios';\nimport { API_BASE_URL } from '../config';"
+Replacement: "import { API_BASE_URL } from '../config';"
+Chunk Lines 24-34
+Target: "    try {\n      const coordinatorId = localStorage.getItem('coordinatorId');\n      const response = await axios.get(`${API_BASE_URL}/api/coordinator/dashboard/${coordinatorId}`);\n      setData(response.data);\n    } catch (err) {\n      console.error(err);\n      setError('Unable to load dashboard data. Invalid ID or network issue.');\n      if (err.response && err.response.status === 404) {\n        handleLogout();\n      }\n    } finally {"
+Replacement: "    try {\n      const coordinatorId = localStorage.getItem('coordinatorId');\n      const response = await fetch(`${API_BASE_URL}/api/coordinator/dashboard/${coordinatorId}`);\n      \n      if (response.status === 404) {\n        handleLogout();\n        return;\n      }\n      \n      if (!response.ok) {\n        throw new Error('Network response was not ok');\n      }\n      \n      const responseData = await response.json();\n      setData(responseData);\n    } catch (err) {\n      console.error(err);\n      setError('Unable to load dashboard data. Invalid ID or network issue.');\n    } finally {"
+
+
+--- Step 10791 : multi_replace_file_content ---
+Instruction: Import API_BASE instead of API_BASE_URL
+Chunk Lines 2-2
+Target: "import { API_BASE_URL } from '../config';"
+Replacement: "import { API_BASE } from '../config';"
+Chunk Lines 22-22
+Target: '      const response = await fetch(`${API_BASE_URL}/api/coordinator/dashboard/${coordinatorId}`);'
+Replacement: '      const response = await fetch(`${API_BASE}/api/coordinator/dashboard/${coordinatorId}`);'
+
+
+--- Step 10806 : multi_replace_file_content ---
+Instruction: Import API_BASE from ../api
+Chunk Lines 2-2
+Target: "import { API_BASE } from '../config';"
+Replacement: "import { API_BASE } from '../api';"
+
+
+--- Step 10936 : multi_replace_file_content ---
+Instruction: Remove all emojis (👥, 🏆, 📈, 🎓, 📭, 🔍) from CoordinatorDashboard.jsx
+Chunk Lines 165-168
+Target: '          <StatCard title="TOTAL STUDENTS" value={data.expectedRegistrations || 0} sub="Out of expected" icon="👥" delay="0" />\n          <StatCard title="OLYMPIAD DONE" value={data.olympiadCompleted || 0} sub="Completed all rounds" icon="🏆" delay="0.1" />\n          <StatCard title="DAILY ENGAGEMENT" value={`${data.avgDailyEngagement || 0}%`} sub="Avg practice activity" icon="📈" delay="0.2" />\n          <StatCard title="STUDENTS ENROLLED" value={data.totalRegistrations || 0} sub="Under your school code" icon="🎓" delay="0.3" />'
+Replacement: '          <StatCard title="TOTAL STUDENTS" value={data.expectedRegistrations || 0} sub="Out of expected" delay="0" />\n          <StatCard title="OLYMPIAD DONE" value={data.olympiadCompleted || 0} sub="Completed all rounds" delay="0.1" />\n          <StatCard title="DAILY ENGAGEMENT" value={`${data.avgDailyEngagement || 0}%`} sub="Avg practice activity" delay="0.2" />\n          <StatCard title="STUDENTS ENROLLED" value={data.totalRegistrations || 0} sub="Under your school code" delay="0.3" />'
+Chunk Lines 249-251
+Target: '              <td colSpan="5" style={{ padding: \'3rem\', textAlign: \'center\', color: \'#94a3b8\' }}>\n                <div style={{ fontSize: \'2rem\', marginBottom: \'1rem\' }}>📭</div>\n                <div>No students have registered under your school code yet.</div>\n              </td>'
+Replacement: '              <td colSpan="5" style={{ padding: \'3rem\', textAlign: \'center\', color: \'#94a3b8\' }}>\n                <div>No students have registered under your school code yet.</div>\n              </td>'
+Chunk Lines 301-303
+Target: '              <td colSpan="6" style={{ padding: \'3rem\', textAlign: \'center\', color: \'#94a3b8\' }}>\n                <div style={{ fontSize: \'2rem\', marginBottom: \'1rem\' }}>🔍</div>\n                <div>No students found matching your criteria.</div>\n              </td>'
+Replacement: '              <td colSpan="6" style={{ padding: \'3rem\', textAlign: \'center\', color: \'#94a3b8\' }}>\n                <div>No students found matching your criteria.</div>\n              </td>'
+
+
+--- Step 10963 : replace_file_content ---
+Instruction: Remove the '⟳ ' icon from the Refresh button in the UI
+Lines 475-475
+Target: "              {loading ? '⟳ Loading…' : '⟳ Refresh'}"
+Replacement: "              {loading ? 'Loading…' : 'Refresh'}"
+
+
+--- Step 10998 : multi_replace_file_content ---
+Instruction: Import logoImg and replace the 'S' div with the logoImg
+Chunk Lines 2-2
+Target: "import { API_BASE } from '../api';"
+Replacement: "import { API_BASE } from '../api';\nimport logoImg from '../assets/logo.png';"
+Chunk Lines 396-396
+Target: "          <div style={{ width: 36, height: 36, borderRadius: 10, background: 'linear-gradient(135deg, #1d4ed8, #3b82f6)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: '1rem', fontWeight: 900, color: '#fff', boxShadow: '0 0 20px rgba(59,130,246,0.4)' }}>S</div>"
+Replacement: '          <img src={logoImg} alt="G Force" style={{ width: 36, height: 36, objectFit: \'contain\', flexShrink: 0 }} />'
+
+
+--- Step 11022 : multi_replace_file_content ---
+Instruction: Import logoImg, replace G box with logoImg, and remove the extra Refresh button
+Chunk Lines 3-3
+Target: "import { API_BASE } from '../api';"
+Replacement: "import { API_BASE } from '../api';\nimport logoImg from '../assets/logo.png';"
+Chunk Lines 1005-1005
+Target: "        <button onClick={fetchSchools} style={{ padding: '0.4rem 0.8rem', background: '#3b82f6', color: '#fff', borderRadius: 6, border: 'none', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 600 }}>Refresh</button>"
+Replacement: '        <SectionTitle>Olympiad School Registrations</SectionTitle>'
+Chunk Lines 1125-1125
+Target: "          <div style={{ width: 36, height: 36, borderRadius: 10, background: 'linear-gradient(135deg,#E8392A,#F97316)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: '1rem', fontWeight: 900, color: '#fff' }}>G</div>"
+Replacement: '          <img src={logoImg} alt="G Force" style={{ width: 36, height: 36, objectFit: \'contain\', flexShrink: 0 }} />'
+
+
+--- Step 11025 : replace_file_content ---
+Instruction: Remove the duplicated SectionTitle tag
+Lines 1005-1005
+Target: '        <SectionTitle>Olympiad School Registrations</SectionTitle>'
+Replacement: ''
+
+
+--- Step 11130 : multi_replace_file_content ---
+Instruction: Add Indus MUN event tile after Mini MUN tile in both dashboard views
+Chunk Lines 840-845
+Target: "          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#60a5fa' }}>\n            Register Now <ChevronRight size={14} />\n          </div>\n        </div>\n      </div>\n      </div>"
+Replacement: '          <div style={{ display: \'flex\', alignItems: \'center\', gap: \'0.4rem\', fontSize: \'0.82rem\', fontWeight: 700, color: \'#60a5fa\' }}>\n            Register Now <ChevronRight size={14} />\n          </div>\n        </div>\n\n        {/* Indus MUN Tile */}\n        <div\n          onClick={() => navigate(\'/indus-mun\')}\n          style={{\n            borderRadius: 18, padding: \'1.4rem 1.5rem\', cursor: \'pointer\',\n            background: \'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)\',\n            border: \'1px solid rgba(234,179,8,0.2)\',\n            position: \'relative\', overflow: \'hidden\',\n            transition: \'transform 0.25s, box-shadow 0.25s\',\n            boxShadow: \'0 4px 24px rgba(0,0,0,0.4)\',\n          }}\n          onMouseEnter={e => { e.currentTarget.style.transform = \'translateY(-3px)\'; e.currentTarget.style.boxShadow = \'0 12px 40px rgba(234,179,8,0.15)\'; }}\n          onMouseLeave={e => { e.currentTarget.style.transform = \'\'; e.currentTarget.style.boxShadow = \'0 4px 24px rgba(0,0,0,0.4)\'; }}\n        >\n          <div style={{ position: \'absolute\', top: 0, left: 0, right: 0, height: 2, background: \'linear-gradient(90deg, #eab308, #fef08a)\' }} />\n          <div style={{ position: \'absolute\', top: -40, right: -40, width: 130, height: 130, borderRadius: \'50%\', background: \'radial-gradient(circle, rgba(234,179,8,0.1) 0%, transparent 70%)\', pointerEvents: \'none\' }} />\n          \n          <div style={{ display: \'flex\', justifyContent: \'space-between\', alignItems: \'flex-start\', marginBottom: \'0.85rem\' }}>\n            <span style={{ fontSize: \'0.62rem\', fontWeight: 800, letterSpacing: \'0.12em\', color: \'#eab308\', background: \'rgba(234,179,8,0.1)\', border: \'1px solid rgba(234,179,8,0.2)\', padding: \'0.2rem 0.65rem\', borderRadius: 99 }}>\n              NEW EVENT\n            </span>\n            <div style={{ width: 34, height: 34, borderRadius: 9, background: \'rgba(234,179,8,0.1)\', border: \'1px solid rgba(234,179,8,0.2)\', display: \'flex\', alignItems: \'center\', justifyContent: \'center\' }}>\n              <Globe size={16} color="#eab308" strokeWidth={2.5} />\n            </div>\n          </div>\n\n          <div style={{ fontSize: \'1.15rem\', fontWeight: 900, color: \'#fff\', marginBottom: \'0.25rem\', letterSpacing: \'-0.01em\' }}>\n            Indus MUN <span style={{ color: \'#eab308\' }}>Hybrid</span>\n          </div>\n          <div style={{ fontSize: \'0.8rem\', color: \'#94a3b8\', marginBottom: \'1rem\', lineHeight: 1.5 }}>\n            International Hybrid MUN for Grades 6 to 12. Registration is Free.\n          </div>\n          <div style={{ display: \'flex\', alignItems: \'center\', gap: \'0.4rem\', fontSize: \'0.82rem\', fontWeight: 700, color: \'#eab308\' }}>\n            Register Now <ChevronRight size={14} />\n          </div>\n        </div>\n\n      </div>\n      </div>'
+Chunk Lines 1132-1137
+Target: "          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#60a5fa' }}>\n            Register Now <ChevronRight size={14} />\n          </div>\n        </div>\n        </div>\n      </div>"
+Replacement: '          <div style={{ display: \'flex\', alignItems: \'center\', gap: \'0.4rem\', fontSize: \'0.82rem\', fontWeight: 700, color: \'#60a5fa\' }}>\n            Register Now <ChevronRight size={14} />\n          </div>\n        </div>\n\n        {/* Indus MUN Tile */}\n        <div\n          onClick={() => navigate(\'/indus-mun\')}\n          style={{\n            borderRadius: 18, padding: \'1.4rem 1.5rem\', cursor: \'pointer\',\n            background: \'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)\',\n            border: \'1px solid rgba(234,179,8,0.2)\',\n            position: \'relative\', overflow: \'hidden\',\n            transition: \'transform 0.25s, box-shadow 0.25s\',\n            boxShadow: \'0 4px 24px rgba(0,0,0,0.4)\',\n          }}\n          onMouseEnter={e => { e.currentTarget.style.transform = \'translateY(-3px)\'; e.currentTarget.style.boxShadow = \'0 12px 40px rgba(234,179,8,0.15)\'; }}\n          onMouseLeave={e => { e.currentTarget.style.transform = \'\'; e.currentTarget.style.boxShadow = \'0 4px 24px rgba(0,0,0,0.4)\'; }}\n        >\n          <div style={{ position: \'absolute\', top: 0, left: 0, right: 0, height: 2, background: \'linear-gradient(90deg, #eab308, #fef08a)\' }} />\n          <div style={{ position: \'absolute\', top: -40, right: -40, width: 130, height: 130, borderRadius: \'50%\', background: \'radial-gradient(circle, rgba(234,179,8,0.1) 0%, transparent 70%)\', pointerEvents: \'none\' }} />\n          \n          <div style={{ display: \'flex\', justifyContent: \'space-between\', alignItems: \'flex-start\', marginBottom: \'0.85rem\' }}>\n            <span style={{ fontSize: \'0.62rem\', fontWeight: 800, letterSpacing: \'0.12em\', color: \'#eab308\', background: \'rgba(234,179,8,0.1)\', border: \'1px solid rgba(234,179,8,0.2)\', padding: \'0.2rem 0.65rem\', borderRadius: 99 }}>\n              NEW EVENT\n            </span>\n            <div style={{ width: 34, height: 34, borderRadius: 9, background: \'rgba(234,179,8,0.1)\', border: \'1px solid rgba(234,179,8,0.2)\', display: \'flex\', alignItems: \'center\', justifyContent: \'center\' }}>\n              <Globe size={16} color="#eab308" strokeWidth={2.5} />\n            </div>\n          </div>\n\n          <div style={{ fontSize: \'1.15rem\', fontWeight: 900, color: \'#fff\', marginBottom: \'0.25rem\', letterSpacing: \'-0.01em\' }}>\n            Indus MUN <span style={{ color: \'#eab308\' }}>Hybrid</span>\n          </div>\n          <div style={{ fontSize: \'0.8rem\', color: \'#94a3b8\', marginBottom: \'1rem\', lineHeight: 1.5 }}>\n            International Hybrid MUN for Grades 6 to 12. Registration is Free.\n          </div>\n          <div style={{ display: \'flex\', alignItems: \'center\', gap: \'0.4rem\', fontSize: \'0.82rem\', fontWeight: 700, color: \'#eab308\' }}>\n            Register Now <ChevronRight size={14} />\n          </div>\n        </div>\n\n        </div>\n      </div>'
+
+
+--- Step 11216 : multi_replace_file_content ---
+Instruction: Fix flexbox centering for Indus MUN tile top and bottom rows
+Chunk Lines 867-874
+Target: '          <div style={{ display: \'flex\', justifyContent: \'space-between\', alignItems: \'flex-start\', marginBottom: \'0.85rem\' }}>\n            <span style={{ fontSize: \'0.62rem\', fontWeight: 800, letterSpacing: \'0.12em\', color: \'#eab308\', background: \'rgba(234,179,8,0.1)\', border: \'1px solid rgba(234,179,8,0.2)\', padding: \'0.2rem 0.65rem\', borderRadius: 99 }}>\n              NEW EVENT\n            </span>\n            <div style={{ width: 34, height: 34, borderRadius: 9, background: \'rgba(234,179,8,0.1)\', border: \'1px solid rgba(234,179,8,0.2)\', display: \'flex\', alignItems: \'center\', justifyContent: \'center\' }}>\n              <Globe size={16} color="#eab308" strokeWidth={2.5} />\n            </div>\n          </div>'
+Replacement: '          <div style={{ display: \'flex\', justifyContent: \'center\', gap: \'0.5rem\', alignItems: \'center\', marginBottom: \'0.85rem\' }}>\n            <span style={{ fontSize: \'0.62rem\', fontWeight: 800, letterSpacing: \'0.12em\', color: \'#eab308\', background: \'rgba(234,179,8,0.1)\', border: \'1px solid rgba(234,179,8,0.2)\', padding: \'0.2rem 0.65rem\', borderRadius: 99 }}>\n              NEW EVENT\n            </span>\n            <div style={{ width: 34, height: 34, borderRadius: 9, background: \'rgba(234,179,8,0.1)\', border: \'1px solid rgba(234,179,8,0.2)\', display: \'flex\', alignItems: \'center\', justifyContent: \'center\' }}>\n              <Globe size={16} color="#eab308" strokeWidth={2.5} />\n            </div>\n          </div>'
+Chunk Lines 882-884
+Target: "          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#eab308' }}>\n            Register Now <ChevronRight size={14} />\n          </div>"
+Replacement: "          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#eab308' }}>\n            Register Now <ChevronRight size={14} />\n          </div>"
+
+
+--- Step 11222 : multi_replace_file_content ---
+Instruction: Center flexboxes in Junior Indus MUN tile
+Chunk Lines 1205-1212
+Target: '          <div style={{ display: \'flex\', justifyContent: \'space-between\', alignItems: \'flex-start\', marginBottom: \'0.85rem\' }}>\n            <span style={{ fontSize: \'0.62rem\', fontWeight: 800, letterSpacing: \'0.12em\', color: \'#eab308\', background: \'rgba(234,179,8,0.1)\', border: \'1px solid rgba(234,179,8,0.2)\', padding: \'0.2rem 0.65rem\', borderRadius: 99 }}>\n              NEW EVENT\n            </span>\n            <div style={{ width: 34, height: 34, borderRadius: 9, background: \'rgba(234,179,8,0.1)\', border: \'1px solid rgba(234,179,8,0.2)\', display: \'flex\', alignItems: \'center\', justifyContent: \'center\' }}>\n              <Globe size={16} color="#eab308" strokeWidth={2.5} />\n            </div>\n          </div>'
+Replacement: '          <div style={{ display: \'flex\', justifyContent: \'center\', gap: \'0.5rem\', alignItems: \'center\', marginBottom: \'0.85rem\' }}>\n            <span style={{ fontSize: \'0.62rem\', fontWeight: 800, letterSpacing: \'0.12em\', color: \'#eab308\', background: \'rgba(234,179,8,0.1)\', border: \'1px solid rgba(234,179,8,0.2)\', padding: \'0.2rem 0.65rem\', borderRadius: 99 }}>\n              NEW EVENT\n            </span>\n            <div style={{ width: 34, height: 34, borderRadius: 9, background: \'rgba(234,179,8,0.1)\', border: \'1px solid rgba(234,179,8,0.2)\', display: \'flex\', alignItems: \'center\', justifyContent: \'center\' }}>\n              <Globe size={16} color="#eab308" strokeWidth={2.5} />\n            </div>\n          </div>'
+Chunk Lines 1220-1222
+Target: "          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#eab308' }}>\n            Register Now <ChevronRight size={14} />\n          </div>"
+Replacement: "          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#eab308' }}>\n            Register Now <ChevronRight size={14} />\n          </div>"
+
+
+--- Step 11563 : multi_replace_file_content ---
+Instruction: Add Flag to lucide-react imports so the new Freedom Quiz tile renders correctly
+Chunk Lines 6-8
+Target: "  Sword, BookOpen, FileText, Medal, Gem, RefreshCw, Dumbbell, MessageCircle,\n  Brain, Globe, Users, ChevronRight, Cpu, Radio, CheckCircle2\n} from 'lucide-react';"
+Replacement: "  Sword, BookOpen, FileText, Medal, Gem, RefreshCw, Dumbbell, MessageCircle,\n  Brain, Globe, Users, ChevronRight, Cpu, Radio, CheckCircle2, Flag\n} from 'lucide-react';"
+
+
+--- Step 11587 : multi_replace_file_content ---
+Instruction: Import Download from lucide-react
+Chunk Lines 3-4
+Target: "import { API_BASE } from '../api';\nimport logoImg from '../assets/logo.png';"
+Replacement: "import { API_BASE } from '../api';\nimport logoImg from '../assets/logo.png';\nimport { Download } from 'lucide-react';"
+
+
+--- Step 11633 : multi_replace_file_content ---
+Instruction: Insert a third row of tiles for English Session and Freedom Quiz just before the Charts Row
+Chunk Lines 887-892
+Target: '      </div>\n      </div>\n\n\n\n      {/* ── Charts Row ── */}'
+Replacement: '      </div>\n      </div>\n\n      {/* Third Row (New Events) */}\n      <div style={{ display: \'grid\', gridTemplateColumns: \'repeat(auto-fit, minmax(min(100%, 280px), 1fr))\', gap: \'1rem\', marginTop: \'1rem\' }}>\n        \n        {/* English Session Tile */}\n        <div\n          onClick={() => navigate(\'/english-session\')}\n          style={{\n            borderRadius: 18, padding: \'1.4rem 1.5rem\', cursor: \'pointer\',\n            background: \'linear-gradient(135deg, #020617 0%, #1e3a8a 100%)\',\n            border: \'1px solid rgba(59,130,246,0.2)\',\n            position: \'relative\', overflow: \'hidden\',\n            transition: \'transform 0.25s, box-shadow 0.25s\',\n            boxShadow: \'0 4px 24px rgba(0,0,0,0.4)\',\n          }}\n          onMouseEnter={e => { e.currentTarget.style.transform = \'translateY(-3px)\'; e.currentTarget.style.boxShadow = \'0 12px 40px rgba(59,130,246,0.15)\'; }}\n          onMouseLeave={e => { e.currentTarget.style.transform = \'\'; e.currentTarget.style.boxShadow = \'0 4px 24px rgba(0,0,0,0.4)\'; }}\n        >\n          <div style={{ position: \'absolute\', top: 0, left: 0, right: 0, height: 2, background: \'linear-gradient(90deg, #3b82f6, #93c5fd)\' }} />\n          <div style={{ position: \'absolute\', top: -40, right: -40, width: 130, height: 130, borderRadius: \'50%\', background: \'radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%)\', pointerEvents: \'none\' }} />\n          \n          <div style={{ display: \'flex\', justifyContent: \'space-between\', alignItems: \'flex-start\', marginBottom: \'0.85rem\' }}>\n            <span style={{ fontSize: \'0.62rem\', fontWeight: 800, letterSpacing: \'0.12em\', color: \'#60a5fa\', background: \'rgba(59,130,246,0.1)\', border: \'1px solid rgba(59,130,246,0.2)\', padding: \'0.2rem 0.65rem\', borderRadius: 99 }}>\n              FREE SESSION\n            </span>\n            <div style={{ width: 34, height: 34, borderRadius: 9, background: \'rgba(59,130,246,0.1)\', border: \'1px solid rgba(59,130,246,0.2)\', display: \'flex\', alignItems: \'center\', justifyContent: \'center\' }}>\n              <Mic size={16} color="#60a5fa" strokeWidth={2.5} />\n            </div>\n          </div>\n\n          <div style={{ fontSize: \'1.15rem\', fontWeight: 900, color: \'#fff\', marginBottom: \'0.25rem\', letterSpacing: \'-0.01em\' }}>\n            Speak English <span style={{ color: \'#60a5fa\' }}>Without Fear</span>\n          </div>\n          <div style={{ fontSize: \'0.8rem\', color: \'#94a3b8\', marginBottom: \'1rem\', lineHeight: 1.5 }}>\n            Parent-Child Confidence-Building Session (Grades 3-8). August 9th, 2026.\n          </div>\n          <div style={{ display: \'flex\', alignItems: \'center\', gap: \'0.4rem\', fontSize: \'0.82rem\', fontWeight: 700, color: \'#60a5fa\' }}>\n            Register Now <ChevronRight size={14} />\n          </div>\n        </div>\n\n        {/* Freedom Quiz Tile */}\n        <div\n          onClick={() => navigate(\'/freedom-quiz\')}\n          style={{\n            borderRadius: 18, padding: \'1.4rem 1.5rem\', cursor: \'pointer\',\n            background: \'linear-gradient(135deg, #431407 0%, #1a0500 100%)\',\n            border: \'1px solid rgba(249,115,22,0.2)\',\n            position: \'relative\', overflow: \'hidden\',\n            transition: \'transform 0.25s, box-shadow 0.25s\',\n            boxShadow: \'0 4px 24px rgba(0,0,0,0.4)\',\n          }}\n          onMouseEnter={e => { e.currentTarget.style.transform = \'translateY(-3px)\'; e.currentTarget.style.boxShadow = \'0 12px 40px rgba(249,115,22,0.15)\'; }}\n          onMouseLeave={e => { e.currentTarget.style.transform = \'\'; e.currentTarget.style.boxShadow = \'0 4px 24px rgba(0,0,0,0.4)\'; }}\n        >\n          <div style={{ position: \'absolute\', top: 0, left: 0, right: 0, height: 2, background: \'linear-gradient(90deg, #f97316, #fdba74)\' }} />\n          <div style={{ position: \'absolute\', top: -40, right: -40, width: 130, height: 130, borderRadius: \'50%\', background: \'radial-gradient(circle, rgba(249,115,22,0.1) 0%, transparent 70%)\', pointerEvents: \'none\' }} />\n          \n          <div style={{ display: \'flex\', justifyContent: \'space-between\', alignItems: \'flex-start\', marginBottom: \'0.85rem\' }}>\n            <span style={{ fontSize: \'0.62rem\', fontWeight: 800, letterSpacing: \'0.12em\', color: \'#f97316\', background: \'rgba(249,115,22,0.1)\', border: \'1px solid rgba(249,115,22,0.2)\', padding: \'0.2rem 0.65rem\', borderRadius: 99 }}>\n              NEW CHALLENGE\n            </span>\n            <div style={{ width: 34, height: 34, borderRadius: 9, background: \'rgba(249,115,22,0.1)\', border: \'1px solid rgba(249,115,22,0.2)\', display: \'flex\', alignItems: \'center\', justifyContent: \'center\' }}>\n              <Flag size={16} color="#f97316" strokeWidth={2.5} />\n            </div>\n          </div>\n\n          <div style={{ fontSize: \'1.15rem\', fontWeight: 900, color: \'#fff\', marginBottom: \'0.25rem\', letterSpacing: \'-0.01em\' }}>\n            Great India <span style={{ color: \'#f97316\' }}>Freedom Challenge</span>\n          </div>\n          <div style={{ fontSize: \'0.8rem\', color: \'#94a3b8\', marginBottom: \'1rem\', lineHeight: 1.5 }}>\n            Freedom Quiz for All Indian Citizens on August 15th, 2026. Free Registration!\n          </div>\n          <div style={{ display: \'flex\', alignItems: \'center\', gap: \'0.4rem\', fontSize: \'0.82rem\', fontWeight: 700, color: \'#f97316\' }}>\n            Register Now <ChevronRight size={14} />\n          </div>\n        </div>\n      </div>\n\n      {/* ── Charts Row ── */}'
+
+
+--- Step 11657 : multi_replace_file_content ---
+Instruction: Remove intermediate grid container closures and openings so all event tiles share a single grid container and equal widths
+Chunk Lines 803-805
+Target: "        </div>\n        {/* Bottom Row */}\n        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '1rem' }}>"
+Replacement: '        </div>\n        \n        {/* Bottom Row */}'
+Chunk Lines 888-891
+Target: "      </div>\n\n      {/* Third Row (New Events) */}\n      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '1rem', marginTop: '1rem' }}>"
+Replacement: '      </div>\n\n      {/* Third Row (New Events) */}'
+
+
+--- Step 11669 : multi_replace_file_content ---
+Instruction: Remove the extra closing div that was causing the syntax error
+Chunk Lines 887-888
+Target: '      </div>\n      </div>'
+Replacement: '      </div>'
+
+
+--- Step 11689 : multi_replace_file_content ---
+Instruction: Add a closing div for the Events wrapper before the Charts Row
+Chunk Lines 965-965
+Target: '      </div>'
+Replacement: '      </div>\n      </div>'
+
+
+--- Step 11695 : multi_replace_file_content ---
+Instruction: Add closing div for Events section before Charts Row
+Chunk Lines 963-966
+Target: '        </div>\n      </div>\n\n      {/* ── Charts Row ── */}'
+Replacement: '        </div>\n      </div>\n      </div>\n\n      {/* ── Charts Row ── */}'
+
+

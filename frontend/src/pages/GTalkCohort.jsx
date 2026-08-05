@@ -14,11 +14,11 @@ const COHORT_DETAILS = {
   duration: '4 Weeks',
   cert: true,
   status: 'open', // open | upcoming | closed
-  startDate: 'June 15, 2026',
-  endDate: 'July 13, 2026',
+  startDate: 'August',
+  endDate: 'September',
   seats: 48,
   seatsLeft: 12,
-  registrationDeadline: 'June 12, 2026',
+  registrationDeadline: 'August',
 };
 
 const CURRICULUM = [

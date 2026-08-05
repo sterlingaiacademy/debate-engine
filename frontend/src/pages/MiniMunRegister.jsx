@@ -12,6 +12,7 @@ export default function MiniMunRegister({ user }) {
     mobile: user?.phone || '',
     countryCode: '+91',
     schoolName: user?.school || '',
+    category: '',
     grade: '',
     city: '',
   });
@@ -34,7 +35,7 @@ export default function MiniMunRegister({ user }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.studentName || !form.email || !form.mobile || !form.grade || !form.schoolName || !form.city) {
+    if (!form.studentName || !form.email || !form.mobile || !form.category || !form.grade || !form.schoolName || !form.city) {
       setErrorMsg('Please fill in all required fields.');
       return;
     }
@@ -53,9 +54,11 @@ export default function MiniMunRegister({ user }) {
           studentName: form.studentName,
           email: form.email,
           mobile: `${form.countryCode} ${form.mobile.trim()}`,
+          category: form.category,
           grade: form.grade,
           schoolName: form.schoolName,
           city: form.city,
+          module: 4
         }),
       });
       const data = await res.json();
@@ -170,7 +173,7 @@ export default function MiniMunRegister({ user }) {
             Registration Successful!
           </h2>
           <p style={{ color: '#94a3b8', fontSize: '1.05rem', lineHeight: 1.6, margin: '0 0 2.5rem' }}>
-            Thank you for registering for <strong>Mini MUN Master Class Module-3</strong>. Your payment was successful and we will contact you soon with your Zoom details.
+            Thank you for registering for <strong>Mini MUN Master Class Module-4</strong>. Your payment was successful and we will contact you soon with your Zoom details.
           </p>
           <button
             onClick={() => navigate('/dashboard')}
@@ -203,7 +206,7 @@ export default function MiniMunRegister({ user }) {
             Already Registered
           </h2>
           <p style={{ color: '#94a3b8', fontSize: '1.05rem', lineHeight: 1.6, margin: '0 0 2.5rem' }}>
-            You have already registered for Mini MUN Master Class Module-3 with this email address. We look forward to seeing you!
+            You have already registered for Mini MUN Master Class Module-4 with this email address. We look forward to seeing you!
           </p>
           <button onClick={() => navigate('/dashboard')} style={{ background: '#3b82f6', color: '#fff', border: 'none', padding: '1rem 2.5rem', borderRadius: 99, fontWeight: 800, cursor: 'pointer' }}>
             Back to Dashboard
@@ -243,11 +246,11 @@ export default function MiniMunRegister({ user }) {
           </div>
           
           <h1 style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 900, color: '#fff', margin: '0 0 1rem', lineHeight: 1.1, letterSpacing: '-0.02em' }}>
-            <span style={{ color: '#1d4ed8' }}>MINI MUN</span> MASTER CLASS <br/><span style={{ color: '#ef4444' }}>MODULE-3</span>
+            <span style={{ color: '#1d4ed8' }}>MINI MUN</span> MASTER CLASS <br/><span style={{ color: '#ef4444' }}>MODULE-4</span>
           </h1>
           
           <p style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', color: '#94a3b8', margin: '0 auto 2.5rem', maxWidth: 650, lineHeight: 1.6 }}>
-            Practical MUN lessons and techniques. Develop Public Speaking, Learn Diplomacy, Enhance Critical Thinking and Build Teamwork.
+            Research. Analyze. Persuade. Master the art of writing an excellent position paper and stand out in your committee.
           </p>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'center' }}>
@@ -255,7 +258,7 @@ export default function MiniMunRegister({ user }) {
               <Clock size={24} color="#3b82f6" />
               <div style={{ textAlign: 'left' }}>
                 <div style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 700, textTransform: 'uppercase' }}>Date & Time</div>
-                <div style={{ color: '#fff', fontWeight: 700, fontSize: '1rem' }}>19 July 2026 | 10:00 AM</div>
+                <div style={{ color: '#fff', fontWeight: 700, fontSize: '1rem' }}>09 August 2026 | 10:00 AM</div>
               </div>
             </div>
             <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, padding: '1rem 1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -324,11 +327,11 @@ export default function MiniMunRegister({ user }) {
           
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {[
-              "Find credible sources",
-              "Analyze & evaluate information",
-              "Use data & facts effectively",
-              "Build strong background for your position",
-              "Write with clarity and impact"
+              "Understand the purpose and structure of a position paper",
+              "Organize your ideas logically and persuasively",
+              "Use strong arguments and evidence",
+              "Align with country policy and committee agenda",
+              "Impress the dais with clarity and depth"
             ].map((item, i) => (
               <li key={i} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
                 <div style={{ marginTop: 2, background: 'rgba(239,68,68,0.15)', borderRadius: '50%', padding: 4, display: 'flex' }}>
@@ -355,7 +358,7 @@ export default function MiniMunRegister({ user }) {
 
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               <div>
-                <label style={labelStyle}>Student Full Name</label>
+                <label style={labelStyle}>Full Name</label>
                 <input type="text" name="studentName" value={form.studentName} onChange={handleChange} placeholder="e.g. Rahul Sharma" style={fieldStyle} {...focusHandlers} required />
               </div>
 
@@ -378,18 +381,68 @@ export default function MiniMunRegister({ user }) {
 
               <div style={{ display: 'flex', gap: '1rem' }}>
                 <div style={{ flex: 1 }}>
-                  <label style={labelStyle}>School Name</label>
-                  <input type="text" name="schoolName" value={form.schoolName} onChange={handleChange} placeholder="e.g. DPS" style={fieldStyle} {...focusHandlers} required />
+                  <label style={labelStyle}>Category</label>
+                  <select name="category" value={form.category} onChange={(e) => setForm(prev => ({ ...prev, category: e.target.value, grade: '' }))} style={fieldStyle} {...focusHandlers} required>
+                    <option value="" disabled>Select Category</option>
+                    <option value="Student">Student</option>
+                    <option value="Professional">Professional</option>
+                    <option value="Other">Other</option>
+                  </select>
                 </div>
                 <div style={{ flex: 1 }}>
-                  <label style={labelStyle}>Grade/Class</label>
-                  <input type="text" name="grade" value={form.grade} onChange={handleChange} placeholder="e.g. Class 10" style={fieldStyle} {...focusHandlers} required />
+                  <label style={labelStyle}>School / Org Name</label>
+                  <input type="text" name="schoolName" value={form.schoolName} onChange={handleChange} placeholder="e.g. DPS" style={fieldStyle} {...focusHandlers} required />
                 </div>
               </div>
 
-              <div>
-                <label style={labelStyle}>City</label>
-                <input type="text" name="city" value={form.city} onChange={handleChange} placeholder="e.g. Mumbai" style={fieldStyle} {...focusHandlers} required />
+              <div style={{ display: 'flex', gap: '1rem' }}>
+                <div style={{ flex: 1 }}>
+                  <label style={labelStyle}>
+                    {form.category === 'Professional' ? 'Designation' : 'Grade / Class'}
+                  </label>
+                  {form.category === 'Student' ? (
+                    <select name="grade" value={form.grade} onChange={handleChange} style={fieldStyle} {...focusHandlers} required>
+                      <option value="" disabled>Select Grade</option>
+                      <option value="Class 1">Class 1</option>
+                      <option value="Class 2">Class 2</option>
+                      <option value="Class 3">Class 3</option>
+                      <option value="Class 4">Class 4</option>
+                      <option value="Class 5">Class 5</option>
+                      <option value="Class 6">Class 6</option>
+                      <option value="Class 7">Class 7</option>
+                      <option value="Class 8">Class 8</option>
+                      <option value="Class 9">Class 9</option>
+                      <option value="Class 10">Class 10</option>
+                      <option value="Class 11">Class 11</option>
+                      <option value="Class 12">Class 12</option>
+                      <option value="College">College</option>
+                    </select>
+                  ) : form.category === 'Professional' ? (
+                    <select name="grade" value={form.grade} onChange={handleChange} style={fieldStyle} {...focusHandlers} required>
+                      <option value="" disabled>Select Designation</option>
+                      <option value="School Educator">School Educator</option>
+                      <option value="College Educator">College Educator</option>
+                      <option value="Educational Leader">Educational Leader</option>
+                      <option value="Teacher Trainer">Teacher Trainer</option>
+                      <option value="Corporate Professional">Corporate Professional</option>
+                      <option value="Entrepreneur">Entrepreneur</option>
+                      <option value="Freelancer">Freelancer</option>
+                      <option value="Graduate">Graduate</option>
+                      <option value="UPSC Aspirant">UPSC Aspirant</option>
+                      <option value="Others">Others</option>
+                    </select>
+                  ) : form.category === 'Other' ? (
+                    <input type="text" name="grade" value={form.grade} onChange={handleChange} placeholder="Specify here..." style={fieldStyle} {...focusHandlers} required />
+                  ) : (
+                    <select name="grade" value={form.grade} disabled style={{ ...fieldStyle, opacity: 0.5 }} {...focusHandlers} required>
+                      <option value="" disabled>Select Category First</option>
+                    </select>
+                  )}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <label style={labelStyle}>City</label>
+                  <input type="text" name="city" value={form.city} onChange={handleChange} placeholder="e.g. Mumbai" style={fieldStyle} {...focusHandlers} required />
+                </div>
               </div>
 
               <div style={{ marginTop: '1rem' }}>

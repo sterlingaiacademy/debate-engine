@@ -27,7 +27,7 @@ const mockUsers = {
     name: 'Hanan Phashim',
     classLevel: 'Level 4',
     subscription_plan: 'pro',
-    streak: 7,
+    
     gforceTokens: 3450,
     rank: 'Gold',
     grade: 'Class 9',
@@ -39,7 +39,7 @@ const mockUsers = {
     name: 'Demo User',
     classLevel: 'Level 4',
     subscription_plan: 'free',
-    streak: 0,
+    
     gforceTokens: 100,
     rank: 'Unranked',
     grade: 'Class 9',
@@ -51,12 +51,12 @@ const mockUsers = {
 const mockProgress = {
   'hananphashim': {
     currentDay: 3,
-    streak: 7,
+    
     missedDaysInRow: 0,
-    longestStreak: 12,
+    
     tokens: 2,
     lastCheckin: new Date().toISOString().split('T')[0],
-    badges: ['first_day', 'week_1', 'streak_7'],
+    
   },
 };
 
@@ -103,12 +103,12 @@ app.get('/api/d365/days/:n', (req, res) => {
 app.get('/api/d365/progress/:userId', (req, res) => {
   const prog = mockProgress[req.params.userId] || {
     currentDay: 1,
-    streak: 0,
+    
     missedDaysInRow: 0,
-    longestStreak: 0,
+    
     tokens: 0,
     lastCheckin: null,
-    badges: [],
+    
   };
   res.json(prog);
 });
@@ -130,7 +130,7 @@ app.post('/api/d365/rubric/grade', (req, res) => {
 
   // Update mock progress
   if (!mockProgress[userId]) {
-    mockProgress[userId] = { currentDay: 1, streak: 1, missedDaysInRow: 0, longestStreak: 1, tokens: 0, badges: [], lastCheckin: null };
+    mockProgress[userId] = { currentDay: 1,  missedDaysInRow: 0,  tokens: 0,  lastCheckin: null };
   }
   const prog = mockProgress[userId];
   if (result.unlocked && parseInt(dayNumber) >= prog.currentDay) {
@@ -196,7 +196,7 @@ app.get('/api/d365/cohort/:ageBand/vienna', (req, res) => {
 // POST /api/d365/streak/checkin
 app.post('/api/d365/streak/checkin', (req, res) => {
   const { userId } = req.body;
-  const prog = mockProgress[userId] || { streak: 0, missedDaysInRow: 0 };
+  const prog = mockProgress[userId] || {  missedDaysInRow: 0 };
   res.json({ streak: prog.streak, missedDaysInRow: prog.missedDaysInRow });
 });
 

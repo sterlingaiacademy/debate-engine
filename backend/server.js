@@ -7,6 +7,7 @@ const path = require('path');
 const { OAuth2Client } = require('google-auth-library');
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const db = require('./database');
+const { sendEmail } = require('./utils/email');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'grace_and_force_super_secret_key_2026';
 const { execFile } = require('child_process');
@@ -42,6 +43,112 @@ class ExecutionQueue {
 const pythonQueue = new ExecutionQueue(20); // Max 20 concurrent python processes
 
 const app = express();
+
+// SECTION: English Session Registrations
+
+app.post('/api/english-session/register', async (req, res) => {
+  const { userId, studentName, parentName, email, mobile, schoolName, grade } = req.body;
+  try {
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS english_session_registrations (
+        id SERIAL PRIMARY KEY,
+        user_id VARCHAR(255),
+        student_name VARCHAR(255),
+        parent_name VARCHAR(255),
+        email VARCHAR(255),
+        mobile VARCHAR(50),
+        school_name VARCHAR(255),
+        grade VARCHAR(50),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    const result = await db.query(
+      `INSERT INTO english_session_registrations (user_id, student_name, parent_name, email, mobile, school_name, grade)
+       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
+      [userId || null, studentName, parentName, email, mobile, schoolName, grade]
+    );
+    res.json({ success: true, registrationId: result.rows[0].id });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/english-session/registrations', async (req, res) => {
+  try {
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS english_session_registrations (
+        id SERIAL PRIMARY KEY,
+        user_id VARCHAR(255),
+        student_name VARCHAR(255),
+        parent_name VARCHAR(255),
+        email VARCHAR(255),
+        mobile VARCHAR(50),
+        school_name VARCHAR(255),
+        grade VARCHAR(50),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    
+    const result = await db.query('SELECT * FROM english_session_registrations ORDER BY created_at DESC');
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+// SECTION: Freedom Quiz Registrations
+
+app.post('/api/freedom-quiz/register', async (req, res) => {
+  const { userId, fullName, email, mobile, city, age } = req.body;
+  try {
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS freedom_quiz_registrations (
+        id SERIAL PRIMARY KEY,
+        user_id VARCHAR(255),
+        full_name VARCHAR(255),
+        email VARCHAR(255),
+        mobile VARCHAR(50),
+        city VARCHAR(255),
+        age VARCHAR(50),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    const result = await db.query(
+      `INSERT INTO freedom_quiz_registrations (user_id, full_name, email, mobile, city, age)
+       VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
+      [userId || null, fullName, email, mobile, city, age]
+    );
+    res.json({ success: true, registrationId: result.rows[0].id });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/freedom-quiz/registrations', async (req, res) => {
+  try {
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS freedom_quiz_registrations (
+        id SERIAL PRIMARY KEY,
+        user_id VARCHAR(255),
+        full_name VARCHAR(255),
+        email VARCHAR(255),
+        mobile VARCHAR(50),
+        city VARCHAR(255),
+        age VARCHAR(50),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    const result = await db.query('SELECT * FROM freedom_quiz_registrations ORDER BY created_at DESC');
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
@@ -50,6 +157,9 @@ app.use(express.json({
     req.rawBody = buf;
   }
 }));
+
+// Speech Coach Routes
+app.use('/api/speech', require('./api/speech_coach'));
 
 // Helper for IST Date (Resets at 12:00 AM IST)
 function getISTDateString() {
@@ -62,7 +172,7 @@ function getISTDateString() {
 
 // Users
 app.post('/api/register', async (req, res) => {
-  const { name, studentId, password, classLevel, grade, email, phone, authProvider, referralCode } = req.body;
+  const { name, studentId, password, classLevel, grade, email, phone, authProvider, referralCode, mobile, schoolName, category, city, state, olympiadSchoolCode, designation } = req.body;
   if (!name || !studentId || !password || !classLevel) {
     return res.status(400).json({ error: 'All fields are required' });
   }
@@ -93,11 +203,22 @@ app.post('/api/register', async (req, res) => {
       }
     }
 
+    let school_id = null;
+    let olympiad_registered = false;
+    if (olympiadSchoolCode) {
+      const schoolRes = await db.query(`SELECT id FROM schools WHERE school_code = $1`, [olympiadSchoolCode]);
+      if (schoolRes.rows.length === 0) {
+        return res.status(404).json({ error: 'Invalid Olympiad School Code' });
+      }
+      school_id = schoolRes.rows[0].id;
+      olympiad_registered = true;
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
-    const query = `INSERT INTO users (name, "studentId", password, "classLevel", grade, "assignedAgentId", email, phone, auth_provider) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
+    const query = `INSERT INTO users (name, "studentId", password, "classLevel", grade, "assignedAgentId", email, phone, auth_provider, mobile, "schoolName", category, city, state, school_id, olympiad_registered, designation) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)`;
     
     try {
-      await db.query(query, [name, studentId, hashedPassword, classLevel, grade || '', assignedAgentId, email || null, phone || null, authProvider || null]);
+      await db.query(query, [name, studentId, hashedPassword, classLevel, grade || '', assignedAgentId, email || null, phone || null, authProvider || null, mobile || null, schoolName || null, category || null, city || null, state || null, school_id, olympiad_registered, designation || null]);
     } catch (err) {
       if (err.code === '23505' || /UNIQUE constraint failed/i.test(err.message)) {
         return res.status(400).json({ error: 'Student ID already exists' });
@@ -205,7 +326,8 @@ app.post('/api/auth/google', async (req, res) => {
         avatar: user.avatar,
         subscription_plan: user.subscription_plan || 'free',
         subscription_period: user.subscription_period || 'monthly',
-        subscription_status: user.subscription_status || 'inactive'
+        subscription_status: user.subscription_status || 'inactive',
+        olympiad_registered: user.olympiad_registered || false
       },
       token
     });
@@ -251,7 +373,9 @@ app.post('/api/login', async (req, res) => {
         phone: user.phone,
         subscription_plan: user.subscription_plan || 'free',
         subscription_period: user.subscription_period || 'monthly',
-        subscription_status: user.subscription_status || 'inactive'
+        subscription_status: user.subscription_status || 'inactive',
+        olympiad_registered: user.olympiad_registered || false,
+        avatar: user.avatar || `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(user.name || 'User')}`
       },
       token
     });
@@ -318,13 +442,15 @@ app.get('/api/me/:studentId', async (req, res) => {
   try {
     const { studentId } = req.params;
     const { rows } = await db.query(
-      `SELECT name, "studentId", "classLevel", grade, "assignedAgentId", email, avatar, phone, subscription_plan, subscription_period, subscription_status FROM users WHERE "studentId" = $1`,
+      `SELECT name, "studentId", "classLevel", grade, "assignedAgentId", email, avatar, phone, subscription_plan, subscription_period, subscription_status, olympiad_registered FROM users WHERE "studentId" = $1`,
       [studentId]
     );
     if (rows.length === 0) {
       return res.status(404).json({ error: 'User not found' });
     }
-    res.json({ user: rows[0] });
+    const user = rows[0];
+    user.avatar = user.avatar || `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(user.name || 'User')}`;
+    res.json({ user });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -1976,6 +2102,20 @@ app.get('/api/admin/stats', requireAdmin, async (req, res) => {
       ORDER BY d.created_at DESC LIMIT 15
     `);
 
+    // === FUTUREQUEST ===
+    let futureQuestTotal = 0;
+    try {
+      const fqRes = await db.query(`SELECT COUNT(*) AS total FROM gforce.future_quest_registrations`);
+      futureQuestTotal = parseInt(fqRes.rows[0].total);
+    } catch (e) { /* table might not exist yet */ }
+
+    // === QUIZ REGISTRATIONS ===
+    let quizTotal = 0;
+    try {
+      const qRes = await db.query(`SELECT COUNT(*) AS total FROM quiz_registrations`);
+      quizTotal = parseInt(qRes.rows[0].total);
+    } catch (e) { /* table might not exist */ }
+
     res.json({
       users: {
         total: totalUsers,
@@ -2007,6 +2147,8 @@ app.get('/api/admin/stats', requireAdmin, async (req, res) => {
       },
       schoolCoupons,
       gforceTokensIssued: Math.round(parseFloat(tokenRes.rows[0]?.total || 0)),
+      quizRegistrations: quizTotal,
+      futureQuestRegistrations: futureQuestTotal,
       recentUsers: recentUsersRes.rows,
       recentSubscriptions: recentSubsRes.rows,
       recentDebates: topDebatesRes.rows,
@@ -2062,6 +2204,161 @@ app.get('/api/admin/users', requireAdmin, async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/coordinator/dashboard/:coordinatorId
+app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
+  try {
+    const { coordinatorId } = req.params;
+    
+    const schoolRes = await db.query(
+      `SELECT id, name, expected_students FROM schools WHERE coordinator_login_id = $1`, 
+      [coordinatorId]
+    );
+    
+    if (schoolRes.rows.length === 0) {
+      return res.status(404).json({ error: 'School not found' });
+    }
+    
+    const school = schoolRes.rows[0];
+    
+    const studentsRes = await db.query(`
+      SELECT 
+        u.id as user_id, 
+        u.name, 
+        u."classLevel" as class, 
+        u.olympiad_registered, 
+        COALESCE(AVG(d.overall_score), 0) as avg_score,
+        COUNT(DISTINCT d.debate_id) as total_debates
+      FROM users u
+      LEFT JOIN debates d ON u."studentId" = d.user_id
+      WHERE u.school_id = $1
+      GROUP BY u.id
+    `, [school.id]);
+    
+    let completedCount = 0;
+    let students = studentsRes.rows.map(s => {
+      // Mock daily practice or calculate based on debates
+      const daysActive = Math.min(s.total_debates, 7); 
+      let status = s.olympiad_registered ? 'Registered' : 'Pending';
+      if (s.total_debates > 3) {
+        status = 'Completed';
+        completedCount++;
+      } else if (s.total_debates > 0) {
+        status = 'In Progress';
+      }
+
+      return {
+        name: s.name || 'Unknown Student',
+        class: s.class || 'Unknown Class',
+        status: status,
+        avg_score: Math.round(s.avg_score * 10) / 10,
+        dailyPractice: `${daysActive}/7 days`,
+        examScore: s.total_debates > 3 ? `${Math.round(s.avg_score * 10)}/100` : 'N/A'
+      };
+    });
+
+    const totalDebates = studentsRes.rows.reduce((sum, s) => sum + parseInt(s.total_debates || 0), 0);
+    const avgDailyEngagement = students.length > 0 ? Math.round((totalDebates / (students.length * 7)) * 100) : 0;
+    
+    res.json({
+      school: school.name,
+      expectedRegistrations: school.expected_students || 0,
+      totalRegistrations: students.length,
+      olympiadCompleted: completedCount,
+      avgDailyEngagement: Math.min(avgDailyEngagement, 100),
+      students: students
+    });
+
+  } catch (err) {
+    console.error('Coordinator Dashboard Error:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// GET /api/admin/olympiad/schools — fetch all schools (pending and approved)
+app.get('/api/admin/olympiad/schools', requireAdmin, async (req, res) => {
+  try {
+    const query = `
+      SELECT id, name, principal_name, coordinator_name, contact_email, contact_phone, 
+             school_code, coordinator_login_id, expected_students, classes_participating, 
+             status, created_at 
+      FROM schools 
+      ORDER BY created_at DESC
+    `;
+    const result = await db.query(query);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error fetching schools:', err);
+    res.status(500).json({ error: 'Failed to fetch schools' });
+  }
+});
+
+// POST /api/admin/olympiad/schools/:id/approve
+app.post('/api/admin/olympiad/schools/:id/approve', requireAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await db.query(`UPDATE schools SET status = 'approved' WHERE id = $1 RETURNING *`, [id]);
+    if (result.rows.length === 0) return res.status(404).json({ error: 'School not found' });
+    
+    const school = result.rows[0];
+    
+    // Send email with credentials
+    await sendEmail({
+      to: school.contact_email,
+      subject: 'ThinkQuest Olympiad: School Registration Approved!',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
+          <h2 style="color: #DA291C;">Welcome to ThinkQuest Olympiad!</h2>
+          <p>Dear ${school.coordinator_name},</p>
+          <p>We are thrilled to inform you that your registration for <strong>${school.name}</strong> has been approved.</p>
+          <div style="background: #f8f9fa; border-left: 4px solid #DA291C; padding: 15px; margin: 20px 0;">
+            <p style="margin: 0 0 10px 0;"><strong>Your Official School Code:</strong> <span style="color: #DA291C; font-size: 18px; font-weight: bold;">${school.school_code}</span></p>
+            <p style="margin: 0;"><strong>Coordinator Login ID:</strong> <span>${school.coordinator_login_id}</span></p>
+          </div>
+          <p>Please share the <strong>School Code</strong> securely with your participating students. They will need this code to register and access the Olympiad platform.</p>
+          <p>You can monitor your school's registrations and progress through the Coordinator Dashboard.</p>
+          <p>Best Regards,<br>The ThinkQuest Team</p>
+        </div>
+      `
+    });
+    
+    res.json({ success: true, school });
+  } catch (err) {
+    console.error('Error approving school:', err);
+    res.status(500).json({ error: 'Failed to approve school' });
+  }
+});
+
+// POST /api/admin/olympiad/schools/:id/reject
+app.post('/api/admin/olympiad/schools/:id/reject', requireAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await db.query(`UPDATE schools SET status = 'rejected' WHERE id = $1 RETURNING *`, [id]);
+    if (result.rows.length === 0) return res.status(404).json({ error: 'School not found' });
+    
+    const school = result.rows[0];
+    
+    // Send rejection email
+    await sendEmail({
+      to: school.contact_email,
+      subject: 'ThinkQuest Olympiad: Registration Update',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
+          <h2>ThinkQuest Olympiad Registration</h2>
+          <p>Dear ${school.coordinator_name},</p>
+          <p>Thank you for your interest in registering <strong>${school.name}</strong> for the ThinkQuest Olympiad.</p>
+          <p>Unfortunately, we are unable to approve your registration at this time. If you believe this was in error or if you have any questions, please reply to this email.</p>
+          <p>Best Regards,<br>The ThinkQuest Team</p>
+        </div>
+      `
+    });
+    
+    res.json({ success: true, school });
+  } catch (err) {
+    console.error('Error rejecting school:', err);
+    res.status(500).json({ error: 'Failed to reject school' });
   }
 });
 
@@ -2410,6 +2707,124 @@ app.get('/api/quiz/registrations', requireAdmin, async (req, res) => {
   }
 });
 
+// ══════════════════════════════════════════════════════════════════════════════
+// INTERNATIONAL TEACHERS' OLYMPIAD (ITO) REGISTRATION
+// ══════════════════════════════════════════════════════════════════════════════
+
+async function ensureITORegistrationsTable() {
+  await db.query(`
+    CREATE TABLE IF NOT EXISTS ito_registrations (
+      id SERIAL PRIMARY KEY,
+      user_id TEXT,
+      full_name TEXT NOT NULL,
+      email TEXT NOT NULL,
+      mobile TEXT NOT NULL,
+      school_name TEXT NOT NULL,
+      city TEXT,
+      registered_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `);
+  // Add subject_or_role if it doesn't exist
+  await db.query(`
+    ALTER TABLE ito_registrations
+    ADD COLUMN IF NOT EXISTS subject_or_role TEXT
+  `).catch(err => console.log('ALTER subject_or_role skipped or error:', err.message));
+}
+
+// POST /api/ito/register
+app.post('/api/ito/register', async (req, res) => {
+  try {
+    const { userId, fullName, email, mobile, subjectOrRole, schoolName, city } = req.body;
+    if (!fullName || !email || !mobile || !subjectOrRole || !schoolName) {
+      return res.status(400).json({ error: 'All required fields must be filled.' });
+    }
+    await ensureITORegistrationsTable();
+    
+    const emailDup = await db.query(`SELECT id FROM ito_registrations WHERE email = $1`, [email]);
+    if (emailDup.rows.length > 0) {
+      return res.status(409).json({ error: 'already_registered', message: 'This email is already registered for the International Teachers Olympiad.' });
+    }
+    const result = await db.query(
+      `INSERT INTO ito_registrations (user_id, full_name, email, mobile, subject_or_role, school_name, city)
+       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id, registered_at`,
+      [userId || null, fullName, email, mobile, subjectOrRole, schoolName, city || '']
+    );
+    res.json({ success: true, registrationId: result.rows[0].id, registeredAt: result.rows[0].registered_at });
+  } catch (err) {
+    console.error('ITO register error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/ito/registrations — Admin
+app.get('/api/ito/registrations', requireAdmin, async (req, res) => {
+  try {
+    await ensureITORegistrationsTable();
+    const result = await db.query(
+      `SELECT id, user_id, full_name, email, mobile, subject_or_role, school_name, city, registered_at
+       FROM ito_registrations ORDER BY registered_at DESC`
+    );
+    res.json({ total: result.rows.length, registrations: result.rows });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// POST /api/futurequest/register
+app.post('/api/futurequest/register', async (req, res) => {
+  try {
+    const { userId, fullName, email, mobile, gradeOrRole, schoolName, city } = req.body;
+    if (!fullName || !email || !mobile || !gradeOrRole || !schoolName || !city) {
+      return res.status(400).json({ error: 'All required fields must be filled.' });
+    }
+    
+    // Create table if not exists (defensive)
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS gforce.future_quest_registrations (
+        id SERIAL PRIMARY KEY,
+        user_id TEXT,
+        full_name TEXT,
+        email TEXT,
+        mobile TEXT,
+        grade_or_role TEXT,
+        school_name TEXT,
+        city TEXT,
+        registered_at TIMESTAMPTZ DEFAULT NOW()
+      );
+    `).catch(console.error);
+
+    const emailDup = await db.query(`SELECT id FROM gforce.future_quest_registrations WHERE email = $1`, [email]);
+    if (emailDup.rows.length > 0) {
+      return res.status(409).json({ error: 'already_registered', message: 'This email is already registered for FutureQuest.' });
+    }
+
+    const result = await db.query(
+      `INSERT INTO gforce.future_quest_registrations (user_id, full_name, email, mobile, grade_or_role, school_name, city)
+       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id, registered_at`,
+      [userId || null, fullName, email, mobile, gradeOrRole, schoolName, city]
+    );
+    res.json({ success: true, registrationId: result.rows[0].id, registeredAt: result.rows[0].registered_at });
+  } catch (err) {
+    console.error('FutureQuest register error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/futurequest/registrations — Admin
+app.get('/api/futurequest/registrations', requireAdmin, async (req, res) => {
+  try {
+    const result = await db.query(
+      `SELECT id, user_id, full_name, email, mobile, grade_or_role, school_name, city, registered_at
+       FROM gforce.future_quest_registrations ORDER BY registered_at DESC`
+    );
+    res.json({ total: result.rows.length, registrations: result.rows });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+
 // GET /api/quiz/certificate-status/:email
 app.get('/api/quiz/certificate-status/:email', (req, res) => {
   try {
@@ -2470,6 +2885,27 @@ app.get('/api/minimun/mod2-certificate-status/:email', (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// GET /api/minimun/mod3-certificate-status/:email
+app.get('/api/minimun/mod3-certificate-status/:email', (req, res) => {
+  try {
+    const email = req.params.email.toLowerCase().trim();
+    const certPath = path.join(__dirname, 'minimun_mod3_certificates.json');
+    if (!fs.existsSync(certPath)) {
+      return res.status(500).json({ error: 'Certificate database not found.' });
+    }
+    const certData = JSON.parse(fs.readFileSync(certPath, 'utf8'));
+    
+    if (certData[email]) {
+      return res.json({ success: true, student: certData[email] });
+    } else {
+      return res.status(404).json({ error: 'No certificate found for this email address. Please make sure you are using the exact email you registered with.' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 // --- MUN Mentor Master Class Registrations ---
 
@@ -2581,12 +3017,64 @@ app.get('/api/munmentor/registrations', requireAdmin, async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+// POST /api/indusmun/register
+app.post('/api/indusmun/register', async (req, res) => {
+  try {
+    const { userId, studentName, email, mobile, schoolName, grade } = req.body;
+    if (!studentName || !email || !mobile || !schoolName || !grade) {
+      return res.status(400).json({ error: 'All required fields must be filled.' });
+    }
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS indus_mun_registrations (
+        id SERIAL PRIMARY KEY,
+        user_id VARCHAR(255),
+        student_name VARCHAR(255),
+        email VARCHAR(255),
+        mobile VARCHAR(255),
+        school_name VARCHAR(255),
+        grade VARCHAR(255),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    const result = await db.query(
+      `INSERT INTO indus_mun_registrations (user_id, student_name, email, mobile, school_name, grade)
+       VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
+      [userId || null, studentName, email, mobile, schoolName, grade]
+    );
+    res.json({ success: true, registrationId: result.rows[0].id });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/indusmun/registrations
+app.get('/api/indusmun/registrations', requireAdmin, async (req, res) => {
+  try {
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS indus_mun_registrations (
+        id SERIAL PRIMARY KEY,
+        user_id VARCHAR(255),
+        student_name VARCHAR(255),
+        email VARCHAR(255),
+        mobile VARCHAR(255),
+        school_name VARCHAR(255),
+        grade VARCHAR(255),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    const result = await db.query('SELECT * FROM indus_mun_registrations ORDER BY created_at DESC');
+    res.json({ total: result.rows.length, registrations: result.rows });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 // POST /api/minimun/register
 app.post('/api/minimun/register', async (req, res) => {
   try {
-    const { userId, studentName, email, mobile, schoolName, grade, city } = req.body;
-    if (!studentName || !email || !mobile || !schoolName || !grade || !city) {
+    const { userId, studentName, email, mobile, schoolName, category, grade, city, module } = req.body;
+    if (!studentName || !email || !mobile || !schoolName || !grade || !category || !city) {
       return res.status(400).json({ error: 'All required fields must be filled.' });
     }
     
@@ -2594,10 +3082,13 @@ app.post('/api/minimun/register', async (req, res) => {
     const amountPaise = 9900; // ₹99 in paise
 
     await db.query(`ALTER TABLE mini_mun_registrations ADD COLUMN IF NOT EXISTS module INTEGER DEFAULT 1`).catch(console.error);
+    await db.query(`ALTER TABLE mini_mun_registrations ADD COLUMN IF NOT EXISTS category VARCHAR(100)`).catch(console.error);
+
+    const targetModule = module || 3;
 
     const emailDup = await db.query(
-      `SELECT id FROM mini_mun_registrations WHERE email = $1 AND payment_status = 'paid' AND module = 3`,
-      [email]
+      `SELECT id FROM mini_mun_registrations WHERE email = $1 AND payment_status = 'paid' AND module = $2`,
+      [email, targetModule]
     );
     if (emailDup.rows.length > 0) {
       return res.status(409).json({ error: 'already_registered', message: 'This email is already registered.' });
@@ -2607,14 +3098,14 @@ app.post('/api/minimun/register', async (req, res) => {
       amount: amountPaise,
       currency: 'INR',
       receipt: `minimun_${Date.now()}`,
-      notes: { programme: 'Mini MUN Master Class Module-3', userId: userId || '', studentName, mobile, school: schoolName || '' },
+      notes: { programme: `Mini MUN Master Class Module-${targetModule}`, userId: userId || '', studentName, mobile, school: schoolName || '' },
     });
 
     const result = await db.query(
       `INSERT INTO mini_mun_registrations 
-        (user_id, student_name, email, mobile, school_name, grade, city, razorpay_order_id, amount, module)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, 3) RETURNING id, registered_at`,
-      [userId || null, studentName, email, mobile, schoolName, grade, city, order.id, amountPaise]
+        (user_id, student_name, email, mobile, school_name, category, grade, city, razorpay_order_id, amount, module)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id, registered_at`,
+      [userId || null, studentName, email, mobile, schoolName, category, grade, city, order.id, amountPaise, targetModule]
     );
     res.json({ success: true, orderId: order.id, amount: amountPaise, registrationId: result.rows[0].id });
   } catch (err) {
@@ -2694,7 +3185,7 @@ app.get('/api/minimun/registrations', requireAdmin, async (req, res) => {
   try {
     await db.query(`ALTER TABLE mini_mun_registrations ADD COLUMN IF NOT EXISTS module INTEGER DEFAULT 1`).catch(console.error);
     const result = await db.query(
-      `SELECT id, user_id, student_name, email, mobile, school_name, grade, city, 
+      `SELECT id, user_id, student_name, email, mobile, school_name, category, grade, city, 
               payment_status, razorpay_payment_id, amount, registered_at, module
        FROM mini_mun_registrations ORDER BY registered_at DESC`
     );
@@ -2703,3 +3194,231 @@ app.get('/api/minimun/registrations', requireAdmin, async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// ==========================================
+// OLYMPIAD FEATURE ROUTES
+// ==========================================
+
+// 1. School Registration
+app.post('/api/olympiad/school/register', async (req, res) => {
+  try {
+    const { name, principal_name, coordinator_name, contact_email, contact_phone, expected_students, classes_participating } = req.body;
+    
+    if (!name || !contact_email) {
+      return res.status(400).json({ error: 'School name and contact email are required' });
+    }
+
+    // Generate unique school code
+    const school_code = Math.random().toString(36).substring(2, 8).toUpperCase();
+    const coordinator_login_id = `COORD-${school_code}`;
+
+    const result = await db.query(
+      `INSERT INTO schools (name, principal_name, coordinator_name, contact_email, contact_phone, school_code, coordinator_login_id, expected_students, classes_participating, status) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, 'pending') RETURNING id`,
+      [name, principal_name, coordinator_name, contact_email, contact_phone, school_code, coordinator_login_id, expected_students || 0, classes_participating || '']
+    );
+
+    // Send pending verification email
+    await sendEmail({
+      to: contact_email,
+      subject: 'ThinkQuest Olympiad: Registration Received',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
+          <h2>Registration Received</h2>
+          <p>Dear ${coordinator_name},</p>
+          <p>We have successfully received your registration application for <strong>${name}</strong>.</p>
+          <p>Our team is currently reviewing your details. Once verified, you will receive another email containing your official <strong>School Code</strong> and <strong>Coordinator Login ID</strong>.</p>
+          <p>We look forward to having your school participate in the Olympiad!</p>
+          <p>Best Regards,<br>The ThinkQuest Team</p>
+        </div>
+      `
+    });
+
+    res.json({ 
+      success: true, 
+      message: 'Your registration has been submitted. Our team will verify your school and email the school code and coordinator login ID to your contact email within 24 hours.'
+    });
+  } catch (err) {
+    console.error('Olympiad school registration error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 2. Student Registration for Olympiad
+// ==========================================
+// THINQUEST OLYMPIAD - EXISTING USER ENROLLMENT
+// ==========================================
+app.post('/api/olympiad/enroll', async (req, res) => {
+  try {
+    const { email, school_code } = req.body;
+    if (!email || !school_code) {
+      return res.status(400).json({ error: 'Email and school code are required.' });
+    }
+
+    // Verify school code
+    const schoolRes = await db.query(`SELECT id FROM schools WHERE school_code = $1`, [school_code]);
+    if (schoolRes.rows.length === 0) {
+      return res.status(404).json({ error: 'Invalid School Code' });
+    }
+    const school_id = schoolRes.rows[0].id;
+
+    // Update user
+    const updateRes = await db.query(
+      `UPDATE users SET school_id = $1, olympiad_registered = true WHERE email = $2 RETURNING id`,
+      [school_id, email]
+    );
+
+    if (updateRes.rows.length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.json({ 
+      success: true, 
+      message: 'Successfully enrolled in the ThinkQuest Olympiad!' 
+    });
+
+  } catch (err) {
+    console.error('Olympiad enrollment error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.post('/api/olympiad/student/register', async (req, res) => {
+  try {
+    const { name, email, password, classLevel, school_code } = req.body;
+
+    if (!name || !email || !password || !school_code) {
+      return res.status(400).json({ error: 'All fields (name, email, password, school code) are required.' });
+    }
+
+    // Verify school code
+    const schoolRes = await db.query(`SELECT id FROM schools WHERE school_code = $1`, [school_code]);
+    if (schoolRes.rows.length === 0) {
+      return res.status(404).json({ error: 'Invalid School Code' });
+    }
+    const school_id = schoolRes.rows[0].id;
+
+    // Check if user already exists
+    const existingUserRes = await db.query(`SELECT id FROM users WHERE email = $1`, [email]);
+    let studentId = '';
+    
+    if (existingUserRes.rows.length > 0) {
+      // User exists, just update them
+      studentId = email; // Using email as studentId for simplicity in updates
+      await db.query(
+        `UPDATE users SET school_id = $1, role = 'student', olympiad_registered = true WHERE email = $2`,
+        [school_id, email]
+      );
+    } else {
+      // Create new user (using logic similar to main register endpoint)
+      studentId = email;
+      const hashedPassword = await bcrypt.hash(password, 10);
+      
+      // Assign dummy agent ID to prevent crash
+      let assignedAgentId = 'agent_0601krh0f23df5br0dahys0kdsbr'; 
+
+      await db.query(
+        `INSERT INTO users (name, "studentId", password, "classLevel", email, "assignedAgentId", school_id, role, olympiad_registered) 
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+        [name, studentId, hashedPassword, classLevel || 'Level 1', email, assignedAgentId, school_id, 'student', true]
+      );
+    }
+
+    res.json({ 
+      success: true, 
+      message: 'Successfully registered for ThinkQuest Olympiad!' 
+    });
+
+  } catch (err) {
+    console.error('Olympiad student registration error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 3. Get Daily Challenge
+app.get('/api/olympiad/daily-challenge', async (req, res) => {
+  try {
+    const today = new Date().toISOString().slice(0, 10);
+    const result = await db.query(`SELECT id, topic, difficulty_level, questions FROM olympiad_daily_challenges WHERE date = $1`, [today]);
+    
+    if (result.rows.length === 0) {
+      // Fallback: return a default challenge if none exists for today
+      return res.json({
+        id: 0,
+        date: today,
+        topic: "General Cognitive Skills",
+        difficulty_level: "Medium",
+        questions: [
+          { q: "If A is taller than B, and B is taller than C, who is the shortest?", options: ["A", "B", "C"], type: "mcq" },
+          { q: "Write a short paragraph convincing a peer to read your favorite book.", type: "subjective" }
+        ]
+      });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 4. Submit Daily Practice
+app.post('/api/olympiad/practice/submit', async (req, res) => {
+  try {
+    const { email, challenge_id, score, time_spent } = req.body;
+    
+    if (!email) return res.status(400).json({ error: 'Email is required' });
+
+    await db.query(
+      `INSERT INTO olympiad_practice_logs (student_id, challenge_id, score, time_spent) VALUES ($1, $2, $3, $4)`,
+      [email, challenge_id, score || 0, time_spent || 0]
+    );
+
+    res.json({ success: true, message: 'Practice submitted successfully!' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 5. Submit Grand Olympiad Exam
+app.post('/api/olympiad/exam/submit', async (req, res) => {
+  try {
+    const { email, answers, time_taken } = req.body;
+    
+    if (!email) return res.status(400).json({ error: 'Email is required' });
+
+    // Mock Grading logic for the MVP
+    const part_a_score = Math.floor(Math.random() * 20) + 1; // 1-20
+    const part_b_score = Math.floor(Math.random() * 20) + 1;
+    const part_c_score = Math.floor(Math.random() * 20) + 1;
+    const part_d_score = Math.floor(Math.random() * 20) + 1;
+    const part_e_score = Math.floor(Math.random() * 20) + 1;
+    
+    const total_score = part_a_score + part_b_score + part_c_score + part_d_score + part_e_score;
+
+    // Generate mock AI competency report
+    const ai_report = {
+      strengths: ["Logical Reasoning", "Creative Expression"],
+      areas_for_improvement: ["Analytical Depth"],
+      overall_feedback: "Great performance! Keep practicing analytical challenges.",
+      percentile: 85
+    };
+
+    const result = await db.query(
+      `INSERT INTO olympiad_exam_submissions 
+       (student_id, part_a_score, part_b_score, part_c_score, part_d_score, part_e_score, total_score, time_taken, ai_competency_report) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id`,
+      [email, part_a_score, part_b_score, part_c_score, part_d_score, part_e_score, total_score, time_taken || 3600, JSON.stringify(ai_report)]
+    );
+
+    res.json({ 
+      success: true, 
+      submission_id: result.rows[0].id,
+      total_score,
+      report: ai_report,
+      message: 'Exam submitted successfully!' 
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+

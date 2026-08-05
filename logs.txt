@@ -1,0 +1,1785 @@
+STDOUT: [TAILING] Tailing last 500 lines for [grace-api] process (change the value with --lines option)
+
+STDOUT: /home/graceandforce/.pm2/logs/grace-api-error.log last 500 lines:
+
+STDOUT: 0|grace-ap | 
+STDOUT:   hint: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   position: '22',
+0|grace-ap |   internalPosition: undefined,
+0|grace-ap |   internalQuery: undefined,
+0|grace-ap |   where: undefined,
+0|grace-ap |   schema: undefined,
+0|grace-ap |   table: undefined,
+0|grace-ap |   column: undefined,
+0|grace-ap |   dataType: undefined,
+0|grace-ap |   constraint: undefined,
+0|grace-ap |   file: 'parse_relation.c',
+
+STDOUT: 0|grace-ap |   line: '1449',
+
+STDOUT: 0|grace-ap |   routine: 'parserOpenTable'
+0|grace-ap | 
+STDOUT: }
+
+STDOUT: 0|grace-ap | 
+STDOUT: Mini MUN verify error: error: relation "time_limits" does not exist
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at /home/graceandforce/debate-engine/backend/node_modules/pg-pool/index.js:45:11
+0|grace-ap | 
+STDOUT:     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at async Object.query (/home/graceandforce/debate-engine/backend/database.js:235:18)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at async /home/graceandforce/debate-engine/backend/server.js:2541:7 {
+0|grace-ap | 
+STDOUT:   length: 110,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   severity: 'ERROR',
+
+STDOUT: 0|grace-ap | 
+STDOUT:   code: '42P01',
+0|grace-ap | 
+STDOUT:   detail: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   hint: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   position: '22',
+
+STDOUT: 0|grace-ap | 
+STDOUT:   internalPosition: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   internalQuery: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   where: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   schema: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   table: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   column: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   dataType: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   constraint: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   file: 'parse_relation.c',
+
+STDOUT: 0|grace-ap |   line: '1449',
+0|grace-ap | 
+STDOUT:   routine: 'parserOpenTable'
+0|grace-ap | 
+STDOUT: }
+
+STDOUT: 0|grace-ap | 
+STDOUT: Mini MUN verify error: error: relation "time_limits" does not exist
+0|grace-ap |     at /home/graceandforce/debate-engine/backend/node_modules/pg-pool/index.js:45:11
+0|grace-ap |     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+0|grace-ap |     at async Object.query (/home/graceandforce/debate-engine/backend/database.js:235:18)
+0|grace-ap |     at async /home/graceandforce/debate-engine/backend/server.js:2541:7 {
+0|grace-ap |   length: 110,
+0|grace-ap |   severity: 'ERROR',
+0|grace-ap |   code: '42P01',
+0|grace-ap |   detail: undefined,
+0|grace-ap |   hint: undefined,
+0|grace-ap |   position: '22',
+0|grace-ap |   internalPosition: undefined,
+0|grace-ap |   internalQuery: undefined,
+0|grace-ap |   where: undefined,
+0|grace-ap |   schema: undefined,
+0|grace-ap |   table: undefined,
+0|grace-ap |   column: undefined,
+0|grace-ap |   dataType: undefined,
+0|grace-ap |   constraint: undefined,
+0|grace-ap |   file: 'parse_relation.c',
+0|grace-ap |   line: '1449',
+0|grace-ap |   routine: 'parserOpenTable'
+0|grace-ap | }
+0|grace-ap | Mini MUN verify error: error: relation "time_limits" does not exist
+0|grace-ap |     at /home/graceandforce/debate-engine/backend/node_modules/pg-pool/index.js:45:11
+0|grace-ap |     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+0|grace-ap |     at async Object.query (/home/graceandforce/debate-engine/backend/database.js:235:18)
+0|grace-ap |     at async /home/graceandforce/debate-engine/backend/server.js:2541:7 {
+0|grace-ap | 
+STDOUT:   length: 110,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   severity: 'ERROR',
+
+STDOUT: 0|grace-ap | 
+STDOUT:   code: '42P01',
+
+STDOUT: 0|grace-ap | 
+STDOUT:   detail: undefined,
+0|grace-ap |   hint: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   position: '22',
+
+STDOUT: 0|grace-ap | 
+STDOUT:   internalPosition: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   internalQuery: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   where: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   schema: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   table: undefined,
+
+STDOUT: 0|grace-ap |   column: undefined,
+0|grace-ap |   dataType: undefined,
+0|grace-ap |   constraint: undefined,
+0|grace-ap |   file: 'parse_relation.c',
+0|grace-ap |   line: '1449',
+0|grace-ap |   routine: 'parserOpenTable'
+0|grace-ap | 
+STDOUT: }
+
+STDOUT: 0|grace-ap | 
+STDOUT: Mini MUN verify error: error: relation "time_limits" does not exist
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at /home/graceandforce/debate-engine/backend/node_modules/pg-pool/index.js:45:11
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at async Object.query (/home/graceandforce/debate-engine/backend/database.js:235:18)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at async /home/graceandforce/debate-engine/backend/server.js:2541:7 {
+
+STDOUT: 0|grace-ap | 
+STDOUT:   length: 110,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   severity: 'ERROR',
+
+STDOUT: 0|grace-ap | 
+STDOUT:   code: '42P01',
+
+STDOUT: 0|grace-ap | 
+STDOUT:   detail: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   hint: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   position: '22',
+
+STDOUT: 0|grace-ap | 
+STDOUT:   internalPosition: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   internalQuery: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   where: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   schema: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   table: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   column: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   dataType: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   constraint: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   file: 'parse_relation.c',
+
+STDOUT: 0|grace-ap | 
+STDOUT:   line: '1449',
+
+STDOUT: 0|grace-ap | 
+STDOUT:   routine: 'parserOpenTable'
+
+STDOUT: 0|grace-ap | 
+STDOUT: }
+
+STDOUT: 0|grace-ap | 
+STDOUT: Mini MUN verify error: error: relation "time_limits" does not exist
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at /home/graceandforce/debate-engine/backend/node_modules/pg-pool/index.js:45:11
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at async Object.query (/home/graceandforce/debate-engine/backend/database.js:235:18)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at async /home/graceandforce/debate-engine/backend/server.js:2541:7 {
+
+STDOUT: 0|grace-ap | 
+STDOUT:   length: 110,
+
+STDOUT: 0|grace-ap |   severity: 'ERROR',
+0|grace-ap | 
+STDOUT:   code: '42P01',
+
+STDOUT: 0|grace-ap | 
+STDOUT:   detail: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   hint: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   position: '22',
+
+STDOUT: 0|grace-ap | 
+STDOUT:   internalPosition: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   internalQuery: undefined,
+0|grace-ap |   where: undefined,
+0|grace-ap | 
+STDOUT:   schema: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   table: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   column: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   dataType: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   constraint: undefined,
+
+STDOUT: 0|grace-ap | 
+STDOUT:   file: 'parse_relation.c',
+
+STDOUT: 0|grace-ap | 
+STDOUT:   line: '1449',
+
+STDOUT: 0|grace-ap | 
+STDOUT:   routine: 'parserOpenTable'
+
+STDOUT: 0|grace-ap | 
+STDOUT: }
+
+STDOUT: 0|grace-ap | 
+STDOUT: Mini MUN verify error: error: relation "time_limits" does not exist
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at /home/graceandforce/debate-engine/backend/node_modules/pg-pool/index.js:45:11
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at async Object.query (/home/graceandforce/debate-engine/backend/database.js:235:18)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at async /home/graceandforce/debate-engine/backend/server.js:2541:7 {
+
+STDOUT: 0|grace-ap | 
+STDOUT:   length: 110,
+
+STDOUT: 0|grace-ap |   severity: 'ERROR',
+0|grace-ap |   code: '42P01',
+0|grace-ap |   detail: undefined,
+0|grace-ap |   hint: undefined,
+0|grace-ap |   position: '22',
+0|grace-ap |   internalPosition: undefined,
+0|grace-ap |   internalQuery: undefined,
+0|grace-ap |   where: undefined,
+0|grace-ap |   schema: undefined,
+0|grace-ap |   table: undefined,
+0|grace-ap |   column: undefined,
+0|grace-ap |   dataType: undefined,
+0|grace-ap |   constraint: undefined,
+0|grace-ap |   file: 'parse_relation.c',
+0|grace-ap |   line: '1449',
+0|grace-ap |   routine: 'parserOpenTable'
+0|grace-ap | }
+0|grace-ap | Create topup order error: {
+0|grace-ap |   statusCode: 400,
+0|grace-ap |   error: {
+0|grace-ap |     code: 'BAD_REQUEST_ERROR',
+0|grace-ap |     description: 'receipt: the length must be no more than 40.',
+0|grace-ap |     metadata: {},
+0|grace-ap |     reason: 'input_validation_failed',
+0|grace-ap | 
+STDOUT:     source: 'business',
+0|grace-ap |     step: 'payment_initiation'
+0|grace-ap | 
+STDOUT:   }
+
+STDOUT: 0|grace-ap | 
+STDOUT: }
+
+STDOUT: 0|grace-ap | 
+STDOUT: /home/graceandforce/debate-engine/backend/server.js:2368
+
+STDOUT: 0|grace-ap | 
+STDOUT: const fs = require('fs');
+
+STDOUT: 0|grace-ap | 
+STDOUT:       ^
+0|grace-ap | 
+STDOUT: 
+
+STDOUT: 0|grace-ap | 
+STDOUT: SyntaxError: Identifier 'fs' has already been declared
+0|grace-ap |     at wrapSafe (node:internal/modules/cjs/loader:1762:18)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1803:20)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap | 
+STDOUT:     at Module.load (node:internal/modules/cjs/loader:1552:32)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Module._load (node:internal/modules/cjs/loader:1354:12)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Object.<anonymous> (/home/graceandforce/.nvm/versions/node/v25.9.0/lib/node_modules/pm2/lib/ProcessContainerFork.js:33:23)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Module._compile (node:internal/modules/cjs/loader:1829:14)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Object..js (node:internal/modules/cjs/loader:1969:10)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Module.load (node:internal/modules/cjs/loader:1552:32)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Module._load (node:internal/modules/cjs/loader:1354:12)
+
+STDOUT: 0|grace-ap | 
+STDOUT: /home/graceandforce/debate-engine/backend/server.js:2368
+
+STDOUT: 0|grace-ap | 
+STDOUT: const fs = require('fs');
+
+STDOUT: 0|grace-ap | 
+STDOUT:       ^
+
+STDOUT: 0|grace-ap | 
+STDOUT: 
+
+STDOUT: 0|grace-ap | 
+STDOUT: SyntaxError: Identifier 'fs' has already been declared
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at wrapSafe (node:internal/modules/cjs/loader:1762:18)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Module._compile (node:internal/modules/cjs/loader:1803:20)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Object..js (node:internal/modules/cjs/loader:1969:10)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Module.load (node:internal/modules/cjs/loader:1552:32)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Module._load (node:internal/modules/cjs/loader:1354:12)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Object.<anonymous> (/home/graceandforce/.nvm/versions/node/v25.9.0/lib/node_modules/pm2/lib/ProcessContainerFork.js:33:23)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Module._compile (node:internal/modules/cjs/loader:1829:14)
+
+STDOUT: 0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap | /home/graceandforce/debate-engine/backend/server.js:2368
+0|grace-ap | const fs = require('fs');
+0|grace-ap |       ^
+0|grace-ap | 
+0|grace-ap | SyntaxError: Identifier 'fs' has already been declared
+0|grace-ap |     at wrapSafe (node:internal/modules/cjs/loader:1762:18)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1803:20)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap |     at Object.<anonymous> (/home/graceandforce/.nvm/versions/node/v25.9.0/lib/node_modules/pm2/lib/ProcessContainerFork.js:33:23)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1829:14)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap | /home/graceandforce/debate-engine/backend/server.js:2368
+0|grace-ap | const fs = require('fs');
+0|grace-ap |       ^
+0|grace-ap | 
+0|grace-ap | SyntaxError: Identifier 'fs' has already been declared
+0|grace-ap |     at wrapSafe (node:internal/modules/cjs/loader:1762:18)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1803:20)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap |     at Object.<anonymous> (/home/graceandforce/.nvm/versions/node/v25.9.0/lib/node_modules/pm2/lib/ProcessContainerFork.js:33:23)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1829:14)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap | /home/graceandforce/debate-engine/backend/server.js:2368
+0|grace-ap | 
+STDOUT: const fs = require('fs');
+0|grace-ap |       ^
+0|grace-ap | 
+STDOUT: 
+
+STDOUT: 0|grace-ap | 
+STDOUT: SyntaxError: Identifier 'fs' has already been declared
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at wrapSafe (node:internal/modules/cjs/loader:1762:18)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Module._compile (node:internal/modules/cjs/loader:1803:20)
+
+STDOUT: 0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap | 
+STDOUT:     at Module._load (node:internal/modules/cjs/loader:1354:12)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Object.<anonymous> (/home/graceandforce/.nvm/versions/node/v25.9.0/lib/node_modules/pm2/lib/ProcessContainerFork.js:33:23)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Module._compile (node:internal/modules/cjs/loader:1829:14)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Object..js (node:internal/modules/cjs/loader:1969:10)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Module.load (node:internal/modules/cjs/loader:1552:32)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Module._load (node:internal/modules/cjs/loader:1354:12)
+
+STDOUT: 0|grace-ap | 
+STDOUT: /home/graceandforce/debate-engine/backend/server.js:2368
+
+STDOUT: 0|grace-ap | 
+STDOUT: const fs = require('fs');
+
+STDOUT: 0|grace-ap | 
+STDOUT:       ^
+
+STDOUT: 0|grace-ap | 
+STDOUT: 
+
+STDOUT: 0|grace-ap | 
+STDOUT: SyntaxError: Identifier 'fs' has already been declared
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at wrapSafe (node:internal/modules/cjs/loader:1762:18)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Module._compile (node:internal/modules/cjs/loader:1803:20)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Object..js (node:internal/modules/cjs/loader:1969:10)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Module.load (node:internal/modules/cjs/loader:1552:32)
+
+STDOUT: 0|grace-ap | 
+STDOUT:     at Module._load (node:internal/modules/cjs/loader:1354:12)
+
+STDOUT: 0|grace-ap |     at Object.<anonymous> (/home/graceandforce/.nvm/versions/node/v25.9.0/lib/node_modules/pm2/lib/ProcessContainerFork.js:33:23)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1829:14)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+
+STDOUT: 0|grace-ap | /home/graceandforce/debate-engine/backend/server.js:2368
+0|grace-ap | const fs = require('fs');
+0|grace-ap |       ^
+0|grace-ap | 
+0|grace-ap | SyntaxError: Identifier 'fs' has already been declared
+0|grace-ap |     at wrapSafe (node:internal/modules/cjs/loader:1762:18)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1803:20)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap |     at Object.<anonymous> (/home/graceandforce/.nvm/versions/node/v25.9.0/lib/node_modules/pm2/lib/ProcessContainerFork.js:33:23)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1829:14)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap | /home/graceandforce/debate-engine/backend/server.js:2368
+0|grace-ap | const fs = require('fs');
+0|grace-ap |       ^
+0|grace-ap | 
+0|grace-ap | SyntaxError: Identifier 'fs' has already been declared
+0|grace-ap |     at wrapSafe (node:internal/modules/cjs/loader:1762:18)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1803:20)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap |     at Object.<anonymous> (/home/graceandforce/.nvm/versions/node/v25.9.0/lib/node_modules/pm2/lib/ProcessContainerFork.js:33:23)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1829:14)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap | /home/graceandforce/debate-engine/backend/server.js:2368
+0|grace-ap | const fs = require('fs');
+0|grace-ap |       ^
+0|grace-ap | 
+0|grace-ap | SyntaxError: Identifier 'fs' has already been declared
+0|grace-ap |     at wrapSafe (node:internal/modules/cjs/loader:1762:18)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1803:20)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap |     at Object.<anonymous> (/home/graceandforce/.nvm/versions/node/v25.9.0/lib/node_modules/pm2/lib/ProcessContainerFork.js:33:23)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1829:14)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap | /home/graceandforce/debate-engine/backend/server.js:2368
+0|grace-ap | const fs = require('fs');
+0|grace-ap |       ^
+0|grace-ap | 
+0|grace-ap | SyntaxError: Identifier 'fs' has already been declared
+0|grace-ap |     at wrapSafe (node:internal/modules/cjs/loader:1762:18)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1803:20)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap |     at Object.<anonymous> (/home/graceandforce/.nvm/versions/node/v25.9.0/lib/node_modules/pm2/lib/ProcessContainerFork.js:33:23)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1829:14)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap | /home/graceandforce/debate-engine/backend/server.js:2368
+0|grace-ap | const fs = require('fs');
+0|grace-ap |       ^
+0|grace-ap | 
+0|grace-ap | SyntaxError: Identifier 'fs' has already been declared
+0|grace-ap |     at wrapSafe (node:internal/modules/cjs/loader:1762:18)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1803:20)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap |     at Object.<anonymous> (/home/graceandforce/.nvm/versions/node/v25.9.0/lib/node_modules/pm2/lib/ProcessContainerFork.js:33:23)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1829:14)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap | /home/graceandforce/debate-engine/backend/server.js:2368
+0|grace-ap | const fs = require('fs');
+0|grace-ap |       ^
+0|grace-ap | 
+0|grace-ap | SyntaxError: Identifier 'fs' has already been declared
+0|grace-ap |     at wrapSafe (node:internal/modules/cjs/loader:1762:18)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1803:20)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap |     at Object.<anonymous> (/home/graceandforce/.nvm/versions/node/v25.9.0/lib/node_modules/pm2/lib/ProcessContainerFork.js:33:23)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1829:14)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap | /home/graceandforce/debate-engine/backend/server.js:2368
+0|grace-ap | const fs = require('fs');
+0|grace-ap |       ^
+0|grace-ap | 
+0|grace-ap | SyntaxError: Identifier 'fs' has already been declared
+0|grace-ap |     at wrapSafe (node:internal/modules/cjs/loader:1762:18)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1803:20)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap |     at Object.<anonymous> (/home/graceandforce/.nvm/versions/node/v25.9.0/lib/node_modules/pm2/lib/ProcessContainerFork.js:33:23)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1829:14)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap | /home/graceandforce/debate-engine/backend/server.js:2368
+0|grace-ap | const fs = require('fs');
+0|grace-ap |       ^
+0|grace-ap | 
+0|grace-ap | SyntaxError: Identifier 'fs' has already been declared
+0|grace-ap |     at wrapSafe (node:internal/modules/cjs/loader:1762:18)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1803:20)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap |     at Object.<anonymous> (/home/graceandforce/.nvm/versions/node/v25.9.0/lib/node_modules/pm2/lib/ProcessContainerFork.js:33:23)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1829:14)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap | /home/graceandforce/debate-engine/backend/server.js:2368
+0|grace-ap | const fs = require('fs');
+0|grace-ap |       ^
+0|grace-ap | 
+0|grace-ap | SyntaxError: Identifier 'fs' has already been declared
+0|grace-ap |     at wrapSafe (node:internal/modules/cjs/loader:1762:18)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1803:20)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap |     at Object.<anonymous> (/home/graceandforce/.nvm/versions/node/v25.9.0/lib/node_modules/pm2/lib/ProcessContainerFork.js:33:23)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1829:14)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap | /home/graceandforce/debate-engine/backend/server.js:2368
+0|grace-ap | const fs = require('fs');
+0|grace-ap |       ^
+0|grace-ap | 
+0|grace-ap | SyntaxError: Identifier 'fs' has already been declared
+0|grace-ap |     at wrapSafe (node:internal/modules/cjs/loader:1762:18)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1803:20)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap |     at Object.<anonymous> (/home/graceandforce/.nvm/versions/node/v25.9.0/lib/node_modules/pm2/lib/ProcessContainerFork.js:33:23)
+0|grace-ap |     at Module._compile (node:internal/modules/cjs/loader:1829:14)
+0|grace-ap |     at Object..js (node:internal/modules/cjs/loader:1969:10)
+0|grace-ap |     at Module.load (node:internal/modules/cjs/loader:1552:32)
+0|grace-ap |     at Module._load (node:internal/modules/cjs/loader:1354:12)
+0|grace-ap | Prep Hints Error: NotFoundError: 404 {"type":"error","error":{"type":"not_found_error","message":"model: claude-3-5-sonnet-20240620"},"request_id":"req_011CdLbKwtxtFCBBa53Dcmkw"}
+0|grace-ap |     at APIError.generate (/home/graceandforce/debate-engine/backend/node_modules/@anthropic-ai/sdk/core/error.js:52:20)
+0|grace-ap |     at Anthropic.makeStatusError (/home/graceandforce/debate-engine/backend/node_modules/@anthropic-ai/sdk/client.js:384:32)
+0|grace-ap |     at Anthropic.makeRequest (/home/graceandforce/debate-engine/backend/node_modules/@anthropic-ai/sdk/client.js:608:30)
+0|grace-ap |     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+0|grace-ap |     at async /home/graceandforce/debate-engine/backend/api/speech_coach.js:173:21 {
+0|grace-ap |   status: 404,
+0|grace-ap |   headers: Headers {
+0|grace-ap |     date: 'Fri, 24 Jul 2026 08:47:56 GMT',
+0|grace-ap |     'content-type': 'application/json',
+0|grace-ap |     'transfer-encoding': 'chunked',
+0|grace-ap |     connection: 'keep-alive',
+0|grace-ap |     'x-should-retry': 'false',
+0|grace-ap |     'request-id': 'req_011CdLbKwtxtFCBBa53Dcmkw',
+0|grace-ap |     'strict-transport-security': 'max-age=31536000; includeSubDomains; preload',
+0|grace-ap |     'anthropic-organization-id': 'f027abe3-d37e-47df-8a95-a0efe886497f',
+0|grace-ap |     traceresponse: '00-5eec4ab7cf6e70ae20f8008aad1c844b-69b726bfbb4e9879-01',
+0|grace-ap |     server: 'cloudflare',
+0|grace-ap |     'content-encoding': 'gzip',
+0|grace-ap |     vary: 'Accept-Encoding',
+0|grace-ap |     'cf-cache-status': 'DYNAMIC',
+0|grace-ap |     'x-robots-tag': 'none',
+0|grace-ap |     'content-security-policy': "default-src 'none'; frame-ancestors 'none'",
+0|grace-ap |     'cf-ray': 'a201a9b86ae7dab3-BOM'
+0|grace-ap |   },
+0|grace-ap |   requestID: 'req_011CdLbKwtxtFCBBa53Dcmkw',
+0|grace-ap |   error: {
+0|grace-ap |     type: 'error',
+0|grace-ap |     error: {
+0|grace-ap |       type: 'not_found_error',
+0|grace-ap |       message: 'model: claude-3-5-sonnet-20240620'
+0|grace-ap |     },
+0|grace-ap |     request_id: 'req_011CdLbKwtxtFCBBa53Dcmkw'
+0|grace-ap |   },
+0|grace-ap |   type: 'not_found_error'
+0|grace-ap | }
+0|grace-ap | The model 'claude-3-sonnet-20240229' is deprecated and will reach end-of-life on July 21st, 2025
+0|grace-ap | Please migrate to a newer model. Visit https://docs.anthropic.com/en/docs/resources/model-deprecations for more information.
+0|grace-ap | Prep Hints Error: NotFoundError: 404 {"type":"error","error":{"type":"not_found_error","message":"model: claude-3-sonnet-20240229"},"request_id":"req_011CdLc3RMqsMMyFqkmNxJiL"}
+0|grace-ap |     at APIError.generate (/home/graceandforce/debate-engine/backend/node_modules/@anthropic-ai/sdk/core/error.js:52:20)
+0|grace-ap |     at Anthropic.makeStatusError (/home/graceandforce/debate-engine/backend/node_modules/@anthropic-ai/sdk/client.js:384:32)
+0|grace-ap |     at Anthropic.makeRequest (/home/graceandforce/debate-engine/backend/node_modules/@anthropic-ai/sdk/client.js:608:30)
+0|grace-ap |     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+0|grace-ap |     at async /home/graceandforce/debate-engine/backend/api/speech_coach.js:173:21 {
+0|grace-ap |   status: 404,
+0|grace-ap |   headers: Headers {
+0|grace-ap |     date: 'Fri, 24 Jul 2026 08:57:19 GMT',
+0|grace-ap |     'content-type': 'application/json',
+0|grace-ap |     'transfer-encoding': 'chunked',
+0|grace-ap |     connection: 'keep-alive',
+0|grace-ap |     'x-should-retry': 'false',
+0|grace-ap |     'request-id': 'req_011CdLc3RMqsMMyFqkmNxJiL',
+0|grace-ap |     'strict-transport-security': 'max-age=31536000; includeSubDomains; preload',
+0|grace-ap |     'anthropic-organization-id': 'f027abe3-d37e-47df-8a95-a0efe886497f',
+0|grace-ap |     traceresponse: '00-14f7960bdb245fcf10afe703f6818a32-83e0e0166806e992-01',
+0|grace-ap |     server: 'cloudflare',
+0|grace-ap |     'content-encoding': 'gzip',
+0|grace-ap |     vary: 'Accept-Encoding',
+0|grace-ap |     'server-timing': 'x-originResponse;dur=196',
+0|grace-ap |     'x-robots-tag': 'none',
+0|grace-ap |     'content-security-policy': "default-src 'none'; frame-ancestors 'none'",
+0|grace-ap |     'cf-cache-status': 'DYNAMIC',
+0|grace-ap |     'cf-ray': 'a201b77519fcdfad-BOM'
+0|grace-ap |   },
+0|grace-ap |   requestID: 'req_011CdLc3RMqsMMyFqkmNxJiL',
+0|grace-ap |   error: {
+0|grace-ap |     type: 'error',
+0|grace-ap |     error: {
+0|grace-ap |       type: 'not_found_error',
+0|grace-ap |       message: 'model: claude-3-sonnet-20240229'
+0|grace-ap |     },
+0|grace-ap |     request_id: 'req_011CdLc3RMqsMMyFqkmNxJiL'
+0|grace-ap |   },
+0|grace-ap |   type: 'not_found_error'
+0|grace-ap | }
+0|grace-ap | Claude API failed for prep hints, using fallback: 404 {"type":"error","error":{"type":"not_found_error","message":"model: claude-3-haiku-20240307"},"request_id":"req_011CdLcMaHcj3SSjPfMEV4ja"}
+0|grace-ap | Claude API failed for prep hints, using fallback: 404 {"type":"error","error":{"type":"not_found_error","message":"model: claude-3-haiku-20240307"},"request_id":"req_011CdLeJ7Vi7tv3c43f22pq1"}
+0|grace-ap | Claude API failed for prep hints, using fallback: 404 {"type":"error","error":{"type":"not_found_error","message":"model: claude-3-haiku-20240307"},"request_id":"req_011CdLeQ8rV6h2HBVGhVzftB"}
+0|grace-ap | Claude API failed for prep hints, using fallback: 404 {"type":"error","error":{"type":"not_found_error","message":"model: claude-3-haiku-20240307"},"request_id":"req_011CdLezMj5xj5WdkdkQSmLr"}
+0|grace-ap | Claude API failed for prep hints, using fallback: 404 {"type":"error","error":{"type":"not_found_error","message":"model: claude-3-5-sonnet-latest"},"request_id":"req_011CdNDALviqeZ3FHqcUvKJn"}
+0|grace-ap | Claude API failed for analysis, using fallback: 404 {"type":"error","error":{"type":"not_found_error","message":"model: claude-3-5-sonnet-latest"},"request_id":"req_011CdNDG5JHbFyQrbPkEp9Tj"}
+0|grace-ap | Claude API failed for prep hints, using fallback: 404 {"type":"error","error":{"type":"not_found_error","message":"model: claude-3-5-sonnet-latest"},"request_id":"req_011CdNGtkrAE9EorXJ8XkdJS"}
+0|grace-ap | Claude API failed for prep hints, using fallback: 404 {"type":"error","error":{"type":"not_found_error","message":"model: claude-3-5-sonnet-latest"},"request_id":"req_011CdNHCuz5vhpKSMjEi7BUj"}
+0|grace-ap | Claude API failed for prep hints, using fallback: 404 {"type":"error","error":{"type":"not_found_error","message":"model: claude-3-5-sonnet-latest"},"request_id":"req_011CdNKAqqUTv1fhbd5KJYHQ"}
+0|grace-ap | Claude API failed for analysis, using fallback: 404 {"type":"error","error":{"type":"not_found_error","message":"model: claude-3-5-sonnet-latest"},"request_id":"req_011CdNKCVpG6RtST1SyUnyRg"}
+0|grace-ap | Failed to generate realtime token: Error: Not found
+0|grace-ap |     at RealtimeTranscriberFactory.fetch (/home/graceandforce/debate-engine/backend/node_modules/assemblyai/dist/node.cjs:119:23)
+0|grace-ap |     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+0|grace-ap |     at async RealtimeTranscriberFactory.fetchJson (/home/graceandforce/debate-engine/backend/node_modules/assemblyai/dist/node.cjs:126:26)
+0|grace-ap |     at async RealtimeTranscriberFactory.createTemporaryToken (/home/graceandforce/debate-engine/backend/node_modules/assemblyai/dist/node.cjs:850:22)
+0|grace-ap |     at async /home/graceandforce/debate-engine/backend/api/speech_coach.js:262:19
+0|grace-ap | Failed to generate realtime token: Error: AssemblyAI API error: Not Found
+0|grace-ap |     at /home/graceandforce/debate-engine/backend/api/speech_coach.js:271:13
+0|grace-ap |     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+0|grace-ap | Failed to generate realtime token: Error: AssemblyAI API error: Not Found
+0|grace-ap |     at /home/graceandforce/debate-engine/backend/api/speech_coach.js:271:13
+0|grace-ap |     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+
+STDOUT: /home/graceandforce/.pm2/logs/grace-api-out.log last 500 lines:
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | 
+STDOUT: Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  override existing env vars with { override: true }
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  override existing env vars with { override: true }
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+
+STDOUT: 0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+
+STDOUT: 0|grace-ap | Vultr database tables verified.
+
+STDOUT: 0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | Server running on port 5000
+
+STDOUT: 0|grace-ap | 
+STDOUT: Vultr database tables verified.
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+
+STDOUT: 0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+
+STDOUT: 0|grace-ap | Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | Server running on port 5000
+
+STDOUT: 0|grace-ap | 
+STDOUT: Vultr database tables verified.
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  override existing env vars with { override: true }
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+
+STDOUT: 0|grace-ap | Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+
+STDOUT: 0|grace-ap | Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | Server running on port 5000
+
+STDOUT: 0|grace-ap | 
+STDOUT: Vultr database tables verified.
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | Vultr database tables verified.
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+
+STDOUT: 0|grace-ap | Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+
+STDOUT: 0|grace-ap | Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | Server running on port 5000
+
+STDOUT: 0|grace-ap | 
+STDOUT: Vultr database tables verified.
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | Server running on port 5000
+
+STDOUT: 0|grace-ap | 
+STDOUT: Vultr database tables verified.
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | Server running on port 5000
+
+STDOUT: 0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  override existing env vars with { override: true }
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+
+STDOUT: 0|grace-ap | Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+
+STDOUT: 0|grace-ap | Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  override existing env vars with { override: true }
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | Server running on port 5000
+
+STDOUT: 0|grace-ap | 
+STDOUT: Vultr database tables verified.
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  override existing env vars with { override: true }
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+
+STDOUT: 0|grace-ap | Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+
+STDOUT: 0|grace-ap | Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  override existing env vars with { override: true }
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+
+STDOUT: 0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  override existing env vars with { override: true }
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | Vultr database tables verified.
+
+STDOUT: 0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | 
+STDOUT: Vultr database tables verified.
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+0|grace-ap | [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | 
+STDOUT: Vultr database tables verified.
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+
+STDOUT: 0|grace-ap | Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+
+STDOUT: 0|grace-ap | Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | 
+STDOUT: Vultr database tables verified.
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚙️  override existing env vars with { override: true }
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | 
+STDOUT: Vultr database tables verified.
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | 
+STDOUT: Vultr database tables verified.
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (17) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | 
+STDOUT: Vultr database tables verified.
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (18) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+
+STDOUT: 0|grace-ap | Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | 
+STDOUT: Vultr database tables verified.
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (18) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+
+STDOUT: 0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+
+STDOUT: 0|grace-ap | Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | Server running on port 5000
+
+STDOUT: 0|grace-ap | 
+STDOUT: Vultr database tables verified.
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (18) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | 
+STDOUT: Vultr database tables verified.
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (18) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | Server running on port 5000
+
+STDOUT: 0|grace-ap | Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (18) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (19) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | Server running on port 5000
+
+STDOUT: 0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | Uploading to AssemblyAI... uploads/1950c0b9d0cce8e50c9b9b6ad754739c
+
+STDOUT: 0|grace-ap | 
+STDOUT: Transcribing...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Analyzing with Claude...
+0|grace-ap | 
+STDOUT: Uploading to AssemblyAI... uploads/cdc9ff3f0a65d57ebb0fdfc0b6d62b30
+0|grace-ap | 
+STDOUT: Transcribing...
+0|grace-ap | 
+STDOUT: Analyzing with Claude...
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (19) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | Vultr database tables verified.
+
+STDOUT: 0|grace-ap | Uploading to AssemblyAI... uploads/4fcc755d859284e36ee6d513ea2066cf
+
+STDOUT: 0|grace-ap | Transcribing...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Analyzing with Claude...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Uploading to AssemblyAI... uploads/14d027add13a12a3698f8791f15aa1cf
+0|grace-ap | 
+STDOUT: Transcribing...
+0|grace-ap | 
+STDOUT: Analyzing with Claude...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Uploading to AssemblyAI... uploads/feb826d65c8f62ec6fe8f328b935384e
+0|grace-ap | 
+STDOUT: Transcribing...
+0|grace-ap | 
+STDOUT: Analyzing with Claude...
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (19) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | 
+STDOUT: Vultr database tables verified.
+0|grace-ap | 
+STDOUT: Uploading to AssemblyAI... uploads/78821c08696de1863ec4582ce4955d4f
+0|grace-ap | Transcribing...
+0|grace-ap | Analyzing with Claude...
+0|grace-ap | [dotenv@17.3.1] injecting env (19) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+
+STDOUT: 0|grace-ap | Uploading to AssemblyAI... uploads/6ddadf1b93464c8e665525cd52dc5cf3
+
+STDOUT: 0|grace-ap | Transcribing...
+
+STDOUT: 0|grace-ap | Analyzing with Claude...
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (19) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: Uploading to AssemblyAI... uploads/d4741d7ad11178920ae887d4dff6276a
+0|grace-ap | 
+STDOUT: Transcribing...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Analyzing with Claude...
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (19) from .env -- tip: ⚙️  override existing env vars with { override: true }
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | Vultr database tables verified.
+
+STDOUT: 0|grace-ap | [dotenv@17.3.1] injecting env (19) from .env -- tip: ⚙️  override existing env vars with { override: true }
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+
+STDOUT: 0|grace-ap | Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (19) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+
+STDOUT: 0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (19) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | Vultr database tables verified.
+
+STDOUT: 0|grace-ap | [dotenv@17.3.1] injecting env (19) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+
+STDOUT: 0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | 
+STDOUT: Vultr database tables verified.
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (19) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | Vultr database tables verified.
+
+STDOUT: 0|grace-ap | [dotenv@17.3.1] injecting env (19) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | Server running on port 5000
+
+STDOUT: 0|grace-ap | Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: Uploading to AssemblyAI... uploads/aabf6675f0e0a4ae59aa67ff0495aa2f
+
+STDOUT: 0|grace-ap | 
+STDOUT: Transcribing...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Analyzing with Claude...
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (19) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+
+STDOUT: 0|grace-ap | Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: Uploading to AssemblyAI... uploads/70f5c7d604f87221d2b9cdf2e5b474a3
+0|grace-ap | 
+STDOUT: Transcribing...
+0|grace-ap | Analyzing with Claude...
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (19) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | Server running on port 5000
+
+STDOUT: 0|grace-ap | 
+STDOUT: Vultr database tables verified.
+0|grace-ap | 
+STDOUT: Uploading to AssemblyAI... uploads/f584cbd9b9f519cd5968ff411ffd948d
+
+STDOUT: 0|grace-ap | Transcribing...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Analyzing with Claude...
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (19) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | Server running on port 5000
+
+STDOUT: 0|grace-ap | Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: Uploading to AssemblyAI... uploads/0b81d9dc435ff583ed10f424cb276ba6
+
+STDOUT: 0|grace-ap | 
+STDOUT: Transcribing...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Analyzing with Claude...
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (19) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | Server running on port 5000
+
+STDOUT: 0|grace-ap | Vultr database tables verified.
+
+STDOUT: 0|grace-ap | 
+STDOUT: Uploading to AssemblyAI... uploads/b35f2a91ad623952d97415e661bee3fd
+0|grace-ap | 
+STDOUT: Transcribing...
+0|grace-ap | 
+STDOUT: Analyzing with Claude...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Uploading to AssemblyAI... uploads/2edcc77311d595a118d9ddedda3b6aa7
+
+STDOUT: 0|grace-ap | Transcribing...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Analyzing with Claude...
+0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (19) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+
+STDOUT: 0|grace-ap | 
+STDOUT: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+0|grace-ap | Connecting to Vultr PostgreSQL database...
+
+STDOUT: 0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | 
+STDOUT: Vultr database tables verified.
+
+STDOUT: 0|grace-ap | [dotenv@17.3.1] injecting env (19) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+
+STDOUT: 0|grace-ap | [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+
+STDOUT: 0|grace-ap | 
+STDOUT: Connecting to Vultr PostgreSQL database...
+0|grace-ap | 
+STDOUT: Server running on port 5000
+0|grace-ap | Vultr database tables verified.
+
+

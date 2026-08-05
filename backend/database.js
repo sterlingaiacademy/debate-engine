@@ -67,6 +67,28 @@ async function initDB() {
       )
     `);
     
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS speech_analysis_sessions (
+        id SERIAL PRIMARY KEY,
+        student_id TEXT NOT NULL,
+        topic TEXT NOT NULL,
+        score INTEGER,
+        detailed_scores JSONB DEFAULT '{}'::jsonb,
+        wpm INTEGER,
+        filler_words INTEGER,
+        strengths JSONB,
+        areas_for_improvement JSONB,
+        overall_feedback TEXT,
+        transcript TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    
+    // Add detailed_scores to existing deployments
+    try {
+      await client.query(`ALTER TABLE speech_analysis_sessions ADD COLUMN IF NOT EXISTS detailed_scores JSONB DEFAULT '{}'::jsonb`);
+    } catch (e) { /* ignore */ }
+
     // Index for fast email lookups during login
     await client.query(`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)`);
 
@@ -88,6 +110,12 @@ async function initDB() {
     await addColumnSafeUsers('dailyVocabClaimed', 'TEXT', "''"); // vocab:YYYY-MM-DD idempotency key
     await addColumnSafeUsers('razorpay_subscription_id', 'TEXT', "''"); // Razorpay subscription ID
     await addColumnSafeUsers('subscription_status', 'TEXT', "''"); // 'active', 'halted', 'cancelled', 'created'
+    await addColumnSafeUsers('mobile', 'TEXT', "''");
+    await addColumnSafeUsers('schoolName', 'TEXT', "''");
+    await addColumnSafeUsers('category', 'TEXT', "''");
+    await addColumnSafeUsers('city', 'TEXT', "''");
+    await addColumnSafeUsers('state', 'TEXT', "''");
+    await addColumnSafeUsers('designation', 'TEXT', "''");
 
     const addColumnSafeDebateUsers = async (col, type, def) => {
       try {
@@ -216,6 +244,77 @@ async function initDB() {
     await addDU('total_words_spoken', 'INTEGER', '0');
     await addDU('badges', 'JSONB', "'[]'");
     await addDU('avatar_url', 'TEXT', "''");
+
+    // Olympiad Feature Tables
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS schools (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        name TEXT NOT NULL,
+        principal_name TEXT,
+        coordinator_name TEXT,
+        contact_email TEXT,
+        contact_phone TEXT,
+        school_code TEXT UNIQUE,
+        coordinator_login_id TEXT,
+        expected_students INTEGER DEFAULT 0,
+        classes_participating TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS olympiad_daily_challenges (
+        id SERIAL PRIMARY KEY,
+        date TEXT UNIQUE NOT NULL,
+        questions JSONB NOT NULL,
+        difficulty_level TEXT,
+        topic TEXT
+      )
+    `);
+
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS olympiad_practice_logs (
+        id SERIAL PRIMARY KEY,
+        student_id TEXT NOT NULL,
+        challenge_id INTEGER REFERENCES olympiad_daily_challenges(id),
+        score INTEGER DEFAULT 0,
+        time_spent INTEGER DEFAULT 0,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS olympiad_exam_submissions (
+        id SERIAL PRIMARY KEY,
+        student_id TEXT NOT NULL,
+        part_a_score INTEGER DEFAULT 0,
+        part_b_score INTEGER DEFAULT 0,
+        part_c_score INTEGER DEFAULT 0,
+        part_d_score INTEGER DEFAULT 0,
+        part_e_score INTEGER DEFAULT 0,
+        total_score INTEGER DEFAULT 0,
+        time_taken INTEGER DEFAULT 0,
+        ai_competency_report JSONB,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    await addColumnSafeUsers('role', 'TEXT', "'student'");
+    await addColumnSafeUsers('school_id', 'UUID', "NULL");
+    await addColumnSafeUsers('olympiad_registered', 'BOOLEAN', 'false');
+
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS indus_mun_registrations (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        user_id TEXT,
+        student_name TEXT NOT NULL,
+        email TEXT NOT NULL,
+        mobile TEXT NOT NULL,
+        school_name TEXT,
+        grade TEXT,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
 
     console.log('Vultr database tables verified.');
 

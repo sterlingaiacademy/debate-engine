@@ -5,6 +5,7 @@ import { ArrowRight, Sparkles, Zap, Trophy, Shield, CheckCircle2, X, AlertTriang
 import logoImg from '../assets/logo.png';
 const GOOGLE_SANS = "'Google Sans', 'Plus Jakarta Sans', 'Product Sans', system-ui, sans-serif";
 import { API_BASE } from '../api';
+import { COUNTRY_CODES } from '../countryCodes';
 
 export default function Register({ onLogin }) {
   const [searchParams] = useSearchParams();
@@ -14,7 +15,9 @@ export default function Register({ onLogin }) {
   const [googleProfile, setGoogleProfile] = useState(null); // { email, avatar, name }
 
   const [formData, setFormData] = useState({
-    name: '', username: '', password: '', selectedClass: 'KG', referralCode: ''
+    name: '', username: '', password: '', selectedClass: '',
+    category: '', mobile: '', countryCode: '+91',
+    schoolName: '', city: '', state: '', olympiadSchoolCode: '', designation: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -52,8 +55,7 @@ export default function Register({ onLogin }) {
   const [termsError, setTermsError] = useState(false);
 
   useEffect(() => {
-    const refFromUrl = searchParams.get('ref');
-    if (refFromUrl) setFormData(p => ({ ...p, referralCode: refFromUrl }));
+    // Referral code logic removed
   }, [searchParams]);
 
   useEffect(() => {
@@ -109,13 +111,14 @@ export default function Register({ onLogin }) {
     setFormData(p => ({ ...p, [field]: val }));
   };
 
-  const getLevelForClass = (cls) => {
+  const getLevelForClass = (cls, cat) => {
+    if (cat === 'Professional' || cat === 'Other') return 'Level 5';
     if (['KG', 'Class 1', 'Class 2'].includes(cls)) return 'Level 1';
     if (['Class 3', 'Class 4', 'Class 5'].includes(cls)) return 'Level 2';
     if (['Class 6', 'Class 7', 'Class 8'].includes(cls)) return 'Level 3';
     if (['Class 9', 'Class 10'].includes(cls)) return 'Level 4';
-    if (['Class 11', 'Class 12'].includes(cls)) return 'Level 5';
-    return 'Level 1';
+    if (['Class 11', 'Class 12', 'Teacher', 'Employed Professional', 'Other'].includes(cls)) return 'Level 5';
+    return 'Level 5';
   };
 
   // Step 1: Open T&C first, then Google sign-in after acceptance
@@ -209,19 +212,43 @@ export default function Register({ onLogin }) {
       return;
     }
 
+    if (formData.category === '') {
+      setError('Please select a category.');
+      return;
+    }
+    if (formData.category === 'Student' && formData.selectedClass === '') {
+      setError('Please select a grade.');
+      return;
+    }
+    if (formData.category !== 'Student' && !formData.designation) {
+      setError('Please enter your designation.');
+      return;
+    }
+    if (!formData.mobile || !formData.city || !formData.state || !formData.schoolName) {
+      setError('Please fill in all required fields.');
+      return;
+    }
+
     setLoading(true);
     try {
-      const computedClassLevel = getLevelForClass(formData.selectedClass);
+      const computedClassLevel = getLevelForClass(formData.selectedClass, formData.category);
       const payload = {
         name: formData.name,
+        username: formData.username,
         studentId: formData.username,
         password: formData.password,
+        grade: formData.category === 'Student' ? formData.selectedClass : formData.category,
         classLevel: computedClassLevel,
-        grade: formData.selectedClass,
-        referralCode: formData.referralCode,
         authProvider: googleProfile ? 'google' : 'local',
         email: googleProfile?.email || null,
         avatar: googleProfile?.avatar || null,
+        mobile: `${formData.countryCode} ${formData.mobile.trim()}`,
+        schoolName: formData.schoolName,
+        category: formData.category,
+        city: formData.city,
+        state: formData.state,
+        designation: formData.category !== 'Student' ? formData.designation : null,
+        olympiadSchoolCode: null
       };
 
       const res = await fetch(`${API_BASE}/api/register`, {
@@ -335,7 +362,7 @@ export default function Register({ onLogin }) {
                     fontWeight: 700, fontSize: '0.82rem',
                     boxShadow: '0 2px 8px rgba(232,57,42,0.35)'
                   }}>
-                    → Sign In Instead
+                    Sign In Instead
                   </Link>
                 </div>
               )}
@@ -369,14 +396,14 @@ export default function Register({ onLogin }) {
                 Already have an account? <Link to="/login" style={{ color: '#F97316', textDecoration: 'none', fontWeight: 700 }}>Sign in</Link>
               </div>
               <div style={{ textAlign: 'center' }}>
-                <Link to="/" style={{ color: '#64748b', fontSize: '0.8rem', textDecoration: 'none', fontWeight: 500 }}>← Back to Home</Link>
+                <Link to="/" style={{ color: '#64748b', fontSize: '0.8rem', textDecoration: 'none', fontWeight: 500 }}>Back to Home</Link>
               </div>
             </div>
           )}
 
           {/* STEP 2: Account Details Form */}
           {step === 'details' && (
-            <form onSubmit={(e) => { e.preventDefault(); handleSaveDetails(); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', animation: 'fadeIn 0.3s ease' }}>
+            <form onSubmit={(e) => { e.preventDefault(); handleSaveDetails(); }} style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', animation: 'fadeIn 0.3s ease' }}>
               
               <div style={{ padding: '0.85rem', background: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                 <CheckCircle2 size={18} color="#34d399" />
@@ -390,51 +417,110 @@ export default function Register({ onLogin }) {
                 </div>
               )}
 
-              <div className="form-row" style={{ display: 'flex', gap: '1rem' }}>
-                <div style={{ flex: '2', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                  <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Full Name</label>
+              <div className="form-row-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.85rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', minWidth: 0 }}>
+                  <label style={{ fontSize: '0.75rem', fontWeight: 600, color: '#e2e8f0' }}>Full Name</label>
                   <input type="text" placeholder="e.g. John Doe" value={formData.name} onChange={set('name')} required
-                    style={{ padding: '0.8rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
+                    style={{ padding: '0.75rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.85rem', outline: 'none', minWidth: 0 }}
                   />
                 </div>
-                <div style={{ flex: '1', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                  <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Grade</label>
-                  <select value={formData.selectedClass} onChange={set('selectedClass')}
-                    style={{ padding: '0.8rem', background: '#0f1322', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none', cursor: 'pointer' }}>
-                    <option value="KG">KG</option>
-                    {[...Array(12)].map((_, i) => (
-                      <option key={`Class ${i + 1}`} value={`Class ${i + 1}`}>Grade {i + 1}</option>
-                    ))}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', minWidth: 0 }}>
+                  <label style={{ fontSize: '0.75rem', fontWeight: 600, color: '#e2e8f0' }}>Phone Number</label>
+                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <select value={formData.countryCode} onChange={set('countryCode')} className="register-select" style={{ appearance: 'none', WebkitAppearance: 'none', backgroundImage: 'url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'white\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 0.75rem center', backgroundSize: '1rem', backgroundColor: '#0f1322', padding: '0.75rem', paddingRight: '2.25rem', textOverflow: 'ellipsis', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.85rem', outline: 'none', cursor: 'pointer', maxWidth: '90px' }}>
+                      {COUNTRY_CODES.map(c => <option key={c.code} value={c.code}>{c.code}</option>)}
+                    </select>
+                    <input type="text" placeholder="Phone Number" value={formData.mobile} onChange={set('mobile')} required
+                      style={{ flex: 1, padding: '0.75rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.85rem', outline: 'none', minWidth: 0 }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="form-row-3" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.85rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', minWidth: 0 }}>
+                  <label style={{ fontSize: '0.75rem', fontWeight: 600, color: '#e2e8f0' }}>Category</label>
+                  <select value={formData.category} onChange={set('category')} required className="register-select"
+                    style={{ appearance: 'none', WebkitAppearance: 'none', backgroundImage: 'url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'white\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 0.75rem center', backgroundSize: '1rem', backgroundColor: '#0f1322', padding: '0.75rem', paddingRight: '2.25rem', textOverflow: 'ellipsis', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.85rem', outline: 'none', cursor: 'pointer', minWidth: 0 }}>
+                    <option value="" disabled hidden>Category</option>
+                    <option value="Student">Student</option>
+                    <option value="Professional">Professional</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
+                
+                {formData.category === 'Student' ? (
+                  <>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', minWidth: 0 }}>
+                      <label style={{ fontSize: '0.75rem', fontWeight: 600, color: '#e2e8f0' }}>Grade</label>
+                      <select value={formData.selectedClass} onChange={set('selectedClass')} required className="register-select"
+                        style={{ appearance: 'none', WebkitAppearance: 'none', backgroundImage: 'url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'white\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 0.75rem center', backgroundSize: '1rem', backgroundColor: '#0f1322', padding: '0.75rem', paddingRight: '2.25rem', textOverflow: 'ellipsis', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.85rem', outline: 'none', cursor: 'pointer', minWidth: 0 }}>
+                        <option value="" disabled hidden>Grade</option>
+                        <option value="KG">KG</option>
+                        {[...Array(12)].map((_, i) => (
+                          <option key={`Class ${i + 1}`} value={`Class ${i + 1}`}>Grade {i + 1}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', minWidth: 0 }}>
+                      <label style={{ fontSize: '0.75rem', fontWeight: 600, color: '#e2e8f0' }}>School</label>
+                      <input type="text" placeholder="e.g. DPS" value={formData.schoolName} onChange={set('schoolName')} required
+                        style={{ padding: '0.75rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.85rem', outline: 'none', minWidth: 0 }}
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', minWidth: 0 }}>
+                      <label style={{ fontSize: '0.75rem', fontWeight: 600, color: '#e2e8f0' }}>Organization</label>
+                      <input type="text" placeholder="e.g. Acme Corp" value={formData.schoolName} onChange={set('schoolName')} required
+                        style={{ padding: '0.75rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.85rem', outline: 'none', minWidth: 0 }}
+                      />
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', minWidth: 0 }}>
+                      <label style={{ fontSize: '0.75rem', fontWeight: 600, color: '#e2e8f0' }}>Designation</label>
+                      <input type="text" placeholder="e.g. Manager" value={formData.designation} onChange={set('designation')} required
+                        style={{ padding: '0.75rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.85rem', outline: 'none', minWidth: 0 }}
+                      />
+                    </div>
+                  </>
+                )}
               </div>
 
-              <div className="form-row" style={{ display: 'flex', gap: '1rem' }}>
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                  <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Username</label>
+              <div className="form-row-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.85rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', minWidth: 0 }}>
+                  <label style={{ fontSize: '0.75rem', fontWeight: 600, color: '#e2e8f0' }}>City</label>
+                  <input type="text" placeholder="e.g. Mumbai" value={formData.city} onChange={set('city')} required
+                    style={{ padding: '0.75rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.85rem', outline: 'none', minWidth: 0 }}
+                  />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', minWidth: 0 }}>
+                  <label style={{ fontSize: '0.75rem', fontWeight: 600, color: '#e2e8f0' }}>State</label>
+                  <input type="text" placeholder="e.g. Maharashtra" value={formData.state} onChange={set('state')} required
+                    style={{ padding: '0.75rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.85rem', outline: 'none', minWidth: 0 }}
+                  />
+                </div>
+              </div>
+
+              <div className="form-row-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.85rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', minWidth: 0 }}>
+                  <label style={{ fontSize: '0.75rem', fontWeight: 600, color: '#e2e8f0' }}>Username</label>
                   <input type="text" placeholder="e.g. johndoe" value={formData.username} onChange={set('username')} required
-                    style={{ padding: '0.8rem 1rem', background: (usernameAvailable === false || usernameFormatError) ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.03)', border: (usernameAvailable === false || usernameFormatError) ? '1px solid rgba(239, 68, 68, 0.5)' : usernameAvailable ? '1px solid rgba(52, 211, 153, 0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
+                    style={{ padding: '0.75rem 1rem', background: (usernameAvailable === false || usernameFormatError) ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.03)', border: (usernameAvailable === false || usernameFormatError) ? '1px solid rgba(239, 68, 68, 0.5)' : usernameAvailable ? '1px solid rgba(52, 211, 153, 0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.85rem', outline: 'none', minWidth: 0 }}
                   />
-                  {usernameFormatError && <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>{usernameFormatError}</span>}
-                  {isCheckingUsername && !usernameFormatError && <span style={{ color: '#94a3b8', fontSize: '0.75rem', marginTop: '0.2rem' }}>Checking...</span>}
-                  {usernameAvailable === true && !isCheckingUsername && !usernameFormatError && <span style={{ color: '#34d399', fontSize: '0.75rem', marginTop: '0.2rem' }}>Username available!</span>}
-                  {usernameAvailable === false && !isCheckingUsername && !usernameFormatError && <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>Username already exists</span>}
+                  {usernameFormatError && <span style={{ color: '#fca5a5', fontSize: '0.7rem', marginTop: '0.1rem' }}>{usernameFormatError}</span>}
+                  {isCheckingUsername && !usernameFormatError && <span style={{ color: '#94a3b8', fontSize: '0.7rem', marginTop: '0.1rem' }}>Checking...</span>}
+                  {usernameAvailable === true && !isCheckingUsername && !usernameFormatError && <span style={{ color: '#34d399', fontSize: '0.7rem', marginTop: '0.1rem' }}>Username available!</span>}
+                  {usernameAvailable === false && !isCheckingUsername && !usernameFormatError && <span style={{ color: '#fca5a5', fontSize: '0.7rem', marginTop: '0.1rem' }}>Username already exists</span>}
                 </div>
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                  <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Password</label>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', minWidth: 0 }}>
+                  <label style={{ fontSize: '0.75rem', fontWeight: 600, color: '#e2e8f0' }}>Password</label>
                   <input type="password" placeholder="Secure password" value={formData.password} onChange={set('password')} required
-                    style={{ padding: '0.8rem 1rem', background: passwordError ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.03)', border: passwordError ? '1px solid rgba(239, 68, 68, 0.5)' : (!passwordError && formData.password.length > 0) ? '1px solid rgba(52, 211, 153, 0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.9rem', outline: 'none' }}
+                    style={{ padding: '0.75rem 1rem', background: passwordError ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.03)', border: passwordError ? '1px solid rgba(239, 68, 68, 0.5)' : (!passwordError && formData.password.length > 0) ? '1px solid rgba(52, 211, 153, 0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.85rem', outline: 'none', minWidth: 0 }}
                   />
-                  {passwordError && <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>{passwordError}</span>}
-                  {!passwordError && formData.password.length > 0 && <span style={{ color: '#34d399', fontSize: '0.75rem', marginTop: '0.2rem' }}>Strong password!</span>}
+                  {passwordError && <span style={{ color: '#fca5a5', fontSize: '0.7rem', marginTop: '0.1rem' }}>{passwordError}</span>}
+                  {!passwordError && formData.password.length > 0 && <span style={{ color: '#34d399', fontSize: '0.7rem', marginTop: '0.1rem' }}>Strong password!</span>}
                 </div>
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0' }}>Referral Code (Optional)</label>
-                <input type="text" placeholder="Enter referral code" value={formData.referralCode} onChange={set('referralCode')}
-                  style={{ padding: '0.8rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#F97316', fontSize: '0.9rem', outline: 'none', letterSpacing: '2px' }}
-                />
               </div>
 
               <button
@@ -446,12 +532,12 @@ export default function Register({ onLogin }) {
                   boxShadow: '0 4px 14px rgba(232,57,42,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem'
                 }}
               >
-                {loading ? 'Creating Account...' : <>Complete Sign Up <ArrowRight size={18} /></>}
+                {loading ? 'Creating Account...' : 'Complete Sign Up'}
               </button>
 
               <div style={{ textAlign: 'center' }}>
                 <button type="button" onClick={() => setStep('auth')} style={{ background: 'none', border: 'none', color: '#64748b', fontSize: '0.8rem', cursor: 'pointer', fontFamily: GOOGLE_SANS }}>
-                  ← Back
+                  Back
                 </button>
               </div>
             </form>
@@ -525,7 +611,7 @@ export default function Register({ onLogin }) {
 
               {/* Usage */}
               <div style={{ marginBottom: '1.25rem' }}>
-                <h4 style={{ color: '#e2e8f0', fontWeight: 700, fontSize: '0.875rem', marginBottom: '0.6rem' }}>📋 Usage Guidelines</h4>
+                <h4 style={{ color: '#e2e8f0', fontWeight: 700, fontSize: '0.875rem', marginBottom: '0.6rem' }}>Usage Guidelines</h4>
                 <ul style={{ color: '#94a3b8', fontSize: '0.82rem', lineHeight: 1.8, paddingLeft: '1.25rem', margin: 0 }}>
                   <li>Grace & Force is an educational platform for debate and communication training.</li>
                   <li>The 10-minute daily limit applies to all free accounts to ensure fair access.</li>
@@ -536,7 +622,7 @@ export default function Register({ onLogin }) {
 
               {/* Consent */}
               <div style={{ marginBottom: '1rem' }}>
-                <h4 style={{ color: '#e2e8f0', fontWeight: 700, fontSize: '0.875rem', marginBottom: '0.6rem' }}>✅ Parental Consent</h4>
+                <h4 style={{ color: '#e2e8f0', fontWeight: 700, fontSize: '0.875rem', marginBottom: '0.6rem' }}>Parental Consent</h4>
                 <p style={{ color: '#94a3b8', fontSize: '0.82rem', lineHeight: 1.7, margin: 0 }}>
                   By creating an account, you confirm that either:<br />
                   (a) The user is <strong style={{ color: '#e2e8f0' }}>16 years or older</strong> and creating their own account, OR<br />
@@ -619,7 +705,7 @@ export default function Register({ onLogin }) {
           }
         }
         @media (max-width: 600px) {
-          .form-row { flex-direction: column !important; gap: 0.85rem !important; }
+          .form-row-2, .form-row-3 { grid-template-columns: 1fr !important; }
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
       `}</style>

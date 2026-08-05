@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { API_BASE } from '../api';
+import logoImg from '../assets/logo.png';
+import { Download } from 'lucide-react';
 
 const FONT = "'Plus Jakarta Sans', 'Google Sans', system-ui, sans-serif";
 
@@ -10,9 +12,14 @@ const SECTIONS = [
   { id: 'subscriptions', label: 'Subscriptions' },
   { id: 'debates', label: 'Debates' },
   { id: 'bootcamp', label: 'Cohort 2.0' },
+  { id: 'minimun', label: 'Mini MUN' },
+  { id: 'indusmun', label: 'Indus MUN' },
+  { id: 'munmentor', label: 'MUN Mentor' },
+  { id: 'english', label: 'English Session' },
+  { id: 'freedom', label: 'Freedom Challenge' },
   { id: 'coupons', label: 'School Coupons' },
-  { id: 'munMentor', label: 'MUN Mentor Master Class' },
-  { id: 'minimun', label: 'Mini MUN Module-3' },
+  { id: 'ito', label: 'Teachers\' Olympiad' },
+  { id: 'olympiad', label: 'Olympiad Schools' },
 ];
 
 const PLAN_COLORS = { free: '#64748b', pro: '#3b82f6', max: '#f97316' };
@@ -130,7 +137,7 @@ function fmt(n) {
 
 function fmtDate(d) {
   if (!d) return '—';
-  return new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'Asia/Kolkata' });
+  return new Date(d).toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'Asia/Kolkata' });
 }
 
 // ══════════════════════════════════════════════════
@@ -157,6 +164,7 @@ function OverviewSection({ stats }) {
         <StatCard label="Bootcamp Registrations" value={fmt(b.paid)} sub={`${b.total} total · ₹${fmt(b.revenue)} revenue`} color="#ec4899" />
         <StatCard label="G-Force Tokens Issued" value={fmt(stats.gforceTokensIssued)} sub="Total across all users" color="#f59e0b" />
         {stats.quizRegistrations !== undefined && <StatCard label="UN Quiz Registrants" value={fmt(stats.quizRegistrations)} sub="Total contest registrations" color="#3b82f6" />}
+
       </div>
 
       {/* Two-column: Users by level + Subscription breakdown */}
@@ -210,7 +218,7 @@ function OverviewSection({ stats }) {
           <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#fff' }}>Recent Signups</h3>
         </div>
         <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
             <TableHead cols={['Name', 'Username', 'Email', 'Level', 'Plan', 'Joined']} />
             <tbody>
               {stats.recentUsers.map((u, i) => (
@@ -298,7 +306,7 @@ function UsersSection({ adminToken, apiBase }) {
           <div style={{ textAlign: 'center', padding: '3rem', color: '#64748b' }}>Loading…</div>
         ) : (
           <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
               <TableHead cols={['Name', 'Username', 'Email', 'Phone', 'Level', 'Grade', 'Plan', 'Status', 'Period', 'Joined']} />
               <tbody>
                 {data?.users?.map((u, i) => (
@@ -355,7 +363,7 @@ function SubscriptionsSection({ stats }) {
           <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#fff' }}>Recent Paid Subscribers</h3>
         </div>
         <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
             <TableHead cols={['Name', 'Username', 'Email', 'Plan', 'Period', 'Status', 'Joined']} />
             <tbody>
               {paid.map((u, i) => (
@@ -502,7 +510,7 @@ function BootcampSection({ stats, adminToken, apiBase }) {
           <div style={{ textAlign: 'center', padding: '3rem', color: '#64748b' }}>Loading…</div>
         ) : (
           <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
               <TableHead cols={['Name', 'Email', 'Phone', 'School', 'Grade', 'City', 'Category', 'Status', 'Amount', 'Registered']} />
               <tbody>
                 {data?.registrations?.map((r, i) => (
@@ -542,7 +550,7 @@ function BootcampSection({ stats, adminToken, apiBase }) {
 // SECTION: School Coupons
 // ══════════════════════════════════════════════════
 function CouponsSection({ stats }) {
-  const sc = stats.schoolCoupons;
+  const sc = stats?.schoolCoupons || { total: 0, used: 0, unused: 0, batches: [] };
   return (
     <div>
       <SectionTitle>School Coupons</SectionTitle>
@@ -556,7 +564,7 @@ function CouponsSection({ stats }) {
       {sc.batches.length > 0 ? (
         <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
           <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
               <TableHead cols={['School', 'Plan', 'Total Codes', 'Used', 'Unused', 'Usage %', 'Created']} />
               <tbody>
                 {sc.batches.map((b, i) => {
@@ -653,7 +661,7 @@ function QuizSection({ adminToken, apiBase }) {
       {/* Table */}
       <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
         <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 800 }}>
+          <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
             <TableHead cols={['#', 'Full Name', 'Email', 'Mobile', 'Class/Grade', 'School', 'City', 'Registered At']} />
             <tbody>
               {filtered.length === 0 ? (
@@ -724,7 +732,7 @@ function MunMentorSection({ adminToken, apiBase }) {
           <div style={{ textAlign: 'center', padding: '3rem', color: '#64748b' }}>Loading…</div>
         ) : (
           <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
               <TableHead cols={['Name', 'Email', 'Phone', 'Role', 'Experience', 'School/Inst.', 'City', 'Status', 'Registered']} />
               <tbody>
                 {regs.map((r, i) => (
@@ -763,6 +771,7 @@ function MunMentorSection({ adminToken, apiBase }) {
 function MiniMunSection({ adminToken, apiBase }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [selectedModule, setSelectedModule] = useState(4);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -778,7 +787,7 @@ function MiniMunSection({ adminToken, apiBase }) {
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
-  const regs = (data?.registrations || []).filter(r => r.payment_status === 'paid' && r.module === 3);
+  const regs = (data?.registrations || []).filter(r => r.payment_status === 'paid' && r.module === selectedModule);
 
   // Compute multiple payments for the current module
   const multiMap = {};
@@ -801,7 +810,20 @@ function MiniMunSection({ adminToken, apiBase }) {
 
   return (
     <div>
-      <SectionTitle>Mini MUN Master Class Registrations (Module-3)</SectionTitle>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <SectionTitle>Mini MUN Master Class Registrations (Module-{selectedModule})</SectionTitle>
+        <select 
+          value={selectedModule} 
+          onChange={(e) => setSelectedModule(Number(e.target.value))}
+          style={{
+            background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
+            color: '#fff', padding: '0.5rem 1rem', borderRadius: 8, outline: 'none', cursor: 'pointer'
+          }}
+        >
+          <option value={4} style={{ background: '#0f172a' }}>Module 4</option>
+          <option value={3} style={{ background: '#0f172a' }}>Module 3</option>
+        </select>
+      </div>
       
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
         <StatCard label="Paid Registrations" value={regs.length} color="#3b82f6" />
@@ -817,14 +839,15 @@ function MiniMunSection({ adminToken, apiBase }) {
           <div style={{ textAlign: 'center', padding: '3rem', color: '#64748b' }}>Loading…</div>
         ) : (
           <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-              <TableHead cols={['Name', 'Email', 'Phone', 'Grade', 'School/Inst.', 'City', 'Status', 'Module', 'Registered']} />
+            <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
+              <TableHead cols={['Name', 'Email', 'Phone', 'Category', 'Grade/Desig', 'School/Inst.', 'City', 'Status', 'Module', 'Registered']} />
               <tbody>
                 {regs.map((r, i) => (
                   <TableRow key={r.id} idx={i}>
                     <TD>{r.student_name}</TD>
                     <TD>{r.email || '—'}</TD>
                     <TD mono>{r.mobile}</TD>
+                    <TD>{r.category || '—'}</TD>
                     <TD>{r.grade || '—'}</TD>
                     <TD>{r.school_name || '—'}</TD>
                     <TD>{r.city || '—'}</TD>
@@ -857,7 +880,7 @@ function MiniMunSection({ adminToken, apiBase }) {
           </div>
           <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
             <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
                 <TableHead cols={['Name', 'Email', 'Phone', 'Times Paid', 'Amounts']} />
                 <tbody>
                   {multiplePaidUsers.map((r, i) => (
@@ -884,8 +907,407 @@ function MiniMunSection({ adminToken, apiBase }) {
 }
 
 // ══════════════════════════════════════════════════
+
+// ══════════════════════════════════════════════════
+// ITO SECTION
+// ══════════════════════════════════════════════════
+function ITOSection({ adminToken, apiBase }) {
+  const [regs, setRegs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(`${apiBase}/api/ito/registrations`, {
+      headers: { Authorization: `Bearer ${adminToken}` }
+    })
+      .then(r => r.json())
+      .then(d => { setRegs(d.registrations || []); setLoading(false); })
+      .catch(() => setLoading(false));
+  }, [adminToken, apiBase]);
+
+  return (
+    <div>
+      <SectionTitle>Teachers' Olympiad Registrations</SectionTitle>
+      
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+        <StatCard label="Total Registrations" value={regs.length} color="#D4AF37" />
+      </div>
+
+      <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
+        {loading ? (
+          <div style={{ textAlign: 'center', padding: '3rem', color: '#64748b' }}>Loading…</div>
+        ) : (
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
+              <TableHead cols={['Name', 'Email', 'Phone', 'Subject/Role', 'School/Inst.', 'City', 'Registered']} />
+              <tbody>
+                {regs.map((r, i) => (
+                  <TableRow key={r.id} idx={i}>
+                    <TD>{r.full_name}</TD>
+                    <TD>{r.email || '—'}</TD>
+                    <TD mono>{r.mobile}</TD>
+                    <TD>{r.subject_or_role || '—'}</TD>
+                    <TD>{r.school_name || '—'}</TD>
+                    <TD>{r.city || '—'}</TD>
+                    <TD>{fmtDate(r.registered_at)}</TD>
+                  </TableRow>
+                ))}
+                {!regs.length && <tr><td colSpan={7} style={{ textAlign: 'center', padding: '2rem', color: '#64748b' }}>No registrations found</td></tr>}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════════════════════
+// SECTION: Olympiad Schools
+// ══════════════════════════════════════════════════
+function OlympiadSchoolsSection({ adminToken, apiBase }) {
+  const [schools, setSchools] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchSchools = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${apiBase}/api/admin/olympiad/schools`, {
+        headers: { 'Authorization': `Bearer ${adminToken}` }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setSchools(data);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+    setLoading(false);
+  }, [adminToken, apiBase]);
+
+  useEffect(() => { fetchSchools(); }, [fetchSchools]);
+
+  const handleAction = async (id, action) => {
+    if (!window.confirm(`Are you sure you want to ${action} this school?`)) return;
+    try {
+      const res = await fetch(`${apiBase}/api/admin/olympiad/schools/${id}/${action}`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${adminToken}` }
+      });
+      if (res.ok) {
+        fetchSchools();
+      } else {
+        alert('Action failed');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error performing action');
+    }
+  };
+
+  return (
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+
+        <SectionTitle>Olympiad School Registrations</SectionTitle>
+      </div>
+
+      <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
+        {loading ? (
+          <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>Loading...</div>
+        ) : schools.length === 0 ? (
+          <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>No schools found</div>
+        ) : (
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
+              <TableHead cols={['Name', 'Principal', 'Coordinator', 'Contact', 'Expected Students', 'Status', 'Actions', 'Credentials']} />
+              <tbody>
+                {schools.map((s, idx) => (
+                  <TableRow key={s.id} idx={idx}>
+                    <TD>
+                      <div style={{ fontWeight: 600, color: '#fff' }}>{s.name}</div>
+                      <div style={{ fontSize: '0.75rem', color: '#64748b' }}>{fmtDate(s.created_at)}</div>
+                    </TD>
+                    <TD>{s.principal_name}</TD>
+                    <TD>{s.coordinator_name}</TD>
+                    <TD>
+                      <div>{s.contact_email}</div>
+                      <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>{s.contact_phone}</div>
+                    </TD>
+                    <TD>{s.expected_students}</TD>
+                    <TD><StatusDot status={s.status === 'approved' ? 'active' : (s.status === 'rejected' ? 'halted' : 'pending')} /></TD>
+                    <TD>
+                      {s.status === 'pending' ? (
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                          <button onClick={() => handleAction(s.id, 'approve')} style={{ padding: '0.3rem 0.6rem', background: '#10b981', color: '#fff', borderRadius: 4, border: 'none', cursor: 'pointer', fontSize: '0.75rem' }}>Approve</button>
+                          <button onClick={() => handleAction(s.id, 'reject')} style={{ padding: '0.3rem 0.6rem', background: '#ef4444', color: '#fff', borderRadius: 4, border: 'none', cursor: 'pointer', fontSize: '0.75rem' }}>Reject</button>
+                        </div>
+                      ) : (
+                        <span style={{ color: s.status === 'approved' ? '#10b981' : '#ef4444', fontSize: '0.8rem', fontWeight: 500, textTransform: 'capitalize' }}>{s.status}</span>
+                      )}
+                    </TD>
+                    <TD mono>
+                      {s.status === 'approved' && (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+                          <div><span style={{ color: '#94a3b8' }}>Code:</span> <span style={{ color: '#fca5a5' }}>{s.school_code}</span></div>
+                          <div><span style={{ color: '#94a3b8' }}>ID:</span> <span style={{ color: '#fca5a5' }}>{s.coordinator_login_id}</span></div>
+                        </div>
+                      )}
+                    </TD>
+                  </TableRow>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════════════════════
 // MAIN ADMIN DASHBOARD
 // ══════════════════════════════════════════════════
+
+// SECTION: Indus MUN Registrations
+// ══════════════════════════════════════════════════
+function IndusMunSection({ adminToken, apiBase }) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${apiBase}/api/indusmun/registrations`, {
+        headers: { Authorization: `Bearer ${adminToken}` }
+      });
+      const d = await res.json();
+      setData(d);
+    } catch (e) { console.error(e); }
+    setLoading(false);
+  }, [adminToken, apiBase]);
+
+  useEffect(() => { fetchData(); }, [fetchData]);
+
+  const regs = data?.registrations || [];
+
+  return (
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+        <SectionTitle>Indus MUN Registrations</SectionTitle>
+        <span style={{ color: '#64748b', fontSize: '0.82rem', fontWeight: 700 }}>{regs.length} TOTAL REGISTRATIONS</span>
+      </div>
+
+      <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
+        {loading ? (
+          <div style={{ textAlign: 'center', padding: '3rem', color: '#64748b' }}>Loading...</div>
+        ) : (
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
+              <TableHead cols={['Name', 'Email', 'Mobile', 'School', 'Grade']} />
+              <tbody>
+                {regs.map((r, i) => (
+                  <TableRow key={r.id} idx={i}>
+                    <TD>
+                      <div style={{ fontWeight: 600, color: '#fff' }}>{r.student_name}</div>
+                      <div style={{ fontSize: '0.75rem', color: '#64748b' }}>{new Date(r.created_at).toLocaleDateString()}</div>
+                    </TD>
+                    <TD>{r.email || '—'}</TD>
+                    <TD mono>{r.mobile}</TD>
+                    <TD>{r.school_name || '—'}</TD>
+                    <TD>{r.grade || '—'}</TD>
+                  </TableRow>
+                ))}
+                {regs.length === 0 && (
+                  <tr>
+                    <td colSpan="5" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>No registrations found.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════════════════════
+// MAIN ADMIN DASHBOARD
+// ══════════════════════════════════════════════════
+
+
+// SECTION: English Session Registrations
+function EnglishSessionSection({ adminToken, apiBase }) {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchIt = async () => {
+      try {
+        const res = await fetch(`${apiBase}/api/english-session/registrations`, {
+          headers: { 'Authorization': `Bearer ${adminToken}` }
+        });
+        if (res.ok) {
+          const d = await res.json();
+          setData(d);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchIt();
+  }, [adminToken, apiBase]);
+
+  const downloadCSV = () => {
+    const headers = ['ID', 'User ID', 'Student Name', 'Parent Name', 'Email', 'Mobile', 'School Name', 'Grade', 'Created At'];
+    const rows = data.map(r => [
+      r.id, r.user_id, r.student_name, r.parent_name, r.email, r.mobile, r.school_name, r.grade, new Date(r.created_at).toLocaleString()
+    ]);
+    const csvContent = [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'english_session_registrations.csv';
+    link.click();
+  };
+
+  return (
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+        <SectionTitle>English Session Registrations</SectionTitle>
+        <button onClick={downloadCSV} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '0.5rem 1rem', borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem' }}>
+          <Download size={16} /> Export CSV
+        </button>
+      </div>
+      
+      {loading ? (
+        <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>Loading...</div>
+      ) : (
+        <div style={{ overflowX: 'auto', background: 'rgba(30, 41, 59, 0.4)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.05)' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <thead>
+              <TableRow isHeader>
+                <TableHead>Student Name</TableHead>
+                <TableHead>Parent Name</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead>Mobile</TableHead>
+                <TableHead>School</TableHead>
+                <TableHead>Grade</TableHead>
+                <TableHead>Date</TableHead>
+              </TableRow>
+            </thead>
+            <tbody>
+              {data.map((r, i) => (
+                <TableRow key={i}>
+                  <TD>{r.student_name}</TD>
+                  <TD>{r.parent_name}</TD>
+                  <TD>{r.email}</TD>
+                  <TD>{r.mobile}</TD>
+                  <TD>{r.school_name}</TD>
+                  <TD>{r.grade}</TD>
+                  <TD>{new Date(r.created_at).toLocaleDateString()}</TD>
+                </TableRow>
+              ))}
+              {data.length === 0 && (
+                <tr>
+                  <td colSpan="7" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>No registrations yet.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// SECTION: Freedom Quiz Registrations
+function FreedomQuizSection({ adminToken, apiBase }) {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchIt = async () => {
+      try {
+        const res = await fetch(`${apiBase}/api/freedom-quiz/registrations`, {
+          headers: { 'Authorization': `Bearer ${adminToken}` }
+        });
+        if (res.ok) {
+          const d = await res.json();
+          setData(d);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchIt();
+  }, [adminToken, apiBase]);
+
+  const downloadCSV = () => {
+    const headers = ['ID', 'User ID', 'Full Name', 'Email', 'Mobile', 'City', 'Age', 'Created At'];
+    const rows = data.map(r => [
+      r.id, r.user_id, r.full_name, r.email, r.mobile, r.city, r.age, new Date(r.created_at).toLocaleString()
+    ]);
+    const csvContent = [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'freedom_quiz_registrations.csv';
+    link.click();
+  };
+
+  return (
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+        <SectionTitle>Freedom Quiz Registrations</SectionTitle>
+        <button onClick={downloadCSV} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '0.5rem 1rem', borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem' }}>
+          <Download size={16} /> Export CSV
+        </button>
+      </div>
+      
+      {loading ? (
+        <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>Loading...</div>
+      ) : (
+        <div style={{ overflowX: 'auto', background: 'rgba(30, 41, 59, 0.4)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.05)' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <thead>
+              <TableRow isHeader>
+                <TableHead>Full Name</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead>Mobile</TableHead>
+                <TableHead>City / State</TableHead>
+                <TableHead>Age</TableHead>
+                <TableHead>Date</TableHead>
+              </TableRow>
+            </thead>
+            <tbody>
+              {data.map((r, i) => (
+                <TableRow key={i}>
+                  <TD>{r.full_name}</TD>
+                  <TD>{r.email}</TD>
+                  <TD>{r.mobile}</TD>
+                  <TD>{r.city}</TD>
+                  <TD>{r.age}</TD>
+                  <TD>{new Date(r.created_at).toLocaleDateString()}</TD>
+                </TableRow>
+              ))}
+              {data.length === 0 && (
+                <tr>
+                  <td colSpan="6" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>No registrations yet.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function AdminDashboard() {
   const navigate = useNavigate();
   const [adminToken] = useState(() => localStorage.getItem('adminToken'));
@@ -947,7 +1369,7 @@ export default function AdminDashboard() {
       }}>
         {/* Logo */}
         <div style={{ padding: '1.25rem 1.25rem', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ width: 36, height: 36, borderRadius: 10, background: 'linear-gradient(135deg,#E8392A,#F97316)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: '1rem', fontWeight: 900, color: '#fff' }}>G</div>
+          <img src={logoImg} alt="G Force" style={{ width: 36, height: 36, objectFit: 'contain', flexShrink: 0 }} />
           <div style={{ opacity: sidebarOpen ? 1 : 0, transition: 'opacity 0.2s', overflow: 'hidden', whiteSpace: 'nowrap' }}>
             <div style={{ fontSize: '0.9rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.01em' }}>G Force</div>
             <div style={{ fontSize: '0.68rem', color: '#64748b', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Admin Panel</div>
@@ -1047,9 +1469,14 @@ export default function AdminDashboard() {
               {activeSection === 'subscriptions' && <SubscriptionsSection stats={stats} />}
               {activeSection === 'debates' && <DebatesSection stats={stats} />}
               {activeSection === 'bootcamp' && <BootcampSection stats={stats} adminToken={adminToken} apiBase={apiBase} />}
-              {activeSection === 'school' && <SchoolCouponsSection adminToken={adminToken} apiBase={apiBase} />}
-              {activeSection === 'munMentor' && <MunMentorSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'minimun' && <MiniMunSection adminToken={adminToken} apiBase={apiBase} />}
+              {activeSection === 'indusmun' && <IndusMunSection adminToken={adminToken} apiBase={apiBase} />}
+              {activeSection === 'munmentor' && <MunMentorSection adminToken={adminToken} apiBase={apiBase} />}
+              {activeSection === 'english' && <EnglishSessionSection adminToken={adminToken} apiBase={apiBase} />}
+              {activeSection === 'freedom' && <FreedomQuizSection adminToken={adminToken} apiBase={apiBase} />}
+              {activeSection === 'coupons' && <CouponsSection stats={stats} />}
+              {activeSection === 'ito' && <ITOSection adminToken={adminToken} apiBase={apiBase} />}
+              {activeSection === 'olympiad' && <OlympiadSchoolsSection adminToken={adminToken} apiBase={apiBase} />}
             </>
           ) : null}
         </div>

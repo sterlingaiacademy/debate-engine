@@ -82,8 +82,15 @@ export default function Login({ onLogin }) {
   // Username + Password Sign-In
   const handleSubmit = async () => {
     setError('');
-    if (!username || !password) { setError('Please provide both username and password.'); return; }
+    if (!username) { setError('Please provide a username or email.'); return; }
+    if (!username.toUpperCase().startsWith('COORD-') && !password) { setError('Please provide both username and password.'); return; }
     if (usernameFormatError) { setError('Username format is invalid.'); return; }
+
+    if (username.toUpperCase().startsWith('COORD-')) {
+       localStorage.setItem('coordinatorId', username.toUpperCase());
+       navigate('/coordinator-dashboard');
+       return;
+    }
 
     setAuthMethod('credentials');
     setLoading(true);
@@ -253,25 +260,25 @@ export default function Login({ onLogin }) {
               <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#e2e8f0' }}>Username or Email</label>
               <input
                 type="text" placeholder="e.g. johndoe or user@email.com" value={username}
-                onChange={e => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_.@-]/g, '').slice(0, 60))}
+                onChange={e => setUsername(e.target.value.replace(/[^a-zA-Z0-9_.@-]/g, '').slice(0, 60))}
                 style={{ padding: '0.85rem 1rem', background: usernameFormatError ? 'rgba(239, 68, 68, 0.05)' : 'rgba(255,255,255,0.03)', border: usernameFormatError ? '1px solid rgba(239, 68, 68, 0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.95rem', outline: 'none' }}
               />
               {usernameFormatError && <span style={{ color: '#fca5a5', fontSize: '0.75rem', marginTop: '0.2rem' }}>{usernameFormatError}</span>}
             </div>
 
-            {/* Password */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#e2e8f0' }}>Password</label>
-                {/* Bug #16 fix: removed href="#" "Forgot Password?" link that went nowhere.
-                    Password reset flow is not yet implemented. */}
+            {/* Password (Hide if Coordinator) */}
+            {!username.toUpperCase().startsWith('COORD-') && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#e2e8f0' }}>Password</label>
+                </div>
+                <input
+                  type="password" placeholder="Enter your password" value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  style={{ padding: '0.85rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.95rem', outline: 'none' }}
+                />
               </div>
-              <input
-                type="password" placeholder="Enter your password" value={password}
-                onChange={e => setPassword(e.target.value)}
-                style={{ padding: '0.85rem 1rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#ffffff', fontSize: '0.95rem', outline: 'none' }}
-              />
-            </div>
+            )}
 
             {/* Submit */}
             <button
@@ -283,7 +290,7 @@ export default function Login({ onLogin }) {
                 boxShadow: '0 4px 14px rgba(232,57,42,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem'
               }}
             >
-              {loading && authMethod === 'credentials' ? 'Authenticating...' : <>Secure Sign In <ArrowRight size={18} /></>}
+              {loading && authMethod === 'credentials' ? 'Authenticating...' : 'Secure Sign In'}
             </button>
           </form>
 
@@ -292,22 +299,29 @@ export default function Login({ onLogin }) {
             <Link to="/register" style={{ color: '#F97316', textDecoration: 'none', fontWeight: 700 }}>Sign up</Link>
           </div>
           <div style={{ marginTop: '1.25rem', textAlign: 'center' }}>
-            <Link to="/" style={{ color: '#64748b', fontSize: '0.8rem', textDecoration: 'none', fontWeight: 500 }}>← Back to Home</Link>
+            <Link to="/" style={{ color: '#64748b', fontSize: '0.8rem', textDecoration: 'none', fontWeight: 500 }}>Back to Home</Link>
           </div>
         </div>
       </div>
 
       <style>{`
+        input:focus {
+          border-color: #F97316 !important;
+          box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15) !important;
+          background: rgba(0, 0, 0, 0.4) !important;
+        }
         @media (min-width: 901px) { .mobile-logo { display: none !important; } }
         @media (max-width: 900px) { 
           .login-left-pane { display: none !important; } 
-          .login-right-pane { padding: 1rem !important; align-items: center !important; justify-content: center !important; }
+          .login-right-pane { padding: 1.5rem !important; align-items: center !important; justify-content: center !important; }
           .login-right-pane > div { 
-            padding: 1.5rem !important; 
-            border: none !important; 
-            background: transparent !important; 
-            box-shadow: none !important; 
-            backdrop-filter: none !important;
+            padding: 2rem 1.5rem !important; 
+            background: rgba(255, 255, 255, 0.03) !important; 
+            backdrop-filter: blur(16px) !important;
+            -webkit-backdrop-filter: blur(16px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4) !important;
+            border-radius: 1.5rem !important;
           }
         }
       `}</style>

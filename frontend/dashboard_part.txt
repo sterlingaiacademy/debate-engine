@@ -1,0 +1,552 @@
+              )}
+              
+              {/* Redeem Coupon Tag */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', position: 'relative' }}>
+                {!showCoupon ? (
+                  <div
+                    onClick={() => setShowCoupon(true)}
+                    style={{
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.2)',
+                      borderRadius: 99, padding: '3px 10px',
+                      fontSize: 12, fontWeight: 700, color: '#fb923c',
+                      cursor: 'pointer', transition: 'all 0.2s', whiteSpace: 'nowrap', flexShrink: 0,
+                      lineHeight: 1, height: 26, boxSizing: 'border-box',
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.background = 'rgba(249,115,22,0.18)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = 'rgba(249,115,22,0.1)'; }}
+                  >
+                    Redeem
+                  </div>
+                ) : couponStatus.msg ? (
+                  // Inline success/error message inside the pill
+                  <div style={{
+                    display: 'flex', alignItems: 'center',
+                    background: couponStatus.type === 'success' ? 'rgba(16,185,129,0.12)' : 'rgba(239,68,68,0.12)',
+                    border: `1px solid ${couponStatus.type === 'success' ? 'rgba(16,185,129,0.3)' : 'rgba(239,68,68,0.3)'}`,
+                    borderRadius: 99, padding: '3px 10px',
+                    fontSize: 12, fontWeight: 700,
+                    color: couponStatus.type === 'success' ? '#10b981' : '#ef4444',
+                    lineHeight: 1, height: 26, boxSizing: 'border-box', whiteSpace: 'nowrap',
+                  }}>
+                    {couponStatus.msg}
+                  </div>
+                ) : (
+                  <div style={{
+                    display: 'flex', alignItems: 'center', gap: '0.3rem',
+                    background: 'rgba(255,107,0,0.06)', border: '1px solid rgba(255,107,0,0.25)',
+                    borderRadius: 99, padding: '0.15rem 0.3rem 0.15rem 0.65rem',
+                    animation: 'fadeIn 0.2s'
+                  }}>
+                    <input
+                      type="text"
+                      placeholder="ENTER CODE"
+                      value={couponCode}
+                      onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                      style={{
+                        background: 'transparent', border: 'none', color: '#FF6B00', width: '90px', fontSize: '0.72rem',
+                        fontFamily: 'monospace', textTransform: 'uppercase', outline: 'none', letterSpacing: '0.05em',
+                      }}
+                      autoFocus
+                      onBlur={() => { if (!couponCode && !couponStatus.loading) setShowCoupon(false); }}
+                      onKeyDown={(e) => e.key === 'Enter' && handleRedeemCoupon()}
+                    />
+                    <button
+                      onClick={handleRedeemCoupon}
+                      disabled={couponStatus.loading || !couponCode.trim()}
+                      style={{
+                        background: couponCode.trim() ? '#FF6B00' : 'rgba(255,255,255,0.08)',
+                        color: '#fff', border: 'none', padding: '0.2rem 0.65rem', borderRadius: 99,
+                        fontSize: '0.7rem', fontWeight: 800,
+                        cursor: couponStatus.loading || !couponCode.trim() ? 'not-allowed' : 'pointer',
+                        transition: 'background 0.2s', opacity: couponCode.trim() ? 1 : 0.5,
+                      }}
+                    >
+                      {couponStatus.loading ? '...' : 'APPLY'}
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {dailyMins !== null && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', minWidth: 140 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.65rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                <span>Daily Time Left</span>
+                <span style={{ color: '#FF6B00' }}>{dailyMins}m</span>
+              </div>
+              <div className="xp-track" style={{ height: 6 }}>
+                <div className="xp-fill" style={{ width: `${Math.min((dailyMins / 60) * 100, 100)}%` }} />
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Demo Account Upgrade Banner (Senior) */}
+        {(!user?.subscription_plan || user?.subscription_plan === 'free') && stats?.timeLimits && stats.timeLimits.remainingRanked <= 0 && (
+          <div 
+            onClick={() => setShowPremiumModal(true)}
+            style={{ 
+              position: 'relative', zIndex: 2, marginTop: '2rem', padding: '1rem 1.25rem', borderRadius: 16, cursor: 'pointer',
+              background: 'linear-gradient(135deg, rgba(255,107,0,0.1), rgba(255,107,0,0.05))',
+              border: '1px solid rgba(255,107,0,0.3)',
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem',
+              transition: 'all 0.2s', boxShadow: '0 8px 24px rgba(255,107,0,0.1)'
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255,107,0,0.15), rgba(255,107,0,0.08))'; e.currentTarget.style.borderColor = 'rgba(255,107,0,0.5)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255,107,0,0.1), rgba(255,107,0,0.05))'; e.currentTarget.style.borderColor = 'rgba(255,107,0,0.3)'; }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+              <div style={{ background: 'rgba(255,107,0,0.2)', color: '#FF6B00', width: 40, height: 40, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <Crown size={22} strokeWidth={2.5} />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <span style={{ fontSize: '1rem', fontWeight: 900, color: '#FF6B00', letterSpacing: '-0.01em' }}>Demo Account</span>
+                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Upgrade to Pro to unlock unlimited time and features!</span>
+              </div>
+            </div>
+            <div style={{ background: '#FF6B00', color: '#fff', padding: '0.6rem 1.25rem', borderRadius: 99, fontSize: '0.85rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.4rem', boxShadow: '0 4px 12px rgba(255,107,0,0.3)' }}>
+              Upgrade Now <ChevronRight size={16} />
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* ── Event Tiles ── */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+        {/* Mini MUN Sunday Tile */}
+        <div
+          onClick={() => {
+            if (!minimunRegistered) navigate('/mini-mun');
+          }}
+          style={{
+            borderRadius: 18, padding: '1.4rem 1.5rem', 
+            cursor: minimunRegistered ? 'default' : 'pointer',
+            opacity: minimunRegistered ? 0.9 : 1,
+            background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+            border: '1px solid rgba(59,130,246,0.18)',
+            position: 'relative', overflow: 'hidden',
+            transition: 'transform 0.25s, box-shadow 0.25s',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
+          }}
+          onMouseEnter={e => { 
+            if (!minimunRegistered) {
+              e.currentTarget.style.transform = 'translateY(-3px)'; 
+              e.currentTarget.style.boxShadow = '0 12px 40px rgba(59,130,246,0.2)'; 
+            }
+          }}
+          onMouseLeave={e => { 
+            if (!minimunRegistered) {
+              e.currentTarget.style.transform = ''; 
+              e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)'; 
+            }
+          }}
+        >
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #3b82f6, #ef4444)' }} />
+          <div style={{ position: 'absolute', top: -40, right: -40, width: 130, height: 130, borderRadius: '50%', background: 'radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
+          
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
+            <span style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.12em', color: '#3b82f6', background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.22)', padding: '0.2rem 0.65rem', borderRadius: 99 }}>
+              LIVE SESSIONS
+            </span>
+            <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Globe size={16} color="#3b82f6" strokeWidth={2.5} />
+            </div>
+          </div>
+
+          <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fff', marginBottom: '0.25rem', letterSpacing: '-0.01em' }}>
+            <span style={{ color: '#3b82f6' }}>Mini</span> MUN <span style={{ color: '#ef4444' }}>Module 3</span>
+          </div>
+          <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '1rem', lineHeight: 1.5 }}>
+            Master Class: Research Like A Diplomat. Sunday 19th July 2026.
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: minimunRegistered ? '#10b981' : '#3b82f6' }}>
+            {minimunRegistered ? (
+              <>Registered for this week! <CheckCircle2 size={14} /></>
+            ) : (
+              <>Register Now (₹99) <ChevronRight size={14} /></>
+            )}
+          </div>
+        </div>
+
+        {/* MUN Mentor Master Class Tile */}
+        <div
+          onClick={() => navigate('/mun-mentor')}
+          style={{
+            borderRadius: 18, padding: '1.4rem 1.5rem', cursor: 'pointer',
+            background: 'linear-gradient(135deg, #0c0e1a 0%, #0e1525 100%)',
+            border: '1px solid rgba(251,191,36,0.18)',
+            position: 'relative', overflow: 'hidden',
+            transition: 'transform 0.25s, box-shadow 0.25s',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(251,191,36,0.2)'; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)'; }}
+        >
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #FBBF24, #F97316)' }} />
+          <div style={{ position: 'absolute', top: -40, right: -40, width: 130, height: 130, borderRadius: '50%', background: 'radial-gradient(circle, rgba(251,191,36,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
+          
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
+            <span style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.12em', color: '#FBBF24', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.22)', padding: '0.2rem 0.65rem', borderRadius: 99 }}>
+              MASTER CLASS
+            </span>
+            <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Award size={16} color="#FBBF24" strokeWidth={2.5} />
+            </div>
+          </div>
+
+          <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fff', marginBottom: '0.25rem', letterSpacing: '-0.01em' }}>
+            MUN <span style={{ color: '#FBBF24' }}>Mentor</span> Masterclass for Teachers
+          </div>
+          <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '1rem', lineHeight: 1.5 }}>
+            A Master Class for Teachers & MUN Coordinators. 17.07.2026, Friday Evening.
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#FBBF24' }}>
+            Register Now <ChevronRight size={14} />
+          </div>
+        </div>
+
+        {/* G-Talk Cohort Tile */}
+        <div
+          onClick={() => navigate('/cohort')}
+          style={{
+            borderRadius: 18, padding: '1.4rem 1.5rem', cursor: 'pointer',
+            background: 'linear-gradient(135deg, #1e0f2d 0%, #291244 100%)',
+            border: '1px solid rgba(168,85,247,0.18)',
+            position: 'relative', overflow: 'hidden',
+            transition: 'transform 0.25s, box-shadow 0.25s',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(168,85,247,0.2)'; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)'; }}
+        >
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #a855f7, #d946ef)' }} />
+          <div style={{ position: 'absolute', top: -40, right: -40, width: 130, height: 130, borderRadius: '50%', background: 'radial-gradient(circle, rgba(168,85,247,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
+          
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
+            <span style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.12em', color: '#a855f7', background: 'rgba(168,85,247,0.1)', border: '1px solid rgba(168,85,247,0.22)', padding: '0.2rem 0.65rem', borderRadius: 99 }}>
+              LIVE COHORT 2.0
+            </span>
+            <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(168,85,247,0.1)', border: '1px solid rgba(168,85,247,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Users size={16} color="#a855f7" strokeWidth={2.5} />
+            </div>
+          </div>
+
+          <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fff', marginBottom: '0.25rem', letterSpacing: '-0.01em' }}>
+            G-Talk <span style={{ color: '#a855f7' }}>Cohort 2</span>
+          </div>
+          <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '1rem', lineHeight: 1.5 }}>
+            Master Public Speaking & Debating with live online sessions, interactive exercises, and peer feedback.
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#a855f7' }}>
+            Learn More <ChevronRight size={14} />
+          </div>
+        </div>
+      </div>
+
+      {/* ── Mode Cards ── */}
+      <div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+          <h2 style={{ fontSize: '1.1rem', fontWeight: 800, margin: 0, color: 'var(--text-primary)' }}>Choose Your Mode</h2>
+        </div>
+        <div className="no-scrollbar modes-container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%,240px), 1fr))', gap: '1rem' }}>
+          {availableModes.map((mode, i) => {
+            const Icon = mode.icon;
+            return (
+              <div
+                key={mode.id}
+                onClick={() => navigate(mode.path(isJunior))}
+                className="mode-card"
+                style={{
+                  '--mode-glow': `0 0 40px ${mode.glow || 'transparent'}`,
+                  background: mode.grad,
+                  border: `1px solid ${mode.color}25`,
+                  color: '#fff',
+                  minHeight: 200,
+                  display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+                  animation: `cardEnter 0.5s cubic-bezier(0.16,1,0.3,1) ${i * 80}ms both`,
+                }}
+              >
+                {/* Top dec */}
+                <div style={{ position: 'absolute', top: -24, right: -24, width: 120, height: 120, borderRadius: '50%', background: `radial-gradient(circle, ${mode.color}1a 0%, transparent 70%)`, pointerEvents: 'none' }} />
+
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                    <div style={{ width: 44, height: 44, borderRadius: 12, background: `${mode.color}25`, border: `1px solid ${mode.color}40`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Icon size={22} color={mode.color} strokeWidth={2} />
+                    </div>
+                    <span style={{ fontSize: '0.65rem', fontWeight: 800, letterSpacing: '0.1em', color: mode.color, background: `${mode.color}18`, border: `1px solid ${mode.color}30`, padding: '0.2rem 0.6rem', borderRadius: 99 }}>
+                      {mode.tag}
+                    </span>
+                  </div>
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800, margin: '0 0 0.4rem', letterSpacing: '-0.01em' }}>{mode.title}</h3>
+                  <p style={{ fontSize: '0.85rem', opacity: 0.75, margin: 0, lineHeight: 1.55 }}>{mode.desc}</p>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '1.5rem', fontSize: '0.85rem', fontWeight: 700, color: mode.color }}>
+                  <span>Start Now</span>
+                  <ChevronRight size={16} />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* ── Quick Stats (Minimized) ── */}
+      <div className="no-scrollbar" style={{ display: 'flex', gap: '0.75rem', overflowX: 'auto', paddingBottom: '0.25rem' }}>
+        <StatBadge icon={Trophy} label="Total Debates" value={stats.total_debates || 0} color="#FF6B00" />
+        <StatBadge icon={Star} label="Avg Score" value={stats.avg_score ? `${stats.avg_score.toFixed(1)}` : '—'} color="#00d4ff" />
+        <StatBadge icon={Flame} label="Best Streak" value={`${stats.best_streak || 0}d`} color="#f59e0b" />
+        <StatBadge icon={Zap} label="GForce Tokens" value={gforce.toLocaleString()} color="#a855f7" />
+      </div>
+
+      {/* ── Charts Row ── */}
+      {(skillData.length > 0 || recentScoresData.length > 0) && (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%,320px), 1fr))', gap: '1.25rem' }}>
+
+          {/* Radar — Skill Profile */}
+          {skillData.length >= 3 && (
+            <div className="glass-card" style={{ padding: '1.5rem' }}>
+              <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.25rem' }}>Skill Profile</div>
+              <div style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--text-primary)', marginBottom: '1.25rem' }}>Debate Skills Radar</div>
+              <ResponsiveContainer width="100%" height={220}>
+                <RadarChart data={skillData} margin={{ top: 0, right: 20, bottom: 0, left: 20 }}>
+                  <PolarGrid stroke={gridColor} />
+                  <PolarAngleAxis dataKey="subject" tick={{ fill: axisColor, fontSize: 11, fontWeight: 600 }} />
+                  <PolarRadiusAxis domain={[0, 10]} tick={false} axisLine={false} />
+                  <Radar name="You" dataKey="A" stroke={radarStroke} fill={radarFill} strokeWidth={2} dot={{ fill: radarStroke, r: 3 }} />
+                </RadarChart>
+              </ResponsiveContainer>
+            </div>
+          )}
+
+          {/* Line — Score Trend */}
+          {recentScoresData.length > 0 && (
+            <div className="glass-card" style={{ padding: '1.5rem' }}>
+              <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.25rem' }}>Performance</div>
+              <div style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--text-primary)', marginBottom: '1.25rem' }}>Score Trend</div>
+              <ResponsiveContainer width="100%" height={220}>
+                <LineChart data={recentScoresData} margin={{ top: 5, right: 10, bottom: 5, left: -20 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+                  <XAxis dataKey="name" tick={{ fill: axisColor, fontSize: 11 }} axisLine={false} tickLine={false} />
+                  <YAxis domain={[0, 10]} tick={{ fill: axisColor, fontSize: 11 }} axisLine={false} tickLine={false} />
+                  <RechartsTooltip
+                    contentStyle={{ background: '#0d0d0d', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, color: '#f1f5f9' }}
+                    formatter={(v) => [v.toFixed(1), 'Score']}
+                  />
+                  <Line type="monotone" dataKey="score" stroke={lineColor} strokeWidth={2.5} dot={{ fill: lineColor, r: 4, strokeWidth: 0 }} activeDot={{ r: 6, strokeWidth: 0 }} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ── Badges ── */}
+      {displayBadges.length > 0 && (
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+            <h2 style={{ fontSize: '1.1rem', fontWeight: 800, margin: 0, color: 'var(--text-primary)' }}>Achievements</h2>
+            <span style={{ fontSize: '0.8rem', color: '#475569', fontWeight: 600 }}>{earnedBadges.length} / {ALL_BADGES.length} unlocked</span>
+          </div>
+          <div className="no-scrollbar" style={{ overflowX: 'auto', paddingBottom: '0.5rem' }}>
+            <div style={{ display: 'flex', gap: '0.75rem', width: 'max-content' }}>
+              {displayBadges.map(badge => {
+                const isEarned = earnedSet.has(badge.id);
+                const BIcon = BADGE_ICON_MAP[badge.id] || Star;
+                return (
+                  <div key={badge.id} className={`badge-slot ${isEarned ? 'earned' : 'locked'}`} title={badge.desc}>
+                    <div className="badge-icon-wrap" style={{ background: isEarned ? `${badge.color}18` : 'rgba(255,255,255,0.04)', border: `1px solid ${isEarned ? badge.color + '35' : 'rgba(255,255,255,0.06)'}`, color: badge.color }}>
+                      <BIcon size={24} strokeWidth={2} color={isEarned ? badge.color : '#475569'} />
+                    </div>
+                    <span style={{ fontSize: '0.7rem', fontWeight: 700, color: isEarned ? '#e2e8f0' : '#334155', textAlign: 'center', maxWidth: 76, lineHeight: 1.25 }}>
+                      {badge.name}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+    </>
+  );
+
+  /* ══════════════════════════════════════════════════════════
+     JUNIOR DASHBOARD
+  ══════════════════════════════════════════════════════════ */
+  return (
+    <>
+      {showPremiumModal && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', flexDirection: 'column', background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', overflowY: 'auto' }}>
+          <PremiumEnrollModal user={user} onDismiss={() => setShowPremiumModal(false)} />
+        </div>
+      )}
+      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', paddingBottom: '3rem' }}>
+
+      {/* ── Hero Welcome Card ── */}
+      <div className="welcome-card" style={{
+        borderRadius: 28, padding: '1.75rem 2rem',
+        background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 60%, #e879f9 100%)',
+        color: '#fff', position: 'relative', overflow: 'hidden',
+        boxShadow: '0 12px 40px rgba(124,58,237,0.4)',
+      }}>
+        <div style={{ position: 'absolute', top: -40, right: -40, width: 180, height: 180, borderRadius: '50%', background: 'rgba(255,255,255,0.08)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', bottom: -60, left: '30%', width: 160, height: 160, borderRadius: '50%', background: 'rgba(255,255,255,0.05)', pointerEvents: 'none' }} />
+
+        <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+          <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'rgba(255,255,255,0.2)', border: '2px solid rgba(255,255,255,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', fontWeight: 900, flexShrink: 0 }}>
+            {user.avatar
+              ? <img src={user.avatar} alt="" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+              : user.name?.charAt(0).toUpperCase()
+            }
+          </div>
+          <div>
+            <div style={{ fontSize: '0.75rem', fontWeight: 700, opacity: 0.8, marginBottom: '0.1rem' }}>Welcome back!</div>
+            <h1 style={{ fontSize: 'clamp(1.4rem, 5vw, 1.75rem)', fontWeight: 900, margin: 0, letterSpacing: '-0.02em' }}>{user.name}</h1>
+            <div style={{ fontSize: '0.8rem', color: '#a78bfa', fontWeight: 700, marginTop: '0.1rem' }}>
+              @{user.studentId}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.2rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', background: 'rgba(255,255,255,0.2)', borderRadius: 99, padding: '0.2rem 0.5rem', fontSize: '0.75rem', fontWeight: 700 }}>
+                <Flame size={12} />
+                {stats.current_streak || 0} Day Streak
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <div style={{ fontSize: '0.75rem', fontWeight: 600, opacity: 0.8 }}>
+                  {user.grade
+                    ? (user.grade.startsWith('Class') ? user.grade.replace('Class', 'Grade') : user.grade)
+                    : user.classLevel}
+                </div>
+                <div style={{ fontSize: '0.65rem', fontWeight: 800, background: '#fff', color: '#7c3aed', padding: '0.1rem 0.4rem', borderRadius: 4, letterSpacing: '0.05em' }}>
+                  {user?.subscription_plan === 'max' ? 'MAX' : user?.subscription_plan === 'pro' ? 'PRO' : 'DEMO'}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Demo Account Upgrade Banner (Junior) */}
+        {(!user?.subscription_plan || user?.subscription_plan === 'free') && stats?.timeLimits && stats.timeLimits.remainingRanked <= 0 && (
+          <div 
+            onClick={() => setShowPremiumModal(true)}
+            style={{ 
+              position: 'relative', zIndex: 2, marginTop: '1.5rem', padding: '1rem 1.25rem', borderRadius: 20, cursor: 'pointer',
+              background: 'rgba(255,255,255,0.15)', border: '2px solid rgba(255,255,255,0.4)',
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.15)', transition: 'all 0.2s'
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.25)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.15)'; e.currentTarget.style.transform = 'translateY(0)'; }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+              <div style={{ background: '#fff', color: '#7c3aed', width: 44, height: 44, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+                <Crown size={24} strokeWidth={2.5} />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <span style={{ fontSize: '1.05rem', fontWeight: 900, color: '#fff', textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>Demo Account</span>
+                <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'rgba(255,255,255,0.9)' }}>Upgrade to Pro for unlimited fun!</span>
+              </div>
+            </div>
+            <div style={{ background: '#fff', color: '#7c3aed', padding: '0.6rem 1.25rem', borderRadius: 99, fontSize: '0.85rem', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '0.4rem', boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }}>
+              Upgrade <ChevronRight size={16} strokeWidth={3} />
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* ── Mode Cards ── */}
+      <div>
+        <h2 style={{ fontSize: '1.15rem', fontWeight: 900, margin: '0 0 1rem', color: 'var(--j-text)' }}>Let's Practice!</h2>
+        <div className="no-scrollbar modes-container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%,200px), 1fr))', gap: '1rem' }}>
+          {availableModes.map((mode, i) => {
+            const Icon = mode.icon;
+            return (
+              <div
+                key={mode.id}
+                onClick={() => navigate(mode.path(true))}
+                style={{
+                  background: mode.grad,
+                  borderRadius: 24, padding: '1.5rem',
+                  color: '#fff', cursor: 'pointer',
+                  display: 'flex', flexDirection: 'column', gap: '0.75rem',
+                  minHeight: 160,
+                  boxShadow: `0 6px 24px ${mode.color}30`,
+                  transition: 'transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s',
+                  position: 'relative', overflow: 'hidden',
+                  animation: `cardEnter 0.5s cubic-bezier(0.16,1,0.3,1) ${i * 80}ms both`,
+                }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)'; e.currentTarget.style.boxShadow = `0 16px 40px ${mode.color}45`; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = `0 6px 24px ${mode.color}30`; }}
+              >
+                <div style={{ position: 'absolute', top: -20, right: -20, width: 100, height: 100, borderRadius: '50%', background: 'rgba(255,255,255,0.1)', pointerEvents: 'none' }} />
+                <div style={{ width: 42, height: 42, borderRadius: 12, background: 'rgba(255,255,255,0.22)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Icon size={22} strokeWidth={2.5} />
+                </div>
+                <div>
+                  <div style={{ fontWeight: 900, fontSize: '1.05rem', marginBottom: '0.25rem' }}>{mode.title}</div>
+                  <div style={{ fontSize: '0.8rem', opacity: 0.85, lineHeight: 1.45 }}>{mode.desc}</div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* ── Quick Stats (Minimized) ── */}
+      <div className="no-scrollbar" style={{ display: 'flex', gap: '0.75rem', overflowX: 'auto', paddingBottom: '0.25rem' }}>
+        <StatBadge icon={Trophy} label="Debates" value={stats.total_debates || 0} color="#7c3aed" isJunior />
+        <StatBadge icon={Star} label="Avg Score" value={stats.avg_score ? `${stats.avg_score.toFixed(1)}` : '—'} color="#f43f5e" isJunior />
+        <StatBadge icon={Zap} label="Tokens" value={gforce.toLocaleString()} color="#f59e0b" isJunior />
+      </div>
+
+      {/* ── Skill Radar (Junior) ── */}
+      {skillData.length >= 3 && (
+        <div className="card" style={{ padding: '1.5rem' }}>
+          <h3 style={{ fontSize: '1rem', fontWeight: 800, marginBottom: '1.25rem', color: 'var(--j-text)' }}>Your Skills</h3>
+          <ResponsiveContainer width="100%" height={220}>
+            <RadarChart data={skillData} margin={{ top: 0, right: 20, bottom: 0, left: 20 }}>
+              <PolarGrid stroke={gridColor} />
+              <PolarAngleAxis dataKey="subject" tick={{ fill: '#7c3aed', fontSize: 11, fontWeight: 700 }} />
+              <PolarRadiusAxis domain={[0, 10]} tick={false} axisLine={false} />
+              <Radar name="You" dataKey="A" stroke="#7c3aed" fill="rgba(124,58,237,0.12)" strokeWidth={2.5} dot={{ fill: '#7c3aed', r: 3 }} />
+            </RadarChart>
+          </ResponsiveContainer>
+        </div>
+      )}
+
+      {/* ── Badges ── */}
+      {displayBadges.length > 0 && (
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.875rem' }}>
+            <h2 style={{ fontSize: '1.1rem', fontWeight: 900, margin: 0, color: 'var(--j-text)' }}>Your Badges</h2>
+            <span style={{ fontSize: '0.8rem', color: '#a78bfa', fontWeight: 700 }}>{earnedBadges.length} earned</span>
+          </div>
+          <div style={{ overflowX: 'auto', paddingBottom: '0.5rem' }}>
+            <div style={{ display: 'flex', gap: '0.75rem', width: 'max-content' }}>
+              {displayBadges.map(badge => {
+                const isEarned = earnedSet.has(badge.id);
+                const BIcon = BADGE_ICON_MAP[badge.id] || Star;
+                return (
+                  <div key={badge.id} className={`badge-slot ${isEarned ? 'earned' : 'locked'}`} title={badge.desc}
+                    style={isEarned ? { animation: 'badgeUnlock 0.5s cubic-bezier(0.16,1,0.3,1) both' } : {}}>
+                    <div className="badge-icon-wrap" style={{ background: `${badge.color}15`, border: `1.5px solid ${badge.color}30`, borderRadius: 14 }}>
+                      <BIcon size={24} strokeWidth={2} color={isEarned ? badge.color : '#a78bfa'} />
+                    </div>
+                    <span style={{ fontSize: '0.68rem', fontWeight: 800, color: isEarned ? 'var(--j-text)' : '#a78bfa', textAlign: 'center', maxWidth: 76, lineHeight: 1.25 }}>
+                      {badge.name}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+    </>
+  );
+}

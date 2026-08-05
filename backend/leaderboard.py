@@ -493,45 +493,12 @@ class Leaderboard:
         new_best = max(user["best_score"], result["overall_score"])
         new_avg = round(((user["avg_score"] * user["total_debates"]) + result["overall_score"]) / new_total, 2)
 
-        new_streak = user.get("current_streak") or 0
-        if new_streak == 0:
-            new_streak = 1
-        
-        if prev_resp.data and prev_resp.data[0].get("created_at"):
-            last_date_str = prev_resp.data[0]["created_at"]
-            try:
-                from datetime import datetime, timezone, timedelta
-                last_dt = datetime.fromisoformat(last_date_str.replace("Z", "+00:00"))
-                ist_last = last_dt + timedelta(hours=5, minutes=30)
-                ist_now = datetime.now(timezone.utc) + timedelta(hours=5, minutes=30)
-                delta_days = (ist_now.date() - ist_last.date()).days
-                
-                if delta_days == 1:
-                    new_streak += 1
-                elif delta_days > 1:
-                    new_streak = 1
-            except Exception:
-                pass
-        new_longest = max(user["longest_streak"], new_streak)
-
         # ── Gforce Token Calculation ──
         # 1 token per 30 words (approx 5 tokens per min)
         base_tokens = debate_words // 30
-        streak_bonus = new_streak * 5
         win_bonus = 20 if result["overall_score"] >= 7.0 else 0
-        
-        # We need to pre-check badges to add badge bounty
-        temp_user = user.copy()
-        temp_user.update({
-            "total_debates": new_total,
-            "total_words_spoken": new_words,
-            "current_streak": new_streak,
-            "avg_score": new_avg
-        })
-        new_badges = check_badges(temp_user, result, prev_score)
-        badge_bonus = len(new_badges) * 25
 
-        tokens_earned = int(base_tokens + streak_bonus + win_bonus + badge_bonus)
+        tokens_earned = int(base_tokens + win_bonus)
         new_gforce = int(user.get("gforce_tokens") or 0) + tokens_earned
 
         # ── Update user ──
@@ -542,8 +509,6 @@ class Leaderboard:
             "best_score": new_best,
             "avg_score": new_avg,
             "gforce_tokens": new_gforce,
-            "current_streak": new_streak,
-            "longest_streak": new_longest,
             "total_words_spoken": new_words,
             "updated_at": datetime.now(timezone.utc).isoformat(),
         }
@@ -559,30 +524,7 @@ class Leaderboard:
 
         self.db.table("debate_users").update(update_data).eq("user_id", user_id).execute()
 
-        # ── Refresh user for badge check ──
-        resp = self.db.table("debate_users").select("*").eq("user_id", user_id).execute()
-        user = resp.data[0]
 
-        # ── Check badges ──
-        new_badges = check_badges(user, result, prev_score)
-        if new_badges:
-            existing = set(user.get("badges") or [])
-            all_badges = list(existing | set(new_badges))
-            self.db.table("debate_users").update({
-                "badges": all_badges
-            }).eq("user_id", user_id).execute()
-
-            for bid in new_badges:
-                bdef = BADGE_DEFINITIONS.get(bid, {})
-                try:
-                    self.db.table("achievements").upsert({
-                        "user_id": user_id,
-                        "badge_id": bid,
-                        "badge_name": bdef.get("name", bid),
-                        "badge_desc": bdef.get("desc", ""),
-                    }, on_conflict="user_id,badge_id").execute()
-                except Exception:
-                    pass
 
         # ── Get rank ──
         rank = self._get_user_rank(user_id)
@@ -594,11 +536,6 @@ class Leaderboard:
             "new_tokens": new_gforce,
             "tokens_earned": tokens_earned,
             "rank": rank,
-            "streak": new_streak,
-            "new_badges": [
-                {"id": bid, **BADGE_DEFINITIONS.get(bid, {"name": bid, "desc": ""})}
-                for bid in new_badges
-            ],
         }
 
     # ── LEADERBOARD QUERIES ──

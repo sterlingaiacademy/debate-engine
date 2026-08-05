@@ -13,4 +13,6 @@ dist/
 mobile/jdk*
 mobile/jdk-17.0.2/
 mobile/jdk.zip
-scratch/
+scratch/*.tar.gz
+*test_anthropic*
+deploy_speech_coach.js

@@ -10,6 +10,8 @@ import Dashboard from './pages/Dashboard';
 import Layout from './components/Layout';
 import LandingPage from './pages/LandingPage';
 import AdminDashboard from './pages/AdminDashboard';
+import ScrollToTop from './components/ScrollToTop';
+import UpgradeRequired from './pages/UpgradeRequired';
 
 const DebateArena = lazy(() => import('./pages/DebateArena'));
 const Results = lazy(() => import('./pages/Results'));
@@ -29,11 +31,24 @@ const MUN30 = lazy(() => import('./pages/mun30/MUN30App'));
 const GTalkCohort = lazy(() => import('./pages/GTalkCohort'));
 const MUNMentorRegister = lazy(() => import('./pages/MUNMentorRegister'));
 const MiniMunRegister = lazy(() => import('./pages/MiniMunRegister'));
+const IndusMunRegister = lazy(() => import('./pages/IndusMunRegister'));
+const EnglishSessionRegister = lazy(() => import('./pages/EnglishSessionRegister'));
+const FreedomQuizRegister = lazy(() => import('./pages/FreedomQuizRegister'));
 const UNCertificateDownload = lazy(() => import('./pages/UNCertificateDownload'));
 const CertificatesHub = lazy(() => import('./pages/CertificatesHub'));
 const MiniMunMod1CertificateDownload = lazy(() => import('./pages/MiniMunMod1CertificateDownload'));
 const MiniMunMod2CertificateDownload = lazy(() => import('./pages/MiniMunMod2CertificateDownload'));
-import UpgradeRequired from './pages/UpgradeRequired';
+const MiniMunMod3CertificateDownload = lazy(() => import('./pages/MiniMunMod3CertificateDownload'));
+
+const ITORegister = lazy(() => import('./pages/ITORegister'));
+const SpeechAnalysis = lazy(() => import('./pages/SpeechAnalysis'));
+
+const OlympiadSchoolRegister = lazy(() => import('./pages/OlympiadSchoolRegister'));
+const OlympiadStudentRegister = lazy(() => import('./pages/OlympiadStudentRegister'));
+const OlympiadPractice = lazy(() => import('./pages/OlympiadPractice'));
+const OlympiadArena = lazy(() => import('./pages/OlympiadArena'));
+const CoordinatorDashboard = lazy(() => import('./pages/CoordinatorDashboard'));
+const OlympiadReportCard = lazy(() => import('./pages/OlympiadReportCard'));
 
 function App() {
   
@@ -208,6 +223,7 @@ function App() {
   return (
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
       <Router>
+        <ScrollToTop />
         <div className={themeClass}>
         <Suspense fallback={<PageLoader />}>
           <Routes>
@@ -222,6 +238,10 @@ function App() {
             <Route path="/auth/google/callback" element={<GoogleCallback onLogin={handleLogin} />} />
             <Route path="/google-callback" element={<GoogleCallback onLogin={handleLogin} />} />
             
+            <Route path="/olympiad/school-registration" element={<OlympiadSchoolRegister />} />
+            <Route path="/olympiad/student-registration" element={<Navigate to="/register" />} />
+            <Route path="/coordinator-dashboard" element={<CoordinatorDashboard />} />
+            
             <Route element={<Layout user={user} onLogout={handleLogout} onSwitchProfile={handleSwitchProfile} />}>
               <Route path="/dashboard" element={user ? <Dashboard user={user} setUser={setUser} /> : <Navigate to="/" />} />
               <Route path="/debate" element={user ? <DebateArena user={user} /> : <Navigate to="/" />} />
@@ -235,6 +255,7 @@ function App() {
               <Route path="/premium-success" element={user ? <PremiumSuccess user={user} /> : <Navigate to="/" />} />
               <Route path="/conversational-agent" element={user ? <ConversationalAgent user={user} /> : <Navigate to="/" />} />
               <Route path="/speech-coach" element={user ? <ConversationalAgent user={user} agentId="agent_7601krh244qdes5s5db2rjhn1kt4" mode="speech-coach" /> : <Navigate to="/" />} />
+              <Route path="/speech-analysis" element={user ? <SpeechAnalysis user={user} /> : <Navigate to="/" />} />
               <Route path="/debate-instructions" element={user ? <DebateInstructions user={user} /> : <Navigate to="/" />} />
               <Route path="/vocab-trainer" element={user ? <VocabTrainer user={user} /> : <Navigate to="/" />} />
               <Route path="/word-scramble" element={user ? <WordScramble user={user} /> : <Navigate to="/" />} />
@@ -243,11 +264,21 @@ function App() {
               <Route path="/cohort" element={user ? <GTalkCohort user={user} /> : <Navigate to="/" />} />
               <Route path="/mun-mentor" element={user ? <MUNMentorRegister user={user} /> : <Navigate to="/" />} />
               <Route path="/mini-mun" element={user ? <MiniMunRegister user={user} /> : <Navigate to="/" />} />
+              <Route path="/indus-mun" element={user ? <IndusMunRegister user={user} /> : <Navigate to="/" />} />
+              <Route path="/english-session" element={user ? <EnglishSessionRegister user={user} /> : <Navigate to="/" />} />
+              <Route path="/freedom-quiz" element={user ? <FreedomQuizRegister user={user} /> : <Navigate to="/" />} />
+
+              <Route path="/olympiad/practice" element={user ? <OlympiadPractice user={user} /> : <Navigate to="/" />} />
+              <Route path="/olympiad/arena" element={user ? <OlympiadArena user={user} /> : <Navigate to="/" />} />
+              <Route path="/olympiad/report-card" element={user ? <OlympiadReportCard user={user} /> : <Navigate to="/" />} />
+
+              <Route path="/ito-register" element={user ? <ITORegister user={user} /> : <Navigate to="/" />} />
               <Route path="/certificates" element={user ? <CertificatesHub /> : <Navigate to="/" />} />
               <Route path="/certificates/model-un-quiz" element={user ? <UNCertificateDownload /> : <Navigate to="/" />} />
               <Route path="/quiz-certificate" element={user ? <UNCertificateDownload /> : <Navigate to="/" />} />
               <Route path="/minimun-mod1-certificate" element={user ? <MiniMunMod1CertificateDownload /> : <Navigate to="/" />} />
               <Route path="/minimun-mod2-certificate" element={user ? <MiniMunMod2CertificateDownload /> : <Navigate to="/" />} />
+              <Route path="/minimun-mod3-certificate" element={user ? <MiniMunMod3CertificateDownload /> : <Navigate to="/" />} />
               <Route path="/upgrade" element={user ? <UpgradeRequired user={user} /> : <Navigate to="/" />} />
             </Route>
 

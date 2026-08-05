@@ -1,0 +1,19 @@
+
+> frontend@0.0.0 dev
+> vite
+
+Port 5173 is in use, trying another one...
+Port 5174 is in use, trying another one...
+
+  VITE v5.4.21  ready in 195 ms
+
+  ➜  Local:   http://localhost:5175/
+  ➜  Network: use --host to expose
+4:39:06 PM [vite] .env changed, restarting server...
+4:39:06 PM [vite] .env changed, restarting server...
+4:39:06 PM [vite] server restarted.
+2:47:32 PM [vite] vite.config.js changed, restarting server...
+2:47:33 PM [vite] server restarted.
+12:31:56 PM [vite] page reload index.html
+12:33:51 PM [vite] page reload index.html
+12:35:22 PM [vite] page reload index.html
