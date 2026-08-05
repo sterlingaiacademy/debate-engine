@@ -3,7 +3,56 @@ import { Mic, Square, Loader, CheckCircle, AlertTriangle, ArrowLeft, History, Pl
 import RecordRTC, { StereoAudioRecorder } from 'recordrtc';
 import ReactMarkdown from 'react-markdown';
 import { useNavigate } from 'react-router-dom';
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid, Cell, Legend } from 'recharts';
 import { API_BASE } from '../api';
+
+// --- Sound Effects Generator ---
+let uiAudioCtx;
+export const playSound = (type) => {
+  try {
+    if (!uiAudioCtx) {
+      uiAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (uiAudioCtx.state === 'suspended') {
+      uiAudioCtx.resume();
+    }
+
+    const osc = uiAudioCtx.createOscillator();
+    const gainNode = uiAudioCtx.createGain();
+
+    osc.connect(gainNode);
+    gainNode.connect(uiAudioCtx.destination);
+
+    const now = uiAudioCtx.currentTime;
+
+    if (type === 'click') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(800, now);
+      osc.frequency.exponentialRampToValueAtTime(300, now + 0.05);
+      gainNode.gain.setValueAtTime(0.1, now);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+      osc.start(now);
+      osc.stop(now + 0.05);
+    } else if (type === 'tick') {
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(440, now); // A4
+      gainNode.gain.setValueAtTime(0.1, now);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+      osc.start(now);
+      osc.stop(now + 0.1);
+    } else if (type === 'go') {
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(880, now); // A5
+      gainNode.gain.setValueAtTime(0.2, now);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+      osc.start(now);
+      osc.stop(now + 0.5);
+    }
+  } catch (e) {
+    console.error('Audio playback failed', e);
+  }
+};
+// ------------------------------
 
 const DEFAULT_TOPICS = [
   "The impact of artificial intelligence on education",
@@ -17,7 +66,15 @@ const DEFAULT_TOPICS = [
   "The ethics of genetic engineering",
   "Should voting be made mandatory?",
   "The role of sports in character building",
-  "Is a college degree still worth the cost?"
+  "Is a college degree still worth the cost?",
+  "Should teenagers be allowed to vote?",
+  "The dangers of fast fashion on the environment",
+  "Would a four-day work week increase productivity?",
+  "Should humans attempt to colonize Mars?",
+  "Does technology make us more alone?",
+  "Should schools teach financial literacy?",
+  "Is climate change the biggest threat to humanity?",
+  "The impact of video games on youth behavior"
 ];
 
 export default function SpeechAnalysis({ user }) {
@@ -44,6 +101,14 @@ export default function SpeechAnalysis({ user }) {
   const [analysis, setAnalysis] = useState(null);
   const [error, setError] = useState('');
   const [liveTranscript, setLiveTranscript] = useState('');
+  const transcriptContainerRef = useRef(null);
+  
+  useEffect(() => {
+    if (transcriptContainerRef.current) {
+      transcriptContainerRef.current.scrollTop = transcriptContainerRef.current.scrollHeight;
+    }
+  }, [liveTranscript]);
+
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const timerRef = useRef(null);
@@ -133,13 +198,16 @@ export default function SpeechAnalysis({ user }) {
   useEffect(() => {
     let interval;
     if (view === 'countdown') {
+      playSound('tick'); // initial tick
       interval = setInterval(() => {
         setCountdown(prev => {
           if (prev <= 1) {
             clearInterval(interval);
+            playSound('go');
             startRecording();
             return 0;
           }
+          playSound('tick');
           return prev - 1;
         });
       }, 1000);
@@ -153,7 +221,7 @@ export default function SpeechAnalysis({ user }) {
     if (view === 'recording') {
       interval = setInterval(() => {
         setRecordingTime(prev => {
-          if (prev >= 1200) { // 20 mins max
+          if (prev >= 600) { // 10 mins max
             stopRecording();
             return prev;
           }
@@ -199,6 +267,7 @@ export default function SpeechAnalysis({ user }) {
 
       // Start Real-Time Transcription
       let useFallback = false;
+      let sharedTranscriptText = '';
       const startWebSpeechAPI = () => {
         try {
           const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -212,7 +281,7 @@ export default function SpeechAnalysis({ user }) {
               setLiveTranscript((prev) => prev ? prev : 'Listening... Your speech will appear here in real-time.');
             };
 
-            let fullFinalTranscript = '';
+            let fullFinalTranscript = sharedTranscriptText;
 
             recognition.onresult = (event) => {
               let interimTranscript = '';
@@ -230,6 +299,7 @@ export default function SpeechAnalysis({ user }) {
                  fullFinalTranscript += newlyFinal;
               }
               
+              sharedTranscriptText = fullFinalTranscript;
               setLiveTranscript(fullFinalTranscript + (interimTranscript ? ' ' + interimTranscript + ' [...]' : ''));
             };
 
@@ -258,26 +328,38 @@ export default function SpeechAnalysis({ user }) {
       };
 
       const connectAssemblyAI = async () => {
+        let assemblyAiReady = false;
         try {
           const tokenRes = await fetch(`${API_BASE}/api/speech/realtime-token`);
           if (!tokenRes.ok) throw new Error('Failed to get realtime token');
           const { token } = await tokenRes.json();
 
-          const socket = new WebSocket(`wss://streaming.assemblyai.com/v3/ws?speech_model=universal-3-5-pro&sample_rate=16000&token=${token}`);
+          const socket = new WebSocket(`wss://api.assemblyai.com/v2/realtime/ws?sample_rate=16000&token=${token}`);
           socketRef.current = socket;
 
           socket.onmessage = (message) => {
             const res = JSON.parse(message.data);
-            if (res.message_type === 'PartialTranscript') {
-              setLiveTranscript((prev) => (prev ? prev.split(' [...]')[0] : '') + ' ' + res.text + ' [...]');
+            if (res.message_type === 'SessionBegins') {
+              console.log('AssemblyAI v2 session began');
+              assemblyAiReady = true;
+            } else if (res.message_type === 'PartialTranscript') {
+              setLiveTranscript(sharedTranscriptText + ' ' + res.text + ' [...]');
             } else if (res.message_type === 'FinalTranscript') {
-              setLiveTranscript((prev) => (prev ? prev.split(' [...]')[0] : '') + ' ' + res.text);
+              sharedTranscriptText += (sharedTranscriptText ? ' ' : '') + res.text;
+              setLiveTranscript(sharedTranscriptText);
+            } else if (res.message_type === 'Error') {
+              console.error('AssemblyAI WebSocket returned error:', res.error);
+              if (!useFallback && mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+                useFallback = true;
+                console.log('Falling back to Web Speech API due to AssemblyAI error...');
+                startWebSpeechAPI();
+              }
             }
           };
 
           socket.onerror = (event) => {
             console.error('AssemblyAI WebSocket error:', event);
-            if (!useFallback) {
+            if (!useFallback && mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
               useFallback = true;
               console.log('Falling back to Web Speech API...');
               startWebSpeechAPI();
@@ -286,8 +368,9 @@ export default function SpeechAnalysis({ user }) {
 
           socket.onclose = (event) => {
             console.warn('AssemblyAI WebSocket closed', event.code, event.reason);
-            if (!useFallback && (event.code === 1006 || event.code >= 4000)) {
+            if (!useFallback && mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
               useFallback = true;
+              console.log('AssemblyAI disconnected. Falling back to Web Speech API to continue transcript...');
               startWebSpeechAPI();
             }
             if (recordRTCRef.current && !useFallback) {
@@ -297,20 +380,28 @@ export default function SpeechAnalysis({ user }) {
 
           socket.onopen = () => {
             setLiveTranscript('Listening... Your speech will appear here in real-time.');
-            navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+            try {
               const audioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
+              audioContext.resume();
               const source = audioContext.createMediaStreamSource(stream);
               const processor = audioContext.createScriptProcessor(4096, 1, 1);
+              const destination = audioContext.createMediaStreamDestination();
 
               source.connect(processor);
-              processor.connect(audioContext.destination);
+              processor.connect(destination);
+
+              // Prevent V8/Chrome Garbage Collection from destroying the nodes while recording
+              window.__audioContext = audioContext;
+              window.__audioProcessor = processor;
+              window.__audioSource = source;
+              window.__audioDestination = destination;
 
               processor.onaudioprocess = (e) => {
-                if (socket.readyState === WebSocket.OPEN) {
+                if (socket.readyState === WebSocket.OPEN && assemblyAiReady) {
                   const inputData = e.inputBuffer.getChannelData(0);
                   const pcm16 = new Int16Array(inputData.length);
                   for (let i = 0; i < inputData.length; i++) {
-                    let s = Math.max(-1, Math.min(1, inputData[i]));
+                    const s = Math.max(-1, Math.min(1, inputData[i]));
                     pcm16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
                   }
                   const buffer = new ArrayBuffer(pcm16.length * 2);
@@ -318,13 +409,7 @@ export default function SpeechAnalysis({ user }) {
                   for (let i = 0; i < pcm16.length; i++) {
                     view.setInt16(i * 2, pcm16[i], true);
                   }
-                  let binary = '';
-                  const bytes = new Uint8Array(buffer);
-                  for (let i = 0; i < bytes.byteLength; i++) {
-                    binary += String.fromCharCode(bytes[i]);
-                  }
-                  const base64 = btoa(binary);
-                  socket.send(JSON.stringify({ audio_data: base64 }));
+                  socket.send(buffer);
                 }
               };
 
@@ -337,9 +422,9 @@ export default function SpeechAnalysis({ user }) {
                   } catch (e) {}
                 }
               };
-            }).catch(err => {
-              console.error('Microphone error for RecordRTC:', err);
-            });
+            } catch (err) {
+              console.error('Microphone audio context error:', err);
+            }
           };
 
         } catch (err) {
@@ -390,11 +475,18 @@ export default function SpeechAnalysis({ user }) {
         body: formData,
       });
 
-      const data = await response.json();
-      
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to process speech');
+        let errorMsg = 'Failed to process speech';
+        try {
+          const errorData = await response.clone().json();
+          if (errorData.error) errorMsg = errorData.error;
+        } catch(e) {
+          errorMsg = `Server error (${response.status})`;
+        }
+        throw new Error(errorMsg);
       }
+
+      const data = await response.json();
 
       setAnalysis(data);
       setView('result');
@@ -413,25 +505,48 @@ export default function SpeechAnalysis({ user }) {
 
   // RENDERS
   return (
-    <div style={{ minHeight: '100vh', background: 'transparent', color: '#fff', padding: '1rem', paddingBottom: '3rem' }}>
-      <div style={{ maxWidth: 900, margin: '0 auto', width: '100%' }}>
+    <div style={{ flex: 1, background: '#000000', color: '#fff', padding: '1rem', paddingBottom: '3rem', position: 'relative', overflowY: 'auto', overflowX: 'hidden' }}>
+      
+      {/* Background Glows */}
+      <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '40%', height: '40%', background: 'radial-gradient(circle, rgba(99,102,241,0.08) 0%, rgba(11,19,31,0) 70%)', filter: 'blur(60px)', zIndex: 0, pointerEvents: 'none' }}></div>
+      <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '40%', height: '40%', background: 'radial-gradient(circle, rgba(168,85,247,0.05) 0%, rgba(11,19,31,0) 70%)', filter: 'blur(60px)', zIndex: 0, pointerEvents: 'none' }}></div>
+
+      <div style={{ maxWidth: 1200, margin: '0 auto', width: '100%', position: 'relative', zIndex: 1 }}>
         
-        {/* Header */}
-        <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: '3rem' }}>
-          {/* Back button removed as requested */}
-          
-          {view === 'selection' && (
-            <button 
-              onClick={() => setView('history')}
-              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', padding: '0.5rem 1rem', borderRadius: 8, cursor: 'pointer' }}
-            >
-              <History size={16} /> My History
-            </button>
-          )}
+        {/* Top Dashboard Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', padding: '1rem 0', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            {view !== 'selection' && (
+              <button 
+                onClick={() => { playSound('click'); setView('selection'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                style={{ background: 'transparent', border: 'none', color: '#cbd5e1', display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '1.2rem', fontWeight: 600, transition: 'color 0.2s' }}
+                onMouseEnter={e => e.currentTarget.style.color = '#fff'}
+                onMouseLeave={e => e.currentTarget.style.color = '#cbd5e1'}
+              >
+                <ArrowLeft size={20} /> Speech Analysis
+              </button>
+            )}
+            {view === 'selection' && (
+              <div style={{ fontSize: '1.4rem', fontWeight: 700, color: '#e2e8f0' }}>Speech Analysis</div>
+            )}
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+            {view === 'selection' && (
+              <button 
+                onClick={() => { playSound('click'); setView('history'); }}
+                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', color: '#94a3b8', padding: '0.5rem 1rem', borderRadius: 8, cursor: 'pointer', transition: 'all 0.2s', fontSize: '0.9rem' }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.color = '#fff'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; e.currentTarget.style.color = '#94a3b8'; }}
+              >
+                <History size={16} /> My History
+              </button>
+            )}
+          </div>
         </div>
 
         {error && (
-          <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)', padding: '1rem', borderRadius: 12, color: '#ef4444', marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)', padding: '1rem', borderRadius: 12, color: '#ef4444', marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.2)' }}>
             <AlertTriangle size={20} /> {error}
           </div>
         )}
@@ -440,41 +555,57 @@ export default function SpeechAnalysis({ user }) {
         {view === 'selection' && (
           <div className="animate-fade-in">
             <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-              <h1 style={{ fontSize: '2.5rem', fontWeight: 800, background: 'linear-gradient(135deg, #6366f1, #38bdf8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', marginBottom: '1rem' }}>
-                AI Speech Analysis
+              <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: '#fff', marginBottom: '0.5rem', letterSpacing: '-0.5px' }}>
+                Select a Topic
               </h1>
-              <p style={{ color: '#94a3b8', fontSize: '1.1rem', maxWidth: 600, margin: '0 auto' }}>
-                Select a topic below or type your own. You will have 2 minutes to prepare before the recording begins.
+              <p style={{ color: '#94a3b8', fontSize: '1.1rem' }}>
+                Choose from below or type your own. You'll get 2 minutes to prep.
               </p>
             </div>
 
-            <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 24, padding: '2rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '2rem', marginBottom: '2rem' }}>
+            <div style={{ background: '#0D0D0D', borderTop: '1px solid rgba(255,255,255,0.1)', borderLeft: '1px solid rgba(255,255,255,0.05)', borderRight: '1px solid rgba(255,255,255,0.02)', borderBottom: '1px solid rgba(255,255,255,0.02)', borderRadius: 24, padding: '3rem', boxShadow: '0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)' }}>
+              <div className="sm-flex-col" style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '3rem' }}>
                 <input 
                   type="text" 
                   value={customTopic}
                   onChange={e => setCustomTopic(e.target.value)}
                   placeholder="Type your own custom topic..."
-                  style={{ flex: 1, background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.1)', padding: '1rem', borderRadius: 8, color: '#fff', fontSize: '1rem', outline: 'none' }}
+                  className="sm-w-full"
+                  style={{ flex: 1, background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.1)', padding: '1rem 1.5rem', borderRadius: 12, color: '#fff', fontSize: '1rem', outline: 'none', transition: 'all 0.3s', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2)' }}
+                  onFocus={e => { e.currentTarget.style.borderColor = '#6366f1'; e.currentTarget.style.boxShadow = '0 0 0 2px rgba(99,102,241,0.2), inset 0 2px 4px rgba(0,0,0,0.2)'; }}
+                  onBlur={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.boxShadow = 'inset 0 2px 4px rgba(0,0,0,0.2)'; }}
                 />
                 <button 
-                  onClick={() => handleTopicSelect()}
+                  className="sm-w-full"
+                  onClick={() => { playSound('click'); handleTopicSelect(); }}
                   disabled={!customTopic.trim()}
-                  style={{ background: '#6366f1', color: '#fff', border: 'none', padding: '1rem 2rem', borderRadius: 8, fontWeight: 700, cursor: customTopic.trim() ? 'pointer' : 'not-allowed', opacity: customTopic.trim() ? 1 : 0.5 }}
+                  style={{ background: 'linear-gradient(135deg, #4f46e5, #38bdf8)', color: '#fff', border: 'none', padding: '1rem 2.5rem', borderRadius: 12, fontWeight: 700, fontSize: '1rem', cursor: customTopic.trim() ? 'pointer' : 'not-allowed', opacity: customTopic.trim() ? 1 : 0.5, transition: 'all 0.2s', boxShadow: customTopic.trim() ? '0 8px 16px rgba(79, 70, 229, 0.3)' : 'none', whiteSpace: 'nowrap' }}
+                  onMouseEnter={e => { if(customTopic.trim()) { e.currentTarget.style.transform = 'translateY(-2px)'; } }}
+                  onMouseLeave={e => { if(customTopic.trim()) { e.currentTarget.style.transform = 'translateY(0)'; } }}
                 >
                   Start
                 </button>
               </div>
 
-              <h3 style={{ marginBottom: '1.5rem', color: '#e2e8f0', fontSize: '1.1rem' }}>Or choose a predefined topic:</h3>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
+              <h3 style={{ marginBottom: '1.5rem', color: '#94a3b8', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 600 }}>
+                Or choose a predefined topic
+              </h3>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '1.25rem' }}>
                 {DEFAULT_TOPICS.map((t, idx) => (
                   <div 
                     key={idx} 
-                    onClick={() => handleTopicSelect(t)}
-                    style={{ background: 'rgba(99,102,241,0.05)', border: '1px solid rgba(99,102,241,0.2)', padding: '1.2rem', borderRadius: 12, cursor: 'pointer', color: '#cbd5e1', transition: 'all 0.2s', display: 'flex', alignItems: 'center', gap: '0.75rem' }}
-                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(99,102,241,0.1)'}
-                    onMouseLeave={e => e.currentTarget.style.background = 'rgba(99,102,241,0.05)'}
+                    onClick={() => { playSound('click'); handleTopicSelect(t); }}
+                    style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', padding: '1.25rem', borderRadius: 12, cursor: 'pointer', color: '#cbd5e1', transition: 'all 0.2s', fontSize: '0.95rem', fontWeight: 500, lineHeight: 1.5 }}
+                    onMouseEnter={e => { 
+                      e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; 
+                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                    }}
+                    onMouseLeave={e => { 
+                      e.currentTarget.style.background = 'rgba(255,255,255,0.02)'; 
+                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                    }}
                   >
                     {t}
                   </div>
@@ -486,40 +617,43 @@ export default function SpeechAnalysis({ user }) {
 
         {/* VIEW: PREP */}
         {view === 'prep' && (
-          <div className="animate-fade-in" style={{ textAlign: 'center' }}>
-            <h2 style={{ fontSize: '1.8rem', marginBottom: '1rem', color: '#fff' }}>Topic: <span style={{ color: '#818cf8' }}>{selectedTopic}</span></h2>
+          <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: 'calc(100dvh - 120px)', textAlign: 'center', maxWidth: 800, margin: '0 auto' }}>
+            <div style={{ marginBottom: '2rem' }}>
+              <div style={{ color: '#94a3b8', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: 1, marginBottom: '0.5rem' }}>Preparing to speak on</div>
+              <h2 style={{ fontSize: '1.5rem', color: '#fff', fontWeight: 600 }}>{selectedTopic}</h2>
+            </div>
             
-            <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 24, padding: '3rem 2rem' }}>
-              <div style={{ margin: '0 auto 2rem', width: 'fit-content', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '0.5rem 1.5rem', borderRadius: 99, display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#f59e0b', fontWeight: 700, fontSize: '1.2rem' }}>
-                <Clock size={20} /> {formatTime(prepTime)}
+            <div style={{ background: '#0D0D0D', borderTop: '1px solid rgba(255,255,255,0.1)', borderLeft: '1px solid rgba(255,255,255,0.05)', borderRadius: 24, padding: '3rem', boxShadow: '0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)' }}>
+              <div style={{ margin: '0 auto 2rem', width: 'fit-content', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '0.75rem 2rem', borderRadius: 99, display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#38bdf8', fontWeight: 700, fontSize: '1.5rem', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2)' }}>
+                <Clock size={24} /> {formatTime(prepTime)}
               </div>
 
               {hintsLoading ? (
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', padding: '2rem 0' }}>
-                  <Loader size={32} color="#6366f1" style={{ animation: 'spin 2s linear infinite' }} />
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', padding: '3rem 0' }}>
+                  <Loader size={32} color="#38bdf8" style={{ animation: 'spin 2s linear infinite' }} />
                   <p style={{ color: '#94a3b8' }}>Generating AI hints to help you prepare...</p>
                 </div>
               ) : prepHints && (
-                <div style={{ textAlign: 'left', maxWidth: 600, margin: '2rem auto 0' }}>
-                  <h3 style={{ color: '#6366f1', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
-                    <Lightbulb size={20} /> Key Points to Hit
+                <div style={{ textAlign: 'left', margin: '2rem auto 0' }}>
+                  <h3 style={{ color: '#e2e8f0', fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.25rem', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '0.75rem' }}>
+                    <Lightbulb size={18} color="#38bdf8" /> Key Points to Hit
                   </h3>
-                  <ul style={{ color: '#cbd5e1', lineHeight: 1.6, paddingLeft: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '2rem' }}>
+                  <ul style={{ color: '#cbd5e1', lineHeight: 1.6, paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '2.5rem' }}>
                     {prepHints.points?.map((pt, i) => <li key={i}>{pt}</li>)}
                   </ul>
 
-                  <div style={{ background: 'rgba(245, 158, 11, 0.1)', border: '1px solid rgba(245, 158, 11, 0.3)', padding: '1rem', borderRadius: 12, color: '#fbbf24', display: 'flex', gap: '0.75rem' }}>
-                    <div style={{ flexShrink: 0 }}><AlertTriangle size={20} /></div>
-                    <div><strong>Speaking Tip:</strong> {prepHints.tip}</div>
+                  <div style={{ background: 'linear-gradient(145deg, rgba(56, 189, 248, 0.1), rgba(56, 189, 248, 0.02))', border: '1px solid rgba(56, 189, 248, 0.2)', padding: '1.25rem', borderRadius: 12, color: '#e0f2fe', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                    <div style={{ flexShrink: 0, marginTop: 2, color: '#38bdf8' }}><AlertTriangle size={20} /></div>
+                    <div style={{ lineHeight: 1.5 }}><strong style={{ color: '#38bdf8' }}>Speaking Tip:</strong> {prepHints.tip}</div>
                   </div>
                 </div>
               )}
 
               <button 
-                onClick={startCountdown}
-                style={{ marginTop: '3rem', background: 'transparent', border: '1px solid #6366f1', color: '#818cf8', padding: '0.75rem 2rem', borderRadius: 99, cursor: 'pointer', fontWeight: 600, transition: 'all 0.2s' }}
-                onMouseEnter={e => e.currentTarget.style.background = 'rgba(99,102,241,0.1)'}
-                onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                onClick={() => { playSound('click'); startCountdown(); }}
+                style={{ marginTop: '3rem', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#e2e8f0', padding: '0.85rem 2.5rem', borderRadius: 99, cursor: 'pointer', fontWeight: 600, transition: 'all 0.2s' }}
+                onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+                onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
               >
                 Skip Prep & Start Now
               </button>
@@ -529,145 +663,233 @@ export default function SpeechAnalysis({ user }) {
 
         {/* VIEW: COUNTDOWN */}
         {view === 'countdown' && (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '50vh', animation: 'zoomIn 0.5s ease-out' }}>
-            <div style={{ fontSize: '10rem', fontWeight: 900, color: '#6366f1', textShadow: '0 0 40px rgba(99,102,241,0.5)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '60vh', animation: 'zoomIn 0.5s ease-out' }}>
+            <div style={{ fontSize: '12rem', fontWeight: 900, color: '#38bdf8', textShadow: '0 0 60px rgba(56,189,248,0.5)', lineHeight: 1 }}>
               {countdown}
             </div>
-            <h2 style={{ color: '#94a3b8', fontSize: '1.5rem', marginTop: '1rem' }}>Get Ready...</h2>
+            <h2 style={{ color: '#94a3b8', fontSize: '1.5rem', marginTop: '1rem', textTransform: 'uppercase', letterSpacing: 2 }}>Get Ready</h2>
           </div>
         )}
 
         {/* VIEW: RECORDING */}
         {view === 'recording' && (
-          <div className="animate-fade-in" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 24, padding: '4rem 2rem', textAlign: 'center' }}>
-            <div style={{ fontSize: '1.2rem', color: '#94a3b8', marginBottom: '2rem' }}>
-              Speaking on: <strong style={{ color: '#fff' }}>{selectedTopic}</strong>
-            </div>
+          <div className="animate-fade-in" style={{ maxWidth: 800, margin: '0 auto' }}>
+            <div style={{ background: '#0D0D0D', borderTop: '1px solid rgba(255,255,255,0.1)', borderLeft: '1px solid rgba(255,255,255,0.05)', borderRadius: 24, padding: '4rem 3rem', textAlign: 'center', boxShadow: '0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)' }}>
+              
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)', padding: '0.5rem 1rem', borderRadius: 99, color: '#fca5a5', fontSize: '0.85rem', fontWeight: 600, marginBottom: '2rem', textTransform: 'uppercase', letterSpacing: 1 }}>
+                <span style={{ display: 'block', width: 8, height: 8, background: '#ef4444', borderRadius: '50%', animation: 'pulse 1.5s infinite' }}></span>
+                Recording Live
+              </div>
 
-            <div style={{ fontSize: '4rem', fontWeight: 200, fontFamily: 'monospace', color: '#ef4444', marginBottom: '2rem' }}>
-              {formatTime(recordingTime)}
-            </div>
-            
-            <button 
-              onClick={stopRecording}
-              style={{ background: 'rgba(239, 68, 68, 0.2)', border: '2px solid #ef4444', color: '#ef4444', width: 80, height: 80, borderRadius: '50%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', animation: 'pulse 2s infinite' }}
-            >
-              <Square size={32} fill="currentColor" />
-            </button>
-            
-            <p style={{ marginTop: '2rem', color: '#64748b', fontSize: '0.9rem' }}>
-              Recording in progress... Click stop when finished. Max 20 minutes.
-            </p>
+              <div style={{ fontSize: '1.1rem', color: '#94a3b8', marginBottom: '2rem' }}>
+                Topic: <span style={{ color: '#fff', fontWeight: 600 }}>{selectedTopic}</span>
+              </div>
 
-            <div style={{ marginTop: '2rem', padding: '1rem', background: 'rgba(0,0,0,0.3)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.1)', textAlign: 'left', minHeight: 100, maxHeight: '35vh', overflowY: 'auto' }}>
-              <h4 style={{ color: '#94a3b8', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: 1, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <span style={{ display: 'inline-block', width: 8, height: 8, background: '#ef4444', borderRadius: '50%', animation: 'pulse 1.5s infinite' }}></span>
-                Live Transcript
-              </h4>
-              <p style={{ color: liveTranscript ? '#e2e8f0' : '#475569', lineHeight: 1.6, fontSize: '1rem', fontStyle: liveTranscript ? 'normal' : 'italic', wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}>
-                {liveTranscript || "Listening... Your speech will appear here in real-time."}
-              </p>
+              <div style={{ fontSize: '5rem', fontWeight: 300, fontFamily: 'monospace', color: '#fff', textShadow: '0 0 20px rgba(255,255,255,0.2)', marginBottom: '3rem', lineHeight: 1 }}>
+                {formatTime(recordingTime)}
+              </div>
+              
+              <button 
+                onClick={() => { playSound('click'); stopRecording(); }}
+                style={{ background: 'linear-gradient(135deg, #ef4444, #b91c1c)', border: 'none', color: '#fff', width: 80, height: 80, borderRadius: '50%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 10px 25px rgba(239, 68, 68, 0.4)' }}
+                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+              >
+                <Square size={32} fill="currentColor" />
+              </button>
+              
+              <div ref={transcriptContainerRef} style={{ marginTop: '4rem', padding: '1.5rem', background: 'rgba(0,0,0,0.2)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.05)', textAlign: 'left', minHeight: 120, maxHeight: '30vh', overflowY: 'auto', boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.2)' }}>
+                <h4 style={{ color: '#64748b', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: 1, marginBottom: '1rem' }}>
+                  Live Transcript
+                </h4>
+                <p style={{ color: liveTranscript ? '#cbd5e1' : '#475569', lineHeight: 1.6, fontSize: '1.05rem', fontStyle: liveTranscript ? 'normal' : 'italic', wordBreak: 'break-word', whiteSpace: 'pre-wrap', margin: 0 }}>
+                  {liveTranscript || "Listening... Your speech will appear here in real-time."}
+                </p>
+              </div>
             </div>
           </div>
         )}
 
         {/* VIEW: PROCESSING */}
         {view === 'processing' && (
-          <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 24, padding: '6rem 2rem', textAlign: 'center' }}>
-            <Loader size={48} color="#6366f1" style={{ animation: 'spin 2s linear infinite', margin: '0 auto 1.5rem' }} />
-            <h3 style={{ fontSize: '1.5rem', color: '#fff', marginBottom: '0.5rem' }}>Analyzing your speech...</h3>
-            <p style={{ color: '#94a3b8' }}>Our AI is evaluating your pacing, vocabulary, and persuasiveness.</p>
+          <div style={{ background: '#0D0D0D', borderTop: '1px solid rgba(255,255,255,0.1)', borderLeft: '1px solid rgba(255,255,255,0.05)', borderRadius: 24, padding: '6rem 2rem', textAlign: 'center', boxShadow: '0 20px 40px rgba(0,0,0,0.4)', maxWidth: 600, margin: '0 auto' }}>
+            <Loader size={48} color="#38bdf8" style={{ animation: 'spin 2s linear infinite', margin: '0 auto 2rem' }} />
+            <h3 style={{ fontSize: '1.5rem', color: '#e2e8f0', marginBottom: '0.75rem', fontWeight: 600 }}>Analyzing Performance...</h3>
+            <p style={{ color: '#94a3b8', fontSize: '1.05rem' }}>Evaluating pacing, clarity, and structural elements of your speech.</p>
           </div>
         )}
 
         {/* VIEW: RESULT */}
         {view === 'result' && analysis && (
           <div className="animate-fade-in">
-            <h2 style={{ fontSize: '1.8rem', marginBottom: '2rem', color: '#fff', textAlign: 'center' }}>Topic: <span style={{ color: '#818cf8' }}>{selectedTopic}</span></h2>
+            <div style={{ marginBottom: '1.5rem', padding: '0 0.5rem' }}>
+              <div style={{ color: '#64748b', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: 1, marginBottom: '0.25rem' }}>Topic</div>
+              <h2 style={{ fontSize: '1.4rem', color: '#e2e8f0', margin: 0, fontWeight: 600 }}>{selectedTopic}</h2>
+            </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
-              <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 16, padding: '1.5rem', border: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>
-                <div style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '0.5rem' }}>Overall Score</div>
-                <div style={{ fontSize: '2.5rem', fontWeight: 800, color: '#6366f1' }}>{analysis.analysis.score}<span style={{ fontSize: '1.2rem', color: '#64748b' }}>/100</span></div>
+            {/* TOP METRICS ROW */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '1.25rem', marginBottom: '1.25rem' }}>
+              
+              {/* Overall Score */}
+              <div style={{ background: '#0D0D0D', borderRadius: 16, padding: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.1)', borderLeft: '1px solid rgba(255,255,255,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', top: -30, right: -30, width: 100, height: 100, background: 'radial-gradient(circle, rgba(168,85,247,0.15) 0%, rgba(0,0,0,0) 70%)', filter: 'blur(10px)' }}></div>
+                <div style={{ color: '#94a3b8', fontSize: '0.85rem', fontWeight: 600, marginBottom: '1rem' }}>Overall Score</div>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', marginTop: 'auto' }}>
+                  <div style={{ fontSize: '2.5rem', fontWeight: 800, color: '#fff', lineHeight: 1 }}>{analysis.analysis.score}</div>
+                  <div style={{ fontSize: '1rem', color: '#64748b', fontWeight: 600 }}>/ 100</div>
+                </div>
+                <div style={{ fontSize: '0.8rem', color: '#10b981', display: 'flex', alignItems: 'center', gap: '0.25rem', marginTop: '0.5rem' }}>
+                  <Activity size={14} /> Analysis Complete
+                </div>
               </div>
-              <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 16, padding: '1.5rem', border: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>
-                <div style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '0.5rem' }}>Pacing (WPM)</div>
-                <div style={{ fontSize: '2.5rem', fontWeight: 800, color: '#fff' }}>{analysis.metrics.wpm}</div>
-                <div style={{ fontSize: '0.8rem', color: analysis.metrics.wpm >= 120 && analysis.metrics.wpm <= 160 ? '#10b981' : '#f59e0b' }}>
+
+              {/* Pacing */}
+              <div style={{ background: '#0D0D0D', borderRadius: 16, padding: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.1)', borderLeft: '1px solid rgba(255,255,255,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ color: '#94a3b8', fontSize: '0.85rem', fontWeight: 600, marginBottom: '1rem' }}>Pacing (WPM)</div>
+                <div style={{ fontSize: '2.5rem', fontWeight: 800, color: '#e2e8f0', lineHeight: 1, marginTop: 'auto' }}>{analysis.metrics.wpm}</div>
+                <div style={{ fontSize: '0.8rem', color: analysis.metrics.wpm >= 120 && analysis.metrics.wpm <= 160 ? '#10b981' : '#f59e0b', marginTop: '0.5rem' }}>
                   {analysis.metrics.wpm < 120 ? 'Too slow' : analysis.metrics.wpm > 160 ? 'Too fast' : 'Ideal speed'}
                 </div>
               </div>
-              <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 16, padding: '1.5rem', border: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>
-                <div style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '0.5rem' }}>Filler Words</div>
-                <div style={{ fontSize: '2.5rem', fontWeight: 800, color: analysis.metrics.fillerWordsCount > 5 ? '#ef4444' : '#10b981' }}>{analysis.metrics.fillerWordsCount}</div>
-                <div style={{ fontSize: '0.8rem', color: '#64748b' }}>"um", "uh", "like"</div>
+
+              {/* Filler Words */}
+              <div style={{ background: '#0D0D0D', borderRadius: 16, padding: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.1)', borderLeft: '1px solid rgba(255,255,255,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ color: '#94a3b8', fontSize: '0.85rem', fontWeight: 600, marginBottom: '1rem' }}>Filler Words</div>
+                <div style={{ fontSize: '2.5rem', fontWeight: 800, color: analysis.metrics.fillerWordsCount > 5 ? '#ef4444' : '#10b981', lineHeight: 1, marginTop: 'auto' }}>{analysis.metrics.fillerWordsCount}</div>
+                <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '0.5rem' }}>Detected um/uhs</div>
               </div>
+
+              {/* Clarity */}
+              {analysis.analysis.audioAnalytics && (
+                <div style={{ background: '#0D0D0D', borderRadius: 16, padding: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.1)', borderLeft: '1px solid rgba(255,255,255,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ color: '#94a3b8', fontSize: '0.85rem', fontWeight: 600, marginBottom: '1rem' }}>Clarity Level</div>
+                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: analysis.analysis.audioAnalytics.clarityLevel === 'Clear' ? '#10b981' : (analysis.analysis.audioAnalytics.clarityLevel === 'Unintelligible' || analysis.analysis.audioAnalytics.clarityLevel === 'Incomprehensible') ? '#ef4444' : '#f59e0b', lineHeight: 1.2, marginTop: 'auto' }}>
+                    {analysis.analysis.audioAnalytics.clarityLevel}
+                  </div>
+                  <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '0.5rem' }}>Articulation</div>
+                </div>
+              )}
             </div>
 
-            {analysis.analysis.scores && (
-              <div style={{ background: 'rgba(255,255,255,0.02)', borderRadius: 20, padding: '2rem', border: '1px solid rgba(255,255,255,0.05)', marginBottom: '2rem' }}>
-                <h3 style={{ fontSize: '1.2rem', color: '#fff', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <Activity size={20} color="#6366f1" /> Detailed Score Breakdown
-                </h3>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
-                  {[
-                    { label: 'Content and Ideas', key: 'contentAndIdeas', max: 20 },
-                    { label: 'Relevance to Topic', key: 'relevanceToTopic', max: 15 },
-                    { label: 'Organisation and Structure', key: 'organisationAndStructure', max: 15 },
-                    { label: 'Fluency', key: 'fluency', max: 15 },
-                    { label: 'Voice Modulation', key: 'voiceModulationAndExpression', max: 10 },
-                    { label: 'Language and Vocabulary', key: 'languageAndVocabulary', max: 10 },
-                    { label: 'Pronunciation and Clarity', key: 'pronunciationAndClarity', max: 10 },
-                    { label: 'Time Management', key: 'timeManagement', max: 5 },
-                  ].map(metric => (
-                    <div key={metric.key}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                        <span style={{ color: '#cbd5e1', fontSize: '0.9rem' }}>{metric.label}</span>
-                        <span style={{ color: '#818cf8', fontWeight: 600, fontSize: '0.9rem' }}>{analysis.analysis.scores[metric.key]} / {metric.max}</span>
-                      </div>
-                      <div style={{ width: '100%', background: 'rgba(255,255,255,0.1)', borderRadius: 99, height: 8, overflow: 'hidden' }}>
-                        <div style={{ 
-                          height: '100%', 
-                          background: 'linear-gradient(90deg, #4f46e5, #818cf8)', 
-                          width: `${(analysis.analysis.scores[metric.key] / metric.max) * 100}%`,
-                          borderRadius: 99,
-                          transition: 'width 1s cubic-bezier(0.4, 0, 0.2, 1)'
-                        }}></div>
-                      </div>
+            {/* MID ROW: Bar Chart & Strengths Box */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1.25rem', marginBottom: '1.25rem' }}>
+              
+              {/* Detailed Breakdown Chart */}
+              {analysis.analysis.scores && (
+                <div style={{ background: '#0D0D0D', borderRadius: 20, padding: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.1)', borderLeft: '1px solid rgba(255,255,255,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}>
+                  <h3 style={{ fontSize: '1rem', color: '#e2e8f0', marginBottom: '1.5rem', fontWeight: 600 }}>Score Breakdown</h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '2rem', alignItems: 'center' }}>
+                    <div style={{ width: '100%', height: 280 }}>
+                      <div style={{ width: '100%', height: '100%' }}>
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart
+                          data={[
+                            { name: 'Content', percentage: (analysis.analysis.scores.contentAndIdeas / 20) * 100, raw: analysis.analysis.scores.contentAndIdeas, max: 20 },
+                            { name: 'Relevance', percentage: (analysis.analysis.scores.relevanceToTopic / 15) * 100, raw: analysis.analysis.scores.relevanceToTopic, max: 15 },
+                            { name: 'Organization', percentage: (analysis.analysis.scores.organisationAndStructure / 15) * 100, raw: analysis.analysis.scores.organisationAndStructure, max: 15 },
+                            { name: 'Fluency', percentage: (analysis.analysis.scores.fluency / 15) * 100, raw: analysis.analysis.scores.fluency, max: 15 },
+                            { name: 'Voice', percentage: (analysis.analysis.scores.voiceModulationAndExpression / 10) * 100, raw: analysis.analysis.scores.voiceModulationAndExpression, max: 10 },
+                            { name: 'Vocabulary', percentage: (analysis.analysis.scores.languageAndVocabulary / 10) * 100, raw: analysis.analysis.scores.languageAndVocabulary, max: 10 },
+                            { name: 'Clarity', percentage: (analysis.analysis.scores.pronunciationAndClarity / 10) * 100, raw: analysis.analysis.scores.pronunciationAndClarity, max: 10 },
+                            { name: 'Time', percentage: (analysis.analysis.scores.timeManagement / 5) * 100, raw: analysis.analysis.scores.timeManagement, max: 5 },
+                          ]}
+                          layout="vertical"
+                          margin={{ top: 0, right: 20, left: 0, bottom: 0 }}
+                          barSize={8}
+                        >
+                          <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="rgba(255,255,255,0.03)" />
+                          <XAxis type="number" domain={[0, 100]} hide />
+                          <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 12 }} width={90} />
+                          <Tooltip 
+                            cursor={{ fill: 'rgba(255,255,255,0.02)' }}
+                            contentStyle={{ background: 'rgba(11, 19, 31, 0.95)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff', boxShadow: '0 4px 12px rgba(0,0,0,0.5)' }}
+                            itemStyle={{ color: '#38bdf8', fontWeight: 600 }}
+                            formatter={(value, name, props) => [`${props.payload.raw} / ${props.payload.max}`, 'Score']}
+                          />
+                          <Bar dataKey="percentage" radius={[4, 4, 4, 4]} fill="#10b981" animationDuration={1000} />
+                        </BarChart>
+                      </ResponsiveContainer>
                     </div>
-                  ))}
+                  </div>
+                  
+                  {/* Radar Chart */}
+                  <div style={{ height: 280, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <RadarChart cx="50%" cy="50%" outerRadius="70%" data={[
+                        { name: 'Content', val: (analysis.analysis.scores.contentAndIdeas / 20) * 100, raw: analysis.analysis.scores.contentAndIdeas, max: 20 },
+                        { name: 'Organization', val: (analysis.analysis.scores.organisationAndStructure / 15) * 100, raw: analysis.analysis.scores.organisationAndStructure, max: 15 },
+                        { name: 'Fluency', val: (analysis.analysis.scores.fluency / 15) * 100, raw: analysis.analysis.scores.fluency, max: 15 },
+                        { name: 'Voice', val: (analysis.analysis.scores.voiceModulationAndExpression / 10) * 100, raw: analysis.analysis.scores.voiceModulationAndExpression, max: 10 },
+                        { name: 'Vocabulary', val: (analysis.analysis.scores.languageAndVocabulary / 10) * 100, raw: analysis.analysis.scores.languageAndVocabulary, max: 10 },
+                        { name: 'Clarity', val: (analysis.analysis.scores.pronunciationAndClarity / 10) * 100, raw: analysis.analysis.scores.pronunciationAndClarity, max: 10 }
+                      ]}>
+                        <PolarGrid stroke="rgba(255,255,255,0.1)" />
+                        <PolarAngleAxis dataKey="name" tick={{ fill: '#94a3b8', fontSize: 11 }} />
+                        <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
+                        <Radar name="Score" dataKey="val" stroke="#38bdf8" fill="#38bdf8" fillOpacity={0.4} />
+                        <Tooltip 
+                          contentStyle={{ background: 'rgba(11, 19, 31, 0.95)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff' }}
+                          itemStyle={{ color: '#38bdf8', fontWeight: 600 }}
+                          formatter={(value, name, props) => [`${props.payload.raw} / ${props.payload.max}`, 'Score']}
+                        />
+                      </RadarChart>
+                    </ResponsiveContainer>
+                  </div>
                 </div>
               </div>
-            )}
-
-            <div style={{ background: 'rgba(255,255,255,0.02)', borderRadius: 20, padding: '2rem', border: '1px solid rgba(255,255,255,0.05)', marginBottom: '2rem' }}>
-              <h3 style={{ fontSize: '1.2rem', color: '#fff', marginBottom: '1rem' }}>Overall Feedback</h3>
-              <p style={{ color: '#cbd5e1', lineHeight: 1.6, fontSize: '1.05rem', whiteSpace: 'pre-wrap' }}>{analysis.analysis.overallFeedback}</p>
+              )}
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem', marginBottom: '2rem' }}>
-              <div style={{ background: 'rgba(16, 185, 129, 0.05)', borderRadius: 20, padding: '2rem', border: '1px solid rgba(16, 185, 129, 0.1)' }}>
-                <h3 style={{ fontSize: '1.2rem', color: '#10b981', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <CheckCircle size={20} /> Strengths
+            {/* STRENGTHS AND OPPORTUNITIES - Custom Box matches Image 2 */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '1px', background: 'rgba(168, 85, 247, 0.3)', borderRadius: 16, border: '1px solid rgba(168, 85, 247, 0.3)', marginBottom: '1.25rem', overflow: 'hidden' }}>
+              <div style={{ padding: '2rem', background: 'linear-gradient(180deg, rgba(15, 15, 15, 0.8), rgba(15, 15, 15, 0.95))' }}>
+                <h3 style={{ fontSize: '1.1rem', color: '#e2e8f0', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 600 }}>
+                  <Activity size={18} color="#38bdf8" /> Strengths
                 </h3>
-                <ul style={{ paddingLeft: '1.2rem', color: '#cbd5e1', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                  {analysis.analysis.strengths.map((s, i) => <li key={i}>{s}</li>)}
-                </ul>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                  {analysis.analysis.strengths && analysis.analysis.strengths.length > 0 ? (
+                    analysis.analysis.strengths.slice(0, 2).map((s, i) => (
+                      <div key={i}>
+                        <div style={{ color: '#d8b4fe', fontWeight: 600, fontSize: '0.95rem', marginBottom: '0.25rem' }}>{s.split(':')[0] || `Strength ${i+1}`}</div>
+                        <div style={{ color: '#94a3b8', fontSize: '0.85rem', lineHeight: 1.5 }}>{s.split(':').slice(1).join(':') || s}</div>
+                      </div>
+                    ))
+                  ) : (
+                    <div style={{ color: '#94a3b8', fontSize: '0.9rem', fontStyle: 'italic' }}>No notable strengths identified. Keep practicing!</div>
+                  )}
+                </div>
               </div>
-              <div style={{ background: 'rgba(245, 158, 11, 0.05)', borderRadius: 20, padding: '2rem', border: '1px solid rgba(245, 158, 11, 0.1)' }}>
-                <h3 style={{ fontSize: '1.2rem', color: '#f59e0b', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <AlertTriangle size={20} /> Areas for Improvement
+              <div style={{ padding: '2rem', background: 'linear-gradient(180deg, rgba(15, 15, 15, 0.8), rgba(15, 15, 15, 0.95))' }}>
+                <h3 style={{ fontSize: '1.1rem', color: '#e2e8f0', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 600 }}>
+                  <AlertTriangle size={18} color="#ef4444" /> Areas to Improve
                 </h3>
-                <ul style={{ paddingLeft: '1.2rem', color: '#cbd5e1', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                  {analysis.analysis.areasForImprovement.map((s, i) => <li key={i}>{s}</li>)}
-                </ul>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                  {analysis.analysis.areasForImprovement && analysis.analysis.areasForImprovement.length > 0 ? (
+                    analysis.analysis.areasForImprovement.slice(0, 2).map((s, i) => (
+                      <div key={i}>
+                        <div style={{ color: '#fca5a5', fontWeight: 600, fontSize: '0.95rem', marginBottom: '0.25rem' }}>{s.split(':')[0] || `Area ${i+1}`}</div>
+                        <div style={{ color: '#94a3b8', fontSize: '0.85rem', lineHeight: 1.5 }}>{s.split(':').slice(1).join(':') || s}</div>
+                      </div>
+                    ))
+                  ) : (
+                    <div style={{ color: '#94a3b8', fontSize: '0.9rem', fontStyle: 'italic' }}>No critical areas to improve identified.</div>
+                  )}
+                </div>
               </div>
             </div>
 
-            <div style={{ background: 'rgba(255,255,255,0.01)', borderRadius: 20, padding: '2rem', border: '1px solid rgba(255,255,255,0.03)' }}>
-              <h3 style={{ fontSize: '1.2rem', color: '#fff', marginBottom: '1rem' }}>Speech Transcript</h3>
-              <div style={{ color: '#94a3b8', lineHeight: 1.8, fontSize: '1rem', whiteSpace: 'pre-wrap' }}>
-                {analysis.transcription || analysis.analysis.transcript || analysis.transcript || "No transcript available."}
+            {/* BOTTOM ROW: Feedback and Transcript */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '1.25rem' }}>
+              <div style={{ background: '#0D0D0D', borderRadius: 20, padding: '2rem', borderTop: '1px solid rgba(255,255,255,0.1)', borderLeft: '1px solid rgba(255,255,255,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}>
+                <h3 style={{ fontSize: '1rem', color: '#e2e8f0', marginBottom: '1rem', fontWeight: 600 }}>Overall Feedback</h3>
+                <p style={{ color: '#cbd5e1', lineHeight: 1.6, fontSize: '0.95rem', whiteSpace: 'pre-wrap', margin: 0 }}>{analysis.analysis.overallFeedback}</p>
+              </div>
+
+              <div style={{ background: '#0D0D0D', borderRadius: 20, padding: '2rem', borderTop: '1px solid rgba(255,255,255,0.1)', borderLeft: '1px solid rgba(255,255,255,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}>
+                <h3 style={{ fontSize: '1rem', color: '#e2e8f0', marginBottom: '1rem', fontWeight: 600 }}>Speech Transcript</h3>
+                <div style={{ color: '#94a3b8', lineHeight: 1.6, fontSize: '0.9rem', whiteSpace: 'pre-wrap', maxHeight: 200, overflowY: 'auto' }} className="custom-scrollbar">
+                  {analysis.transcription || analysis.analysis.transcript || analysis.transcript || "No transcript available."}
+                </div>
               </div>
             </div>
           </div>
@@ -676,39 +898,88 @@ export default function SpeechAnalysis({ user }) {
         {/* VIEW: HISTORY */}
         {view === 'history' && (
           <div className="animate-fade-in">
-            <h1 style={{ fontSize: '2rem', fontWeight: 800, color: '#fff', marginBottom: '2rem' }}>My Speech History</h1>
+            <div style={{ marginBottom: '2rem', padding: '0 0.5rem' }}>
+              <h1 style={{ fontSize: '1.8rem', fontWeight: 700, color: '#e2e8f0', margin: 0 }}>Past Assessments</h1>
+              <div style={{ color: '#64748b', fontSize: '0.9rem', marginTop: '0.25rem' }}>Review your previous speech analytics</div>
+            </div>
             
             {historyLoading ? (
               <div style={{ display: 'flex', justifyContent: 'center', padding: '4rem 0' }}>
-                <Loader size={40} color="#6366f1" style={{ animation: 'spin 2s linear infinite' }} />
+                <Loader size={32} color="#38bdf8" style={{ animation: 'spin 2s linear infinite' }} />
               </div>
             ) : history.length === 0 ? (
-              <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px dashed rgba(255,255,255,0.1)', padding: '4rem 2rem', textAlign: 'center', borderRadius: 24, color: '#94a3b8' }}>
+              <div style={{ background: '#0D0D0D', border: '1px dashed rgba(255,255,255,0.1)', padding: '4rem 2rem', textAlign: 'center', borderRadius: 24, color: '#94a3b8' }}>
                 You haven't recorded any speeches yet. Go back and select a topic to get started!
               </div>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                {history.map((h, i) => (
-                  <div key={i} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 16, padding: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div>
-                      <div style={{ fontSize: '1.1rem', fontWeight: 600, color: '#fff', marginBottom: '0.4rem' }}>{h.topic}</div>
-                      <div style={{ fontSize: '0.85rem', color: '#64748b' }}>
-                        {new Date(h.created_at).toLocaleDateString()} at {new Date(h.created_at).toLocaleTimeString()}
-                      </div>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
-                      <div style={{ textAlign: 'center' }}>
-                        <div style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase' }}>WPM</div>
-                        <div style={{ fontWeight: 700, color: '#e2e8f0' }}>{h.wpm}</div>
-                      </div>
-                      <div style={{ textAlign: 'center' }}>
-                        <div style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase' }}>Score</div>
-                        <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#6366f1' }}>{h.score}</div>
-                      </div>
-                    </div>
+              <div style={{ background: '#0D0D0D', borderRadius: 20, borderTop: '1px solid rgba(255,255,255,0.1)', borderLeft: '1px solid rgba(255,255,255,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.3)', overflowX: 'auto', overflowY: 'hidden' }}>
+                <div style={{ minWidth: '600px' }}>
+                  {/* Table Header style */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', padding: '1.25rem 2rem', borderBottom: '1px solid rgba(255,255,255,0.05)', color: '#64748b', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 600 }}>
+                    <div>Topic</div>
+                    <div>Date</div>
+                    <div>Pacing</div>
+                    <div style={{ textAlign: 'right' }}>Score</div>
                   </div>
-                ))}
+  
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  {history.map((h, i) => (
+                    <div key={i} 
+                         onClick={() => {
+                            let parsedScores = h.detailed_scores;
+                            if (typeof parsedScores === 'string') {
+                              try { parsedScores = JSON.parse(parsedScores); } catch(e){}
+                            }
+                            let parsedStrengths = h.strengths;
+                            if (typeof parsedStrengths === 'string') {
+                              try { parsedStrengths = JSON.parse(parsedStrengths); } catch(e){}
+                            }
+                            let parsedAreas = h.areas_for_improvement;
+                            if (typeof parsedAreas === 'string') {
+                              try { parsedAreas = JSON.parse(parsedAreas); } catch(e){}
+                            }
+  
+                            setAnalysis({
+                              transcription: h.transcript,
+                              metrics: {
+                                wpm: h.wpm,
+                                fillerWordsCount: h.filler_words || 0,
+                                durationSeconds: 0
+                              },
+                              analysis: {
+                                score: h.score,
+                                scores: parsedScores || {},
+                                strengths: parsedStrengths || [],
+                                areasForImprovement: parsedAreas || [],
+                                overallFeedback: h.overall_feedback,
+                                audioAnalytics: {
+                                  longPauses: 0,
+                                  clarityLevel: 'N/A',
+                                  voiceVariation: 'N/A'
+                                }
+                              }
+                            });
+                            setSelectedTopic(h.topic);
+                            setView('result');
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                         }}
+                         style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', padding: '1.5rem 2rem', borderBottom: '1px solid rgba(255,255,255,0.02)', cursor: 'pointer', transition: 'all 0.2s', alignItems: 'center' }}
+                         onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.02)'; }}
+                         onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+                    >
+                      <div style={{ color: '#e2e8f0', fontWeight: 600, fontSize: '0.95rem', paddingRight: '1rem' }}>{h.topic}</div>
+                      <div style={{ color: '#94a3b8', fontSize: '0.9rem' }}>{new Date(h.created_at).toLocaleDateString()}</div>
+                      <div style={{ color: '#cbd5e1', fontSize: '0.9rem' }}>{h.wpm} <span style={{ fontSize: '0.75rem', color: '#64748b' }}>WPM</span></div>
+                      <div style={{ textAlign: 'right' }}>
+                        <span style={{ background: 'rgba(16, 185, 129, 0.1)', color: '#10b981', padding: '0.4rem 0.8rem', borderRadius: 99, fontWeight: 700, fontSize: '0.85rem', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
+                          {h.score}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
+            </div>
             )}
           </div>
         )}

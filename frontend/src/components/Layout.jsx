@@ -37,7 +37,10 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
     pathname.includes('agent') ||
     pathname.includes('/persona') ||
     pathname.includes('/mock-un') ||
-    pathname.includes('/speech-coach');
+    pathname.includes('/speech-coach') ||
+    pathname.includes('/speech-analysis');
+
+  const isFullWidthRoute = pathname.includes('/ito-register') || pathname.includes('/mini-mun') || pathname.includes('/indus-mun');
 
   const getNormalizedLevel = (cls) => {
     if (!cls) return 'Level 1';
@@ -64,6 +67,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
     isLevel3Plus && { name: 'Wisdom Arena', path: isJunior ? '/persona' : '/debate-instructions?next=/persona', match: '/persona', icon: Users },
     { name: 'Super Tutor', path: isJunior ? '/conversational-agent' : '/debate-instructions?next=/conversational-agent', match: '/conversational-agent', icon: Brain },
     isLevel3Plus && { name: 'Speech Coach', path: isJunior ? '/speech-coach' : '/debate-instructions?next=/speech-coach', match: '/speech-coach', icon: Radio },
+    isLevel3Plus && { name: 'Speech Analysis', path: '/speech-analysis', match: '/speech-analysis', icon: Mic },
     // MUN 30-Day — Pro & Max full access; Free sees it locked
     { name: 'MUN 30 Boot Camp', path: '/mun30', match: '/mun30', icon: Target, locked: isFree, plan: 'Pro' },
     // Diplomat 365 — Max only; Pro & Free see it locked
@@ -147,24 +151,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
             </span>
           </Link>
           
-          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <div style={{
-              display: 'flex', alignItems: 'center', gap: '0.25rem',
-              background: isJunior ? 'rgba(124,58,237,0.08)' : 'rgba(139,92,246,0.1)',
-              padding: '0.35rem 0.6rem', borderRadius: 8, fontSize: '0.75rem', fontWeight: 800,
-              color: isJunior ? '#7c3aed' : '#a78bfa',
-            }}>
-               <Zap size={12} strokeWidth={2.5} /> {(tokens).toLocaleString()}
-            </div>
-            <div style={{
-              display: 'flex', alignItems: 'center', gap: '0.25rem',
-              background: isJunior ? 'rgba(249,115,22,0.08)' : 'rgba(249,115,22,0.1)',
-              padding: '0.35rem 0.6rem', borderRadius: 8, fontSize: '0.75rem', fontWeight: 800,
-              color: '#fb923c',
-            }}>
-               <Flame size={12} strokeWidth={2.5} /> {user?.streak || 0}d
-            </div>
-          </div>
+          {/* Stats removed */}
         </header>
       )}
 
@@ -372,50 +359,9 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
           display: 'flex', flexDirection: 'column', gap: '0.75rem', flexShrink: 0,
         }}>
 
-          {/* Stats pills — tokens + streak */}
-          {(!isCollapsed || isMobile) && user && (
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
-              <div style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem',
-                background: isJunior ? 'rgba(124,58,237,0.08)' : 'rgba(139,92,246,0.1)',
-                border: isJunior ? '1.5px solid rgba(124,58,237,0.18)' : '1px solid rgba(139,92,246,0.25)',
-                borderRadius: 8, padding: '0.5rem',
-                fontSize: '0.82rem', fontWeight: 800,
-                color: isJunior ? '#7c3aed' : '#a78bfa',
-              }} title="GForce Tokens">
-                <Zap size={14} strokeWidth={2.5} />
-                {(tokens).toLocaleString()}
-              </div>
-              <div style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem',
-                background: isJunior ? 'rgba(249,115,22,0.08)' : 'rgba(249,115,22,0.1)',
-                border: isJunior ? '1.5px solid rgba(249,115,22,0.2)' : '1px solid rgba(249,115,22,0.25)',
-                borderRadius: 8, padding: '0.5rem',
-                fontSize: '0.82rem', fontWeight: 800,
-                color: '#fb923c',
-              }} title="Daily Streak">
-                <Flame size={14} strokeWidth={2.5} />
-                {user.streak || 0}d
-              </div>
-            </div>
-          )}
+          {/* Stats pills removed */}
 
-          {/* XP / progress bar */}
-          {(!isCollapsed || isMobile) && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '0.7rem', fontWeight: 700, color: isJunior ? '#7c3aed' : '#475569', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                  {user?.rank || 'Unranked'}
-                </span>
-                <span style={{ fontSize: '0.7rem', fontWeight: 600, color: isJunior ? '#a78bfa' : '#334155' }}>
-                  {tokens % 5000} / 5000
-                </span>
-              </div>
-              <div className="xp-track">
-                <div className="xp-fill" style={{ width: `${xpPct}%` }} />
-              </div>
-            </div>
-          )}
+          {/* XP / progress bar removed */}
 
           {/* Sidebar Upgrade Banner */}
           {(!user?.subscription_plan || user?.subscription_plan === 'free') && (
@@ -540,12 +486,12 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
       </aside>
 
       {/* ─── MAIN CONTENT ─── */}
-      <main style={{
+      <main id="main-scroll-container" style={{
         flex: 1,
         overflowX: 'hidden',
         overflowY: isFullScreenRoute ? 'hidden' : 'auto',
-        padding: isFullScreenRoute ? 0 : (isMobile ? '1rem 1rem calc(80px + env(safe-area-inset-bottom, 0px)) 1rem' : '2rem 1.5rem'),
-        display: 'flex', justifyContent: 'center',
+        padding: isFullScreenRoute ? 0 : isFullWidthRoute ? (isMobile ? '0 0 calc(80px + env(safe-area-inset-bottom, 0px)) 0' : 0) : (isMobile ? '1rem 1rem calc(80px + env(safe-area-inset-bottom, 0px)) 1rem' : '2rem 1.5rem'),
+        display: 'flex', flexDirection: 'column', alignItems: 'center',
         position: 'relative', zIndex: 10,
         background: isJunior
           ? 'linear-gradient(135deg, #faf5ff 0%, #fff0f7 50%, #f0f9ff 100%)'
@@ -553,9 +499,10 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
       }}>
         <div style={{
           width: '100%',
-          maxWidth: isFullScreenRoute ? '100%' : '1100px',
-          height: isFullScreenRoute ? '100%' : 'auto',
+          maxWidth: (isFullScreenRoute || isFullWidthRoute) ? '100%' : '1100px',
+          flex: isFullScreenRoute ? '1 1 100%' : '1 0 auto',
           display: 'flex', flexDirection: 'column',
+          minHeight: 0,
         }}>
           <Outlet />
         </div>
