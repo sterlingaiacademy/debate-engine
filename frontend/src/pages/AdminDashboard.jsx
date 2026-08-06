@@ -307,7 +307,7 @@ function UsersSection({ adminToken, apiBase }) {
         ) : (
           <div style={{ overflowX: 'auto' }}>
             <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-              <TableHead cols={['Name', 'Username', 'Email', 'Phone', 'Level', 'Grade', 'Plan', 'Status', 'Period', 'Joined']} />
+              <TableHead cols={['Name', 'Username', 'Email', 'Phone', 'Level', 'Grade', 'Speech Score', 'Plan', 'Status', 'Period', 'Joined']} />
               <tbody>
                 {data?.users?.map((u, i) => (
                   <TableRow key={u.studentId} idx={i}>
@@ -317,6 +317,7 @@ function UsersSection({ adminToken, apiBase }) {
                     <TD mono>{u.phone || '—'}</TD>
                     <TD>{u.classLevel}</TD>
                     <TD>{u.grade || '—'}</TD>
+                    <TD>{u.max_speech_score || '—'}</TD>
                     <TD><PlanBadge plan={u.subscription_plan} /></TD>
                     <TD><StatusDot status={u.subscription_status} /></TD>
                     <TD>{u.subscription_period || '—'}</TD>

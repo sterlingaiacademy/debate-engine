@@ -2185,15 +2185,15 @@ app.get('/api/admin/users', requireAdmin, async (req, res) => {
     let idx = 1;
 
     if (search) {
-      conditions.push(`(LOWER(name) LIKE LOWER($${idx}) OR LOWER("studentId") LIKE LOWER($${idx}) OR LOWER(COALESCE(email,'')) LIKE LOWER($${idx}))`);
+      conditions.push(`(LOWER(users.name) LIKE LOWER($${idx}) OR LOWER(users."studentId") LIKE LOWER($${idx}) OR LOWER(COALESCE(users.email,'')) LIKE LOWER($${idx}))`);
       params.push(search); idx++;
     }
     if (planFilter && planFilter !== 'all') {
-      conditions.push(`subscription_plan = $${idx}`);
+      conditions.push(`users.subscription_plan = $${idx}`);
       params.push(planFilter); idx++;
     }
     if (levelFilter && levelFilter !== 'all') {
-      conditions.push(`"classLevel" = $${idx}`);
+      conditions.push(`users."classLevel" = $${idx}`);
       params.push(levelFilter); idx++;
     }
 
@@ -2201,9 +2201,14 @@ app.get('/api/admin/users', requireAdmin, async (req, res) => {
 
     const countRes = await db.query(`SELECT COUNT(*) AS count FROM users ${where}`, params);
     const usersRes = await db.query(
-      `SELECT name, "studentId", email, phone, "classLevel", grade,
-              subscription_plan, subscription_period, subscription_status, "createdAt"
-       FROM users ${where} ORDER BY "createdAt" DESC LIMIT $${idx} OFFSET $${idx + 1}`,
+      `SELECT users.name, users."studentId", users.email, users.phone, users."classLevel", users.grade,
+              users.subscription_plan, users.subscription_period, users.subscription_status, users."createdAt",
+              COALESCE(MAX(sas.score), 0) AS max_speech_score
+       FROM users 
+       LEFT JOIN speech_analysis_sessions sas ON users."studentId" = sas.student_id
+       ${where} 
+       GROUP BY users.id
+       ORDER BY users."createdAt" DESC LIMIT $${idx} OFFSET $${idx + 1}`,
       [...params, limit, offset]
     );
 
