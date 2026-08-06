@@ -311,7 +311,11 @@ function UsersSection({ adminToken, apiBase, speechOnly = false }) {
         ) : (
           <div style={{ overflowX: 'auto' }}>
             <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-              <TableHead cols={['Name', 'Username', 'Email', 'Phone', 'Grade', 'Speech Score', 'Plan', 'Status', 'Period', speechOnly ? 'Analyzed' : 'Joined']} />
+              <TableHead cols={[
+                'Name', 'Username', 'Email', 'Phone', 'Grade', 'Speech Score',
+                ...(speechOnly ? [] : ['Plan', 'Status', 'Period']),
+                speechOnly ? 'Analyzed' : 'Joined'
+              ]} />
               <tbody>
                 {data?.users?.map((u, i) => (
                   <TableRow key={u.studentId} idx={i}>
@@ -321,9 +325,13 @@ function UsersSection({ adminToken, apiBase, speechOnly = false }) {
                     <TD mono>{u.phone || '—'}</TD>
                     <TD>{u.grade || '—'}</TD>
                     <TD>{u.max_speech_score || '—'}</TD>
-                    <TD><PlanBadge plan={u.subscription_plan} /></TD>
-                    <TD><StatusDot status={u.subscription_status} /></TD>
-                    <TD>{u.subscription_period || '—'}</TD>
+                    {!speechOnly && (
+                      <>
+                        <TD><PlanBadge plan={u.subscription_plan} /></TD>
+                        <TD><StatusDot status={u.subscription_status} /></TD>
+                        <TD>{u.subscription_period || '—'}</TD>
+                      </>
+                    )}
                     <TD>{fmtDate(speechOnly ? (u.speech_date || u.createdAt) : u.createdAt)}</TD>
                   </TableRow>
                 ))}
