@@ -1,8 +1,19 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GraduationCap, CheckCircle2, ChevronRight, School, User, Phone, Mail, Users } from 'lucide-react';
+import { GraduationCap, CheckCircle2, ChevronRight, School, User, Phone, Mail, Users, Sparkles, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { API_BASE } from '../api';
 import { COUNTRY_CODES } from '../countryCodes';
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.2 } }
+};
 
 export default function EnglishSessionRegister({ user }) {
   const navigate = useNavigate();
@@ -23,6 +34,7 @@ export default function EnglishSessionRegister({ user }) {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [success, setSuccess] = useState(false);
+  const [focusedInput, setFocusedInput] = useState(null);
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -31,11 +43,9 @@ export default function EnglishSessionRegister({ user }) {
       return;
     }
     
-    // Grade constraint check (3-8)
     const gradeNum = parseInt(form.grade.replace(/[^0-9]/g, ''), 10);
     if (isNaN(gradeNum) || gradeNum < 3 || gradeNum > 8) {
       setErrorMsg("This session is exclusively for students from Grade 3 to Grade 8.");
-      setLoading(false);
       return;
     }
 
@@ -66,204 +76,276 @@ export default function EnglishSessionRegister({ user }) {
     }
   };
 
+  const InputField = ({ label, icon: Icon, type = "text", name, value, onChange, placeholder, required = true, isSelect = false, options = [] }) => {
+    const isFocused = focusedInput === name;
+    
+    return (
+      <motion.div variants={fadeInUp} className="flex flex-col gap-1.5 w-full">
+        <label className="text-[0.75rem] font-bold text-slate-400 uppercase tracking-wider pl-1">
+          {label}
+        </label>
+        <div className="relative group">
+          <div className={`absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl blur transition-opacity duration-300 ${isFocused ? 'opacity-30' : 'opacity-0'}`} />
+          <div className={`relative flex items-center bg-slate-900/50 backdrop-blur-md border ${isFocused ? 'border-blue-500/50' : 'border-white/10'} rounded-xl transition-colors duration-300 overflow-hidden`}>
+            <div className={`pl-4 pr-3 py-3 transition-colors ${isFocused ? 'text-blue-400' : 'text-slate-400'}`}>
+              <Icon size={18} />
+            </div>
+            {isSelect ? (
+              <select
+                required={required}
+                value={value}
+                onChange={e => onChange(e.target.value)}
+                onFocus={() => setFocusedInput(name)}
+                onBlur={() => setFocusedInput(null)}
+                className={`w-full bg-transparent border-none py-3 pr-4 text-base outline-none cursor-pointer appearance-none ${value ? 'text-white' : 'text-slate-500'}`}
+              >
+                <option value="" disabled>{placeholder}</option>
+                {options.map(opt => (
+                  <option key={opt.value} value={opt.value} className="text-black">{opt.label}</option>
+                ))}
+              </select>
+            ) : (
+              <input
+                type={type}
+                required={required}
+                value={value}
+                onChange={e => onChange(e.target.value)}
+                onFocus={() => setFocusedInput(name)}
+                onBlur={() => setFocusedInput(null)}
+                placeholder={placeholder}
+                className="w-full bg-transparent border-none py-3 pr-4 text-white placeholder-slate-600 outline-none text-base"
+              />
+            )}
+          </div>
+        </div>
+      </motion.div>
+    );
+  };
+
   if (success) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0a0f1d', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 24, padding: '4rem 2rem', textAlign: 'center', maxWidth: 480, margin: '2rem' }}>
-          <CheckCircle2 size={64} color="#3b82f6" style={{ margin: '0 auto 1.5rem auto' }} />
-          <h2 style={{ fontSize: '2rem', fontWeight: 800, color: '#3b82f6', marginBottom: '1rem', letterSpacing: '-0.02em' }}>Registration Successful!</h2>
-          <p style={{ color: '#94a3b8', lineHeight: 1.6, marginBottom: '2.5rem' }}>
+      <div className="min-h-[100dvh] bg-[#020617] text-white flex flex-col items-center justify-center font-['Plus_Jakarta_Sans'] relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/20 rounded-full blur-[120px]" />
+        </div>
+        
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, type: 'spring' }}
+          className="relative bg-slate-900/40 backdrop-blur-2xl border border-white/10 rounded-3xl p-12 text-center max-w-lg mx-6 shadow-2xl"
+        >
+          <motion.div 
+            initial={{ scale: 0 }} 
+            animate={{ scale: 1 }} 
+            transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+            className="flex justify-center mb-6"
+          >
+            <div className="bg-blue-500/20 p-4 rounded-full">
+              <CheckCircle2 size={64} className="text-blue-500" />
+            </div>
+          </motion.div>
+          <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300 mb-4 tracking-tight">
+            Registration Successful!
+          </h2>
+          <p className="text-slate-400 leading-relaxed mb-8 text-lg">
             You have successfully registered for the "Speak English Without Fear" live session. See you on August 9th!
           </p>
-          <button onClick={() => navigate('/dashboard')} style={{ background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)', color: '#fff', border: 'none', padding: '1rem 2rem', borderRadius: 12, fontSize: '1rem', fontWeight: 700, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', boxShadow: '0 4px 15px rgba(59, 130, 246, 0.3)' }}>
-            Go to Dashboard <ChevronRight size={18} />
-          </button>
-        </div>
+          <motion.button 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => navigate('/dashboard')} 
+            className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white border-none py-4 px-8 rounded-xl text-lg font-bold shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all"
+          >
+            Go to Dashboard <ChevronRight size={20} />
+          </motion.button>
+        </motion.div>
       </div>
     );
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#020617', color: '#fff', fontFamily: "'Plus Jakarta Sans', sans-serif", paddingBottom: '4rem' }}>
+    <div className="min-h-[100dvh] bg-[#020617] text-white font-['Plus_Jakarta_Sans'] pb-20 relative overflow-hidden">
       
-      {/* Hero Section */}
-      <div style={{ padding: '4rem 2rem', textAlign: 'center', background: 'radial-gradient(circle at center top, rgba(37, 99, 235, 0.15) 0%, #020617 70%)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-        <div style={{ maxWidth: 800, margin: '0 auto' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
-            <div style={{ background: '#dc2626', padding: '0.3rem 0.6rem', borderRadius: 4, fontWeight: 900, letterSpacing: '0.05em', fontSize: '0.9rem' }}>NANO SKOOL</div>
-            <div style={{ width: 1, height: 20, background: 'rgba(255,255,255,0.2)' }} />
-            <div style={{ fontWeight: 800, color: '#3b82f6', letterSpacing: '0.05em', fontSize: '1rem' }}>GRACE<span style={{ color: '#fff' }}>&</span>FORCE.COM</div>
-          </div>
-          <h1 style={{ fontSize: '3.5rem', fontWeight: 900, letterSpacing: '-0.02em', background: 'linear-gradient(to right, #60a5fa, #fff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', margin: '0 0 0.5rem 0' }}>
-            SPEAK ENGLISH
-          </h1>
-          <h1 style={{ fontSize: '4.5rem', fontWeight: 900, letterSpacing: '-0.02em', background: 'linear-gradient(to right, #38bdf8, #bae6fd)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', margin: '0 0 1rem 0' }}>
-            WITHOUT FEAR!
-          </h1>
-          <div style={{ display: 'inline-block', background: 'linear-gradient(to right, #f97316, #ea580c)', padding: '0.5rem 1.5rem', borderRadius: 30, fontSize: '1rem', fontWeight: 700, letterSpacing: '0.05em', color: '#fff', marginBottom: '2rem' }}>
-            Parent-Child Confidence-Building Session
-          </div>
-          <p style={{ fontSize: '1.1rem', color: '#94a3b8', lineHeight: 1.6, maxWidth: 600, margin: '0 auto 2rem auto' }}>
-            Experience AI-Powered English Speaking Practice. Overcome hesitation, speak clearly, and build confidence!
-          </p>
-          
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1.5rem', marginTop: '2rem' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-              <div style={{ background: 'rgba(59, 130, 246, 0.1)', padding: '1rem', borderRadius: '50%', color: '#60a5fa' }}>
-                <Users size={24} />
-              </div>
-              <span style={{ fontSize: '0.9rem', fontWeight: 600 }}>Grades 3-8 & Parents</span>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-              <div style={{ background: 'rgba(59, 130, 246, 0.1)', padding: '1rem', borderRadius: '50%', color: '#60a5fa' }}>
-                <CheckCircle2 size={24} />
-              </div>
-              <span style={{ fontSize: '0.9rem', fontWeight: 600 }}>09 Aug 2026 • 4:00 PM</span>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-              <div style={{ background: 'rgba(59, 130, 246, 0.1)', padding: '1rem', borderRadius: '50%', color: '#60a5fa' }}>
-                <User size={24} />
-              </div>
-              <span style={{ fontSize: '0.9rem', fontWeight: 600 }}>Ms Sohini Roy Biswas</span>
-              <span style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: '-0.25rem' }}>English Faculty, 21K School</span>
-            </div>
-          </div>
-        </div>
+      {/* Animated Background Orbs */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <motion.div 
+          animate={{ x: [0, 50, 0], y: [0, 30, 0] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+          className="absolute -top-[10%] -left-[10%] w-[50%] h-[50%] bg-blue-600/10 rounded-full blur-[120px]" 
+        />
+        <motion.div 
+          animate={{ x: [0, -50, 0], y: [0, -30, 0] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute top-[20%] -right-[10%] w-[40%] h-[60%] bg-indigo-600/10 rounded-full blur-[120px]" 
+        />
+        <motion.div 
+          animate={{ x: [0, 30, 0], y: [0, -40, 0] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+          className="absolute bottom-0 left-[20%] w-[60%] h-[40%] bg-orange-600/5 rounded-full blur-[120px]" 
+        />
       </div>
 
-      {/* Form Section */}
-      <div style={{ maxWidth: 600, margin: '-2rem auto 0 auto', position: 'relative', zIndex: 10, padding: '0 1rem' }}>
-        <div style={{ background: 'rgba(15, 23, 42, 0.8)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 24, padding: '2.5rem', boxShadow: '0 20px 40px rgba(0,0,0,0.4)' }}>
-          <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-            <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#fff', marginBottom: '0.5rem' }}>Free Live Practical Session</h2>
-            <p style={{ color: '#94a3b8', fontSize: '0.95rem' }}>Register below to secure your spot via Zoom</p>
+      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 lg:gap-24 px-6 pt-16 lg:pt-24 items-center lg:items-start">
+        
+        {/* Hero Section */}
+        <motion.div 
+          variants={staggerContainer}
+          initial="hidden"
+          animate="visible"
+          className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left pt-4 lg:pt-12"
+        >
+          <motion.div variants={fadeInUp} className="flex items-center gap-4 mb-8">
+            <div className="bg-red-600 px-3 py-1 rounded shadow-lg shadow-red-600/20 font-black tracking-wider text-sm">
+              NANO SKOOL
+            </div>
+            <div className="w-px h-6 bg-white/20" />
+            <div className="font-extrabold text-blue-400 tracking-wider text-sm flex items-center gap-1">
+              GRACE<span className="text-white">&</span>FORCE.COM
+            </div>
+          </motion.div>
+          
+          <motion.h1 variants={fadeInUp} className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[1.1] mb-2">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-white block">SPEAK ENGLISH</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-sky-200 block">WITHOUT FEAR!</span>
+          </motion.h1>
+          
+          <motion.div variants={fadeInUp} className="mt-6 mb-8 inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-2.5 rounded-full font-bold text-sm md:text-base tracking-wide shadow-lg shadow-orange-500/20 border border-orange-400/30">
+            <Sparkles size={18} className="text-orange-200" />
+            Parent-Child Confidence-Building Session
+          </motion.div>
+          
+          <motion.p variants={fadeInUp} className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-xl font-medium">
+            Experience AI-Powered English Speaking Practice. Overcome hesitation, speak clearly, and build confidence together!
+          </motion.p>
+          
+          <motion.div variants={staggerContainer} className="flex flex-wrap justify-center lg:justify-start gap-8 mt-12">
+            {[
+              { icon: Users, label: "Grades 3-8 & Parents" },
+              { icon: CheckCircle2, label: "09 Aug 2026 • 4:00 PM" },
+              { icon: User, label: "Ms Sohini Roy Biswas", sub: "English Faculty, 21K School" }
+            ].map((feature, i) => (
+              <motion.div key={i} variants={fadeInUp} whileHover={{ y: -5 }} className="flex flex-col items-center lg:items-start gap-3">
+                <div className="bg-blue-500/10 p-3.5 rounded-2xl text-blue-400 border border-blue-500/20 shadow-lg shadow-blue-500/5">
+                  <feature.icon size={28} />
+                </div>
+                <div className="flex flex-col items-center lg:items-start">
+                  <span className="font-bold text-slate-200">{feature.label}</span>
+                  {feature.sub && <span className="text-xs text-slate-400 mt-1">{feature.sub}</span>}
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
+
+        {/* Form Section */}
+        <motion.div 
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.3, type: "spring" }}
+          className="w-full lg:w-1/2 max-w-md w-full shrink-0"
+        >
+          <div className="bg-slate-900/60 backdrop-blur-2xl border border-white/10 p-8 md:p-10 rounded-[2rem] shadow-[0_8px_32px_rgba(0,0,0,0.4)] relative">
+            
+            <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent rounded-[2rem] pointer-events-none" />
+
+            <div className="text-center mb-8 relative">
+              <h2 className="text-2xl font-black text-white mb-2">Free Live Practical Session</h2>
+              <p className="text-slate-400 text-sm font-medium">Register below to secure your spot via Zoom</p>
+            </div>
+
+            <form onSubmit={handleRegister} className="flex flex-col gap-5 relative">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <InputField label="Student Name" icon={User} name="studentName" value={form.studentName} onChange={v => setForm({...form, studentName: v})} placeholder="E.g. Rahul" />
+                <InputField label="Parent Name" icon={Users} name="parentName" value={form.parentName} onChange={v => setForm({...form, parentName: v})} placeholder="E.g. Amit" />
+              </div>
+
+              <InputField label="Email Address" icon={Mail} type="email" name="email" value={form.email} onChange={v => setForm({...form, email: v})} placeholder="parent@example.com" />
+              
+              <div className="flex flex-col gap-1.5 w-full">
+                <label className="text-[0.75rem] font-bold text-slate-400 uppercase tracking-wider pl-1">
+                  WhatsApp Number
+                </label>
+                <div className="flex gap-3">
+                  <div className="relative group w-28 shrink-0">
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl blur opacity-0 group-focus-within:opacity-30 transition-opacity duration-300" />
+                    <select 
+                      value={form.countryCode}
+                      onChange={e => setForm({...form, countryCode: e.target.value})}
+                      className="relative w-full h-full bg-slate-900/50 backdrop-blur-md border border-white/10 focus:border-blue-500/50 rounded-xl px-3 text-white text-base outline-none cursor-pointer appearance-none transition-colors"
+                    >
+                      {COUNTRY_CODES.map(c => (
+                        <option key={c.code} value={c.code} className="text-black">{c.code} {c.country}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="flex-1">
+                    <div className="relative group">
+                      <div className={`absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl blur transition-opacity duration-300 ${focusedInput === 'mobile' ? 'opacity-30' : 'opacity-0'}`} />
+                      <div className={`relative flex items-center bg-slate-900/50 backdrop-blur-md border ${focusedInput === 'mobile' ? 'border-blue-500/50' : 'border-white/10'} rounded-xl transition-colors duration-300 overflow-hidden`}>
+                        <div className={`pl-4 pr-3 py-3 transition-colors ${focusedInput === 'mobile' ? 'text-blue-400' : 'text-slate-400'}`}>
+                          <Phone size={18} />
+                        </div>
+                        <input
+                          type="tel"
+                          required
+                          value={form.mobile}
+                          onChange={e => setForm({...form, mobile: e.target.value})}
+                          onFocus={() => setFocusedInput('mobile')}
+                          onBlur={() => setFocusedInput(null)}
+                          placeholder="9876543210"
+                          className="w-full bg-transparent border-none py-3 pr-4 text-white placeholder-slate-600 outline-none text-base"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <InputField label="School Name" icon={School} name="schoolName" value={form.schoolName} onChange={v => setForm({...form, schoolName: v})} placeholder="Your School" />
+              
+              <InputField 
+                label="Grade" 
+                icon={GraduationCap} 
+                name="grade" 
+                value={form.grade} 
+                onChange={v => setForm({...form, grade: v})} 
+                placeholder="Select Grade (3-8)" 
+                isSelect={true}
+                options={[3,4,5,6,7,8].map(g => ({ value: String(g), label: `Grade ${g}` }))}
+              />
+
+              <AnimatePresence>
+                {errorMsg && (
+                  <motion.div 
+                    initial={{ opacity: 0, height: 0, y: -10 }}
+                    animate={{ opacity: 1, height: 'auto', y: 0 }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm font-semibold mt-2"
+                  >
+                    {errorMsg}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              <motion.button 
+                whileHover={!loading ? { scale: 1.02, boxShadow: "0 10px 25px -5px rgba(234, 88, 12, 0.4)" } : {}}
+                whileTap={!loading ? { scale: 0.98 } : {}}
+                type="submit" 
+                disabled={loading}
+                className={`w-full mt-4 py-4 rounded-xl text-white font-black text-lg flex items-center justify-center gap-2 transition-all ${
+                  loading ? 'bg-slate-700 cursor-not-allowed opacity-70' : 'bg-gradient-to-r from-orange-600 to-orange-500 shadow-lg shadow-orange-500/20 border border-orange-400/30'
+                }`}
+              >
+                {loading ? (
+                  <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                ) : (
+                  <>Register Free via ZOOM <ArrowRight size={20} /></>
+                )}
+              </motion.button>
+            </form>
           </div>
-
-          <form onSubmit={handleRegister} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-              <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Student Name</label>
-                <div style={{ position: 'relative' }}>
-                  <User size={18} color="#64748b" style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)' }} />
-                  <input 
-                    type="text" 
-                    required 
-                    value={form.studentName}
-                    onChange={e => setForm({...form, studentName: e.target.value})}
-                    placeholder="E.g. Rahul Kumar"
-                    style={{ width: '100%', padding: '0.875rem 1rem 0.875rem 3rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, color: '#fff', fontSize: '1rem', outline: 'none' }}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Parent Name</label>
-                <div style={{ position: 'relative' }}>
-                  <Users size={18} color="#64748b" style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)' }} />
-                  <input 
-                    type="text" 
-                    required 
-                    value={form.parentName}
-                    onChange={e => setForm({...form, parentName: e.target.value})}
-                    placeholder="E.g. Amit Kumar"
-                    style={{ width: '100%', padding: '0.875rem 1rem 0.875rem 3rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, color: '#fff', fontSize: '1rem', outline: 'none' }}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Email Address</label>
-              <div style={{ position: 'relative' }}>
-                <Mail size={18} color="#64748b" style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)' }} />
-                <input 
-                  type="email" 
-                  required 
-                  value={form.email}
-                  onChange={e => setForm({...form, email: e.target.value})}
-                  placeholder="parent@example.com"
-                  style={{ width: '100%', padding: '0.875rem 1rem 0.875rem 3rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, color: '#fff', fontSize: '1rem', outline: 'none' }}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>WhatsApp Number</label>
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <select 
-                  value={form.countryCode}
-                  onChange={e => setForm({...form, countryCode: e.target.value})}
-                  style={{ width: '100px', padding: '0.875rem 0.5rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, color: '#fff', fontSize: '1rem', outline: 'none', cursor: 'pointer' }}
-                >
-                  {COUNTRY_CODES.map(c => (
-                    <option key={c.code} value={c.code} style={{ color: '#000' }}>{c.code} {c.country}</option>
-                  ))}
-                </select>
-                <div style={{ position: 'relative', flex: 1 }}>
-                  <Phone size={18} color="#64748b" style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)' }} />
-                  <input 
-                    type="tel" 
-                    required 
-                    value={form.mobile}
-                    onChange={e => setForm({...form, mobile: e.target.value})}
-                    placeholder="9876543210"
-                    style={{ width: '100%', padding: '0.875rem 1rem 0.875rem 3rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, color: '#fff', fontSize: '1rem', outline: 'none' }}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>School Name</label>
-              <div style={{ position: 'relative' }}>
-                <School size={18} color="#64748b" style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)' }} />
-                <input 
-                  type="text" 
-                  required 
-                  value={form.schoolName}
-                  onChange={e => setForm({...form, schoolName: e.target.value})}
-                  placeholder="Your School"
-                  style={{ width: '100%', padding: '0.875rem 1rem 0.875rem 3rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, color: '#fff', fontSize: '1rem', outline: 'none' }}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Grade</label>
-              <div style={{ position: 'relative' }}>
-                <GraduationCap size={18} color="#64748b" style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)' }} />
-                <select 
-                  required
-                  value={form.grade}
-                  onChange={e => setForm({...form, grade: e.target.value})}
-                  style={{ width: '100%', padding: '0.875rem 1rem 0.875rem 3rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, color: form.grade ? '#fff' : '#64748b', fontSize: '1rem', outline: 'none', appearance: 'none', cursor: 'pointer' }}
-                >
-                  <option value="" disabled>Select Grade (3 to 8 only)</option>
-                  <option value="3" style={{ color: '#000' }}>Grade 3</option>
-                  <option value="4" style={{ color: '#000' }}>Grade 4</option>
-                  <option value="5" style={{ color: '#000' }}>Grade 5</option>
-                  <option value="6" style={{ color: '#000' }}>Grade 6</option>
-                  <option value="7" style={{ color: '#000' }}>Grade 7</option>
-                  <option value="8" style={{ color: '#000' }}>Grade 8</option>
-                </select>
-              </div>
-            </div>
-
-            {errorMsg && (
-              <div style={{ padding: '0.75rem', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)', borderRadius: 8, color: '#ef4444', fontSize: '0.85rem', fontWeight: 500 }}>
-                {errorMsg}
-              </div>
-            )}
-
-            <button 
-              type="submit" 
-              disabled={loading}
-              style={{ width: '100%', padding: '1rem', background: 'linear-gradient(to right, #ea580c, #f97316)', color: '#fff', border: 'none', borderRadius: 12, fontSize: '1.1rem', fontWeight: 800, cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.7 : 1, marginTop: '0.5rem', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', boxShadow: '0 4px 15px rgba(234, 88, 12, 0.4)' }}
-            >
-              {loading ? 'Processing...' : 'Register Free at GraceandForce.com'}
-            </button>
-          </form>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
