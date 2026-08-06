@@ -44,6 +44,15 @@ const pythonQueue = new ExecutionQueue(20); // Max 20 concurrent python processe
 
 const app = express();
 
+const PORT = process.env.PORT || 5000;
+
+app.use(cors());
+app.use(express.json({
+  verify: (req, res, buf) => {
+    req.rawBody = buf;
+  }
+}));
+
 // SECTION: English Session Registrations
 
 app.post('/api/english-session/register', async (req, res) => {
@@ -62,6 +71,15 @@ app.post('/api/english-session/register', async (req, res) => {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
+
+    const checkRes = await db.query(
+      `SELECT id FROM english_session_registrations WHERE email = $1 OR mobile = $2`,
+      [email, mobile]
+    );
+
+    if (checkRes.rows.length > 0) {
+      return res.status(400).json({ error: 'You have already registered for this session.' });
+    }
 
     const result = await db.query(
       `INSERT INTO english_session_registrations (user_id, student_name, parent_name, email, mobile, school_name, grade)
@@ -149,14 +167,6 @@ app.get('/api/freedom-quiz/registrations', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 5000;
-
-app.use(cors());
-app.use(express.json({
-  verify: (req, res, buf) => {
-    req.rawBody = buf;
-  }
-}));
 
 // Speech Coach Routes
 app.use('/api/speech', require('./api/speech_coach'));
