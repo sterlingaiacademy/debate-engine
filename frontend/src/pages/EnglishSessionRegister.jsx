@@ -2,29 +2,22 @@ import React, { useState } from 'react';
 import { User, Users, Phone, Mail, GraduationCap, School, CheckCircle, Sparkles, MoveRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const COUNTRY_CODES = [
-  { code: '+91', country: 'India' },
-  { code: '+971', country: 'UAE' },
-  { code: '+1', country: 'USA/Canada' },
-  { code: '+44', country: 'UK' },
-  { code: '+61', country: 'Australia' },
-  { code: '+65', country: 'Singapore' },
-  { code: '+974', country: 'Qatar' },
-  { code: '+966', country: 'Saudi Arabia' },
-  { code: '+968', country: 'Oman' },
-  { code: '+973', country: 'Bahrain' },
-  { code: '+965', country: 'Kuwait' }
-];
+import { API_BASE } from '../api';
+import { COUNTRY_CODES } from '../countryCodes';
 
-export default function EnglishSessionRegister() {
+export default function EnglishSessionRegister({ user }) {
+  // Only pre-fill grade if it's a valid number between 3 and 8
+  const initialGrade = (user?.grade || user?.classLevel || '').toString();
+  const validGrade = ['3', '4', '5', '6', '7', '8'].includes(initialGrade) ? initialGrade : '';
+
   const [form, setForm] = useState({
-    studentName: '',
+    studentName: user?.name || '',
     parentName: '',
-    mobile: '',
+    mobile: user?.phone || user?.mobile || '',
     countryCode: '+91',
-    email: '',
-    schoolName: '',
-    grade: ''
+    email: user?.email || '',
+    schoolName: user?.schoolName || user?.school || '',
+    grade: validGrade
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -36,21 +29,24 @@ export default function EnglishSessionRegister() {
     setErrorMsg('');
 
     try {
-      const response = await fetch('https://script.google.com/macros/s/AKfycbyfE9K21v8-K82W17C32R2oU2iB5WJ8R9u9g1YyU-X9T6qO1G9c0v9sZ8/exec', {
+      const res = await fetch(`${API_BASE}/api/english-session/register`, {
         method: 'POST',
-        body: new URLSearchParams({
-          formType: 'english_session',
-          ...form,
-          fullMobile: `${form.countryCode}${form.mobile}`
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user?.studentId || user?.username || null,
+          studentName: form.studentName,
+          parentName: form.parentName,
+          email: form.email,
+          mobile: `${form.countryCode} ${form.mobile.trim()}`,
+          schoolName: form.schoolName,
+          grade: form.grade,
+        }),
       });
       
-      const result = await response.json();
-      if (result.result === 'success') {
-        setSuccess(true);
-      } else {
-        throw new Error(result.error || 'Failed to register');
-      }
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to register');
+
+      setSuccess(true);
     } catch (err) {
       setErrorMsg(err.message || 'Network error. Please try again.');
     } finally {
