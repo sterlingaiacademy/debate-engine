@@ -47,7 +47,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
     pathname.includes('/speech-coach') ||
     pathname.includes('/speech-analysis');
 
-  const isFullWidthRoute = pathname.includes('/ito-register') || pathname.includes('/mini-mun') || pathname.includes('/indus-mun') || pathname.includes('/english-session');
+  const isFullWidthRoute = pathname.includes('/ito-register') || pathname.includes('/mini-mun') || pathname.includes('/indus-mun') || pathname.includes('/english-session') || pathname.includes('/freedom-quiz');
 
   const getNormalizedLevel = (cls) => {
     if (!cls) return 'Level 1';
