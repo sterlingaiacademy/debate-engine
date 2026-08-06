@@ -3,7 +3,6 @@
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import { cn } from "../../lib/utils";
 
 export const AnimatedTestimonials = ({
   testimonials,
@@ -36,10 +35,10 @@ export const AnimatedTestimonials = ({
   };
 
   return (
-    <div className={cn("max-w-sm md:max-w-4xl mx-auto px-4 md:px-8 lg:px-12 py-20", className)}>
-      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-20">
+    <div style={{ maxWidth: '900px', margin: '0 auto', padding: '5rem 2rem' }} className={className}>
+      <div style={{ position: 'relative', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '5rem', alignItems: 'center' }}>
         <div>
-          <div className="relative h-80 w-full">
+          <div style={{ position: 'relative', height: '20rem', width: '100%' }}>
             <AnimatePresence>
               {testimonials.map((testimonial, index) => (
                 <motion.div
@@ -70,35 +69,39 @@ export const AnimatedTestimonials = ({
                     duration: 0.4,
                     ease: "easeInOut",
                   }}
-                  className="absolute inset-0 origin-bottom"
+                  style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, transformOrigin: 'bottom' }}
                 >
                   <img
                     src={testimonial.src}
                     alt={testimonial.name}
                     draggable={false}
-                    className="h-full w-full rounded-3xl object-cover object-center"
+                    style={{ height: '100%', width: '100%', borderRadius: '1.5rem', objectFit: 'cover', objectPosition: 'center' }}
                   />
                 </motion.div>
               ))}
             </AnimatePresence>
           </div>
           
-          <div className="flex gap-4 mt-8 justify-center">
+          <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem', justifyContent: 'center' }}>
             <button
               onClick={handlePrev}
-              className="h-10 w-10 rounded-full bg-slate-800 border-2 border-slate-300 flex items-center justify-center group/button hover:scale-105 transition-transform"
+              style={{ height: '2.5rem', width: '2.5rem', borderRadius: '50%', backgroundColor: '#1e293b', border: '2px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'transform 0.2s' }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
-              <IconArrowLeft className="h-5 w-5 text-slate-100 group-hover/button:-rotate-12 transition-transform duration-300" />
+              <IconArrowLeft style={{ height: '1.25rem', width: '1.25rem', color: '#f1f5f9' }} />
             </button>
             <button
               onClick={handleNext}
-              className="h-10 w-10 rounded-full bg-slate-800 border-2 border-slate-300 flex items-center justify-center group/button hover:scale-105 transition-transform"
+              style={{ height: '2.5rem', width: '2.5rem', borderRadius: '50%', backgroundColor: '#1e293b', border: '2px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'transform 0.2s' }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
-              <IconArrowRight className="h-5 w-5 text-slate-100 group-hover/button:rotate-12 transition-transform duration-300" />
+              <IconArrowRight style={{ height: '1.25rem', width: '1.25rem', color: '#f1f5f9' }} />
             </button>
           </div>
         </div>
-        <div className="flex justify-between flex-col py-4">
+        <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', padding: '1rem 0' }}>
           <motion.div
             key={active}
             initial={{
@@ -118,13 +121,13 @@ export const AnimatedTestimonials = ({
               ease: "easeInOut",
             }}
           >
-            <h3 className="text-2xl font-bold text-slate-100">
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#f1f5f9', margin: '0 0 0.25rem 0' }}>
               {testimonials[active].name}
             </h3>
-            <p className="text-sm text-slate-400">
+            <p style={{ fontSize: '0.875rem', color: '#94a3b8', margin: 0 }}>
               {testimonials[active].designation}
             </p>
-            <motion.p className="text-lg text-slate-300 mt-8">
+            <motion.p style={{ fontSize: '1.125rem', color: '#cbd5e1', marginTop: '2rem', lineHeight: 1.6 }}>
               {testimonials[active].quote.split(" ").map((word, index) => (
                 <motion.span
                   key={index}
@@ -143,7 +146,7 @@ export const AnimatedTestimonials = ({
                     ease: "easeInOut",
                     delay: 0.02 * index,
                   }}
-                  className="inline-block"
+                  style={{ display: 'inline-block' }}
                 >
                   {word}&nbsp;
                 </motion.span>

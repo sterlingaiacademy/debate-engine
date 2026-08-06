@@ -14,7 +14,9 @@ const filesToDeploy = [
   'frontend/src/pages/OlympiadArena.jsx',
   'frontend/src/pages/AdminDashboard.jsx',
   'frontend/src/pages/Login.jsx',
-  'frontend/src/pages/Register.jsx'
+  'frontend/src/pages/Register.jsx',
+  'frontend/src/pages/EnglishSessionRegister.jsx',
+  'frontend/src/components/ui/animated-testimonials.jsx'
 ];
 
 conn.on('ready', () => {
