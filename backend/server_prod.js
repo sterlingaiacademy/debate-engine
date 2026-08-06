@@ -83,15 +83,6 @@ app.post('/api/english-session/register', async (req, res) => {
       )
     `);
 
-    const checkRes = await db.query(
-      `SELECT id FROM english_session_registrations WHERE email = $1 OR mobile = $2`,
-      [email, mobile]
-    );
-
-    if (checkRes.rows.length > 0) {
-      return res.status(400).json({ error: 'You have already registered for this session.' });
-    }
-
     const result = await db.query(
       `INSERT INTO english_session_registrations (user_id, student_name, parent_name, email, mobile, school_name, grade)
        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,

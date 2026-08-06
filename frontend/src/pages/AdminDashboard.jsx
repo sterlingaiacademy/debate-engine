@@ -1187,17 +1187,7 @@ function EnglishSessionSection({ adminToken, apiBase }) {
       ) : (
         <div style={{ overflowX: 'auto', background: 'rgba(30, 41, 59, 0.4)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.05)' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-            <thead>
-              <TableRow isHeader>
-                <TableHead>Student Name</TableHead>
-                <TableHead>Parent Name</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Mobile</TableHead>
-                <TableHead>School</TableHead>
-                <TableHead>Grade</TableHead>
-                <TableHead>Date</TableHead>
-              </TableRow>
-            </thead>
+            <TableHead cols={['Student Name', 'Parent Name', 'Email', 'Mobile', 'School', 'Grade', 'Date']} />
             <tbody>
               {data.map((r, i) => (
                 <TableRow key={i}>
@@ -1274,16 +1264,7 @@ function FreedomQuizSection({ adminToken, apiBase }) {
       ) : (
         <div style={{ overflowX: 'auto', background: 'rgba(30, 41, 59, 0.4)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.05)' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-            <thead>
-              <TableRow isHeader>
-                <TableHead>Full Name</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Mobile</TableHead>
-                <TableHead>City / State</TableHead>
-                <TableHead>Age</TableHead>
-                <TableHead>Date</TableHead>
-              </TableRow>
-            </thead>
+            <TableHead cols={['Full Name', 'Email', 'Mobile', 'City / State', 'Age', 'Date']} />
             <tbody>
               {data.map((r, i) => (
                 <TableRow key={i}>

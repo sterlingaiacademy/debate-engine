@@ -72,13 +72,9 @@ app.post('/api/english-session/register', async (req, res) => {
       )
     `);
 
-    const checkRes = await db.query(
-      `SELECT id FROM english_session_registrations WHERE email = $1 OR mobile = $2`,
-      [email, mobile]
-    );
-
-    if (checkRes.rows.length > 0) {
-      return res.status(400).json({ error: 'You have already registered for this session.' });
+    const existing = await db.query('SELECT id FROM english_session_registrations WHERE email = $1', [email]);
+    if (existing.rows.length > 0) {
+      return res.status(400).json({ error: 'You have already registered for this event.' });
     }
 
     const result = await db.query(
@@ -133,6 +129,11 @@ app.post('/api/freedom-quiz/register', async (req, res) => {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
+
+    const existing = await db.query('SELECT id FROM freedom_quiz_registrations WHERE email = $1', [email]);
+    if (existing.rows.length > 0) {
+      return res.status(400).json({ error: 'You have already registered for this event.' });
+    }
 
     const result = await db.query(
       `INSERT INTO freedom_quiz_registrations (user_id, full_name, email, mobile, city, age)
@@ -3046,6 +3047,12 @@ app.post('/api/indusmun/register', async (req, res) => {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
+
+    const existing = await db.query('SELECT id FROM indus_mun_registrations WHERE email = $1', [email]);
+    if (existing.rows.length > 0) {
+      return res.status(400).json({ error: 'You have already registered for this event.' });
+    }
+
     const result = await db.query(
       `INSERT INTO indus_mun_registrations (user_id, student_name, email, mobile, school_name, grade)
        VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
