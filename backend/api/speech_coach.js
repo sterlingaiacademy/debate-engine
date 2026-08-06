@@ -72,7 +72,8 @@ router.post('/analyze', upload.single('audio'), async (req, res) => {
 You are an expert, strict public speaking coach. Analyze the following speech transcript and provide detailed, actionable feedback.
 The student spoke for ${durationSeconds} seconds on the topic: "${topic}".
 
-CRITICAL INSTRUCTION: First, determine if the speech is completely unrelated, gibberish, or off-topic. If the transcript is entirely off-topic or doesn't make any sense regarding the prompt, you MUST give a total score of 0, and 0 for ALL detailed scores. 
+CRITICAL INSTRUCTION 1: First, determine if the speech is completely unrelated, gibberish, or off-topic. If the transcript is entirely off-topic or doesn't make any sense regarding the prompt, you MUST give a total score of 0, and 0 for ALL detailed scores. 
+CRITICAL INSTRUCTION 2: Be EXTREMELY STRICT about length and substance. If the transcript is shorter than 2-3 full sentences OR if it completely lacks substantive content about the topic (e.g. generic statements like "I think there has been a great achievement"), you MUST give a total score of 0, and 0 for ALL detailed scores. Do NOT give any pity points for grammar or syntax if there is no substantive content.
 Otherwise, evaluate it strictly on a scale of 0-100 for overall quality, and provide a detailed breakdown based on this exact rubric:
 - Content and Ideas (max 20)
 - Relevance to Topic (max 15)
