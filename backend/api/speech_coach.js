@@ -118,8 +118,7 @@ Transcript:
       });
       
       const responseText = message.content[0].text;
-      // In case Claude includes markdown formatting like \`\`\`json ... \`\`\`
-      const cleanJson = responseText.replace(/\`\`\`json\n?|\n?\`\`\`/g, '').trim();
+      const cleanJson = responseText.replace(/```json\n?|\n?```/g, '').trim();
       aiAnalysis = JSON.parse(cleanJson);
     } catch (e) {
       console.error('Claude API failed for analysis, using fallback:', e.message);
@@ -139,6 +138,22 @@ Transcript:
         areasForImprovement: ["Reduce filler words", "Add more vocal variety"],
         overallFeedback: 'Your API key is restricted or invalid, so this is a placeholder analysis. However, you spoke clearly and your pacing was generally good! Make sure to verify your Anthropic API key.'
       };
+    }
+
+    // STRICT OVERRIDE: Force 0 if the speech is far too short or lacks substance
+    if (wordCount < 15 || durationSeconds < 10) {
+      aiAnalysis.score = 0;
+      aiAnalysis.scores = {
+        contentAndIdeas: 0,
+        relevanceToTopic: 0,
+        organisationAndStructure: 0,
+        fluency: 0,
+        voiceModulationAndExpression: 0,
+        languageAndVocabulary: 0,
+        pronunciationAndClarity: 0,
+        timeManagement: 0
+      };
+      // Keep the AI's feedback so the user understands why it was too short
     }
 
     const result = {
