@@ -141,7 +141,7 @@ Transcript:
     }
 
     // STRICT OVERRIDE: Force 0 if the speech is far too short or lacks substance
-    if (wordCount < 15 || durationSeconds < 10) {
+    if (wordCount < 40 || durationSeconds < 30) {
       aiAnalysis.score = 0;
       aiAnalysis.scores = {
         contentAndIdeas: 0,
