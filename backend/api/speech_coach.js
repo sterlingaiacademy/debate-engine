@@ -69,9 +69,11 @@ router.post('/analyze', upload.single('audio'), async (req, res) => {
     // Step 3: Analyze with Claude
     console.log('Analyzing with Claude...');
     const prompt = `
-You are an expert public speaking coach. Analyze the following speech transcript and provide detailed, actionable feedback.
+You are an expert, strict public speaking coach. Analyze the following speech transcript and provide detailed, actionable feedback.
 The student spoke for ${durationSeconds} seconds on the topic: "${topic}".
-Evaluate it on a scale of 0-100 for overall quality, and provide a detailed breakdown based on this exact rubric:
+
+CRITICAL INSTRUCTION: First, determine if the speech is completely unrelated, gibberish, or off-topic. If the transcript is entirely off-topic or doesn't make any sense regarding the prompt, you MUST give a total score of 0, and 0 for ALL detailed scores. 
+Otherwise, evaluate it strictly on a scale of 0-100 for overall quality, and provide a detailed breakdown based on this exact rubric:
 - Content and Ideas (max 20)
 - Relevance to Topic (max 15)
 - Organisation and Structure (max 15)
@@ -106,7 +108,7 @@ Transcript:
     let aiAnalysis;
     try {
       const message = await anthropic.messages.create({
-        model: "claude-haiku-4-5",
+        model: "claude-3-5-sonnet-latest",
         max_tokens: 1024,
         system: "You are an expert public speaking coach. Always respond with only valid JSON.",
         messages: [
@@ -207,7 +209,7 @@ Format strictly as JSON:
     let result;
     try {
       const message = await anthropic.messages.create({
-        model: "claude-haiku-4-5",
+        model: "claude-3-5-sonnet-latest",
         max_tokens: 500,
         system: "You are an expert public speaking coach. Always respond with only valid JSON.",
         messages: [
