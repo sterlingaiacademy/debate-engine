@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { User, Users, Phone, Mail, GraduationCap, School, CheckCircle, Sparkles, MoveRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import resourcePersonImg from '../assets/resource_person.png';
 
 const COUNTRY_CODES = [
   { code: '+91', country: 'India' },
@@ -172,9 +173,9 @@ export default function EnglishSessionRegister() {
                 <CheckCircle size={24} color="#94a3b8" />
                 <span style={{ fontWeight: 700, fontSize: '1rem' }}>09 Aug 2026 • 4:00 PM</span>
              </div>
-             <div className="flex flex-col items-center gap-2">
-                <User size={24} color="#94a3b8" />
-                <div className="flex flex-col items-center">
+             <div className="flex flex-col items-center gap-3">
+                <img src={resourcePersonImg} alt="Ms Sohini Roy Biswas" style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover', border: '2px solid rgba(255,107,0,0.5)', padding: '2px', background: 'rgba(255,255,255,0.05)' }} />
+                <div className="flex flex-col items-center gap-0.5">
                   <span style={{ fontWeight: 700, fontSize: '1rem' }}>Ms Sohini Roy Biswas</span>
                   <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>English Faculty, 21K School</span>
                 </div>
