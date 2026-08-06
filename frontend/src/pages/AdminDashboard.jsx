@@ -16,6 +16,7 @@ const SECTIONS = [
   { id: 'indusmun', label: 'Indus MUN' },
   { id: 'munmentor', label: 'MUN Mentor' },
   { id: 'english', label: 'English Session' },
+  { id: 'speech_analysis', label: 'Speech Analysis' },
   { id: 'freedom', label: 'Freedom Challenge' },
   { id: 'coupons', label: 'School Coupons' },
   { id: 'ito', label: 'Teachers\' Olympiad' },
@@ -219,7 +220,7 @@ function OverviewSection({ stats }) {
         </div>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-            <TableHead cols={['Name', 'Username', 'Email', 'Level', 'Plan', 'Joined']} />
+            <TableHead cols={['Name', 'Username', 'Email', 'Level', 'Grade', 'Speech Score', 'Plan', 'Joined']} />
             <tbody>
               {stats.recentUsers.map((u, i) => (
                 <TableRow key={u.studentId} idx={i}>
@@ -227,6 +228,8 @@ function OverviewSection({ stats }) {
                   <TD mono>{u.studentId}</TD>
                   <TD>{u.email || '—'}</TD>
                   <TD>{u.classLevel}</TD>
+                  <TD>{u.grade || '—'}</TD>
+                  <TD>{u.max_speech_score || '—'}</TD>
                   <TD><PlanBadge plan={u.subscription_plan} /></TD>
                   <TD>{fmtDate(u.createdAt)}</TD>
                 </TableRow>
@@ -242,13 +245,13 @@ function OverviewSection({ stats }) {
 // ══════════════════════════════════════════════════
 // SECTION: Users (full paginated table)
 // ══════════════════════════════════════════════════
-function UsersSection({ adminToken, apiBase }) {
+function UsersSection({ adminToken, apiBase, speechOnly = false }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const [planFilter, setPlanFilter] = useState('all');
-  const [levelFilter, setLevelFilter] = useState('all');
+  const [gradeFilter, setGradeFilter] = useState('all');
   const [searchInput, setSearchInput] = useState('');
 
   const fetchUsers = useCallback(async () => {
@@ -257,7 +260,8 @@ function UsersSection({ adminToken, apiBase }) {
       const params = new URLSearchParams({ page, limit: 20 });
       if (search) params.set('search', search);
       if (planFilter !== 'all') params.set('plan', planFilter);
-      if (levelFilter !== 'all') params.set('level', levelFilter);
+      if (gradeFilter !== 'all') params.set('grade', gradeFilter);
+      if (speechOnly) params.set('speechOnly', 'true');
       const res = await fetch(`${apiBase}/api/admin/users?${params}`, {
         headers: { Authorization: `Bearer ${adminToken}` }
       });
@@ -265,13 +269,13 @@ function UsersSection({ adminToken, apiBase }) {
       setData(d);
     } catch (e) { console.error(e); }
     setLoading(false);
-  }, [page, search, planFilter, levelFilter, adminToken, apiBase]);
+  }, [page, search, planFilter, gradeFilter, adminToken, apiBase, speechOnly]);
 
   useEffect(() => { fetchUsers(); }, [fetchUsers]);
 
   return (
     <div>
-      <SectionTitle>All Users</SectionTitle>
+      <SectionTitle>{speechOnly ? 'Speech Analysis Scores' : 'All Users'}</SectionTitle>
 
       {/* Filters */}
       <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.25rem', flexWrap: 'wrap', alignItems: 'center' }}>
@@ -293,10 +297,10 @@ function UsersSection({ adminToken, apiBase }) {
           <option value="pro">Pro</option>
           <option value="max">Max</option>
         </select>
-        <select value={levelFilter} onChange={e => { setLevelFilter(e.target.value); setPage(1); }}
+        <select value={gradeFilter} onChange={e => { setGradeFilter(e.target.value); setPage(1); }}
           style={{ padding: '0.55rem 0.9rem', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, color: '#fff', fontSize: '0.875rem', cursor: 'pointer', outline: 'none' }}>
-          <option value="all">All Levels</option>
-          {['Level 1','Level 2','Level 3','Level 4','Level 5'].map(l => <option key={l} value={l}>{l}</option>)}
+          <option value="all">All Grades</option>
+          {['KG', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'Class 6', 'Class 7', 'Class 8', 'Class 9', 'Class 10', 'Class 11', 'Class 12', 'Professional', 'Other'].map(g => <option key={g} value={g}>{g}</option>)}
         </select>
         {data && <span style={{ color: '#64748b', fontSize: '0.82rem', marginLeft: 'auto' }}>{data.total} users</span>}
       </div>
@@ -307,7 +311,7 @@ function UsersSection({ adminToken, apiBase }) {
         ) : (
           <div style={{ overflowX: 'auto' }}>
             <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-              <TableHead cols={['Name', 'Username', 'Email', 'Phone', 'Level', 'Grade', 'Speech Score', 'Plan', 'Status', 'Period', 'Joined']} />
+              <TableHead cols={['Name', 'Username', 'Email', 'Phone', 'Grade', 'Speech Score', 'Plan', 'Status', 'Period', speechOnly ? 'Analyzed' : 'Joined']} />
               <tbody>
                 {data?.users?.map((u, i) => (
                   <TableRow key={u.studentId} idx={i}>
@@ -315,13 +319,12 @@ function UsersSection({ adminToken, apiBase }) {
                     <TD mono>{u.studentId}</TD>
                     <TD>{u.email || '—'}</TD>
                     <TD mono>{u.phone || '—'}</TD>
-                    <TD>{u.classLevel}</TD>
                     <TD>{u.grade || '—'}</TD>
                     <TD>{u.max_speech_score || '—'}</TD>
                     <TD><PlanBadge plan={u.subscription_plan} /></TD>
                     <TD><StatusDot status={u.subscription_status} /></TD>
                     <TD>{u.subscription_period || '—'}</TD>
-                    <TD>{fmtDate(u.createdAt)}</TD>
+                    <TD>{fmtDate(speechOnly ? (u.speech_date || u.createdAt) : u.createdAt)}</TD>
                   </TableRow>
                 ))}
                 {!data?.users?.length && (
@@ -512,7 +515,7 @@ function BootcampSection({ stats, adminToken, apiBase }) {
         ) : (
           <div style={{ overflowX: 'auto' }}>
             <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-              <TableHead cols={['Name', 'Email', 'Phone', 'School', 'Grade', 'City', 'Category', 'Status', 'Amount', 'Registered']} />
+              <TableHead cols={['Name', 'Email', 'Phone', 'School', 'Grade', 'City', 'Category', 'Status', 'Speech Score', 'Amount', 'Registered']} />
               <tbody>
                 {data?.registrations?.map((r, i) => (
                   <TableRow key={r.id} idx={i}>
@@ -532,11 +535,12 @@ function BootcampSection({ stats, adminToken, apiBase }) {
                         {r.payment_status}
                       </span>
                     </TD>
+                    <TD>{r.max_speech_score || 0}</TD>
                     <TD>₹{((r.amount || 0) / 100).toFixed(0)}</TD>
                     <TD>{fmtDate(r.registered_at)}</TD>
                   </TableRow>
                 ))}
-                {!data?.registrations?.length && <tr><td colSpan={10} style={{ textAlign: 'center', padding: '2rem', color: '#64748b' }}>No registrations found</td></tr>}
+                {!data?.registrations?.length && <tr><td colSpan={11} style={{ textAlign: 'center', padding: '2rem', color: '#64748b' }}>No registrations found</td></tr>}
               </tbody>
             </table>
           </div>
@@ -663,11 +667,11 @@ function QuizSection({ adminToken, apiBase }) {
       <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-            <TableHead cols={['#', 'Full Name', 'Email', 'Mobile', 'Class/Grade', 'School', 'City', 'Registered At']} />
+            <TableHead cols={['#', 'Full Name', 'Email', 'Mobile', 'Class/Grade', 'School', 'City', 'Speech Score', 'Registered At']} />
             <tbody>
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={8} style={{ textAlign: 'center', padding: '2.5rem', color: '#475569' }}>
+                  <td colSpan={9} style={{ textAlign: 'center', padding: '2.5rem', color: '#475569' }}>
                     {search ? 'No results matching your search.' : 'No registrations yet.'}
                   </td>
                 </tr>
@@ -680,6 +684,7 @@ function QuizSection({ adminToken, apiBase }) {
                   <TD>{r.class_grade}</TD>
                   <TD>{r.school_name}</TD>
                   <TD>{r.city || '—'}</TD>
+                  <TD>{r.max_speech_score || 0}</TD>
                   <TD>{fmtDate(r.registered_at)}</TD>
                 </TableRow>
               ))}
@@ -734,7 +739,7 @@ function MunMentorSection({ adminToken, apiBase }) {
         ) : (
           <div style={{ overflowX: 'auto' }}>
             <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-              <TableHead cols={['Name', 'Email', 'Phone', 'Role', 'Experience', 'School/Inst.', 'City', 'Status', 'Registered']} />
+              <TableHead cols={['Name', 'Email', 'Phone', 'Role', 'Experience', 'School/Inst.', 'City', 'Speech Score', 'Status', 'Registered']} />
               <tbody>
                 {regs.map((r, i) => (
                   <TableRow key={r.id} idx={i}>
@@ -742,9 +747,10 @@ function MunMentorSection({ adminToken, apiBase }) {
                     <TD>{r.email || '—'}</TD>
                     <TD mono>{r.mobile}</TD>
                     <TD>{r.role || '—'}</TD>
-                    <TD>{r.experience_years || '—'}</TD>
+                    <TD>{r.experience_years ? `${r.experience_years} yrs` : '—'}</TD>
                     <TD>{r.school_name || '—'}</TD>
                     <TD>{r.city || '—'}</TD>
+                    <TD>{r.max_speech_score || 0}</TD>
                     <TD>
                       <span style={{ padding: '2px 8px', borderRadius: 99, fontSize: '0.72rem', fontWeight: 700,
                         background: r.payment_status === 'paid' ? 'rgba(16,185,129,0.12)' : 'rgba(245,158,11,0.12)',
@@ -757,7 +763,7 @@ function MunMentorSection({ adminToken, apiBase }) {
                     <TD>{fmtDate(r.registered_at)}</TD>
                   </TableRow>
                 ))}
-                {!regs.length && <tr><td colSpan={9} style={{ textAlign: 'center', padding: '2rem', color: '#64748b' }}>No paid registrations found</td></tr>}
+                {!regs.length && <tr><td colSpan={10} style={{ textAlign: 'center', padding: '2rem', color: '#64748b' }}>No paid registrations found</td></tr>}
               </tbody>
             </table>
           </div>
@@ -841,7 +847,7 @@ function MiniMunSection({ adminToken, apiBase }) {
         ) : (
           <div style={{ overflowX: 'auto' }}>
             <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-              <TableHead cols={['Name', 'Email', 'Phone', 'Category', 'Grade/Desig', 'School/Inst.', 'City', 'Status', 'Module', 'Registered']} />
+              <TableHead cols={['Name', 'Email', 'Phone', 'Category', 'Grade/Desig', 'School/Inst.', 'City', 'Speech Score', 'Status', 'Module', 'Registered']} />
               <tbody>
                 {regs.map((r, i) => (
                   <TableRow key={r.id} idx={i}>
@@ -852,6 +858,7 @@ function MiniMunSection({ adminToken, apiBase }) {
                     <TD>{r.grade || '—'}</TD>
                     <TD>{r.school_name || '—'}</TD>
                     <TD>{r.city || '—'}</TD>
+                    <TD>{r.max_speech_score || 0}</TD>
                     <TD>
                       <span style={{ padding: '2px 8px', borderRadius: 99, fontSize: '0.72rem', fontWeight: 700,
                         background: r.payment_status === 'paid' ? 'rgba(59,130,246,0.12)' : 'rgba(245,158,11,0.12)',
@@ -865,7 +872,7 @@ function MiniMunSection({ adminToken, apiBase }) {
                     <TD>{fmtDate(r.registered_at)}</TD>
                   </TableRow>
                 ))}
-                {!regs.length && <tr><td colSpan={9} style={{ textAlign: 'center', padding: '2rem', color: '#64748b' }}>No paid registrations found</td></tr>}
+                {!regs.length && <tr><td colSpan={11} style={{ textAlign: 'center', padding: '2rem', color: '#64748b' }}>No paid registrations found</td></tr>}
               </tbody>
             </table>
           </div>
@@ -939,7 +946,7 @@ function ITOSection({ adminToken, apiBase }) {
         ) : (
           <div style={{ overflowX: 'auto' }}>
             <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-              <TableHead cols={['Name', 'Email', 'Phone', 'Subject/Role', 'School/Inst.', 'City', 'Registered']} />
+              <TableHead cols={['Name', 'Email', 'Phone', 'Subject/Role', 'School/Inst.', 'City', 'Speech Score', 'Registered']} />
               <tbody>
                 {regs.map((r, i) => (
                   <TableRow key={r.id} idx={i}>
@@ -949,10 +956,11 @@ function ITOSection({ adminToken, apiBase }) {
                     <TD>{r.subject_or_role || '—'}</TD>
                     <TD>{r.school_name || '—'}</TD>
                     <TD>{r.city || '—'}</TD>
+                    <TD>{r.max_speech_score || 0}</TD>
                     <TD>{fmtDate(r.registered_at)}</TD>
                   </TableRow>
                 ))}
-                {!regs.length && <tr><td colSpan={7} style={{ textAlign: 'center', padding: '2rem', color: '#64748b' }}>No registrations found</td></tr>}
+                {!regs.length && <tr><td colSpan={8} style={{ textAlign: 'center', padding: '2rem', color: '#64748b' }}>No registrations found</td></tr>}
               </tbody>
             </table>
           </div>
@@ -1104,7 +1112,7 @@ function IndusMunSection({ adminToken, apiBase }) {
         ) : (
           <div style={{ overflowX: 'auto' }}>
             <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-              <TableHead cols={['Name', 'Email', 'Mobile', 'School', 'Grade']} />
+              <TableHead cols={['Name', 'Email', 'Mobile', 'School', 'Grade', 'Speech Score']} />
               <tbody>
                 {regs.map((r, i) => (
                   <TableRow key={r.id} idx={i}>
@@ -1116,11 +1124,12 @@ function IndusMunSection({ adminToken, apiBase }) {
                     <TD mono>{r.mobile}</TD>
                     <TD>{r.school_name || '—'}</TD>
                     <TD>{r.grade || '—'}</TD>
+                    <TD>{r.max_speech_score || 0}</TD>
                   </TableRow>
                 ))}
                 {regs.length === 0 && (
                   <tr>
-                    <td colSpan="5" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>No registrations found.</td>
+                    <td colSpan="6" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>No registrations found.</td>
                   </tr>
                 )}
               </tbody>
@@ -1162,9 +1171,9 @@ function EnglishSessionSection({ adminToken, apiBase }) {
   }, [adminToken, apiBase]);
 
   const downloadCSV = () => {
-    const headers = ['ID', 'User ID', 'Student Name', 'Parent Name', 'Email', 'Mobile', 'School Name', 'Grade', 'Created At'];
+    const headers = ['ID', 'User ID', 'Student Name', 'Parent Name', 'Email', 'Mobile', 'School Name', 'Grade', 'Speech Score', 'Created At'];
     const rows = data.map(r => [
-      r.id, r.user_id, r.student_name, r.parent_name, r.email, r.mobile, r.school_name, r.grade, new Date(r.created_at).toLocaleString()
+      r.id, r.user_id, r.student_name, r.parent_name, r.email, r.mobile, r.school_name, r.grade, r.max_speech_score, new Date(r.created_at).toLocaleString()
     ]);
     const csvContent = [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -1188,7 +1197,7 @@ function EnglishSessionSection({ adminToken, apiBase }) {
       ) : (
         <div style={{ overflowX: 'auto', background: 'rgba(30, 41, 59, 0.4)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.05)' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-            <TableHead cols={['Student Name', 'Parent Name', 'Email', 'Mobile', 'School', 'Grade', 'Date']} />
+            <TableHead cols={['Student Name', 'Parent Name', 'Email', 'Mobile', 'School', 'Grade', 'Speech Score', 'Date']} />
             <tbody>
               {data.map((r, i) => (
                 <TableRow key={i}>
@@ -1198,12 +1207,13 @@ function EnglishSessionSection({ adminToken, apiBase }) {
                   <TD>{r.mobile}</TD>
                   <TD>{r.school_name}</TD>
                   <TD>{r.grade}</TD>
+                  <TD>{r.max_speech_score || 0}</TD>
                   <TD>{new Date(r.created_at).toLocaleDateString()}</TD>
                 </TableRow>
               ))}
               {data.length === 0 && (
                 <tr>
-                  <td colSpan="7" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>No registrations yet.</td>
+                  <td colSpan="8" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>No registrations yet.</td>
                 </tr>
               )}
             </tbody>
@@ -1239,9 +1249,9 @@ function FreedomQuizSection({ adminToken, apiBase }) {
   }, [adminToken, apiBase]);
 
   const downloadCSV = () => {
-    const headers = ['ID', 'User ID', 'Full Name', 'Email', 'Mobile', 'City', 'Age', 'Created At'];
+    const headers = ['ID', 'User ID', 'Full Name', 'Email', 'Mobile', 'City', 'Age', 'Speech Score', 'Created At'];
     const rows = data.map(r => [
-      r.id, r.user_id, r.full_name, r.email, r.mobile, r.city, r.age, new Date(r.created_at).toLocaleString()
+      r.id, r.user_id, r.full_name, r.email, r.mobile, r.city, r.age, r.max_speech_score, new Date(r.created_at).toLocaleString()
     ]);
     const csvContent = [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -1265,7 +1275,7 @@ function FreedomQuizSection({ adminToken, apiBase }) {
       ) : (
         <div style={{ overflowX: 'auto', background: 'rgba(30, 41, 59, 0.4)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.05)' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-            <TableHead cols={['Full Name', 'Email', 'Mobile', 'City / State', 'Age', 'Date']} />
+            <TableHead cols={['Full Name', 'Email', 'Mobile', 'City / State', 'Age', 'Speech Score', 'Date']} />
             <tbody>
               {data.map((r, i) => (
                 <TableRow key={i}>
@@ -1274,12 +1284,13 @@ function FreedomQuizSection({ adminToken, apiBase }) {
                   <TD>{r.mobile}</TD>
                   <TD>{r.city}</TD>
                   <TD>{r.age}</TD>
+                  <TD>{r.max_speech_score || 0}</TD>
                   <TD>{new Date(r.created_at).toLocaleDateString()}</TD>
                 </TableRow>
               ))}
               {data.length === 0 && (
                 <tr>
-                  <td colSpan="6" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>No registrations yet.</td>
+                  <td colSpan="7" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>No registrations yet.</td>
                 </tr>
               )}
             </tbody>
@@ -1455,6 +1466,7 @@ export default function AdminDashboard() {
               {activeSection === 'indusmun' && <IndusMunSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'munmentor' && <MunMentorSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'english' && <EnglishSessionSection adminToken={adminToken} apiBase={apiBase} />}
+              {activeSection === 'speech_analysis' && <UsersSection adminToken={adminToken} apiBase={apiBase} speechOnly={true} />}
               {activeSection === 'freedom' && <FreedomQuizSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'coupons' && <CouponsSection stats={stats} />}
               {activeSection === 'ito' && <ITOSection adminToken={adminToken} apiBase={apiBase} />}

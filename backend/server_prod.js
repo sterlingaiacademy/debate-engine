@@ -110,7 +110,14 @@ app.get('/api/english-session/registrations', async (req, res) => {
       )
     `);
     
-    const result = await db.query('SELECT * FROM english_session_registrations ORDER BY created_at DESC');
+    const result = await db.query(`
+      SELECT esr.*, COALESCE(MAX(sas.score), 0) AS max_speech_score
+      FROM english_session_registrations esr
+      LEFT JOIN users u ON u.id::text = esr.user_id OR u.email = esr.email
+      LEFT JOIN speech_analysis_sessions sas ON sas.student_id = u."studentId"
+      GROUP BY esr.id
+      ORDER BY esr.created_at DESC
+    `);
     res.json(result.rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -162,7 +169,14 @@ app.get('/api/freedom-quiz/registrations', async (req, res) => {
       )
     `);
 
-    const result = await db.query('SELECT * FROM freedom_quiz_registrations ORDER BY created_at DESC');
+    const result = await db.query(`
+      SELECT fqr.*, COALESCE(MAX(sas.score), 0) AS max_speech_score
+      FROM freedom_quiz_registrations fqr
+      LEFT JOIN users u ON u.id::text = fqr.user_id OR u.email = fqr.email
+      LEFT JOIN speech_analysis_sessions sas ON sas.student_id = u."studentId"
+      GROUP BY fqr.id
+      ORDER BY fqr.created_at DESC
+    `);
     res.json(result.rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -214,7 +228,14 @@ app.get('/api/indusmun/registrations', requireAdmin, async (req, res) => {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    const result = await db.query('SELECT * FROM indus_mun_registrations ORDER BY created_at DESC');
+    const result = await db.query(`
+      SELECT imr.*, COALESCE(MAX(sas.score), 0) AS max_speech_score
+      FROM indus_mun_registrations imr
+      LEFT JOIN users u ON u.id::text = imr.user_id OR u.email = imr.email
+      LEFT JOIN speech_analysis_sessions sas ON sas.student_id = u."studentId"
+      GROUP BY imr.id
+      ORDER BY imr.created_at DESC
+    `);
     res.json({ total: result.rows.length, registrations: result.rows });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -2132,9 +2153,13 @@ app.get('/api/admin/stats', requireAdmin, async (req, res) => {
 
     // === RECENT USERS ===
     const recentUsersRes = await db.query(`
-      SELECT name, "studentId", email, phone, "classLevel", grade,
-             subscription_plan, subscription_status, "createdAt"
-      FROM users ORDER BY "createdAt" DESC LIMIT 20
+      SELECT users.name, users."studentId", users.email, users.phone, users."classLevel", users.grade,
+             users.subscription_plan, users.subscription_status, users."createdAt",
+             COALESCE(MAX(sas.score), 0) AS max_speech_score
+      FROM users 
+      LEFT JOIN speech_analysis_sessions sas ON users."studentId" = sas.student_id
+      GROUP BY users.id
+      ORDER BY users."createdAt" DESC LIMIT 20
     `);
 
     // === RECENT SUBSCRIPTIONS ===
@@ -2217,7 +2242,8 @@ app.get('/api/admin/users', requireAdmin, async (req, res) => {
     const offset = (page - 1) * limit;
     const search = req.query.search ? `%${req.query.search}%` : null;
     const planFilter = req.query.plan || null;
-    const levelFilter = req.query.level || null;
+    const gradeFilter = req.query.grade || null;
+    const speechOnly = req.query.speechOnly === 'true';
 
     let conditions = [];
     let params = [];
@@ -2231,23 +2257,27 @@ app.get('/api/admin/users', requireAdmin, async (req, res) => {
       conditions.push(`users.subscription_plan = $${idx}`);
       params.push(planFilter); idx++;
     }
-    if (levelFilter && levelFilter !== 'all') {
-      conditions.push(`users."classLevel" = $${idx}`);
-      params.push(levelFilter); idx++;
+    if (gradeFilter && gradeFilter !== 'all') {
+      conditions.push(`users.grade = $${idx}`);
+      params.push(gradeFilter); idx++;
+    }
+    if (speechOnly) {
+      conditions.push(`sas.score IS NOT NULL AND sas.score > 0`);
     }
 
     const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
 
-    const countRes = await db.query(`SELECT COUNT(*) AS count FROM users ${where}`, params);
+    const countRes = await db.query(`SELECT COUNT(DISTINCT users.id) AS count FROM users LEFT JOIN speech_analysis_sessions sas ON users."studentId" = sas.student_id ${where}`, params);
     const usersRes = await db.query(
       `SELECT users.name, users."studentId", users.email, users.phone, users."classLevel", users.grade,
               users.subscription_plan, users.subscription_period, users.subscription_status, users."createdAt",
-              COALESCE(MAX(sas.score), 0) AS max_speech_score
+              COALESCE(MAX(sas.score), 0) AS max_speech_score,
+              MAX(sas.created_at) AS speech_date
        FROM users 
        LEFT JOIN speech_analysis_sessions sas ON users."studentId" = sas.student_id
        ${where} 
        GROUP BY users.id
-       ORDER BY users."createdAt" DESC LIMIT $${idx} OFFSET $${idx + 1}`,
+       ORDER BY ${speechOnly ? 'max_speech_score DESC' : 'users."createdAt" DESC'} LIMIT $${idx} OFFSET $${idx + 1}`,
       [...params, limit, offset]
     );
 
@@ -2345,9 +2375,15 @@ app.get('/api/admin/bootcamp', requireAdmin, async (req, res) => {
       FROM bootcamp_registrations ${where} GROUP BY grade ORDER BY count DESC LIMIT 10
     `, params);
     const rows = await db.query(
-      `SELECT id, student_id, name, email, phone, school, grade, city, category,
-              payment_status, razorpay_payment_id, amount, registered_at
-       FROM bootcamp_registrations ${where} ORDER BY registered_at DESC
+      `SELECT br.id, br.student_id, br.name, br.email, br.phone, br.school, br.grade, br.city, br.category,
+              br.payment_status, br.razorpay_payment_id, br.amount, br.registered_at,
+              COALESCE(MAX(sas.score), 0) AS max_speech_score
+       FROM bootcamp_registrations br
+       LEFT JOIN users u ON u.email = br.email OR u."studentId" = br.student_id
+       LEFT JOIN speech_analysis_sessions sas ON sas.student_id = u."studentId"
+       ${where}
+       GROUP BY br.id
+       ORDER BY br.registered_at DESC
        LIMIT $${params.length + 1} OFFSET $${params.length + 2}`,
       [...params, limit, offset]
     );
@@ -2956,9 +2992,14 @@ app.get('/api/munmentor/registrations', requireAdmin, async (req, res) => {
   try {
     await ensureMunMentorRegistrationsTable();
     const result = await db.query(
-      `SELECT id, user_id, full_name, email, mobile, school_name, city, role, 
-              experience_years, reason, hear_about, payment_status, razorpay_payment_id, amount, registered_at
-       FROM mun_mentor_registrations ORDER BY registered_at DESC`
+      `SELECT mmr.id, mmr.user_id, mmr.full_name, mmr.email, mmr.mobile, mmr.school_name, mmr.city, mmr.role, 
+              mmr.experience_years, mmr.reason, mmr.hear_about, mmr.payment_status, mmr.razorpay_payment_id, mmr.amount, mmr.registered_at,
+              COALESCE(MAX(sas.score), 0) AS max_speech_score
+       FROM mun_mentor_registrations mmr
+       LEFT JOIN users u ON u.id::text = mmr.user_id OR u.email = mmr.email
+       LEFT JOIN speech_analysis_sessions sas ON sas.student_id = u."studentId"
+       GROUP BY mmr.id
+       ORDER BY mmr.registered_at DESC`
     );
     res.json({ total: result.rows.length, registrations: result.rows });
   } catch (err) {
@@ -3081,9 +3122,14 @@ app.get('/api/minimun/registrations', requireAdmin, async (req, res) => {
   try {
     await db.query(`ALTER TABLE mini_mun_registrations ADD COLUMN IF NOT EXISTS module INTEGER DEFAULT 1`).catch(console.error);
     const result = await db.query(
-      `SELECT id, user_id, student_name, email, mobile, school_name, category, grade, city, 
-              payment_status, razorpay_payment_id, amount, registered_at, module
-       FROM mini_mun_registrations ORDER BY registered_at DESC`
+      `SELECT mmr.id, mmr.user_id, mmr.student_name, mmr.email, mmr.mobile, mmr.school_name, mmr.category, mmr.grade, mmr.city, 
+              mmr.payment_status, mmr.razorpay_payment_id, mmr.amount, mmr.registered_at, mmr.module,
+              COALESCE(MAX(sas.score), 0) AS max_speech_score
+       FROM mini_mun_registrations mmr
+       LEFT JOIN users u ON u.id::text = mmr.user_id OR u.email = mmr.email
+       LEFT JOIN speech_analysis_sessions sas ON sas.student_id = u."studentId"
+       GROUP BY mmr.id
+       ORDER BY mmr.registered_at DESC`
     );
     res.json({ total: result.rows.length, registrations: result.rows });
   } catch (err) {
