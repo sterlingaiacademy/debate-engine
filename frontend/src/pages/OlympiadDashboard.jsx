@@ -84,22 +84,22 @@ export default function OlympiadDashboard({ user }) {
           style={{
             background: '#09090b', border: '2px solid #18181b', borderRadius: 24, padding: '2rem',
             cursor: 'not-allowed', display: 'flex', flexDirection: 'column', gap: '1.2rem',
-            boxShadow: '0 10px 25px rgba(0,0,0,0.5)', opacity: 0.7
+            boxShadow: '0 10px 25px rgba(0,0,0,0.5)', opacity: 0.8
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div style={{ width: 64, height: 64, borderRadius: 20, background: '#18181b', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #27272a' }}>
-              <Rocket size={32} color="#52525b" strokeWidth={2.5} />
+            <div style={{ width: 64, height: 64, borderRadius: 20, background: '#450a0a', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #7f1d1d' }}>
+              <Rocket size={32} color="#fca5a5" strokeWidth={2.5} />
             </div>
-            <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#71717a', background: '#18181b', padding: '0.5rem 1rem', borderRadius: 99, border: '1px solid #27272a' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#fca5a5', background: '#450a0a', padding: '0.5rem 1rem', borderRadius: 99, border: '1px solid #7f1d1d' }}>
               LOCKED
             </span>
           </div>
           <div>
-            <h3 style={{ fontSize: '1.6rem', fontWeight: 900, margin: '0 0 0.5rem 0', color: '#71717a' }}>Daily Practice</h3>
-            <p style={{ margin: 0, fontSize: '1.05rem', color: '#52525b', lineHeight: 1.6, fontWeight: 500 }}>Sharpen your brain! Answer fun daily questions tailored just for you.</p>
+            <h3 style={{ fontSize: '1.6rem', fontWeight: 900, margin: '0 0 0.5rem 0', color: '#f8fafc' }}>Daily Practice</h3>
+            <p style={{ margin: 0, fontSize: '1.05rem', color: '#a1a1aa', lineHeight: 1.6, fontWeight: 500 }}>Sharpen your brain! Answer fun daily questions tailored just for you.</p>
           </div>
-          <div style={{ marginTop: 'auto', paddingTop: '1.5rem', display: 'flex', alignItems: 'center', color: '#71717a', fontWeight: 800, fontSize: '1.15rem', gap: '0.5rem' }}>
+          <div style={{ marginTop: 'auto', paddingTop: '1.5rem', display: 'flex', alignItems: 'center', color: '#fca5a5', fontWeight: 800, fontSize: '1.15rem', gap: '0.5rem' }}>
             <Clock size={20} strokeWidth={3} /> Opens Soon
           </div>
         </div>
@@ -109,22 +109,22 @@ export default function OlympiadDashboard({ user }) {
           style={{
             background: '#09090b', border: '2px solid #18181b', borderRadius: 24, padding: '2rem',
             cursor: 'not-allowed', display: 'flex', flexDirection: 'column', gap: '1.2rem',
-            boxShadow: '0 10px 25px rgba(0,0,0,0.5)', opacity: 0.7
+            boxShadow: '0 10px 25px rgba(0,0,0,0.5)', opacity: 0.8
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div style={{ width: 64, height: 64, borderRadius: 20, background: '#18181b', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #27272a' }}>
-              <Target size={32} color="#52525b" strokeWidth={2.5} />
+            <div style={{ width: 64, height: 64, borderRadius: 20, background: '#172554', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #1e3a8a' }}>
+              <Target size={32} color="#93c5fd" strokeWidth={2.5} />
             </div>
-            <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#71717a', background: '#18181b', padding: '0.5rem 1rem', borderRadius: 99, border: '1px solid #27272a' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#93c5fd', background: '#172554', padding: '0.5rem 1rem', borderRadius: 99, border: '1px solid #1e3a8a' }}>
               LOCKED
             </span>
           </div>
           <div>
-            <h3 style={{ fontSize: '1.6rem', fontWeight: 900, margin: '0 0 0.5rem 0', color: '#71717a' }}>Mock Exam</h3>
-            <p style={{ margin: 0, fontSize: '1.05rem', color: '#52525b', lineHeight: 1.6, fontWeight: 500 }}>The big practice test! This will unlock shortly before the main event.</p>
+            <h3 style={{ fontSize: '1.6rem', fontWeight: 900, margin: '0 0 0.5rem 0', color: '#f8fafc' }}>Mock Exam</h3>
+            <p style={{ margin: 0, fontSize: '1.05rem', color: '#a1a1aa', lineHeight: 1.6, fontWeight: 500 }}>The big practice test! This will unlock shortly before the main event.</p>
           </div>
-          <div style={{ marginTop: 'auto', paddingTop: '1.5rem', display: 'flex', alignItems: 'center', color: '#71717a', fontWeight: 800, fontSize: '1.15rem', gap: '0.5rem' }}>
+          <div style={{ marginTop: 'auto', paddingTop: '1.5rem', display: 'flex', alignItems: 'center', color: '#93c5fd', fontWeight: 800, fontSize: '1.15rem', gap: '0.5rem' }}>
             <Clock size={20} strokeWidth={3} /> Opens Soon
           </div>
         </div>
@@ -134,22 +134,22 @@ export default function OlympiadDashboard({ user }) {
           style={{
             background: '#09090b', border: '2px solid #18181b', borderRadius: 24, padding: '2rem',
             cursor: 'not-allowed', display: 'flex', flexDirection: 'column', gap: '1.2rem',
-            boxShadow: '0 10px 25px rgba(0,0,0,0.5)', opacity: 0.7
+            boxShadow: '0 10px 25px rgba(0,0,0,0.5)', opacity: 0.8
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div style={{ width: 64, height: 64, borderRadius: 20, background: '#18181b', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #27272a' }}>
-              <BookOpen size={32} color="#52525b" strokeWidth={2.5} />
+            <div style={{ width: 64, height: 64, borderRadius: 20, background: '#451a03', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #78350f' }}>
+              <BookOpen size={32} color="#fcd34d" strokeWidth={2.5} />
             </div>
-            <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#71717a', background: '#18181b', padding: '0.5rem 1rem', borderRadius: 99, border: '1px solid #27272a' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#fcd34d', background: '#451a03', padding: '0.5rem 1rem', borderRadius: 99, border: '1px solid #78350f' }}>
               LOCKED
             </span>
           </div>
           <div>
-            <h3 style={{ fontSize: '1.6rem', fontWeight: 900, margin: '0 0 0.5rem 0', color: '#71717a' }}>Rules & Guide</h3>
-            <p style={{ margin: 0, fontSize: '1.05rem', color: '#52525b', lineHeight: 1.6, fontWeight: 500 }}>Read all the super important instructions and see what topics to study!</p>
+            <h3 style={{ fontSize: '1.6rem', fontWeight: 900, margin: '0 0 0.5rem 0', color: '#f8fafc' }}>Rules & Guide</h3>
+            <p style={{ margin: 0, fontSize: '1.05rem', color: '#a1a1aa', lineHeight: 1.6, fontWeight: 500 }}>Read all the super important instructions and see what topics to study!</p>
           </div>
-          <div style={{ marginTop: 'auto', paddingTop: '1.5rem', display: 'flex', alignItems: 'center', color: '#71717a', fontWeight: 800, fontSize: '1.15rem', gap: '0.5rem' }}>
+          <div style={{ marginTop: 'auto', paddingTop: '1.5rem', display: 'flex', alignItems: 'center', color: '#fcd34d', fontWeight: 800, fontSize: '1.15rem', gap: '0.5rem' }}>
             <Clock size={20} strokeWidth={3} /> Opens Soon
           </div>
         </div>
