@@ -326,7 +326,7 @@ function StudentsSection({ students, fetchData, coordinatorId }) {
       <Card>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-            <TableHead cols={['#', 'Student Name', 'Class', 'Age', 'Parent Info', 'Status', 'Daily Practice', 'Avg Score', 'Exam Score', 'Actions']} />
+            <TableHead cols={['#', 'Student Name', 'Class', 'Age', 'Contact & Location', 'Status', 'Daily Practice', 'Avg Score', 'Exam Score', 'Actions']} />
             <tbody>
               {filtered.map((s, i) => (
                 <TableRow key={i} idx={i}>
@@ -335,8 +335,9 @@ function StudentsSection({ students, fetchData, coordinatorId }) {
                   <TD muted>{s.class}</TD>
                   <TD muted>{s.age || '—'}</TD>
                   <TD muted>
-                    <div style={{ fontSize: '0.75rem' }}>{s.parent_name || '—'}</div>
-                    <div style={{ fontSize: '0.7rem', color: '#64748b' }}>{s.parent_phone || '—'}</div>
+                    <div style={{ fontSize: '0.75rem', fontWeight: 600 }}>{s.parent_name || '—'} <span style={{fontWeight: 400}}>({s.parent_phone || '—'})</span></div>
+                    <div style={{ fontSize: '0.7rem', color: '#64748b', marginTop: 2 }}>{s.contact_email || '—'}</div>
+                    <div style={{ fontSize: '0.7rem', color: '#64748b', marginTop: 2 }}>{s.city ? `${s.city}, ${s.state || ''}` : '—'}</div>
                   </TD>
                   <TD><StatusBadge status={s.status} /></TD>
                   <TD muted>{s.dailyPractice}</TD>

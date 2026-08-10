@@ -3198,7 +3198,7 @@ app.post('/api/olympiad/verify-school', async (req, res) => {
 // ==========================================
 app.post('/api/olympiad/enroll', async (req, res) => {
   try {
-    const { email, school_code, name, classLevel, age, parentName, parentPhone } = req.body;
+    const { email, school_code, name, classLevel, age, parentName, parentPhone, city, state, contactEmail } = req.body;
     if (!email || !school_code) {
       return res.status(400).json({ error: 'Email and school code are required.' });
     }
@@ -3229,9 +3229,12 @@ app.post('/api/olympiad/enroll', async (req, res) => {
            "classLevel" = COALESCE($4, "classLevel"),
            age = COALESCE($5::INTEGER, age),
            parent_name = COALESCE($6, parent_name),
-           parent_phone = COALESCE($7, parent_phone)
+           parent_phone = COALESCE($7, parent_phone),
+           city = COALESCE($8, city),
+           state = COALESCE($9, state),
+           contact_email = COALESCE($10, contact_email)
        WHERE email = $2 RETURNING id`,
-      [school_id, email, name || null, classLevel || null, age || null, parentName || null, parentPhone || null]
+      [school_id, email, name || null, classLevel || null, age || null, parentName || null, parentPhone || null, city || null, state || null, contactEmail || null]
     );
 
     if (updateRes.rows.length === 0) {
@@ -3241,7 +3244,7 @@ app.post('/api/olympiad/enroll', async (req, res) => {
     res.json({ 
       success: true, 
       schoolName: school_name,
-      message: \`Successfully enrolled in ${school_name}!\` 
+      message: `Successfully enrolled in ${school_name}!` 
     });
 
   } catch (err) {
@@ -3270,7 +3273,7 @@ app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
 
     // Fetch students linked to this school
     const studentsRes = await db.query(
-      `SELECT id, name, "classLevel" as class, email, olympiad_registered, age, parent_name, parent_phone 
+      `SELECT id, name, "classLevel" as class, email, olympiad_registered, age, parent_name, parent_phone, city, state, contact_email
        FROM users 
        WHERE school_id = $1 AND role = 'student'`,
       [school.id]
@@ -3370,7 +3373,7 @@ app.post('/api/coordinator/remove-student', async (req, res) => {
     // Remove student ONLY if they belong to this school
     const updateRes = await db.query(
       `UPDATE users 
-       SET school_id = NULL, olympiad_registered = false, age = NULL, parent_name = NULL, parent_phone = NULL 
+       SET school_id = NULL, olympiad_registered = false, age = NULL, parent_name = NULL, parent_phone = NULL, city = NULL, state = NULL, contact_email = NULL 
        WHERE id = $1 AND school_id = $2 RETURNING id`,
       [studentId, schoolId]
     );
