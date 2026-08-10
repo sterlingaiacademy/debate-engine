@@ -398,7 +398,8 @@ app.post('/api/auth/google', async (req, res) => {
         subscription_plan: user.subscription_plan || 'free',
         subscription_period: user.subscription_period || 'monthly',
         subscription_status: user.subscription_status || 'inactive',
-        olympiad_registered: user.olympiad_registered || false
+        olympiad_registered: user.olympiad_registered || false,
+        olympiad_school_name: user.olympiad_school_name || null
       },
       token
     });
@@ -417,7 +418,7 @@ app.post('/api/login', async (req, res) => {
 
   try {
     const { rows } = await db.query(
-      'SELECT * FROM users WHERE LOWER("studentId") = LOWER($1) OR LOWER("email") = LOWER($1)', 
+      'SELECT u.*, s.name as olympiad_school_name FROM users u LEFT JOIN schools s ON u.school_id = s.id WHERE LOWER(u."studentId") = LOWER($1) OR LOWER(u."email") = LOWER($1)', 
       [studentId]
     );
     if (rows.length === 0) {
@@ -446,6 +447,7 @@ app.post('/api/login', async (req, res) => {
         subscription_period: user.subscription_period || 'monthly',
         subscription_status: user.subscription_status || 'inactive',
         olympiad_registered: user.olympiad_registered || false,
+        olympiad_school_name: user.olympiad_school_name || null,
         avatar: user.avatar || `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(user.name || 'User')}`
       },
       token
@@ -513,7 +515,7 @@ app.get('/api/me/:studentId', async (req, res) => {
   try {
     const { studentId } = req.params;
     const { rows } = await db.query(
-      `SELECT name, "studentId", "classLevel", grade, "assignedAgentId", email, avatar, phone, subscription_plan, subscription_period, subscription_status, olympiad_registered FROM users WHERE "studentId" = $1`,
+      `SELECT u.name, u."studentId", u."classLevel", u.grade, u."assignedAgentId", u.email, u.avatar, u.phone, u.subscription_plan, u.subscription_period, u.subscription_status, u.olympiad_registered, s.name as olympiad_school_name FROM users u LEFT JOIN schools s ON u.school_id = s.id WHERE u."studentId" = $1`,
       [studentId]
     );
     if (rows.length === 0) {
