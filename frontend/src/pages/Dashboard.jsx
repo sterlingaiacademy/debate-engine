@@ -641,17 +641,7 @@ export default function Dashboard({ user, setUser }) {
     .map(([key, val]) => ({ subject: formatCategory(key), A: val, fullMark: 10 }));
 
   const modes = isJunior ? JUNIOR_MODES : SENIOR_MODES;
-  const availableModes = modes.filter(m => {
-    // Level 1 & 2 only have one debate agent — hide Super Tutor and Speech Coach
-    if (isBasicLevel && (m.id === 'supertutor' || m.id === 'speech-coach')) return false;
-    // If mode has a levels array, only show for those levels
-    if (m.levels) return m.levels.includes(normalizedLevel);
-    // If mode has an accessKey, only show for that exact level
-    if (m.accessKey) {
-      return normalizedLevel === m.accessKey;
-    }
-    return true; // no accessKey = always available
-  });
+  const availableModes = modes;
 
   /* ─── Chart theming ─── */
   const chartBg    = isJunior ? '#fff' : 'transparent';
