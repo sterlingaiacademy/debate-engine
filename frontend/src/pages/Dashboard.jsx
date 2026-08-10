@@ -132,7 +132,8 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
   const inputStyle = {
     width: '100%', padding: '0.8rem 1rem', borderRadius: 8,
     background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.1)',
-    color: '#fff', fontSize: '0.9rem', outline: 'none', marginBottom: '1rem'
+    color: '#fff', fontSize: '0.9rem', outline: 'none', marginBottom: '1rem',
+    boxSizing: 'border-box', height: '46px'
   };
 
   return (
@@ -246,18 +247,18 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
             <form onSubmit={handleIndividualEnroll} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div>
                 <label style={{ display: 'block', fontSize: '0.75rem', color: '#94a3b8', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>Full Name</label>
-                <input type="text" name="studentName" value={indForm.studentName} onChange={handleIndChange} placeholder="e.g. Rahul Sharma" style={inputStyle} required />
+                <input type="text" name="studentName" value={indForm.studentName} onChange={handleIndChange} placeholder="e.g. Rahul Sharma" style={{ ...inputStyle, marginBottom: 0 }} required />
               </div>
               
               <div>
                 <label style={{ display: 'block', fontSize: '0.75rem', color: '#94a3b8', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>Email Address</label>
-                <input type="email" name="email" value={indForm.email} onChange={handleIndChange} placeholder="e.g. rahul@example.com" style={inputStyle} required />
+                <input type="email" name="email" value={indForm.email} onChange={handleIndChange} placeholder="e.g. rahul@example.com" style={{ ...inputStyle, marginBottom: 0 }} required />
               </div>
 
               <div>
                 <label style={{ display: 'block', fontSize: '0.75rem', color: '#94a3b8', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>WhatsApp Number</label>
                 <div style={{ display: 'flex', gap: '0.5rem' }}>
-                  <select name="countryCode" value={indForm.countryCode} onChange={handleIndChange} style={{ ...inputStyle, width: '100px', padding: '0.8rem 0.5rem' }}>
+                  <select name="countryCode" value={indForm.countryCode} onChange={handleIndChange} style={{ ...inputStyle, width: '90px', padding: '0 0.5rem', marginBottom: 0 }}>
                     {COUNTRY_CODES.map(c => <option key={c.code} value={c.code} style={{ background: '#1e293b', color: '#fff' }}>{c.code}</option>)}
                   </select>
                   <input type="tel" name="mobile" value={indForm.mobile} onChange={handleIndChange} placeholder="Enter your number" style={{ ...inputStyle, flex: 1, marginBottom: 0 }} required />
@@ -267,7 +268,7 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
               <div style={{ display: 'flex', gap: '1rem' }}>
                 <div style={{ flex: 1 }}>
                   <label style={{ display: 'block', fontSize: '0.75rem', color: '#94a3b8', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>Category</label>
-                  <select name="category" value={indForm.category} onChange={(e) => setIndForm(prev => ({ ...prev, category: e.target.value, grade: '' }))} style={{ ...inputStyle, padding: '0.8rem 0.5rem' }} required>
+                  <select name="category" value={indForm.category} onChange={(e) => setIndForm(prev => ({ ...prev, category: e.target.value, grade: '' }))} style={{ ...inputStyle, padding: '0 0.5rem', marginBottom: 0 }} required>
                     <option value="" disabled>Select</option>
                     <option value="Student">Student</option>
                     <option value="Professional">Professional</option>
@@ -286,7 +287,7 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
                     {indForm.category === 'Professional' ? 'Designation' : 'Grade / Class'}
                   </label>
                   {indForm.category === 'Student' ? (
-                    <select name="grade" value={indForm.grade} onChange={handleIndChange} style={{ ...inputStyle, padding: '0.8rem 0.5rem' }} required>
+                    <select name="grade" value={indForm.grade} onChange={handleIndChange} style={{ ...inputStyle, padding: '0 0.5rem', marginBottom: 0 }} required>
                       <option value="" disabled>Select</option>
                       {Array.from({length: 12}, (_, i) => `Class ${i + 1}`).map(c => <option key={c} value={c} style={{ background: '#1e293b', color: '#fff' }}>{c}</option>)}
                       <option value="Undergraduate" style={{ background: '#1e293b', color: '#fff' }}>Undergrad</option>
