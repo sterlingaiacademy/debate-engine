@@ -911,77 +911,9 @@ export default function Dashboard({ user, setUser }) {
         </div>
 
 
-        {/* Teachers' Challenge 2026 Tile */}
-        <div
-          onClick={() => navigate('/ito-register')}
-          style={{
-            borderRadius: 18, padding: '1.4rem 1.5rem', cursor: 'pointer',
-            background: 'linear-gradient(135deg, #4A142D 0%, #2D0B1C 100%)',
-            border: '1px solid rgba(212,175,55,0.2)',
-            position: 'relative', overflow: 'hidden',
-            transition: 'transform 0.25s, box-shadow 0.25s',
-            boxShadow: '0 4px 24px rgba(212,175,55,0.1)',
-          }}
-          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(212,175,55,0.3)'; }}
-          onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 4px 24px rgba(212,175,55,0.1)'; }}
-        >
-          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #d4af37, #fde047)' }} />
-          <div style={{ position: 'absolute', top: -40, right: -40, width: 130, height: 130, borderRadius: '50%', background: 'radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%)', pointerEvents: 'none' }} />
-          
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
-            <span style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.12em', color: '#FBBF24', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.22)', padding: '0.2rem 0.65rem', borderRadius: 99 }}>
-              UPCOMING EVENT
-            </span>
-            <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Star size={16} color="#FBBF24" strokeWidth={2.5} />
-            </div>
-          </div>
-          <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fff', marginBottom: '0.25rem', letterSpacing: '-0.01em' }}>
-            <span style={{ color: '#FBBF24' }}>Teachers'</span> Challenge 2026
-          </div>
-          <div style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '1rem', lineHeight: 1.5 }}>
-            Test Your Knowledge. Challenge Your Potential. Register now for free.
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#FBBF24' }}>
-            Register Now <ChevronRight size={14} />
-          </div>
-        </div>
 
-        {/* Mini MUN Module-4 */}
-        <div
-          onClick={() => navigate('/mini-mun')}
-          style={{
-            borderRadius: 18, padding: '1.4rem 1.5rem', cursor: 'pointer',
-            background: 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%)',
-            border: '1px solid rgba(59,130,246,0.2)',
-            position: 'relative', overflow: 'hidden',
-            transition: 'transform 0.25s, box-shadow 0.25s',
-            boxShadow: '0 4px 24px rgba(59,130,246,0.1)',
-          }}
-          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(59,130,246,0.3)'; }}
-          onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 4px 24px rgba(59,130,246,0.1)'; }}
-        >
-          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #3b82f6, #93c5fd)' }} />
-          <div style={{ position: 'absolute', top: -40, right: -40, width: 130, height: 130, borderRadius: '50%', background: 'radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%)', pointerEvents: 'none' }} />
-          
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
-            <span style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.12em', color: '#3b82f6', background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.22)', padding: '0.2rem 0.65rem', borderRadius: 99 }}>
-              UPCOMING EVENT
-            </span>
-            <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Globe size={16} color="#3b82f6" strokeWidth={2.5} />
-            </div>
-          </div>
-          <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fff', marginBottom: '0.25rem', letterSpacing: '-0.01em' }}>
-            Mini MUN <span style={{ color: '#3b82f6' }}>Module-4</span>
-          </div>
-          <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '1rem', lineHeight: 1.5 }}>
-            Master the art of writing an excellent position paper and stand out in your committee.
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#3b82f6' }}>
-            Register Now <ChevronRight size={14} />
-          </div>
-        </div>
+
+
 
         {/* ThinkQuest Olympiad */}
         <div

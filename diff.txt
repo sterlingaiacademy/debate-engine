@@ -1,0 +1,37 @@
+commit 6e867c86aef12624e44dd6233c420cd5819732f1
+Author: Hanan P Hashim <hananphashim@Hanans-MacBook-Air.local>
+Date:   Mon Aug 10 13:00:16 2026 +0530
+
+    Create Olympiad Student Dashboard and route users to it after enrollment
+
+diff --git a/frontend/src/pages/Dashboard.jsx b/frontend/src/pages/Dashboard.jsx
+index b379d624..005bec5d 100644
+--- a/frontend/src/pages/Dashboard.jsx
++++ b/frontend/src/pages/Dashboard.jsx
+@@ -172,7 +172,7 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
+               onClick={onSuccess}
+               style={{ width: '100%', padding: '1rem', borderRadius: 12, background: '#ef4444', color: '#fff', fontSize: '1.05rem', fontWeight: 800, border: 'none', cursor: 'pointer' }}
+             >
+-              Enter Arena Now
++              Enter Olympiad Dashboard
+             </button>
+           </div>
+         )}
+@@ -860,7 +860,7 @@ export default function Dashboard({ user, setUser }) {
+         <div
+           onClick={() => {
+             if (user?.olympiad_registered) {
+-              navigate('/olympiad/practice');
++              navigate('/olympiad-dashboard');
+             } else {
+               setShowThinkQuestModal(true);
+             }
+@@ -1016,7 +1016,7 @@ export default function Dashboard({ user, setUser }) {
+           onSuccess={() => {
+             if (setUser) setUser({ ...user, olympiad_registered: true });
+             setShowThinkQuestModal(false);
+-            navigate('/olympiad/practice');
++            navigate('/olympiad-dashboard');
+           }}
+         />
+       )}
