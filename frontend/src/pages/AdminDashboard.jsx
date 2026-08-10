@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { API_BASE } from '../api';
 import logoImg from '../assets/logo.png';
-import { Download } from 'lucide-react';
+import { Download, Trash2 } from 'lucide-react';
 
 const FONT = "'Plus Jakarta Sans', 'Google Sans', system-ui, sans-serif";
 

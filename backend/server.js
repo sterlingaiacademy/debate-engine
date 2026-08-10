@@ -2366,6 +2366,17 @@ app.get('/api/admin/olympiad/independent-students', requireAdmin, async (req, re
   }
 });
 
+// DELETE /api/admin/olympiad/independent-students/:id
+app.delete('/api/admin/olympiad/independent-students/:id', requireAdmin, async (req, res) => {
+  try {
+    await db.query(`UPDATE users SET olympiad_registered = false WHERE id = $1`, [req.params.id]);
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error removing independent student:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 // GET /api/admin/bootcamp — paginated bootcamp registrations
 app.get('/api/admin/bootcamp', requireAdmin, async (req, res) => {
   try {
