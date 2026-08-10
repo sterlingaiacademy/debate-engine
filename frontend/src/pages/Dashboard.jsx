@@ -576,7 +576,8 @@ export default function Dashboard({ user, setUser }) {
     if (['Class 6', 'Class 7', 'Class 8'].includes(cls)) return 'Level 3';
     if (['Class 9', 'Class 10'].includes(cls)) return 'Level 4';
     if (['Class 11', 'Class 12'].includes(cls)) return 'Level 5';
-    return 'Level 1';
+    // Any other category like Professional or College Student gets Level 5 access
+    return 'Level 5';
   };
   const normalizedLevel = getNormalizedLevel(user?.classLevel);
   const isBasicLevel = ['Level 1', 'Level 2'].includes(normalizedLevel);
@@ -641,7 +642,12 @@ export default function Dashboard({ user, setUser }) {
     .map(([key, val]) => ({ subject: formatCategory(key), A: val, fullMark: 10 }));
 
   const modes = isJunior ? JUNIOR_MODES : SENIOR_MODES;
-  const availableModes = modes;
+  const availableModes = modes.filter(m => {
+    if (isBasicLevel && (m.id === 'supertutor' || m.id === 'speech-coach')) return false;
+    if (m.levels) return m.levels.includes(normalizedLevel);
+    if (m.accessKey) return normalizedLevel === m.accessKey;
+    return true;
+  });
 
   /* ─── Chart theming ─── */
   const chartBg    = isJunior ? '#fff' : 'transparent';
