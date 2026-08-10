@@ -1321,7 +1321,7 @@ function ThinkQuestIndividualSection({ adminToken, apiBase }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  useEffect(() => {
+  const fetchData = useCallback(() => {
     fetch(`${apiBase}/api/admin/olympiad/independent-students`, {
       headers: { 'Authorization': `Bearer ${adminToken}` }
     })
@@ -1337,6 +1337,27 @@ function ThinkQuestIndividualSection({ adminToken, apiBase }) {
       });
   }, [adminToken, apiBase]);
 
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const handleRemove = async (id) => {
+    if (!window.confirm("Are you sure you want to remove this registration?")) return;
+    try {
+      const res = await fetch(`${apiBase}/api/admin/olympiad/independent-students/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${adminToken}` }
+      });
+      if (res.ok) {
+        fetchData();
+      } else {
+        alert("Failed to remove registration.");
+      }
+    } catch (e) {
+      alert("Error: " + e.message);
+    }
+  };
+
   if (loading) return <div style={{ color: '#94a3b8' }}>Loading independent registrations...</div>;
   if (error) return <div style={{ color: '#ef4444' }}>Error: {error}</div>;
   if (!data || data.length === 0) return <div style={{ color: '#94a3b8' }}>No independent registrations found.</div>;
@@ -1347,7 +1368,7 @@ function ThinkQuestIndividualSection({ adminToken, apiBase }) {
       <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-            <TableHead cols={['Name', 'Email', 'Role / Grade', 'City', 'Phone/Org', 'Joined']} />
+            <TableHead cols={['Name', 'Email', 'Role / Grade', 'City', 'Phone/Org', 'Joined', 'Actions']} />
             <tbody>
               {data.map((r, i) => (
                 <TableRow key={r.id || i} idx={i}>
@@ -1357,6 +1378,15 @@ function ThinkQuestIndividualSection({ adminToken, apiBase }) {
                   <TD>{r.city || '—'}</TD>
                   <TD>{r.parent_phone || r.parent_name || '—'}</TD>
                   <TD>{r.createdAt || r.created_at ? new Date(r.createdAt || r.created_at).toLocaleDateString() : '—'}</TD>
+                  <TD>
+                    <button 
+                      onClick={() => handleRemove(r.id)}
+                      style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0.5rem', borderRadius: 8 }}
+                      title="Remove Registration"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </TD>
                 </TableRow>
               ))}
             </tbody>
