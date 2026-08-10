@@ -172,7 +172,7 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
               onClick={onSuccess}
               style={{ width: '100%', padding: '1rem', borderRadius: 12, background: '#ef4444', color: '#fff', fontSize: '1.05rem', fontWeight: 800, border: 'none', cursor: 'pointer' }}
             >
-              Enter Arena Now
+              Enter Olympiad Dashboard
             </button>
           </div>
         )}
@@ -860,7 +860,7 @@ export default function Dashboard({ user, setUser }) {
         <div
           onClick={() => {
             if (user?.olympiad_registered) {
-              navigate('/olympiad/practice');
+              navigate('/olympiad-dashboard');
             } else {
               setShowThinkQuestModal(true);
             }
@@ -1016,7 +1016,7 @@ export default function Dashboard({ user, setUser }) {
           onSuccess={() => {
             if (setUser) setUser({ ...user, olympiad_registered: true });
             setShowThinkQuestModal(false);
-            navigate('/olympiad/practice');
+            navigate('/olympiad-dashboard');
           }}
         />
       )}
