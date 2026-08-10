@@ -435,7 +435,7 @@ function GameBoard({ user, isJunior, accent, onReset }) {
 export default function WordScramble({ user }) {
   const [gameKey, setGameKey] = useState(0);
 
-  const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel) && !['Professional', 'College Student'].includes(user?.grade);
+  const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel);
   const accent = isJunior ? '#7c3aed' : '#FF6B00';
 
   return (

@@ -83,7 +83,7 @@ function App() {
     alert('You are now using direct username authentication. To switch accounts, simply log out and log in with your other username.');
   };
 
-  const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel) && !['Professional', 'College Student'].includes(user?.grade);
+  const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel);
   const themeClass = isJunior ? 'theme-junior' : 'theme-senior';
 
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
