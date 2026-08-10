@@ -116,6 +116,11 @@ async function initDB() {
     await addColumnSafeUsers('city', 'TEXT', "''");
     await addColumnSafeUsers('state', 'TEXT', "''");
     await addColumnSafeUsers('designation', 'TEXT', "''");
+    await addColumnSafeUsers('olympiad_registered', 'BOOLEAN', "false");
+    await addColumnSafeUsers('age', 'INTEGER', "NULL");
+    await addColumnSafeUsers('parent_name', 'TEXT', "NULL");
+    await addColumnSafeUsers('parent_phone', 'TEXT', "NULL");
+    await addColumnSafeUsers('contact_email', 'TEXT', "NULL");
 
     const addColumnSafeDebateUsers = async (col, type, def) => {
       try {

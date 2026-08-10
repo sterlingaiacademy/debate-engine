@@ -3291,7 +3291,7 @@ app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
     for (let student of studentsRes.rows) {
       // Get exam score
       const examRes = await db.query(
-        `SELECT final_score, created_at FROM olympiad_exam_submissions WHERE student_id = $1 ORDER BY created_at DESC LIMIT 1`,
+        `SELECT total_score as final_score, created_at FROM olympiad_exam_submissions WHERE student_id = $1 ORDER BY created_at DESC LIMIT 1`,
         [student.id]
       );
       
