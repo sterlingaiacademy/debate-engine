@@ -1,0 +1,15 @@
+@@ -220,13 +220,12 @@
+         ) : (
+           <div style={{ overflowX: 'auto' }}>
+             <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
+-              <TableHead cols={['Name', 'Username', 'Email', 'Level', 'Grade', 'Speech Score', 'Plan', 'Joined']} />
++              <TableHead cols={['Name', 'Username', 'Email', 'Grade', 'Speech Score', 'Plan', 'Joined']} />
+               <tbody>
+                 {stats.recentUsers.map((u, i) => (
+                   <TableRow key={u.studentId} idx={i}>
+                     <TD>{u.name}</TD>
+                     <TD mono>{u.studentId}</TD>
+                     <TD>{u.email || '—'}</TD>
+-                    <TD>{u.classLevel}</TD>
+                     <TD>{u.grade || '—'}</TD>
+                     <TD>{u.max_speech_score || '—'}</TD>

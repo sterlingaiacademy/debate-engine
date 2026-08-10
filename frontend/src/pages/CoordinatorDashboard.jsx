@@ -255,10 +255,31 @@ function OverviewSection({ data }) {
 }
 
 // ── Students Section ──────────────────────────────────────────
-function StudentsSection({ students }) {
+function StudentsSection({ students, fetchData, coordinatorId }) {
   const [search, setSearch] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [sortBy, setSortBy] = useState('name');
+  const [removingId, setRemovingId] = useState(null);
+
+  const handleRemove = async (studentId, studentName) => {
+    if (!window.confirm(`Are you sure you want to remove ${studentName} from your school?`)) return;
+    setRemovingId(studentId);
+    try {
+      const res = await fetch(`${API_BASE}/api/coordinator/remove-student`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ coordinatorId, studentId })
+      });
+      if (res.ok) {
+        fetchData();
+      } else {
+        alert('Failed to remove student');
+      }
+    } catch (err) {
+      alert('Network error');
+    }
+    setRemovingId(null);
+  };
 
   const filtered = (students || [])
     .filter(s => {
@@ -305,13 +326,18 @@ function StudentsSection({ students }) {
       <Card>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-            <TableHead cols={['#', 'Student Name', 'Class', 'Status', 'Daily Practice', 'Avg Score', 'Exam Score']} />
+            <TableHead cols={['#', 'Student Name', 'Class', 'Age', 'Parent Info', 'Status', 'Daily Practice', 'Avg Score', 'Exam Score', 'Actions']} />
             <tbody>
               {filtered.map((s, i) => (
                 <TableRow key={i} idx={i}>
                   <TD mono muted>{i + 1}</TD>
                   <TD><span style={{ fontWeight: 600, color: '#e2e8f0' }}>{s.name}</span></TD>
                   <TD muted>{s.class}</TD>
+                  <TD muted>{s.age || '—'}</TD>
+                  <TD muted>
+                    <div style={{ fontSize: '0.75rem' }}>{s.parent_name || '—'}</div>
+                    <div style={{ fontSize: '0.7rem', color: '#64748b' }}>{s.parent_phone || '—'}</div>
+                  </TD>
                   <TD><StatusBadge status={s.status} /></TD>
                   <TD muted>{s.dailyPractice}</TD>
                   <TD>
@@ -323,11 +349,22 @@ function StudentsSection({ students }) {
                   <TD>
                     <span style={{ fontWeight: 700, color: s.examScore !== 'N/A' ? '#10b981' : '#334155' }}>{s.examScore}</span>
                   </TD>
+                  <TD>
+                    <button 
+                      onClick={() => handleRemove(s.id, s.name)}
+                      disabled={removingId === s.id}
+                      style={{ padding: '0.4rem 0.75rem', fontSize: '0.75rem', fontWeight: 600, color: '#f87171', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: 6, cursor: removingId === s.id ? 'wait' : 'pointer', transition: 'all 0.2s' }}
+                      onMouseEnter={e => e.currentTarget.style.background = 'rgba(239,68,68,0.2)'}
+                      onMouseLeave={e => e.currentTarget.style.background = 'rgba(239,68,68,0.1)'}
+                    >
+                      {removingId === s.id ? '...' : 'Remove'}
+                    </button>
+                  </TD>
                 </TableRow>
               ))}
               {filtered.length === 0 && (
                 <tr>
-                  <td colSpan={7} style={{ padding: '3rem', textAlign: 'center', color: '#334155' }}>
+                  <td colSpan={10} style={{ padding: '3rem', textAlign: 'center', color: '#334155' }}>
                     <div>No students match your filters.</div>
                   </td>
                 </tr>
@@ -495,7 +532,7 @@ export default function CoordinatorDashboard() {
           ) : data ? (
             <>
               {activeSection === 'overview' && <OverviewSection data={data} />}
-              {activeSection === 'students' && <StudentsSection students={data.students} />}
+              {activeSection === 'students' && <StudentsSection students={data.students} fetchData={fetchData} coordinatorId={coordinatorId} />}
             </>
           ) : null}
         </div>

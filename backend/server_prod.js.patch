@@ -1,0 +1,48 @@
+--- backend/server_prod.js
++++ backend/server_prod.js
+@@ -2256,12 +2256,16 @@
+     const planFilter = req.query.plan || null;
+     const levelFilter = req.query.level || null;
++    const speechOnly = req.query.speechOnly === 'true';
+ 
+     let conditions = [];
+     let params = [];
+     let idx = 1;
+ 
+     if (search) {
+       conditions.push(`(LOWER(users.name) LIKE LOWER($${idx}) OR LOWER(users."studentId") LIKE LOWER($${idx}) OR LOWER(COALESCE(users.email,'')) LIKE LOWER($${idx}))`);
+       params.push(search); idx++;
+     }
+     if (planFilter) {
+       conditions.push(`users.subscription_plan = $${idx}`);
+       params.push(planFilter); idx++;
+     }
+     if (levelFilter) {
+       conditions.push(`users."classLevel" = $${idx}`);
+       params.push(levelFilter); idx++;
+     }
++    if (speechOnly) {
++      conditions.push(`sas.score IS NOT NULL AND sas.score > 0`);
++    }
+ 
+     const where = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
+ 
+     const countRes = await db.query(
+-      `SELECT COUNT(*) FROM users ${where.replace('users.', '')}`,
++      `SELECT COUNT(DISTINCT users.id) FROM users LEFT JOIN speech_analysis_sessions sas ON users."studentId" = sas.student_id ${where}`,
+       params
+     );
+ 
+     const usersRes = await db.query(
+       `SELECT users.name, users."studentId", users.email, users.phone, users."classLevel", users.grade,
+               users.subscription_plan, users.subscription_period, users.subscription_status, users."createdAt",
+               COALESCE(MAX(sas.score), 0) AS max_speech_score
+        FROM users 
+        LEFT JOIN speech_analysis_sessions sas ON users."studentId" = sas.student_id
+        ${where} 
+        GROUP BY users.id
+-       ORDER BY users."createdAt" DESC LIMIT $${idx} OFFSET $${idx + 1}`,
++       ORDER BY ${speechOnly ? 'max_speech_score DESC' : 'users."createdAt" DESC'} LIMIT $${idx} OFFSET $${idx + 1}`,
+       [...params, limit, offset]
+     );
+ 

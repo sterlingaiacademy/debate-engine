@@ -1,0 +1,8 @@
+@@ -32,6 +32,7 @@
+   { id: 'english_session', label: 'English Session' },
+   { id: 'freedom_quiz', label: 'Freedom Challenge' },
+   { id: 'school_coupons', label: 'School Coupons' },
++  { id: 'speech_analysis', label: 'Speech Analysis' },
+   { id: 'ito', label: 'Teachers\' Olympiad' },
+   { id: 'olympiad_schools', label: 'Olympiad Schools' }
+ ];

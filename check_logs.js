@@ -1,10 +1,11 @@
 const { Client } = require('ssh2');
-
 const conn = new Client();
 conn.on('ready', () => {
+  console.log('Client :: ready');
   conn.exec('source ~/.nvm/nvm.sh && pm2 logs grace-api --lines 50 --nostream', (err, stream) => {
     if (err) throw err;
-    stream.on('close', () => {
+    stream.on('close', (code, signal) => {
+      console.log('Stream :: close :: code: ' + code + ', signal: ' + signal);
       conn.end();
     }).on('data', (data) => {
       console.log('STDOUT: ' + data);

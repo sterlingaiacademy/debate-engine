@@ -3270,7 +3270,7 @@ app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
 
     // Fetch students linked to this school
     const studentsRes = await db.query(
-      `SELECT id, name, "classLevel" as class, email, olympiad_registered 
+      `SELECT id, name, "classLevel" as class, email, olympiad_registered, age, parent_name, parent_phone 
        FROM users 
        WHERE school_id = $1 AND role = 'student'`,
       [school.id]
@@ -3316,8 +3316,12 @@ app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
       }
 
       enrichedStudents.push({
+        id: student.id,
         name: student.name,
         class: student.class || 'Unknown',
+        age: student.age,
+        parent_name: student.parent_name,
+        parent_phone: student.parent_phone,
         status: status,
         dailyPractice: practiceCount,
         avg_score: avgScore,
@@ -3340,6 +3344,44 @@ app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
 
   } catch (err) {
     console.error('Coordinator dashboard error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// ==========================================
+// REMOVE STUDENT FROM SCHOOL
+// ==========================================
+app.post('/api/coordinator/remove-student', async (req, res) => {
+  try {
+    const { coordinatorId, studentId } = req.body;
+    
+    // Verify coordinator
+    const schoolRes = await db.query(
+      `SELECT id FROM schools WHERE coordinator_login_id = $1`,
+      [coordinatorId]
+    );
+
+    if (schoolRes.rows.length === 0) {
+      return res.status(404).json({ error: 'School not found' });
+    }
+
+    const schoolId = schoolRes.rows[0].id;
+
+    // Remove student ONLY if they belong to this school
+    const updateRes = await db.query(
+      `UPDATE users 
+       SET school_id = NULL, olympiad_registered = false, age = NULL, parent_name = NULL, parent_phone = NULL 
+       WHERE id = $1 AND school_id = $2 RETURNING id`,
+      [studentId, schoolId]
+    );
+
+    if (updateRes.rows.length === 0) {
+      return res.status(404).json({ error: 'Student not found in this school' });
+    }
+
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Coordinator remove student error:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

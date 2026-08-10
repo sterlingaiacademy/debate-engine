@@ -1,0 +1,88 @@
+--- frontend/src/pages/AdminDashboard.jsx
++++ frontend/src/pages/AdminDashboard.jsx
+@@ -220,13 +220,12 @@
+         ) : (
+           <div style={{ overflowX: 'auto' }}>
+             <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
+-              <TableHead cols={['Name', 'Username', 'Email', 'Level', 'Grade', 'Speech Score', 'Plan', 'Joined']} />
++              <TableHead cols={['Name', 'Username', 'Email', 'Grade', 'Speech Score', 'Plan', 'Joined']} />
+               <tbody>
+                 {stats.recentUsers.map((u, i) => (
+                   <TableRow key={u.studentId} idx={i}>
+                     <TD>{u.name}</TD>
+                     <TD mono>{u.studentId}</TD>
+                     <TD>{u.email || '—'}</TD>
+-                    <TD>{u.classLevel}</TD>
+                     <TD>{u.grade || '—'}</TD>
+                     <TD>{u.max_speech_score || '—'}</TD>
+                     <TD><PlanBadge plan={u.subscription_plan} /></TD>
+@@ -253,7 +252,7 @@
+   const [page, setPage] = useState(1);
+   const [search, setSearch] = useState('');
+   const [planFilter, setPlanFilter] = useState('all');
+-  const [levelFilter, setLevelFilter] = useState('all');
++  const [gradeFilter, setGradeFilter] = useState('all');
+   const [searchInput, setSearchInput] = useState('');
+ 
+   const fetchUsers = useCallback(async () => {
+@@ -262,14 +261,14 @@
+       const params = new URLSearchParams({ page, limit: 20 });
+       if (search) params.set('search', search);
+       if (planFilter !== 'all') params.set('plan', planFilter);
+-      if (levelFilter !== 'all') params.set('level', levelFilter);
++      if (gradeFilter !== 'all') params.set('grade', gradeFilter);
+       if (speechOnly) params.set('speechOnly', 'true');
+       const res = await fetch(`${apiBase}/api/admin/users?${params}`, {
+         headers: { Authorization: `Bearer ${adminToken}` }
+       });
+       const d = await res.json();
+       setData(d);
+     } catch (e) { console.error(e); }
+     setLoading(false);
+-  }, [page, search, planFilter, levelFilter, adminToken, apiBase, speechOnly]);
++  }, [page, search, planFilter, gradeFilter, adminToken, apiBase, speechOnly]);
+ 
+   useEffect(() => { fetchUsers(); }, [fetchUsers]);
+@@ -291,15 +290,20 @@
+           <option value="MAX">MAX</option>
+         </Select>
+         <Select
+-          value={levelFilter}
++          value={gradeFilter}
+           onChange={(e) => {
+-            setLevelFilter(e.target.value);
++            setGradeFilter(e.target.value);
+             setPage(1);
+           }}
+         >
+-          <option value="all">All Levels</option>
+-          {[1,2,3,4,5,6].map(l => (
+-            <option key={l} value={`Level ${l}`}>Level {l}</option>
++          <option value="all">All Grades</option>
++          {[
++            'KG', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 
++            'Class 6', 'Class 7', 'Class 8', 'Class 9', 'Class 10', 
++            'Class 11', 'Class 12', 'Professional', 'Other'
++          ].map(g => (
++            <option key={g} value={g}>{g}</option>
+           ))}
+         </Select>
+       </Flex>
+ 
+@@ -310,14 +314,13 @@
+         ) : (
+           <div style={{ overflowX: 'auto' }}>
+             <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
+-              <TableHead cols={['Name', 'Username', 'Email', 'Phone', 'Level', 'Grade', 'Speech Score', 'Plan', 'Status', 'Period', speechOnly ? 'Analyzed' : 'Joined']} />
++              <TableHead cols={['Name', 'Username', 'Email', 'Phone', 'Grade', 'Speech Score', 'Plan', 'Status', 'Period', speechOnly ? 'Analyzed' : 'Joined']} />
+               <tbody>
+                 {data?.users?.map((u, i) => (
+                   <TableRow key={u.studentId} idx={i}>
+                     <TD>{u.name}</TD>
+                     <TD mono>{u.studentId}</TD>
+                     <TD>{u.email || '—'}</TD>
+                     <TD mono>{u.phone || '—'}</TD>
+-                    <TD>{u.classLevel}</TD>
+                     <TD>{u.grade || '—'}</TD>
+                     <TD>{u.max_speech_score > 0 ? u.max_speech_score : '—'}</TD>
+                     <TD><PlanBadge plan={u.subscription_plan} /></TD>

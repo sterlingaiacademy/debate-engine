@@ -1,0 +1,26 @@
+@@ -253,7 +252,7 @@
+   const [page, setPage] = useState(1);
+   const [search, setSearch] = useState('');
+   const [planFilter, setPlanFilter] = useState('all');
+-  const [levelFilter, setLevelFilter] = useState('all');
++  const [gradeFilter, setGradeFilter] = useState('all');
+   const [searchInput, setSearchInput] = useState('');
+ 
+   const fetchUsers = useCallback(async () => {
+@@ -262,14 +261,14 @@
+       const params = new URLSearchParams({ page, limit: 20 });
+       if (search) params.set('search', search);
+       if (planFilter !== 'all') params.set('plan', planFilter);
+-      if (levelFilter !== 'all') params.set('level', levelFilter);
++      if (gradeFilter !== 'all') params.set('grade', gradeFilter);
+       if (speechOnly) params.set('speechOnly', 'true');
+       const res = await fetch(`${apiBase}/api/admin/users?${params}`, {
+         headers: { Authorization: `Bearer ${adminToken}` }
+       });
+       const d = await res.json();
+       setData(d);
+     } catch (e) { console.error(e); }
+     setLoading(false);
+-  }, [page, search, planFilter, levelFilter, adminToken, apiBase, speechOnly]);
++  }, [page, search, planFilter, gradeFilter, adminToken, apiBase, speechOnly]);
+ 
