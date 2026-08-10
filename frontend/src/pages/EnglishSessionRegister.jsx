@@ -166,7 +166,7 @@ export default function EnglishSessionRegister({ user }) {
              </div>
              <div className="flex flex-col items-center gap-2">
                 <CheckCircle size={24} color="#94a3b8" />
-                <span style={{ fontWeight: 700, fontSize: '1rem' }}>09 Aug 2026 • 4:00 PM</span>
+                <span style={{ fontWeight: 700, fontSize: '1rem' }}>16 Aug 2026 • 4:00 PM</span>
              </div>
              <div className="flex flex-col items-center gap-2">
                 <User size={24} color="#94a3b8" />

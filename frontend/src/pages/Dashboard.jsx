@@ -1022,7 +1022,7 @@ export default function Dashboard({ user, setUser }) {
             Speak English <span style={{ color: '#14b8a6' }}>Without Fear</span>
           </div>
           <div style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '1rem', lineHeight: 1.5 }}>
-            Parent-Child Confidence-Building Session (Grades 3–8). August 9th, 2026.
+            Parent-Child Confidence-Building Session (Grades 3–8). August 16th, 2026.
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#14b8a6' }}>
             Register Now <ChevronRight size={14} />
