@@ -565,10 +565,10 @@ export default function Dashboard({ user, setUser }) {
     }
   };
 
-  const isJunior = ['Level 1','Level 2','Class 1-3','Class 3-5','KG','Class KG','KG-2',
-    'Class 1-5','Class 1','Class 2','Class 3','Class 4','Class 5','kg'].includes(user?.classLevel);
+  const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel) && !['Professional', 'College Student'].includes(user?.grade);
 
   const getNormalizedLevel = (cls) => {
+    if (user?.grade === 'Professional' || user?.grade === 'College Student' || user?.category === 'Professional') return 'Level 5';
     if (!cls) return 'Level 1';
     if (cls.startsWith('Level ')) return cls;
     if (['KG', 'kg', 'Class 1', 'Class 2', 'Class KG', 'KG-2', 'Class 1-3', 'Class 1-5'].includes(cls)) return 'Level 1';

@@ -36,8 +36,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const isJunior = ['Level 1','Level 2','Class 1-3','Class 3-5','KG','Class KG','KG-2','Class 1-5',
-    'Class 1','Class 2','Class 3','Class 4','Class 5','kg'].includes(user?.classLevel);
+  const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel) && !['Professional', 'College Student'].includes(user?.grade);
 
   const isFullScreenRoute =
     pathname.includes('/debate') ||
