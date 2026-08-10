@@ -13,6 +13,7 @@ import {
 import HUDCard from '../components/HUDCard';
 import { API_BASE } from '../api';
 import PremiumEnrollModal from '../components/PremiumEnrollModal';
+import { COUNTRY_CODES } from '../countryCodes';
 
 const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
   const [step, setStep] = useState(1);
@@ -23,13 +24,59 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
   const [formData, setFormData] = useState({
     name: user?.name || '',
     classLevel: user?.classLevel || '',
-    age: '',
-    parentName: '',
-    parentPhone: '',
-    city: '',
-    state: '',
-    contactEmail: ''
   });
+
+  const [indForm, setIndForm] = useState({
+    studentName: user?.name || '',
+    email: user?.email || '',
+    mobile: user?.phone || '',
+    countryCode: '+91',
+    schoolName: user?.school || '',
+    category: '',
+    grade: '',
+    city: '',
+  });
+
+  const [indSubmitting, setIndSubmitting] = useState(false);
+  const [indError, setIndError] = useState('');
+  
+  const handleIndChange = (e) => setIndForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+
+  const handleIndividualEnroll = async (e) => {
+    e.preventDefault();
+    if (!indForm.studentName || !indForm.email || !indForm.mobile || !indForm.category || !indForm.grade || !indForm.schoolName || !indForm.city) {
+      setIndError('Please fill in all required fields.');
+      return;
+    }
+    setIndSubmitting(true);
+    setIndError('');
+    try {
+      const res = await fetch(`${API_BASE}/api/olympiad/enroll`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: indForm.email,
+          school_code: 'INDIVIDUAL',
+          name: indForm.studentName,
+          classLevel: indForm.grade,
+          age: null,
+          city: indForm.city,
+          contactEmail: indForm.email,
+          parentPhone: `${indForm.countryCode} ${indForm.mobile.trim()}`,
+          parentName: indForm.schoolName
+        }),
+      });
+      const data = await res.json();
+      
+      if (!res.ok) throw new Error(data.error || 'Failed to register.');
+
+      setSchoolName('INDIVIDUAL');
+      setStep(3); // Go to success step
+    } catch (err) {
+      setIndError(err.message || 'Network error. Please try again.');
+      setIndSubmitting(false);
+    }
+  };
 
   const handleVerify = async (isIndividual = false) => {
     setError('');
@@ -90,7 +137,7 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
 
   return (
     <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 99999, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)', animation: 'fadeIn 0.2s' }}>
-      <div style={{ width: '90%', maxWidth: '420px', background: 'linear-gradient(135deg, #1f0505 0%, #3d0a0a 100%)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: 24, padding: '2rem', position: 'relative', boxShadow: '0 24px 60px rgba(0,0,0,0.5)', animation: 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)' }}>
+      <div style={{ width: '90%', maxWidth: '420px', maxHeight: '90vh', overflowY: 'auto', background: 'linear-gradient(135deg, #1f0505 0%, #3d0a0a 100%)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: 24, padding: '2rem', position: 'relative', boxShadow: '0 24px 60px rgba(0,0,0,0.5)', animation: 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)' }}>
         {step !== 3 && (
           <button onClick={onDismiss} style={{ position: 'absolute', top: 16, right: 16, background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: 32, height: 32, borderRadius: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <X size={18} />
@@ -130,7 +177,7 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
             <div style={{ textAlign: 'center', color: '#94a3b8', fontSize: '0.85rem', marginBottom: '1rem' }}>OR</div>
 
             <button 
-              onClick={() => handleVerify(true)}
+              onClick={() => setStep(4)}
               style={{ width: '100%', padding: '1rem', borderRadius: 12, background: 'transparent', border: '1px solid #ef4444', color: '#ef4444', fontSize: '1.05rem', fontWeight: 800, cursor: 'pointer', transition: 'all 0.2s' }}
             >
               Individual Registration
@@ -171,7 +218,7 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
             </div>
             <h2 style={{ fontSize: '1.5rem', fontWeight: 900, color: '#fff', margin: '0 0 0.5rem 0' }}>Success!</h2>
             <p style={{ color: '#94a3b8', fontSize: '0.95rem', lineHeight: 1.5, marginBottom: '2rem' }}>
-              You have been successfully enrolled in <strong>{schoolName}</strong> for the ThinkQuest Olympiad!
+              You have been successfully enrolled {schoolName === 'INDIVIDUAL' ? 'as an individual participant' : <>in <strong>{schoolName}</strong></>} for the ThinkQuest Olympiad!
             </p>
             <button 
               onClick={onSuccess}
@@ -179,6 +226,90 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
             >
               Enter Olympiad Dashboard
             </button>
+          </div>
+        )}
+
+        {step === 4 && (
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+              <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Globe size={24} color="#ef4444" strokeWidth={2.5} />
+              </div>
+              <div>
+                <h2 style={{ fontSize: '1.25rem', fontWeight: 900, color: '#fff', margin: 0, letterSpacing: '-0.02em' }}>Individual <span style={{ color: '#ef4444' }}>Registration</span></h2>
+                <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginTop: '0.15rem' }}>ThinkQuest Olympiad</div>
+              </div>
+            </div>
+
+            {indError && <div style={{ color: '#ef4444', fontSize: '0.85rem', marginBottom: '1rem', textAlign: 'center', background: 'rgba(239,68,68,0.1)', padding: '0.5rem', borderRadius: 8 }}>{indError}</div>}
+
+            <form onSubmit={handleIndividualEnroll} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.75rem', color: '#94a3b8', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>Full Name</label>
+                <input type="text" name="studentName" value={indForm.studentName} onChange={handleIndChange} placeholder="e.g. Rahul Sharma" style={inputStyle} required />
+              </div>
+              
+              <div>
+                <label style={{ display: 'block', fontSize: '0.75rem', color: '#94a3b8', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>Email Address</label>
+                <input type="email" name="email" value={indForm.email} onChange={handleIndChange} placeholder="e.g. rahul@example.com" style={inputStyle} required />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.75rem', color: '#94a3b8', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>WhatsApp Number</label>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <select name="countryCode" value={indForm.countryCode} onChange={handleIndChange} style={{ ...inputStyle, width: '100px', padding: '0.8rem 0.5rem' }}>
+                    {COUNTRY_CODES.map(c => <option key={c.code} value={c.code} style={{ background: '#1e293b', color: '#fff' }}>{c.code}</option>)}
+                  </select>
+                  <input type="tel" name="mobile" value={indForm.mobile} onChange={handleIndChange} placeholder="Enter your number" style={{ ...inputStyle, flex: 1, marginBottom: 0 }} required />
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '1rem' }}>
+                <div style={{ flex: 1 }}>
+                  <label style={{ display: 'block', fontSize: '0.75rem', color: '#94a3b8', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>Category</label>
+                  <select name="category" value={indForm.category} onChange={(e) => setIndForm(prev => ({ ...prev, category: e.target.value, grade: '' }))} style={{ ...inputStyle, padding: '0.8rem 0.5rem' }} required>
+                    <option value="" disabled>Select</option>
+                    <option value="Student">Student</option>
+                    <option value="Professional">Professional</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <label style={{ display: 'block', fontSize: '0.75rem', color: '#94a3b8', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>School/Org</label>
+                  <input type="text" name="schoolName" value={indForm.schoolName} onChange={handleIndChange} placeholder="e.g. DPS" style={{ ...inputStyle, marginBottom: 0 }} required />
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '1rem' }}>
+                <div style={{ flex: 1 }}>
+                  <label style={{ display: 'block', fontSize: '0.75rem', color: '#94a3b8', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>
+                    {indForm.category === 'Professional' ? 'Designation' : 'Grade / Class'}
+                  </label>
+                  {indForm.category === 'Student' ? (
+                    <select name="grade" value={indForm.grade} onChange={handleIndChange} style={{ ...inputStyle, padding: '0.8rem 0.5rem' }} required>
+                      <option value="" disabled>Select</option>
+                      {Array.from({length: 12}, (_, i) => `Class ${i + 1}`).map(c => <option key={c} value={c} style={{ background: '#1e293b', color: '#fff' }}>{c}</option>)}
+                      <option value="Undergraduate" style={{ background: '#1e293b', color: '#fff' }}>Undergrad</option>
+                      <option value="Postgraduate" style={{ background: '#1e293b', color: '#fff' }}>Postgrad</option>
+                    </select>
+                  ) : (
+                    <input type="text" name="grade" value={indForm.grade} onChange={handleIndChange} placeholder="e.g. Manager" style={{ ...inputStyle, marginBottom: 0 }} required />
+                  )}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <label style={{ display: 'block', fontSize: '0.75rem', color: '#94a3b8', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>City</label>
+                  <input type="text" name="city" value={indForm.city} onChange={handleIndChange} placeholder="City Name" style={{ ...inputStyle, marginBottom: 0 }} required />
+                </div>
+              </div>
+
+              <button 
+                type="submit"
+                disabled={indSubmitting}
+                style={{ width: '100%', padding: '1rem', borderRadius: 12, background: indSubmitting ? 'rgba(239,68,68,0.5)' : '#ef4444', color: '#fff', fontSize: '1.05rem', fontWeight: 800, border: 'none', cursor: indSubmitting ? 'not-allowed' : 'pointer', marginTop: '1rem', transition: 'all 0.2s' }}
+              >
+                {indSubmitting ? 'Registering...' : 'Complete Registration'}
+              </button>
+            </form>
           </div>
         )}
       </div>

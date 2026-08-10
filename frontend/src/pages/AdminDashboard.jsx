@@ -21,6 +21,7 @@ const SECTIONS = [
   { id: 'coupons', label: 'School Coupons' },
   { id: 'ito', label: 'Teachers\' Olympiad' },
   { id: 'olympiad', label: 'Olympiad Schools' },
+  { id: 'thinkquest_individual', label: 'Independent Registered' },
 ];
 
 const PLAN_COLORS = { free: '#64748b', pro: '#3b82f6', max: '#f97316' };
@@ -1312,6 +1313,60 @@ function FreedomQuizSection({ adminToken, apiBase }) {
   );
 }
 
+// ══════════════════════════════════════════════════
+// SECTION: ThinkQuest Individual Registration
+// ══════════════════════════════════════════════════
+function ThinkQuestIndividualSection({ adminToken, apiBase }) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    fetch(`${apiBase}/api/admin/olympiad/independent-students`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    })
+      .then(r => r.json())
+      .then(d => {
+        if (d.error) throw new Error(d.error);
+        setData(d.students || []);
+        setLoading(false);
+      })
+      .catch(e => {
+        setError(e.message);
+        setLoading(false);
+      });
+  }, [adminToken, apiBase]);
+
+  if (loading) return <div style={{ color: '#94a3b8' }}>Loading independent registrations...</div>;
+  if (error) return <div style={{ color: '#ef4444' }}>Error: {error}</div>;
+  if (!data || data.length === 0) return <div style={{ color: '#94a3b8' }}>No independent registrations found.</div>;
+
+  return (
+    <div>
+      <SectionTitle>ThinkQuest Independent Students ({data.length})</SectionTitle>
+      <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
+            <TableHead cols={['Name', 'Email', 'Role / Grade', 'City', 'Phone/Org', 'Joined']} />
+            <tbody>
+              {data.map((r, i) => (
+                <TableRow key={r.id || i} idx={i}>
+                  <TD>{r.name}</TD>
+                  <TD>{r.email}</TD>
+                  <TD>{r.classLevel || '—'}</TD>
+                  <TD>{r.city || '—'}</TD>
+                  <TD>{r.parent_phone || r.parent_name || '—'}</TD>
+                  <TD>{r.createdAt || r.created_at ? new Date(r.createdAt || r.created_at).toLocaleDateString() : '—'}</TD>
+                </TableRow>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function AdminDashboard() {
   const navigate = useNavigate();
   const [adminToken] = useState(() => localStorage.getItem('adminToken'));
@@ -1482,6 +1537,7 @@ export default function AdminDashboard() {
               {activeSection === 'coupons' && <CouponsSection stats={stats} />}
               {activeSection === 'ito' && <ITOSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'olympiad' && <OlympiadSchoolsSection adminToken={adminToken} apiBase={apiBase} />}
+              {activeSection === 'thinkquest_individual' && <ThinkQuestIndividualSection adminToken={adminToken} apiBase={apiBase} />}
             </>
           ) : null}
         </div>

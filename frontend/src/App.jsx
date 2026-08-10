@@ -50,6 +50,7 @@ const OlympiadArena = lazy(() => import('./pages/OlympiadArena'));
 const CoordinatorDashboard = lazy(() => import('./pages/CoordinatorDashboard'));
 const OlympiadReportCard = lazy(() => import('./pages/OlympiadReportCard'));
 const OlympiadDashboard = lazy(() => import('./pages/OlympiadDashboard'));
+const OlympiadIndividualRegister = lazy(() => import('./pages/OlympiadIndividualRegister'));
 
 function App() {
   
@@ -240,6 +241,7 @@ function App() {
             <Route path="/google-callback" element={<GoogleCallback onLogin={handleLogin} />} />
             
             <Route path="/olympiad/school-registration" element={<OlympiadSchoolRegister />} />
+            <Route path="/thinkquest/individual-register" element={<OlympiadIndividualRegister />} />
             <Route path="/olympiad/student-registration" element={<Navigate to="/register" />} />
             <Route path="/coordinator-dashboard" element={<CoordinatorDashboard />} />
             

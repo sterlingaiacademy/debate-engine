@@ -3272,6 +3272,38 @@ app.post('/api/olympiad/enroll', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+// POST /api/olympiad/individual/register
+app.post('/api/olympiad/individual/register', async (req, res) => {
+  try {
+    const { email, name, classLevel, city, parentPhone, parentName, category } = req.body;
+    
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS thinkquest_individuals (
+          id SERIAL PRIMARY KEY,
+          name VARCHAR(255),
+          email VARCHAR(255),
+          mobile VARCHAR(50),
+          category VARCHAR(100),
+          grade VARCHAR(100),
+          school_name VARCHAR(255),
+          city VARCHAR(255),
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    await db.query(
+      `INSERT INTO thinkquest_individuals (name, email, mobile, category, grade, school_name, city)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [name, email, parentPhone, category, classLevel, parentName, city]
+    );
+
+    res.json({ success: true, message: 'Successfully registered as an independent participant.' });
+  } catch (err) {
+    console.error('Individual register error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 // ==========================================
 // COORDINATOR DASHBOARD
 // ==========================================
