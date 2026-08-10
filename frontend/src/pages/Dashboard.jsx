@@ -14,38 +14,152 @@ import HUDCard from '../components/HUDCard';
 import { API_BASE } from '../api';
 import PremiumEnrollModal from '../components/PremiumEnrollModal';
 
-const ThinkQuestModal = ({ onDismiss, onSubmit }) => {
+const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
+  const [step, setStep] = useState(1);
   const [code, setCode] = useState('');
+  const [schoolName, setSchoolName] = useState('');
+  const [error, setError] = useState('');
+  
+  const [formData, setFormData] = useState({
+    name: user?.name || '',
+    classLevel: user?.classLevel || '',
+    age: '',
+    parentName: '',
+    parentPhone: ''
+  });
+
+  const handleVerify = async () => {
+    setError('');
+    try {
+      const res = await fetch(`${API_BASE}/api/olympiad/verify-school`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ school_code: code })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setSchoolName(data.school.name);
+        setStep(2);
+      } else {
+        setError(data.error || 'Invalid School Code');
+      }
+    } catch (e) {
+      setError('Error verifying code. Check connection.');
+    }
+  };
+
+  const handleEnroll = async () => {
+    setError('');
+    try {
+      const res = await fetch(`${API_BASE}/api/olympiad/enroll`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          email: user.email, 
+          school_code: code,
+          ...formData
+        })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setStep(3);
+      } else {
+        setError(data.error || 'Enrollment failed.');
+      }
+    } catch (e) {
+      setError('Error enrolling. Please try again.');
+    }
+  };
+
+  const inputStyle = {
+    width: '100%', padding: '0.8rem 1rem', borderRadius: 8,
+    background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.1)',
+    color: '#fff', fontSize: '0.9rem', outline: 'none', marginBottom: '1rem'
+  };
+
   return (
     <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 99999, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)', animation: 'fadeIn 0.2s' }}>
-      <div style={{ width: '90%', maxWidth: '400px', background: 'linear-gradient(135deg, #1f0505 0%, #3d0a0a 100%)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: 24, padding: '2rem', position: 'relative', boxShadow: '0 24px 60px rgba(0,0,0,0.5)', animation: 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)' }}>
-        <button onClick={onDismiss} style={{ position: 'absolute', top: 16, right: 16, background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: 32, height: 32, borderRadius: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <X size={18} />
-        </button>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
-          <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Star size={24} color="#ef4444" strokeWidth={2.5} />
+      <div style={{ width: '90%', maxWidth: '420px', background: 'linear-gradient(135deg, #1f0505 0%, #3d0a0a 100%)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: 24, padding: '2rem', position: 'relative', boxShadow: '0 24px 60px rgba(0,0,0,0.5)', animation: 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)' }}>
+        {step !== 3 && (
+          <button onClick={onDismiss} style={{ position: 'absolute', top: 16, right: 16, background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: 32, height: 32, borderRadius: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <X size={18} />
+          </button>
+        )}
+        
+        {step === 1 && (
+          <>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+              <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Star size={24} color="#ef4444" strokeWidth={2.5} />
+              </div>
+              <div>
+                <h2 style={{ fontSize: '1.25rem', fontWeight: 900, color: '#fff', margin: 0, letterSpacing: '-0.02em' }}>ThinkQuest <span style={{ color: '#ef4444' }}>Olympiad</span></h2>
+                <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginTop: '0.15rem' }}>Enter your School Code to join</div>
+              </div>
+            </div>
+            
+            {error && <div style={{ color: '#ef4444', fontSize: '0.85rem', marginBottom: '1rem', textAlign: 'center' }}>{error}</div>}
+            
+            <input 
+              type="text" 
+              placeholder="ENTER SCHOOL CODE" 
+              value={code} 
+              onChange={e => setCode(e.target.value.toUpperCase())}
+              style={{ ...inputStyle, textAlign: 'center', fontSize: '1.1rem', fontWeight: 700, letterSpacing: '0.1em' }}
+              autoFocus
+            />
+            <button 
+              onClick={handleVerify}
+              disabled={!code.trim()}
+              style={{ width: '100%', padding: '1rem', borderRadius: 12, background: code.trim() ? '#ef4444' : 'rgba(239,68,68,0.3)', color: '#fff', fontSize: '1.05rem', fontWeight: 800, border: 'none', cursor: code.trim() ? 'pointer' : 'not-allowed', transition: 'all 0.2s' }}
+            >
+              Verify Code
+            </button>
+          </>
+        )}
+
+        {step === 2 && (
+          <>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 900, color: '#fff', margin: 0, marginBottom: '1rem', textAlign: 'center' }}>Student Details</h2>
+            <div style={{ fontSize: '0.85rem', color: '#ef4444', textAlign: 'center', marginBottom: '1.5rem', fontWeight: 600 }}>Enrolling in: {schoolName}</div>
+            
+            {error && <div style={{ color: '#ef4444', fontSize: '0.85rem', marginBottom: '1rem', textAlign: 'center' }}>{error}</div>}
+
+            <input type="text" placeholder="Student Full Name" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} style={inputStyle} />
+            <div style={{ display: 'flex', gap: '1rem' }}>
+              <input type="text" placeholder="Class / Grade" value={formData.classLevel} onChange={e => setFormData({...formData, classLevel: e.target.value})} style={{...inputStyle, flex: 1}} />
+              <input type="number" placeholder="Age" value={formData.age} onChange={e => setFormData({...formData, age: e.target.value})} style={{...inputStyle, width: '100px'}} />
+            </div>
+            <input type="text" placeholder="Parent Name" value={formData.parentName} onChange={e => setFormData({...formData, parentName: e.target.value})} style={inputStyle} />
+            <input type="tel" placeholder="Parent Phone Number" value={formData.parentPhone} onChange={e => setFormData({...formData, parentPhone: e.target.value})} style={inputStyle} />
+
+            <button 
+              onClick={handleEnroll}
+              disabled={!formData.name || !formData.classLevel}
+              style={{ width: '100%', padding: '1rem', borderRadius: 12, background: (formData.name && formData.classLevel) ? '#ef4444' : 'rgba(239,68,68,0.3)', color: '#fff', fontSize: '1.05rem', fontWeight: 800, border: 'none', cursor: (formData.name && formData.classLevel) ? 'pointer' : 'not-allowed', transition: 'all 0.2s' }}
+            >
+              Complete Enrollment
+            </button>
+          </>
+        )}
+
+        {step === 3 && (
+          <div style={{ textAlign: 'center', padding: '1rem 0' }}>
+            <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem' }}>
+              <Star size={32} color="#fff" />
+            </div>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 900, color: '#fff', margin: '0 0 0.5rem 0' }}>Success!</h2>
+            <p style={{ color: '#94a3b8', fontSize: '0.95rem', lineHeight: 1.5, marginBottom: '2rem' }}>
+              You have been successfully enrolled in <strong>{schoolName}</strong> for the ThinkQuest Olympiad!
+            </p>
+            <button 
+              onClick={onSuccess}
+              style={{ width: '100%', padding: '1rem', borderRadius: 12, background: '#ef4444', color: '#fff', fontSize: '1.05rem', fontWeight: 800, border: 'none', cursor: 'pointer' }}
+            >
+              Enter Arena Now
+            </button>
           </div>
-          <div>
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 900, color: '#fff', margin: 0, letterSpacing: '-0.02em' }}>ThinkQuest <span style={{ color: '#ef4444' }}>Olympiad</span></h2>
-            <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginTop: '0.15rem' }}>Enter your School Code to join</div>
-          </div>
-        </div>
-        <input 
-          type="text" 
-          placeholder="ENTER SCHOOL CODE" 
-          value={code} 
-          onChange={e => setCode(e.target.value.toUpperCase())}
-          style={{ width: '100%', padding: '1rem 1.25rem', borderRadius: 12, background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(239,68,68,0.4)', color: '#fff', fontSize: '1rem', fontWeight: 700, letterSpacing: '0.1em', textAlign: 'center', marginBottom: '1.5rem', outline: 'none' }}
-          autoFocus
-        />
-        <button 
-          onClick={() => onSubmit(code)}
-          disabled={!code.trim()}
-          style={{ width: '100%', padding: '1rem', borderRadius: 12, background: code.trim() ? '#ef4444' : 'rgba(239,68,68,0.3)', color: '#fff', fontSize: '1.05rem', fontWeight: 800, border: 'none', cursor: code.trim() ? 'pointer' : 'not-allowed', transition: 'all 0.2s' }}
-        >
-          Access Arena
-        </button>
+        )}
       </div>
     </div>
   );
@@ -881,24 +995,12 @@ export default function Dashboard({ user, setUser }) {
 
       {showThinkQuestModal && (
         <ThinkQuestModal
+          user={user}
           onDismiss={() => setShowThinkQuestModal(false)}
-          onSubmit={async (code) => {
-            try {
-              const res = await fetch(`${API_BASE}/api/olympiad/enroll`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: user.email, school_code: code })
-              });
-              if (res.ok) {
-                if (setUser) setUser({ ...user, olympiad_registered: true });
-                setShowThinkQuestModal(false);
-                navigate('/olympiad/practice');
-              } else {
-                alert('Invalid School Code or enrollment failed.');
-              }
-            } catch (e) {
-              alert('Error enrolling in Olympiad. Please check your connection.');
-            }
+          onSuccess={() => {
+            if (setUser) setUser({ ...user, olympiad_registered: true });
+            setShowThinkQuestModal(false);
+            navigate('/olympiad/practice');
           }}
         />
       )}
@@ -1025,24 +1127,12 @@ export default function Dashboard({ user, setUser }) {
 
       {showThinkQuestModal && (
         <ThinkQuestModal
+          user={user}
           onDismiss={() => setShowThinkQuestModal(false)}
-          onSubmit={async (code) => {
-            try {
-              const res = await fetch(`${API_BASE}/api/olympiad/enroll`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: user.email, school_code: code })
-              });
-              if (res.ok) {
-                if (setUser) setUser({ ...user, olympiad_registered: true });
-                setShowThinkQuestModal(false);
-                navigate('/olympiad/practice');
-              } else {
-                alert('Invalid School Code or enrollment failed.');
-              }
-            } catch (e) {
-              alert('Error enrolling in Olympiad. Please check your connection.');
-            }
+          onSuccess={() => {
+            if (setUser) setUser({ ...user, olympiad_registered: true });
+            setShowThinkQuestModal(false);
+            navigate('/olympiad/practice');
           }}
         />
       )}

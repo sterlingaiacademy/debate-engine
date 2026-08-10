@@ -3172,26 +3172,66 @@ app.post('/api/olympiad/school/register', async (req, res) => {
 
 // 2. Student Registration for Olympiad
 // ==========================================
+// THINQUEST OLYMPIAD - VERIFY SCHOOL CODE
+// ==========================================
+app.post('/api/olympiad/verify-school', async (req, res) => {
+  try {
+    const { school_code } = req.body;
+    if (!school_code) {
+      return res.status(400).json({ error: 'School code is required.' });
+    }
+
+    const schoolRes = await db.query(`SELECT id, name FROM schools WHERE school_code = $1`, [school_code]);
+    if (schoolRes.rows.length === 0) {
+      return res.status(404).json({ error: 'Invalid School Code' });
+    }
+    
+    res.json({ success: true, school: schoolRes.rows[0] });
+  } catch (err) {
+    console.error('Olympiad school verify error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// ==========================================
 // THINQUEST OLYMPIAD - EXISTING USER ENROLLMENT
 // ==========================================
 app.post('/api/olympiad/enroll', async (req, res) => {
   try {
-    const { email, school_code } = req.body;
+    const { email, school_code, name, classLevel, age, parentName, parentPhone } = req.body;
     if (!email || !school_code) {
       return res.status(400).json({ error: 'Email and school code are required.' });
     }
 
     // Verify school code
-    const schoolRes = await db.query(`SELECT id FROM schools WHERE school_code = $1`, [school_code]);
+    const schoolRes = await db.query(`SELECT id, name FROM schools WHERE school_code = $1`, [school_code]);
     if (schoolRes.rows.length === 0) {
       return res.status(404).json({ error: 'Invalid School Code' });
     }
     const school_id = schoolRes.rows[0].id;
+    const school_name = schoolRes.rows[0].name;
+
+    // Ensure columns exist (fallback if DB init didn't run)
+    try {
+      await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS parent_name VARCHAR(255)`);
+      await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS parent_phone VARCHAR(50)`);
+      await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS age INTEGER`);
+    } catch (e) {
+      // Ignore if fails
+    }
 
     // Update user
     const updateRes = await db.query(
-      `UPDATE users SET school_id = $1, olympiad_registered = true WHERE email = $2 RETURNING id`,
-      [school_id, email]
+      `UPDATE users 
+       SET school_id = $1, 
+           olympiad_registered = true,
+           name = COALESCE($3, name),
+           "classLevel" = COALESCE($4, "classLevel"),
+           age = COALESCE($5::INTEGER, age),
+           parent_name = COALESCE($6, parent_name),
+           parent_phone = COALESCE($7, parent_phone)
+       WHERE email = $2 RETURNING id`,
+      [school_id, email, name || null, classLevel || null, age || null, parentName || null, parentPhone || null]
     );
 
     if (updateRes.rows.length === 0) {
@@ -3200,7 +3240,8 @@ app.post('/api/olympiad/enroll', async (req, res) => {
 
     res.json({ 
       success: true, 
-      message: 'Successfully enrolled in the ThinkQuest Olympiad!' 
+      schoolName: school_name,
+      message: \`Successfully enrolled in ${school_name}!\` 
     });
 
   } catch (err) {
