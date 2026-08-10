@@ -68,11 +68,13 @@ export default function OlympiadDashboard({ user }) {
                <span style={{ color: '#a1a1aa', fontWeight: 700, fontSize: '0.95rem' }}>Status:</span> 
                <span style={{ color: '#34d399', fontWeight: 900, fontSize: '0.95rem', textShadow: '0 0 10px rgba(52,211,153,0.3)' }}>Registered</span>
              </div>
-             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#09090b', padding: '0.6rem 1.2rem', borderRadius: 99, boxShadow: '0 4px 12px rgba(0,0,0,0.4)', border: '1px solid #27272a' }}>
-               <Award size={20} color="#fca5a5" strokeWidth={2.5} />
-               <span style={{ color: '#a1a1aa', fontWeight: 700, fontSize: '0.95rem' }}>School:</span> 
-               <span style={{ color: '#f8fafc', fontWeight: 900, fontSize: '0.95rem' }}>{user?.olympiad_school_name || 'Loading...'}</span>
-             </div>
+             {user?.olympiad_school_name && (
+               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#09090b', padding: '0.6rem 1.2rem', borderRadius: 99, boxShadow: '0 4px 12px rgba(0,0,0,0.4)', border: '1px solid #27272a' }}>
+                 <Award size={20} color="#fca5a5" strokeWidth={2.5} />
+                 <span style={{ color: '#a1a1aa', fontWeight: 700, fontSize: '0.95rem' }}>School:</span> 
+                 <span style={{ color: '#f8fafc', fontWeight: 900, fontSize: '0.95rem' }}>{user.olympiad_school_name}</span>
+               </div>
+             )}
         </div>
       </div>
 
