@@ -1036,7 +1036,7 @@ function OlympiadSchoolsSection({ adminToken, apiBase }) {
         ) : (
           <div style={{ overflowX: 'auto' }}>
             <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-              <TableHead cols={['Name', 'Principal', 'Coordinator', 'Contact', 'Expected Students', 'Status', 'Actions', 'Credentials']} />
+              <TableHead cols={['Name', 'Principal', 'Coordinator', 'Contact', 'Expected Students', 'Status', 'Actions', 'Credentials', 'Remove']} />
               <tbody>
                 {schools.map((s, idx) => (
                   <TableRow key={s.id} idx={idx}>
@@ -1069,6 +1069,9 @@ function OlympiadSchoolsSection({ adminToken, apiBase }) {
                           <div><span style={{ color: '#94a3b8' }}>ID:</span> <span style={{ color: '#fca5a5' }}>{s.coordinator_login_id}</span></div>
                         </div>
                       )}
+                    </TD>
+                    <TD>
+                      <button onClick={() => handleAction(s.id, 'remove')} style={{ padding: '0.3rem 0.6rem', background: 'transparent', color: '#ef4444', border: '1px solid #ef4444', borderRadius: 4, cursor: 'pointer', fontSize: '0.75rem' }}>Remove</button>
                     </TD>
                   </TableRow>
                 ))}

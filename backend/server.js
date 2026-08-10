@@ -2342,6 +2342,19 @@ app.post('/api/admin/olympiad/schools/:id/reject', requireAdmin, async (req, res
   }
 });
 
+// POST /api/admin/olympiad/schools/:id/remove
+app.post('/api/admin/olympiad/schools/:id/remove', requireAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await db.query(`DELETE FROM schools WHERE id = $1 RETURNING *`, [id]);
+    if (result.rows.length === 0) return res.status(404).json({ error: 'School not found' });
+    res.json({ success: true, school: result.rows[0] });
+  } catch (err) {
+    console.error('Error removing school:', err);
+    res.status(500).json({ error: 'Failed to remove school' });
+  }
+});
+
 // GET /api/admin/bootcamp — paginated bootcamp registrations
 app.get('/api/admin/bootcamp', requireAdmin, async (req, res) => {
   try {
@@ -3291,8 +3304,8 @@ app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
     for (let student of studentsRes.rows) {
       // Get exam score
       const examRes = await db.query(
-        `SELECT final_score, created_at FROM olympiad_exam_submissions WHERE student_id = $1 ORDER BY created_at DESC LIMIT 1`,
-        [student.id]
+        `SELECT total_score as final_score, created_at FROM olympiad_exam_submissions WHERE student_id = $1 ORDER BY created_at DESC LIMIT 1`,
+        [student.id.toString()]
       );
       
       const hasTakenExam = examRes.rows.length > 0;
@@ -3305,7 +3318,7 @@ app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
       // Get practice stats
       const practiceRes = await db.query(
         `SELECT COUNT(*) as practice_count, AVG(score) as avg_score FROM olympiad_practice_logs WHERE student_id = $1`,
-        [student.id]
+        [student.id.toString()]
       );
       const practiceCount = parseInt(practiceRes.rows[0].practice_count || '0');
       const avgScore = parseFloat(practiceRes.rows[0].avg_score || '0');
