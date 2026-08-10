@@ -571,8 +571,8 @@ export default function Dashboard({ user, setUser }) {
   const getNormalizedLevel = (cls) => {
     if (!cls) return 'Level 1';
     if (cls.startsWith('Level ')) return cls;
-    if (['KG', 'Class 1', 'Class 2', 'Class KG', 'KG-2'].includes(cls)) return 'Level 1';
-    if (['Class 3', 'Class 4', 'Class 5'].includes(cls)) return 'Level 2';
+    if (['KG', 'kg', 'Class 1', 'Class 2', 'Class KG', 'KG-2', 'Class 1-3', 'Class 1-5'].includes(cls)) return 'Level 1';
+    if (['Class 3', 'Class 4', 'Class 5', 'Class 3-5'].includes(cls)) return 'Level 2';
     if (['Class 6', 'Class 7', 'Class 8'].includes(cls)) return 'Level 3';
     if (['Class 9', 'Class 10'].includes(cls)) return 'Level 4';
     if (['Class 11', 'Class 12'].includes(cls)) return 'Level 5';
@@ -1028,7 +1028,7 @@ export default function Dashboard({ user, setUser }) {
             Speak English <span style={{ color: '#14b8a6' }}>Without Fear</span>
           </div>
           <div style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '1rem', lineHeight: 1.5 }}>
-            Parent-Child Confidence-Building Session (Grades 3–8). August 16th, 2026.
+            Parent-Child Confidence-Building Session (Grades 3–8). 16.08.2026.
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#14b8a6' }}>
             Register Now <ChevronRight size={14} />

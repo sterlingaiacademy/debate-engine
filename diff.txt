@@ -1,37 +1,152 @@
-commit 6e867c86aef12624e44dd6233c420cd5819732f1
+commit 0eb2d943a337c53ea019f0041e18616d7f7f5eb7
 Author: Hanan P Hashim <hananphashim@Hanans-MacBook-Air.local>
-Date:   Mon Aug 10 13:00:16 2026 +0530
+Date:   Mon Aug 10 16:48:39 2026 +0530
 
-    Create Olympiad Student Dashboard and route users to it after enrollment
+    Remove Mini MUN, Teachers Challenge, and MUN Mentor from dashboards
 
+diff --git a/diff.txt b/diff.txt
+new file mode 100644
+index 00000000..a1b7cf38
+--- /dev/null
++++ b/diff.txt
+@@ -0,0 +1,37 @@
++commit 6e867c86aef12624e44dd6233c420cd5819732f1
++Author: Hanan P Hashim <hananphashim@Hanans-MacBook-Air.local>
++Date:   Mon Aug 10 13:00:16 2026 +0530
++
++    Create Olympiad Student Dashboard and route users to it after enrollment
++
++diff --git a/frontend/src/pages/Dashboard.jsx b/frontend/src/pages/Dashboard.jsx
++index b379d624..005bec5d 100644
++--- a/frontend/src/pages/Dashboard.jsx
+++++ b/frontend/src/pages/Dashboard.jsx
++@@ -172,7 +172,7 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
++               onClick={onSuccess}
++               style={{ width: '100%', padding: '1rem', borderRadius: 12, background: '#ef4444', color: '#fff', fontSize: '1.05rem', fontWeight: 800, border: 'none', cursor: 'pointer' }}
++             >
++-              Enter Arena Now
+++              Enter Olympiad Dashboard
++             </button>
++           </div>
++         )}
++@@ -860,7 +860,7 @@ export default function Dashboard({ user, setUser }) {
++         <div
++           onClick={() => {
++             if (user?.olympiad_registered) {
++-              navigate('/olympiad/practice');
+++              navigate('/olympiad-dashboard');
++             } else {
++               setShowThinkQuestModal(true);
++             }
++@@ -1016,7 +1016,7 @@ export default function Dashboard({ user, setUser }) {
++           onSuccess={() => {
++             if (setUser) setUser({ ...user, olympiad_registered: true });
++             setShowThinkQuestModal(false);
++-            navigate('/olympiad/practice');
+++            navigate('/olympiad-dashboard');
++           }}
++         />
++       )}
+diff --git a/frontend/src/pages/AdminDashboard.jsx b/frontend/src/pages/AdminDashboard.jsx
+index 102b30e6..97b024ad 100644
+--- a/frontend/src/pages/AdminDashboard.jsx
++++ b/frontend/src/pages/AdminDashboard.jsx
+@@ -12,14 +12,11 @@ const SECTIONS = [
+   { id: 'subscriptions', label: 'Subscriptions' },
+   { id: 'debates', label: 'Debates' },
+   { id: 'bootcamp', label: 'Cohort 2.0' },
+-  { id: 'minimun', label: 'Mini MUN' },
+   { id: 'indusmun', label: 'Indus MUN' },
+-  { id: 'munmentor', label: 'MUN Mentor' },
+   { id: 'english', label: 'English Session' },
+   { id: 'speech_analysis', label: 'Speech Analysis' },
+   { id: 'freedom', label: 'Freedom Challenge' },
+   { id: 'coupons', label: 'School Coupons' },
+-  { id: 'ito', label: 'Teachers\' Olympiad' },
+   { id: 'olympiad', label: 'Olympiad Schools' },
+   { id: 'thinkquest_individual', label: 'Independent Registered' },
+ ];
 diff --git a/frontend/src/pages/Dashboard.jsx b/frontend/src/pages/Dashboard.jsx
-index b379d624..005bec5d 100644
+index 457b0e00..d6feda4e 100644
 --- a/frontend/src/pages/Dashboard.jsx
 +++ b/frontend/src/pages/Dashboard.jsx
-@@ -172,7 +172,7 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
-               onClick={onSuccess}
-               style={{ width: '100%', padding: '1rem', borderRadius: 12, background: '#ef4444', color: '#fff', fontSize: '1.05rem', fontWeight: 800, border: 'none', cursor: 'pointer' }}
-             >
--              Enter Arena Now
-+              Enter Olympiad Dashboard
-             </button>
-           </div>
-         )}
-@@ -860,7 +860,7 @@ export default function Dashboard({ user, setUser }) {
+@@ -911,77 +911,9 @@ export default function Dashboard({ user, setUser }) {
+         </div>
+ 
+ 
+-        {/* Teachers' Challenge 2026 Tile */}
+-        <div
+-          onClick={() => navigate('/ito-register')}
+-          style={{
+-            borderRadius: 18, padding: '1.4rem 1.5rem', cursor: 'pointer',
+-            background: 'linear-gradient(135deg, #4A142D 0%, #2D0B1C 100%)',
+-            border: '1px solid rgba(212,175,55,0.2)',
+-            position: 'relative', overflow: 'hidden',
+-            transition: 'transform 0.25s, box-shadow 0.25s',
+-            boxShadow: '0 4px 24px rgba(212,175,55,0.1)',
+-          }}
+-          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(212,175,55,0.3)'; }}
+-          onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 4px 24px rgba(212,175,55,0.1)'; }}
+-        >
+-          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #d4af37, #fde047)' }} />
+-          <div style={{ position: 'absolute', top: -40, right: -40, width: 130, height: 130, borderRadius: '50%', background: 'radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%)', pointerEvents: 'none' }} />
+-          
+-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
+-            <span style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.12em', color: '#FBBF24', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.22)', padding: '0.2rem 0.65rem', borderRadius: 99 }}>
+-              UPCOMING EVENT
+-            </span>
+-            <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+-              <Star size={16} color="#FBBF24" strokeWidth={2.5} />
+-            </div>
+-          </div>
+-          <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fff', marginBottom: '0.25rem', letterSpacing: '-0.01em' }}>
+-            <span style={{ color: '#FBBF24' }}>Teachers'</span> Challenge 2026
+-          </div>
+-          <div style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '1rem', lineHeight: 1.5 }}>
+-            Test Your Knowledge. Challenge Your Potential. Register now for free.
+-          </div>
+-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#FBBF24' }}>
+-            Register Now <ChevronRight size={14} />
+-          </div>
+-        </div>
+ 
+-        {/* Mini MUN Module-4 */}
+-        <div
+-          onClick={() => navigate('/mini-mun')}
+-          style={{
+-            borderRadius: 18, padding: '1.4rem 1.5rem', cursor: 'pointer',
+-            background: 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%)',
+-            border: '1px solid rgba(59,130,246,0.2)',
+-            position: 'relative', overflow: 'hidden',
+-            transition: 'transform 0.25s, box-shadow 0.25s',
+-            boxShadow: '0 4px 24px rgba(59,130,246,0.1)',
+-          }}
+-          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(59,130,246,0.3)'; }}
+-          onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 4px 24px rgba(59,130,246,0.1)'; }}
+-        >
+-          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #3b82f6, #93c5fd)' }} />
+-          <div style={{ position: 'absolute', top: -40, right: -40, width: 130, height: 130, borderRadius: '50%', background: 'radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%)', pointerEvents: 'none' }} />
+-          
+-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
+-            <span style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.12em', color: '#3b82f6', background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.22)', padding: '0.2rem 0.65rem', borderRadius: 99 }}>
+-              UPCOMING EVENT
+-            </span>
+-            <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+-              <Globe size={16} color="#3b82f6" strokeWidth={2.5} />
+-            </div>
+-          </div>
+-          <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fff', marginBottom: '0.25rem', letterSpacing: '-0.01em' }}>
+-            Mini MUN <span style={{ color: '#3b82f6' }}>Module-4</span>
+-          </div>
+-          <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '1rem', lineHeight: 1.5 }}>
+-            Master the art of writing an excellent position paper and stand out in your committee.
+-          </div>
+-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#3b82f6' }}>
+-            Register Now <ChevronRight size={14} />
+-          </div>
+-        </div>
++
++
+ 
+         {/* ThinkQuest Olympiad */}
          <div
-           onClick={() => {
-             if (user?.olympiad_registered) {
--              navigate('/olympiad/practice');
-+              navigate('/olympiad-dashboard');
-             } else {
-               setShowThinkQuestModal(true);
-             }
-@@ -1016,7 +1016,7 @@ export default function Dashboard({ user, setUser }) {
-           onSuccess={() => {
-             if (setUser) setUser({ ...user, olympiad_registered: true });
-             setShowThinkQuestModal(false);
--            navigate('/olympiad/practice');
-+            navigate('/olympiad-dashboard');
-           }}
-         />
-       )}
