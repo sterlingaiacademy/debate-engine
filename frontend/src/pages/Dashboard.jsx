@@ -31,8 +31,16 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
     contactEmail: ''
   });
 
-  const handleVerify = async () => {
+  const handleVerify = async (isIndividual = false) => {
     setError('');
+    
+    if (isIndividual) {
+      setCode('INDIVIDUAL');
+      setSchoolName('Independent Participant');
+      setStep(2);
+      return;
+    }
+
     try {
       const res = await fetch(`${API_BASE}/api/olympiad/verify-school`, {
         method: 'POST',
@@ -112,11 +120,20 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
               autoFocus
             />
             <button 
-              onClick={handleVerify}
+              onClick={() => handleVerify(false)}
               disabled={!code.trim()}
-              style={{ width: '100%', padding: '1rem', borderRadius: 12, background: code.trim() ? '#ef4444' : 'rgba(239,68,68,0.3)', color: '#fff', fontSize: '1.05rem', fontWeight: 800, border: 'none', cursor: code.trim() ? 'pointer' : 'not-allowed', transition: 'all 0.2s' }}
+              style={{ width: '100%', padding: '1rem', borderRadius: 12, background: code.trim() ? '#ef4444' : 'rgba(239,68,68,0.3)', color: '#fff', fontSize: '1.05rem', fontWeight: 800, border: 'none', cursor: code.trim() ? 'pointer' : 'not-allowed', transition: 'all 0.2s', marginBottom: '1rem' }}
             >
               Verify Code
+            </button>
+
+            <div style={{ textAlign: 'center', color: '#94a3b8', fontSize: '0.85rem', marginBottom: '1rem' }}>OR</div>
+
+            <button 
+              onClick={() => handleVerify(true)}
+              style={{ width: '100%', padding: '1rem', borderRadius: 12, background: 'transparent', border: '1px solid #ef4444', color: '#ef4444', fontSize: '1.05rem', fontWeight: 800, cursor: 'pointer', transition: 'all 0.2s' }}
+            >
+              Individual Registration
             </button>
           </>
         )}
@@ -128,26 +145,14 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
             
             {error && <div style={{ color: '#ef4444', fontSize: '0.85rem', marginBottom: '1rem', textAlign: 'center' }}>{error}</div>}
 
-            <input type="text" placeholder="Student Full Name" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} style={inputStyle} />
-            <div style={{ display: 'flex', gap: '1rem' }}>
-              <select value={formData.classLevel} onChange={e => setFormData({...formData, classLevel: e.target.value})} style={{...inputStyle, flex: 1, appearance: 'none', backgroundColor: 'rgba(0,0,0,0.4)', color: formData.classLevel ? '#fff' : '#94a3b8'}}>
-                <option value="" disabled>Select Class/Grade</option>
-                {Array.from({length: 12}, (_, i) => `Class ${i + 1}`).map(c => <option key={c} value={c}>{c}</option>)}
-              </select>
-              <select value={formData.age} onChange={e => setFormData({...formData, age: e.target.value})} style={{...inputStyle, width: '120px', appearance: 'none', backgroundColor: 'rgba(0,0,0,0.4)', color: formData.age ? '#fff' : '#94a3b8'}}>
-                <option value="" disabled>Select Age</option>
-                {Array.from({length: 17}, (_, i) => i + 4).map(a => <option key={a} value={a}>{a}</option>)}
-              </select>
-            </div>
-            <div style={{ display: 'flex', gap: '1rem' }}>
-              <input type="text" placeholder="City" value={formData.city} onChange={e => setFormData({...formData, city: e.target.value})} style={{...inputStyle, flex: 1}} />
-              <input type="text" placeholder="State" value={formData.state} onChange={e => setFormData({...formData, state: e.target.value})} style={{...inputStyle, flex: 1}} />
-            </div>
-            <input type="email" placeholder="Email Address (Own or Parents)" value={formData.contactEmail} onChange={e => setFormData({...formData, contactEmail: e.target.value})} style={inputStyle} />
-            <div style={{ display: 'flex', gap: '1rem' }}>
-              <input type="text" placeholder="Parent Name" value={formData.parentName} onChange={e => setFormData({...formData, parentName: e.target.value})} style={{...inputStyle, flex: 1}} />
-              <input type="tel" placeholder="Parent Phone Number" value={formData.parentPhone} onChange={e => setFormData({...formData, parentPhone: e.target.value})} style={{...inputStyle, flex: 1}} />
-            </div>
+            <input type="text" placeholder="Full Name" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} style={inputStyle} />
+            <select value={formData.classLevel} onChange={e => setFormData({...formData, classLevel: e.target.value})} style={{...inputStyle, appearance: 'none', backgroundColor: 'rgba(0,0,0,0.4)', color: formData.classLevel ? '#fff' : '#94a3b8', marginBottom: '1.5rem'}}>
+              <option value="" disabled>Select Role / Grade</option>
+              {Array.from({length: 12}, (_, i) => `Class ${i + 1}`).map(c => <option key={c} value={c}>{c}</option>)}
+              <option value="Teacher">Teacher</option>
+              <option value="Parent">Parent</option>
+              <option value="Other">Other</option>
+            </select>
 
             <button 
               onClick={handleEnroll}

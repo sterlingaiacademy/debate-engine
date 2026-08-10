@@ -3219,12 +3219,17 @@ app.post('/api/olympiad/enroll', async (req, res) => {
     }
 
     // Verify school code
-    const schoolRes = await db.query(`SELECT id, name FROM schools WHERE school_code = $1`, [school_code]);
-    if (schoolRes.rows.length === 0) {
-      return res.status(404).json({ error: 'Invalid School Code' });
+    let school_id = null;
+    let school_name = 'Independent Participant';
+    
+    if (school_code !== 'INDIVIDUAL') {
+      const schoolRes = await db.query(`SELECT id, name FROM schools WHERE school_code = $1`, [school_code]);
+      if (schoolRes.rows.length === 0) {
+        return res.status(404).json({ error: 'Invalid School Code' });
+      }
+      school_id = schoolRes.rows[0].id;
+      school_name = schoolRes.rows[0].name;
     }
-    const school_id = schoolRes.rows[0].id;
-    const school_name = schoolRes.rows[0].name;
 
     // Ensure columns exist (fallback if DB init didn't run)
     try {
