@@ -3208,6 +3208,100 @@ app.post('/api/olympiad/enroll', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+// ==========================================
+// COORDINATOR DASHBOARD
+// ==========================================
+app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
+  try {
+    const { coordinatorId } = req.params;
+
+    // Verify coordinator and get school details
+    const schoolRes = await db.query(
+      `SELECT id, name as school, expected_students FROM schools WHERE coordinator_login_id = $1`,
+      [coordinatorId]
+    );
+
+    if (schoolRes.rows.length === 0) {
+      return res.status(404).json({ error: 'School not found' });
+    }
+
+    const school = schoolRes.rows[0];
+
+    // Fetch students linked to this school
+    const studentsRes = await db.query(
+      `SELECT id, name, "classLevel" as class, email, olympiad_registered 
+       FROM users 
+       WHERE school_id = $1 AND role = 'student'`,
+      [school.id]
+    );
+
+    let totalRegistrations = studentsRes.rows.length;
+    let olympiadCompleted = 0;
+    let totalPracticeCount = 0;
+
+    // We will enrich each student with their status, daily practice, and exam score
+    const enrichedStudents = [];
+
+    for (let student of studentsRes.rows) {
+      // Get exam score
+      const examRes = await db.query(
+        `SELECT final_score, created_at FROM olympiad_exam_submissions WHERE student_id = $1 ORDER BY created_at DESC LIMIT 1`,
+        [student.id]
+      );
+      
+      const hasTakenExam = examRes.rows.length > 0;
+      const examScore = hasTakenExam ? examRes.rows[0].final_score : 'N/A';
+      
+      if (hasTakenExam) {
+        olympiadCompleted++;
+      }
+
+      // Get practice stats
+      const practiceRes = await db.query(
+        `SELECT COUNT(*) as practice_count, AVG(score) as avg_score FROM olympiad_practice_logs WHERE student_id = $1`,
+        [student.id]
+      );
+      const practiceCount = parseInt(practiceRes.rows[0].practice_count || '0');
+      const avgScore = parseFloat(practiceRes.rows[0].avg_score || '0');
+      totalPracticeCount += practiceCount;
+
+      let status = 'Registered'; // Baseline if they are in the array
+      if (hasTakenExam) {
+        status = 'Completed';
+      } else if (practiceCount > 0) {
+        status = 'In Progress';
+      } else if (!student.olympiad_registered) {
+        status = 'Pending';
+      }
+
+      enrichedStudents.push({
+        name: student.name,
+        class: student.class || 'Unknown',
+        status: status,
+        dailyPractice: practiceCount,
+        avg_score: avgScore,
+        examScore: examScore
+      });
+    }
+
+    const avgDailyEngagement = totalRegistrations > 0 
+      ? Math.round((totalPracticeCount / totalRegistrations) * 10) 
+      : 0;
+
+    res.json({
+      school: school.school,
+      totalRegistrations: totalRegistrations,
+      expectedRegistrations: school.expected_students || 0,
+      olympiadCompleted: olympiadCompleted,
+      avgDailyEngagement: avgDailyEngagement,
+      students: enrichedStudents
+    });
+
+  } catch (err) {
+    console.error('Coordinator dashboard error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 app.post('/api/olympiad/student/register', async (req, res) => {
   try {

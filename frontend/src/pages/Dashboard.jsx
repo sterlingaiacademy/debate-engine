@@ -728,7 +728,13 @@ export default function Dashboard({ user, setUser }) {
 
         {/* ThinkQuest Olympiad */}
         <div
-          onClick={() => setShowThinkQuestModal(true)}
+          onClick={() => {
+            if (user?.olympiad_registered) {
+              navigate('/olympiad/practice');
+            } else {
+              setShowThinkQuestModal(true);
+            }
+          }}
           style={{
             borderRadius: 18, padding: '1.4rem 1.5rem', cursor: 'pointer',
             background: 'linear-gradient(135deg, #1f0505 0%, #3d0a0a 100%)',
@@ -876,9 +882,23 @@ export default function Dashboard({ user, setUser }) {
       {showThinkQuestModal && (
         <ThinkQuestModal
           onDismiss={() => setShowThinkQuestModal(false)}
-          onSubmit={(code) => {
-            setShowThinkQuestModal(false);
-            navigate('/olympiad/practice');
+          onSubmit={async (code) => {
+            try {
+              const res = await fetch(`${API_BASE}/api/olympiad/enroll`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: user.email, school_code: code })
+              });
+              if (res.ok) {
+                if (setUser) setUser({ ...user, olympiad_registered: true });
+                setShowThinkQuestModal(false);
+                navigate('/olympiad/practice');
+              } else {
+                alert('Invalid School Code or enrollment failed.');
+              }
+            } catch (e) {
+              alert('Error enrolling in Olympiad. Please check your connection.');
+            }
           }}
         />
       )}
@@ -1006,9 +1026,23 @@ export default function Dashboard({ user, setUser }) {
       {showThinkQuestModal && (
         <ThinkQuestModal
           onDismiss={() => setShowThinkQuestModal(false)}
-          onSubmit={(code) => {
-            setShowThinkQuestModal(false);
-            navigate('/olympiad/practice');
+          onSubmit={async (code) => {
+            try {
+              const res = await fetch(`${API_BASE}/api/olympiad/enroll`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: user.email, school_code: code })
+              });
+              if (res.ok) {
+                if (setUser) setUser({ ...user, olympiad_registered: true });
+                setShowThinkQuestModal(false);
+                navigate('/olympiad/practice');
+              } else {
+                alert('Invalid School Code or enrollment failed.');
+              }
+            } catch (e) {
+              alert('Error enrolling in Olympiad. Please check your connection.');
+            }
           }}
         />
       )}
