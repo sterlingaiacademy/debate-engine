@@ -7,9 +7,15 @@ const sshPassword = 'wvpi2!ZnTcV];ncy';
 
 const filesToUpload = [
   { local: 'backend/server.js', remote: '/home/graceandforce/debate-engine/backend/server.js' },
+  { local: 'backend/server_prod.js', remote: '/home/graceandforce/debate-engine/backend/server_prod.js' },
   { local: 'backend/api/speech_coach.js', remote: '/home/graceandforce/debate-engine/backend/api/speech_coach.js' },
   { local: 'backend/utils/email.js', remote: '/home/graceandforce/debate-engine/backend/utils/email.js' },
+  { local: 'backend/minimun_mod4_certificates.json', remote: '/home/graceandforce/debate-engine/backend/minimun_mod4_certificates.json' },
+  { local: 'backend/teachers_challenge_certificates.json', remote: '/home/graceandforce/debate-engine/backend/teachers_challenge_certificates.json' },
   { local: 'frontend/src/App.jsx', remote: '/home/graceandforce/debate-engine/frontend/src/App.jsx' },
+  { local: 'frontend/src/pages/CertificatesHub.jsx', remote: '/home/graceandforce/debate-engine/frontend/src/pages/CertificatesHub.jsx' },
+  { local: 'frontend/src/pages/MiniMunMod4CertificateDownload.jsx', remote: '/home/graceandforce/debate-engine/frontend/src/pages/MiniMunMod4CertificateDownload.jsx' },
+  { local: 'frontend/src/pages/TeachersChallengeCertificateDownload.jsx', remote: '/home/graceandforce/debate-engine/frontend/src/pages/TeachersChallengeCertificateDownload.jsx' },
   { local: 'frontend/src/pages/Dashboard.jsx', remote: '/home/graceandforce/debate-engine/frontend/src/pages/Dashboard.jsx' },
   { local: 'frontend/src/pages/AdminDashboard.jsx', remote: '/home/graceandforce/debate-engine/frontend/src/pages/AdminDashboard.jsx' },
   { local: 'frontend/src/pages/LandingPage.jsx', remote: '/home/graceandforce/debate-engine/frontend/src/pages/LandingPage.jsx' },

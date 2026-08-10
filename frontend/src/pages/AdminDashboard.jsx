@@ -1273,7 +1273,7 @@ function FreedomQuizSection({ adminToken, apiBase }) {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-        <SectionTitle>Freedom Quiz Registrations</SectionTitle>
+        <SectionTitle>Freedom Quiz Registrations ({data.length})</SectionTitle>
         <button onClick={downloadCSV} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '0.5rem 1rem', borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem' }}>
           <Download size={16} /> Export CSV
         </button>
