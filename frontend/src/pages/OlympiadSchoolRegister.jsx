@@ -69,7 +69,7 @@ export default function OlympiadSchoolRegister() {
     fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase'
   };
 
-  const grades = Array.from({length: 12}, (_, i) => i + 1);
+  const grades = Array.from({length: 8}, (_, i) => i + 5);
 
   const LeftPane = () => (
     <div className="oly-left" style={{ flex: 1, backgroundColor: THEME.bg, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '2rem 3rem', height: '100vh', borderRight: '1px solid rgba(255,255,255,0.05)' }}>
