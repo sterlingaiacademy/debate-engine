@@ -327,36 +327,23 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
                 </div>
               </div>
 
-              {/* Row 3: Category + School */}
+              {/* Row 3: School / Organisation + Grade */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '0.75rem' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.72rem', color: '#94a3b8', marginBottom: '0.3rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>Category</label>
-                  <select name="category" value={indForm.category} onChange={(e) => setIndForm(prev => ({ ...prev, category: e.target.value, grade: '' }))} style={{ ...inputStyle, height: 44, padding: '0 0.6rem', marginBottom: 0, fontSize: '0.88rem' }} required>
-                    <option value="" disabled>Select</option>
-                    <option value="Student">Student</option>
-                    <option value="Professional">Professional</option>
-                    <option value="Other">Other</option>
-                  </select>
+                  <label style={{ display: 'block', fontSize: '0.72rem', color: '#94a3b8', marginBottom: '0.3rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>School / Organisation</label>
+                  <input type="text" name="schoolName" value={indForm.schoolName} onChange={handleIndChange} placeholder="e.g. DPS" style={{ ...inputStyle, height: 44, padding: '0 0.9rem', marginBottom: 0, fontSize: '0.88rem' }} required />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.72rem', color: '#94a3b8', marginBottom: '0.3rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>School / Org</label>
-                  <input type="text" name="schoolName" value={indForm.schoolName} onChange={handleIndChange} placeholder="e.g. DPS" style={{ ...inputStyle, height: 44, padding: '0 0.9rem', marginBottom: 0, fontSize: '0.88rem' }} required />
+                  <label style={{ display: 'block', fontSize: '0.72rem', color: '#94a3b8', marginBottom: '0.3rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>Grade</label>
+                  <select name="grade" value={indForm.grade} onChange={handleIndChange} style={{ ...inputStyle, height: 44, padding: '0 0.5rem', marginBottom: 0, fontSize: '0.88rem' }} required>
+                    <option value="" disabled>Select</option>
+                    {Array.from({length: 8}, (_, i) => `Grade ${i + 5}`).map(c => <option key={c} value={c} style={{ background: '#1e293b', color: '#fff' }}>{c}</option>)}
+                  </select>
                 </div>
               </div>
 
-              {/* Row 4: Grade + City + State */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.75rem', marginBottom: '0.75rem' }}>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.72rem', color: '#94a3b8', marginBottom: '0.3rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>{indForm.category === 'Professional' ? 'Designation' : 'Grade'}</label>
-                  {indForm.category === 'Student' ? (
-                    <select name="grade" value={indForm.grade} onChange={handleIndChange} style={{ ...inputStyle, height: 44, padding: '0 0.5rem', marginBottom: 0, fontSize: '0.88rem' }} required>
-                      <option value="" disabled>Select</option>
-                      {Array.from({length: 8}, (_, i) => `Grade ${i + 5}`).map(c => <option key={c} value={c} style={{ background: '#1e293b', color: '#fff' }}>{c}</option>)}
-                    </select>
-                  ) : (
-                    <input type="text" name="grade" value={indForm.grade} onChange={handleIndChange} placeholder="e.g. Manager" style={{ ...inputStyle, height: 44, padding: '0 0.9rem', marginBottom: 0, fontSize: '0.88rem' }} required />
-                  )}
-                </div>
+              {/* Row 4: City + State */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '0.75rem' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.72rem', color: '#94a3b8', marginBottom: '0.3rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>City</label>
                   <input type="text" name="city" value={indForm.city} onChange={handleIndChange} placeholder="City" style={{ ...inputStyle, height: 44, padding: '0 0.9rem', marginBottom: 0, fontSize: '0.88rem' }} required />
@@ -366,6 +353,7 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
                   <input type="text" name="state" value={indForm.state} onChange={handleIndChange} placeholder="State" style={{ ...inputStyle, height: 44, padding: '0 0.9rem', marginBottom: 0, fontSize: '0.88rem' }} required />
                 </div>
               </div>
+
 
               {/* Row 5: Subjects */}
               <div style={{ marginBottom: '0.9rem' }}>
