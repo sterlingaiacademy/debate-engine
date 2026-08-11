@@ -958,7 +958,7 @@ export default function Dashboard({ user, setUser }) {
             Practice daily for the Grand Cognitive Challenge!
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#ef4444' }}>
-            Start Practice <ChevronRight size={14} />
+            Register Now <ChevronRight size={14} />
           </div>
         </div>
 
