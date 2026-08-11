@@ -164,7 +164,7 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
 
   return (
     <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 99999, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)', animation: 'fadeIn 0.2s' }}>
-      <div style={{ width: '95%', maxWidth: step === 4 ? '580px' : '420px', maxHeight: step === 4 ? '96vh' : '90vh', overflowY: step === 4 ? 'visible' : 'auto', background: 'linear-gradient(135deg, #1f0505 0%, #3d0a0a 100%)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: 24, padding: step === 4 ? '1.25rem 1.5rem' : '2rem', position: 'relative', boxShadow: '0 24px 60px rgba(0,0,0,0.5)', animation: 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)' }}>
+      <div style={{ width: '95%', maxWidth: step === 4 ? '660px' : '420px', maxHeight: step === 4 ? '96vh' : '90vh', overflowY: step === 4 ? 'visible' : 'auto', background: 'linear-gradient(135deg, #1f0505 0%, #3d0a0a 100%)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: 24, padding: step === 4 ? '1.5rem 1.75rem' : '2rem', position: 'relative', boxShadow: '0 24px 60px rgba(0,0,0,0.5)', animation: 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)' }}>
         {step !== 3 && (
           <button onClick={onDismiss} style={{ position: 'absolute', top: 16, right: 16, background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: 32, height: 32, borderRadius: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <X size={18} />
@@ -290,48 +290,48 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
 
         {step === 4 && (
           <div>
-            {/* Compact header */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.9rem' }}>
-              <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                <Globe size={20} color="#ef4444" strokeWidth={2.5} />
+            {/* Header */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.1rem' }}>
+              <div style={{ width: 42, height: 42, borderRadius: 12, background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <Globe size={22} color="#ef4444" strokeWidth={2.5} />
               </div>
               <div>
-                <h2 style={{ fontSize: '1.1rem', fontWeight: 900, color: '#fff', margin: 0, letterSpacing: '-0.02em' }}>Individual <span style={{ color: '#ef4444' }}>Registration</span></h2>
-                <div style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: '0.1rem' }}>ThinkQuest Olympiad</div>
+                <h2 style={{ fontSize: '1.2rem', fontWeight: 900, color: '#fff', margin: 0, letterSpacing: '-0.02em' }}>Individual <span style={{ color: '#ef4444' }}>Registration</span></h2>
+                <div style={{ fontSize: '0.8rem', color: '#94a3b8', marginTop: '0.1rem' }}>ThinkQuest Olympiad</div>
               </div>
             </div>
 
-            {indError && <div style={{ color: '#ef4444', fontSize: '0.8rem', marginBottom: '0.6rem', textAlign: 'center', background: 'rgba(239,68,68,0.1)', padding: '0.4rem', borderRadius: 8 }}>{indError}</div>}
+            {indError && <div style={{ color: '#ef4444', fontSize: '0.85rem', marginBottom: '0.75rem', textAlign: 'center', background: 'rgba(239,68,68,0.1)', padding: '0.5rem', borderRadius: 8 }}>{indError}</div>}
 
             <form onSubmit={handleIndividualEnroll}>
               {/* Row 1: Name + Email */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '0.5rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '0.75rem' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.68rem', color: '#94a3b8', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>Full Name</label>
-                  <input type="text" name="studentName" value={indForm.studentName} onChange={handleIndChange} placeholder="Rahul Sharma" style={{ ...inputStyle, height: 38, padding: '0 0.75rem', marginBottom: 0, fontSize: '0.82rem' }} required />
+                  <label style={{ display: 'block', fontSize: '0.72rem', color: '#94a3b8', marginBottom: '0.3rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>Full Name</label>
+                  <input type="text" name="studentName" value={indForm.studentName} onChange={handleIndChange} placeholder="e.g. Rahul Sharma" style={{ ...inputStyle, height: 44, padding: '0 0.9rem', marginBottom: 0, fontSize: '0.88rem' }} required />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.68rem', color: '#94a3b8', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>Email</label>
-                  <input type="email" name="email" value={indForm.email} onChange={handleIndChange} placeholder="rahul@email.com" style={{ ...inputStyle, height: 38, padding: '0 0.75rem', marginBottom: 0, fontSize: '0.82rem' }} required />
+                  <label style={{ display: 'block', fontSize: '0.72rem', color: '#94a3b8', marginBottom: '0.3rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>Email</label>
+                  <input type="email" name="email" value={indForm.email} onChange={handleIndChange} placeholder="rahul@email.com" style={{ ...inputStyle, height: 44, padding: '0 0.9rem', marginBottom: 0, fontSize: '0.88rem' }} required />
                 </div>
               </div>
 
-              {/* Row 2: WhatsApp */}
-              <div style={{ marginBottom: '0.5rem' }}>
-                <label style={{ display: 'block', fontSize: '0.68rem', color: '#94a3b8', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>WhatsApp Number</label>
-                <div style={{ display: 'flex', gap: '0.4rem' }}>
-                  <select name="countryCode" value={indForm.countryCode} onChange={handleIndChange} style={{ ...inputStyle, width: '80px', height: 38, padding: '0 0.4rem', marginBottom: 0, fontSize: '0.82rem', flexShrink: 0 }}>
+              {/* Row 2: WhatsApp — fixed layout so number field doesn't stretch */}
+              <div style={{ marginBottom: '0.75rem' }}>
+                <label style={{ display: 'block', fontSize: '0.72rem', color: '#94a3b8', marginBottom: '0.3rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>WhatsApp Number</label>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <select name="countryCode" value={indForm.countryCode} onChange={handleIndChange} style={{ ...inputStyle, width: '100px', height: 44, padding: '0 0.5rem', marginBottom: 0, fontSize: '0.88rem', flexShrink: 0 }}>
                     {COUNTRY_CODES.map(c => <option key={c.code} value={c.code} style={{ background: '#1e293b', color: '#fff' }}>{c.code}</option>)}
                   </select>
-                  <input type="tel" name="mobile" value={indForm.mobile} onChange={handleIndChange} placeholder="Enter number" style={{ ...inputStyle, flex: 1, height: 38, padding: '0 0.75rem', marginBottom: 0, fontSize: '0.82rem' }} required />
+                  <input type="tel" name="mobile" value={indForm.mobile} onChange={handleIndChange} placeholder="Enter your number" style={{ ...inputStyle, width: '220px', height: 44, padding: '0 0.9rem', marginBottom: 0, fontSize: '0.88rem' }} required />
                 </div>
               </div>
 
               {/* Row 3: Category + School */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '0.5rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '0.75rem' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.68rem', color: '#94a3b8', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>Category</label>
-                  <select name="category" value={indForm.category} onChange={(e) => setIndForm(prev => ({ ...prev, category: e.target.value, grade: '' }))} style={{ ...inputStyle, height: 38, padding: '0 0.5rem', marginBottom: 0, fontSize: '0.82rem' }} required>
+                  <label style={{ display: 'block', fontSize: '0.72rem', color: '#94a3b8', marginBottom: '0.3rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>Category</label>
+                  <select name="category" value={indForm.category} onChange={(e) => setIndForm(prev => ({ ...prev, category: e.target.value, grade: '' }))} style={{ ...inputStyle, height: 44, padding: '0 0.6rem', marginBottom: 0, fontSize: '0.88rem' }} required>
                     <option value="" disabled>Select</option>
                     <option value="Student">Student</option>
                     <option value="Professional">Professional</option>
@@ -339,44 +339,44 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
                   </select>
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.68rem', color: '#94a3b8', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>School / Org</label>
-                  <input type="text" name="schoolName" value={indForm.schoolName} onChange={handleIndChange} placeholder="e.g. DPS" style={{ ...inputStyle, height: 38, padding: '0 0.75rem', marginBottom: 0, fontSize: '0.82rem' }} required />
+                  <label style={{ display: 'block', fontSize: '0.72rem', color: '#94a3b8', marginBottom: '0.3rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>School / Org</label>
+                  <input type="text" name="schoolName" value={indForm.schoolName} onChange={handleIndChange} placeholder="e.g. DPS" style={{ ...inputStyle, height: 44, padding: '0 0.9rem', marginBottom: 0, fontSize: '0.88rem' }} required />
                 </div>
               </div>
 
               {/* Row 4: Grade + City + State */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.5rem', marginBottom: '0.5rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.75rem', marginBottom: '0.75rem' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.68rem', color: '#94a3b8', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>{indForm.category === 'Professional' ? 'Designation' : 'Grade'}</label>
+                  <label style={{ display: 'block', fontSize: '0.72rem', color: '#94a3b8', marginBottom: '0.3rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>{indForm.category === 'Professional' ? 'Designation' : 'Grade'}</label>
                   {indForm.category === 'Student' ? (
-                    <select name="grade" value={indForm.grade} onChange={handleIndChange} style={{ ...inputStyle, height: 38, padding: '0 0.4rem', marginBottom: 0, fontSize: '0.82rem' }} required>
+                    <select name="grade" value={indForm.grade} onChange={handleIndChange} style={{ ...inputStyle, height: 44, padding: '0 0.5rem', marginBottom: 0, fontSize: '0.88rem' }} required>
                       <option value="" disabled>Select</option>
                       {Array.from({length: 12}, (_, i) => `Class ${i + 1}`).map(c => <option key={c} value={c} style={{ background: '#1e293b', color: '#fff' }}>{c}</option>)}
                       <option value="Undergraduate" style={{ background: '#1e293b', color: '#fff' }}>Undergrad</option>
                       <option value="Postgraduate" style={{ background: '#1e293b', color: '#fff' }}>Postgrad</option>
                     </select>
                   ) : (
-                    <input type="text" name="grade" value={indForm.grade} onChange={handleIndChange} placeholder="e.g. Manager" style={{ ...inputStyle, height: 38, padding: '0 0.75rem', marginBottom: 0, fontSize: '0.82rem' }} required />
+                    <input type="text" name="grade" value={indForm.grade} onChange={handleIndChange} placeholder="e.g. Manager" style={{ ...inputStyle, height: 44, padding: '0 0.9rem', marginBottom: 0, fontSize: '0.88rem' }} required />
                   )}
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.68rem', color: '#94a3b8', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>City</label>
-                  <input type="text" name="city" value={indForm.city} onChange={handleIndChange} placeholder="City" style={{ ...inputStyle, height: 38, padding: '0 0.75rem', marginBottom: 0, fontSize: '0.82rem' }} required />
+                  <label style={{ display: 'block', fontSize: '0.72rem', color: '#94a3b8', marginBottom: '0.3rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>City</label>
+                  <input type="text" name="city" value={indForm.city} onChange={handleIndChange} placeholder="City" style={{ ...inputStyle, height: 44, padding: '0 0.9rem', marginBottom: 0, fontSize: '0.88rem' }} required />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.68rem', color: '#94a3b8', marginBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>State</label>
-                  <input type="text" name="state" value={indForm.state} onChange={handleIndChange} placeholder="State" style={{ ...inputStyle, height: 38, padding: '0 0.75rem', marginBottom: 0, fontSize: '0.82rem' }} required />
+                  <label style={{ display: 'block', fontSize: '0.72rem', color: '#94a3b8', marginBottom: '0.3rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>State</label>
+                  <input type="text" name="state" value={indForm.state} onChange={handleIndChange} placeholder="State" style={{ ...inputStyle, height: 44, padding: '0 0.9rem', marginBottom: 0, fontSize: '0.88rem' }} required />
                 </div>
               </div>
 
               {/* Row 5: Subjects */}
-              <div style={{ marginBottom: '0.6rem' }}>
-                <label style={{ display: 'block', fontSize: '0.68rem', color: '#94a3b8', marginBottom: '0.35rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>Select Subjects</label>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
+              <div style={{ marginBottom: '0.9rem' }}>
+                <label style={{ display: 'block', fontSize: '0.72rem', color: '#94a3b8', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>Select Subjects</label>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }}>
                   {SUBJECTS.map(s => (
-                    <div key={s} onClick={() => toggleSubject(s, true)} style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', padding: '0.3rem 0.6rem', borderRadius: 99, border: `1px solid ${indForm.subjects.includes(s) ? '#ef4444' : 'rgba(255,255,255,0.12)'}`, background: indForm.subjects.includes(s) ? 'rgba(239,68,68,0.15)' : 'rgba(255,255,255,0.04)', cursor: 'pointer', transition: 'all 0.15s', fontSize: '0.75rem', fontWeight: 600, color: indForm.subjects.includes(s) ? '#ef4444' : '#94a3b8', userSelect: 'none' }}>
-                      <div style={{ width: 12, height: 12, borderRadius: 3, border: `1.5px solid ${indForm.subjects.includes(s) ? '#ef4444' : '#475569'}`, background: indForm.subjects.includes(s) ? '#ef4444' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                        {indForm.subjects.includes(s) && <svg width="8" height="6" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+                    <div key={s} onClick={() => toggleSubject(s, true)} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.35rem 0.75rem', borderRadius: 99, border: `1px solid ${indForm.subjects.includes(s) ? '#ef4444' : 'rgba(255,255,255,0.12)'}`, background: indForm.subjects.includes(s) ? 'rgba(239,68,68,0.15)' : 'rgba(255,255,255,0.04)', cursor: 'pointer', transition: 'all 0.15s', fontSize: '0.82rem', fontWeight: 600, color: indForm.subjects.includes(s) ? '#ef4444' : '#94a3b8', userSelect: 'none' }}>
+                      <div style={{ width: 14, height: 14, borderRadius: 3, border: `1.5px solid ${indForm.subjects.includes(s) ? '#ef4444' : '#475569'}`, background: indForm.subjects.includes(s) ? '#ef4444' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        {indForm.subjects.includes(s) && <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}
                       </div>
                       {s}
                     </div>
@@ -388,7 +388,7 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
               <button
                 type="submit"
                 disabled={indSubmitting}
-                style={{ width: '100%', padding: '0.75rem', borderRadius: 12, background: indSubmitting ? 'rgba(239,68,68,0.5)' : '#ef4444', color: '#fff', fontSize: '0.95rem', fontWeight: 800, border: 'none', cursor: indSubmitting ? 'not-allowed' : 'pointer', transition: 'all 0.2s' }}
+                style={{ width: '100%', padding: '0.9rem', borderRadius: 12, background: indSubmitting ? 'rgba(239,68,68,0.5)' : '#ef4444', color: '#fff', fontSize: '1rem', fontWeight: 800, border: 'none', cursor: indSubmitting ? 'not-allowed' : 'pointer', transition: 'all 0.2s' }}
               >
                 {indSubmitting ? 'Registering...' : 'Complete Registration'}
               </button>
