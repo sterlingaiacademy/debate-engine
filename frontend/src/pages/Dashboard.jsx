@@ -323,7 +323,7 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
                   <select name="countryCode" value={indForm.countryCode} onChange={handleIndChange} style={{ ...inputStyle, width: '100px', height: 44, padding: '0 0.5rem', marginBottom: 0, fontSize: '0.88rem', flexShrink: 0 }}>
                     {COUNTRY_CODES.map(c => <option key={c.code} value={c.code} style={{ background: '#1e293b', color: '#fff' }}>{c.code}</option>)}
                   </select>
-                  <input type="tel" name="mobile" value={indForm.mobile} onChange={handleIndChange} placeholder="Enter your number" style={{ ...inputStyle, width: '220px', height: 44, padding: '0 0.9rem', marginBottom: 0, fontSize: '0.88rem' }} required />
+                  <input type="tel" name="mobile" value={indForm.mobile} onChange={handleIndChange} placeholder="Enter your number" style={{ ...inputStyle, flex: 1, height: 44, padding: '0 0.9rem', marginBottom: 0, fontSize: '0.88rem' }} required />
                 </div>
               </div>
 
@@ -351,9 +351,7 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
                   {indForm.category === 'Student' ? (
                     <select name="grade" value={indForm.grade} onChange={handleIndChange} style={{ ...inputStyle, height: 44, padding: '0 0.5rem', marginBottom: 0, fontSize: '0.88rem' }} required>
                       <option value="" disabled>Select</option>
-                      {Array.from({length: 12}, (_, i) => `Class ${i + 1}`).map(c => <option key={c} value={c} style={{ background: '#1e293b', color: '#fff' }}>{c}</option>)}
-                      <option value="Undergraduate" style={{ background: '#1e293b', color: '#fff' }}>Undergrad</option>
-                      <option value="Postgraduate" style={{ background: '#1e293b', color: '#fff' }}>Postgrad</option>
+                      {Array.from({length: 8}, (_, i) => `Grade ${i + 5}`).map(c => <option key={c} value={c} style={{ background: '#1e293b', color: '#fff' }}>{c}</option>)}
                     </select>
                   ) : (
                     <input type="text" name="grade" value={indForm.grade} onChange={handleIndChange} placeholder="e.g. Manager" style={{ ...inputStyle, height: 44, padding: '0 0.9rem', marginBottom: 0, fontSize: '0.88rem' }} required />
