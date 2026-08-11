@@ -25,8 +25,10 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
     name: user?.name || '',
     classLevel: '',
     email: user?.email || '',
-    phone: user?.phone || '',
+    countryCode: '+91',
+    phone: '',
     city: '',
+    state: '',
   });
 
   const [indForm, setIndForm] = useState({
@@ -118,7 +120,12 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
         body: JSON.stringify({ 
           email: user.email, 
           school_code: code,
-          ...formData
+          name: formData.name,
+          classLevel: formData.classLevel,
+          contactEmail: formData.email,
+          parentPhone: `${formData.countryCode} ${formData.phone.trim()}`,
+          city: formData.city,
+          state: formData.state,
         })
       });
       const data = await res.json();
@@ -200,22 +207,32 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
 
             <input type="email" placeholder="Email Address *" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} style={inputStyle} />
 
-            <input type="tel" placeholder="Phone / WhatsApp Number *" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} style={inputStyle} />
+            {/* Phone with country code */}
+            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
+              <select
+                value={formData.countryCode}
+                onChange={e => setFormData({...formData, countryCode: e.target.value})}
+                style={{ ...inputStyle, width: '90px', padding: '0 0.5rem', marginBottom: 0, flexShrink: 0 }}
+              >
+                {COUNTRY_CODES.map(c => <option key={c.code} value={c.code} style={{ background: '#1e293b', color: '#fff' }}>{c.code}</option>)}
+              </select>
+              <input type="tel" placeholder="WhatsApp Number *" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} style={{ ...inputStyle, flex: 1, marginBottom: 0 }} />
+            </div>
 
             <select value={formData.classLevel} onChange={e => setFormData({...formData, classLevel: e.target.value})} style={{...inputStyle, appearance: 'none', backgroundColor: 'rgba(0,0,0,0.4)', color: formData.classLevel ? '#fff' : '#94a3b8'}}>
-              <option value="" disabled>Select Grade / Role *</option>
+              <option value="" disabled>Select Grade *</option>
               {Array.from({length: 8}, (_, i) => `Grade ${i + 5}`).map(c => <option key={c} value={c}>{c}</option>)}
-              <option value="Teacher">Teacher</option>
-              <option value="Parent">Parent</option>
-              <option value="Other">Other</option>
             </select>
 
-            <input type="text" placeholder="City *" value={formData.city} onChange={e => setFormData({...formData, city: e.target.value})} style={inputStyle} />
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <input type="text" placeholder="City *" value={formData.city} onChange={e => setFormData({...formData, city: e.target.value})} style={{ ...inputStyle, flex: 1, marginBottom: 0 }} />
+              <input type="text" placeholder="State *" value={formData.state} onChange={e => setFormData({...formData, state: e.target.value})} style={{ ...inputStyle, flex: 1, marginBottom: 0 }} />
+            </div>
 
             <button
               onClick={handleEnroll}
-              disabled={!formData.name || !formData.classLevel || !formData.email || !formData.phone || !formData.city}
-              style={{ width: '100%', padding: '1rem', borderRadius: 12, background: (formData.name && formData.classLevel && formData.email && formData.phone && formData.city) ? '#ef4444' : 'rgba(239,68,68,0.3)', color: '#fff', fontSize: '1.05rem', fontWeight: 800, border: 'none', cursor: (formData.name && formData.classLevel && formData.email && formData.phone && formData.city) ? 'pointer' : 'not-allowed', transition: 'all 0.2s', marginTop: '0.5rem' }}
+              disabled={!formData.name || !formData.classLevel || !formData.email || !formData.phone || !formData.city || !formData.state}
+              style={{ width: '100%', padding: '1rem', borderRadius: 12, background: (formData.name && formData.classLevel && formData.email && formData.phone && formData.city && formData.state) ? '#ef4444' : 'rgba(239,68,68,0.3)', color: '#fff', fontSize: '1.05rem', fontWeight: 800, border: 'none', cursor: (formData.name && formData.classLevel && formData.email && formData.phone && formData.city && formData.state) ? 'pointer' : 'not-allowed', transition: 'all 0.2s', marginTop: '1rem' }}
             >
               Complete Enrollment
             </button>
