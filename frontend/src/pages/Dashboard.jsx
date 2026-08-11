@@ -682,7 +682,7 @@ export default function Dashboard({ user, setUser }) {
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-            <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(255,255,255,0.2)', border: '2px solid rgba(255,255,255,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', fontWeight: 900, color: '#fff', flexShrink: 0, boxShadow: '0 8px 24px rgba(0,0,0,0.1)' }}>
+            <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'linear-gradient(135deg, #FF6B00 0%, #f97316 100%)', border: '2px solid rgba(255,107,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', fontWeight: 900, color: '#fff', flexShrink: 0, boxShadow: '0 8px 24px rgba(255,107,0,0.3)' }}>
               {user.avatar
                 ? <img src={user.avatar} alt="" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
                 : user.name?.charAt(0).toUpperCase()
@@ -802,24 +802,24 @@ export default function Dashboard({ user, setUser }) {
             onClick={() => setShowPremiumModal(true)}
             style={{ 
               position: 'relative', zIndex: 2, marginTop: '2rem', padding: '1rem 1.25rem', borderRadius: 16, cursor: 'pointer',
-              background: 'rgba(255,255,255,0.15)',
-              border: '1px solid rgba(255,255,255,0.3)',
+              background: 'linear-gradient(135deg, rgba(255,107,0,0.1), rgba(255,107,0,0.05))',
+              border: '1px solid rgba(255,107,0,0.3)',
               display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem',
-              transition: 'all 0.2s', boxShadow: '0 8px 24px rgba(0,0,0,0.1)'
+              transition: 'all 0.2s', boxShadow: '0 8px 24px rgba(255,107,0,0.1)'
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.25)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.15)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)'; }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255,107,0,0.15), rgba(255,107,0,0.08))'; e.currentTarget.style.borderColor = 'rgba(255,107,0,0.5)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255,107,0,0.1), rgba(255,107,0,0.05))'; e.currentTarget.style.borderColor = 'rgba(255,107,0,0.3)'; }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-              <div style={{ background: 'rgba(255,255,255,0.2)', color: '#fff', width: 40, height: 40, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <div style={{ background: 'rgba(255,107,0,0.2)', color: '#FF6B00', width: 40, height: 40, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                 <Crown size={22} strokeWidth={2.5} />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <span style={{ fontSize: '1rem', fontWeight: 900, color: '#fff', letterSpacing: '-0.01em' }}>Demo Account</span>
-                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'rgba(255,255,255,0.8)' }}>Upgrade to Pro to unlock unlimited time and features!</span>
+                <span style={{ fontSize: '1rem', fontWeight: 900, color: '#FF6B00', letterSpacing: '-0.01em' }}>Demo Account</span>
+                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Upgrade to Pro to unlock unlimited time and features!</span>
               </div>
             </div>
-            <div style={{ background: '#fff', color: '#FF6B00', padding: '0.6rem 1.25rem', borderRadius: 99, fontSize: '0.85rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.4rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+            <div style={{ background: '#FF6B00', color: '#fff', padding: '0.6rem 1.25rem', borderRadius: 99, fontSize: '0.85rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.4rem', boxShadow: '0 4px 12px rgba(255,107,0,0.3)' }}>
               Upgrade Now <ChevronRight size={16} />
             </div>
           </div>
@@ -841,6 +841,7 @@ export default function Dashboard({ user, setUser }) {
                 className="mode-card"
                 style={{
                   '--mode-glow': `0 0 40px ${mode.glow || 'transparent'}`,
+                  boxShadow: 'var(--mode-glow)',
                   background: mode.grad,
                   border: `1px solid ${mode.color}25`,
                   color: '#fff',
