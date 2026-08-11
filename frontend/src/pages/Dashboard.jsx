@@ -840,8 +840,6 @@ export default function Dashboard({ user, setUser }) {
                 onClick={() => navigate(mode.path(isJunior))}
                 className="mode-card"
                 style={{
-                  '--mode-glow': `0 0 40px ${mode.glow || 'transparent'}`,
-                  boxShadow: 'var(--mode-glow)',
                   background: mode.grad,
                   border: `1px solid ${mode.color}25`,
                   color: '#fff',
@@ -851,7 +849,7 @@ export default function Dashboard({ user, setUser }) {
                 }}
               >
                 {/* Top dec */}
-                <div style={{ position: 'absolute', top: -24, right: -24, width: 120, height: 120, borderRadius: '50%', background: `radial-gradient(circle, ${mode.color}1a 0%, transparent 70%)`, pointerEvents: 'none' }} />
+
 
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
