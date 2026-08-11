@@ -338,6 +338,7 @@ function StudentsSection({ students, fetchData, coordinatorId }) {
                     <div style={{ fontSize: '0.75rem', fontWeight: 600 }}>{s.parent_name || '—'} <span style={{fontWeight: 400}}>({s.parent_phone || '—'})</span></div>
                     <div style={{ fontSize: '0.7rem', color: '#64748b', marginTop: 2 }}>{s.contact_email || '—'}</div>
                     <div style={{ fontSize: '0.7rem', color: '#64748b', marginTop: 2 }}>{s.city ? `${s.city}, ${s.state || ''}` : '—'}</div>
+                    {s.subjects && <div style={{ fontSize: '0.7rem', color: '#94a3b8', marginTop: 2 }}>{s.subjects}</div>}
                   </TD>
                   <TD><StatusBadge status={s.status} /></TD>
                   <TD muted>{s.dailyPractice}</TD>

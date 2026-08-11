@@ -3253,7 +3253,7 @@ app.post('/api/olympiad/verify-school', async (req, res) => {
 // ==========================================
 app.post('/api/olympiad/enroll', async (req, res) => {
   try {
-    const { email, school_code, name, classLevel, age, parentName, parentPhone, city, state, contactEmail } = req.body;
+    const { email, school_code, name, classLevel, age, parentName, parentPhone, city, state, contactEmail, subjects } = req.body;
     if (!email || !school_code) {
       return res.status(400).json({ error: 'Email and school code are required.' });
     }
@@ -3276,6 +3276,7 @@ app.post('/api/olympiad/enroll', async (req, res) => {
       await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS parent_name VARCHAR(255)`);
       await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS parent_phone VARCHAR(50)`);
       await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS age INTEGER`);
+      await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS subjects TEXT`);
     } catch (e) {
       // Ignore if fails
     }
@@ -3292,9 +3293,10 @@ app.post('/api/olympiad/enroll', async (req, res) => {
            parent_phone = COALESCE($7, parent_phone),
            city = COALESCE($8, city),
            state = COALESCE($9, state),
-           contact_email = COALESCE($10, contact_email)
+           contact_email = COALESCE($10, contact_email),
+           subjects = COALESCE($11, subjects)
        WHERE email = $2 RETURNING id`,
-      [school_id, email, name || null, classLevel || null, age || null, parentName || null, parentPhone || null, city || null, state || null, contactEmail || null]
+      [school_id, email, name || null, classLevel || null, age || null, parentName || null, parentPhone || null, city || null, state || null, contactEmail || null, subjects || null]
     );
 
     if (updateRes.rows.length === 0) {
@@ -3365,7 +3367,7 @@ app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
 
     // Fetch students linked to this school
     const studentsRes = await db.query(
-      `SELECT id, name, "classLevel" as class, email, olympiad_registered, age, parent_name, parent_phone, city, state, contact_email
+      `SELECT id, name, "classLevel" as class, email, olympiad_registered, age, parent_name, parent_phone, city, state, contact_email, subjects
        FROM users 
        WHERE school_id = $1 AND role = 'student'`,
       [school.id]
@@ -3420,6 +3422,7 @@ app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
         contact_email: student.contact_email,
         city: student.city,
         state: student.state,
+        subjects: student.subjects,
         status: status,
         dailyPractice: practiceCount,
         avg_score: avgScore,

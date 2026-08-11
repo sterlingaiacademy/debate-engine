@@ -21,6 +21,8 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
   const [schoolName, setSchoolName] = useState('');
   const [error, setError] = useState('');
   
+  const SUBJECTS = ['English', 'Mathematics', 'Science', 'Social Sciences', 'CT & AI'];
+
   const [formData, setFormData] = useState({
     name: user?.name || '',
     classLevel: '',
@@ -29,6 +31,7 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
     phone: '',
     city: '',
     state: '',
+    subjects: [],
   });
 
   const [indForm, setIndForm] = useState({
@@ -40,6 +43,8 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
     category: '',
     grade: '',
     city: '',
+    state: '',
+    subjects: [],
   });
 
   const [indSubmitting, setIndSubmitting] = useState(false);
@@ -47,9 +52,17 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
   
   const handleIndChange = (e) => setIndForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
 
+  const toggleSubject = (subject, isInd = false) => {
+    if (isInd) {
+      setIndForm(prev => ({ ...prev, subjects: prev.subjects.includes(subject) ? prev.subjects.filter(s => s !== subject) : [...prev.subjects, subject] }));
+    } else {
+      setFormData(prev => ({ ...prev, subjects: prev.subjects.includes(subject) ? prev.subjects.filter(s => s !== subject) : [...prev.subjects, subject] }));
+    }
+  };
+
   const handleIndividualEnroll = async (e) => {
     e.preventDefault();
-    if (!indForm.studentName || !indForm.email || !indForm.mobile || !indForm.category || !indForm.grade || !indForm.schoolName || !indForm.city) {
+    if (!indForm.studentName || !indForm.email || !indForm.mobile || !indForm.category || !indForm.grade || !indForm.schoolName || !indForm.city || !indForm.state) {
       setIndError('Please fill in all required fields.');
       return;
     }
@@ -66,9 +79,11 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
           classLevel: indForm.grade,
           age: null,
           city: indForm.city,
+          state: indForm.state,
           contactEmail: indForm.email,
           parentPhone: `${indForm.countryCode} ${indForm.mobile.trim()}`,
-          parentName: indForm.schoolName
+          parentName: indForm.schoolName,
+          subjects: indForm.subjects.join(', '),
         }),
       });
       const data = await res.json();
@@ -126,6 +141,7 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
           parentPhone: `${formData.countryCode} ${formData.phone.trim()}`,
           city: formData.city,
           state: formData.state,
+          subjects: formData.subjects.join(', '),
         })
       });
       const data = await res.json();
@@ -229,6 +245,21 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
               <input type="text" placeholder="State *" value={formData.state} onChange={e => setFormData({...formData, state: e.target.value})} style={{ ...inputStyle, flex: 1, marginBottom: 0 }} />
             </div>
 
+            {/* Subject Selection */}
+            <div style={{ marginTop: '1rem' }}>
+              <div style={{ fontSize: '0.75rem', color: '#94a3b8', marginBottom: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>Select Subjects</div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                {SUBJECTS.map(s => (
+                  <div key={s} onClick={() => toggleSubject(s)} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.4rem 0.75rem', borderRadius: 99, border: `1px solid ${formData.subjects.includes(s) ? '#ef4444' : 'rgba(255,255,255,0.12)'}`, background: formData.subjects.includes(s) ? 'rgba(239,68,68,0.15)' : 'rgba(255,255,255,0.04)', cursor: 'pointer', transition: 'all 0.15s', fontSize: '0.8rem', fontWeight: 600, color: formData.subjects.includes(s) ? '#ef4444' : '#94a3b8', userSelect: 'none' }}>
+                    <div style={{ width: 14, height: 14, borderRadius: 3, border: `1.5px solid ${formData.subjects.includes(s) ? '#ef4444' : '#475569'}`, background: formData.subjects.includes(s) ? '#ef4444' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      {formData.subjects.includes(s) && <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+                    </div>
+                    {s}
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <button
               onClick={handleEnroll}
               disabled={!formData.name || !formData.classLevel || !formData.email || !formData.phone || !formData.city || !formData.state}
@@ -330,10 +361,30 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
                 </div>
               </div>
 
+              <div>
+                <label style={{ display: 'block', fontSize: '0.75rem', color: '#94a3b8', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>State</label>
+                <input type="text" name="state" value={indForm.state} onChange={handleIndChange} placeholder="State Name" style={{ ...inputStyle, marginBottom: 0 }} required />
+              </div>
+
+              {/* Subject Selection */}
+              <div>
+                <label style={{ display: 'block', fontSize: '0.75rem', color: '#94a3b8', marginBottom: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>Select Subjects</label>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                  {SUBJECTS.map(s => (
+                    <div key={s} onClick={() => toggleSubject(s, true)} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.4rem 0.75rem', borderRadius: 99, border: `1px solid ${indForm.subjects.includes(s) ? '#ef4444' : 'rgba(255,255,255,0.12)'}`, background: indForm.subjects.includes(s) ? 'rgba(239,68,68,0.15)' : 'rgba(255,255,255,0.04)', cursor: 'pointer', transition: 'all 0.15s', fontSize: '0.8rem', fontWeight: 600, color: indForm.subjects.includes(s) ? '#ef4444' : '#94a3b8', userSelect: 'none' }}>
+                      <div style={{ width: 14, height: 14, borderRadius: 3, border: `1.5px solid ${indForm.subjects.includes(s) ? '#ef4444' : '#475569'}`, background: indForm.subjects.includes(s) ? '#ef4444' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        {indForm.subjects.includes(s) && <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+                      </div>
+                      {s}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               <button 
                 type="submit"
                 disabled={indSubmitting}
-                style={{ width: '100%', padding: '1rem', borderRadius: 12, background: indSubmitting ? 'rgba(239,68,68,0.5)' : '#ef4444', color: '#fff', fontSize: '1.05rem', fontWeight: 800, border: 'none', cursor: indSubmitting ? 'not-allowed' : 'pointer', marginTop: '1rem', transition: 'all 0.2s' }}
+                style={{ width: '100%', padding: '1rem', borderRadius: 12, background: indSubmitting ? 'rgba(239,68,68,0.5)' : '#ef4444', color: '#fff', fontSize: '1.05rem', fontWeight: 800, border: 'none', cursor: indSubmitting ? 'not-allowed' : 'pointer', marginTop: '0.5rem', transition: 'all 0.2s' }}
               >
                 {indSubmitting ? 'Registering...' : 'Complete Registration'}
               </button>
