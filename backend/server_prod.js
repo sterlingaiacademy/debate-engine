@@ -3678,7 +3678,7 @@ async function ensureQuizTable() {
 }
 ensureQuizTable().catch(console.error);
 
-// GET questions for a grade (includes correct for instant feedback in practice mode)
+// GET questions for a grade (includes correct for instant feedback; options are shuffled per question)
 app.get('/api/olympiad/quiz/:subject/:grade', async (req, res) => {
   try {
     const grade = parseInt(req.params.grade);
@@ -3687,7 +3687,18 @@ app.get('/api/olympiad/quiz/:subject/:grade', async (req, res) => {
     if (!bank) return res.status(404).json({ error: 'Subject not found' });
     const raw = bank[grade];
     if (!raw) return res.status(404).json({ error: 'No questions for this grade' });
-    const questions = raw.map((q, i) => ({ id: i, question: q.question, options: q.options, correct: q.correct }));
+    const letters = ['A', 'B', 'C', 'D'];
+    const questions = raw.map((q, i) => {
+      // Shuffle options so correct answer isn't always first
+      const originalOptions = q.options.slice(); // [{letter, text}]
+      const originalCorrectText = originalOptions.find(o => o.letter === q.correct)?.text;
+      // Shuffle
+      const shuffled = originalOptions.map(o => o.text).sort(() => Math.random() - 0.5);
+      const newOptions = shuffled.map((text, idx) => ({ letter: letters[idx], text }));
+      // Find new correct letter
+      const newCorrectLetter = newOptions.find(o => o.text === originalCorrectText)?.letter || q.correct;
+      return { id: i, question: q.question, options: newOptions, correct: newCorrectLetter };
+    });
     const label = SUBJECT_LABELS[subject] || subject;
     res.json({ quiz_name: `${label} Practice – Grade ${grade}`, subject: label, grade, total: questions.length, questions });
   } catch (err) {
@@ -3717,7 +3728,7 @@ app.get('/api/olympiad/quiz/status/:subject/:grade', async (req, res) => {
 // POST submit quiz answers
 app.post('/api/olympiad/quiz/submit', async (req, res) => {
   try {
-    const { email, subject, grade, answers } = req.body;
+    const { email, subject, grade, answers, correctAnswers } = req.body;
     if (!email || !subject || !grade || !answers) return res.status(400).json({ error: 'Missing fields' });
     const gradeNum = parseInt(grade);
     await ensureQuizTable();
@@ -3731,13 +3742,15 @@ app.post('/api/olympiad/quiz/submit', async (req, res) => {
     let score = 0;
     const breakdown = raw.map((q, i) => {
       const selected = answers[i];
-      const isCorrect = selected === q.correct;
+      // Use correctAnswers from frontend if provided (shuffled letters), else fall back to raw
+      const correctLetter = correctAnswers ? correctAnswers[i] : q.correct;
+      const isCorrect = selected !== undefined && selected === correctLetter;
       if (isCorrect) score++;
-      return { question: q.question, selected, correct: q.correct, isCorrect };
+      return { question: q.question, selected, correct: correctLetter, isCorrect };
     });
     const total = raw.length;
     const percentage = parseFloat(((score / total) * 100).toFixed(2));
-    const quiz_name = `English Practice – Grade ${gradeNum}`;
+    const quiz_name = `${SUBJECT_LABELS[subject.toLowerCase()] || subject} Practice – Grade ${gradeNum}`;
     const userRes = await db.query(`SELECT id FROM users WHERE email=$1`, [email]);
     const user_id = userRes.rows[0]?.id || null;
     await db.query(

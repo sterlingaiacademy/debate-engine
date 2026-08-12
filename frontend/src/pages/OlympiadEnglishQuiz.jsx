@@ -15,8 +15,9 @@ const SUBJECT_COLORS = {
 export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose }) {
   const [phase, setPhase] = useState('loading');
   const [quiz, setQuiz] = useState(null);
-  const [answers, setAnswers] = useState({});     // { qIndex: letter }
-  const [revealed, setRevealed] = useState({});   // { qIndex: true } — set when Next is clicked
+  const [answers, setAnswers] = useState({});       // { qIndex: selectedLetter }
+  const [correctAnswers, setCorrectAnswers] = useState({}); // { qIndex: correctLetter } from shuffled quiz
+  const [revealed, setRevealed] = useState({});     // { qIndex: true } — set when Check Answer is clicked
   const [current, setCurrent] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState(null);
@@ -33,7 +34,14 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
       .then(r => r.json())
       .then(data => {
         if (data.attempted) { setResult(data.result); setPhase('result'); }
-        else return fetch(`${API_BASE}/api/olympiad/quiz/${subjectKey}/${gradeNum}`).then(r => r.json()).then(q => { setQuiz(q); setPhase('quiz'); });
+        else return fetch(`${API_BASE}/api/olympiad/quiz/${subjectKey}/${gradeNum}`).then(r => r.json()).then(q => {
+          // Store the correct letter for each shuffled question
+          const ca = {};
+          q.questions.forEach((qu, i) => { ca[i] = qu.correct; });
+          setCorrectAnswers(ca);
+          setQuiz(q);
+          setPhase('quiz');
+        });
       })
       .catch(e => { setError(e.message); setPhase('blocked'); });
   }, [gradeNum, user.email, subjectKey]);
@@ -72,7 +80,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
     if (unanswered > 0 && !window.confirm(`${unanswered} question(s) unanswered. Submit anyway?`)) return;
     setSubmitting(true);
     try {
-      const res = await fetch(`${API_BASE}/api/olympiad/quiz/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: user.email, subject: subjectKey, grade: gradeNum, answers }) });
+      const res = await fetch(`${API_BASE}/api/olympiad/quiz/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: user.email, subject: subjectKey, grade: gradeNum, answers, correctAnswers }) });
       const data = await res.json();
       if (data.error) throw new Error(data.error);
       setResult(data); setPhase('result');
