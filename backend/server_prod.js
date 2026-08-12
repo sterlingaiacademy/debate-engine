@@ -3751,10 +3751,8 @@ app.post('/api/olympiad/quiz/submit', async (req, res) => {
 });
 
 // GET quiz results for admin (all students)
-app.get('/api/admin/olympiad/quiz-results', async (req, res) => {
+app.get('/api/admin/olympiad/quiz-results', requireAdmin, async (req, res) => {
   try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader || authHeader !== `Bearer ${process.env.ADMIN_TOKEN || 'gforce-admin-2024'}`) return res.status(401).json({ error: 'Unauthorized' });
     await ensureQuizTable();
     const result = await db.query(`
       SELECT qr.id, qr.user_email, qr.quiz_name, qr.subject, qr.grade, qr.score, qr.total, qr.percentage, qr.attempted_at,
