@@ -12,6 +12,8 @@ const filesToDeploy = [
   'frontend/src/pages/OlympiadStudentRegister.jsx',
   'frontend/src/pages/OlympiadReportCard.jsx',
   'frontend/src/pages/OlympiadArena.jsx',
+  'frontend/src/pages/OlympiadDashboard.jsx',
+  'frontend/src/pages/OlympiadEnglishQuiz.jsx',
   'frontend/src/pages/AdminDashboard.jsx',
   'frontend/src/pages/Login.jsx',
   'frontend/src/pages/Register.jsx',
