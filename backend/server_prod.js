@@ -3352,10 +3352,10 @@ app.get('/api/admin/olympiad/independent-students', requireAdmin, async (req, re
   try {
     // Individual participants enrolled via 'INDIVIDUAL' school_code → school_id is NULL, olympiad_registered = true
     const result = await db.query(
-      `SELECT id, name, email, "classLevel", city, state, parent_name, parent_phone, contact_email, subjects, created_at
+      `SELECT id, name, email, "classLevel", city, state, parent_name, parent_phone, contact_email, subjects, "createdAt" as created_at
        FROM users
        WHERE olympiad_registered = true AND (school_id IS NULL)
-       ORDER BY created_at DESC`
+       ORDER BY "createdAt" DESC`
     );
     res.json({ students: result.rows });
   } catch (err) {
