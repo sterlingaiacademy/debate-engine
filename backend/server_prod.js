@@ -3403,10 +3403,21 @@ app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
       const avgScore = parseFloat(practiceRes.rows[0].avg_score || '0');
       totalPracticeCount += practiceCount;
 
-      let status = 'Registered'; // Baseline if they are in the array
+      // Get quiz results
+      let quizResults = [];
+      try {
+        await ensureQuizTable();
+        const quizRes = await db.query(
+          `SELECT quiz_name, subject, score, total, percentage, attempted_at FROM olympiad_quiz_results WHERE user_email=$1 ORDER BY attempted_at DESC`,
+          [student.contact_email || student.email || '']
+        );
+        quizResults = quizRes.rows;
+      } catch(e) { /* quiz table may not exist yet */ }
+
+      let status = 'Registered';
       if (hasTakenExam) {
         status = 'Completed';
-      } else if (practiceCount > 0) {
+      } else if (practiceCount > 0 || quizResults.length > 0) {
         status = 'In Progress';
       } else if (!student.olympiad_registered) {
         status = 'Pending';
@@ -3426,7 +3437,8 @@ app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
         status: status,
         dailyPractice: practiceCount,
         avg_score: avgScore,
-        examScore: examScore
+        examScore: examScore,
+        quizResults: quizResults
       });
     }
 
@@ -3626,4 +3638,122 @@ app.post('/api/olympiad/exam/submit', async (req, res) => {
   }
 });
 
+
+// ==========================================
+// THINKQUEST OLYMPIAD – ENGLISH MCQ QUIZ
+// ==========================================
+
+const englishQuestions = require('./data/english_questions.json');
+
+async function ensureQuizTable() {
+  await db.query(`
+    CREATE TABLE IF NOT EXISTS olympiad_quiz_results (
+      id SERIAL PRIMARY KEY,
+      user_id INTEGER,
+      user_email VARCHAR(255),
+      quiz_name VARCHAR(255),
+      subject VARCHAR(100),
+      grade INTEGER,
+      score INTEGER,
+      total INTEGER,
+      percentage NUMERIC(5,2),
+      answers JSONB,
+      attempted_at TIMESTAMP DEFAULT NOW()
+    )
+  `);
+}
+ensureQuizTable().catch(console.error);
+
+// GET questions for a grade (correct answers stripped)
+app.get('/api/olympiad/quiz/:subject/:grade', async (req, res) => {
+  try {
+    const grade = parseInt(req.params.grade);
+    const subject = req.params.subject.toLowerCase();
+    if (subject !== 'english') return res.status(404).json({ error: 'Subject not found' });
+    const raw = englishQuestions[grade];
+    if (!raw) return res.status(404).json({ error: 'No questions for this grade' });
+    const questions = raw.map((q, i) => ({
+      id: i,
+      question: q.question,
+      options: q.options,
+    }));
+    res.json({ quiz_name: `English Practice – Grade ${grade}`, subject: 'English', grade, total: questions.length, questions });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET quiz attempt status for a user
+app.get('/api/olympiad/quiz/status/:subject/:grade', async (req, res) => {
+  try {
+    const { email } = req.query;
+    const grade = parseInt(req.params.grade);
+    const subject = req.params.subject;
+    if (!email) return res.status(400).json({ error: 'Email required' });
+    await ensureQuizTable();
+    const existing = await db.query(
+      `SELECT id, score, total, percentage, attempted_at, quiz_name FROM olympiad_quiz_results WHERE user_email=$1 AND subject=$2 AND grade=$3`,
+      [email, subject, grade]
+    );
+    if (existing.rows.length > 0) return res.json({ attempted: true, result: existing.rows[0] });
+    res.json({ attempted: false });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// POST submit quiz answers
+app.post('/api/olympiad/quiz/submit', async (req, res) => {
+  try {
+    const { email, subject, grade, answers } = req.body;
+    if (!email || !subject || !grade || !answers) return res.status(400).json({ error: 'Missing fields' });
+    const gradeNum = parseInt(grade);
+    await ensureQuizTable();
+    const existing = await db.query(
+      `SELECT id FROM olympiad_quiz_results WHERE user_email=$1 AND subject=$2 AND grade=$3`,
+      [email, subject, gradeNum]
+    );
+    if (existing.rows.length > 0) return res.status(400).json({ error: 'Already attempted' });
+    const raw = subject.toLowerCase() === 'english' ? englishQuestions[gradeNum] : null;
+    if (!raw) return res.status(404).json({ error: 'Questions not found' });
+    let score = 0;
+    const breakdown = raw.map((q, i) => {
+      const selected = answers[i];
+      const isCorrect = selected === q.correct;
+      if (isCorrect) score++;
+      return { question: q.question, selected, correct: q.correct, isCorrect };
+    });
+    const total = raw.length;
+    const percentage = parseFloat(((score / total) * 100).toFixed(2));
+    const quiz_name = `English Practice – Grade ${gradeNum}`;
+    const userRes = await db.query(`SELECT id FROM users WHERE email=$1`, [email]);
+    const user_id = userRes.rows[0]?.id || null;
+    await db.query(
+      `INSERT INTO olympiad_quiz_results (user_id, user_email, quiz_name, subject, grade, score, total, percentage, answers) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+      [user_id, email, quiz_name, subject, gradeNum, score, total, percentage, JSON.stringify({ submitted: answers, breakdown })]
+    );
+    res.json({ success: true, score, total, percentage, quiz_name, breakdown });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET quiz results for admin (all students)
+app.get('/api/admin/olympiad/quiz-results', async (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || authHeader !== `Bearer ${process.env.ADMIN_TOKEN || 'gforce-admin-2024'}`) return res.status(401).json({ error: 'Unauthorized' });
+    await ensureQuizTable();
+    const result = await db.query(`
+      SELECT qr.id, qr.user_email, qr.quiz_name, qr.subject, qr.grade, qr.score, qr.total, qr.percentage, qr.attempted_at,
+             u.name as student_name, u."classLevel" as grade_level, u.city, u.state, u.school_id
+      FROM olympiad_quiz_results qr
+      LEFT JOIN users u ON u.email = qr.user_email
+      ORDER BY qr.attempted_at DESC
+    `);
+    res.json({ results: result.rows });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 

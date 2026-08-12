@@ -19,6 +19,7 @@ const SECTIONS = [
   { id: 'coupons', label: 'School Coupons' },
   { id: 'olympiad', label: 'Olympiad Schools' },
   { id: 'thinkquest_individual', label: 'Independent Registered' },
+  { id: 'quiz_results', label: '📊 Quiz Results' },
 ];
 
 const PLAN_COLORS = { free: '#64748b', pro: '#3b82f6', max: '#f97316' };
@@ -1394,6 +1395,61 @@ function ThinkQuestIndividualSection({ adminToken, apiBase }) {
   );
 }
 
+function QuizResultsSection({ adminToken, apiBase }) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    fetch(`${apiBase}/api/admin/olympiad/quiz-results`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    })
+      .then(r => r.json())
+      .then(d => {
+        if (d.error) throw new Error(d.error);
+        setData(d.results || []);
+        setLoading(false);
+      })
+      .catch(e => { setError(e.message); setLoading(false); });
+  }, [adminToken, apiBase]);
+
+  if (loading) return <div style={{ color: '#94a3b8' }}>Loading quiz results...</div>;
+  if (error) return <div style={{ color: '#ef4444' }}>Error: {error}</div>;
+  if (!data || data.length === 0) return <div style={{ color: '#94a3b8' }}>No quiz results yet.</div>;
+
+  return (
+    <div>
+      <SectionTitle>ThinkQuest Quiz Results ({data.length})</SectionTitle>
+      <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
+            <TableHead cols={['Student Name', 'Email', 'Quiz Name', 'Grade', 'Score', 'Percentage', 'Date & Time']} />
+            <tbody>
+              {data.map((r, i) => (
+                <TableRow key={r.id || i} idx={i}>
+                  <TD><span style={{ fontWeight: 600, color: '#e2e8f0' }}>{r.student_name || '—'}</span></TD>
+                  <TD>{r.user_email}</TD>
+                  <TD><span style={{ color: '#ef4444', fontWeight: 600 }}>{r.quiz_name}</span></TD>
+                  <TD>{r.grade}</TD>
+                  <TD><span style={{ color: '#10b981', fontWeight: 700 }}>{r.score}/{r.total}</span></TD>
+                  <TD>
+                    <span style={{ fontWeight: 700, color: parseFloat(r.percentage) >= 80 ? '#10b981' : parseFloat(r.percentage) >= 50 ? '#f59e0b' : '#ef4444' }}>
+                      {r.percentage}%
+                    </span>
+                  </TD>
+                  <TD>
+                    <div style={{ fontSize: '0.78rem' }}>{new Date(r.attempted_at).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })}</div>
+                  </TD>
+                </TableRow>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function AdminDashboard() {
   const navigate = useNavigate();
   const [adminToken] = useState(() => localStorage.getItem('adminToken'));
@@ -1565,6 +1621,7 @@ export default function AdminDashboard() {
               {activeSection === 'ito' && <ITOSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'olympiad' && <OlympiadSchoolsSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'thinkquest_individual' && <ThinkQuestIndividualSection adminToken={adminToken} apiBase={apiBase} />}
+              {activeSection === 'quiz_results' && <QuizResultsSection adminToken={adminToken} apiBase={apiBase} />}
             </>
           ) : null}
         </div>

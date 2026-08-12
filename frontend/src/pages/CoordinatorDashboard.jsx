@@ -326,7 +326,7 @@ function StudentsSection({ students, fetchData, coordinatorId }) {
       <Card>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-            <TableHead cols={['#', 'Student Name', 'Class', 'Age', 'Contact & Location', 'Status', 'Daily Practice', 'Avg Score', 'Exam Score', 'Actions']} />
+            <TableHead cols={['#', 'Student Name', 'Class', 'Age', 'Contact & Location', 'Status', 'Daily Practice', 'Avg Score', 'Exam Score', 'Quiz Results', 'Actions']} />
             <tbody>
               {filtered.map((s, i) => (
                 <TableRow key={i} idx={i}>
@@ -350,6 +350,23 @@ function StudentsSection({ students, fetchData, coordinatorId }) {
                   </TD>
                   <TD>
                     <span style={{ fontWeight: 700, color: s.examScore !== 'N/A' ? '#10b981' : '#334155' }}>{s.examScore}</span>
+                  </TD>
+                  <TD>
+                    {s.quizResults && s.quizResults.length > 0 ? (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+                        {s.quizResults.map((qr, qi) => (
+                          <div key={qi} style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.15)', borderRadius: 7, padding: '0.3rem 0.6rem' }}>
+                            <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#ef4444' }}>{qr.quiz_name}</div>
+                            <div style={{ fontSize: '0.7rem', color: '#94a3b8', marginTop: 1 }}>
+                              Score: <span style={{ color: '#10b981', fontWeight: 700 }}>{qr.score}/{qr.total}</span> ({qr.percentage}%)
+                            </div>
+                            <div style={{ fontSize: '0.65rem', color: '#64748b', marginTop: 1 }}>
+                              {new Date(qr.attempted_at).toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' })}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : <span style={{ color: '#334155' }}>—</span>}
                   </TD>
                   <TD>
                     <button 
