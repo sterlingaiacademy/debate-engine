@@ -20,6 +20,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
   const [phase, setPhase] = useState('loading');
   const [quiz, setQuiz] = useState(null);
   const [answers, setAnswers] = useState({});
+  const [revealed, setRevealed] = useState({});
   const [current, setCurrent] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState(null);
@@ -50,7 +51,11 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
       .catch(e => { setError(e.message); setPhase('blocked'); });
   }, [gradeNum, user.email, subjectKey]);
 
-  const handleSelect = (letter) => setAnswers(prev => ({ ...prev, [current]: letter }));
+  const handleSelect = (letter) => {
+    if (revealed[current]) return;
+    setAnswers(prev => ({ ...prev, [current]: letter }));
+    setRevealed(prev => ({ ...prev, [current]: true }));
+  };
 
   const goNext = () => { setAnimate(false); setTimeout(() => { setCurrent(c => c + 1); setAnimate(true); }, 200); };
   const goPrev = () => { setAnimate(false); setTimeout(() => { setCurrent(c => c - 1); setAnimate(true); }, 200); };
@@ -74,7 +79,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
   };
 
   const overlay = { position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.88)', backdropFilter: 'blur(14px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999, fontFamily: FONT };
-  const card = { background: 'linear-gradient(145deg, #0d0d1f 0%, #1a0808 100%)', border: '1px solid rgba(239,68,68,0.18)', borderRadius: 24, padding: '2rem', width: '100%', maxWidth: 680, maxHeight: '92vh', overflowY: 'auto', boxShadow: '0 40px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(239,68,68,0.08)', position: 'relative' };
+  const card = { background: 'linear-gradient(145deg, #0d0d1f 0%, #1a0808 100%)', border: '1px solid rgba(239,68,68,0.18)', borderRadius: 24, padding: '2rem', width: '100%', maxWidth: 680, maxHeight: '92vh', overflowY: 'auto', boxShadow: '0 40px 100px rgba(0,0,0,0.8)', position: 'relative' };
 
   if (phase === 'loading') return (
     <div style={overlay}>
@@ -100,7 +105,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
   if (phase === 'result') {
     const score = result?.score ?? result?.result?.score;
     const total = result?.total ?? result?.result?.total;
-    const quizName = result?.quiz_name ?? result?.result?.quiz_name ?? `English Practice – Grade ${gradeNum}`;
+    const quizName = result?.quiz_name ?? result?.result?.quiz_name ?? `${subject} Practice - Grade ${gradeNum}`;
     const attemptedAt = result?.attempted_at ?? result?.result?.attempted_at;
     const finalPct = total ? parseFloat(((score / total) * 100).toFixed(1)) : 0;
     const finalColor = finalPct >= 80 ? '#10b981' : finalPct >= 50 ? '#f59e0b' : '#ef4444';
@@ -114,7 +119,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
               <h2 style={{ color: '#fff', fontSize: '1.25rem', fontWeight: 800, margin: 0, fontFamily: FONT }}>{quizName}</h2>
               {attemptedAt && <div style={{ fontSize: '0.73rem', color: '#64748b', marginTop: '0.2rem', fontFamily: FONT }}>{new Date(attemptedAt).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })}</div>}
             </div>
-            <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: '#94a3b8', borderRadius: 10, padding: '0.4rem 0.9rem', cursor: 'pointer', fontSize: '0.85rem', fontFamily: FONT }}>✕ Close</button>
+            <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: '#94a3b8', borderRadius: 10, padding: '0.4rem 0.9rem', cursor: 'pointer', fontSize: '0.85rem', fontFamily: FONT }}>X Close</button>
           </div>
           <div style={{ textAlign: 'center', padding: '1.5rem 0' }}>
             <div style={{ width: 140, height: 140, borderRadius: '50%', border: `6px solid ${finalColor}`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem', background: `${finalColor}12`, boxShadow: `0 0 50px ${finalColor}30` }}>
@@ -122,7 +127,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
               <div style={{ fontSize: '0.82rem', color: '#64748b', fontFamily: FONT }}>out of {total}</div>
             </div>
             <div style={{ fontSize: '1.9rem', fontWeight: 800, color: finalColor, fontFamily: FONT }}>{finalPct}%</div>
-            <div style={{ fontSize: '0.92rem', color: '#94a3b8', marginTop: '0.3rem', fontFamily: FONT }}>{finalPct >= 80 ? '🏆 Excellent!' : finalPct >= 50 ? '👍 Good effort!' : '📚 Keep practicing!'}</div>
+            <div style={{ fontSize: '0.92rem', color: '#94a3b8', marginTop: '0.3rem', fontFamily: FONT }}>{finalPct >= 80 ? 'Excellent!' : finalPct >= 50 ? 'Good effort!' : 'Keep practicing!'}</div>
           </div>
           {breakdown.length > 0 && (
             <div style={{ marginTop: '1rem' }}>
@@ -130,10 +135,10 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem', maxHeight: 260, overflowY: 'auto' }}>
                 {breakdown.map((b, i) => (
                   <div key={i} style={{ background: b.isCorrect ? 'rgba(16,185,129,0.07)' : 'rgba(239,68,68,0.07)', border: `1px solid ${b.isCorrect ? 'rgba(16,185,129,0.18)' : 'rgba(239,68,68,0.18)'}`, borderRadius: 10, padding: '0.6rem 0.9rem', display: 'flex', gap: '0.75rem' }}>
-                    <div style={{ color: b.isCorrect ? '#10b981' : '#ef4444', fontSize: '1rem', flexShrink: 0, marginTop: 1 }}>{b.isCorrect ? '✓' : '✗'}</div>
+                    <div style={{ color: b.isCorrect ? '#10b981' : '#ef4444', fontSize: '1rem', flexShrink: 0, marginTop: 1 }}>{b.isCorrect ? 'CORRECT' : 'WRONG'}</div>
                     <div style={{ flex: 1 }}>
                       <div style={{ fontSize: '0.8rem', color: '#cbd5e1', lineHeight: 1.45, fontFamily: FONT }}>Q{i + 1}: {b.question}</div>
-                      {!b.isCorrect && <div style={{ fontSize: '0.72rem', color: '#94a3b8', marginTop: '0.2rem', fontFamily: FONT }}>Your: <span style={{ color: '#ef4444' }}>{b.selected || '—'}</span> · Correct: <span style={{ color: '#10b981' }}>{b.correct}</span></div>}
+                      {!b.isCorrect && <div style={{ fontSize: '0.72rem', color: '#94a3b8', marginTop: '0.2rem', fontFamily: FONT }}>Your: <span style={{ color: '#ef4444' }}>{b.selected || 'Not answered'}</span>  Correct: <span style={{ color: '#10b981' }}>{b.correct}</span></div>}
                     </div>
                   </div>
                 ))}
@@ -151,60 +156,112 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
   // QUIZ phase
   const q = quiz.questions[current];
   const total = quiz.questions.length;
-  const progress = (current / total) * 100;
+  const progress = ((current + 1) / total) * 100;
   const answered = Object.keys(answers).length;
+  const isRevealed = !!revealed[current];
+  const selectedLetter = answers[current];
+  const correctLetter = q.correct;
+
+  const getOptionStyle = (letter) => {
+    const base = { display: 'flex', alignItems: 'center', gap: '0.8rem', padding: '0.85rem 1.05rem', borderRadius: 12, textAlign: 'left', transition: 'all 0.2s', width: '100%', border: '1.5px solid', cursor: isRevealed ? 'default' : 'pointer' };
+    if (!isRevealed) {
+      const sel = selectedLetter === letter;
+      return { ...base, background: sel ? 'rgba(239,68,68,0.12)' : 'rgba(255,255,255,0.03)', borderColor: sel ? '#ef4444' : 'rgba(255,255,255,0.07)' };
+    }
+    if (letter === correctLetter) return { ...base, background: 'rgba(16,185,129,0.15)', borderColor: '#10b981', boxShadow: '0 0 20px rgba(16,185,129,0.15)' };
+    if (letter === selectedLetter) return { ...base, background: 'rgba(239,68,68,0.15)', borderColor: '#ef4444' };
+    return { ...base, background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.04)', opacity: 0.45 };
+  };
+
+  const getBadgeStyle = (letter) => {
+    const base = { width: 32, height: 32, borderRadius: 9, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '0.82rem', transition: 'all 0.2s', fontFamily: FONT };
+    if (!isRevealed) {
+      const sel = selectedLetter === letter;
+      return { ...base, background: sel ? '#ef4444' : 'rgba(255,255,255,0.05)', color: sel ? '#fff' : '#64748b' };
+    }
+    if (letter === correctLetter) return { ...base, background: '#10b981', color: '#fff' };
+    if (letter === selectedLetter) return { ...base, background: '#ef4444', color: '#fff' };
+    return { ...base, background: 'rgba(255,255,255,0.04)', color: '#475569' };
+  };
 
   return (
     <div style={overlay}>
-      <style>{`@keyframes slideIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } } @keyframes spin { to { transform: rotate(360deg); } } .qopt:hover { border-color: rgba(239,68,68,0.45) !important; background: rgba(239,68,68,0.07) !important; }`}</style>
+      <style>{`
+        @keyframes slideIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes popIn { 0% { transform: scale(0.94); opacity:0; } 100% { transform: scale(1); opacity:1; } }
+        .qopt-active:hover { border-color: rgba(239,68,68,0.45) !important; background: rgba(239,68,68,0.07) !important; }
+      `}</style>
       <div style={card}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.1rem' }}>
           <div>
-            <div style={{ fontSize: '0.65rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700, fontFamily: FONT }}>ThinkQuest Olympiad · English</div>
+            <div style={{ fontSize: '0.65rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700, fontFamily: FONT }}>ThinkQuest Olympiad - {subject}</div>
             <h2 style={{ color: '#fff', fontSize: '1.05rem', fontWeight: 800, margin: '0.1rem 0 0', fontFamily: FONT }}>{quiz.quiz_name}</h2>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
             <div style={{ fontSize: '0.78rem', color: '#64748b', fontFamily: FONT }}>{answered}/{total} answered</div>
-            <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', color: '#94a3b8', borderRadius: 10, padding: '0.38rem 0.7rem', cursor: 'pointer', fontSize: '0.82rem', fontFamily: FONT }}>✕</button>
+            <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', color: '#94a3b8', borderRadius: 10, padding: '0.38rem 0.7rem', cursor: 'pointer', fontSize: '0.82rem', fontFamily: FONT }}>X</button>
           </div>
         </div>
+
         <div style={{ height: 5, background: 'rgba(255,255,255,0.06)', borderRadius: 99, marginBottom: '1.25rem', overflow: 'hidden' }}>
           <div style={{ height: '100%', width: `${progress}%`, background: 'linear-gradient(90deg,#ef4444,#f87171)', borderRadius: 99, transition: 'width 0.3s ease' }} />
         </div>
+
         <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
-          {quiz.questions.map((_, i) => (
-            <button key={i} onClick={() => { setAnimate(false); setTimeout(() => { setCurrent(i); setAnimate(true); }, 150); }}
-              style={{ width: 30, height: 30, borderRadius: 8, border: 'none', cursor: 'pointer', fontSize: '0.7rem', fontWeight: 700, transition: 'all 0.15s', fontFamily: FONT,
-                background: i === current ? '#ef4444' : answers[i] ? 'rgba(16,185,129,0.18)' : 'rgba(255,255,255,0.05)',
-                color: i === current ? '#fff' : answers[i] ? '#10b981' : '#64748b',
-              }}
-            >{i + 1}</button>
-          ))}
+          {quiz.questions.map((qItem, i) => {
+            const isCur = i === current;
+            const isAns = answers[i] !== undefined;
+            const isCorrectQ = isAns && revealed[i] && answers[i] === quiz.questions[i].correct;
+            const isWrongQ = isAns && revealed[i] && answers[i] !== quiz.questions[i].correct;
+            return (
+              <button key={i}
+                onClick={() => { setAnimate(false); setTimeout(() => { setCurrent(i); setAnimate(true); }, 150); }}
+                style={{ width: 30, height: 30, borderRadius: 8, border: isCur ? '2px solid #ef4444' : 'none', cursor: 'pointer', fontSize: '0.7rem', fontWeight: 700, transition: 'all 0.15s', fontFamily: FONT,
+                  background: isCur ? '#ef4444' : isCorrectQ ? 'rgba(16,185,129,0.3)' : isWrongQ ? 'rgba(239,68,68,0.3)' : isAns ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.05)',
+                  color: isCur ? '#fff' : isCorrectQ ? '#10b981' : isWrongQ ? '#ef4444' : isAns ? '#fff' : '#64748b',
+                }}
+              >{i + 1}</button>
+            );
+          })}
         </div>
+
         <div style={{ animation: animate ? 'slideIn 0.22s ease' : 'none' }}>
           <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, padding: '1.2rem 1.4rem', marginBottom: '1rem' }}>
             <div style={{ fontSize: '0.65rem', color: '#ef4444', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.45rem', fontFamily: FONT }}>Question {current + 1} of {total}</div>
             <p style={{ color: '#f1f5f9', fontSize: '0.98rem', fontWeight: 600, lineHeight: 1.65, margin: 0, fontFamily: FONT }}>{q.question}</p>
           </div>
+
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
-            {q.options.map(opt => {
-              const sel = answers[current] === opt.letter;
-              return (
-                <button key={opt.letter} className="qopt" onClick={() => handleSelect(opt.letter)}
-                  style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', padding: '0.85rem 1.05rem', background: sel ? 'rgba(239,68,68,0.12)' : 'rgba(255,255,255,0.03)', border: `1.5px solid ${sel ? '#ef4444' : 'rgba(255,255,255,0.07)'}`, borderRadius: 12, cursor: 'pointer', textAlign: 'left', transition: 'all 0.15s', width: '100%' }}
-                >
-                  <div style={{ width: 32, height: 32, borderRadius: 9, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: sel ? '#ef4444' : 'rgba(255,255,255,0.05)', color: sel ? '#fff' : '#64748b', fontWeight: 800, fontSize: '0.82rem', transition: 'all 0.15s', fontFamily: FONT }}>{opt.letter}</div>
-                  <span style={{ color: sel ? '#fff' : '#cbd5e1', fontSize: '0.9rem', fontWeight: sel ? 600 : 400, lineHeight: 1.5, fontFamily: FONT }}>{opt.text}</span>
-                </button>
-              );
-            })}
+            {q.options.map(opt => (
+              <button key={opt.letter}
+                className={!isRevealed ? 'qopt-active' : ''}
+                onClick={() => handleSelect(opt.letter)}
+                style={getOptionStyle(opt.letter)}
+              >
+                <div style={getBadgeStyle(opt.letter)}>{opt.letter}</div>
+                <span style={{ color: isRevealed ? (opt.letter === correctLetter ? '#6ee7b7' : opt.letter === selectedLetter ? '#fca5a5' : '#475569') : '#cbd5e1', fontSize: '0.9rem', fontWeight: isRevealed && opt.letter === correctLetter ? 700 : 400, lineHeight: 1.5, fontFamily: FONT, flex: 1 }}>{opt.text}</span>
+                {isRevealed && opt.letter === correctLetter && <span style={{ marginLeft: 'auto', color: '#10b981', fontWeight: 900, fontSize: '1.1rem' }}>V</span>}
+                {isRevealed && opt.letter === selectedLetter && opt.letter !== correctLetter && <span style={{ marginLeft: 'auto', color: '#ef4444', fontWeight: 900, fontSize: '1.1rem' }}>X</span>}
+              </button>
+            ))}
           </div>
+
+          {isRevealed && (
+            <div style={{ marginTop: '0.9rem', padding: '0.7rem 1rem', borderRadius: 12, background: selectedLetter === correctLetter ? 'rgba(16,185,129,0.12)' : 'rgba(239,68,68,0.1)', border: `1px solid ${selectedLetter === correctLetter ? 'rgba(16,185,129,0.3)' : 'rgba(239,68,68,0.25)'}`, animation: 'popIn 0.22s ease', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+              <span style={{ fontSize: '1.3rem' }}>{selectedLetter === correctLetter ? 'CORRECT' : 'WRONG'}</span>
+              <span style={{ color: selectedLetter === correctLetter ? '#6ee7b7' : '#fca5a5', fontWeight: 700, fontSize: '0.9rem', fontFamily: FONT }}>
+                {selectedLetter === correctLetter ? 'Correct! Great job.' : `The correct answer is ${correctLetter}.`}
+              </span>
+            </div>
+          )}
         </div>
+
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1.4rem' }}>
-          <button onClick={goPrev} disabled={current === 0} style={{ padding: '0.65rem 1.3rem', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.09)', color: current === 0 ? '#334155' : '#94a3b8', borderRadius: 12, cursor: current === 0 ? 'not-allowed' : 'pointer', fontWeight: 700, fontSize: '0.86rem', fontFamily: FONT }}>← Prev</button>
+          <button onClick={goPrev} disabled={current === 0} style={{ padding: '0.65rem 1.3rem', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.09)', color: current === 0 ? '#334155' : '#94a3b8', borderRadius: 12, cursor: current === 0 ? 'not-allowed' : 'pointer', fontWeight: 700, fontSize: '0.86rem', fontFamily: FONT }}>Prev</button>
           {current < total - 1
-            ? <button onClick={goNext} style={{ padding: '0.65rem 1.5rem', background: answers[current] ? '#ef4444' : 'rgba(239,68,68,0.25)', color: '#fff', border: 'none', borderRadius: 12, cursor: 'pointer', fontWeight: 700, fontSize: '0.86rem', fontFamily: FONT }}>Next →</button>
-            : <button onClick={handleSubmit} disabled={submitting} style={{ padding: '0.65rem 1.75rem', background: submitting ? 'rgba(239,68,68,0.4)' : 'linear-gradient(135deg,#ef4444,#dc2626)', color: '#fff', border: 'none', borderRadius: 12, cursor: submitting ? 'not-allowed' : 'pointer', fontWeight: 800, fontSize: '0.88rem', boxShadow: '0 4px 18px rgba(239,68,68,0.3)', fontFamily: FONT }}>{submitting ? 'Submitting...' : '🏁 Submit Quiz'}</button>
+            ? <button onClick={goNext} style={{ padding: '0.65rem 1.5rem', background: isRevealed ? '#ef4444' : 'rgba(239,68,68,0.25)', color: '#fff', border: 'none', borderRadius: 12, cursor: 'pointer', fontWeight: 700, fontSize: '0.86rem', fontFamily: FONT, boxShadow: isRevealed ? '0 4px 18px rgba(239,68,68,0.3)' : 'none', transition: 'all 0.2s' }}>Next</button>
+            : <button onClick={handleSubmit} disabled={submitting} style={{ padding: '0.65rem 1.75rem', background: submitting ? 'rgba(239,68,68,0.4)' : 'linear-gradient(135deg,#ef4444,#dc2626)', color: '#fff', border: 'none', borderRadius: 12, cursor: submitting ? 'not-allowed' : 'pointer', fontWeight: 800, fontSize: '0.88rem', boxShadow: '0 4px 18px rgba(239,68,68,0.3)', fontFamily: FONT }}>{submitting ? 'Submitting...' : 'Submit Quiz'}</button>
           }
         </div>
       </div>

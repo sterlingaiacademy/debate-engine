@@ -3678,7 +3678,7 @@ async function ensureQuizTable() {
 }
 ensureQuizTable().catch(console.error);
 
-// GET questions for a grade (correct answers stripped)
+// GET questions for a grade (includes correct for instant feedback in practice mode)
 app.get('/api/olympiad/quiz/:subject/:grade', async (req, res) => {
   try {
     const grade = parseInt(req.params.grade);
@@ -3687,7 +3687,7 @@ app.get('/api/olympiad/quiz/:subject/:grade', async (req, res) => {
     if (!bank) return res.status(404).json({ error: 'Subject not found' });
     const raw = bank[grade];
     if (!raw) return res.status(404).json({ error: 'No questions for this grade' });
-    const questions = raw.map((q, i) => ({ id: i, question: q.question, options: q.options }));
+    const questions = raw.map((q, i) => ({ id: i, question: q.question, options: q.options, correct: q.correct }));
     const label = SUBJECT_LABELS[subject] || subject;
     res.json({ quiz_name: `${label} Practice – Grade ${grade}`, subject: label, grade, total: questions.length, questions });
   } catch (err) {
