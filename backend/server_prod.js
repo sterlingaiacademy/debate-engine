@@ -3350,22 +3350,12 @@ app.post('/api/olympiad/individual/register', async (req, res) => {
 // GET /api/admin/olympiad/independent-students — list all individually registered ThinkQuest students
 app.get('/api/admin/olympiad/independent-students', requireAdmin, async (req, res) => {
   try {
-    await db.query(`
-      CREATE TABLE IF NOT EXISTS thinkquest_individuals (
-        id SERIAL PRIMARY KEY,
-        name VARCHAR(255),
-        email VARCHAR(255),
-        mobile VARCHAR(50),
-        category VARCHAR(100),
-        grade VARCHAR(100),
-        school_name VARCHAR(255),
-        city VARCHAR(255),
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      )
-    `);
+    // Individual participants enrolled via 'INDIVIDUAL' school_code → school_id is NULL, olympiad_registered = true
     const result = await db.query(
-      `SELECT id, name, email, mobile AS parent_phone, school_name AS parent_name, grade AS "classLevel", city, created_at
-       FROM thinkquest_individuals ORDER BY created_at DESC`
+      `SELECT id, name, email, "classLevel", city, state, parent_name, parent_phone, contact_email, subjects, created_at
+       FROM users
+       WHERE olympiad_registered = true AND (school_id IS NULL)
+       ORDER BY created_at DESC`
     );
     res.json({ students: result.rows });
   } catch (err) {
@@ -3374,15 +3364,18 @@ app.get('/api/admin/olympiad/independent-students', requireAdmin, async (req, re
   }
 });
 
-// DELETE /api/admin/olympiad/independent-students/:id — remove an independent registration
+// DELETE /api/admin/olympiad/independent-students/:id — remove an independent registration (reset flag)
 app.delete('/api/admin/olympiad/independent-students/:id', requireAdmin, async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await db.query(`DELETE FROM thinkquest_individuals WHERE id=$1 RETURNING *`, [id]);
+    const result = await db.query(
+      `UPDATE users SET olympiad_registered = false, school_id = NULL WHERE id = $1 AND school_id IS NULL RETURNING id, name`,
+      [id]
+    );
     if (result.rows.length === 0) return res.status(404).json({ error: 'Registration not found' });
     res.json({ success: true });
   } catch (err) {
-    console.error('Error deleting independent student:', err);
+    console.error('Error removing independent student:', err);
     res.status(500).json({ error: 'Failed to remove registration' });
   }
 });
