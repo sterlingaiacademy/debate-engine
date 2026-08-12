@@ -1,0 +1,1778 @@
+{
+  "5": [
+    {
+      "question": "A school buys 8 boxes of pencils. Each box has 24 pencils. If 37 pencils are distributed, how many remain?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "155"
+        },
+        {
+          "letter": "B",
+          "text": "192"
+        },
+        {
+          "letter": "C",
+          "text": "165"
+        },
+        {
+          "letter": "D",
+          "text": "145"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A bus leaves at 8:35 a.m. and reaches the museum at 10:05 a.m. How long is the journey?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "1 h 30 min"
+        },
+        {
+          "letter": "B",
+          "text": "1 h 20 min"
+        },
+        {
+          "letter": "C",
+          "text": "2 h 30 min"
+        },
+        {
+          "letter": "D",
+          "text": "90 h"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A rectangular garden is 12 m long and 8 m wide. How much fencing is needed around it?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "40 m"
+        },
+        {
+          "letter": "B",
+          "text": "96 m"
+        },
+        {
+          "letter": "C",
+          "text": "20 m"
+        },
+        {
+          "letter": "D",
+          "text": "48 m"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Four friends share 3 identical pizzas equally. What fraction of a pizza does each friend get?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "3/4"
+        },
+        {
+          "letter": "B",
+          "text": "4/3"
+        },
+        {
+          "letter": "C",
+          "text": "1/4"
+        },
+        {
+          "letter": "D",
+          "text": "3/7"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A shopkeeper has \u20b9500. She buys 6 notebooks at \u20b958 each. How much money remains?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "\u20b9152"
+        },
+        {
+          "letter": "B",
+          "text": "\u20b9348"
+        },
+        {
+          "letter": "C",
+          "text": "\u20b9142"
+        },
+        {
+          "letter": "D",
+          "text": "\u20b9158"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A water tank holds 250 L. It already has 175 L. How much more water is needed to fill it?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "75 L"
+        },
+        {
+          "letter": "B",
+          "text": "425 L"
+        },
+        {
+          "letter": "C",
+          "text": "85 L"
+        },
+        {
+          "letter": "D",
+          "text": "25 L"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A pattern is 4, 8, 12, 16, __. What number comes next and why?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "20, because 4 is added each time."
+        },
+        {
+          "letter": "B",
+          "text": "18, because 2 is added."
+        },
+        {
+          "letter": "C",
+          "text": "24, because numbers double."
+        },
+        {
+          "letter": "D",
+          "text": "17, because 1 is added."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A floor is covered by 5 rows of 7 equal square tiles. How many tiles are used?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "35"
+        },
+        {
+          "letter": "B",
+          "text": "12"
+        },
+        {
+          "letter": "C",
+          "text": "30"
+        },
+        {
+          "letter": "D",
+          "text": "42"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A family uses 18 L of water for cooking in 3 days at the same daily rate. How much will it use in 7 days?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "42 L"
+        },
+        {
+          "letter": "B",
+          "text": "21 L"
+        },
+        {
+          "letter": "C",
+          "text": "54 L"
+        },
+        {
+          "letter": "D",
+          "text": "126 L"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A map shows 1 cm represents 5 km. Two towns are 7 cm apart on the map. What is the actual distance?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "35 km"
+        },
+        {
+          "letter": "B",
+          "text": "12 km"
+        },
+        {
+          "letter": "C",
+          "text": "7 km"
+        },
+        {
+          "letter": "D",
+          "text": "2 km"
+        }
+      ],
+      "correct": "A"
+    }
+  ],
+  "6": [
+    {
+      "question": "A lift starts at floor 3, goes down 7 floors, then up 4 floors. On which floor does it stop if basement floors are numbered negatively?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "0"
+        },
+        {
+          "letter": "B",
+          "text": "-4"
+        },
+        {
+          "letter": "C",
+          "text": "7"
+        },
+        {
+          "letter": "D",
+          "text": "14"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A recipe uses 3/4 cup of flour for one batch. How much flour is needed for 2 batches?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "1 1/2 cups"
+        },
+        {
+          "letter": "B",
+          "text": "3/8 cup"
+        },
+        {
+          "letter": "C",
+          "text": "2 3/4 cups"
+        },
+        {
+          "letter": "D",
+          "text": "6 cups"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A rectangular playground is 25 m by 18 m. A child runs once around it. Distance covered?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "86 m"
+        },
+        {
+          "letter": "B",
+          "text": "450 m"
+        },
+        {
+          "letter": "C",
+          "text": "43 m"
+        },
+        {
+          "letter": "D",
+          "text": "900 m"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A class has 18 girls and 12 boys. What is the ratio of girls to total students in simplest form?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "3:5"
+        },
+        {
+          "letter": "B",
+          "text": "3:2"
+        },
+        {
+          "letter": "C",
+          "text": "18:12"
+        },
+        {
+          "letter": "D",
+          "text": "2:5"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "The temperatures on four mornings were 12\u00b0C, 9\u00b0C, 15\u00b0C and 8\u00b0C. What is the mean temperature?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "11\u00b0C"
+        },
+        {
+          "letter": "B",
+          "text": "44\u00b0C"
+        },
+        {
+          "letter": "C",
+          "text": "10\u00b0C"
+        },
+        {
+          "letter": "D",
+          "text": "12\u00b0C"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A shop offers 5 pens for \u20b960. At the same rate, what will 8 pens cost?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "\u20b996"
+        },
+        {
+          "letter": "B",
+          "text": "\u20b968"
+        },
+        {
+          "letter": "C",
+          "text": "\u20b9100"
+        },
+        {
+          "letter": "D",
+          "text": "\u20b9480"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A rope 9.6 m long is cut into 4 equal pieces. Length of each piece?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "2.4 m"
+        },
+        {
+          "letter": "B",
+          "text": "3.4 m"
+        },
+        {
+          "letter": "C",
+          "text": "5.6 m"
+        },
+        {
+          "letter": "D",
+          "text": "38.4 m"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Which statement is always true for a square?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "All four sides are equal and each angle is 90\u00b0."
+        },
+        {
+          "letter": "B",
+          "text": "Only opposite sides are equal."
+        },
+        {
+          "letter": "C",
+          "text": "It has three right angles."
+        },
+        {
+          "letter": "D",
+          "text": "Its diagonals are sides."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A number is divisible by both 2 and 3. Which must also divide it?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "6"
+        },
+        {
+          "letter": "B",
+          "text": "5"
+        },
+        {
+          "letter": "C",
+          "text": "9"
+        },
+        {
+          "letter": "D",
+          "text": "12"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A school survey records favourite sports: Cricket 18, Football 12, Badminton 10. What fraction chose football?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "3/10"
+        },
+        {
+          "letter": "B",
+          "text": "12/18"
+        },
+        {
+          "letter": "C",
+          "text": "1/3"
+        },
+        {
+          "letter": "D",
+          "text": "2/5"
+        }
+      ],
+      "correct": "A"
+    }
+  ],
+  "7": [
+    {
+      "question": "A jacket marked \u20b91,200 is sold at a 15% discount. What is the selling price?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "\u20b91,020"
+        },
+        {
+          "letter": "B",
+          "text": "\u20b91,180"
+        },
+        {
+          "letter": "C",
+          "text": "\u20b91,380"
+        },
+        {
+          "letter": "D",
+          "text": "\u20b9180"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A car travels 150 km in 3 hours at a constant speed. How far will it travel in 5 hours?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "250 km"
+        },
+        {
+          "letter": "B",
+          "text": "90 km"
+        },
+        {
+          "letter": "C",
+          "text": "750 km"
+        },
+        {
+          "letter": "D",
+          "text": "300 km"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "The angles of a triangle are x, 2x and 3x. What is x?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "30\u00b0"
+        },
+        {
+          "letter": "B",
+          "text": "60\u00b0"
+        },
+        {
+          "letter": "C",
+          "text": "90\u00b0"
+        },
+        {
+          "letter": "D",
+          "text": "20\u00b0"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A bank account balance is \u20b9500. A withdrawal of \u20b9750 is recorded. What is the new balance?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "-\u20b9250"
+        },
+        {
+          "letter": "B",
+          "text": "\u20b9250"
+        },
+        {
+          "letter": "C",
+          "text": "\u20b91,250"
+        },
+        {
+          "letter": "D",
+          "text": "-\u20b91,250"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A square has area 144 cm\u00b2. What is its perimeter?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "48 cm"
+        },
+        {
+          "letter": "B",
+          "text": "36 cm"
+        },
+        {
+          "letter": "C",
+          "text": "144 cm"
+        },
+        {
+          "letter": "D",
+          "text": "576 cm"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "The mean of 8, 12, 15, 9 and x is 11. What is x?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "11"
+        },
+        {
+          "letter": "B",
+          "text": "55"
+        },
+        {
+          "letter": "C",
+          "text": "10"
+        },
+        {
+          "letter": "D",
+          "text": "12"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A number increased by 7 gives 25. Which equation models this situation?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "x + 7 = 25"
+        },
+        {
+          "letter": "B",
+          "text": "7x = 25"
+        },
+        {
+          "letter": "C",
+          "text": "x - 7 = 25"
+        },
+        {
+          "letter": "D",
+          "text": "25x = 7"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A map uses scale 1:100,000. A road measures 4 cm on the map. Actual distance?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "4 km"
+        },
+        {
+          "letter": "B",
+          "text": "400 km"
+        },
+        {
+          "letter": "C",
+          "text": "40 km"
+        },
+        {
+          "letter": "D",
+          "text": "1 km"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A die is rolled once. Probability of getting an even number?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "1/2"
+        },
+        {
+          "letter": "B",
+          "text": "1/6"
+        },
+        {
+          "letter": "C",
+          "text": "2/3"
+        },
+        {
+          "letter": "D",
+          "text": "1"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A shop's sales rose from \u20b940,000 to \u20b950,000. Percentage increase?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "25%"
+        },
+        {
+          "letter": "B",
+          "text": "10%"
+        },
+        {
+          "letter": "C",
+          "text": "20%"
+        },
+        {
+          "letter": "D",
+          "text": "125%"
+        }
+      ],
+      "correct": "A"
+    }
+  ],
+  "8": [
+    {
+      "question": "A taxi charges \u20b950 fixed plus \u20b912 per kilometre. Which expression gives the fare for x km?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "50 + 12x"
+        },
+        {
+          "letter": "B",
+          "text": "62x"
+        },
+        {
+          "letter": "C",
+          "text": "50x + 12"
+        },
+        {
+          "letter": "D",
+          "text": "12 + x"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A square park has area 1,600 m\u00b2. Its side length is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "40 m"
+        },
+        {
+          "letter": "B",
+          "text": "400 m"
+        },
+        {
+          "letter": "C",
+          "text": "80 m"
+        },
+        {
+          "letter": "D",
+          "text": "20 m"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A \u20b95,000 investment earns 8% simple interest per year. Interest after 2 years?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "\u20b9800"
+        },
+        {
+          "letter": "B",
+          "text": "\u20b9400"
+        },
+        {
+          "letter": "C",
+          "text": "\u20b95,800"
+        },
+        {
+          "letter": "D",
+          "text": "\u20b980"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A cube has edge 5 cm. Its volume is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "125 cm\u00b3"
+        },
+        {
+          "letter": "B",
+          "text": "25 cm\u00b3"
+        },
+        {
+          "letter": "C",
+          "text": "150 cm\u00b3"
+        },
+        {
+          "letter": "D",
+          "text": "100 cm\u00b3"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "If 6 workers complete a task in 10 days at the same rate, how many days would 12 workers take?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "5 days"
+        },
+        {
+          "letter": "B",
+          "text": "20 days"
+        },
+        {
+          "letter": "C",
+          "text": "12 days"
+        },
+        {
+          "letter": "D",
+          "text": "60 days"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A line graph shows temperature rising from 20\u00b0C at 8 a.m. to 32\u00b0C at 2 p.m. What is the increase?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "12\u00b0C"
+        },
+        {
+          "letter": "B",
+          "text": "52\u00b0C"
+        },
+        {
+          "letter": "C",
+          "text": "6\u00b0C"
+        },
+        {
+          "letter": "D",
+          "text": "1.5\u00b0C"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Solve: 3x - 5 = 16.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "x = 7"
+        },
+        {
+          "letter": "B",
+          "text": "x = 11"
+        },
+        {
+          "letter": "C",
+          "text": "x = 5"
+        },
+        {
+          "letter": "D",
+          "text": "x = 3"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A rectangular field is 30 m \u00d7 20 m. A 2 m wide path is built inside all around the boundary. Area of the remaining field?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "416 m\u00b2"
+        },
+        {
+          "letter": "B",
+          "text": "600 m\u00b2"
+        },
+        {
+          "letter": "C",
+          "text": "184 m\u00b2"
+        },
+        {
+          "letter": "D",
+          "text": "504 m\u00b2"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Which number is irrational?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "\u221a2"
+        },
+        {
+          "letter": "B",
+          "text": "0.25"
+        },
+        {
+          "letter": "C",
+          "text": "3/7"
+        },
+        {
+          "letter": "D",
+          "text": "1.5"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A bag has 3 red, 5 blue and 2 green balls. Probability of selecting a blue ball?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "1/2"
+        },
+        {
+          "letter": "B",
+          "text": "1/5"
+        },
+        {
+          "letter": "C",
+          "text": "3/10"
+        },
+        {
+          "letter": "D",
+          "text": "2/5"
+        }
+      ],
+      "correct": "A"
+    }
+  ],
+  "9": [
+    {
+      "question": "A taxi fare is \u20b980 for the first kilometre and \u20b915 for each additional kilometre. Fare for 6 km?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "\u20b9155"
+        },
+        {
+          "letter": "B",
+          "text": "\u20b9170"
+        },
+        {
+          "letter": "C",
+          "text": "\u20b995"
+        },
+        {
+          "letter": "D",
+          "text": "\u20b9480"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "The point (-3, 4) lies in which quadrant?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "II"
+        },
+        {
+          "letter": "B",
+          "text": "I"
+        },
+        {
+          "letter": "C",
+          "text": "III"
+        },
+        {
+          "letter": "D",
+          "text": "IV"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A triangle has sides 5 cm, 12 cm and 13 cm. What can you conclude?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It is right-angled."
+        },
+        {
+          "letter": "B",
+          "text": "It is equilateral."
+        },
+        {
+          "letter": "C",
+          "text": "It cannot exist."
+        },
+        {
+          "letter": "D",
+          "text": "It is obtuse because 13 is largest."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A cylindrical tank has radius 3 m and height 5 m. Which expression gives its volume?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "45\u03c0 m\u00b3"
+        },
+        {
+          "letter": "B",
+          "text": "15\u03c0 m\u00b3"
+        },
+        {
+          "letter": "C",
+          "text": "30\u03c0 m\u00b3"
+        },
+        {
+          "letter": "D",
+          "text": "90\u03c0 m\u00b3"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "If x + y = 10 and x - y = 4, what is x?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "7"
+        },
+        {
+          "letter": "B",
+          "text": "3"
+        },
+        {
+          "letter": "C",
+          "text": "14"
+        },
+        {
+          "letter": "D",
+          "text": "6"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A coin is tossed 100 times and heads occurs 56 times. Experimental probability of heads?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "0.56"
+        },
+        {
+          "letter": "B",
+          "text": "0.44"
+        },
+        {
+          "letter": "C",
+          "text": "56"
+        },
+        {
+          "letter": "D",
+          "text": "1/2 exactly by experiment"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "The sides of a triangular plot are 13 m, 14 m and 15 m. Its semi-perimeter is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "21 m"
+        },
+        {
+          "letter": "B",
+          "text": "42 m"
+        },
+        {
+          "letter": "C",
+          "text": "28 m"
+        },
+        {
+          "letter": "D",
+          "text": "7 m"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A polynomial p(x)=x\u00b2-5x+6. Which value is a zero?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "2"
+        },
+        {
+          "letter": "B",
+          "text": "1"
+        },
+        {
+          "letter": "C",
+          "text": "0"
+        },
+        {
+          "letter": "D",
+          "text": "5"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Two parallel lines are cut by a transversal. If one corresponding angle is 65\u00b0, the corresponding angle is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "65\u00b0"
+        },
+        {
+          "letter": "B",
+          "text": "115\u00b0"
+        },
+        {
+          "letter": "C",
+          "text": "25\u00b0"
+        },
+        {
+          "letter": "D",
+          "text": "180\u00b0"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A data set is 4, 5, 5, 7, 9. What is its median?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "5"
+        },
+        {
+          "letter": "B",
+          "text": "6"
+        },
+        {
+          "letter": "C",
+          "text": "7"
+        },
+        {
+          "letter": "D",
+          "text": "30"
+        }
+      ],
+      "correct": "A"
+    }
+  ],
+  "10": [
+    {
+      "question": "A shop sells notebooks at \u20b940 each and charges \u20b950 delivery. If a customer pays \u20b9370, how many notebooks were bought?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "8"
+        },
+        {
+          "letter": "B",
+          "text": "9"
+        },
+        {
+          "letter": "C",
+          "text": "7"
+        },
+        {
+          "letter": "D",
+          "text": "10"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "The roots of x\u00b2 - 7x + 12 = 0 are:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "3 and 4"
+        },
+        {
+          "letter": "B",
+          "text": "2 and 6"
+        },
+        {
+          "letter": "C",
+          "text": "1 and 12"
+        },
+        {
+          "letter": "D",
+          "text": "-3 and -4"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A pole 10 m high casts a 10\u221a3 m shadow. Angle of elevation of the sun?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "30\u00b0"
+        },
+        {
+          "letter": "B",
+          "text": "45\u00b0"
+        },
+        {
+          "letter": "C",
+          "text": "60\u00b0"
+        },
+        {
+          "letter": "D",
+          "text": "90\u00b0"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "From an external point P, tangents PA and PB are drawn to a circle. If PA=8 cm, PB equals:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "8 cm"
+        },
+        {
+          "letter": "B",
+          "text": "4 cm"
+        },
+        {
+          "letter": "C",
+          "text": "16 cm"
+        },
+        {
+          "letter": "D",
+          "text": "Cannot be determined"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A bag has 5 red and 3 blue balls. One ball is chosen randomly. Probability it is not blue?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "5/8"
+        },
+        {
+          "letter": "B",
+          "text": "3/8"
+        },
+        {
+          "letter": "C",
+          "text": "1/2"
+        },
+        {
+          "letter": "D",
+          "text": "8/5"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "The mean of 10 observations is 15. If one observation 25 is removed, sum of remaining observations is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "125"
+        },
+        {
+          "letter": "B",
+          "text": "150"
+        },
+        {
+          "letter": "C",
+          "text": "135"
+        },
+        {
+          "letter": "D",
+          "text": "115"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Two numbers have HCF 6 and LCM 72. If one number is 18, the other is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "24"
+        },
+        {
+          "letter": "B",
+          "text": "12"
+        },
+        {
+          "letter": "C",
+          "text": "36"
+        },
+        {
+          "letter": "D",
+          "text": "54"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A ladder 5 m long reaches a window 4 m above ground. How far is its foot from the wall?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "3 m"
+        },
+        {
+          "letter": "B",
+          "text": "1 m"
+        },
+        {
+          "letter": "C",
+          "text": "9 m"
+        },
+        {
+          "letter": "D",
+          "text": "\u221a41 m"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A cone has radius 3 cm and height 4 cm. Its volume is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "12\u03c0 cm\u00b3"
+        },
+        {
+          "letter": "B",
+          "text": "36\u03c0 cm\u00b3"
+        },
+        {
+          "letter": "C",
+          "text": "48\u03c0 cm\u00b3"
+        },
+        {
+          "letter": "D",
+          "text": "9\u03c0 cm\u00b3"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "For the arithmetic progression 5, 9, 13, ..., the 20th term is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "81"
+        },
+        {
+          "letter": "B",
+          "text": "80"
+        },
+        {
+          "letter": "C",
+          "text": "85"
+        },
+        {
+          "letter": "D",
+          "text": "76"
+        }
+      ],
+      "correct": "A"
+    }
+  ],
+  "11": [
+    {
+      "question": "A company models cost by C(x)=5000+200x and revenue by R(x)=350x. For how many units do cost and revenue become equal?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "100/3 units (about 33.3)"
+        },
+        {
+          "letter": "B",
+          "text": "50"
+        },
+        {
+          "letter": "C",
+          "text": "25"
+        },
+        {
+          "letter": "D",
+          "text": "150"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "If A={1,2,3} and B={2,4}, how many ordered pairs are in A\u00d7B?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "6"
+        },
+        {
+          "letter": "B",
+          "text": "5"
+        },
+        {
+          "letter": "C",
+          "text": "8"
+        },
+        {
+          "letter": "D",
+          "text": "2"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "For \u03b8 in the first quadrant, if sin \u03b8=3/5, cos \u03b8 is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "4/5"
+        },
+        {
+          "letter": "B",
+          "text": "3/4"
+        },
+        {
+          "letter": "C",
+          "text": "5/4"
+        },
+        {
+          "letter": "D",
+          "text": "2/5"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "The sum of the first 20 natural numbers is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "210"
+        },
+        {
+          "letter": "B",
+          "text": "200"
+        },
+        {
+          "letter": "C",
+          "text": "400"
+        },
+        {
+          "letter": "D",
+          "text": "190"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A committee of 3 is chosen from 7 students. Number of possible committees?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "35"
+        },
+        {
+          "letter": "B",
+          "text": "21"
+        },
+        {
+          "letter": "C",
+          "text": "210"
+        },
+        {
+          "letter": "D",
+          "text": "343"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "If z=3+4i, |z| equals:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "5"
+        },
+        {
+          "letter": "B",
+          "text": "7"
+        },
+        {
+          "letter": "C",
+          "text": "1"
+        },
+        {
+          "letter": "D",
+          "text": "25"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "The slope of the line through (2,3) and (6,11) is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "2"
+        },
+        {
+          "letter": "B",
+          "text": "1/2"
+        },
+        {
+          "letter": "C",
+          "text": "8"
+        },
+        {
+          "letter": "D",
+          "text": "4"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A circle has centre (2,-1) and radius 3. Which equation represents it?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "(x-2)\u00b2+(y+1)\u00b2=9"
+        },
+        {
+          "letter": "B",
+          "text": "(x+2)\u00b2+(y-1)\u00b2=3"
+        },
+        {
+          "letter": "C",
+          "text": "x\u00b2+y\u00b2=9"
+        },
+        {
+          "letter": "D",
+          "text": "(x-2)\u00b2+(y-1)\u00b2=6"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "If P(A)=0.4, then P(not A) is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "0.6"
+        },
+        {
+          "letter": "B",
+          "text": "0.4"
+        },
+        {
+          "letter": "C",
+          "text": "1.4"
+        },
+        {
+          "letter": "D",
+          "text": "0"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A sequence has nth term a\u2099=3n-1. Its 10th term is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "29"
+        },
+        {
+          "letter": "B",
+          "text": "30"
+        },
+        {
+          "letter": "C",
+          "text": "27"
+        },
+        {
+          "letter": "D",
+          "text": "31"
+        }
+      ],
+      "correct": "A"
+    }
+  ],
+  "12": [
+    {
+      "question": "If f(x)=x\u00b2, the instantaneous rate of change at x=3 is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "6"
+        },
+        {
+          "letter": "B",
+          "text": "9"
+        },
+        {
+          "letter": "C",
+          "text": "3"
+        },
+        {
+          "letter": "D",
+          "text": "12"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A rectangular field has length x and width y with perimeter 100 m. Which constraint is correct?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "x+y=50"
+        },
+        {
+          "letter": "B",
+          "text": "xy=100"
+        },
+        {
+          "letter": "C",
+          "text": "x+y=100"
+        },
+        {
+          "letter": "D",
+          "text": "2xy=100"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "The determinant of [[2,3],[1,4]] is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "5"
+        },
+        {
+          "letter": "B",
+          "text": "11"
+        },
+        {
+          "letter": "C",
+          "text": "8"
+        },
+        {
+          "letter": "D",
+          "text": "-5"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "If A is a 2\u00d73 matrix and B is a 3\u00d74 matrix, the order of AB is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "2\u00d74"
+        },
+        {
+          "letter": "B",
+          "text": "3\u00d73"
+        },
+        {
+          "letter": "C",
+          "text": "4\u00d72"
+        },
+        {
+          "letter": "D",
+          "text": "2\u00d73"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "The probability of an event is 0.7. Probability of its complement?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "0.3"
+        },
+        {
+          "letter": "B",
+          "text": "0.7"
+        },
+        {
+          "letter": "C",
+          "text": "1.7"
+        },
+        {
+          "letter": "D",
+          "text": "0"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A particle's displacement is s(t)=t\u00b3-3t\u00b2+2t. Its velocity at time t is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "3t\u00b2-6t+2"
+        },
+        {
+          "letter": "B",
+          "text": "t\u00b2-6t+2"
+        },
+        {
+          "letter": "C",
+          "text": "3t\u00b2-3t+2"
+        },
+        {
+          "letter": "D",
+          "text": "t\u00b3-6t"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Evaluate \u222b\u2080\u00b2 x dx.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "2"
+        },
+        {
+          "letter": "B",
+          "text": "4"
+        },
+        {
+          "letter": "C",
+          "text": "1"
+        },
+        {
+          "letter": "D",
+          "text": "0"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A differential equation dy/dx=2x has general solution:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "y=x\u00b2+C"
+        },
+        {
+          "letter": "B",
+          "text": "y=2x+C"
+        },
+        {
+          "letter": "C",
+          "text": "y=x\u00b2"
+        },
+        {
+          "letter": "D",
+          "text": "y=2+C"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "If vectors a=(1,2,2) and b=(2,0,1), their dot product is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "4"
+        },
+        {
+          "letter": "B",
+          "text": "3"
+        },
+        {
+          "letter": "C",
+          "text": "5"
+        },
+        {
+          "letter": "D",
+          "text": "6"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A factory maximises Z=3x+2y subject to linear constraints. Why are corner points of the feasible region checked?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "For a linear objective over a polygonal feasible region, an optimum occurs at a corner point when it exists."
+        },
+        {
+          "letter": "B",
+          "text": "Only corner points satisfy constraints."
+        },
+        {
+          "letter": "C",
+          "text": "The objective is always zero inside."
+        },
+        {
+          "letter": "D",
+          "text": "Graphs cannot show other points."
+        }
+      ],
+      "correct": "A"
+    }
+  ]
+}

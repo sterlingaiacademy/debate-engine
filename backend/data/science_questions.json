@@ -1,0 +1,1778 @@
+{
+  "5": [
+    {
+      "question": "A potted plant near a window bends towards sunlight after a few days. What is the best explanation?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The plant is trying to leave the pot."
+        },
+        {
+          "letter": "B",
+          "text": "The shoot responds to light and grows towards it."
+        },
+        {
+          "letter": "C",
+          "text": "Sunlight pushes the stem."
+        },
+        {
+          "letter": "D",
+          "text": "The soil moves the plant."
+        }
+      ],
+      "correct": "B"
+    },
+    {
+      "question": "Rina keeps one wet cloth in sunlight and another in a closed, cool room. Which will most likely dry first?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The cloth in sunlight."
+        },
+        {
+          "letter": "B",
+          "text": "The cloth in the closed room."
+        },
+        {
+          "letter": "C",
+          "text": "Both always dry together."
+        },
+        {
+          "letter": "D",
+          "text": "Neither can dry without boiling."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A child eats only rice for many days. Why is this not a balanced diet?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Rice has no energy."
+        },
+        {
+          "letter": "B",
+          "text": "The body needs different nutrients from different foods."
+        },
+        {
+          "letter": "C",
+          "text": "Rice cannot be digested."
+        },
+        {
+          "letter": "D",
+          "text": "Only fruits give energy."
+        }
+      ],
+      "correct": "B"
+    },
+    {
+      "question": "You see water droplets on the outside of a cold bottle. Where did most of this water come from?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It leaked through the bottle."
+        },
+        {
+          "letter": "B",
+          "text": "Water vapour in the air cooled and condensed."
+        },
+        {
+          "letter": "C",
+          "text": "The bottle produced water."
+        },
+        {
+          "letter": "D",
+          "text": "Ice passed through the bottle wall."
+        }
+      ],
+      "correct": "B"
+    },
+    {
+      "question": "A farmer notices that earthworms are common in loose, moist soil. How can they help the soil?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "They make the soil harder."
+        },
+        {
+          "letter": "B",
+          "text": "Their movement can loosen and mix the soil."
+        },
+        {
+          "letter": "C",
+          "text": "They remove all water."
+        },
+        {
+          "letter": "D",
+          "text": "They stop roots from growing."
+        }
+      ],
+      "correct": "B"
+    },
+    {
+      "question": "Two identical seeds are planted. One gets water; the other does not. Only the watered seed germinates. What does this show?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Seeds need water for germination."
+        },
+        {
+          "letter": "B",
+          "text": "Seeds need darkness only."
+        },
+        {
+          "letter": "C",
+          "text": "Water turns into a seed."
+        },
+        {
+          "letter": "D",
+          "text": "All seeds need fertiliser first."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A metal spoon and a wooden spoon are left in hot soup. The metal handle becomes hot sooner. Why?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Metal conducts heat better than wood."
+        },
+        {
+          "letter": "B",
+          "text": "Wood has no particles."
+        },
+        {
+          "letter": "C",
+          "text": "Metal creates heat."
+        },
+        {
+          "letter": "D",
+          "text": "Soup enters the metal."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A family separates vegetable peels from plastic waste. What is the best reason?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Both wastes are exactly the same."
+        },
+        {
+          "letter": "B",
+          "text": "Peels can decompose and may be composted, while plastic needs different handling."
+        },
+        {
+          "letter": "C",
+          "text": "Plastic becomes soil immediately."
+        },
+        {
+          "letter": "D",
+          "text": "Peels cannot be reused."
+        }
+      ],
+      "correct": "B"
+    },
+    {
+      "question": "During a power cut, Meera uses a mirror to direct sunlight into a dark corner. Which property of light is she using?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Reflection"
+        },
+        {
+          "letter": "B",
+          "text": "Absorption only"
+        },
+        {
+          "letter": "C",
+          "text": "Sound production"
+        },
+        {
+          "letter": "D",
+          "text": "Magnetism"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A bird has a long, pointed beak and is often seen catching fish. Which conclusion is most reasonable?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Its beak is adapted to its feeding habit."
+        },
+        {
+          "letter": "B",
+          "text": "All birds eat fish."
+        },
+        {
+          "letter": "C",
+          "text": "The beak decides its colour."
+        },
+        {
+          "letter": "D",
+          "text": "It cannot live near water."
+        }
+      ],
+      "correct": "A"
+    }
+  ],
+  "6": [
+    {
+      "question": "A student mixes sand and iron filings. What is the simplest way to separate them?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Use a magnet."
+        },
+        {
+          "letter": "B",
+          "text": "Add sugar."
+        },
+        {
+          "letter": "C",
+          "text": "Boil the mixture."
+        },
+        {
+          "letter": "D",
+          "text": "Use a sieve with very large holes."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A meal contains rice, dal, vegetables and curd. Why is it more balanced than rice alone?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It provides a wider range of nutrients."
+        },
+        {
+          "letter": "B",
+          "text": "It contains only carbohydrates."
+        },
+        {
+          "letter": "C",
+          "text": "It has no water."
+        },
+        {
+          "letter": "D",
+          "text": "More dishes always mean more energy."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A torch does not glow although its bulb is good. Which should be checked first?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Whether the circuit is complete and cells are connected correctly."
+        },
+        {
+          "letter": "B",
+          "text": "Colour of the torch."
+        },
+        {
+          "letter": "C",
+          "text": "Weight of the bulb."
+        },
+        {
+          "letter": "D",
+          "text": "Shape of the switch."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A shadow becomes larger when an object is moved closer to a light source. What does this demonstrate?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Shadow size depends on relative positions of source, object and screen."
+        },
+        {
+          "letter": "B",
+          "text": "Objects grow near light."
+        },
+        {
+          "letter": "C",
+          "text": "Light bends around every object completely."
+        },
+        {
+          "letter": "D",
+          "text": "Shadows have fixed size."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Why are gaps sometimes left between railway tracks?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "To allow expansion when temperature rises."
+        },
+        {
+          "letter": "B",
+          "text": "To make trains slower."
+        },
+        {
+          "letter": "C",
+          "text": "To store rainwater."
+        },
+        {
+          "letter": "D",
+          "text": "To reduce track length."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A cactus has leaves modified into spines. What advantage does this mainly provide in a dry habitat?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It reduces water loss."
+        },
+        {
+          "letter": "B",
+          "text": "It increases leaf surface."
+        },
+        {
+          "letter": "C",
+          "text": "It absorbs more sound."
+        },
+        {
+          "letter": "D",
+          "text": "It produces more rain."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A mixture contains stones, sand and water. Which sequence is most suitable?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Handpick stones, then filter sand from water."
+        },
+        {
+          "letter": "B",
+          "text": "Evaporate first, then add stones."
+        },
+        {
+          "letter": "C",
+          "text": "Use a magnet for everything."
+        },
+        {
+          "letter": "D",
+          "text": "Freeze and burn the mixture."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A compass needle turns when a bar magnet is brought near it. Why?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The compass needle is itself magnetic and responds to the magnetic field."
+        },
+        {
+          "letter": "B",
+          "text": "The magnet heats the compass."
+        },
+        {
+          "letter": "C",
+          "text": "Air pushes the needle."
+        },
+        {
+          "letter": "D",
+          "text": "The compass contains water."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A student measures a curved line using a thread first and then a ruler. Why?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Thread can follow the curve before its length is measured."
+        },
+        {
+          "letter": "B",
+          "text": "A ruler cannot measure anything."
+        },
+        {
+          "letter": "C",
+          "text": "Thread changes the curve into mass."
+        },
+        {
+          "letter": "D",
+          "text": "Curved lines have no length."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Wet waste is composted instead of mixed with plastic. What scientific idea supports this practice?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Biodegradable matter can be broken down by decomposers."
+        },
+        {
+          "letter": "B",
+          "text": "Plastic decomposes faster."
+        },
+        {
+          "letter": "C",
+          "text": "Compost is made from metals."
+        },
+        {
+          "letter": "D",
+          "text": "All waste should be burned."
+        }
+      ],
+      "correct": "A"
+    }
+  ],
+  "7": [
+    {
+      "question": "A farmer adds lime to strongly acidic soil. What is the purpose?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "To neutralise excess acidity."
+        },
+        {
+          "letter": "B",
+          "text": "To make soil more acidic."
+        },
+        {
+          "letter": "C",
+          "text": "To remove all minerals."
+        },
+        {
+          "letter": "D",
+          "text": "To stop water absorption."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A woollen blanket keeps a person warm mainly because:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Trapped air is a poor conductor of heat."
+        },
+        {
+          "letter": "B",
+          "text": "Wool produces heat continuously."
+        },
+        {
+          "letter": "C",
+          "text": "Wool is colder than air."
+        },
+        {
+          "letter": "D",
+          "text": "It reflects all sunlight."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "After vigorous exercise, breathing rate increases. Why?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Muscles need more oxygen for releasing energy and more carbon dioxide must be removed."
+        },
+        {
+          "letter": "B",
+          "text": "The lungs become smaller."
+        },
+        {
+          "letter": "C",
+          "text": "Blood stops moving."
+        },
+        {
+          "letter": "D",
+          "text": "Food enters the lungs."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A plant stem kept in coloured water later shows colour in its veins. What does this demonstrate?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Water moves upward through conducting tissue."
+        },
+        {
+          "letter": "B",
+          "text": "Leaves send colour into water."
+        },
+        {
+          "letter": "C",
+          "text": "Roots produce dye."
+        },
+        {
+          "letter": "D",
+          "text": "Only food moves in stems."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Iron nails left in moist air develop rust. Which conditions are important for rusting?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Oxygen and moisture"
+        },
+        {
+          "letter": "B",
+          "text": "Only bright light"
+        },
+        {
+          "letter": "C",
+          "text": "Only carbon dioxide"
+        },
+        {
+          "letter": "D",
+          "text": "Dry nitrogen"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A cyclist covers equal distances in shorter and shorter time intervals. What can you infer?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The cyclist's speed is increasing."
+        },
+        {
+          "letter": "B",
+          "text": "The cyclist is stationary."
+        },
+        {
+          "letter": "C",
+          "text": "Distance is decreasing."
+        },
+        {
+          "letter": "D",
+          "text": "Time has no relation to speed."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A fuse wire melts when excessive current flows. Why is this useful?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It breaks the circuit and helps protect appliances."
+        },
+        {
+          "letter": "B",
+          "text": "It increases current."
+        },
+        {
+          "letter": "C",
+          "text": "It stores electricity."
+        },
+        {
+          "letter": "D",
+          "text": "It makes wires magnetic permanently."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A forest loses many trees. Which consequence is most likely?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Greater soil erosion and habitat loss."
+        },
+        {
+          "letter": "B",
+          "text": "More stable food webs."
+        },
+        {
+          "letter": "C",
+          "text": "Less carbon dioxide in air immediately."
+        },
+        {
+          "letter": "D",
+          "text": "More groundwater recharge in all cases."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A convex lens forms a sharp image on a screen. What does this show about the rays?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "They converge at the image position."
+        },
+        {
+          "letter": "B",
+          "text": "They disappear."
+        },
+        {
+          "letter": "C",
+          "text": "They become sound."
+        },
+        {
+          "letter": "D",
+          "text": "They all reflect backward."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A city treats sewage before releasing water into a river. Why?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "To reduce pollutants and disease-causing organisms."
+        },
+        {
+          "letter": "B",
+          "text": "To add more plastic."
+        },
+        {
+          "letter": "C",
+          "text": "To increase bad odour."
+        },
+        {
+          "letter": "D",
+          "text": "To stop evaporation."
+        }
+      ],
+      "correct": "A"
+    }
+  ],
+  "8": [
+    {
+      "question": "A farmer grows legumes between cereal crops. How can this help soil fertility?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Legume-associated bacteria can add usable nitrogen compounds to soil."
+        },
+        {
+          "letter": "B",
+          "text": "Legumes remove all nitrogen."
+        },
+        {
+          "letter": "C",
+          "text": "Cereals cannot grow near legumes."
+        },
+        {
+          "letter": "D",
+          "text": "Legumes create phosphorus from nothing."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A metal gate is painted regularly. How does paint help?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It limits contact of metal with air and moisture, reducing corrosion."
+        },
+        {
+          "letter": "B",
+          "text": "It converts iron into plastic."
+        },
+        {
+          "letter": "C",
+          "text": "It increases rusting."
+        },
+        {
+          "letter": "D",
+          "text": "It removes metal atoms."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A candle flame goes out when covered by a glass jar. What is the best explanation?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The available oxygen becomes insufficient for continued combustion."
+        },
+        {
+          "letter": "B",
+          "text": "Glass absorbs all heat instantly."
+        },
+        {
+          "letter": "C",
+          "text": "Carbon dioxide burns the wick."
+        },
+        {
+          "letter": "D",
+          "text": "The wax freezes immediately."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A student rubs a plastic scale on dry hair and it attracts paper bits. What has happened?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The scale becomes electrically charged."
+        },
+        {
+          "letter": "B",
+          "text": "The scale becomes magnetic."
+        },
+        {
+          "letter": "C",
+          "text": "Gravity stops acting."
+        },
+        {
+          "letter": "D",
+          "text": "The paper becomes heavier."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Why can excessive use of antibiotics be a concern?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It can favour survival of resistant bacteria."
+        },
+        {
+          "letter": "B",
+          "text": "Antibiotics always increase viruses."
+        },
+        {
+          "letter": "C",
+          "text": "They make all microbes useful."
+        },
+        {
+          "letter": "D",
+          "text": "They replace vaccination."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A ray of light strikes a plane mirror at 35\u00b0 to the normal. What is the angle of reflection?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "35\u00b0"
+        },
+        {
+          "letter": "B",
+          "text": "55\u00b0"
+        },
+        {
+          "letter": "C",
+          "text": "70\u00b0"
+        },
+        {
+          "letter": "D",
+          "text": "90\u00b0"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A species disappears from a forest food web. Why can other organisms be affected?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Organisms are interconnected through feeding relationships."
+        },
+        {
+          "letter": "B",
+          "text": "Every species lives independently."
+        },
+        {
+          "letter": "C",
+          "text": "Only plants depend on others."
+        },
+        {
+          "letter": "D",
+          "text": "Food webs contain no energy flow."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A lubricating oil is added between moving machine parts. What is its main effect?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It reduces friction between surfaces."
+        },
+        {
+          "letter": "B",
+          "text": "It increases roughness."
+        },
+        {
+          "letter": "C",
+          "text": "It increases mass greatly."
+        },
+        {
+          "letter": "D",
+          "text": "It stops all forces."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A sound becomes louder when a vibrating object has greater amplitude. Which quantity mainly changes?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Loudness"
+        },
+        {
+          "letter": "B",
+          "text": "Pitch only"
+        },
+        {
+          "letter": "C",
+          "text": "Speed of light"
+        },
+        {
+          "letter": "D",
+          "text": "Colour"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Two identical bulbs are tested, one with a fresh cell and one with a weak cell. The first glows brighter. Best inference?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The fresh cell provides conditions for a larger current through the bulb."
+        },
+        {
+          "letter": "B",
+          "text": "Bulb brightness is unrelated to circuits."
+        },
+        {
+          "letter": "C",
+          "text": "Weak cells contain no matter."
+        },
+        {
+          "letter": "D",
+          "text": "The bright bulb creates electricity."
+        }
+      ],
+      "correct": "A"
+    }
+  ],
+  "9": [
+    {
+      "question": "A perfume bottle is opened in one corner and its smell reaches the other side of the room. Which property of matter explains this?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Particles are continuously moving and diffuse."
+        },
+        {
+          "letter": "B",
+          "text": "Particles have no spaces."
+        },
+        {
+          "letter": "C",
+          "text": "Air has no particles."
+        },
+        {
+          "letter": "D",
+          "text": "Perfume changes into light."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A student wants to separate ammonium chloride from a mixture with common salt. Which property can be used?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Ammonium chloride sublimes on heating."
+        },
+        {
+          "letter": "B",
+          "text": "Common salt is magnetic."
+        },
+        {
+          "letter": "C",
+          "text": "Both have identical physical behaviour."
+        },
+        {
+          "letter": "D",
+          "text": "Salt evaporates at room temperature."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A plant cell placed in a concentrated salt solution loses water. What happens to the cell contents?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "They shrink away from the cell wall due to osmosis."
+        },
+        {
+          "letter": "B",
+          "text": "They gain unlimited water."
+        },
+        {
+          "letter": "C",
+          "text": "The cell wall dissolves instantly."
+        },
+        {
+          "letter": "D",
+          "text": "Photosynthesis doubles."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A car changes velocity from 10 m/s to 20 m/s in 5 s uniformly. Its acceleration is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "2 m/s\u00b2"
+        },
+        {
+          "letter": "B",
+          "text": "5 m/s\u00b2"
+        },
+        {
+          "letter": "C",
+          "text": "10 m/s\u00b2"
+        },
+        {
+          "letter": "D",
+          "text": "50 m/s\u00b2"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A passenger lurches forward when a moving bus stops suddenly. Which idea best explains this?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Inertia of motion"
+        },
+        {
+          "letter": "B",
+          "text": "Gravitation disappears."
+        },
+        {
+          "letter": "C",
+          "text": "Action and reaction cancel mass."
+        },
+        {
+          "letter": "D",
+          "text": "The passenger gains energy from the seat."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A stone and a crumpled paper ball fall nearly together in a vacuum. Why?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Without air resistance, both have the same gravitational acceleration."
+        },
+        {
+          "letter": "B",
+          "text": "They have equal mass."
+        },
+        {
+          "letter": "C",
+          "text": "Gravity acts only in vacuum."
+        },
+        {
+          "letter": "D",
+          "text": "Paper becomes stone-like."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A machine does 600 J of work in 30 s. Its power is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "20 W"
+        },
+        {
+          "letter": "B",
+          "text": "18000 W"
+        },
+        {
+          "letter": "C",
+          "text": "630 W"
+        },
+        {
+          "letter": "D",
+          "text": "0.05 W"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Two sounds have the same amplitude but different frequencies. They mainly differ in:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Pitch"
+        },
+        {
+          "letter": "B",
+          "text": "Loudness"
+        },
+        {
+          "letter": "C",
+          "text": "Speed in the same medium"
+        },
+        {
+          "letter": "D",
+          "text": "Energy source only"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A farmer selects disease-resistant crop varieties. What is the most direct benefit?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Reduced crop loss due to disease."
+        },
+        {
+          "letter": "B",
+          "text": "Plants no longer need water."
+        },
+        {
+          "letter": "C",
+          "text": "All pests disappear."
+        },
+        {
+          "letter": "D",
+          "text": "Soil becomes unnecessary."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A mixture shows a Tyndall effect but particles do not settle easily. It is most likely a:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Colloid"
+        },
+        {
+          "letter": "B",
+          "text": "True solution only"
+        },
+        {
+          "letter": "C",
+          "text": "Pure element"
+        },
+        {
+          "letter": "D",
+          "text": "Suspension that settles rapidly"
+        }
+      ],
+      "correct": "A"
+    }
+  ],
+  "10": [
+    {
+      "question": "A clean iron nail is placed in copper sulphate solution. After some time, a brown coating appears. What is happening?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Iron displaces copper from the solution."
+        },
+        {
+          "letter": "B",
+          "text": "Copper displaces iron."
+        },
+        {
+          "letter": "C",
+          "text": "No chemical reaction occurs."
+        },
+        {
+          "letter": "D",
+          "text": "Iron turns into carbon."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A farmer finds soil pH is too low for a crop. Which treatment is commonly suitable?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Add a basic material such as lime."
+        },
+        {
+          "letter": "B",
+          "text": "Add more acid."
+        },
+        {
+          "letter": "C",
+          "text": "Add only distilled water forever."
+        },
+        {
+          "letter": "D",
+          "text": "Add sodium metal."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Why is aluminium used for some cooking utensils despite being reactive?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It forms a protective oxide layer that resists further corrosion."
+        },
+        {
+          "letter": "B",
+          "text": "It never reacts with oxygen."
+        },
+        {
+          "letter": "C",
+          "text": "It is a non-metal."
+        },
+        {
+          "letter": "D",
+          "text": "It has zero conductivity."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A person has difficulty digesting fats because bile flow is blocked. Which process is directly affected?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Emulsification of fats"
+        },
+        {
+          "letter": "B",
+          "text": "Absorption of oxygen in lungs"
+        },
+        {
+          "letter": "C",
+          "text": "Formation of urine"
+        },
+        {
+          "letter": "D",
+          "text": "Transmission of nerve impulses"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A plant shoot bends towards light. Which hormone-related response is involved?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Auxin distribution causing differential growth"
+        },
+        {
+          "letter": "B",
+          "text": "Insulin secretion"
+        },
+        {
+          "letter": "C",
+          "text": "Adrenaline action"
+        },
+        {
+          "letter": "D",
+          "text": "Thyroxine release"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Two parents are heterozygous for a trait, Aa \u00d7 Aa. What is the probability of aa offspring?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "25%"
+        },
+        {
+          "letter": "B",
+          "text": "50%"
+        },
+        {
+          "letter": "C",
+          "text": "75%"
+        },
+        {
+          "letter": "D",
+          "text": "100%"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A ray passes from air into glass obliquely. It usually bends:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Towards the normal because light slows in glass."
+        },
+        {
+          "letter": "B",
+          "text": "Away from the normal because light speeds up."
+        },
+        {
+          "letter": "C",
+          "text": "Without changing direction in all cases."
+        },
+        {
+          "letter": "D",
+          "text": "Back to the source."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Two resistors of 2 \u03a9 and 4 \u03a9 are connected in series. Their equivalent resistance is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "6 \u03a9"
+        },
+        {
+          "letter": "B",
+          "text": "2 \u03a9"
+        },
+        {
+          "letter": "C",
+          "text": "0.5 \u03a9"
+        },
+        {
+          "letter": "D",
+          "text": "8 \u03a9"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A current-carrying straight wire produces:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A magnetic field around the wire."
+        },
+        {
+          "letter": "B",
+          "text": "Only an electric field with no magnetic effect."
+        },
+        {
+          "letter": "C",
+          "text": "Permanent gravity."
+        },
+        {
+          "letter": "D",
+          "text": "No effect outside the wire."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "If decomposers disappeared from an ecosystem, what would most likely happen over time?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Dead organic matter would accumulate and nutrient cycling would be disrupted."
+        },
+        {
+          "letter": "B",
+          "text": "Photosynthesis would stop instantly everywhere."
+        },
+        {
+          "letter": "C",
+          "text": "All consumers would become producers."
+        },
+        {
+          "letter": "D",
+          "text": "Energy would cycle endlessly."
+        }
+      ],
+      "correct": "A"
+    }
+  ],
+  "11": [
+    {
+      "question": "A passenger in a car moving at constant velocity tosses a ball vertically upward. Neglecting air resistance, where does it land?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Back in the passenger's hand because ball and car share horizontal velocity."
+        },
+        {
+          "letter": "B",
+          "text": "Far behind the car."
+        },
+        {
+          "letter": "C",
+          "text": "Far ahead of the car."
+        },
+        {
+          "letter": "D",
+          "text": "It loses all horizontal motion."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Two forces of 3 N and 4 N act at right angles on an object. The magnitude of the resultant is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "5 N"
+        },
+        {
+          "letter": "B",
+          "text": "7 N"
+        },
+        {
+          "letter": "C",
+          "text": "1 N"
+        },
+        {
+          "letter": "D",
+          "text": "12 N"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A gas is compressed at constant temperature. If volume decreases, pressure increases. This behaviour is consistent with:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Boyle's law"
+        },
+        {
+          "letter": "B",
+          "text": "Charles' law only"
+        },
+        {
+          "letter": "C",
+          "text": "Law of conservation of mass only"
+        },
+        {
+          "letter": "D",
+          "text": "Ohm's law"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Which observation best supports that a chemical reaction has occurred?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A precipitate forms when two clear solutions are mixed."
+        },
+        {
+          "letter": "B",
+          "text": "Ice melts."
+        },
+        {
+          "letter": "C",
+          "text": "Water is poured into a glass."
+        },
+        {
+          "letter": "D",
+          "text": "A metal rod is cut."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "An atom has atomic number 17. How many electrons does a neutral atom have?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "17"
+        },
+        {
+          "letter": "B",
+          "text": "34"
+        },
+        {
+          "letter": "C",
+          "text": "18"
+        },
+        {
+          "letter": "D",
+          "text": "16"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A plant cell is placed in a hypotonic solution. What is expected?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Water enters the cell; it becomes turgid because the cell wall resists bursting."
+        },
+        {
+          "letter": "B",
+          "text": "Water leaves and plasmolysis occurs."
+        },
+        {
+          "letter": "C",
+          "text": "The nucleus disappears."
+        },
+        {
+          "letter": "D",
+          "text": "The cell loses its wall."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Why are enzymes effective biological catalysts?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "They lower activation energy for specific reactions."
+        },
+        {
+          "letter": "B",
+          "text": "They permanently raise body temperature."
+        },
+        {
+          "letter": "C",
+          "text": "They are consumed completely in every reaction."
+        },
+        {
+          "letter": "D",
+          "text": "They make all reactions spontaneous."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A student observes that stomata close during severe water stress. What is the immediate advantage?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Reduced water loss through transpiration."
+        },
+        {
+          "letter": "B",
+          "text": "Increased carbon dioxide entry."
+        },
+        {
+          "letter": "C",
+          "text": "Faster mineral loss."
+        },
+        {
+          "letter": "D",
+          "text": "Complete stop of respiration."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "If net external force on a body is zero, which statement is correct?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Its velocity remains constant; it may be at rest or moving uniformly."
+        },
+        {
+          "letter": "B",
+          "text": "It must be at rest."
+        },
+        {
+          "letter": "C",
+          "text": "It must accelerate."
+        },
+        {
+          "letter": "D",
+          "text": "Its mass becomes zero."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A solution has [H+] = 1 \u00d7 10\u207b\u00b3 mol L\u207b\u00b9. Its pH is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "3"
+        },
+        {
+          "letter": "B",
+          "text": "11"
+        },
+        {
+          "letter": "C",
+          "text": "7"
+        },
+        {
+          "letter": "D",
+          "text": "-3"
+        }
+      ],
+      "correct": "A"
+    }
+  ],
+  "12": [
+    {
+      "question": "A charged particle moves perpendicular to a uniform magnetic field. What happens to its speed if magnetic force is the only force?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Speed remains constant while direction changes."
+        },
+        {
+          "letter": "B",
+          "text": "Speed continuously increases."
+        },
+        {
+          "letter": "C",
+          "text": "Speed becomes zero immediately."
+        },
+        {
+          "letter": "D",
+          "text": "Kinetic energy doubles each second."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A transformer works with alternating current primarily because:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A changing magnetic flux induces emf in the secondary coil."
+        },
+        {
+          "letter": "B",
+          "text": "Direct current always changes flux continuously."
+        },
+        {
+          "letter": "C",
+          "text": "It creates electric charge."
+        },
+        {
+          "letter": "D",
+          "text": "It converts resistance into capacitance."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "In a galvanic cell, oxidation occurs at the:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Anode"
+        },
+        {
+          "letter": "B",
+          "text": "Cathode"
+        },
+        {
+          "letter": "C",
+          "text": "Salt bridge only"
+        },
+        {
+          "letter": "D",
+          "text": "Electrolyte surface only"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Increasing temperature often increases reaction rate because:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A larger fraction of molecules can cross the activation-energy barrier."
+        },
+        {
+          "letter": "B",
+          "text": "All molecules lose kinetic energy."
+        },
+        {
+          "letter": "C",
+          "text": "Activation energy always becomes zero."
+        },
+        {
+          "letter": "D",
+          "text": "Concentration must become infinite."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Which condition favours adsorption of a gas on a solid surface in many cases?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Lower temperature and higher pressure"
+        },
+        {
+          "letter": "B",
+          "text": "Higher temperature and lower pressure always"
+        },
+        {
+          "letter": "C",
+          "text": "Zero surface area"
+        },
+        {
+          "letter": "D",
+          "text": "No intermolecular attraction"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A carrier mother for an X-linked recessive disorder and a normal father have a son. What is the probability that the son inherits the affected X from the mother?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "50%"
+        },
+        {
+          "letter": "B",
+          "text": "0%"
+        },
+        {
+          "letter": "C",
+          "text": "25%"
+        },
+        {
+          "letter": "D",
+          "text": "100%"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "During PCR, why is a thermostable DNA polymerase used?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It remains functional after repeated high-temperature denaturation steps."
+        },
+        {
+          "letter": "B",
+          "text": "It melts DNA permanently."
+        },
+        {
+          "letter": "C",
+          "text": "It prevents primers from binding."
+        },
+        {
+          "letter": "D",
+          "text": "It replaces DNA template."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A population exceeds the carrying capacity of its environment. What is most likely over time?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Resource limitation increases and population growth is constrained."
+        },
+        {
+          "letter": "B",
+          "text": "Resources become unlimited."
+        },
+        {
+          "letter": "C",
+          "text": "Competition disappears."
+        },
+        {
+          "letter": "D",
+          "text": "Birth rate must remain permanently maximum."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "In the photoelectric effect, increasing light frequency above threshold mainly increases:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Maximum kinetic energy of emitted electrons."
+        },
+        {
+          "letter": "B",
+          "text": "Number of electrons only regardless of intensity."
+        },
+        {
+          "letter": "C",
+          "text": "Electron charge."
+        },
+        {
+          "letter": "D",
+          "text": "Planck's constant."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A drug binds specifically to an enzyme's active site and blocks substrate binding. This is best described as:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Competitive inhibition"
+        },
+        {
+          "letter": "B",
+          "text": "Denaturation by heat"
+        },
+        {
+          "letter": "C",
+          "text": "Osmosis"
+        },
+        {
+          "letter": "D",
+          "text": "Translation"
+        }
+      ],
+      "correct": "A"
+    }
+  ]
+}

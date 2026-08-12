@@ -3643,7 +3643,21 @@ app.post('/api/olympiad/exam/submit', async (req, res) => {
 // THINKQUEST OLYMPIAD – ENGLISH MCQ QUIZ
 // ==========================================
 
-const englishQuestions = require('./data/english_questions.json');
+const subjectQuestions = {
+  english: require('./data/english_questions.json'),
+  mathematics: require('./data/mathematics_questions.json'),
+  science: require('./data/science_questions.json'),
+  social_science: require('./data/social_science_questions.json'),
+  ct_ai: require('./data/ct_ai_questions.json'),
+};
+
+const SUBJECT_LABELS = {
+  english: 'English',
+  mathematics: 'Mathematics',
+  science: 'Science',
+  social_science: 'Social Sciences',
+  ct_ai: 'CT & AI',
+};
 
 async function ensureQuizTable() {
   await db.query(`
@@ -3669,15 +3683,13 @@ app.get('/api/olympiad/quiz/:subject/:grade', async (req, res) => {
   try {
     const grade = parseInt(req.params.grade);
     const subject = req.params.subject.toLowerCase();
-    if (subject !== 'english') return res.status(404).json({ error: 'Subject not found' });
-    const raw = englishQuestions[grade];
+    const bank = subjectQuestions[subject];
+    if (!bank) return res.status(404).json({ error: 'Subject not found' });
+    const raw = bank[grade];
     if (!raw) return res.status(404).json({ error: 'No questions for this grade' });
-    const questions = raw.map((q, i) => ({
-      id: i,
-      question: q.question,
-      options: q.options,
-    }));
-    res.json({ quiz_name: `English Practice – Grade ${grade}`, subject: 'English', grade, total: questions.length, questions });
+    const questions = raw.map((q, i) => ({ id: i, question: q.question, options: q.options }));
+    const label = SUBJECT_LABELS[subject] || subject;
+    res.json({ quiz_name: `${label} Practice – Grade ${grade}`, subject: label, grade, total: questions.length, questions });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -3714,7 +3726,7 @@ app.post('/api/olympiad/quiz/submit', async (req, res) => {
       [email, subject, gradeNum]
     );
     if (existing.rows.length > 0) return res.status(400).json({ error: 'Already attempted' });
-    const raw = subject.toLowerCase() === 'english' ? englishQuestions[gradeNum] : null;
+    const raw = subjectQuestions[subject.toLowerCase()]?.[gradeNum];
     if (!raw) return res.status(404).json({ error: 'Questions not found' });
     let score = 0;
     const breakdown = raw.map((q, i) => {

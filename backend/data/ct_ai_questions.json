@@ -1,0 +1,1778 @@
+{
+  "5": [
+    {
+      "question": "Riya has to pack 24 books equally into 4 boxes. Which computational thinking idea helps her break the task into smaller, manageable parts?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Decomposition"
+        },
+        {
+          "letter": "B",
+          "text": "Decoration"
+        },
+        {
+          "letter": "C",
+          "text": "Guessing"
+        },
+        {
+          "letter": "D",
+          "text": "Downloading"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A robot follows: Move 2 steps \u2192 Turn right \u2192 Move 2 steps. It starts facing north. Which direction is it facing after the turn?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "East"
+        },
+        {
+          "letter": "B",
+          "text": "West"
+        },
+        {
+          "letter": "C",
+          "text": "South"
+        },
+        {
+          "letter": "D",
+          "text": "North"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A sequence is 2, 4, 8, 16, __. What should come next?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "32"
+        },
+        {
+          "letter": "B",
+          "text": "18"
+        },
+        {
+          "letter": "C",
+          "text": "20"
+        },
+        {
+          "letter": "D",
+          "text": "24"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "An AI drawing tool produces a picture after a student types a description. The typed description is called:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A prompt"
+        },
+        {
+          "letter": "B",
+          "text": "A password"
+        },
+        {
+          "letter": "C",
+          "text": "A virus"
+        },
+        {
+          "letter": "D",
+          "text": "A battery"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A student asks a voice assistant, 'Will it rain today?' What is the system mainly doing?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Processing the request and using data to produce an answer."
+        },
+        {
+          "letter": "B",
+          "text": "Reading the student's mind."
+        },
+        {
+          "letter": "C",
+          "text": "Changing the weather."
+        },
+        {
+          "letter": "D",
+          "text": "Creating electricity."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A robot must reach a desk without hitting chairs. What should the programmer identify first?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The starting point, destination and obstacles."
+        },
+        {
+          "letter": "B",
+          "text": "The robot's favourite colour."
+        },
+        {
+          "letter": "C",
+          "text": "The teacher's age."
+        },
+        {
+          "letter": "D",
+          "text": "The classroom wall colour."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Which instruction is most precise for a robot?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Go there."
+        },
+        {
+          "letter": "B",
+          "text": "Move forward 3 steps and turn left."
+        },
+        {
+          "letter": "C",
+          "text": "Do something."
+        },
+        {
+          "letter": "D",
+          "text": "Walk nicely."
+        }
+      ],
+      "correct": "B"
+    },
+    {
+      "question": "A computer sorts pictures into 'cats' and 'dogs'. What does it need to recognise?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Features or patterns in the pictures."
+        },
+        {
+          "letter": "B",
+          "text": "Only file names in every case."
+        },
+        {
+          "letter": "C",
+          "text": "The owner's mood."
+        },
+        {
+          "letter": "D",
+          "text": "The computer's colour."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "An AI tool gives an answer that sounds correct. What should a student do before using it in homework?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Check the answer using reliable sources."
+        },
+        {
+          "letter": "B",
+          "text": "Copy it without reading."
+        },
+        {
+          "letter": "C",
+          "text": "Assume AI is always correct."
+        },
+        {
+          "letter": "D",
+          "text": "Delete the homework."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Which is the best example of an algorithm?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Step-by-step instructions for making a sandwich."
+        },
+        {
+          "letter": "B",
+          "text": "A random drawing."
+        },
+        {
+          "letter": "C",
+          "text": "A school bell."
+        },
+        {
+          "letter": "D",
+          "text": "A photograph."
+        }
+      ],
+      "correct": "A"
+    }
+  ],
+  "6": [
+    {
+      "question": "A class wants to organise a school trip. They divide the work into transport, food, permission and schedule. Which CT skill is this?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Decomposition"
+        },
+        {
+          "letter": "B",
+          "text": "Encryption"
+        },
+        {
+          "letter": "C",
+          "text": "Animation"
+        },
+        {
+          "letter": "D",
+          "text": "Compression"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A program says: Repeat 4 times [move 1 step]. How many steps will the character move?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "4"
+        },
+        {
+          "letter": "B",
+          "text": "1"
+        },
+        {
+          "letter": "C",
+          "text": "8"
+        },
+        {
+          "letter": "D",
+          "text": "16"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A student notices that every even number in a list ends in 0, 2, 4, 6 or 8. Which CT skill is being used?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Pattern recognition"
+        },
+        {
+          "letter": "B",
+          "text": "Password creation"
+        },
+        {
+          "letter": "C",
+          "text": "Debugging hardware"
+        },
+        {
+          "letter": "D",
+          "text": "Image editing"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A robot is supposed to turn left but turns right because of a wrong instruction. Finding and correcting the mistake is called:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Debugging"
+        },
+        {
+          "letter": "B",
+          "text": "Browsing"
+        },
+        {
+          "letter": "C",
+          "text": "Printing"
+        },
+        {
+          "letter": "D",
+          "text": "Scanning"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "An AI system recommends videos based on what a user has watched before. It is mainly using:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Patterns in user data"
+        },
+        {
+          "letter": "B",
+          "text": "Magic"
+        },
+        {
+          "letter": "C",
+          "text": "Weather only"
+        },
+        {
+          "letter": "D",
+          "text": "Battery level"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Which data would be most useful for an AI system learning to identify handwritten digits?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Many labelled examples of handwritten digits."
+        },
+        {
+          "letter": "B",
+          "text": "A list of school holidays."
+        },
+        {
+          "letter": "C",
+          "text": "Audio recordings of songs."
+        },
+        {
+          "letter": "D",
+          "text": "A map of India."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A student wants a computer to decide: 'If temperature is above 30\u00b0C, display HOT; otherwise display NORMAL.' This is an example of:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conditional logic"
+        },
+        {
+          "letter": "B",
+          "text": "A loop only"
+        },
+        {
+          "letter": "C",
+          "text": "Random guessing"
+        },
+        {
+          "letter": "D",
+          "text": "Storage"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Why should an AI-generated summary be checked against the original text?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "AI can make errors or omit important context."
+        },
+        {
+          "letter": "B",
+          "text": "AI never processes text."
+        },
+        {
+          "letter": "C",
+          "text": "Original texts are always shorter."
+        },
+        {
+          "letter": "D",
+          "text": "Summaries cannot contain facts."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Which is an example of abstraction?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Showing only important roads and landmarks on a route map."
+        },
+        {
+          "letter": "B",
+          "text": "Drawing every leaf on every tree."
+        },
+        {
+          "letter": "C",
+          "text": "Adding unnecessary details."
+        },
+        {
+          "letter": "D",
+          "text": "Repeating the same instruction."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A program repeats an action forever because its stopping condition is wrong. What should the programmer examine?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The loop condition."
+        },
+        {
+          "letter": "B",
+          "text": "The screen colour."
+        },
+        {
+          "letter": "C",
+          "text": "The keyboard size."
+        },
+        {
+          "letter": "D",
+          "text": "The file name only."
+        }
+      ],
+      "correct": "A"
+    }
+  ],
+  "7": [
+    {
+      "question": "A school wants to reduce lunch-time queues. Students study arrival times, serving time and counter usage. What is the best first CT step?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Break the problem into factors that affect the queue."
+        },
+        {
+          "letter": "B",
+          "text": "Buy a new computer immediately."
+        },
+        {
+          "letter": "C",
+          "text": "Ignore the data."
+        },
+        {
+          "letter": "D",
+          "text": "Ask AI to guess."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Which pseudocode correctly finds whether a number n is even?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "If n mod 2 = 0, output EVEN."
+        },
+        {
+          "letter": "B",
+          "text": "If n + 2 = 0, output EVEN."
+        },
+        {
+          "letter": "C",
+          "text": "Always output EVEN."
+        },
+        {
+          "letter": "D",
+          "text": "If n = 1, output EVEN."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "An AI model trained mostly on pictures of light-coloured dogs performs poorly on dark-coloured dogs. What is a likely reason?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The training data was not sufficiently representative."
+        },
+        {
+          "letter": "B",
+          "text": "Dark dogs are invisible to computers."
+        },
+        {
+          "letter": "C",
+          "text": "AI cannot process images."
+        },
+        {
+          "letter": "D",
+          "text": "The keyboard is faulty."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A navigation app suggests a faster route after detecting traffic. Which inputs are most relevant?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Location, road network and traffic data."
+        },
+        {
+          "letter": "B",
+          "text": "Phone wallpaper and ringtone."
+        },
+        {
+          "letter": "C",
+          "text": "User's favourite food."
+        },
+        {
+          "letter": "D",
+          "text": "Screen brightness only."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A student writes the same five instructions ten times in a program. What could make the program more efficient?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Use a loop."
+        },
+        {
+          "letter": "B",
+          "text": "Add more repeated lines."
+        },
+        {
+          "letter": "C",
+          "text": "Remove all instructions."
+        },
+        {
+          "letter": "D",
+          "text": "Change the font."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "What is the main purpose of a flowchart?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "To visually represent steps and decisions in a process."
+        },
+        {
+          "letter": "B",
+          "text": "To store passwords."
+        },
+        {
+          "letter": "C",
+          "text": "To increase internet speed."
+        },
+        {
+          "letter": "D",
+          "text": "To create music."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "An AI chatbot confidently gives a false historical date. This is an example of why users should:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Verify AI outputs rather than treating them as automatically true."
+        },
+        {
+          "letter": "B",
+          "text": "Never use computers."
+        },
+        {
+          "letter": "C",
+          "text": "Trust longer answers more."
+        },
+        {
+          "letter": "D",
+          "text": "Judge accuracy by confidence."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A program should give a discount only if age < 12 OR age > 60. Which concept is central?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Logical conditions"
+        },
+        {
+          "letter": "B",
+          "text": "Image recognition"
+        },
+        {
+          "letter": "C",
+          "text": "File compression"
+        },
+        {
+          "letter": "D",
+          "text": "Robotics hardware"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A face-recognition system works well for some groups but poorly for others. Which issue should developers investigate?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Bias in data and model performance."
+        },
+        {
+          "letter": "B",
+          "text": "Monitor size."
+        },
+        {
+          "letter": "C",
+          "text": "Keyboard layout."
+        },
+        {
+          "letter": "D",
+          "text": "Printer ink."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A student removes names and irrelevant details from survey data before analysing travel time to school. Which CT idea is most clearly used?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Abstraction"
+        },
+        {
+          "letter": "B",
+          "text": "Duplication"
+        },
+        {
+          "letter": "C",
+          "text": "Decoration"
+        },
+        {
+          "letter": "D",
+          "text": "Gaming"
+        }
+      ],
+      "correct": "A"
+    }
+  ],
+  "8": [
+    {
+      "question": "A school bus route problem is complex. Which sequence best reflects computational problem solving?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Define problem \u2192 decompose \u2192 identify patterns/data \u2192 design algorithm \u2192 test and improve."
+        },
+        {
+          "letter": "B",
+          "text": "Guess \u2192 publish \u2192 ignore errors."
+        },
+        {
+          "letter": "C",
+          "text": "Code first \u2192 define problem later."
+        },
+        {
+          "letter": "D",
+          "text": "Collect random data \u2192 stop."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A search algorithm checks each name in a list one by one until it finds the target. This is:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Linear search"
+        },
+        {
+          "letter": "B",
+          "text": "Binary addition"
+        },
+        {
+          "letter": "C",
+          "text": "Encryption"
+        },
+        {
+          "letter": "D",
+          "text": "Recursion only"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A sorted list contains 1,000 names. Why can binary search be faster than checking each name sequentially?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It repeatedly eliminates about half the remaining search space."
+        },
+        {
+          "letter": "B",
+          "text": "It reads every item twice."
+        },
+        {
+          "letter": "C",
+          "text": "It works only on unsorted data."
+        },
+        {
+          "letter": "D",
+          "text": "It changes the names."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "An AI model predicts exam performance using students' attendance, study time and previous scores. What is the output?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A prediction based on patterns in the input data."
+        },
+        {
+          "letter": "B",
+          "text": "A guaranteed future result."
+        },
+        {
+          "letter": "C",
+          "text": "A new attendance record."
+        },
+        {
+          "letter": "D",
+          "text": "A password."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A hiring AI is trained using past hiring decisions that contained gender bias. What risk exists?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The system may learn and reproduce the historical bias."
+        },
+        {
+          "letter": "B",
+          "text": "The system automatically removes all bias."
+        },
+        {
+          "letter": "C",
+          "text": "Gender data guarantees fairness."
+        },
+        {
+          "letter": "D",
+          "text": "AI cannot learn from past data."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A program gives the wrong result only when the input is zero. What is the best debugging approach?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Test the zero case and trace the program's conditions step by step."
+        },
+        {
+          "letter": "B",
+          "text": "Rewrite everything without testing."
+        },
+        {
+          "letter": "C",
+          "text": "Ignore zero inputs."
+        },
+        {
+          "letter": "D",
+          "text": "Change the computer."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A smart irrigation system uses soil-moisture sensors. What should happen when moisture falls below a chosen threshold?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The system can trigger watering according to its programmed rule."
+        },
+        {
+          "letter": "B",
+          "text": "The sensor should delete its data."
+        },
+        {
+          "letter": "C",
+          "text": "The field should be ignored."
+        },
+        {
+          "letter": "D",
+          "text": "The threshold becomes a password."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A dataset contains student marks but also phone numbers that are unnecessary for the task. What is the best practice?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Use only data necessary for the stated purpose."
+        },
+        {
+          "letter": "B",
+          "text": "Publish all phone numbers."
+        },
+        {
+          "letter": "C",
+          "text": "Add more personal data."
+        },
+        {
+          "letter": "D",
+          "text": "Share the dataset publicly."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Which prompt is likely to produce the most useful AI response?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "'Explain photosynthesis for Grade 8 in 5 clear points with one example.'"
+        },
+        {
+          "letter": "B",
+          "text": "'Tell me stuff.'"
+        },
+        {
+          "letter": "C",
+          "text": "'Answer.'"
+        },
+        {
+          "letter": "D",
+          "text": "'Science maybe.'"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "An AI image generator creates an image that closely imitates a living artist's distinctive work. What should a responsible user consider?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Creative rights, attribution and ethical use."
+        },
+        {
+          "letter": "B",
+          "text": "Only image size."
+        },
+        {
+          "letter": "C",
+          "text": "Battery percentage."
+        },
+        {
+          "letter": "D",
+          "text": "Typing speed."
+        }
+      ],
+      "correct": "A"
+    }
+  ],
+  "9": [
+    {
+      "question": "A city wants to optimise traffic lights. Which dataset would be most relevant?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Traffic volume by time, junction and direction."
+        },
+        {
+          "letter": "B",
+          "text": "Favourite colours of drivers."
+        },
+        {
+          "letter": "C",
+          "text": "Names of nearby shops only."
+        },
+        {
+          "letter": "D",
+          "text": "Phone models of pedestrians."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "An algorithm takes 10 seconds for 1,000 items and 100 seconds for 10,000 similar items. What should a programmer investigate?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "How the algorithm's running time grows with input size."
+        },
+        {
+          "letter": "B",
+          "text": "Screen resolution."
+        },
+        {
+          "letter": "C",
+          "text": "File colour."
+        },
+        {
+          "letter": "D",
+          "text": "Keyboard language."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A machine-learning model is trained on labelled emails marked 'spam' and 'not spam'. This is an example of:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Supervised learning"
+        },
+        {
+          "letter": "B",
+          "text": "Unsupervised learning only"
+        },
+        {
+          "letter": "C",
+          "text": "Mechanical engineering"
+        },
+        {
+          "letter": "D",
+          "text": "Manual sorting only"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A model scores 98% accuracy overall but performs badly on a small minority group. Why is overall accuracy insufficient?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Performance should also be examined across relevant groups."
+        },
+        {
+          "letter": "B",
+          "text": "98% means no errors exist."
+        },
+        {
+          "letter": "C",
+          "text": "Minority outcomes never matter."
+        },
+        {
+          "letter": "D",
+          "text": "Accuracy is unrelated to predictions."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A student uses AI to write an entire assignment and submits it as personal work without disclosure. What is the main concern?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Academic integrity and misrepresentation of authorship."
+        },
+        {
+          "letter": "B",
+          "text": "File size."
+        },
+        {
+          "letter": "C",
+          "text": "Internet speed."
+        },
+        {
+          "letter": "D",
+          "text": "Font choice."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "An autonomous vehicle detects a pedestrian. Which sequence best describes an AI-enabled response?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Sense data \u2192 interpret/predict \u2192 decide \u2192 act."
+        },
+        {
+          "letter": "B",
+          "text": "Act \u2192 delete sensors \u2192 guess."
+        },
+        {
+          "letter": "C",
+          "text": "Print \u2192 scan \u2192 sleep."
+        },
+        {
+          "letter": "D",
+          "text": "Download \u2192 ignore \u2192 accelerate."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A program works for positive numbers but crashes for negative inputs. Which practice would most likely have found this earlier?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Testing with normal, boundary and unusual inputs."
+        },
+        {
+          "letter": "B",
+          "text": "Using only one test case."
+        },
+        {
+          "letter": "C",
+          "text": "Avoiding debugging."
+        },
+        {
+          "letter": "D",
+          "text": "Increasing screen brightness."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A recommendation system repeatedly shows users only content similar to what they already like. What potential problem can result?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A filter bubble or narrowing of exposure."
+        },
+        {
+          "letter": "B",
+          "text": "Guaranteed balanced information."
+        },
+        {
+          "letter": "C",
+          "text": "Perfect objectivity."
+        },
+        {
+          "letter": "D",
+          "text": "No influence on users."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Why is explainability important in high-impact AI decisions such as loan approval?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "People should be able to understand and challenge important decisions."
+        },
+        {
+          "letter": "B",
+          "text": "Explanations make data unnecessary."
+        },
+        {
+          "letter": "C",
+          "text": "AI decisions are legally correct by default."
+        },
+        {
+          "letter": "D",
+          "text": "It increases screen speed."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "An AI-generated image is shared as if it were a real disaster photograph. What is the key ethical risk?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Misinformation and deception."
+        },
+        {
+          "letter": "B",
+          "text": "Low resolution."
+        },
+        {
+          "letter": "C",
+          "text": "Slow upload."
+        },
+        {
+          "letter": "D",
+          "text": "Incorrect file extension."
+        }
+      ],
+      "correct": "A"
+    }
+  ],
+  "10": [
+    {
+      "question": "A hospital develops an AI model to flag high-risk patients. Which measure is most important before deployment?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Test accuracy, safety, bias and performance on appropriate real-world data."
+        },
+        {
+          "letter": "B",
+          "text": "Use it immediately because it is AI."
+        },
+        {
+          "letter": "C",
+          "text": "Judge it by interface design."
+        },
+        {
+          "letter": "D",
+          "text": "Test only one patient."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Two algorithms solve the same task correctly, but one takes far fewer steps for large inputs. What property differs?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Efficiency"
+        },
+        {
+          "letter": "B",
+          "text": "Truth of the output"
+        },
+        {
+          "letter": "C",
+          "text": "Keyboard compatibility"
+        },
+        {
+          "letter": "D",
+          "text": "File ownership"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A dataset contains missing values and duplicate records. What should usually happen before model training?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Clean and prepare the data appropriately."
+        },
+        {
+          "letter": "B",
+          "text": "Ignore all quality issues."
+        },
+        {
+          "letter": "C",
+          "text": "Add random answers."
+        },
+        {
+          "letter": "D",
+          "text": "Publish the raw personal data."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A model performs extremely well on training data but poorly on new data. This is commonly called:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Overfitting"
+        },
+        {
+          "letter": "B",
+          "text": "Encryption"
+        },
+        {
+          "letter": "C",
+          "text": "Compression"
+        },
+        {
+          "letter": "D",
+          "text": "Abstraction"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A school uses facial recognition for attendance. Which question is most important from an ethical perspective?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Is the collection necessary, secure, accurate and respectful of privacy and consent requirements?"
+        },
+        {
+          "letter": "B",
+          "text": "Does the camera look modern?"
+        },
+        {
+          "letter": "C",
+          "text": "Is the screen large?"
+        },
+        {
+          "letter": "D",
+          "text": "Can the system play music?"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A generative AI system creates text by predicting likely continuations based on learned patterns. Why can it still produce false statements?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Plausible language generation does not guarantee factual accuracy."
+        },
+        {
+          "letter": "B",
+          "text": "It has access to every fact."
+        },
+        {
+          "letter": "C",
+          "text": "Prediction always equals truth."
+        },
+        {
+          "letter": "D",
+          "text": "False statements require broken hardware."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Which is the strongest example of human oversight in AI?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A qualified person reviews consequential AI recommendations and can override them."
+        },
+        {
+          "letter": "B",
+          "text": "AI decisions are never checked."
+        },
+        {
+          "letter": "C",
+          "text": "Users cannot appeal."
+        },
+        {
+          "letter": "D",
+          "text": "The model changes rules secretly."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A programmer converts a complex problem into modules for input, processing, storage and output. What CT principle is being applied?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Decomposition/modularity"
+        },
+        {
+          "letter": "B",
+          "text": "Randomisation only"
+        },
+        {
+          "letter": "C",
+          "text": "Decoration"
+        },
+        {
+          "letter": "D",
+          "text": "Copying"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "An AI system uses personal data collected for school attendance to target students with advertisements without informing them. What principle is violated most clearly?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Purpose limitation and privacy"
+        },
+        {
+          "letter": "B",
+          "text": "Loop efficiency"
+        },
+        {
+          "letter": "C",
+          "text": "Image resolution"
+        },
+        {
+          "letter": "D",
+          "text": "Sorting order"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Before using an AI-generated answer in a research project, which workflow is best?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Check claims against credible sources, identify limitations, revise critically and acknowledge AI use where required."
+        },
+        {
+          "letter": "B",
+          "text": "Copy and submit immediately."
+        },
+        {
+          "letter": "C",
+          "text": "Assume citations generated by AI are real."
+        },
+        {
+          "letter": "D",
+          "text": "Use only the longest answer."
+        }
+      ],
+      "correct": "A"
+    }
+  ],
+  "11": [
+    {
+      "question": "A student receives an email saying, 'Your account will close in 10 minutes\u2014click here and enter your password.' What is the safest response?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Do not click; verify through the official service or trusted contact channel."
+        },
+        {
+          "letter": "B",
+          "text": "Reply with the password."
+        },
+        {
+          "letter": "C",
+          "text": "Forward it to friends."
+        },
+        {
+          "letter": "D",
+          "text": "Click quickly before time runs out."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Why is reusing the same password across many important accounts risky?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "One breached password can expose multiple accounts."
+        },
+        {
+          "letter": "B",
+          "text": "It makes passwords too long."
+        },
+        {
+          "letter": "C",
+          "text": "It prevents websites from loading."
+        },
+        {
+          "letter": "D",
+          "text": "It disables Wi-Fi."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A social-media post shows a dramatic image but provides no date or source. What should a responsible digital citizen do?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Verify the image, context and source before sharing."
+        },
+        {
+          "letter": "B",
+          "text": "Share it because it is dramatic."
+        },
+        {
+          "letter": "C",
+          "text": "Assume images cannot be manipulated."
+        },
+        {
+          "letter": "D",
+          "text": "Judge truth by number of likes."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "An app asks for microphone, contacts, precise location and photos even though it only provides a calculator. What should concern the user?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The permissions appear excessive for the app's purpose."
+        },
+        {
+          "letter": "B",
+          "text": "The calculator has numbers."
+        },
+        {
+          "letter": "C",
+          "text": "The app has an icon."
+        },
+        {
+          "letter": "D",
+          "text": "The phone has storage."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A student posts an embarrassing video of a classmate without permission. Which digital citizenship principle is most relevant?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Respect for privacy, consent and dignity."
+        },
+        {
+          "letter": "B",
+          "text": "Faster connectivity"
+        },
+        {
+          "letter": "C",
+          "text": "Cloud storage"
+        },
+        {
+          "letter": "D",
+          "text": "Software updates"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A website uses a design that makes 'Accept All Tracking' bright and easy while hiding the reject option. This may be an example of:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A dark pattern that manipulates user choice."
+        },
+        {
+          "letter": "B",
+          "text": "Strong encryption"
+        },
+        {
+          "letter": "C",
+          "text": "Open-source software"
+        },
+        {
+          "letter": "D",
+          "text": "A firewall"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A friend sends a private message containing personal information. What is the responsible approach?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Do not share it beyond the intended context without permission, unless safety requires trusted help."
+        },
+        {
+          "letter": "B",
+          "text": "Post it publicly."
+        },
+        {
+          "letter": "C",
+          "text": "Use it as a meme."
+        },
+        {
+          "letter": "D",
+          "text": "Sell it."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A student is repeatedly harassed in a group chat. Which response is most appropriate?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Save evidence, block/report where appropriate, and seek help from a trusted adult or authority."
+        },
+        {
+          "letter": "B",
+          "text": "Retaliate with threats."
+        },
+        {
+          "letter": "C",
+          "text": "Delete evidence and tell no one."
+        },
+        {
+          "letter": "D",
+          "text": "Create a public harassment campaign."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "What is a digital footprint?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The trace of data and activities associated with a person's digital use."
+        },
+        {
+          "letter": "B",
+          "text": "A mark left on a keyboard."
+        },
+        {
+          "letter": "C",
+          "text": "Only deleted files."
+        },
+        {
+          "letter": "D",
+          "text": "A computer virus."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "An influencer promotes a product but does not disclose that the company paid for the post. What is the main issue?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Lack of transparency about sponsored content."
+        },
+        {
+          "letter": "B",
+          "text": "The post uses video."
+        },
+        {
+          "letter": "C",
+          "text": "The influencer has followers."
+        },
+        {
+          "letter": "D",
+          "text": "The product has a logo."
+        }
+      ],
+      "correct": "A"
+    }
+  ],
+  "12": [
+    {
+      "question": "A university uses an automated system to rank applicants. What right should applicants reasonably expect in a responsible system?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Transparent information about consequential automated processing and a meaningful way to question errors."
+        },
+        {
+          "letter": "B",
+          "text": "No information at all."
+        },
+        {
+          "letter": "C",
+          "text": "A guarantee of admission."
+        },
+        {
+          "letter": "D",
+          "text": "Access to other applicants' private data."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A deepfake audio clip appears to show a CEO announcing a company collapse. Before acting on it, what should a responsible user do?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Verify it through authentic official channels and reliable independent sources."
+        },
+        {
+          "letter": "B",
+          "text": "Immediately sell or share based only on the clip."
+        },
+        {
+          "letter": "C",
+          "text": "Assume audio cannot be fabricated."
+        },
+        {
+          "letter": "D",
+          "text": "Edit the clip further."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A platform's algorithm promotes highly emotional misinformation because it generates engagement. What does this illustrate?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Platform incentives and algorithm design can shape the information people encounter."
+        },
+        {
+          "letter": "B",
+          "text": "Algorithms are always neutral."
+        },
+        {
+          "letter": "C",
+          "text": "Engagement proves truth."
+        },
+        {
+          "letter": "D",
+          "text": "Users have no role in information ecosystems."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A student wants to delete an old account containing years of personal posts. What broader concept is involved?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Management of digital identity and personal data lifecycle."
+        },
+        {
+          "letter": "B",
+          "text": "Processor speed"
+        },
+        {
+          "letter": "C",
+          "text": "File compression"
+        },
+        {
+          "letter": "D",
+          "text": "Screen calibration"
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A company suffers a breach exposing customer information. Which response is most responsible?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Secure the breach, investigate, notify affected parties as required, and reduce future risk."
+        },
+        {
+          "letter": "B",
+          "text": "Hide the incident indefinitely."
+        },
+        {
+          "letter": "C",
+          "text": "Blame customers automatically."
+        },
+        {
+          "letter": "D",
+          "text": "Publish more customer data."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A public Wi-Fi network is open and unencrypted. Which behaviour is safest?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Avoid sensitive transactions or use appropriate secure protections and trusted connections."
+        },
+        {
+          "letter": "B",
+          "text": "Enter banking passwords freely."
+        },
+        {
+          "letter": "C",
+          "text": "Disable device security."
+        },
+        {
+          "letter": "D",
+          "text": "Share files with everyone nearby."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Someone creates a realistic AI-generated video using another person's face for a misleading advertisement without consent. Which concerns arise?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Consent, identity misuse, deception and potential reputational harm."
+        },
+        {
+          "letter": "B",
+          "text": "Only video resolution."
+        },
+        {
+          "letter": "C",
+          "text": "Only storage cost."
+        },
+        {
+          "letter": "D",
+          "text": "No concern if AI was used."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A news article is accurate but its headline exaggerates the findings to attract clicks. A careful reader should:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Read beyond the headline and evaluate the evidence and context."
+        },
+        {
+          "letter": "B",
+          "text": "Judge only from the headline."
+        },
+        {
+          "letter": "C",
+          "text": "Assume popularity equals accuracy."
+        },
+        {
+          "letter": "D",
+          "text": "Share before reading."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "A digital service is free because it profiles users for targeted advertising. What trade-off should users understand?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "They may be exchanging personal data and attention for access to the service."
+        },
+        {
+          "letter": "B",
+          "text": "Free services collect no data."
+        },
+        {
+          "letter": "C",
+          "text": "Advertising cannot use profiles."
+        },
+        {
+          "letter": "D",
+          "text": "Privacy settings never matter."
+        }
+      ],
+      "correct": "A"
+    },
+    {
+      "question": "Which behaviour best represents mature digital citizenship?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Using technology safely, critically, ethically and responsibly while respecting the rights of others."
+        },
+        {
+          "letter": "B",
+          "text": "Avoiding all technology."
+        },
+        {
+          "letter": "C",
+          "text": "Believing all online information."
+        },
+        {
+          "letter": "D",
+          "text": "Using anonymity to avoid responsibility."
+        }
+      ],
+      "correct": "A"
+    }
+  ]
+}

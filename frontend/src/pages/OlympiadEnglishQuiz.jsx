@@ -3,12 +3,20 @@ import { API_BASE } from '../api';
 
 const FONT = "'Plus Jakarta Sans', 'Google Sans', system-ui, sans-serif";
 
+const SUBJECT_KEY = {
+  English: 'english',
+  Mathematics: 'mathematics',
+  Science: 'science',
+  'Social Sciences': 'social_science',
+  'CT & AI': 'ct_ai',
+};
+
 const GRADE_NUM = {
   'Grade 5': 5, 'Grade 6': 6, 'Grade 7': 7, 'Grade 8': 8,
   'Grade 9': 9, 'Grade 10': 10, 'Grade 11': 11, 'Grade 12': 12,
 };
 
-export default function OlympiadEnglishQuiz({ user, onClose }) {
+export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose }) {
   const [phase, setPhase] = useState('loading');
   const [quiz, setQuiz] = useState(null);
   const [answers, setAnswers] = useState({});
@@ -19,6 +27,7 @@ export default function OlympiadEnglishQuiz({ user, onClose }) {
   const [animate, setAnimate] = useState(true);
 
   const gradeNum = GRADE_NUM[user?.classLevel] || GRADE_NUM[user?.grade];
+  const subjectKey = SUBJECT_KEY[subject] || 'english';
 
   useEffect(() => {
     if (!gradeNum) {
@@ -26,20 +35,20 @@ export default function OlympiadEnglishQuiz({ user, onClose }) {
       setPhase('blocked');
       return;
     }
-    fetch(`${API_BASE}/api/olympiad/quiz/status/english/${gradeNum}?email=${encodeURIComponent(user.email)}`)
+    fetch(`${API_BASE}/api/olympiad/quiz/status/${subjectKey}/${gradeNum}?email=${encodeURIComponent(user.email)}`)
       .then(r => r.json())
       .then(data => {
         if (data.attempted) {
           setResult(data.result);
           setPhase('result');
         } else {
-          return fetch(`${API_BASE}/api/olympiad/quiz/english/${gradeNum}`)
+          return fetch(`${API_BASE}/api/olympiad/quiz/${subjectKey}/${gradeNum}`)
             .then(r => r.json())
             .then(q => { setQuiz(q); setPhase('quiz'); });
         }
       })
       .catch(e => { setError(e.message); setPhase('blocked'); });
-  }, [gradeNum, user.email]);
+  }, [gradeNum, user.email, subjectKey]);
 
   const handleSelect = (letter) => setAnswers(prev => ({ ...prev, [current]: letter }));
 
@@ -54,7 +63,7 @@ export default function OlympiadEnglishQuiz({ user, onClose }) {
       const res = await fetch(`${API_BASE}/api/olympiad/quiz/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: user.email, subject: 'English', grade: gradeNum, answers }),
+        body: JSON.stringify({ email: user.email, subject: subjectKey, grade: gradeNum, answers }),
       });
       const data = await res.json();
       if (data.error) throw new Error(data.error);
