@@ -12,9 +12,10 @@ export default function OlympiadIndividualRegister({ user }) {
     mobile: user?.phone || '',
     countryCode: '+91',
     schoolName: user?.school || '',
-    category: '',
+    category: 'Student',
     grade: '',
     city: '',
+    state: '',
   });
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState(null);
@@ -24,7 +25,7 @@ export default function OlympiadIndividualRegister({ user }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.studentName || !form.email || !form.mobile || !form.category || !form.grade || !form.schoolName || !form.city) {
+    if (!form.studentName || !form.email || !form.mobile || !form.grade || !form.schoolName || !form.city) {
       setErrorMsg('Please fill in all required fields.');
       return;
     }
