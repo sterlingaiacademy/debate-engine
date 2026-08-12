@@ -40,7 +40,7 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
     mobile: user?.phone || '',
     countryCode: '+91',
     schoolName: user?.school || '',
-    category: '',
+    category: 'Student',
     grade: '',
     city: '',
     state: '',
@@ -62,7 +62,7 @@ const ThinkQuestModal = ({ user, onDismiss, onSuccess }) => {
 
   const handleIndividualEnroll = async (e) => {
     e.preventDefault();
-    if (!indForm.studentName || !indForm.email || !indForm.mobile || !indForm.category || !indForm.grade || !indForm.schoolName || !indForm.city || !indForm.state) {
+    if (!indForm.studentName || !indForm.email || !indForm.mobile || !indForm.grade || !indForm.schoolName || !indForm.city || !indForm.state) {
       setIndError('Please fill in all required fields.');
       return;
     }
