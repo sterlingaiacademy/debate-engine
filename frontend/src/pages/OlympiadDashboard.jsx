@@ -121,7 +121,7 @@ export default function OlympiadDashboard({ user }) {
                     <p style={{ margin: 0, fontSize: '0.82rem', color: '#64748b', lineHeight: 1.6 }}>{s.desc}</p>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 700, color: isHov ? s.light : '#64748b', transition: 'color 0.25s' }}>
-                    Start Quiz <span style={{ transition: 'transform 0.2s', display: 'inline-block', transform: isHov ? 'translateX(4px)' : '' }}>→</span>
+                    Start Practice Test <span style={{ transition: 'transform 0.2s', display: 'inline-block', transform: isHov ? 'translateX(4px)' : '' }}>→</span>
                   </div>
                 </div>
               </div>
