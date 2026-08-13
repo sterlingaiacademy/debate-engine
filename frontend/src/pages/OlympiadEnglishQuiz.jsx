@@ -144,9 +144,9 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
     return (
       <div style={overlay}>
         <style>{`@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}`}</style>
-        <div style={{ background: 'rgba(10,10,20,0.97)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 28, padding: '0', width: '100%', maxWidth: 620, maxHeight: '90vh', overflowY: 'auto', boxShadow: '0 40px 120px rgba(0,0,0,0.6)', animation: 'fadeUp 0.3s ease', backdropFilter: 'blur(30px)' }}>
-          <div style={{ height: 3, background: C.grad, borderRadius: '28px 28px 0 0' }} />
-          <div style={{ padding: '2rem' }}>
+        <div style={{ background: 'rgba(10,10,20,0.97)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 28, width: '100%', maxWidth: 620, maxHeight: '90vh', overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: '0 40px 120px rgba(0,0,0,0.6)', animation: 'fadeUp 0.3s ease', backdropFilter: 'blur(30px)' }}>
+          <div style={{ height: 3, background: C.grad, flexShrink: 0 }} />
+          <div style={{ padding: '2rem', overflowY: 'auto', flex: 1 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.75rem' }}>
               <div>
                 <div style={{ fontSize: '0.68rem', fontWeight: 800, color: C.light, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.3rem' }}>Quiz Complete</div>
