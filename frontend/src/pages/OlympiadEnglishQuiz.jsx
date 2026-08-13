@@ -277,14 +277,13 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
               const isOK = isAns && revealed[i] && answers[i] === quiz.questions[i].correct;
               const isBAD = isAns && revealed[i] && answers[i] !== quiz.questions[i].correct;
               return (
-                <button key={i}
-                  onClick={() => { setAnimate(false); setTimeout(() => { setTimeLeft(15); setCurrent(i); setAnimate(true); }, 150); }}
-                  style={{ width: 28, height: 28, borderRadius: 8, cursor: 'pointer', fontSize: '0.68rem', fontWeight: 800, fontFamily: FONT, transition: 'all 0.15s',
+                <div key={i}
+                  style={{ width: 28, height: 28, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.68rem', fontWeight: 800, fontFamily: FONT, transition: 'all 0.15s',
                     background: isCur ? C.light : isOK ? 'rgba(16,185,129,0.22)' : isBAD ? 'rgba(239,68,68,0.22)' : isAns ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.04)',
                     color: isCur ? '#fff' : isOK ? '#34d399' : isBAD ? '#f87171' : isAns ? '#94a3b8' : '#334155',
                     border: isCur ? `1.5px solid ${C.light}` : '1.5px solid transparent',
                     boxShadow: isCur ? `0 0 10px ${C.shadow}` : 'none',
-                  }}>{i + 1}</button>
+                  }}>{i + 1}</div>
               );
             })}
           </div>
@@ -320,10 +319,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
 
         {/* Fixed bottom navigation */}
         <div style={{ padding: '1rem 2rem 1.5rem', borderTop: '1px solid rgba(255,255,255,0.05)', background: 'rgba(10,10,20,0.95)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }}>
-          <button onClick={handlePrev} disabled={current === 0}
-            style={{ padding: '0.7rem 1.5rem', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', color: current === 0 ? '#1e293b' : '#64748b', borderRadius: 14, cursor: current === 0 ? 'not-allowed' : 'pointer', fontWeight: 700, fontSize: '0.85rem', fontFamily: FONT }}>
-            ← Previous
-          </button>
+          <div style={{ width: '100px' }} /> {/* Spacer to keep flex-between balanced */}
 
           <span style={{ fontSize: '0.78rem', color: '#334155', fontWeight: 600 }}>{current + 1} / {total}</span>
 
