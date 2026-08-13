@@ -23,6 +23,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
   const [result, setResult] = useState(null);
   const [error, setError] = useState('');
   const [animate, setAnimate] = useState(true);
+  const [timeLeft, setTimeLeft] = useState(15);
 
   const gradeNum = GRADE_NUM[user?.classLevel] || GRADE_NUM[user?.grade];
   const subjectKey = SUBJECT_KEY[subject] || 'english';
@@ -45,6 +46,28 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
       })
       .catch(e => { setError(e.message); setPhase('blocked'); });
   }, [gradeNum, user.email, subjectKey]);
+
+  useEffect(() => {
+    if (phase !== 'quiz') return;
+    if (revealed[current]) return; // pause timer if answer revealed
+
+    if (timeLeft <= 0) {
+      if (!revealed[current]) {
+        setRevealed(prev => ({ ...prev, [current]: true }));
+      }
+      return;
+    }
+
+    const timerId = setInterval(() => {
+      setTimeLeft(t => t - 1);
+    }, 1000);
+
+    return () => clearInterval(timerId);
+  }, [phase, revealed, current, timeLeft]);
+
+  useEffect(() => {
+    setTimeLeft(15);
+  }, [current]);
 
   // User freely selects/changes answer — no locking yet
   const handleSelect = (letter) => {
@@ -229,6 +252,9 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
               <h2 style={{ color: '#f1f5f9', fontSize: '1rem', fontWeight: 800, margin: 0 }}>{quiz.quiz_name}</h2>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+              <div style={{ fontSize: '0.75rem', color: timeLeft <= 5 && !revealed[current] ? '#ef4444' : '#475569', fontWeight: 700, background: 'rgba(255,255,255,0.04)', padding: '0.35rem 0.8rem', borderRadius: 99, border: '1px solid rgba(255,255,255,0.06)', display: 'flex', gap: '0.4rem', alignItems: 'center', transition: 'color 0.3s' }}>
+                <span style={{ fontSize: '0.85rem' }}>⏳</span> {timeLeft}s
+              </div>
               <div style={{ fontSize: '0.75rem', color: '#475569', fontWeight: 600, background: 'rgba(255,255,255,0.04)', padding: '0.35rem 0.8rem', borderRadius: 99, border: '1px solid rgba(255,255,255,0.06)' }}>{answered}/{total} done</div>
               <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.07)', color: '#475569', borderRadius: 10, padding: '0.4rem 0.8rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}>✕</button>
             </div>
