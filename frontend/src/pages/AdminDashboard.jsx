@@ -19,7 +19,7 @@ const SECTIONS = [
   { id: 'coupons', label: 'School Coupons' },
   { id: 'olympiad', label: 'Olympiad Schools' },
   { id: 'thinkquest_individual', label: 'Independent Registered' },
-  { id: 'quiz_results', label: '📊 Quiz Results' },
+  { id: 'quiz_results', label: 'Quiz Results' },
 ];
 
 const PLAN_COLORS = { free: '#64748b', pro: '#3b82f6', max: '#f97316' };
