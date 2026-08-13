@@ -65,9 +65,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
     return () => clearInterval(timerId);
   }, [phase, revealed, current, timeLeft]);
 
-  useEffect(() => {
-    setTimeLeft(15);
-  }, [current]);
+
 
   // User freely selects/changes answer — no locking yet
   const handleSelect = (letter) => {
@@ -84,13 +82,13 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
     } else {
       // Move to next question
       setAnimate(false);
-      setTimeout(() => { setCurrent(c => c + 1); setAnimate(true); }, 180);
+      setTimeout(() => { setTimeLeft(15); setCurrent(c => c + 1); setAnimate(true); }, 180);
     }
   };
 
   const handlePrev = () => {
     setAnimate(false);
-    setTimeout(() => { setCurrent(c => c - 1); setAnimate(true); }, 180);
+    setTimeout(() => { setTimeLeft(15); setCurrent(c => c - 1); setAnimate(true); }, 180);
   };
 
   const handleSubmit = async () => {
@@ -280,7 +278,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
               const isBAD = isAns && revealed[i] && answers[i] !== quiz.questions[i].correct;
               return (
                 <button key={i}
-                  onClick={() => { setAnimate(false); setTimeout(() => { setCurrent(i); setAnimate(true); }, 150); }}
+                  onClick={() => { setAnimate(false); setTimeout(() => { setTimeLeft(15); setCurrent(i); setAnimate(true); }, 150); }}
                   style={{ width: 28, height: 28, borderRadius: 8, cursor: 'pointer', fontSize: '0.68rem', fontWeight: 800, fontFamily: FONT, transition: 'all 0.15s',
                     background: isCur ? C.light : isOK ? 'rgba(16,185,129,0.22)' : isBAD ? 'rgba(239,68,68,0.22)' : isAns ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.04)',
                     color: isCur ? '#fff' : isOK ? '#34d399' : isBAD ? '#f87171' : isAns ? '#94a3b8' : '#334155',
