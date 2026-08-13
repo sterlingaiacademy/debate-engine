@@ -2193,6 +2193,13 @@ app.get('/api/admin/stats', requireAdmin, async (req, res) => {
       quizTotal = parseInt(qRes.rows[0].total);
     } catch (e) { /* table might not exist */ }
 
+    // === INDUS MUN ===
+    let indusMunTotal = 0;
+    try {
+      const imRes = await db.query(`SELECT COUNT(*) AS total FROM indus_mun_registrations`);
+      indusMunTotal = parseInt(imRes.rows[0].total);
+    } catch (e) { /* table might not exist */ }
+
     res.json({
       users: {
         total: totalUsers,
@@ -2226,6 +2233,7 @@ app.get('/api/admin/stats', requireAdmin, async (req, res) => {
       gforceTokensIssued: Math.round(parseFloat(tokenRes.rows[0]?.total || 0)),
       quizRegistrations: quizTotal,
       futureQuestRegistrations: futureQuestTotal,
+      indusMunRegistrations: indusMunTotal,
       recentUsers: recentUsersRes.rows,
       recentSubscriptions: recentSubsRes.rows,
       recentDebates: topDebatesRes.rows,

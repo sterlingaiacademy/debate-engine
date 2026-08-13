@@ -164,6 +164,7 @@ function OverviewSection({ stats }) {
         <StatCard label="Bootcamp Registrations" value={fmt(b.paid)} sub={`${b.total} total · ₹${fmt(b.revenue)} revenue`} color="#ec4899" />
         <StatCard label="G-Force Tokens Issued" value={fmt(stats.gforceTokensIssued)} sub="Total across all users" color="#f59e0b" />
         {stats.quizRegistrations !== undefined && <StatCard label="UN Quiz Registrants" value={fmt(stats.quizRegistrations)} sub="Total contest registrations" color="#3b82f6" />}
+        {stats.indusMunRegistrations !== undefined && <StatCard label="Indus MUN Registrants" value={fmt(stats.indusMunRegistrations)} sub="Total MUN registrations" color="#F97316" />}
 
       </div>
 
@@ -1114,6 +1115,10 @@ function IndusMunSection({ adminToken, apiBase }) {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
         <SectionTitle>Indus MUN Registrations</SectionTitle>
         <span style={{ color: '#64748b', fontSize: '0.82rem', fontWeight: 700 }}>{regs.length} TOTAL REGISTRATIONS</span>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+        <StatCard label="Total Registrations" value={regs.length} color="#F97316" />
       </div>
 
       <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
