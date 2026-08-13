@@ -1366,7 +1366,7 @@ function ThinkQuestIndividualSection({ adminToken, apiBase }) {
       <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-            <TableHead cols={['Name', 'Email', 'Role / Grade', 'City', 'Phone/Org', 'Joined', 'Actions']} />
+            <TableHead cols={['Name', 'Email', 'Grade', 'City', 'Phone', 'Subjects', 'Joined', 'Actions']} />
             <tbody>
               {data.map((r, i) => (
                 <TableRow key={r.id || i} idx={i}>
@@ -1374,7 +1374,8 @@ function ThinkQuestIndividualSection({ adminToken, apiBase }) {
                   <TD>{r.email}</TD>
                   <TD>{r.classLevel || '—'}</TD>
                   <TD>{r.city || '—'}</TD>
-                  <TD>{r.parent_phone || r.parent_name || '—'}</TD>
+                  <TD>{r.parent_phone || '—'}</TD>
+                  <TD>{r.subjects || '—'}</TD>
                   <TD>{r.createdAt || r.created_at ? new Date(r.createdAt || r.created_at).toLocaleDateString() : '—'}</TD>
                   <TD>
                     <button 
