@@ -25,7 +25,10 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
   const [animate, setAnimate] = useState(true);
   const [timeLeft, setTimeLeft] = useState(15);
 
-  const gradeNum = GRADE_NUM[user?.classLevel] || GRADE_NUM[user?.grade];
+  let gradeNum = GRADE_NUM[user?.classLevel] || GRADE_NUM[user?.grade];
+  if (!gradeNum && (user?.classLevel === 'Professional' || user?.grade === 'Professional')) {
+    gradeNum = 12; // Default to highest grade quiz for professionals
+  }
   const subjectKey = SUBJECT_KEY[subject] || 'english';
   const C = SUBJECT_COLORS[subject] || SUBJECT_COLORS.English;
 
