@@ -250,8 +250,21 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
               <h2 style={{ color: '#f1f5f9', fontSize: '1rem', fontWeight: 800, margin: 0 }}>{quiz.quiz_name}</h2>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-              <div style={{ fontSize: '0.75rem', color: timeLeft <= 5 && !revealed[current] ? '#ef4444' : '#475569', fontWeight: 700, background: 'rgba(255,255,255,0.04)', padding: '0.35rem 0.8rem', borderRadius: 99, border: '1px solid rgba(255,255,255,0.06)', display: 'flex', gap: '0.4rem', alignItems: 'center', transition: 'color 0.3s' }}>
-                <span style={{ fontSize: '0.85rem' }}>⏳</span> {timeLeft}s
+              <div style={{ 
+                fontSize: '1.05rem', 
+                color: timeLeft <= 5 && !revealed[current] ? '#ef4444' : '#06b6d4', 
+                fontWeight: 900, 
+                background: timeLeft <= 5 && !revealed[current] ? 'rgba(239,68,68,0.1)' : 'rgba(6,182,212,0.1)', 
+                padding: '0.45rem 1rem', 
+                borderRadius: 99, 
+                border: `1.5px solid ${timeLeft <= 5 && !revealed[current] ? '#ef4444' : '#06b6d4'}`, 
+                display: 'flex', 
+                gap: '0.5rem', 
+                alignItems: 'center', 
+                transition: 'all 0.3s',
+                boxShadow: timeLeft <= 5 && !revealed[current] ? '0 0 12px rgba(239,68,68,0.4)' : '0 0 10px rgba(6,182,212,0.2)'
+              }}>
+                <span style={{ fontSize: '1.1rem' }}>⏳</span> {timeLeft}s
               </div>
               <div style={{ fontSize: '0.75rem', color: '#475569', fontWeight: 600, background: 'rgba(255,255,255,0.04)', padding: '0.35rem 0.8rem', borderRadius: 99, border: '1px solid rgba(255,255,255,0.06)' }}>{answered}/{total} done</div>
               <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.07)', color: '#475569', borderRadius: 10, padding: '0.4rem 0.8rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}>✕</button>
