@@ -230,7 +230,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
     return 'Next Question →';
   };
 
-  const nextEnabled = !!selectedLetter; // must have selected something
+  const nextEnabled = !!selectedLetter || isRevealed; // must have selected something or time ran out
   const nextGlowing = isRevealed || (selectedLetter && !isRevealed); // glow when answer selected or revealed
 
   return (
