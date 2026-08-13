@@ -17,6 +17,8 @@ export default function OlympiadDashboard({ user }) {
   const [activeQuiz, setActiveQuiz] = useState(null);
   const [hoveredCard, setHoveredCard] = useState(null);
 
+  const userSubjectsArray = user?.subjects ? user.subjects.split(',').map(s => s.trim()) : [];
+  
   return (
     <div style={{ minHeight: '100vh', background: 'radial-gradient(ellipse at top left, #1a0a2e 0%, #0d0d1a 40%, #0a0a0f 100%)', color: '#f8fafc', fontFamily: FONT, position: 'relative', overflow: 'hidden' }}>
       {/* Background blobs */}
@@ -63,7 +65,7 @@ export default function OlympiadDashboard({ user }) {
                 </div>
               )}
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.45rem 1rem', background: 'rgba(255,255,255,0.05)', borderRadius: 99, border: '1px solid rgba(255,255,255,0.08)', fontSize: '0.82rem', fontWeight: 600, color: '#94a3b8' }}>
-                📝 5 Subjects · 1 Attempt Each
+                📝 {userSubjectsArray.length > 0 ? `${userSubjectsArray.length} Subjects` : '5 Subjects'} · 1 Attempt Each
               </div>
             </div>
           </div>
@@ -78,12 +80,13 @@ export default function OlympiadDashboard({ user }) {
         {/* Subject Cards Grid */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.25rem', marginBottom: '3rem' }}>
           {SUBJECTS.map((s, idx) => {
-            const isHov = hoveredCard === s.key;
+            const isSelected = userSubjectsArray.length === 0 || userSubjectsArray.includes(s.key);
+            const isHov = hoveredCard === s.key && isSelected;
             return (
               <div
                 key={s.key}
-                onClick={() => setActiveQuiz(s.key)}
-                onMouseEnter={() => setHoveredCard(s.key)}
+                onClick={() => { if (isSelected) setActiveQuiz(s.key); }}
+                onMouseEnter={() => { if (isSelected) setHoveredCard(s.key); }}
                 onMouseLeave={() => setHoveredCard(null)}
                 style={{
                   background: isHov
@@ -92,13 +95,14 @@ export default function OlympiadDashboard({ user }) {
                   border: `1px solid ${isHov ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.06)'}`,
                   borderRadius: 24,
                   padding: '1.75rem',
-                  cursor: 'pointer',
+                  cursor: isSelected ? 'pointer' : 'not-allowed',
                   position: 'relative',
                   overflow: 'hidden',
                   backdropFilter: 'blur(20px)',
                   transition: 'all 0.25s cubic-bezier(0.4,0,0.2,1)',
                   transform: isHov ? 'translateY(-4px)' : 'translateY(0)',
                   boxShadow: isHov ? `0 20px 60px ${s.shadow}, 0 0 0 1px rgba(255,255,255,0.08)` : '0 4px 24px rgba(0,0,0,0.2)',
+                  opacity: isSelected ? 1 : 0.5
                 }}
               >
                 {/* Top color bar */}
@@ -111,10 +115,16 @@ export default function OlympiadDashboard({ user }) {
                     <div style={{ width: 52, height: 52, borderRadius: 16, background: isHov ? s.grad : 'rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', transition: 'all 0.25s', boxShadow: isHov ? `0 8px 24px ${s.shadow}` : 'none' }}>
                       {s.emoji}
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', padding: '0.28rem 0.75rem', background: 'rgba(16,185,129,0.12)', borderRadius: 99, border: '1px solid rgba(16,185,129,0.2)' }}>
-                      <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#10b981', display: 'inline-block' }} />
-                      <span style={{ fontSize: '0.65rem', fontWeight: 800, color: '#34d399', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Available</span>
-                    </div>
+                    {isSelected ? (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', padding: '0.28rem 0.75rem', background: 'rgba(16,185,129,0.12)', borderRadius: 99, border: '1px solid rgba(16,185,129,0.2)' }}>
+                        <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#10b981', display: 'inline-block' }} />
+                        <span style={{ fontSize: '0.7rem', fontWeight: 700, color: '#6ee7b7', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Ready</span>
+                      </div>
+                    ) : (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', padding: '0.28rem 0.75rem', background: 'rgba(255,255,255,0.05)', borderRadius: 99, border: '1px solid rgba(255,255,255,0.1)' }}>
+                        <span style={{ fontSize: '0.7rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Locked</span>
+                      </div>
+                    )}
                   </div>
                   <div style={{ marginBottom: '1rem' }}>
                     <h3 style={{ fontSize: '1.15rem', fontWeight: 800, margin: '0 0 0.4rem', color: '#f1f5f9', letterSpacing: '-0.01em' }}>{s.label}</h3>

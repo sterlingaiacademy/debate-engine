@@ -418,7 +418,7 @@ app.post('/api/login', async (req, res) => {
 
   try {
     const { rows } = await db.query(
-      'SELECT u.*, s.name as olympiad_school_name FROM users u LEFT JOIN schools s ON u.school_id = s.id WHERE LOWER(u."studentId") = LOWER($1) OR LOWER(u."email") = LOWER($1)', 
+      'SELECT u.*, s.name as olympiad_school_name, u.subjects FROM users u LEFT JOIN schools s ON u.school_id = s.id WHERE LOWER(u."studentId") = LOWER($1) OR LOWER(u."email") = LOWER($1)', 
       [studentId]
     );
     if (rows.length === 0) {
@@ -448,6 +448,7 @@ app.post('/api/login', async (req, res) => {
         subscription_status: user.subscription_status || 'inactive',
         olympiad_registered: user.olympiad_registered || false,
         olympiad_school_name: user.olympiad_school_name || null,
+        subjects: user.subjects || null,
         avatar: user.avatar || `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(user.name || 'User')}`
       },
       token
@@ -515,7 +516,7 @@ app.get('/api/me/:studentId', async (req, res) => {
   try {
     const { studentId } = req.params;
     const { rows } = await db.query(
-      `SELECT u.name, u."studentId", u."classLevel", u.grade, u."assignedAgentId", u.email, u.avatar, u.phone, u.subscription_plan, u.subscription_period, u.subscription_status, u.olympiad_registered, s.name as olympiad_school_name FROM users u LEFT JOIN schools s ON u.school_id = s.id WHERE u."studentId" = $1`,
+      `SELECT u.name, u."studentId", u."classLevel", u.grade, u."assignedAgentId", u.email, u.avatar, u.phone, u.subscription_plan, u.subscription_period, u.subscription_status, u.olympiad_registered, u.subjects, s.name as olympiad_school_name FROM users u LEFT JOIN schools s ON u.school_id = s.id WHERE u."studentId" = $1`,
       [studentId]
     );
     if (rows.length === 0) {
