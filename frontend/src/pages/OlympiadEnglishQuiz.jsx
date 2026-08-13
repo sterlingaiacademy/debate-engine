@@ -97,8 +97,9 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
       setRevealed(prev => ({ ...prev, [current]: true }));
       return;
     }
-    const unanswered = quiz.questions.filter((_, i) => answers[i] === undefined).length;
-    if (unanswered > 0 && !window.confirm(`${unanswered} question(s) unanswered. Submit anyway?`)) return;
+    if (answers[current] === undefined && !revealed[current]) {
+      if (!window.confirm("You haven't answered the current question. Submit quiz anyway?")) return;
+    }
     setSubmitting(true);
     try {
       const res = await fetch(`${API_BASE}/api/olympiad/quiz/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: user.email, subject: subjectKey, grade: gradeNum, answers, correctAnswers }) });
@@ -165,7 +166,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
             {breakdown.length > 0 && (
               <div style={{ marginBottom: '1.5rem' }}>
                 <div style={{ fontSize: '0.72rem', fontWeight: 800, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.75rem' }}>Answer Review</div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', maxHeight: 300, overflowY: 'auto' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', maxHeight: 300, overflowY: 'auto', paddingRight: '0.5rem', paddingBottom: '0.5rem' }}>
                   {breakdown.map((b, i) => (
                     <div key={i} style={{ display: 'flex', gap: '0.75rem', padding: '0.75rem 1rem', background: b.isCorrect ? 'rgba(16,185,129,0.06)' : 'rgba(239,68,68,0.06)', border: `1px solid ${b.isCorrect ? 'rgba(16,185,129,0.15)' : 'rgba(239,68,68,0.15)'}`, borderRadius: 12 }}>
                       <div style={{ width: 24, height: 24, borderRadius: '50%', background: b.isCorrect ? 'rgba(16,185,129,0.2)' : 'rgba(239,68,68,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: '0.7rem', fontWeight: 900, color: b.isCorrect ? '#10b981' : '#ef4444', marginTop: 2 }}>{b.isCorrect ? '✓' : '✗'}</div>
@@ -288,7 +289,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
               const isCur = i === current;
               const isAns = answers[i] !== undefined;
               const isOK = isAns && revealed[i] && answers[i] === quiz.questions[i].correct;
-              const isBAD = isAns && revealed[i] && answers[i] !== quiz.questions[i].correct;
+              const isBAD = revealed[i] && answers[i] !== quiz.questions[i].correct;
               return (
                 <div key={i}
                   style={{ width: 28, height: 28, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.68rem', fontWeight: 800, fontFamily: FONT, transition: 'all 0.15s',
