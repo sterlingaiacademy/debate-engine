@@ -1029,7 +1029,7 @@ export default function Dashboard({ user, setUser }) {
               </div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#ef4444' }}>
-              Register Now <ChevronRight size={14} />
+              Start Now <ChevronRight size={14} />
             </div>
           </div>
         </div>
