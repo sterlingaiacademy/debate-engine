@@ -944,7 +944,7 @@ export default function Dashboard({ user, setUser }) {
 
             {/* ── Event Tiles ── */}
       <div style={{ marginTop: '2rem' }}>
-        <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1rem' }}>Upcoming Events</h2>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1rem' }}>Upcoming Courses/Programmes</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem', marginBottom: '2rem' }}>
           
           {/* G-Talk Cohort 2 */}
