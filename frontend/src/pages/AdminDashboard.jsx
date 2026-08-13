@@ -1400,6 +1400,7 @@ function QuizResultsSection({ adminToken, apiBase }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [expanded, setExpanded] = useState({});
 
   useEffect(() => {
     fetch(`${apiBase}/api/admin/olympiad/quiz-results`, {
@@ -1418,32 +1419,68 @@ function QuizResultsSection({ adminToken, apiBase }) {
   if (error) return <div style={{ color: '#ef4444' }}>Error: {error}</div>;
   if (!data || data.length === 0) return <div style={{ color: '#94a3b8' }}>No quiz results yet.</div>;
 
+  const groupedData = Object.values(data.reduce((acc, row) => {
+    if (!acc[row.user_email]) acc[row.user_email] = { student_name: row.student_name, user_email: row.user_email, grade: row.grade, results: [] };
+    acc[row.user_email].results.push(row);
+    return acc;
+  }, {}));
+
   return (
     <div>
-      <SectionTitle>ThinkQuest Quiz Results ({data.length})</SectionTitle>
+      <SectionTitle>ThinkQuest Quiz Results ({data.length} total attempts)</SectionTitle>
       <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-            <TableHead cols={['Student Name', 'Email', 'Quiz Name', 'Grade', 'Score', 'Percentage', 'Date & Time']} />
-            <tbody>
-              {data.map((r, i) => (
-                <TableRow key={r.id || i} idx={i}>
-                  <TD><span style={{ fontWeight: 600, color: '#e2e8f0' }}>{r.student_name || '—'}</span></TD>
-                  <TD>{r.user_email}</TD>
-                  <TD><span style={{ color: '#ef4444', fontWeight: 600 }}>{r.quiz_name}</span></TD>
-                  <TD>{r.grade}</TD>
-                  <TD><span style={{ color: '#10b981', fontWeight: 700 }}>{r.score}/{r.total}</span></TD>
-                  <TD>
-                    <span style={{ fontWeight: 700, color: parseFloat(r.percentage) >= 80 ? '#10b981' : parseFloat(r.percentage) >= 50 ? '#f59e0b' : '#ef4444' }}>
-                      {r.percentage}%
-                    </span>
-                  </TD>
-                  <TD>
-                    <div style={{ fontSize: '0.78rem' }}>{new Date(r.attempted_at).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })}</div>
-                  </TD>
-                </TableRow>
+            <TableHead cols={['Student Name', 'Email', 'Grade', 'Total Attempts']} />
+              {groupedData.map((student, i) => (
+                <tbody key={student.user_email}>
+                  <tr 
+                    onClick={() => setExpanded(prev => ({ ...prev, [student.user_email]: !prev[student.user_email] }))}
+                    style={{ cursor: 'pointer', background: i % 2 === 0 ? 'rgba(255,255,255,0.02)' : 'transparent', borderBottom: '1px solid rgba(255,255,255,0.05)', transition: 'background 0.2s' }}
+                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.06)'}
+                    onMouseLeave={e => e.currentTarget.style.background = i % 2 === 0 ? 'rgba(255,255,255,0.02)' : 'transparent'}
+                  >
+                    <TD><span style={{ fontWeight: 600, color: '#e2e8f0' }}>{student.student_name || '—'}</span></TD>
+                    <TD>{student.user_email}</TD>
+                    <TD>{student.grade}</TD>
+                    <TD><span style={{ fontWeight: 700, color: '#38bdf8' }}>{student.results.length} Attempt(s)</span></TD>
+                  </tr>
+                  {expanded[student.user_email] && (
+                    <tr>
+                      <td colSpan={4} style={{ padding: 0, background: 'rgba(0,0,0,0.2)' }}>
+                        <div style={{ padding: '1rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                            <thead>
+                              <tr>
+                                <th style={{ textAlign: 'left', padding: '0.75rem', fontSize: '0.75rem', color: '#94a3b8' }}>Quiz Name</th>
+                                <th style={{ textAlign: 'left', padding: '0.75rem', fontSize: '0.75rem', color: '#94a3b8' }}>Score</th>
+                                <th style={{ textAlign: 'left', padding: '0.75rem', fontSize: '0.75rem', color: '#94a3b8' }}>Percentage</th>
+                                <th style={{ textAlign: 'left', padding: '0.75rem', fontSize: '0.75rem', color: '#94a3b8' }}>Date & Time</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {student.results.map((r, rIdx) => (
+                                <tr key={r.id || rIdx} style={{ borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
+                                  <td style={{ padding: '0.75rem', color: '#ef4444', fontWeight: 600, fontSize: '0.85rem' }}>{r.quiz_name}</td>
+                                  <td style={{ padding: '0.75rem', color: '#10b981', fontWeight: 700, fontSize: '0.85rem' }}>{r.score}/{r.total}</td>
+                                  <td style={{ padding: '0.75rem', fontSize: '0.85rem' }}>
+                                    <span style={{ fontWeight: 700, color: parseFloat(r.percentage) >= 80 ? '#10b981' : parseFloat(r.percentage) >= 50 ? '#f59e0b' : '#ef4444' }}>
+                                      {r.percentage}%
+                                    </span>
+                                  </td>
+                                  <td style={{ padding: '0.75rem', fontSize: '0.78rem', color: '#cbd5e1' }}>
+                                    {new Date(r.attempted_at).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
               ))}
-            </tbody>
           </table>
         </div>
       </div>
