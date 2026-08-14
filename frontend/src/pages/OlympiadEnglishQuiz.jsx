@@ -103,7 +103,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
   const gradientTextStyle = { background: C.grad, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' };
 
   if (phase === 'loading') return (
-    <div className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm flex items-start justify-center p-4">
       <div className="text-center bg-bg-base dark:bg-dark-base p-8 rounded-3xl shadow-neo dark:shadow-neo-dark">
         <div style={{ width: 52, height: 52, borderRadius: '50%', border: `3px solid ${C.light}`, borderTopColor: 'transparent', animation: 'spin 0.8s linear infinite', margin: '0 auto 1.25rem' }} />
         <p className="text-text-main dark:text-gray-200 font-bold">Loading {subject} Quiz...</p>
@@ -112,7 +112,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
   );
 
   if (phase === 'blocked') return (
-    <div className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm flex items-start justify-center p-4">
       <div className="bg-bg-base dark:bg-dark-base rounded-[28px] p-10 text-center max-w-[420px] w-full shadow-neo dark:shadow-neo-dark">
         <div className="text-5xl mb-4">⚠️</div>
         <h2 className="text-text-main dark:text-white font-bold text-2xl mb-2">Cannot Load Quiz</h2>
@@ -130,7 +130,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
     const breakdown = result?.breakdown || [];
 
     return (
-      <div className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm flex items-center justify-center p-margin-mobile md:p-margin-desktop overflow-y-auto text-text-main dark:text-white">
+      <div className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm flex items-start justify-center p-margin-mobile md:p-margin-desktop overflow-y-auto text-text-main dark:text-white">
         <div className="bg-bg-base dark:bg-dark-base rounded-[28px] w-full max-w-[900px] relative overflow-hidden flex flex-col my-auto shadow-neo dark:shadow-neo-dark">
           {/* Top Color Bar */}
           <div className="h-[3px] w-full absolute top-0 left-0" style={gradientStyle}></div>
@@ -239,7 +239,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
   const nextEnabled = !!selectedLetter || isRevealed;
 
   return (
-    <div className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm flex items-center justify-center p-margin-mobile md:p-margin-desktop overflow-y-auto text-text-main dark:text-white">
+    <div className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm flex items-start justify-center p-margin-mobile md:p-margin-desktop overflow-y-auto text-text-main dark:text-white">
       <div className="bg-bg-base dark:bg-dark-base rounded-[28px] w-full max-w-[680px] relative overflow-hidden flex flex-col my-auto shadow-neo dark:shadow-neo-dark min-h-[500px]">
         {/* Top Color Bar */}
         <div className="h-[3px] w-full absolute top-0 left-0" style={gradientStyle}></div>

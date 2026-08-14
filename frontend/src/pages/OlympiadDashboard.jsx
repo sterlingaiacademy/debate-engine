@@ -13,9 +13,7 @@ const SUBJECTS = [
 export default function OlympiadDashboard({ user }) {
   const navigate = useNavigate();
   const [activeQuiz, setActiveQuiz] = useState(null);
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    return localStorage.theme === 'dark';
-  });
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
     if (isDarkMode) {
