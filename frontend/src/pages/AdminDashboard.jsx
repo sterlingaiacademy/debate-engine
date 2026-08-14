@@ -1406,6 +1406,7 @@ function QuizResultsSection({ adminToken, apiBase }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [expanded, setExpanded] = useState({});
+  const [selectedGrade, setSelectedGrade] = useState('All');
 
   useEffect(() => {
     fetch(`${apiBase}/api/admin/olympiad/quiz-results`, {
@@ -1450,17 +1451,44 @@ function QuizResultsSection({ adminToken, apiBase }) {
     return a.localeCompare(b);
   });
 
+  const visibleGrades = selectedGrade === 'All' ? grades : grades.filter(g => g === selectedGrade);
+
   return (
     <div>
       {/* Leaderboard Section */}
-      <SectionTitle>ThinkQuest Subject Leaders</SectionTitle>
-      {grades.length > 0 ? (
-        grades.map(grade => {
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+        <SectionTitle style={{ marginBottom: 0 }}>ThinkQuest Subject Leaders</SectionTitle>
+        <select 
+          value={selectedGrade} 
+          onChange={(e) => setSelectedGrade(e.target.value)}
+          style={{ 
+            background: 'rgba(255,255,255,0.05)', 
+            border: '1px solid rgba(255,255,255,0.1)', 
+            color: '#f8fafc', 
+            padding: '0.5rem 1rem', 
+            borderRadius: 8,
+            outline: 'none',
+            fontFamily: 'inherit',
+            fontSize: '0.9rem',
+            cursor: 'pointer'
+          }}
+        >
+          <option value="All" style={{ background: '#0f172a' }}>All Grades</option>
+          {grades.map(g => (
+            <option key={g} value={g} style={{ background: '#0f172a' }}>Grade {g}</option>
+          ))}
+        </select>
+      </div>
+
+      {visibleGrades.length > 0 ? (
+        visibleGrades.map(grade => {
           const gradeLeaderboard = leaderboardByGrade[grade];
           const subjects = Object.keys(gradeLeaderboard).sort();
           return (
             <div key={grade} style={{ marginBottom: '2.5rem' }}>
-              <h3 style={{ color: '#e2e8f0', fontSize: '1.2rem', margin: '0 0 1rem 0', paddingBottom: '0.5rem', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'inline-block' }}>Grade {grade}</h3>
+              {selectedGrade === 'All' && (
+                <h3 style={{ color: '#e2e8f0', fontSize: '1.2rem', margin: '0 0 1rem 0', paddingBottom: '0.5rem', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'inline-block' }}>Grade {grade}</h3>
+              )}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
                 {subjects.map(subject => {
                   const leader = gradeLeaderboard[subject];
