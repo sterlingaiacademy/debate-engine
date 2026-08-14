@@ -59,7 +59,7 @@ export default function OlympiadDashboard({ user }) {
         {/* Hero Banner */}
         <section className="rounded-[32px] p-8 md:p-12 mb-16 flex flex-col md:flex-row items-start md:items-center gap-8 bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal transition-all duration-300">
           <div className="w-20 h-20 rounded-3xl bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal flex items-center justify-center shrink-0 transition-all duration-300">
-            <span className="material-symbols-outlined text-primary text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>emoji_events</span>
+            <span className="material-symbols-outlined text-[#ffaa00] text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>emoji_events</span>
           </div>
           <div className="flex-1">
             <div className="text-primary font-bold text-sm tracking-wider uppercase mb-2">PRACTICE PORTAL</div>
@@ -86,7 +86,7 @@ export default function OlympiadDashboard({ user }) {
         {/* Practice Quizzes */}
         <section className="mb-32">
           <h2 className="text-2xl font-bold mb-10 flex items-center gap-3 text-text-main dark:text-white transition-colors duration-300">
-            <span className="material-symbols-outlined text-primary dark:text-[#9e70ff] bg-bg-base dark:bg-dark-base shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal p-2 rounded-xl transition-all duration-300">school</span>
+            <span className="material-symbols-outlined text-[#6d3bd7] dark:text-[#9e70ff] bg-bg-base dark:bg-dark-base shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal p-2 rounded-xl transition-all duration-300">school</span>
             Practice Quizzes
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
@@ -125,7 +125,6 @@ export default function OlympiadDashboard({ user }) {
                   <p className="text-text-muted dark:text-gray-400 text-sm mb-8 flex-grow transition-colors duration-300">{s.desc}</p>
                   <button onClick={() => setActiveQuiz(s.key)} className="w-full py-3.5 rounded-xl bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal hover:shadow-neo-btn-inset-portal dark:hover:shadow-neo-btn-inset-dark-portal transition-all duration-300 font-bold text-sm flex justify-center items-center gap-2 text-text-main dark:text-gray-200 group cursor-pointer border-none">
                     Start Practice Test 
-                    <span className="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform text-primary dark:text-[#9e70ff]">arrow_forward</span>
                   </button>
                 </div>
               );
