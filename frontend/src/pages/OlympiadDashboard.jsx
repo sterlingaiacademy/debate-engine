@@ -32,14 +32,7 @@ export default function OlympiadDashboard({ user }) {
   return (
     <div className={`font-body-md text-text-main dark:text-gray-100 bg-bg-base dark:bg-dark-base transition-colors duration-300 min-h-screen flex flex-col relative overflow-x-hidden ${isDarkMode ? 'dark' : ''}`}>
       {/* Navigation Shell (TopAppBar) */}
-      <nav className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-20 bg-bg-base/80 dark:bg-dark-base/80 backdrop-blur-md hidden md:flex shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal transition-all duration-300">
-        <div className="font-headline-md text-2xl font-bold text-text-main dark:text-white tracking-tight">ThinkQuest</div>
-        <div className="flex gap-8">
-          <a className="text-text-muted dark:text-gray-400 font-medium hover:text-primary dark:hover:text-primary transition-colors duration-300" href="#">Dashboard</a>
-          <a className="text-primary font-bold relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-1 after:bg-primary after:rounded-full" href="#">Practice</a>
-          <a className="text-text-muted dark:text-gray-400 font-medium hover:text-primary dark:hover:text-primary transition-colors duration-300" href="#">Rankings</a>
-          <a className="text-text-muted dark:text-gray-400 font-medium hover:text-primary dark:hover:text-primary transition-colors duration-300" href="#">Profile</a>
-        </div>
+      <nav className="fixed top-0 left-0 w-full z-50 flex justify-end items-center px-margin-desktop h-20 bg-bg-base/80 dark:bg-dark-base/80 backdrop-blur-md hidden md:flex shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal transition-all duration-300">
         <div className="flex items-center gap-4">
           <button onClick={toggleTheme} className="w-10 h-10 rounded-full bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal hover:shadow-neo-btn-inset-portal dark:hover:shadow-neo-btn-inset-dark-portal transition-all duration-300 flex items-center justify-center text-text-main dark:text-gray-200 cursor-pointer border-none">
             {isDarkMode ? (
