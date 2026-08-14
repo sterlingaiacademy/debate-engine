@@ -155,16 +155,20 @@
    ================================================================ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { color-scheme: light; font-size: 16px; }
+html { color-scheme: light; font-size: 16px; background-color: var(--color-bg-base); }
+html.dark { color-scheme: dark; background-color: var(--color-dark-base); }
 
 body {
   font-family: var(--font-sans);
-  background: var(--bg-secondary);
+  background-color: var(--color-bg-base);
   color: var(--text-primary);
   min-height: 100vh;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+html.dark body {
+  background-color: var(--color-dark-base);
 }
 
 #root { display: flex; flex-direction: column; min-height: 100vh; }
@@ -1292,12 +1296,8 @@ tbody tr:hover { background: var(--bg-tertiary); }
 /* ================================================================
    SCROLLBAR
    ================================================================ */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: var(--radius-full); }
-::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.15); }
-.dark ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); }
-.dark ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+::-webkit-scrollbar { display: none; }
+* { scrollbar-width: none; }
 
 /* ================================================================
    DIVIDER
