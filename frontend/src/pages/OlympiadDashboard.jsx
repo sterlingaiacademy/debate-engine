@@ -84,7 +84,7 @@ export default function OlympiadDashboard({ user }) {
               ThinkQuest <span className="text-tertiary dark:text-[#ffaa00]">Olympiad</span>
             </h1>
             <p className="text-text-muted dark:text-gray-400 text-lg mb-6 transition-colors duration-300">Welcome back, {user?.name?.split(' ')[0] || 'Student'}</p>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-6 md:gap-8 mt-2">
               <span className="w-max flex-shrink-0 inline-flex items-center gap-2 pl-4 pr-5 py-2 rounded-full bg-bg-base dark:bg-dark-base shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal text-secondary dark:text-[#00d896] text-sm font-semibold transition-all duration-300 whitespace-nowrap">
                 <span className="w-2.5 h-2.5 rounded-full bg-secondary dark:bg-[#00d896] animate-pulse flex-shrink-0"></span> Registered & Active
               </span>
