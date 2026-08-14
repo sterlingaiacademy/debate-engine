@@ -3,6 +3,8 @@ const fs = require('fs');
 const conn = new Client();
 const filesToDeploy = [
   'frontend/src/App.jsx',
+  'frontend/index.html',
+  'frontend/src/index.css',
   'frontend/src/components/ScrollToTop.jsx',
   'frontend/src/components/Layout.jsx',
   'frontend/src/pages/CoordinatorDashboard.jsx',

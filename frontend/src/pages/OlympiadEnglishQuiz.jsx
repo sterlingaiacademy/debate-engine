@@ -223,6 +223,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
     </div>
   );
 
+  }
   // ── QUIZ PHASE ──
   const q = quiz.questions[current];
   const total = quiz.questions.length;
@@ -425,4 +426,4 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
 
 };
 
-export default OlympiadEnglishQuiz;
+
