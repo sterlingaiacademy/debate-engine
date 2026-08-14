@@ -148,8 +148,8 @@ export default function OlympiadDashboard({ user }) {
                       <div className="w-14 h-14 rounded-2xl bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal flex items-center justify-center transition-all duration-300">
                         <span className={`material-symbols-outlined ${s.iconColorClass} text-2xl grayscale opacity-60`}>{s.icon}</span>
                       </div>
-                      <span className="px-3 py-1.5 rounded-lg bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal text-text-muted dark:text-gray-500 text-xs font-bold uppercase tracking-wide flex items-center gap-1 transition-all duration-300">
-                        <span className="material-symbols-outlined text-[14px] text-red-500 dark:text-red-400">lock</span> Locked
+                      <span className="px-4 py-1.5 rounded-full bg-bg-base dark:bg-dark-base shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal text-[#8a94a6] dark:text-gray-400 text-[13px] font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all duration-300">
+                        <span className="material-symbols-outlined text-[15px]">lock</span> LOCKED
                       </span>
                     </div>
                     <h3 className="text-2xl font-extrabold mb-3 text-text-muted dark:text-gray-500 transition-colors duration-300">{s.label}</h3>
@@ -167,7 +167,7 @@ export default function OlympiadDashboard({ user }) {
                     <div className="w-14 h-14 rounded-2xl bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal flex items-center justify-center transition-all duration-300">
                       <span className={`material-symbols-outlined ${s.iconColorClass} text-2xl`}>{s.icon}</span>
                     </div>
-                    <span className="px-3 py-1.5 rounded-lg bg-bg-base dark:bg-dark-base shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal text-secondary dark:text-[#00d896] text-xs font-bold uppercase tracking-wide transition-all duration-300">Ready</span>
+                    <span className="px-4 py-1.5 rounded-full bg-bg-base dark:bg-dark-base shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal text-[#00a572] dark:text-[#00d896] text-[13px] font-extrabold uppercase tracking-wider transition-all duration-300">READY</span>
                   </div>
                   <h3 className="text-2xl font-extrabold mb-3 text-text-main dark:text-white transition-colors duration-300">{s.label}</h3>
                   <p className="text-text-muted dark:text-gray-400 text-sm mb-8 flex-grow transition-colors duration-300">{s.desc}</p>
