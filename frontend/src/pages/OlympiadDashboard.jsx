@@ -88,7 +88,7 @@ export default function OlympiadDashboard({ user }) {
             <span className="material-symbols-outlined text-primary dark:text-[#9e70ff] bg-bg-base dark:bg-dark-base shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal p-2 rounded-xl transition-all duration-300">school</span>
             Practice Quizzes
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             {SUBJECTS.map((s) => {
               const isSelected = userSubjectsArray.length === 0 || userSubjectsArray.includes(s.key);
 
@@ -138,7 +138,7 @@ export default function OlympiadDashboard({ user }) {
             <span className="material-symbols-outlined text-tertiary dark:text-[#ffaa00] bg-bg-base dark:bg-dark-base shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal p-1.5 rounded-lg transition-all duration-300">hourglass_empty</span>
             Coming Soon
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { icon: 'event', label: 'Daily Practice', color: 'text-blue-500 dark:text-blue-400' },
               { icon: 'description', label: 'Mock Exam', color: 'text-pink-500 dark:text-pink-400' },
