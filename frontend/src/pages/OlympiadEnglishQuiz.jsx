@@ -105,7 +105,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
   if (phase === 'loading') return (
     <div className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm overflow-y-auto">
       <div className="min-h-full flex items-center justify-center p-4 py-12">
-        <div className="text-center bg-bg-base dark:bg-dark-base p-8 rounded-3xl shadow-neo dark:shadow-neo-dark">
+        <div className="text-center bg-bg-base dark:bg-dark-base p-8 rounded-3xl shadow-neo-portal dark:shadow-neo-dark-portal">
           <div style={{ width: 52, height: 52, borderRadius: '50%', border: `3px solid ${C.light}`, borderTopColor: 'transparent', animation: 'spin 0.8s linear infinite', margin: '0 auto 1.25rem' }} />
           <p className="text-text-main dark:text-gray-200 font-bold">Loading {subject} Quiz...</p>
         </div>
@@ -116,11 +116,11 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
   if (phase === 'blocked') return (
     <div className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm overflow-y-auto">
       <div className="min-h-full flex items-center justify-center p-4 py-12">
-        <div className="bg-bg-base dark:bg-dark-base rounded-[28px] p-10 text-center max-w-[420px] w-full shadow-neo dark:shadow-neo-dark">
+        <div className="bg-bg-base dark:bg-dark-base rounded-[28px] p-10 text-center max-w-[420px] w-full shadow-neo-portal dark:shadow-neo-dark-portal">
           <div className="text-5xl mb-4">⚠️</div>
           <h2 className="text-text-main dark:text-white font-bold text-2xl mb-2">Cannot Load Quiz</h2>
           <p className="text-text-muted dark:text-gray-400 mb-8">{error}</p>
-          <button onClick={onClose} style={gradientStyle} className="px-8 py-3 rounded-xl text-white font-bold shadow-neo dark:shadow-neo-dark hover:opacity-90 active:scale-95 transition-all">Close</button>
+          <button onClick={onClose} style={gradientStyle} className="px-8 py-3 rounded-xl text-white font-bold shadow-neo-portal dark:shadow-neo-dark-portal hover:opacity-90 active:scale-95 transition-all">Close</button>
         </div>
       </div>
     </div>
@@ -136,7 +136,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
     return (
       <div className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm overflow-y-auto text-text-main dark:text-white">
         <div className="min-h-full flex items-center justify-center p-4 py-12">
-          <div className="bg-bg-base dark:bg-dark-base rounded-[28px] w-full max-w-[900px] relative overflow-hidden flex flex-col shadow-neo dark:shadow-neo-dark">
+          <div className="bg-bg-base dark:bg-dark-base rounded-[28px] w-full max-w-[900px] relative overflow-hidden flex flex-col shadow-neo-portal dark:shadow-neo-dark-portal">
           {/* Top Color Bar */}
           <div className="h-[3px] w-full absolute top-0 left-0" style={gradientStyle}></div>
           
@@ -144,7 +144,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
             {/* Left Col: Review (only if breakdown exists) */}
             <div className="p-6 md:p-8 border-r border-gray-200 dark:border-white/5 flex flex-col h-full max-h-[70vh] md:max-h-[80vh] overflow-hidden">
               <div className="mb-6 flex-shrink-0 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-bg-base dark:bg-dark-base shadow-neo-sm dark:shadow-neo-sm-dark text-text-muted dark:text-gray-400 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-lg bg-bg-base dark:bg-dark-base shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal text-text-muted dark:text-gray-400 flex items-center justify-center">
                   <span className="material-symbols-outlined text-[20px]">manage_search</span>
                 </div>
                 <h2 className="text-2xl font-extrabold text-xl font-bold">Answer Review</h2>
@@ -155,7 +155,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
                   <p className="text-text-muted dark:text-gray-500">No review data available.</p>
                 ) : (
                   breakdown.map((b, i) => (
-                    <div key={i} className={`p-5 rounded-2xl bg-bg-base dark:bg-dark-base ${b.isCorrect ? 'shadow-neo-inset dark:shadow-neo-inset-dark border border-green-500/20' : 'shadow-neo dark:shadow-neo-dark border border-red-500/20'}`}>
+                    <div key={i} className={`p-5 rounded-2xl bg-bg-base dark:bg-dark-base ${b.isCorrect ? 'shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal border border-green-500/20' : 'shadow-neo-portal dark:shadow-neo-dark-portal border border-red-500/20'}`}>
                       <div className="flex items-start gap-4">
                         <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${b.isCorrect ? 'bg-green-500/20 text-green-600 dark:text-green-400' : 'bg-red-500/20 text-red-600 dark:text-red-400'}`}>
                           <span className="material-symbols-outlined text-[16px]">{b.isCorrect ? 'check' : 'close'}</span>
@@ -201,7 +201,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
                   </div>
                 </div>
 
-                <div className="bg-bg-base dark:bg-dark-base shadow-neo-inset dark:shadow-neo-inset-dark rounded-2xl p-4 inline-flex gap-8 mb-8">
+                <div className="bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal rounded-2xl p-4 inline-flex gap-8 mb-8">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-text-main dark:text-white">{score}</div>
                     <div className="text-text-muted dark:text-gray-400 text-xs">Correct</div>
@@ -213,7 +213,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
                   </div>
                 </div>
               </div>
-              <button onClick={onClose} className="w-full max-w-[280px] py-4 rounded-xl font-bold text-white shadow-neo dark:shadow-neo-dark hover:opacity-90 active:shadow-neo-btn-inset dark:active:shadow-neo-btn-inset-dark active:scale-[0.98] transition-all" style={gradientStyle}>
+              <button onClick={onClose} className="w-full max-w-[280px] py-4 rounded-xl font-bold text-white shadow-neo-portal dark:shadow-neo-dark-portal hover:opacity-90 active:shadow-neo-btn-inset dark:active:shadow-neo-btn-inset-dark active:scale-[0.98] transition-all" style={gradientStyle}>
                 Back to Dashboard
               </button>
             </div>
@@ -246,7 +246,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
   return (
     <div className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm overflow-y-auto text-text-main dark:text-white">
       <div className="min-h-full flex items-center justify-center p-4 py-12 md:p-8 md:py-16">
-        <div className="bg-bg-base dark:bg-dark-base rounded-[28px] w-full max-w-[680px] relative overflow-hidden flex flex-col shadow-neo dark:shadow-neo-dark min-h-[500px]">
+        <div className="bg-bg-base dark:bg-dark-base rounded-[28px] w-full max-w-[680px] relative overflow-hidden flex flex-col shadow-neo-portal dark:shadow-neo-dark-portal min-h-[500px]">
         {/* Top Color Bar */}
         <div className="h-[3px] w-full absolute top-0 left-0" style={gradientStyle}></div>
         
@@ -257,11 +257,11 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
             <h1 className="text-2xl font-extrabold text-headline-md font-bold" style={gradientTextStyle}>{quiz.quiz_name}</h1>
           </div>
           <div className="flex gap-4">
-            <div className="bg-bg-base dark:bg-dark-base shadow-neo-sm dark:shadow-neo-sm-dark rounded-full px-4 py-1.5 flex items-center gap-1.5 hidden sm:flex">
+            <div className="bg-bg-base dark:bg-dark-base shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal rounded-full px-4 py-1.5 flex items-center gap-1.5 hidden sm:flex">
               <span className="material-symbols-outlined text-[16px] text-text-muted dark:text-white/70">format_list_numbered</span>
               <span className="text-xs font-bold tracking-widest text-text-main dark:text-white/90 font-bold">{answered}/{total}</span>
             </div>
-            <div className={`bg-bg-base dark:bg-dark-base shadow-neo-sm dark:shadow-neo-sm-dark rounded-full px-4 py-1.5 flex items-center gap-1.5 ${timeLeft <= 5 && !isRevealed ? 'text-red-500 danger-pulse' : 'text-primary'}`}>
+            <div className={`bg-bg-base dark:bg-dark-base shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal rounded-full px-4 py-1.5 flex items-center gap-1.5 ${timeLeft <= 5 && !isRevealed ? 'text-red-500 danger-pulse' : 'text-primary'}`}>
               <span className="material-symbols-outlined text-[16px]">timer</span>
               <span className="text-xs font-bold tracking-widest font-bold">00:{timeLeft.toString().padStart(2, '0')}</span>
             </div>
@@ -270,7 +270,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
 
         {/* Progress Bar & Navigator */}
         <div className="px-6 md:px-8 py-6 border-b border-gray-200 dark:border-white/[0.03]">
-          <div className="h-[6px] bg-bg-base dark:bg-dark-base shadow-neo-inset dark:shadow-neo-inset-dark rounded-full w-full mb-8 overflow-hidden p-[1px]">
+          <div className="h-[6px] bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal rounded-full w-full mb-8 overflow-hidden p-[1px]">
             <div className="h-full rounded-full transition-all duration-300" style={{ width: `${((current+1)/total)*100}%`, ...gradientStyle, boxShadow: `0 0 8px ${C.light}` }}></div>
           </div>
           
@@ -284,34 +284,34 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
               
               if (isCur) {
                 return (
-                  <div key={i} className="w-[32px] h-[32px] rounded-full bg-bg-base dark:bg-dark-base shadow-neo-inset dark:shadow-neo-inset-dark flex items-center justify-center font-bold text-sm">
+                  <div key={i} className="w-[32px] h-[32px] rounded-full bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal flex items-center justify-center font-bold text-sm">
                     <span style={gradientTextStyle}>{i + 1}</span>
                   </div>
                 );
               }
               if (isOK) {
                 return (
-                  <div key={i} className="w-[32px] h-[32px] rounded-full bg-bg-base dark:bg-dark-base shadow-neo-sm dark:shadow-neo-sm-dark text-green-500 flex items-center justify-center">
+                  <div key={i} className="w-[32px] h-[32px] rounded-full bg-bg-base dark:bg-dark-base shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal text-green-500 flex items-center justify-center">
                     <span className="material-symbols-outlined text-[16px]">check</span>
                   </div>
                 );
               }
               if (isBAD) {
                 return (
-                  <div key={i} className="w-[32px] h-[32px] rounded-full bg-bg-base dark:bg-dark-base shadow-neo-sm dark:shadow-neo-sm-dark text-red-500 flex items-center justify-center">
+                  <div key={i} className="w-[32px] h-[32px] rounded-full bg-bg-base dark:bg-dark-base shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal text-red-500 flex items-center justify-center">
                     <span className="material-symbols-outlined text-[16px]">close</span>
                   </div>
                 );
               }
               if (isAns) {
                  return (
-                  <div key={i} className="w-[32px] h-[32px] rounded-full bg-bg-base dark:bg-dark-base shadow-neo-sm dark:shadow-neo-sm-dark text-text-main dark:text-white flex items-center justify-center text-xs font-medium">
+                  <div key={i} className="w-[32px] h-[32px] rounded-full bg-bg-base dark:bg-dark-base shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal text-text-main dark:text-white flex items-center justify-center text-xs font-medium">
                     {i + 1}
                   </div>
                 );
               }
               return (
-                <div key={i} className={`w-[32px] h-[32px] rounded-full bg-bg-base dark:bg-dark-base shadow-neo-sm dark:shadow-neo-sm-dark text-text-muted dark:text-white/40 items-center justify-center text-xs font-medium ${Math.abs(current - i) > 3 ? 'hidden sm:flex' : 'flex'}`}>
+                <div key={i} className={`w-[32px] h-[32px] rounded-full bg-bg-base dark:bg-dark-base shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal text-text-muted dark:text-white/40 items-center justify-center text-xs font-medium ${Math.abs(current - i) > 3 ? 'hidden sm:flex' : 'flex'}`}>
                   {i + 1}
                 </div>
               );
@@ -322,7 +322,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
         {/* Question Area */}
         <div className="p-6 md:p-8 flex-1 flex flex-col gap-8 transition-opacity duration-200" style={{ opacity: animate ? 1 : 0 }}>
           {/* Question Card */}
-          <div className="bg-bg-base dark:bg-dark-base shadow-neo-inset dark:shadow-neo-inset-dark rounded-[20px] p-6 relative overflow-hidden">
+          <div className="bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal rounded-[20px] p-6 relative overflow-hidden">
             <div className="absolute left-0 top-0 bottom-0 w-[4px] opacity-80" style={gradientStyle}></div>
             <p className="text-lg text-text-main dark:text-white/90 leading-relaxed pl-3 font-medium whitespace-pre-wrap">
               {q.question}
@@ -341,20 +341,20 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
               let textClass = "text-base font-medium ";
               
               if (isCorrectOpt) {
-                containerClass += "bg-bg-base dark:bg-dark-base shadow-neo-inset dark:shadow-neo-inset-dark border border-green-500/20";
-                letterClass += "bg-green-500/20 text-green-600 dark:text-green-400 shadow-neo-inset dark:shadow-neo-inset-dark";
+                containerClass += "bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal border border-green-500/20";
+                letterClass += "bg-green-500/20 text-green-600 dark:text-green-400 shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal";
                 textClass += "text-green-600 dark:text-green-400 font-bold";
               } else if (isWrongOpt) {
-                containerClass += "bg-bg-base dark:bg-dark-base shadow-neo-inset dark:shadow-neo-inset-dark border border-red-500/20";
-                letterClass += "bg-red-500/20 text-red-600 dark:text-red-400 shadow-neo-inset dark:shadow-neo-inset-dark";
+                containerClass += "bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal border border-red-500/20";
+                letterClass += "bg-red-500/20 text-red-600 dark:text-red-400 shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal";
                 textClass += "text-red-600 dark:text-red-400 font-bold";
               } else if (isSelected) {
-                containerClass += "bg-bg-base dark:bg-dark-base shadow-neo-inset dark:shadow-neo-inset-dark";
+                containerClass += "bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal";
                 letterClass += "text-white shadow-[0_4px_12px_rgba(200,206,221,0.5)] dark:shadow-[0_4px_12px_rgba(255,255,255,0.1)]"; // Custom style applied below
                 textClass += "text-text-main dark:text-white font-bold";
               } else {
-                containerClass += "bg-bg-base dark:bg-dark-base shadow-neo dark:shadow-neo-dark hover:shadow-neo-sm dark:hover:shadow-neo-sm-dark " + (isRevealed ? "opacity-50 cursor-default" : "");
-                letterClass += "bg-bg-base dark:bg-dark-base shadow-neo-sm dark:shadow-neo-sm-dark text-text-muted dark:text-white/60 group-hover:text-text-main dark:group-hover:text-white/80";
+                containerClass += "bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal hover:shadow-neo-sm-portal dark:hover:shadow-neo-sm-dark-portal " + (isRevealed ? "opacity-50 cursor-default" : "");
+                letterClass += "bg-bg-base dark:bg-dark-base shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal text-text-muted dark:text-white/60 group-hover:text-text-main dark:group-hover:text-white/80";
                 textClass += "text-text-muted dark:text-white/80";
               }
 
@@ -383,7 +383,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
             <button 
               onClick={handleSubmit} 
               disabled={submitting || !nextEnabled}
-              className={`px-8 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 ${nextEnabled && !submitting ? 'text-white shadow-neo dark:shadow-neo-dark hover:opacity-90 active:shadow-neo-btn-inset dark:active:shadow-neo-btn-inset-dark active:scale-[0.98]' : 'bg-gray-200 dark:bg-white/5 text-gray-400 dark:text-white/30 cursor-not-allowed'}`}
+              className={`px-8 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 ${nextEnabled && !submitting ? 'text-white shadow-neo-portal dark:shadow-neo-dark-portal hover:opacity-90 active:shadow-neo-btn-inset dark:active:shadow-neo-btn-inset-dark active:scale-[0.98]' : 'bg-gray-200 dark:bg-white/5 text-gray-400 dark:text-white/30 cursor-not-allowed'}`}
               style={nextEnabled && !submitting ? gradientStyle : {}}
             >
               {nextLabel()}
@@ -392,7 +392,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
             <button 
               onClick={handleNext} 
               disabled={!nextEnabled}
-              className={`px-8 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 ${nextEnabled ? 'text-white shadow-neo dark:shadow-neo-dark hover:opacity-90 active:shadow-neo-btn-inset dark:active:shadow-neo-btn-inset-dark active:scale-[0.98]' : 'bg-gray-200 dark:bg-white/5 text-gray-400 dark:text-white/30 cursor-not-allowed'}`}
+              className={`px-8 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 ${nextEnabled ? 'text-white shadow-neo-portal dark:shadow-neo-dark-portal hover:opacity-90 active:shadow-neo-btn-inset dark:active:shadow-neo-btn-inset-dark active:scale-[0.98]' : 'bg-gray-200 dark:bg-white/5 text-gray-400 dark:text-white/30 cursor-not-allowed'}`}
               style={nextEnabled ? gradientStyle : {}}
             >
               {nextLabel()}
