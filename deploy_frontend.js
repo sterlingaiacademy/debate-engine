@@ -32,6 +32,7 @@ conn.on('ready', () => {
       conn.exec('source ~/.nvm/nvm.sh && cd /home/graceandforce/debate-engine/frontend && npm run build && cp -r dist/* /var/www/grace-and-force/frontend/ && echo "Deploy completed successfully!"', (err, stream) => {
         if (err) throw err;
         stream.on('data', d => console.log(d.toString()))
+              .stderr.on('data', d => console.error('ERR:', d.toString()))
               .on('close', () => conn.end());
       });
       return;

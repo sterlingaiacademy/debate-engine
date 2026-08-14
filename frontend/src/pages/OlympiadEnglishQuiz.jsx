@@ -296,7 +296,6 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
                       <span style={gradientTextStyle}>{i + 1}</span>
                     </div>
                   );
-                  );
                 }
                 
                 elClass += "shadow-neo-btn-portal dark:shadow-neo-btn-dark-portal ";
