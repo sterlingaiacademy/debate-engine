@@ -155,18 +155,7 @@ export default function OlympiadDashboard({ user }) {
         </section>
       </main>
 
-      {/* Footer Shell */}
-      <footer className="w-full py-12 px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-6 bg-bg-base dark:bg-dark-base shadow-[0_-10px_20px_rgba(200,206,221,0.3)] dark:shadow-[0_-10px_20px_rgba(14,15,17,0.5)] transition-all duration-300 mt-auto z-10 relative">
-        <div className="font-headline-md text-xl font-bold text-text-main dark:text-white transition-colors duration-300">ThinkQuest</div>
-        <div className="text-text-muted dark:text-gray-400 font-body-md text-sm transition-colors duration-300 text-center">
-          © 2024 ThinkQuest Olympiad. Powered by Cosmic Intelligence.
-        </div>
-        <div className="flex gap-6">
-          <a className="text-text-muted dark:text-gray-400 hover:text-primary dark:hover:text-[#9e70ff] transition-colors font-medium text-sm" href="#">Support</a>
-          <a className="text-text-muted dark:text-gray-400 hover:text-primary dark:hover:text-[#9e70ff] transition-colors font-medium text-sm" href="#">Privacy Policy</a>
-          <a className="text-text-muted dark:text-gray-400 hover:text-primary dark:hover:text-[#9e70ff] transition-colors font-medium text-sm" href="#">Terms of Service</a>
-        </div>
-      </footer>
+
 
       {activeQuiz && <OlympiadEnglishQuiz user={user} subject={activeQuiz} onClose={() => setActiveQuiz(null)} />}
     </div>
