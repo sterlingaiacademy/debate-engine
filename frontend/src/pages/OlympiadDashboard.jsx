@@ -32,8 +32,8 @@ export default function OlympiadDashboard({ user }) {
   return (
     <div className={`font-body-md text-text-main dark:text-gray-100 bg-bg-base dark:bg-dark-base transition-colors duration-300 min-h-screen flex flex-col relative overflow-x-hidden ${isDarkMode ? 'dark' : ''}`}>
       {/* Navigation Shell (TopAppBar) */}
-      <nav className="fixed top-0 left-0 w-full z-50 flex justify-end items-center px-margin-desktop h-20 bg-bg-base/80 dark:bg-dark-base/80 backdrop-blur-md hidden md:flex shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal transition-all duration-300">
-        <div className="flex items-center gap-4">
+      <nav className="fixed top-0 right-0 z-50 flex justify-end items-center px-margin-desktop h-24 hidden md:flex transition-all duration-300 pointer-events-none">
+        <div className="flex items-center gap-4 pointer-events-auto">
           <button onClick={toggleTheme} className="w-10 h-10 rounded-full bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal hover:shadow-neo-btn-inset-portal dark:hover:shadow-neo-btn-inset-dark-portal transition-all duration-300 flex items-center justify-center text-text-main dark:text-gray-200 cursor-pointer border-none">
             {isDarkMode ? (
               <span className="material-symbols-outlined text-[20px]">light_mode</span>
@@ -48,7 +48,7 @@ export default function OlympiadDashboard({ user }) {
       </nav>
 
       {/* Main Container */}
-      <main className="max-w-[1100px] w-full mx-auto px-6 pb-24 relative z-10 flex-1" style={{ marginTop: '120px' }}>
+      <main className="max-w-[1100px] w-full mx-auto px-6 pb-48 relative z-10 flex-1" style={{ marginTop: '120px' }}>
         {/* Back Button Mobile */}
         <button onClick={() => navigate('/dashboard')} className="md:hidden inline-flex items-center gap-2 px-6 py-3 rounded-full bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal hover:shadow-neo-inset-portal dark:hover:shadow-neo-inset-dark-portal transition-shadow text-sm text-text-main dark:text-gray-200 font-semibold mb-8 group cursor-pointer border-none">
           <span className="material-symbols-outlined text-[18px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
@@ -83,9 +83,9 @@ export default function OlympiadDashboard({ user }) {
         </section>
 
         {/* Practice Quizzes */}
-        <section className="mb-20">
+        <section className="mb-32">
           <h2 className="text-2xl font-bold mb-10 flex items-center gap-3 text-text-main dark:text-white transition-colors duration-300">
-            <span className="material-symbols-outlined text-primary bg-bg-base dark:bg-dark-base shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal p-2 rounded-xl transition-all duration-300">school</span>
+            <span className="material-symbols-outlined text-primary dark:text-[#9e70ff] bg-bg-base dark:bg-dark-base shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal p-2 rounded-xl transition-all duration-300">school</span>
             Practice Quizzes
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -100,7 +100,7 @@ export default function OlympiadDashboard({ user }) {
                         <span className={`material-symbols-outlined ${s.iconColorClass} text-2xl grayscale opacity-60`}>{s.icon}</span>
                       </div>
                       <span className="px-3 py-1.5 rounded-lg bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal text-text-muted dark:text-gray-500 text-xs font-bold uppercase tracking-wide flex items-center gap-1 transition-all duration-300">
-                        <span className="material-symbols-outlined text-[14px]">lock</span> Locked
+                        <span className="material-symbols-outlined text-[14px] text-red-500 dark:text-red-400">lock</span> Locked
                       </span>
                     </div>
                     <h3 className="text-2xl font-extrabold mb-3 text-text-muted dark:text-gray-500 transition-colors duration-300">{s.label}</h3>
@@ -140,13 +140,13 @@ export default function OlympiadDashboard({ user }) {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { icon: 'event', label: 'Daily Practice' },
-              { icon: 'description', label: 'Mock Exam' },
-              { icon: 'gavel', label: 'Rules & Guide' }
+              { icon: 'event', label: 'Daily Practice', color: 'text-blue-500 dark:text-blue-400' },
+              { icon: 'description', label: 'Mock Exam', color: 'text-pink-500 dark:text-pink-400' },
+              { icon: 'gavel', label: 'Rules & Guide', color: 'text-purple-500 dark:text-purple-400' }
             ].map(item => (
               <div key={item.label} className="rounded-2xl bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal p-5 flex items-center gap-5 transition-all duration-300">
                 <div className="w-12 h-12 rounded-xl bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal flex items-center justify-center shrink-0 transition-all duration-300">
-                  <span className="material-symbols-outlined text-text-muted dark:text-gray-400 transition-colors duration-300">{item.icon}</span>
+                  <span className={`material-symbols-outlined ${item.color} transition-colors duration-300`}>{item.icon}</span>
                 </div>
                 <div className="font-bold text-sm text-text-muted dark:text-gray-400 transition-colors duration-300">{item.label}</div>
               </div>
