@@ -32,19 +32,17 @@ export default function OlympiadDashboard({ user }) {
   return (
     <div className={`font-body-md text-text-main dark:text-gray-100 bg-bg-base dark:bg-dark-base transition-colors duration-300 min-h-screen flex flex-col relative overflow-x-hidden ${isDarkMode ? 'dark' : ''}`}>
       {/* Navigation Shell (TopAppBar) */}
-      <nav className="fixed top-0 right-0 z-50 flex justify-end items-center px-margin-desktop h-24 hidden md:flex transition-all duration-300 pointer-events-none">
-        <div className="flex items-center gap-4 pointer-events-auto">
-          <button onClick={toggleTheme} className="w-10 h-10 rounded-full bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal hover:shadow-neo-btn-inset-portal dark:hover:shadow-neo-btn-inset-dark-portal transition-all duration-300 flex items-center justify-center text-text-main dark:text-gray-200 cursor-pointer border-none">
-            {isDarkMode ? (
-              <span className="material-symbols-outlined text-[20px]">light_mode</span>
-            ) : (
-              <span className="material-symbols-outlined text-[20px]">dark_mode</span>
-            )}
-          </button>
-          <button onClick={() => navigate('/dashboard')} className="px-6 py-2.5 rounded-full bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal hover:shadow-neo-btn-inset-portal dark:hover:shadow-neo-btn-inset-dark-portal transition-shadow duration-300 text-sm font-semibold text-text-main dark:text-gray-200 cursor-pointer border-none">
-            Back to Dashboard
-          </button>
-        </div>
+      <nav className="absolute top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-24 hidden md:flex transition-all duration-300">
+        <button onClick={() => navigate('/dashboard')} className="px-6 py-2.5 rounded-full bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal hover:shadow-neo-btn-inset-portal dark:hover:shadow-neo-btn-inset-dark-portal transition-shadow duration-300 text-sm font-semibold text-text-main dark:text-gray-200 cursor-pointer border-none">
+          Back to Dashboard
+        </button>
+        <button onClick={toggleTheme} className="w-10 h-10 rounded-full bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal hover:shadow-neo-btn-inset-portal dark:hover:shadow-neo-btn-inset-dark-portal transition-all duration-300 flex items-center justify-center text-text-main dark:text-gray-200 cursor-pointer border-none">
+          {isDarkMode ? (
+            <span className="material-symbols-outlined text-[20px]">light_mode</span>
+          ) : (
+            <span className="material-symbols-outlined text-[20px]">dark_mode</span>
+          )}
+        </button>
       </nav>
 
       {/* Main Container */}
@@ -132,27 +130,7 @@ export default function OlympiadDashboard({ user }) {
           </div>
         </section>
 
-        {/* Coming Soon Section */}
-        <section>
-          <h2 className="text-xl font-bold mb-8 flex items-center gap-3 text-text-muted dark:text-gray-400 transition-colors duration-300">
-            <span className="material-symbols-outlined text-tertiary dark:text-[#ffaa00] bg-bg-base dark:bg-dark-base shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal p-1.5 rounded-lg transition-all duration-300">hourglass_empty</span>
-            Coming Soon
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { icon: 'event', label: 'Daily Practice', color: 'text-blue-500 dark:text-blue-400' },
-              { icon: 'description', label: 'Mock Exam', color: 'text-pink-500 dark:text-pink-400' },
-              { icon: 'gavel', label: 'Rules & Guide', color: 'text-purple-500 dark:text-purple-400' }
-            ].map(item => (
-              <div key={item.label} className="rounded-2xl bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal p-5 flex items-center gap-5 transition-all duration-300">
-                <div className="w-12 h-12 rounded-xl bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal flex items-center justify-center shrink-0 transition-all duration-300">
-                  <span className={`material-symbols-outlined ${item.color} transition-colors duration-300`}>{item.icon}</span>
-                </div>
-                <div className="font-bold text-sm text-text-muted dark:text-gray-400 transition-colors duration-300">{item.label}</div>
-              </div>
-            ))}
-          </div>
-        </section>
+
       </main>
 
 
