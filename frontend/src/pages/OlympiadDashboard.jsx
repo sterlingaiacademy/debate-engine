@@ -14,6 +14,7 @@ export default function OlympiadDashboard({ user }) {
   const navigate = useNavigate();
   const [activeQuiz, setActiveQuiz] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isScrolledDown, setIsScrolledDown] = useState(false);
 
   useEffect(() => {
     if (isDarkMode) {
@@ -25,6 +26,23 @@ export default function OlympiadDashboard({ user }) {
     }
   }, [isDarkMode]);
 
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > 60 && currentScrollY > lastScrollY) {
+        setIsScrolledDown(true);
+      } else {
+        setIsScrolledDown(false);
+      }
+      lastScrollY = currentScrollY;
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const toggleTheme = () => setIsDarkMode(!isDarkMode);
 
   const userSubjectsArray = user?.subjects ? user.subjects.split(',').map(s => s.trim()) : [];
@@ -32,7 +50,7 @@ export default function OlympiadDashboard({ user }) {
   return (
     <div className={`font-body-md text-text-main dark:text-gray-100 bg-bg-base dark:bg-dark-base transition-colors duration-300 min-h-screen flex flex-col relative overflow-x-hidden ${isDarkMode ? 'dark' : ''}`}>
       {/* Navigation Shell (TopAppBar) */}
-      <nav className="absolute top-0 left-0 w-full z-50 hidden md:block transition-all duration-300">
+      <nav className={`fixed top-0 left-0 w-full z-50 hidden md:block transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${isScrolledDown ? '-translate-y-[150%]' : 'translate-y-0'}`}>
         <div className="max-w-[1100px] w-full mx-auto px-6 h-24 flex justify-between items-center">
           <button onClick={() => navigate('/dashboard')} className="px-6 py-2.5 rounded-full bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal hover:shadow-neo-btn-inset-portal dark:hover:shadow-neo-btn-inset-dark-portal transition-shadow duration-300 text-sm font-semibold text-text-main dark:text-gray-200 cursor-pointer border-none">
             Back to Dashboard
@@ -67,8 +85,8 @@ export default function OlympiadDashboard({ user }) {
             </h1>
             <p className="text-text-muted dark:text-gray-400 text-lg mb-6 transition-colors duration-300">Welcome back, {user?.name?.split(' ')[0] || 'Student'}</p>
             <div className="flex flex-wrap gap-4">
-              <span className="inline-flex items-center px-4 py-2 rounded-full bg-bg-base dark:bg-dark-base shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal text-secondary dark:text-[#00d896] text-sm font-semibold transition-all duration-300">
-                <span className="w-2 h-2 rounded-full bg-secondary dark:bg-[#00d896] mr-2 animate-pulse"></span> Registered & Active
+              <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-bg-base dark:bg-dark-base shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal text-secondary dark:text-[#00d896] text-sm font-semibold transition-all duration-300">
+                <span className="w-2.5 h-2.5 rounded-full bg-secondary dark:bg-[#00d896] animate-pulse"></span> Registered & Active
               </span>
               {user?.classLevel && (
                 <span className="inline-flex items-center px-4 py-2 rounded-full bg-bg-base dark:bg-dark-base shadow-neo-sm-portal dark:shadow-neo-sm-dark-portal text-text-main dark:text-gray-200 text-sm font-semibold transition-all duration-300">
