@@ -55,7 +55,7 @@ export default function OlympiadDashboard({ user }) {
       </nav>
 
       {/* Main Container */}
-      <main className="max-w-[1100px] w-full mx-auto px-6 pt-8 md:pt-32 pb-24 relative z-10 flex-1">
+      <main className="max-w-[1100px] w-full mx-auto px-6 pb-24 relative z-10 flex-1" style={{ marginTop: '120px' }}>
         {/* Back Button Mobile */}
         <button onClick={() => navigate('/dashboard')} className="md:hidden inline-flex items-center gap-2 px-6 py-3 rounded-full bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal hover:shadow-neo-inset-portal dark:hover:shadow-neo-inset-dark-portal transition-shadow text-sm text-text-main dark:text-gray-200 font-semibold mb-8 group cursor-pointer border-none">
           <span className="material-symbols-outlined text-[18px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
