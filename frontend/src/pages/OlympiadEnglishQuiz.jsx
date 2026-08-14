@@ -250,7 +250,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
         <div className="bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal mx-auto rounded-[28px] w-full max-w-[680px] relative overflow-hidden flex flex-col">
           
           {/* Header */}
-          <div className="p-6 md:p-8 pb-0 pt-10 md:pt-12 flex justify-between items-start">
+          <div className="p-6 md:p-8 pb-0 pt-16 md:pt-20 flex justify-between items-start">
             <div>
               <div className="text-xs font-bold text-text-muted dark:text-white/50 tracking-wider uppercase mb-1">ThinkQuest Olympiad · {subject}</div>
               <h1 className="text-2xl md:text-3xl font-extrabold" style={gradientTextStyle}>{quiz.quiz_name}</h1>
