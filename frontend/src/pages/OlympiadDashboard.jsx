@@ -5,11 +5,11 @@ import OlympiadEnglishQuiz from './OlympiadEnglishQuiz';
 const FONT = "'Inter', 'Google Sans', system-ui, sans-serif";
 
 const SUBJECTS = [
-  { key: 'English', label: 'English', desc: 'Grammar, comprehension & vocabulary — grade-specific MCQs.', emoji: '📖', grad: 'linear-gradient(135deg,#ff6b6b,#ee0979)', shadow: 'rgba(238,9,121,0.28)', light: '#ff6b6b' },
-  { key: 'Mathematics', label: 'Mathematics', desc: 'Problem-solving & key mathematical concepts for your grade.', emoji: '📐', grad: 'linear-gradient(135deg,#4facfe,#00f2fe)', shadow: 'rgba(79,172,254,0.28)', light: '#4facfe' },
-  { key: 'Science', label: 'Science', desc: 'Physics, Chemistry & Biology — tailored for your grade.', emoji: '⚗️', grad: 'linear-gradient(135deg,#43e97b,#38f9d7)', shadow: 'rgba(67,233,123,0.28)', light: '#43e97b' },
-  { key: 'Social Sciences', label: 'Social Sciences', desc: 'History, Geography & Global Citizenship MCQs.', emoji: '🌍', grad: 'linear-gradient(135deg,#f7971e,#ffd200)', shadow: 'rgba(247,151,30,0.28)', light: '#f7971e' },
-  { key: 'CT & AI', label: 'CT & AI', desc: 'Computational Thinking, Digital Citizenship & AI.', emoji: '🤖', grad: 'linear-gradient(135deg,#a18cd1,#fbc2eb)', shadow: 'rgba(161,140,209,0.28)', light: '#a18cd1' },
+  { key: 'English', label: 'English', desc: 'Grammar, comprehension & vocabulary — grade-specific MCQs.', icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>, grad: 'linear-gradient(135deg,#ff6b6b,#ee0979)', shadow: 'rgba(238,9,121,0.28)', light: '#ff6b6b' },
+  { key: 'Mathematics', label: 'Mathematics', desc: 'Problem-solving & key mathematical concepts for your grade.', icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="m16 10-2.83 2.83"/><path d="m8 14 2.83-2.83"/></svg>, grad: 'linear-gradient(135deg,#4facfe,#00f2fe)', shadow: 'rgba(79,172,254,0.28)', light: '#4facfe' },
+  { key: 'Science', label: 'Science', desc: 'Physics, Chemistry & Biology — tailored for your grade.', icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></svg>, grad: 'linear-gradient(135deg,#43e97b,#38f9d7)', shadow: 'rgba(67,233,123,0.28)', light: '#43e97b' },
+  { key: 'Social Sciences', label: 'Social Sciences', desc: 'History, Geography & Global Citizenship MCQs.', icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>, grad: 'linear-gradient(135deg,#f7971e,#ffd200)', shadow: 'rgba(247,151,30,0.28)', light: '#f7971e' },
+  { key: 'CT & AI', label: 'CT & AI', desc: 'Computational Thinking, Digital Citizenship & AI.', icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>, grad: 'linear-gradient(135deg,#a18cd1,#fbc2eb)', shadow: 'rgba(161,140,209,0.28)', light: '#a18cd1' },
 ];
 
 export default function OlympiadDashboard({ user }) {
@@ -45,13 +45,15 @@ export default function OlympiadDashboard({ user }) {
 
           <div style={{ position: 'relative', zIndex: 2 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.25rem' }}>
-              <div style={{ width: 56, height: 56, borderRadius: 18, background: 'linear-gradient(135deg, #8b5cf6, #6366f1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem', boxShadow: '0 8px 32px rgba(139,92,246,0.4)' }}>🏆</div>
+              <div style={{ width: 56, height: 56, borderRadius: 18, background: 'linear-gradient(135deg, #8b5cf6, #6366f1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', boxShadow: '0 8px 32px rgba(139,92,246,0.4)' }}>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+              </div>
               <div>
                 <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#8b5cf6', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.2rem' }}>Practice Portal</div>
                 <h1 style={{ fontSize: '2.2rem', fontWeight: 900, margin: 0, background: 'linear-gradient(135deg, #fff 30%, #c4b5fd)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
                   ThinkQuest <span style={{ background: 'linear-gradient(135deg, #f59e0b, #fde047)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Olympiad</span>
                 </h1>
-                <div style={{ fontSize: '1rem', color: '#94a3b8', marginTop: '0.3rem', fontWeight: 500 }}>Welcome back, {user?.name?.split(' ')[0] || 'Champion'} 👋</div>
+                <div style={{ fontSize: '1rem', color: '#94a3b8', marginTop: '0.3rem', fontWeight: 500 }}>Welcome back, {user?.name?.split(' ')[0] || 'Champion'}</div>
               </div>
             </div>
             <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
@@ -61,11 +63,11 @@ export default function OlympiadDashboard({ user }) {
               </div>
               {user?.classLevel && (
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.45rem 1rem', background: 'rgba(139,92,246,0.1)', borderRadius: 99, border: '1px solid rgba(139,92,246,0.2)', fontSize: '0.82rem', fontWeight: 600, color: '#c4b5fd' }}>
-                  🎓 {user.classLevel}
+                  {user.classLevel}
                 </div>
               )}
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.45rem 1rem', background: 'rgba(255,255,255,0.05)', borderRadius: 99, border: '1px solid rgba(255,255,255,0.08)', fontSize: '0.82rem', fontWeight: 600, color: '#94a3b8' }}>
-                📝 {userSubjectsArray.length > 0 ? `${userSubjectsArray.length} Subjects` : '5 Subjects'} · 1 Attempt Each
+                {userSubjectsArray.length > 0 ? `${userSubjectsArray.length} Subjects` : '5 Subjects'} · 1 Attempt Each
               </div>
             </div>
           </div>
@@ -112,8 +114,8 @@ export default function OlympiadDashboard({ user }) {
 
                 <div style={{ position: 'relative', zIndex: 2 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem' }}>
-                    <div style={{ width: 52, height: 52, borderRadius: 16, background: isHov ? s.grad : 'rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', transition: 'all 0.25s', boxShadow: isHov ? `0 8px 24px ${s.shadow}` : 'none' }}>
-                      {s.emoji}
+                    <div style={{ width: 52, height: 52, borderRadius: 16, background: isHov ? s.grad : 'rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', transition: 'all 0.25s', boxShadow: isHov ? `0 8px 24px ${s.shadow}` : 'none' }}>
+                      {s.icon}
                     </div>
                     {isSelected ? (
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', padding: '0.28rem 0.75rem', background: 'rgba(16,185,129,0.12)', borderRadius: 99, border: '1px solid rgba(16,185,129,0.2)' }}>
@@ -145,15 +147,17 @@ export default function OlympiadDashboard({ user }) {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem', opacity: 0.45 }}>
           {[
-            { emoji: '🚀', label: 'Daily Practice', desc: 'Sharpen your brain with daily questions tailored for you.' },
-            { emoji: '🎯', label: 'Mock Exam', desc: 'Full-length test — unlocks before the main Olympiad event.' },
-            { emoji: '📚', label: 'Rules & Guide', desc: 'Topics, instructions, and everything you need to know.' },
+            { icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 3.8-8.1 4 4 0 0 1 5.3-1.4 4 4 0 0 1 1.4 5.3A22 22 0 0 1 12 15z"/><path d="m15 12 3 3"/></svg>, label: 'Daily Practice', desc: 'Sharpen your brain with daily questions tailored for you.' },
+            { icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>, label: 'Mock Exam', desc: 'Full-length test — unlocks before the main Olympiad event.' },
+            { icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>, label: 'Rules & Guide', desc: 'Topics, instructions, and everything you need to know.' },
           ].map(item => (
             <div key={item.label} style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)', borderRadius: 20, padding: '1.5rem', cursor: 'not-allowed' }}>
-              <div style={{ fontSize: '1.8rem', marginBottom: '0.75rem' }}>{item.emoji}</div>
+              <div style={{ color: '#94a3b8', marginBottom: '1rem' }}>{item.icon}</div>
               <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: '0 0 0.35rem', color: '#475569' }}>{item.label}</h3>
               <p style={{ margin: '0 0 1rem', fontSize: '0.8rem', color: '#334155', lineHeight: 1.55 }}>{item.desc}</p>
-              <div style={{ fontSize: '0.78rem', color: '#334155', fontWeight: 600 }}>🔒 Locked</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.78rem', color: '#334155', fontWeight: 600 }}>
+                Locked
+              </div>
             </div>
           ))}
         </div>
