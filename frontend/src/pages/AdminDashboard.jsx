@@ -1430,8 +1430,41 @@ function QuizResultsSection({ adminToken, apiBase }) {
     return acc;
   }, {}));
 
+  // Calculate leaderboard (highest score per subject)
+  const leaderboard = {};
+  data.forEach(r => {
+    if (!leaderboard[r.quiz_name] || r.score > leaderboard[r.quiz_name].score || (r.score === leaderboard[r.quiz_name].score && r.percentage > leaderboard[r.quiz_name].percentage)) {
+      leaderboard[r.quiz_name] = r;
+    }
+  });
+  const leaderboardSubjects = Object.keys(leaderboard).sort();
+
   return (
     <div>
+      {/* Leaderboard Section */}
+      <SectionTitle>ThinkQuest Subject Leaders</SectionTitle>
+      {leaderboardSubjects.length > 0 ? (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+          {leaderboardSubjects.map(subject => {
+            const leader = leaderboard[subject];
+            return (
+              <div key={subject} style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, padding: '1.25rem', position: 'relative', overflow: 'hidden' }}>
+                <div style={{ fontSize: '0.8rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem', fontWeight: 700 }}>{subject}</div>
+                <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#f8fafc', marginBottom: '0.2rem' }}>{leader.student_name || 'Anonymous'}</div>
+                <div style={{ fontSize: '0.75rem', color: '#cbd5e1', marginBottom: '0.75rem' }}>{leader.user_email} (Grade {leader.grade || '-'})</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <span style={{ fontSize: '1rem', fontWeight: 800, color: '#10b981' }}>{leader.score}/{leader.total}</span>
+                  <span style={{ fontSize: '0.8rem', fontWeight: 700, color: parseFloat(leader.percentage) >= 80 ? '#10b981' : '#f59e0b', padding: '0.15rem 0.5rem', background: 'rgba(16,185,129,0.1)', borderRadius: 99 }}>{leader.percentage}%</span>
+                </div>
+                <div style={{ position: 'absolute', top: '-10px', right: '-10px', fontSize: '4rem', opacity: 0.05, pointerEvents: 'none' }}>🏆</div>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div style={{ color: '#94a3b8', marginBottom: '2rem' }}>No attempts yet to determine leaders.</div>
+      )}
+
       <SectionTitle>ThinkQuest Quiz Results ({data.length} total attempts)</SectionTitle>
       <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
         <div style={{ overflowX: 'auto' }}>
