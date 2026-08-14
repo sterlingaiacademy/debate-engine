@@ -33,7 +33,7 @@ export default function OlympiadDashboard({ user }) {
   return (
     <div className={`font-body-md text-text-main dark:text-gray-100 bg-bg-base dark:bg-dark-base transition-colors duration-300 min-h-screen flex flex-col relative overflow-x-hidden ${isDarkMode ? 'dark' : ''}`}>
       {/* Navigation Shell (TopAppBar) */}
-      <nav className="fixed top-0 left-0 w-full z-50 hidden md:block bg-bg-base/90 dark:bg-dark-base/90 backdrop-blur-md border-b border-transparent">
+      <nav className="absolute top-0 left-0 w-full z-50 hidden md:block">
         <div className="max-w-[1100px] w-full mx-auto px-6 h-24 flex justify-between items-center">
           <button onClick={() => navigate('/dashboard')} className="px-6 py-2.5 rounded-full bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal hover:shadow-neo-btn-inset-portal dark:hover:shadow-neo-btn-inset-dark-portal transition-shadow duration-300 text-sm font-semibold text-text-main dark:text-gray-200 cursor-pointer border-none">
             Back to Dashboard
