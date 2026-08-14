@@ -336,7 +336,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
             {/* Question Card */}
             <div className="bg-[#292d32] rounded-[20px] p-6 relative overflow-hidden" style={{ boxShadow: 'inset 6px 6px 12px #191b1f, inset -6px -6px 12px #393f45' }}>
               <div className="absolute left-0 top-0 bottom-0 w-[4px] opacity-80" style={gradientStyle}></div>
-              <p className="text-lg text-white/90 leading-relaxed pl-3 font-medium whitespace-pre-wrap">
+              <p className="text-base text-white/90 leading-relaxed pl-3 font-medium whitespace-pre-wrap">
                 {q.question}
               </p>
             </div>
@@ -352,7 +352,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
                 let containerStyle = {};
                 let letterClass = "w-10 h-10 rounded-lg flex items-center justify-center font-bold mr-4 transition-colors ";
                 let letterStyle = {};
-                let textClass = "text-base font-medium ";
+                let textClass = "text-sm font-medium ";
                 
                 if (isCorrectOpt) {
                   containerStyle.boxShadow = 'inset 6px 6px 12px #191b1f, inset -6px -6px 12px #393f45';
