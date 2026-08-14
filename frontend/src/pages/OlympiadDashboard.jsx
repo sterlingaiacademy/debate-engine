@@ -28,7 +28,53 @@ export default function OlympiadDashboard({ user }) {
     }
   }, [isDarkMode]);
 
-  const toggleTheme = () => setIsDarkMode(!isDarkMode);
+  const toggleTheme = (e) => {
+    const isDark = !isDarkMode;
+
+    if (!document.startViewTransition) {
+      setIsDarkMode(isDark);
+      return;
+    }
+
+    // Disable CSS transitions globally so the new snapshot doesn't capture mid-transition elements
+    document.documentElement.classList.add('theme-transitioning');
+
+    const x = e?.clientX ?? window.innerWidth / 2;
+    const y = e?.clientY ?? window.innerHeight / 2;
+    const endRadius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
+    );
+
+    const transition = document.startViewTransition(() => {
+      setIsDarkMode(isDark);
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+        localStorage.theme = 'dark';
+      } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.theme = 'light';
+      }
+    });
+
+    transition.ready.then(() => {
+      document.documentElement.classList.remove('theme-transitioning');
+      const clipPath = [
+        `circle(0px at ${x}px ${y}px)`,
+        `circle(${endRadius}px at ${x}px ${y}px)`
+      ];
+      document.documentElement.animate(
+        {
+          clipPath: isDark ? clipPath : clipPath.reverse(),
+        },
+        {
+          duration: 500,
+          easing: 'ease-out',
+          pseudoElement: isDark ? '::view-transition-new(root)' : '::view-transition-old(root)',
+        }
+      );
+    });
+  };
 
   const userSubjectsArray = user?.subjects ? user.subjects.split(',').map(s => s.trim()) : [];
 
