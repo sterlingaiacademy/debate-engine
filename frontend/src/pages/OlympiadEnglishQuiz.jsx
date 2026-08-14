@@ -248,15 +248,18 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
     <div className="fixed inset-0 z-[100] bg-bg-base dark:bg-dark-base overflow-y-auto text-text-main dark:text-white">
       <div className="min-h-full flex flex-col justify-center p-4 sm:p-8 py-12">
         <div className="bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal mx-auto rounded-[28px] w-full max-w-[680px] relative overflow-hidden flex flex-col">
-          {/* Top Color Bar */}
-          <div className="h-[3px] w-full absolute top-0 left-0" style={gradientStyle}></div>
           
           {/* Header */}
           <div className="p-6 md:p-8 pb-0 pt-8 flex justify-between items-start">
             <div>
-              <div className="text-xs font-bold text-white/50 tracking-wider uppercase mb-1">ThinkQuest Olympiad · {subject}</div>
+              <div className="text-xs font-bold text-text-muted dark:text-white/50 tracking-wider uppercase mb-1">ThinkQuest Olympiad · {subject}</div>
               <h1 className="text-2xl md:text-3xl font-extrabold" style={gradientTextStyle}>{quiz.quiz_name}</h1>
             </div>
+          </div>
+          
+          {/* Header Stats */}
+          <div className="p-6 md:p-8 flex justify-between items-center border-b border-gray-200 dark:border-white/[0.03]">
+            <div></div> {/* Empty div to keep stats on the right if justify-between is used, or adjust as needed */}
             <div className="flex gap-4">
               <div className="bg-bg-base dark:bg-dark-base shadow-neo-btn-portal dark:shadow-neo-btn-dark-portal rounded-full px-4 py-1.5 flex items-center gap-1.5 hidden sm:flex">
                 <span className="material-symbols-outlined text-[16px] text-text-muted dark:text-white/70">format_list_numbered</span>
@@ -354,7 +357,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
                 let containerStyle = {};
                 let letterClass = "w-10 h-10 rounded-lg flex items-center justify-center font-bold mr-6 flex-shrink-0 transition-colors ";
                 let letterStyle = {};
-                let textClass = "text-sm font-medium ";
+                let textClass = "text-sm font-medium break-words ";
                 
                 if (isCorrectOpt) {
                   containerClass += "shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal border border-green-500/20";
@@ -380,9 +383,9 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
                     <div className={letterClass} style={isSelected && !isRevealed ? { ...gradientStyle, ...letterStyle } : letterStyle}>
                       {opt.letter}
                     </div>
-                    <span className={textClass + " flex-1"}>{opt.text}</span>
-                    {isCorrectOpt && <span className="material-symbols-outlined text-green-500 ml-2">check_circle</span>}
-                    {isWrongOpt && <span className="material-symbols-outlined text-red-500 ml-2">cancel</span>}
+                    <span className={textClass + " flex-1 min-w-0"}>{opt.text}</span>
+                    {isCorrectOpt && <span className="material-symbols-outlined text-green-500 ml-2 flex-shrink-0">check_circle</span>}
+                    {isWrongOpt && <span className="material-symbols-outlined text-red-500 ml-2 flex-shrink-0">cancel</span>}
                   </label>
                 );
               })}
