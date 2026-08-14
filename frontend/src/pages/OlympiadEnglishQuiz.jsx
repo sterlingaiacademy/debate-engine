@@ -350,7 +350,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
                 
                 let containerClass = "group relative flex items-center p-4 rounded-xl cursor-pointer transition-all duration-200 bg-[#292d32] ";
                 let containerStyle = {};
-                let letterClass = "w-10 h-10 rounded-lg flex items-center justify-center font-bold mr-4 transition-colors ";
+                let letterClass = "w-10 h-10 rounded-lg flex items-center justify-center font-bold mr-6 flex-shrink-0 transition-colors ";
                 let letterStyle = {};
                 let textClass = "text-sm font-medium ";
                 
