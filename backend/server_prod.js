@@ -3926,3 +3926,40 @@ app.get('/api/admin/olympiad/quiz-results', requireAdmin, async (req, res) => {
   }
 });
 
+
+// ── Automated Coupon Expiration Job ──
+// Runs every 12 hours to downgrade expired special coupons
+setInterval(async () => {
+  try {
+    // 14-Day Coupons (PRO Plan for Top 14 Winners)
+    await db.query(`
+      UPDATE gforce.users u
+      SET subscription_plan = 'free', subscription_status = 'expired'
+      FROM user_coupons c
+      WHERE u."studentId" = c.user_id
+      AND c.coupon_code IN (
+        'AMINA2000', 'ASHIQ2000', 'SUMIA2000', 'YUKTI2000', 'MOHAMMED2000',
+        'JEREMY2000', 'SHAHAN2000', 'RESHMY2000', 'ANSU2000', 'RADIN2000',
+        'SHAFEEQUE2000', 'PARUL2000', 'ZAHRA2000', 'PRERANA2000', 'TEST-WINNER2000'
+      )
+      AND c.redeemed_at < NOW() - INTERVAL '14 days'
+      AND u.subscription_plan = 'pro'
+    `);
+
+    // 30-Day Coupons (PRO or MAX for Top 3)
+    await db.query(`
+      UPDATE gforce.users u
+      SET subscription_plan = 'free', subscription_status = 'expired'
+      FROM user_coupons c
+      WHERE u."studentId" = c.user_id
+      AND c.coupon_code IN (
+        'ANKITA10000', 'HABIBA5000', 'DEVBINU3000',
+        'TEST-ANKITA-2', 'TEST-HABIBA-2', 'TEST-DEVBINU3000'
+      )
+      AND c.redeemed_at < NOW() - INTERVAL '30 days'
+      AND u.subscription_plan IN ('pro', 'max')
+    `);
+  } catch (error) {
+    console.error("Error in automated coupon expiration job:", error);
+  }
+}, 12 * 60 * 60 * 1000); // 12 hours
