@@ -21,8 +21,8 @@ export default function PremiumSuccess({ plan }) {
     : {
         gradient: 'linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)',
         shadow: '0 10px 40px rgba(139,92,246,0.3)',
-        title: 'Welcome to Pro!',
-        desc: 'You now have 20 minutes of daily practice and unlimited priority AI coaching.',
+        title: customPopup ? customPopup.title : 'Welcome to Pro!',
+        desc: customPopup ? customPopup.desc : 'You now have 20 minutes of daily practice and unlimited priority AI coaching.',
         icon: <Crown size={64} color="#8b5cf6" />
       };
 
