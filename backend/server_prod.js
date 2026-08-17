@@ -729,6 +729,27 @@ app.post('/api/coupons/redeem', async (req, res) => {
       });
     }
 
+    // ── DevbINU Custom Freedom Quiz Coupon (3rd Prize) ──
+    if (code === 'DEVBINU3000' || code === 'TEST-DEVBINU3000') {
+      const checkRes = await db.query(`SELECT id FROM user_coupons WHERE coupon_code = $1`, [code]);
+      if (checkRes.rows.length > 0) {
+        return res.status(400).json({ error: 'This special coupon has already been redeemed.' });
+      }
+
+      await db.query(`UPDATE gforce.users SET subscription_plan = 'pro', subscription_status = 'active' WHERE "studentId" = $1`, [studentId]);
+      await db.query(`INSERT INTO user_coupons (user_id, coupon_code, effect_date, redeemed_at) VALUES ($1, $2, $3, NOW())`, [studentId, code, getISTDateString()]);
+      
+      return res.json({
+        success: true,
+        plan: 'pro',
+        message: 'Code activated! Your account is now on PRO plan.',
+        customPopup: {
+          title: 'Congratulations DevbINU!',
+          desc: 'For securing the THIRD POSITION in the Freedom Quiz Challenge, you have been awarded the PRO Plan (worth ₹3,000) for 1 month! Keep up the amazing work!'
+        }
+      });
+    }
+
     // ── Regular coupons ──
     const VALID_COUPONS = {
       'GFORCE10': '+10 minutes for today',
