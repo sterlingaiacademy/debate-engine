@@ -708,7 +708,7 @@ app.post('/api/coupons/redeem', async (req, res) => {
     }
 
     // ── Habiba Custom Freedom Quiz Coupon (2nd Prize) ──
-    if (code === 'HABIBA5000' || code === 'TEST-HABIBA5000') {
+    if (code === 'HABIBA5000' || code === 'TEST-HABIBA5000' || code === 'TEST-HABIBA-2') {
       const checkRes = await db.query(`SELECT id FROM user_coupons WHERE coupon_code = $1`, [code]);
       if (checkRes.rows.length > 0) {
         return res.status(400).json({ error: 'This special coupon has already been redeemed.' });
