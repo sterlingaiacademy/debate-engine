@@ -688,7 +688,7 @@ app.post('/api/coupons/redeem', async (req, res) => {
     }
 
     // ── Ankita Custom Freedom Quiz Coupon ──
-    if (code === 'ANKITA10000' || code === 'TEST-ANKITA10000') {
+    if (code === 'ANKITA10000' || code === 'TEST-ANKITA10000' || code === 'TEST-ANKITA-2') {
       const checkRes = await db.query(`SELECT id FROM user_coupons WHERE coupon_code = $1`, [code]);
       if (checkRes.rows.length > 0) {
         return res.status(400).json({ error: 'This special coupon has already been redeemed.' });

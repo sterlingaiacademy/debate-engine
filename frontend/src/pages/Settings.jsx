@@ -1,10 +1,12 @@
 
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Settings as SettingsIcon, Camera, UploadCloud, Loader2, Crown, Phone, School, CheckCircle, Clock, User, Share2, Copy, Check, Shield, Type } from 'lucide-react';
 import { API_BASE } from '../api';
 import PremiumEnrollModal from '../components/PremiumEnrollModal';
 
 export default function Settings({ user, setUser }) {
+  const navigate = useNavigate();
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null);
   const [copied, setCopied] = useState(false);
@@ -49,6 +51,10 @@ export default function Settings({ user, setUser }) {
       if (res.ok && data.success) {
         setCouponStatus({ loading: false, msg: data.message, type: 'success' });
         setCouponCode('');
+        
+        if (data.plan) {
+          setTimeout(() => navigate(`/premium-success?plan=${data.plan}`, { state: { customPopup: data.customPopup } }), 800);
+        }
       } else {
         setCouponStatus({ loading: false, msg: data.error || 'Failed to redeem coupon', type: 'error' });
       }
