@@ -750,6 +750,46 @@ app.post('/api/coupons/redeem', async (req, res) => {
       });
     }
 
+    // ── Top 14 Winners Freedom Quiz Coupons (2 Weeks PRO) ──
+    const TOP_14_WINNERS = {
+      'AMINA2000': 'Amina Minha Muneer',
+      'ASHIQ2000': 'Ashiq Hussain Sheikh',
+      'SUMIA2000': 'SUMIA BASHIR',
+      'YUKTI2000': 'Yukti Sharma',
+      'MOHAMMED2000': 'Mohammed Afil',
+      'JEREMY2000': 'Jeremy Robin',
+      'SHAHAN2000': 'Shahan shabeeb',
+      'RESHMY2000': 'Reshmy Rachel Shibu',
+      'ANSU2000': 'Ansu Abraham',
+      'RADIN2000': 'Radin T',
+      'SHAFEEQUE2000': 'MUHAMMED SHAFEEQUE',
+      'PARUL2000': 'Parul',
+      'ZAHRA2000': 'Zahra Shakir',
+      'PRERANA2000': 'Prerana Shukla',
+      'TEST-WINNER2000': 'Admin Test User'
+    };
+
+    if (TOP_14_WINNERS[code]) {
+      const winnerName = TOP_14_WINNERS[code];
+      const checkRes = await db.query(`SELECT id FROM user_coupons WHERE coupon_code = $1`, [code]);
+      if (checkRes.rows.length > 0) {
+        return res.status(400).json({ error: 'This special coupon has already been redeemed.' });
+      }
+
+      await db.query(`UPDATE gforce.users SET subscription_plan = 'pro', subscription_status = 'active' WHERE "studentId" = $1`, [studentId]);
+      await db.query(`INSERT INTO user_coupons (user_id, coupon_code, effect_date, redeemed_at) VALUES ($1, $2, $3, NOW())`, [studentId, code, getISTDateString()]);
+      
+      return res.json({
+        success: true,
+        plan: 'pro',
+        message: 'Code activated! Your account is now on PRO plan.',
+        customPopup: {
+          title: `Congratulations ${winnerName}!`,
+          desc: 'For your outstanding performance in the Freedom Quiz Challenge, you have been awarded the PRO Plan (worth ₹2,000) for 2 weeks! Keep up the amazing work!'
+        }
+      });
+    }
+
     // ── Regular coupons ──
     const VALID_COUPONS = {
       'GFORCE10': '+10 minutes for today',
