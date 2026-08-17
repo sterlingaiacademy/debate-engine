@@ -608,7 +608,7 @@ export default function Dashboard({ user, setUser }) {
           cachedStats = null;
           cachedStudentId = null;
           // Navigate to the congratulations page (same as Razorpay flow)
-          setTimeout(() => navigate(`/premium-success?plan=${data.plan}`), 800);
+          setTimeout(() => navigate(`/premium-success?plan=${data.plan}`, { state: { customPopup: data.customPopup } }), 800);
         } else {
           // Regular time coupon — optimistically add seconds
           if (stats && stats.timeLimits && !stats.timeLimits.error) {

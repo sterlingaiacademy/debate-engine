@@ -6,6 +6,7 @@ export default function PremiumSuccess({ plan }) {
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const statePlan = searchParams.get('plan') || location.state?.plan || plan || 'pro';
+  const customPopup = location.state?.customPopup;
   
   const isMax = statePlan === 'max';
   
@@ -13,8 +14,8 @@ export default function PremiumSuccess({ plan }) {
     ? { 
         gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', 
         shadow: '0 10px 40px rgba(16,185,129,0.3)',
-        title: 'Welcome to Max!',
-        desc: 'You now have 60 minutes of daily practice, School Leaderboards, and full Debate Arena access.',
+        title: customPopup ? customPopup.title : 'Welcome to Max!',
+        desc: customPopup ? customPopup.desc : 'You now have 60 minutes of daily practice, School Leaderboards, and full Debate Arena access.',
         icon: <Sparkles size={64} color="#10b981" />
       }
     : {

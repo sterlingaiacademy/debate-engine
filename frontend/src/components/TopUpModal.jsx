@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { X, Zap, Clock, CheckCircle } from 'lucide-react';
 import { API_BASE } from '../api';
 
@@ -116,6 +117,8 @@ export default function TopUpModal({ user, onDismiss, onSuccess }) {
     }
   };
 
+  const navigate = useNavigate();
+
   const handleCouponRedeem = async () => {
     const code = couponCode.trim().toUpperCase();
     if (!code) return;
@@ -131,6 +134,13 @@ export default function TopUpModal({ user, onDismiss, onSuccess }) {
       if (res.ok && data.success) {
         setCouponStatus({ loading: false, msg: data.message, type: 'success' });
         setCouponCode('');
+        
+        // Handle plan upgrade coupon
+        if (data.plan) {
+          setTimeout(() => navigate(`/premium-success?plan=${data.plan}`, { state: { customPopup: data.customPopup } }), 800);
+          return;
+        }
+
         const seconds = code === 'TOPUP999' ? 18000 : code === 'TOPUP499' ? 9000 : 0;
         if (seconds && onSuccess) setTimeout(() => onSuccess(seconds), 1500);
       } else {
