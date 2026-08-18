@@ -150,29 +150,29 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
                 <h2 className="text-2xl font-extrabold text-xl font-bold">Answer Review</h2>
               </div>
               
-              <div className="flex-1 overflow-y-auto pr-2 flex flex-col gap-4">
+              <div className="flex-1 overflow-y-auto pr-2 flex flex-col" style={{ gap: '0.625rem' }}>
                 {breakdown.length === 0 ? (
                   <p className="text-text-muted dark:text-gray-500">No review data available.</p>
                 ) : (
                   breakdown.map((b, i) => (
-                    <div key={i} className={`p-5 rounded-2xl bg-bg-base dark:bg-dark-base ${b.isCorrect ? 'shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal border border-green-500/20' : 'shadow-neo-portal dark:shadow-neo-dark-portal border border-red-500/20'}`}>
-                      <div className="flex items-start gap-4">
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${b.isCorrect ? 'bg-green-500/20 text-green-600 dark:text-green-400' : 'bg-red-500/20 text-red-600 dark:text-red-400'}`}>
-                          <span className="material-symbols-outlined text-[16px]">{b.isCorrect ? 'check' : 'close'}</span>
+                    <div key={i} className={`rounded-xl bg-bg-base dark:bg-dark-base ${b.isCorrect ? 'shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal border border-green-500/20' : 'shadow-neo-portal dark:shadow-neo-dark-portal border border-red-500/20'}`} style={{ padding: '0.75rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.625rem' }}>
+                        <div className={`rounded-full flex items-center justify-center flex-shrink-0 ${b.isCorrect ? 'bg-green-500/20 text-green-600 dark:text-green-400' : 'bg-red-500/20 text-red-600 dark:text-red-400'}`} style={{ width: '1.5rem', height: '1.5rem', flexShrink: 0 }}>
+                          <span className="material-symbols-outlined" style={{ fontSize: '13px' }}>{b.isCorrect ? 'check' : 'close'}</span>
                         </div>
-                        <div className="flex-1">
-                          <p className="text-sm text-text-main dark:text-white/90 mb-2 leading-relaxed">
-                            <span className="text-text-muted dark:text-white/40 font-bold mr-2">Q{i+1}.</span> {b.question}
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <p style={{ fontSize: '0.75rem', lineHeight: '1.4', marginBottom: '0.375rem' }} className="text-text-main dark:text-white/90">
+                            <span className="text-text-muted dark:text-white/40 font-bold" style={{ marginRight: '0.25rem' }}>Q{i+1}.</span> {b.question}
                           </p>
-                          <div className="flex flex-col gap-1.5 mt-3">
-                            <div className="flex items-center gap-2">
-                              <span className="text-text-muted dark:text-white/40 text-xs uppercase tracking-wider w-16">Selected</span>
-                              <span className={`text-sm font-medium ${b.isCorrect ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>{b.selected || '—'}</span>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', marginTop: '0.375rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                              <span className="text-text-muted dark:text-white/40" style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.05em', width: '3.5rem' }}>Selected</span>
+                              <span className={`font-medium ${b.isCorrect ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`} style={{ fontSize: '0.75rem' }}>{b.selected || '—'}</span>
                             </div>
                             {!b.isCorrect && (
-                              <div className="flex items-center gap-2">
-                                <span className="text-text-muted dark:text-white/40 text-xs uppercase tracking-wider w-16">Correct</span>
-                                <span className="text-sm font-medium text-green-600 dark:text-green-400">{b.correct}</span>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <span className="text-text-muted dark:text-white/40" style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.05em', width: '3.5rem' }}>Correct</span>
+                                <span className="text-green-600 dark:text-green-400 font-medium" style={{ fontSize: '0.75rem' }}>{b.correct}</span>
                               </div>
                             )}
                           </div>
