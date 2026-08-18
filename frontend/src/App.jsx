@@ -42,6 +42,7 @@ const MiniMunMod2CertificateDownload = lazy(() => import('./pages/MiniMunMod2Cer
 const MiniMunMod3CertificateDownload = lazy(() => import('./pages/MiniMunMod3CertificateDownload'));
 const MiniMunMod4CertificateDownload = lazy(() => import('./pages/MiniMunMod4CertificateDownload'));
 const TeachersChallengeCertificateDownload = lazy(() => import('./pages/TeachersChallengeCertificateDownload'));
+const FreedomQuizCertificateDownload = lazy(() => import('./pages/FreedomQuizCertificateDownload'));
 
 const ITORegister = lazy(() => import('./pages/ITORegister'));
 const SpeechAnalysis = lazy(() => import('./pages/SpeechAnalysis'));
@@ -289,6 +290,7 @@ function App() {
               <Route path="/minimun-mod3-certificate" element={user ? <MiniMunMod3CertificateDownload /> : <Navigate to="/" />} />
               <Route path="/minimun-mod4-certificate" element={user ? <MiniMunMod4CertificateDownload /> : <Navigate to="/" />} />
               <Route path="/teachers-challenge-certificate" element={user ? <TeachersChallengeCertificateDownload /> : <Navigate to="/" />} />
+              <Route path="/freedom-quiz-certificate" element={user ? <FreedomQuizCertificateDownload /> : <Navigate to="/" />} />
               <Route path="/upgrade" element={user ? <UpgradeRequired user={user} /> : <Navigate to="/" />} />
             </Route>
 
