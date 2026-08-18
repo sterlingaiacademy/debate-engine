@@ -247,7 +247,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
   return (
     <div className="fixed inset-0 z-[100] bg-bg-base dark:bg-dark-base overflow-y-auto text-text-main dark:text-white">
       <div className="min-h-full flex flex-col items-center px-4 sm:px-8 pb-8" style={{ paddingTop: '2rem' }}>
-        <div className="bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal mx-auto rounded-[24px] w-full max-w-[600px] relative overflow-hidden flex flex-col">
+        <div className="bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal mx-auto rounded-[24px] w-full max-w-[640px] relative overflow-hidden flex flex-col">
           
           {/* Header & Stats */}
           <div className="px-5 md:px-6 border-b border-gray-200 dark:border-white/[0.03]" style={{ paddingTop: '0.85rem', paddingBottom: '1rem' }}>
@@ -332,9 +332,9 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
           </div>
 
           {/* Question Area */}
-          <div className="px-5 md:px-6 pt-4 pb-2 flex-1 flex flex-col gap-3 transition-opacity duration-200" style={{ opacity: animate ? 1 : 0 }}>
+          <div className="px-6 md:px-7 pt-5 pb-3 flex-1 flex flex-col gap-4 transition-opacity duration-200" style={{ opacity: animate ? 1 : 0 }}>
             {/* Question Card */}
-            <div className="bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal rounded-[16px] p-4 relative overflow-hidden">
+            <div className="bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal rounded-[18px] p-5 relative overflow-hidden">
               <div className="absolute left-0 top-0 bottom-0 w-[4px] opacity-80" style={gradientStyle}></div>
               <p className="text-sm text-text-main dark:text-white/90 leading-relaxed pl-5 font-medium whitespace-pre-wrap">
                 {q.question}
@@ -342,15 +342,15 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
             </div>
 
             {/* Multiple Choice Options */}
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-3">
               {q.options.map(opt => {
                 const isSelected = selectedLetter === opt.letter;
                 const isCorrectOpt = isRevealed && opt.letter === correctLetter;
                 const isWrongOpt = isRevealed && isSelected && opt.letter !== correctLetter;
                 
-                let containerClass = "group relative flex items-center p-3 rounded-xl cursor-pointer transition-all duration-200 bg-bg-base dark:bg-dark-base ";
+                let containerClass = "group relative flex items-center p-3.5 rounded-xl cursor-pointer transition-all duration-200 bg-bg-base dark:bg-dark-base ";
                 let containerStyle = {};
-                let letterClass = "w-8 h-8 rounded-lg flex items-center justify-center font-bold mr-4 flex-shrink-0 transition-colors ";
+                let letterClass = "w-9 h-9 rounded-lg flex items-center justify-center font-bold mr-4 flex-shrink-0 transition-colors ";
                 let letterStyle = {};
                 let textClass = "text-sm font-medium break-words ";
                 
@@ -388,7 +388,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
           </div>
 
           {/* Bottom Nav */}
-          <div className="px-5 md:px-6 pt-3 pb-5 flex justify-between items-center z-10">
+          <div className="px-6 md:px-7 pt-4 pb-6 flex justify-between items-center z-10">
             <button onClick={onClose} className="text-text-muted dark:text-white/40 hover:text-text-main dark:hover:text-white/80 transition-colors font-medium text-sm flex items-center gap-1 border-none bg-transparent cursor-pointer">
               <span className="material-symbols-outlined text-[18px]">close</span> Exit
             </button>
