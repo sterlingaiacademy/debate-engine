@@ -805,6 +805,25 @@ function MiniMunSection({ adminToken, apiBase }) {
 
   const regs = (data?.registrations || []).filter(r => r.payment_status === 'paid' && r.module === selectedModule);
 
+  // Compute multiple payments for the current module
+  const multiMap = {};
+  regs.forEach(r => {
+    if (!r.email) return;
+    const e = r.email.toLowerCase().trim();
+    if (!multiMap[e]) {
+      multiMap[e] = { count: 0, rows: [] };
+    }
+    multiMap[e].count++;
+    multiMap[e].rows.push(r);
+  });
+  const multiplePaidUsers = Object.values(multiMap).filter(x => x.count > 1).map(x => ({
+    name: x.rows[0].student_name,
+    email: x.rows[0].email,
+    phone: x.rows[0].mobile,
+    count: x.count,
+    amounts: x.rows.map(r => r.amount / 100).join(', ')
+  }));
+
   const downloadCSV = () => {
     const headers = ['Name', 'Email', 'Phone', 'Category', 'Grade/Desig', 'School/Inst.', 'City', 'Speech Score', 'Status', 'Module', 'Registered'];
     const rows = regs.map(r => [
