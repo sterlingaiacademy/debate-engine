@@ -348,10 +348,10 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
                 const isCorrectOpt = isRevealed && opt.letter === correctLetter;
                 const isWrongOpt = isRevealed && isSelected && opt.letter !== correctLetter;
                 
-                let containerClass = "group relative flex items-center p-4 rounded-xl cursor-pointer transition-all duration-200 bg-bg-base dark:bg-dark-base overflow-hidden ";
-                let containerStyle = { padding: '0.875rem', width: '100%', boxSizing: 'border-box' };
-                let letterClass = "w-10 h-10 rounded-lg flex items-center justify-center font-bold mr-6 flex-shrink-0 transition-colors ";
-                let letterStyle = {};
+                let containerClass = "group relative rounded-xl cursor-pointer transition-all duration-200 bg-bg-base dark:bg-dark-base overflow-hidden ";
+                let containerStyle = { display: 'flex', alignItems: 'center', padding: '0.875rem', width: '100%', boxSizing: 'border-box', overflow: 'hidden' };
+                let letterClass = "rounded-lg flex items-center justify-center font-bold transition-colors ";
+                let letterStyle = { flexShrink: 0, width: '2.5rem', height: '2.5rem', marginRight: '1rem' };
                 let textClass = "text-sm font-medium min-w-0 ";
                 
                 if (isCorrectOpt) {
@@ -378,7 +378,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
                     <div className={letterClass} style={isSelected && !isRevealed ? { ...gradientStyle, ...letterStyle } : letterStyle}>
                       {opt.letter}
                     </div>
-                    <span className={textClass + " flex-1 min-w-0"} style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{opt.text}</span>
+                    <span className={textClass} style={{ flexGrow: 1, flexShrink: 1, minWidth: 0, wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{opt.text}</span>
                     {isCorrectOpt && <span className="material-symbols-outlined text-green-500 ml-2 flex-shrink-0">check_circle</span>}
                     {isWrongOpt && <span className="material-symbols-outlined text-red-500 ml-2 flex-shrink-0">cancel</span>}
                   </label>
