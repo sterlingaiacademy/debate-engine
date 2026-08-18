@@ -249,17 +249,13 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
       <div className="min-h-full flex flex-col justify-center p-4 sm:p-8 py-12">
         <div className="bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal mx-auto rounded-[28px] w-full max-w-[680px] relative overflow-hidden flex flex-col">
           
-          {/* Header */}
-          <div className="px-6 md:px-8 pb-0 pt-12 md:pt-16 flex justify-between items-start">
+          {/* Header & Stats */}
+          <div className="px-6 md:px-8 pb-6 pt-12 md:pt-16 flex justify-between items-center border-b border-gray-200 dark:border-white/[0.03] flex-wrap gap-4">
             <div>
               <div className="text-xs font-bold text-text-muted dark:text-white/50 tracking-wider uppercase mb-1">ThinkQuest Olympiad · {subject}</div>
               <h1 className="text-2xl md:text-3xl font-extrabold" style={gradientTextStyle}>{quiz.quiz_name}</h1>
             </div>
-          </div>
-          
-          {/* Header Stats */}
-          <div className="p-6 md:p-8 flex justify-between items-center border-b border-gray-200 dark:border-white/[0.03]">
-            <div></div> {/* Empty div to keep stats on the right if justify-between is used, or adjust as needed */}
+            
             <div className="flex gap-4">
               <div className="bg-bg-base dark:bg-dark-base shadow-neo-btn-portal dark:shadow-neo-btn-dark-portal rounded-full px-4 py-1.5 flex items-center gap-1.5 hidden sm:flex">
                 <span className="material-symbols-outlined text-[16px] text-text-muted dark:text-white/70">format_list_numbered</span>
