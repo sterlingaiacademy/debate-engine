@@ -332,9 +332,9 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
           </div>
 
           {/* Question Area */}
-          <div className="p-6 md:p-8 flex-1 flex flex-col gap-8 transition-opacity duration-200" style={{ opacity: animate ? 1 : 0 }}>
+          <div className="flex-1 flex flex-col transition-opacity duration-200" style={{ opacity: animate ? 1 : 0, padding: '1.5rem', gap: '1.5rem' }}>
             {/* Question Card */}
-            <div className="bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal rounded-[20px] p-6 relative overflow-hidden">
+            <div className="bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal rounded-[20px] relative overflow-hidden" style={{ padding: '1.25rem' }}>
               <div className="absolute left-0 top-0 bottom-0 w-[4px] opacity-80" style={gradientStyle}></div>
               <p className="text-base text-text-main dark:text-white/90 leading-relaxed pl-6 font-medium whitespace-pre-wrap">
                 {q.question}
@@ -342,17 +342,17 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
             </div>
 
             {/* Multiple Choice Options */}
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col" style={{ gap: '0.75rem' }}>
               {q.options.map(opt => {
                 const isSelected = selectedLetter === opt.letter;
                 const isCorrectOpt = isRevealed && opt.letter === correctLetter;
                 const isWrongOpt = isRevealed && isSelected && opt.letter !== correctLetter;
                 
                 let containerClass = "group relative flex items-center p-4 rounded-xl cursor-pointer transition-all duration-200 bg-bg-base dark:bg-dark-base overflow-hidden ";
-                let containerStyle = {};
+                let containerStyle = { padding: '0.875rem', width: '100%', boxSizing: 'border-box' };
                 let letterClass = "w-10 h-10 rounded-lg flex items-center justify-center font-bold mr-6 flex-shrink-0 transition-colors ";
                 let letterStyle = {};
-                let textClass = "text-sm font-medium break-words min-w-0 ";
+                let textClass = "text-sm font-medium min-w-0 ";
                 
                 if (isCorrectOpt) {
                   containerClass += "shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal border border-green-500/20";
@@ -378,7 +378,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
                     <div className={letterClass} style={isSelected && !isRevealed ? { ...gradientStyle, ...letterStyle } : letterStyle}>
                       {opt.letter}
                     </div>
-                    <span className={textClass + " flex-1 min-w-0"}>{opt.text}</span>
+                    <span className={textClass + " flex-1 min-w-0"} style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{opt.text}</span>
                     {isCorrectOpt && <span className="material-symbols-outlined text-green-500 ml-2 flex-shrink-0">check_circle</span>}
                     {isWrongOpt && <span className="material-symbols-outlined text-red-500 ml-2 flex-shrink-0">cancel</span>}
                   </label>
