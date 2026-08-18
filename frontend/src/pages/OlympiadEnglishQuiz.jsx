@@ -332,7 +332,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
           </div>
 
           {/* Question Area */}
-          <div className="flex-1 flex flex-col transition-opacity duration-200" style={{ opacity: animate ? 1 : 0, padding: '1.5rem', gap: '1.5rem' }}>
+          <div className="flex-1 flex flex-col transition-opacity duration-200" style={{ opacity: animate ? 1 : 0, padding: '1.5rem 2rem', gap: '1.5rem' }}>
             {/* Question Card */}
             <div className="bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal rounded-[20px] relative overflow-hidden" style={{ padding: '1.25rem' }}>
               <div className="absolute left-0 top-0 bottom-0 w-[4px] opacity-80" style={gradientStyle}></div>
