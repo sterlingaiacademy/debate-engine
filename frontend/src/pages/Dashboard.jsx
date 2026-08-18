@@ -1142,6 +1142,42 @@ export default function Dashboard({ user, setUser }) {
           </div>
         </div>
 
+        {/* Speech League */}
+        <div
+          onClick={() => navigate('/speech-league-register')}
+          style={{
+            borderRadius: 18, padding: '1.4rem 1.5rem', cursor: 'pointer',
+            background: 'linear-gradient(135deg, #1e1b4b 0%, #312e81 100%)',
+            border: '1px solid rgba(234,179,8,0.2)',
+            position: 'relative', overflow: 'hidden',
+            transition: 'transform 0.25s, box-shadow 0.25s',
+            boxShadow: '0 4px 24px rgba(234,179,8,0.1)',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(234,179,8,0.2)'; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 4px 24px rgba(234,179,8,0.1)'; }}
+        >
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #eab308, #fef08a)' }} />
+          <div style={{ position: 'absolute', top: -40, right: -40, width: 130, height: 130, borderRadius: '50%', background: 'radial-gradient(circle, rgba(234,179,8,0.15) 0%, transparent 70%)', pointerEvents: 'none' }} />
+          
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
+            <span style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.12em', color: '#eab308', background: 'rgba(234,179,8,0.1)', border: '1px solid rgba(234,179,8,0.22)', padding: '0.2rem 0.65rem', borderRadius: 99 }}>
+              MONTHLY COMPETITION
+            </span>
+            <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(234,179,8,0.1)', border: '1px solid rgba(234,179,8,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Mic size={16} color="#eab308" strokeWidth={2.5} />
+            </div>
+          </div>
+          <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fff', marginBottom: '0.25rem', letterSpacing: '-0.01em' }}>
+            Speech <span style={{ color: '#eab308' }}>League</span>
+          </div>
+          <div style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '1rem', lineHeight: 1.5 }}>
+            Grace & Force Monthly Speech League. Speak. Persuade. Shine.
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#eab308' }}>
+            Register Now <ChevronRight size={14} />
+          </div>
+        </div>
+
         {/* Great India Freedom Challenge */}
         <div
           onClick={() => navigate('/freedom-quiz')}
