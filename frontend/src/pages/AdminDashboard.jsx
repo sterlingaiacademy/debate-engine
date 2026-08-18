@@ -1053,16 +1053,14 @@ function OlympiadSchoolsSection({ adminToken, apiBase }) {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <SectionTitle>Olympiad School Registrations</SectionTitle>
-          {!loading && schools.length > 0 && (
-            <span style={{ background: 'rgba(255,255,255,0.03)', color: '#94a3b8', padding: '0.25rem 0.65rem', borderRadius: 8, fontSize: '0.75rem', fontWeight: 600, border: '1px solid rgba(255,255,255,0.06)', marginTop: '-0.2rem' }}>
-              {schools.length} Total
-            </span>
-          )}
-        </div>
-      </div>
+      <SectionTitle>
+        Olympiad School Registrations
+        {!loading && schools.length > 0 && (
+          <span style={{ background: 'rgba(255,255,255,0.03)', color: '#94a3b8', padding: '0.2rem 0.6rem', borderRadius: 8, fontSize: '0.75rem', fontWeight: 600, border: '1px solid rgba(255,255,255,0.06)' }}>
+            {schools.length} Total
+          </span>
+        )}
+      </SectionTitle>
 
       <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
         {loading ? (
