@@ -32,6 +32,7 @@ const GTalkCohort = lazy(() => import('./pages/GTalkCohort'));
 const MUNMentorRegister = lazy(() => import('./pages/MUNMentorRegister'));
 const MiniMunRegister = lazy(() => import('./pages/MiniMunRegister'));
 const IndusMunRegister = lazy(() => import('./pages/IndusMunRegister'));
+const SpeechLeagueRegister = lazy(() => import('./pages/SpeechLeagueRegister'));
 const EnglishSessionRegister = lazy(() => import('./pages/EnglishSessionRegister'));
 const FreedomQuizRegister = lazy(() => import('./pages/FreedomQuizRegister'));
 const UNCertificateDownload = lazy(() => import('./pages/UNCertificateDownload'));
@@ -271,6 +272,7 @@ function App() {
               <Route path="/mun-mentor" element={user ? <MUNMentorRegister user={user} /> : <Navigate to="/" />} />
               <Route path="/mini-mun" element={user ? <MiniMunRegister user={user} /> : <Navigate to="/" />} />
               <Route path="/indus-mun" element={user ? <IndusMunRegister user={user} /> : <Navigate to="/" />} />
+              <Route path="/speech-league-register" element={user ? <SpeechLeagueRegister user={user} /> : <Navigate to="/" />} />
               <Route path="/english-session" element={user ? <EnglishSessionRegister user={user} /> : <Navigate to="/" />} />
               <Route path="/freedom-quiz" element={user ? <FreedomQuizRegister user={user} /> : <Navigate to="/" />} />
 

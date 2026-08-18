@@ -15,6 +15,7 @@ const SECTIONS = [
   { id: 'minimun', label: 'Mini MUN' },
   { id: 'indusmun', label: 'Indus MUN' },
   { id: 'english', label: 'English Session' },
+  { id: 'speech_league', label: 'Speech League' },
   { id: 'speech_analysis', label: 'Speech Analysis' },
   { id: 'freedom', label: 'Freedom Challenge' },
   { id: 'coupons', label: 'School Coupons' },
@@ -1269,6 +1270,100 @@ function EnglishSessionSection({ adminToken, apiBase }) {
   );
 }
 
+// SECTION: Speech League Registrations
+function SpeechLeagueSection({ adminToken, apiBase }) {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchIt = async () => {
+      try {
+        const res = await fetch(`${apiBase}/api/speech-league/registrations`, {
+          headers: { 'Authorization': `Bearer ${adminToken}` }
+        });
+        if (res.ok) {
+          const d = await res.json();
+          setData(d);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchIt();
+  }, [adminToken, apiBase]);
+
+  const downloadCSV = () => {
+    const headers = ['ID', 'User ID', 'Student Name', 'Email', 'Mobile', 'School Name', 'Grade', 'Created At'];
+    const rows = data.map(r => [
+      r.id, r.user_id, r.student_name, r.email, r.mobile, r.school_name, r.grade, new Date(r.created_at).toLocaleString()
+    ]);
+    const csvContent = "data:text/csv;charset=utf-8," 
+      + headers.join(",") + "\n" 
+      + rows.map(e => e.map(cell => `"${cell || ''}"`).join(",")).join("\n");
+    
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "speech_league_registrations.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  return (
+    <div style={{ background: '#0a0f1d', borderRadius: 16, border: '1px solid #1e293b', overflow: 'hidden' }}>
+      <div style={{ padding: '1.5rem', borderBottom: '1px solid #1e293b', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#fff' }}>Speech League Registrations</h2>
+          <p style={{ color: '#64748b', fontSize: '0.9rem', marginTop: '0.25rem' }}>Total: {data.length}</p>
+        </div>
+        <button onClick={downloadCSV} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#1e293b', color: '#fff', border: '1px solid #334155', padding: '0.5rem 1rem', borderRadius: 8, cursor: 'pointer', fontSize: '0.875rem' }}>
+          <Download size={16} /> Export CSV
+        </button>
+      </div>
+      
+      {loading ? (
+        <div style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>Loading...</div>
+      ) : (
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <thead>
+              <tr style={{ background: '#0f172a', color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                <TH>Student Name</TH>
+                <TH>Email</TH>
+                <TH>Mobile</TH>
+                <TH>School</TH>
+                <TH>Grade</TH>
+                <TH>Date</TH>
+              </tr>
+            </thead>
+            <tbody style={{ fontSize: '0.9rem' }}>
+              {data.map(r => (
+                <TableRow key={r.id}>
+                  <TD>{r.student_name}</TD>
+                  <TD>{r.email}</TD>
+                  <TD>{r.mobile}</TD>
+                  <TD>{r.school_name}</TD>
+                  <TD>{r.grade}</TD>
+                  <TD>{new Date(r.created_at).toLocaleDateString()}</TD>
+                </TableRow>
+              ))}
+              {data.length === 0 && (
+                <tr>
+                  <td colSpan="6" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>No registrations yet.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
 // SECTION: Freedom Quiz Registrations
 function FreedomQuizSection({ adminToken, apiBase }) {
   const [data, setData] = useState([]);
@@ -1769,6 +1864,7 @@ export default function AdminDashboard() {
               {activeSection === 'indusmun' && <IndusMunSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'munmentor' && <MunMentorSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'english' && <EnglishSessionSection adminToken={adminToken} apiBase={apiBase} />}
+              {activeSection === 'speech_league' && <SpeechLeagueSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'speech_analysis' && <UsersSection adminToken={adminToken} apiBase={apiBase} speechOnly={true} />}
               {activeSection === 'freedom' && <FreedomQuizSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'coupons' && <CouponsSection stats={stats} />}
