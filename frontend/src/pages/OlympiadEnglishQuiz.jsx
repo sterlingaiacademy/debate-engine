@@ -327,7 +327,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
                   </div>
                 );
               })}
-              {total > 8 && <div className="text-white/30 material-symbols-outlined text-[16px] w-[32px] h-[32px] flex items-center justify-center hidden sm:flex">more_horiz</div>}
+
             </div>
           </div>
 
