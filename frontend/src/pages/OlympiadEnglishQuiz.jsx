@@ -332,25 +332,25 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
           </div>
 
           {/* Question Area */}
-          <div className="p-6 md:p-8 flex-1 flex flex-col gap-8 transition-opacity duration-200" style={{ opacity: animate ? 1 : 0 }}>
+          <div className="px-5 md:px-6 pt-4 pb-2 flex-1 flex flex-col gap-3 transition-opacity duration-200" style={{ opacity: animate ? 1 : 0 }}>
             {/* Question Card */}
-            <div className="bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal rounded-[20px] p-6 relative overflow-hidden">
+            <div className="bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal rounded-[16px] p-4 relative overflow-hidden">
               <div className="absolute left-0 top-0 bottom-0 w-[4px] opacity-80" style={gradientStyle}></div>
-              <p className="text-base text-text-main dark:text-white/90 leading-relaxed pl-6 font-medium whitespace-pre-wrap">
+              <p className="text-sm text-text-main dark:text-white/90 leading-relaxed pl-5 font-medium whitespace-pre-wrap">
                 {q.question}
               </p>
             </div>
 
             {/* Multiple Choice Options */}
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
               {q.options.map(opt => {
                 const isSelected = selectedLetter === opt.letter;
                 const isCorrectOpt = isRevealed && opt.letter === correctLetter;
                 const isWrongOpt = isRevealed && isSelected && opt.letter !== correctLetter;
                 
-                let containerClass = "group relative flex items-center p-4 rounded-xl cursor-pointer transition-all duration-200 bg-bg-base dark:bg-dark-base ";
+                let containerClass = "group relative flex items-center p-3 rounded-xl cursor-pointer transition-all duration-200 bg-bg-base dark:bg-dark-base ";
                 let containerStyle = {};
-                let letterClass = "w-10 h-10 rounded-lg flex items-center justify-center font-bold mr-6 flex-shrink-0 transition-colors ";
+                let letterClass = "w-8 h-8 rounded-lg flex items-center justify-center font-bold mr-4 flex-shrink-0 transition-colors ";
                 let letterStyle = {};
                 let textClass = "text-sm font-medium break-words ";
                 
@@ -388,7 +388,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
           </div>
 
           {/* Bottom Nav */}
-          <div className="p-6 md:p-8 pt-4 pb-8 flex justify-between items-center z-10">
+          <div className="px-5 md:px-6 pt-3 pb-5 flex justify-between items-center z-10">
             <button onClick={onClose} className="text-text-muted dark:text-white/40 hover:text-text-main dark:hover:text-white/80 transition-colors font-medium text-sm flex items-center gap-1 border-none bg-transparent cursor-pointer">
               <span className="material-symbols-outlined text-[18px]">close</span> Exit
             </button>
