@@ -143,6 +143,14 @@ app.post('/api/speech-league/register', async (req, res) => {
       )
     `);
 
+    const existing = await db.query(
+      `SELECT id FROM speech_league_registrations WHERE email = $1`,
+      [email]
+    );
+    if (existing.rows.length > 0) {
+      return res.status(409).json({ error: 'This email is already registered.' });
+    }
+
     const result = await db.query(
       `INSERT INTO speech_league_registrations (user_id, student_name, email, mobile, school_name, grade)
        VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
@@ -3259,11 +3267,11 @@ app.post('/api/minimun/register', async (req, res) => {
     const targetModule = module || 3;
 
     const emailDup = await db.query(
-      `SELECT id FROM mini_mun_registrations WHERE email = $1 AND payment_status = 'paid' AND module = $2`,
-      [email, targetModule]
+      `SELECT id FROM mini_mun_registrations WHERE email = $1 AND payment_status = 'paid'`,
+      [email]
     );
     if (emailDup.rows.length > 0) {
-      return res.status(409).json({ error: 'already_registered', message: 'This email is already registered.' });
+      return res.status(409).json({ error: 'This email is already registered.' });
     }
 
     const order = await razorpayInstance.orders.create({
