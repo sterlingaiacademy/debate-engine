@@ -348,11 +348,11 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
                 const isCorrectOpt = isRevealed && opt.letter === correctLetter;
                 const isWrongOpt = isRevealed && isSelected && opt.letter !== correctLetter;
                 
-                let containerClass = "group relative flex items-center p-4 rounded-xl cursor-pointer transition-all duration-200 bg-bg-base dark:bg-dark-base ";
+                let containerClass = "group relative flex items-center p-4 rounded-xl cursor-pointer transition-all duration-200 bg-bg-base dark:bg-dark-base overflow-hidden ";
                 let containerStyle = {};
                 let letterClass = "w-10 h-10 rounded-lg flex items-center justify-center font-bold mr-6 flex-shrink-0 transition-colors ";
                 let letterStyle = {};
-                let textClass = "text-sm font-medium break-words ";
+                let textClass = "text-sm font-medium break-words min-w-0 ";
                 
                 if (isCorrectOpt) {
                   containerClass += "shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal border border-green-500/20";
