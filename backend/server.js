@@ -3267,8 +3267,8 @@ app.post('/api/minimun/register', async (req, res) => {
     const targetModule = module || 3;
 
     const emailDup = await db.query(
-      `SELECT id FROM mini_mun_registrations WHERE email = $1 AND payment_status = 'paid'`,
-      [email]
+      `SELECT id FROM mini_mun_registrations WHERE email = $1 AND payment_status = 'paid' AND module = $2`,
+      [email, targetModule]
     );
     if (emailDup.rows.length > 0) {
       return res.status(409).json({ error: 'This email is already registered.' });
