@@ -246,11 +246,11 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
 
   return (
     <div className="fixed inset-0 z-[100] bg-bg-base dark:bg-dark-base overflow-y-auto text-text-main dark:text-white">
-      <div className="min-h-full flex flex-col items-center px-4 sm:px-8 pb-12" style={{ paddingTop: '6rem' }}>
-        <div className="bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal mx-auto rounded-[28px] w-full max-w-[680px] relative overflow-hidden flex flex-col">
+      <div className="min-h-full flex flex-col items-center px-4 sm:px-8 pb-8" style={{ paddingTop: '2rem' }}>
+        <div className="bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal mx-auto rounded-[24px] w-full max-w-[600px] relative overflow-hidden flex flex-col">
           
           {/* Header & Stats */}
-          <div className="px-6 md:px-8 border-b border-gray-200 dark:border-white/[0.03]" style={{ paddingTop: '1rem', paddingBottom: '1.75rem' }}>
+          <div className="px-5 md:px-6 border-b border-gray-200 dark:border-white/[0.03]" style={{ paddingTop: '0.85rem', paddingBottom: '1rem' }}>
             <div className="text-xs font-bold text-text-muted dark:text-white/50 tracking-wider uppercase mb-2">ThinkQuest Olympiad · {subject}</div>
             <div className="flex justify-between items-center flex-wrap gap-4">
               <h1 className="text-2xl md:text-3xl font-extrabold" style={gradientTextStyle}>{quiz.quiz_name}</h1>
@@ -269,8 +269,8 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
           </div>
 
           {/* Progress Bar & Navigator */}
-          <div className="px-6 md:px-8 py-6 border-b border-gray-200 dark:border-white/[0.03]">
-            <div className="h-[6px] bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal rounded-full w-full mb-8 overflow-hidden p-[1px]">
+          <div className="px-5 md:px-6 py-4 border-b border-gray-200 dark:border-white/[0.03]">
+            <div className="h-[5px] bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal rounded-full w-full mb-4 overflow-hidden p-[1px]">
               <div className="h-full rounded-full transition-all duration-300 shadow-[0_0_8px_rgba(238,9,121,0.5)]" style={{ width: `${((current+1)/total)*100}%`, ...gradientStyle }}></div>
             </div>
             
