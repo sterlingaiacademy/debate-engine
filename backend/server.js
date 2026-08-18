@@ -125,6 +125,62 @@ app.get('/api/english-session/registrations', async (req, res) => {
 });
 
 
+// SECTION: Speech League Registrations
+
+app.post('/api/speech-league/register', async (req, res) => {
+  const { userId, studentName, email, mobile, schoolName, grade } = req.body;
+  try {
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS speech_league_registrations (
+        id SERIAL PRIMARY KEY,
+        user_id VARCHAR(255),
+        student_name VARCHAR(255),
+        email VARCHAR(255),
+        mobile VARCHAR(50),
+        school_name VARCHAR(255),
+        grade VARCHAR(50),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    const result = await db.query(
+      `INSERT INTO speech_league_registrations (user_id, student_name, email, mobile, school_name, grade)
+       VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
+      [userId || null, studentName, email, mobile, schoolName, grade]
+    );
+    res.json({ success: true, registrationId: result.rows[0].id });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/speech-league/registrations', async (req, res) => {
+  try {
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS speech_league_registrations (
+        id SERIAL PRIMARY KEY,
+        user_id VARCHAR(255),
+        student_name VARCHAR(255),
+        email VARCHAR(255),
+        mobile VARCHAR(50),
+        school_name VARCHAR(255),
+        grade VARCHAR(50),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    
+    const result = await db.query(`
+      SELECT *
+      FROM speech_league_registrations
+      ORDER BY created_at DESC
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 // SECTION: Freedom Quiz Registrations
 
 app.post('/api/freedom-quiz/register', async (req, res) => {
