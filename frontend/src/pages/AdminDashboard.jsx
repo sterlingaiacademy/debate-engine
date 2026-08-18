@@ -12,6 +12,7 @@ const SECTIONS = [
   { id: 'subscriptions', label: 'Subscriptions' },
   { id: 'debates', label: 'Debates' },
   { id: 'bootcamp', label: 'Cohort 2.0' },
+  { id: 'minimun', label: 'Mini MUN' },
   { id: 'indusmun', label: 'Indus MUN' },
   { id: 'english', label: 'English Session' },
   { id: 'speech_analysis', label: 'Speech Analysis' },
@@ -804,30 +805,38 @@ function MiniMunSection({ adminToken, apiBase }) {
 
   const regs = (data?.registrations || []).filter(r => r.payment_status === 'paid' && r.module === selectedModule);
 
-  // Compute multiple payments for the current module
-  const multiMap = {};
-  regs.forEach(r => {
-    if (!r.email) return;
-    const e = r.email.toLowerCase().trim();
-    if (!multiMap[e]) {
-      multiMap[e] = { count: 0, rows: [] };
-    }
-    multiMap[e].count++;
-    multiMap[e].rows.push(r);
-  });
-  const multiplePaidUsers = Object.values(multiMap).filter(x => x.count > 1).map(x => ({
-    name: x.rows[0].student_name,
-    email: x.rows[0].email,
-    phone: x.rows[0].mobile,
-    count: x.count,
-    amounts: x.rows.map(r => r.amount / 100).join(', ')
-  }));
+  const downloadCSV = () => {
+    const headers = ['Name', 'Email', 'Phone', 'Category', 'Grade/Desig', 'School/Inst.', 'City', 'Speech Score', 'Status', 'Module', 'Registered'];
+    const rows = regs.map(r => [
+      `"${(r.student_name || '').replace(/"/g, '""')}"`,
+      `"${(r.email || '').replace(/"/g, '""')}"`,
+      `"${(r.mobile || '').replace(/"/g, '""')}"`,
+      `"${(r.category || '').replace(/"/g, '""')}"`,
+      `"${(r.grade || '').replace(/"/g, '""')}"`,
+      `"${(r.school_name || '').replace(/"/g, '""')}"`,
+      `"${(r.city || '').replace(/"/g, '""')}"`,
+      r.max_speech_score || 0,
+      r.payment_status,
+      r.module,
+      `"${fmtDate(r.registered_at)}"`
+    ]);
+    const csvContent = [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `minimun_module_${selectedModule}_registrations.csv`;
+    link.click();
+  };
 
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <SectionTitle>Mini MUN Master Class Registrations (Module-{selectedModule})</SectionTitle>
-        <select 
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          <button onClick={downloadCSV} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '0.5rem 1rem', borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem' }}>
+            <Download size={16} /> Export CSV
+          </button>
+          <select 
           value={selectedModule} 
           onChange={(e) => setSelectedModule(Number(e.target.value))}
           style={{
@@ -839,6 +848,7 @@ function MiniMunSection({ adminToken, apiBase }) {
           <option value={4} style={{ background: '#0f172a' }}>Module 4</option>
           <option value={3} style={{ background: '#0f172a' }}>Module 3</option>
         </select>
+        </div>
       </div>
       
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
