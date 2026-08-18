@@ -388,26 +388,76 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
           </div>
 
           {/* Bottom Nav */}
-          <div className="p-6 md:p-8 pt-4 pb-8 flex justify-between items-center z-10">
-            <button onClick={onClose} className="text-text-muted dark:text-white/40 hover:text-text-main dark:hover:text-white/80 transition-colors font-medium text-sm flex items-center gap-1 border-none bg-transparent cursor-pointer">
-              <span className="material-symbols-outlined text-[18px]">close</span> Exit
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 1.5rem 1.5rem' }}>
+            <button
+              onClick={onClose}
+              style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.875rem', fontWeight: 500, opacity: 0.5, transition: 'opacity 0.2s' }}
+              className="text-text-main dark:text-white hover:opacity-80"
+              onMouseEnter={e => e.currentTarget.style.opacity = '0.8'}
+              onMouseLeave={e => e.currentTarget.style.opacity = '0.5'}
+            >
+              <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>close</span> Exit
             </button>
-            
+
             {isLastQ ? (
-              <button 
-                onClick={handleSubmit} 
+              <button
+                onClick={handleSubmit}
                 disabled={submitting || !nextEnabled}
-                className={`px-8 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 border-none ${nextEnabled && !submitting ? 'text-white hover:opacity-90 active:scale-[0.98] shadow-neo-portal dark:shadow-neo-dark-portal cursor-pointer' : 'bg-gray-200 dark:bg-white/5 text-gray-400 dark:text-white/30 cursor-not-allowed'}`}
-                style={nextEnabled && !submitting ? gradientStyle : {}}
+                style={nextEnabled && !submitting ? {
+                  ...gradientStyle,
+                  border: 'none',
+                  borderRadius: '999px',
+                  padding: '0.75rem 2rem',
+                  fontWeight: 700,
+                  fontSize: '0.9rem',
+                  color: '#fff',
+                  cursor: 'pointer',
+                  letterSpacing: '0.02em',
+                  boxShadow: '0 4px 20px rgba(238,9,121,0.45), 0 1px 4px rgba(0,0,0,0.3)',
+                  transition: 'transform 0.15s, box-shadow 0.15s',
+                } : {
+                  border: 'none',
+                  borderRadius: '999px',
+                  padding: '0.75rem 2rem',
+                  fontWeight: 700,
+                  fontSize: '0.9rem',
+                  background: 'rgba(255,255,255,0.06)',
+                  color: 'rgba(255,255,255,0.3)',
+                  cursor: 'not-allowed',
+                }}
+                onMouseEnter={e => { if (nextEnabled && !submitting) e.currentTarget.style.transform = 'scale(1.03)'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; }}
               >
                 {nextLabel()}
               </button>
             ) : (
-              <button 
-                onClick={handleNext} 
+              <button
+                onClick={handleNext}
                 disabled={!nextEnabled}
-                className={`px-8 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 border-none ${nextEnabled ? 'text-white hover:opacity-90 active:scale-[0.98] shadow-neo-portal dark:shadow-neo-dark-portal cursor-pointer' : 'bg-bg-base dark:bg-dark-base text-text-muted dark:text-white/30 cursor-not-allowed border border-gray-200 dark:border-white/5'}`}
-                style={nextEnabled ? gradientStyle : {}}
+                style={nextEnabled ? {
+                  ...gradientStyle,
+                  border: 'none',
+                  borderRadius: '999px',
+                  padding: '0.75rem 2rem',
+                  fontWeight: 700,
+                  fontSize: '0.9rem',
+                  color: '#fff',
+                  cursor: 'pointer',
+                  letterSpacing: '0.02em',
+                  boxShadow: '0 4px 20px rgba(238,9,121,0.45), 0 1px 4px rgba(0,0,0,0.3)',
+                  transition: 'transform 0.15s, box-shadow 0.15s',
+                } : {
+                  border: 'none',
+                  borderRadius: '999px',
+                  padding: '0.75rem 2rem',
+                  fontWeight: 700,
+                  fontSize: '0.9rem',
+                  background: 'rgba(255,255,255,0.06)',
+                  color: 'rgba(255,255,255,0.3)',
+                  cursor: 'not-allowed',
+                }}
+                onMouseEnter={e => { if (nextEnabled) e.currentTarget.style.transform = 'scale(1.03)'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; }}
               >
                 {nextLabel()}
               </button>
