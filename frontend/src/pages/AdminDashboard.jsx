@@ -1057,7 +1057,7 @@ function OlympiadSchoolsSection({ adminToken, apiBase }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <SectionTitle>Olympiad School Registrations</SectionTitle>
           {!loading && schools.length > 0 && (
-            <span style={{ background: 'rgba(238,9,121,0.15)', color: '#ff2a85', padding: '0.25rem 0.75rem', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 700, border: '1px solid rgba(238,9,121,0.3)' }}>
+            <span style={{ background: 'rgba(255,255,255,0.03)', color: '#94a3b8', padding: '0.25rem 0.65rem', borderRadius: 8, fontSize: '0.75rem', fontWeight: 600, border: '1px solid rgba(255,255,255,0.06)' }}>
               {schools.length} Total
             </span>
           )}
