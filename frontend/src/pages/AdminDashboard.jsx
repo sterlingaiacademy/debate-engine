@@ -14,7 +14,6 @@ const SECTIONS = [
   { id: 'bootcamp', label: 'Cohort 2.0' },
   { id: 'minimun', label: 'Mini MUN' },
   { id: 'indusmun', label: 'Indus MUN' },
-  { id: 'english', label: 'English Session' },
   { id: 'speech_league', label: 'Speech League' },
   { id: 'speech_analysis', label: 'Speech Analysis' },
   { id: 'freedom', label: 'Freedom Challenge' },
@@ -1192,83 +1191,6 @@ function IndusMunSection({ adminToken, apiBase }) {
 // ══════════════════════════════════════════════════
 
 
-// SECTION: English Session Registrations
-function EnglishSessionSection({ adminToken, apiBase }) {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchIt = async () => {
-      try {
-        const res = await fetch(`${apiBase}/api/english-session/registrations`, {
-          headers: { 'Authorization': `Bearer ${adminToken}` }
-        });
-        if (res.ok) {
-          const d = await res.json();
-          setData(d);
-        }
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchIt();
-  }, [adminToken, apiBase]);
-
-  const downloadCSV = () => {
-    const headers = ['ID', 'User ID', 'Student Name', 'Parent Name', 'Email', 'Mobile', 'School Name', 'Grade', 'Speech Score', 'Created At'];
-    const rows = data.map(r => [
-      r.id, r.user_id, r.student_name, r.parent_name, r.email, r.mobile, r.school_name, r.grade, r.max_speech_score, new Date(r.created_at).toLocaleString()
-    ]);
-    const csvContent = [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'english_session_registrations.csv';
-    link.click();
-  };
-
-  return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-        <SectionTitle>English Session Registrations ({data.length})</SectionTitle>
-        <button onClick={downloadCSV} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '0.5rem 1rem', borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem' }}>
-          <Download size={16} /> Export CSV
-        </button>
-      </div>
-      
-      {loading ? (
-        <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>Loading...</div>
-      ) : (
-        <div style={{ overflowX: 'auto', background: 'rgba(30, 41, 59, 0.4)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.05)' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-            <TableHead cols={['Student Name', 'Parent Name', 'Email', 'Mobile', 'School', 'Grade', 'Speech Score', 'Date']} />
-            <tbody>
-              {data.map((r, i) => (
-                <TableRow key={i}>
-                  <TD>{r.student_name}</TD>
-                  <TD>{r.parent_name}</TD>
-                  <TD>{r.email}</TD>
-                  <TD>{r.mobile}</TD>
-                  <TD>{r.school_name}</TD>
-                  <TD>{r.grade}</TD>
-                  <TD>{r.max_speech_score || 0}</TD>
-                  <TD>{new Date(r.created_at).toLocaleDateString()}</TD>
-                </TableRow>
-              ))}
-              {data.length === 0 && (
-                <tr>
-                  <td colSpan="8" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>No registrations yet.</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </div>
-  );
-}
 
 // SECTION: Speech League Registrations
 function SpeechLeagueSection({ adminToken, apiBase }) {
@@ -1851,7 +1773,6 @@ export default function AdminDashboard() {
               {activeSection === 'minimun' && <MiniMunSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'indusmun' && <IndusMunSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'munmentor' && <MunMentorSection adminToken={adminToken} apiBase={apiBase} />}
-              {activeSection === 'english' && <EnglishSessionSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'speech_league' && <SpeechLeagueSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'speech_analysis' && <UsersSection adminToken={adminToken} apiBase={apiBase} speechOnly={true} />}
               {activeSection === 'freedom' && <FreedomQuizSection adminToken={adminToken} apiBase={apiBase} />}
