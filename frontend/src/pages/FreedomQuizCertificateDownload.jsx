@@ -30,7 +30,7 @@ export default function FreedomQuizCertificateDownload() {
         throw new Error(data.error || 'Failed to fetch certificate status');
       }
       
-      const { name, status } = data.student;
+      const { name, status, id } = data.student;
       
       // 2. Fetch the corresponding PDF template
       const pdfUrl = status === 'appreciation' 
@@ -89,6 +89,18 @@ export default function FreedomQuizCertificateDownload() {
         font: font,
         color: rgb(0.1, 0.1, 0.1),
       });
+
+      // ID
+      if (id) {
+        const idSize = 14;
+        firstPage.drawText(id, {
+          x: 705, 
+          y: 378, 
+          size: idSize,
+          font: font,
+          color: rgb(0.1, 0.1, 0.1),
+        });
+      }
       
       // 5. Save and trigger download
       const pdfBytes = await pdfDoc.save();
