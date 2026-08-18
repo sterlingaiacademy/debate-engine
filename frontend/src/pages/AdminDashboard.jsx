@@ -1313,34 +1313,22 @@ function SpeechLeagueSection({ adminToken, apiBase }) {
   };
 
   return (
-    <div style={{ background: '#0a0f1d', borderRadius: 16, border: '1px solid #1e293b', overflow: 'hidden' }}>
-      <div style={{ padding: '1.5rem', borderBottom: '1px solid #1e293b', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#fff' }}>Speech League Registrations</h2>
-          <p style={{ color: '#64748b', fontSize: '0.9rem', marginTop: '0.25rem' }}>Total: {data.length}</p>
-        </div>
-        <button onClick={downloadCSV} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#1e293b', color: '#fff', border: '1px solid #334155', padding: '0.5rem 1rem', borderRadius: 8, cursor: 'pointer', fontSize: '0.875rem' }}>
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+        <SectionTitle>Speech League Registrations ({data.length})</SectionTitle>
+        <button onClick={downloadCSV} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '0.5rem 1rem', borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem' }}>
           <Download size={16} /> Export CSV
         </button>
       </div>
       
       {loading ? (
-        <div style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>Loading...</div>
+        <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>Loading...</div>
       ) : (
-        <div style={{ overflowX: 'auto' }}>
+        <div style={{ overflowX: 'auto', background: 'rgba(30, 41, 59, 0.4)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.05)' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-            <thead>
-              <tr style={{ background: '#0f172a', color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                <TH>Student Name</TH>
-                <TH>Email</TH>
-                <TH>Mobile</TH>
-                <TH>School</TH>
-                <TH>Grade</TH>
-                <TH>Date</TH>
-              </tr>
-            </thead>
-            <tbody style={{ fontSize: '0.9rem' }}>
-              {data.map(r => (
+            <TableHead cols={['Student Name', 'Email', 'Mobile', 'School', 'Grade', 'Date']} />
+            <tbody>
+              {data.map((r, i) => (
                 <TableRow key={r.id}>
                   <TD>{r.student_name}</TD>
                   <TD>{r.email}</TD>
