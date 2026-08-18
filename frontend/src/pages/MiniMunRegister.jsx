@@ -58,7 +58,7 @@ export default function MiniMunRegister({ user }) {
           grade: form.grade,
           schoolName: form.schoolName,
           city: form.city,
-          module: 4
+          module: 5
         }),
       });
       const data = await res.json();
@@ -173,7 +173,7 @@ export default function MiniMunRegister({ user }) {
             Registration Successful!
           </h2>
           <p style={{ color: '#94a3b8', fontSize: '1.05rem', lineHeight: 1.6, margin: '0 0 2.5rem' }}>
-            Thank you for registering for <strong>Mini MUN Master Class Module-4</strong>. Your payment was successful and we will contact you soon with your Zoom details.
+            Thank you for registering for <strong>Mini MUN Master Class Module-5</strong>. Your payment was successful and we will contact you soon with your Zoom details.
           </p>
           <button
             onClick={() => navigate('/dashboard')}
@@ -206,7 +206,7 @@ export default function MiniMunRegister({ user }) {
             Already Registered
           </h2>
           <p style={{ color: '#94a3b8', fontSize: '1.05rem', lineHeight: 1.6, margin: '0 0 2.5rem' }}>
-            You have already registered for Mini MUN Master Class Module-4 with this email address. We look forward to seeing you!
+            You have already registered for Mini MUN Master Class Module-5 with this email address. We look forward to seeing you!
           </p>
           <button onClick={() => navigate('/dashboard')} style={{ background: '#3b82f6', color: '#fff', border: 'none', padding: '1rem 2.5rem', borderRadius: 99, fontWeight: 800, cursor: 'pointer' }}>
             Back to Dashboard
@@ -246,11 +246,11 @@ export default function MiniMunRegister({ user }) {
           </div>
           
           <h1 style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 900, color: '#fff', margin: '0 0 1rem', lineHeight: 1.1, letterSpacing: '-0.02em' }}>
-            <span style={{ color: '#1d4ed8' }}>MINI MUN</span> MASTER CLASS <br/><span style={{ color: '#ef4444' }}>MODULE-4</span>
+            <span style={{ color: '#1d4ed8' }}>MINI MUN</span> MASTER CLASS <br/><span style={{ color: '#ef4444' }}>MODULE-5</span>
           </h1>
           
           <p style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', color: '#94a3b8', margin: '0 auto 2.5rem', maxWidth: 650, lineHeight: 1.6 }}>
-            Research. Analyze. Persuade. Master the art of writing an excellent position paper and stand out in your committee.
+            Understand the rules & flow of MUN. Practice the procedure with confidence. Excel in every session as a leader.
           </p>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'center' }}>
@@ -258,7 +258,7 @@ export default function MiniMunRegister({ user }) {
               <Clock size={24} color="#3b82f6" />
               <div style={{ textAlign: 'left' }}>
                 <div style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 700, textTransform: 'uppercase' }}>Date & Time</div>
-                <div style={{ color: '#fff', fontWeight: 700, fontSize: '1rem' }}>09 August 2026 | 10:00 AM</div>
+                <div style={{ color: '#fff', fontWeight: 700, fontSize: '1rem' }}>23 August 2026 | 10:00 AM</div>
               </div>
             </div>
             <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, padding: '1rem 1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -327,11 +327,12 @@ export default function MiniMunRegister({ user }) {
           
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {[
-              "Understand the purpose and structure of a position paper",
-              "Organize your ideas logically and persuasively",
-              "Use strong arguments and evidence",
-              "Align with country policy and committee agenda",
-              "Impress the dais with clarity and depth"
+              "Understand the MUN procedure step-by-step",
+              "Learn the rules of debate and motions",
+              "Master the flow of formal and informal sessions",
+              "Use points, privileges and parliamentary language",
+              "Follow decorum and maintain committee discipline",
+              "Become a confident and effective delegate"
             ].map((item, i) => (
               <li key={i} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
                 <div style={{ marginTop: 2, background: 'rgba(239,68,68,0.15)', borderRadius: '50%', padding: 4, display: 'flex' }}>

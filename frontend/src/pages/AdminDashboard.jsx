@@ -786,7 +786,7 @@ function MunMentorSection({ adminToken, apiBase }) {
 function MiniMunSection({ adminToken, apiBase }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [selectedModule, setSelectedModule] = useState(4);
+  const [selectedModule, setSelectedModule] = useState(5);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -835,6 +835,7 @@ function MiniMunSection({ adminToken, apiBase }) {
             color: '#fff', padding: '0.5rem 1rem', borderRadius: 8, outline: 'none', cursor: 'pointer'
           }}
         >
+          <option value={5} style={{ background: '#0f172a' }}>Module 5</option>
           <option value={4} style={{ background: '#0f172a' }}>Module 4</option>
           <option value={3} style={{ background: '#0f172a' }}>Module 3</option>
         </select>
