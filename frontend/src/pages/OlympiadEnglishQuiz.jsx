@@ -246,8 +246,8 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
 
   return (
     <div className="fixed inset-0 z-[100] bg-bg-base dark:bg-dark-base overflow-y-auto text-text-main dark:text-white">
-      <div className="min-h-full flex flex-col justify-center p-4 sm:p-8 py-12">
-        <div className="bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal mx-auto rounded-[28px] w-full max-w-[680px] relative overflow-hidden flex flex-col">
+      <div className="min-h-full flex flex-col p-4 sm:p-8 py-12">
+        <div className="bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal m-auto rounded-[28px] w-full max-w-[680px] relative overflow-hidden flex flex-col">
           
           {/* Header & Stats */}
           <div className="px-6 md:px-8 pb-8 pt-20 md:pt-24 flex justify-between items-center border-b border-gray-200 dark:border-white/[0.03] flex-wrap gap-4">
