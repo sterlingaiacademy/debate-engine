@@ -510,7 +510,11 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
         email: emailIdx !== -1 ? cols[emailIdx] || '' : '',
       };
     }).filter(r => r.name);
-    setParsed(rows);
+    const valid = rows.filter(r => r.classLevel);
+    const skipped = rows.length - valid.length;
+    if (skipped > 0) setParseError(`⚠️ ${skipped} row(s) skipped — class/grade is required for every student.`);
+    else setParseError('');
+    setParsed(valid);
   };
 
   const handleFileDrop = (e) => {
