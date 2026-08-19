@@ -266,6 +266,16 @@ app.post('/api/indusmun/register', async (req, res) => {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
+
+    // Check for duplicates
+    const existing = await db.query(
+      `SELECT id FROM indus_mun_registrations WHERE email = $1 OR mobile = $2`,
+      [email, mobile]
+    );
+    if (existing.rows.length > 0) {
+      return res.json({ success: true, message: 'Already registered', registrationId: existing.rows[0].id });
+    }
+
     const result = await db.query(
       `INSERT INTO indus_mun_registrations (user_id, student_name, email, mobile, school_name, grade)
        VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
