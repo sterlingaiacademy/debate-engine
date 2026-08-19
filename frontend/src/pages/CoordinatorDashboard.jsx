@@ -470,7 +470,16 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
   const [manualResult, setManualResult] = useState(null);
   const [manualError, setManualError] = useState('');
 
-  const CLASS_OPTIONS = ['Level 1','Level 2','Level 3','Level 4','Level 5'];
+  // Grade → Level mapping (matches Layout.jsx logic)
+  const gradeToLevel = (g) => {
+    if (['KG','Grade 1','Grade 2'].includes(g)) return 'Level 1';
+    if (['Grade 3','Grade 4','Grade 5'].includes(g)) return 'Level 2';
+    if (['Grade 6','Grade 7','Grade 8'].includes(g)) return 'Level 3';
+    if (['Grade 9','Grade 10'].includes(g)) return 'Level 4';
+    if (['Grade 11','Grade 12'].includes(g)) return 'Level 5';
+    return g; // fallback: pass as-is
+  };
+  const CLASS_OPTIONS = ['KG','Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6','Grade 7','Grade 8','Grade 9','Grade 10','Grade 11','Grade 12'];
 
   const parseCSV = (text) => {
     setParseError('');
@@ -510,10 +519,12 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
     if (!parsed.length) return;
     setUploading(true);
     try {
+      // Map grade values to Level before sending to backend
+      const studentsWithLevel = parsed.map(s => ({ ...s, classLevel: gradeToLevel(s.classLevel) }));
       const res = await fetch(`${API_BASE}/api/coordinator/bulk-create-students`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ coordinatorId, students: parsed }),
+        body: JSON.stringify({ coordinatorId, students: studentsWithLevel }),
       });
       const data = await res.json();
       if (data.success) { setResults(data.results); setTab('results'); fetchData(); }
@@ -539,7 +550,7 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
       const res = await fetch(`${API_BASE}/api/coordinator/add-student`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ coordinatorId, ...manualForm }),
+        body: JSON.stringify({ coordinatorId, ...manualForm, classLevel: gradeToLevel(manualForm.classLevel) }),
       });
       const data = await res.json();
       if (data.success) { setManualResult(data.student); setManualForm({ name: '', classLevel: '', password: '', email: '' }); fetchData(); }
@@ -581,11 +592,11 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.25rem', padding: '1rem 1.25rem', background: 'rgba(59,130,246,0.05)', border: '1px solid rgba(59,130,246,0.2)', borderRadius: 14 }}>
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: '0.875rem', fontWeight: 700, color: '#e2e8f0', marginBottom: '0.2rem' }}>📥 Download CSV Template</div>
-              <div style={{ fontSize: '0.78rem', color: '#64748b' }}>Fill in student names and classes. Password and email are optional — leave blank to auto-generate.</div>
+              <div style={{ fontSize: '0.78rem', color: '#64748b' }}>Fill in student names and grades. Password and email are optional — leave blank to auto-generate.</div>
             </div>
             <button
               onClick={() => {
-                const csv = 'name,class,password,email\nArjun Kumar,Level 3,,\nPriya Sharma,Level 2,,\nRohan Nair,Level 3,,';
+                const csv = 'name,class,password,email\nArjun Kumar,Grade 8,,\nPriya Sharma,Grade 6,,\nRohan Nair,Grade 10,,';
                 const blob = new Blob([csv], { type: 'text/csv' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
