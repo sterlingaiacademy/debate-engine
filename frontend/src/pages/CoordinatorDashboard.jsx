@@ -596,7 +596,7 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
             </div>
             <button
               onClick={() => {
-                const csv = 'name,class,password,email\nArjun Kumar,Grade 8,,\nPriya Sharma,Grade 6,,\nRohan Nair,Grade 10,,';
+                const csv = 'name,class,email (optional)\nArjun Kumar,Grade 8,\nPriya Sharma,Grade 6,\nRohan Nair,Grade 10,';
                 const blob = new Blob([csv], { type: 'text/csv' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -639,7 +639,7 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
           <textarea
             value={csvText}
             onChange={e => handleCSVText(e.target.value)}
-            placeholder={'name,class,password,email\nArjun Kumar,Level 3,,\nPriya Sharma,Level 2,,'}
+            placeholder={'name,class,email (optional)\nArjun Kumar,Grade 8,\nPriya Sharma,Grade 6,'}
             style={{ ...inputStyle, minHeight: 130, resize: 'vertical', fontFamily: 'monospace', fontSize: '0.8rem', marginBottom: '0.75rem' }}
           />
 
