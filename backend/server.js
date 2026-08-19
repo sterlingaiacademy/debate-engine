@@ -273,7 +273,7 @@ app.post('/api/indusmun/register', async (req, res) => {
       [email, mobile]
     );
     if (existing.rows.length > 0) {
-      return res.json({ success: true, message: 'Already registered', registrationId: existing.rows[0].id });
+      return res.status(400).json({ error: 'You are already registered for Indus MUN with this email or mobile number.' });
     }
 
     const result = await db.query(
