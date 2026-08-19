@@ -261,7 +261,8 @@ function StudentsSection({ students, fetchData, coordinatorId }) {
   const [filterStatus, setFilterStatus] = useState('all');
   const [sortBy, setSortBy] = useState('name');
   const [removingId, setRemovingId] = useState(null);
-  const [editingStudent, setEditingStudent] = useState(null); // { id, username, name }
+  const [revealedId, setRevealedId] = useState(null); // student id whose credentials are shown
+  const [editingStudent, setEditingStudent] = useState(null);
   const [editForm, setEditForm] = useState({ newUsername: '', newPassword: '' });
   const [editLoading, setEditLoading] = useState(false);
   const [editError, setEditError] = useState('');
@@ -391,9 +392,24 @@ function StudentsSection({ students, fetchData, coordinatorId }) {
                   <TD mono muted>{i + 1}</TD>
                   <TD><span style={{ fontWeight: 600, color: '#e2e8f0' }}>{s.name}</span></TD>
                   <TD mono>
-                    {s.username
-                      ? <span style={{ color: '#93c5fd', fontSize: '0.8rem' }}>{s.username}</span>
-                      : <span style={{ color: '#334155' }}>—</span>}
+                    {s.username ? (
+                      <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                          <span style={{ color: '#93c5fd', fontSize: '0.8rem' }}>{s.username}</span>
+                          <button
+                            onClick={() => setRevealedId(revealedId === s.id ? null : s.id)}
+                            title={revealedId === s.id ? 'Hide password' : 'Show password'}
+                            style={{ padding: '0.15rem 0.4rem', fontSize: '0.65rem', color: revealedId === s.id ? '#10b981' : '#64748b', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 5, cursor: 'pointer' }}
+                          >{revealedId === s.id ? '🙈' : '👁'}</button>
+                        </div>
+                        {revealedId === s.id && (
+                          <div style={{ marginTop: '0.3rem', padding: '0.35rem 0.6rem', background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.15)', borderRadius: 7 }}>
+                            <div style={{ fontSize: '0.68rem', color: '#64748b', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.15rem' }}>Password</div>
+                            <span style={{ fontFamily: 'monospace', fontSize: '0.82rem', color: '#10b981', fontWeight: 700, letterSpacing: '0.04em' }}>{s.password || '—'}</span>
+                          </div>
+                        )}
+                      </div>
+                    ) : <span style={{ color: '#334155' }}>—</span>}
                   </TD>
                   <TD muted>{s.class}</TD>
                   <TD muted>{s.age || '—'}</TD>

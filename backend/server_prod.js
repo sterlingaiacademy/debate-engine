@@ -3607,7 +3607,7 @@ app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
 
     // Fetch students linked to this school
     const studentsRes = await db.query(
-      `SELECT id, name, "studentId" as username, "classLevel" as class, email, olympiad_registered, age, parent_name, parent_phone, city, state, contact_email, subjects
+      `SELECT id, name, "studentId" as username, password, "classLevel" as class, email, olympiad_registered, age, parent_name, parent_phone, city, state, contact_email, subjects
        FROM users 
        WHERE school_id = $1 AND role = 'student'`,
       [school.id]
@@ -3667,6 +3667,7 @@ app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
         id: student.id,
         name: student.name,
         username: student.username,
+        password: student.password,
         class: student.class || 'Unknown',
         age: student.age,
         parent_name: student.parent_name,
