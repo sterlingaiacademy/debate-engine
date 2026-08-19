@@ -325,7 +325,24 @@ function StudentsSection({ students, fetchData, coordinatorId }) {
 
   return (
     <div>
-      <SectionTitle sub={`${(students || []).length} total students registered under your school`}>All Students</SectionTitle>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
+        <SectionTitle sub={`${(students || []).length} total students registered under your school`}>All Students</SectionTitle>
+        <button
+          onClick={() => {
+            const rows = (students || []).filter(s => s.username);
+            if (!rows.length) return alert('No students with credentials to download.');
+            const isHashed = p => p && (p.startsWith('$2a$') || p.startsWith('$2b$'));
+            const csv = ['Name,Username,Password,Email,Class']
+              .concat(rows.map(s => `${s.name},${s.username},${isHashed(s.password) ? 'Set by student' : (s.password || 'N/A')},${s.email || ''},${s.class || ''}`))
+              .join('\n');
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url; a.download = 'student_credentials.csv'; a.click();
+            URL.revokeObjectURL(url);
+          }}
+          style={{ padding: '0.55rem 1.1rem', background: 'linear-gradient(135deg, #059669, #10b981)', color: '#fff', border: 'none', borderRadius: 10, fontFamily: FONT, fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}
+        >⬇ Download Credentials CSV</button>
+      </div>
 
       {/* Edit credentials modal */}
       {editingStudent && (
@@ -402,12 +419,18 @@ function StudentsSection({ students, fetchData, coordinatorId }) {
                             style={{ padding: '0.15rem 0.4rem', fontSize: '0.65rem', color: revealedId === s.id ? '#10b981' : '#64748b', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 5, cursor: 'pointer' }}
                           >{revealedId === s.id ? '🙈' : '👁'}</button>
                         </div>
-                        {revealedId === s.id && (
-                          <div style={{ marginTop: '0.3rem', padding: '0.35rem 0.6rem', background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.15)', borderRadius: 7 }}>
-                            <div style={{ fontSize: '0.68rem', color: '#64748b', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.15rem' }}>Password</div>
-                            <span style={{ fontFamily: 'monospace', fontSize: '0.82rem', color: '#10b981', fontWeight: 700, letterSpacing: '0.04em' }}>{s.password || '—'}</span>
-                          </div>
-                        )}
+                        {revealedId === s.id && (() => {
+                            const isHashed = s.password && (s.password.startsWith('$2a$') || s.password.startsWith('$2b$'));
+                            return (
+                              <div style={{ marginTop: '0.3rem', padding: '0.35rem 0.6rem', background: isHashed ? 'rgba(100,116,139,0.1)' : 'rgba(16,185,129,0.08)', border: `1px solid ${isHashed ? 'rgba(100,116,139,0.2)' : 'rgba(16,185,129,0.15)'}`, borderRadius: 7 }}>
+                                <div style={{ fontSize: '0.68rem', color: '#64748b', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.15rem' }}>Password</div>
+                                {isHashed
+                                  ? <span style={{ fontSize: '0.78rem', color: '#64748b', fontStyle: 'italic' }}>Set by student (hidden)</span>
+                                  : <span style={{ fontFamily: 'monospace', fontSize: '0.82rem', color: '#10b981', fontWeight: 700, letterSpacing: '0.04em' }}>{s.password || '—'}</span>
+                                }
+                              </div>
+                            );
+                          })()}
                       </div>
                     ) : <span style={{ color: '#334155' }}>—</span>}
                   </TD>
