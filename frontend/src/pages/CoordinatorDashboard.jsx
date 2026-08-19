@@ -7,6 +7,7 @@ const FONT = "'Plus Jakarta Sans', 'Google Sans', system-ui, sans-serif";
 const SECTIONS = [
   { id: 'overview', label: 'Overview', icon: '⊞' },
   { id: 'students', label: 'Students', icon: '◎' },
+  { id: 'manage', label: 'Manage Students', icon: '⊕' },
 ];
 
 // ── Reusable primitives ──────────────────────────────────────
@@ -260,6 +261,33 @@ function StudentsSection({ students, fetchData, coordinatorId }) {
   const [filterStatus, setFilterStatus] = useState('all');
   const [sortBy, setSortBy] = useState('name');
   const [removingId, setRemovingId] = useState(null);
+  const [editingStudent, setEditingStudent] = useState(null); // { id, username, name }
+  const [editForm, setEditForm] = useState({ newUsername: '', newPassword: '' });
+  const [editLoading, setEditLoading] = useState(false);
+  const [editError, setEditError] = useState('');
+  const [editSuccess, setEditSuccess] = useState('');
+
+  const handleEdit = (s) => {
+    setEditingStudent(s);
+    setEditForm({ newUsername: s.username || '', newPassword: '' });
+    setEditError(''); setEditSuccess('');
+  };
+
+  const handleEditSave = async () => {
+    if (!editingStudent) return;
+    setEditLoading(true); setEditError(''); setEditSuccess('');
+    try {
+      const res = await fetch(`${API_BASE}/api/coordinator/update-student`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ coordinatorId, studentId: editingStudent.username, newUsername: editForm.newUsername || undefined, newPassword: editForm.newPassword || undefined }),
+      });
+      const data = await res.json();
+      if (data.success) { setEditSuccess('Credentials updated!'); fetchData(); setTimeout(() => setEditingStudent(null), 1200); }
+      else setEditError(data.error || 'Failed to update.');
+    } catch { setEditError('Network error.'); }
+    setEditLoading(false);
+  };
 
   const handleRemove = async (studentId, studentName) => {
     if (!window.confirm(`Are you sure you want to remove ${studentName} from your school?`)) return;
@@ -298,6 +326,36 @@ function StudentsSection({ students, fetchData, coordinatorId }) {
     <div>
       <SectionTitle sub={`${(students || []).length} total students registered under your school`}>All Students</SectionTitle>
 
+      {/* Edit credentials modal */}
+      {editingStudent && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
+          <div style={{ background: '#0d1526', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 20, padding: '2rem', width: '100%', maxWidth: 420, fontFamily: FONT }}>
+            <div style={{ fontSize: '1rem', fontWeight: 800, color: '#fff', marginBottom: '0.25rem' }}>Edit Credentials</div>
+            <div style={{ fontSize: '0.8rem', color: '#475569', marginBottom: '1.5rem' }}>{editingStudent.name}</div>
+            <div style={{ marginBottom: '1rem' }}>
+              <label style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: '0.4rem' }}>Username</label>
+              <input value={editForm.newUsername} onChange={e => setEditForm(f => ({ ...f, newUsername: e.target.value }))}
+                style={{ width: '100%', boxSizing: 'border-box', padding: '0.65rem 0.9rem', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, color: '#e2e8f0', fontFamily: 'monospace', fontSize: '0.875rem', outline: 'none' }} />
+            </div>
+            <div style={{ marginBottom: '1.25rem' }}>
+              <label style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: '0.4rem' }}>New Password (leave blank to keep current)</label>
+              <input type="password" value={editForm.newPassword} onChange={e => setEditForm(f => ({ ...f, newPassword: e.target.value }))} placeholder="Enter new password"
+                style={{ width: '100%', boxSizing: 'border-box', padding: '0.65rem 0.9rem', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, color: '#e2e8f0', fontFamily: FONT, fontSize: '0.875rem', outline: 'none' }} />
+            </div>
+            {editError && <div style={{ color: '#f87171', fontSize: '0.8rem', marginBottom: '0.75rem' }}>⚠️ {editError}</div>}
+            {editSuccess && <div style={{ color: '#10b981', fontSize: '0.8rem', marginBottom: '0.75rem' }}>✅ {editSuccess}</div>}
+            <div style={{ display: 'flex', gap: '0.75rem' }}>
+              <button onClick={handleEditSave} disabled={editLoading} style={{ flex: 1, padding: '0.65rem', background: 'linear-gradient(135deg, #2563eb, #3b82f6)', color: '#fff', border: 'none', borderRadius: 10, fontFamily: FONT, fontSize: '0.875rem', fontWeight: 700, cursor: editLoading ? 'wait' : 'pointer' }}>
+                {editLoading ? 'Saving…' : 'Save Changes'}
+              </button>
+              <button onClick={() => setEditingStudent(null)} style={{ padding: '0.65rem 1.25rem', background: 'rgba(255,255,255,0.05)', color: '#94a3b8', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, fontFamily: FONT, fontSize: '0.875rem', fontWeight: 600, cursor: 'pointer' }}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Filters bar */}
       <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.25rem', flexWrap: 'wrap', alignItems: 'center' }}>
         <div style={{ position: 'relative', flex: 1, minWidth: 200 }}>
@@ -326,12 +384,17 @@ function StudentsSection({ students, fetchData, coordinatorId }) {
       <Card>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-            <TableHead cols={['#', 'Student Name', 'Class', 'Age', 'Contact & Location', 'Status', 'Daily Practice', 'Avg Score', 'Exam Score', 'Quiz Results', 'Actions']} />
+            <TableHead cols={['#', 'Student Name', 'Username', 'Class', 'Age', 'Contact & Location', 'Status', 'Daily Practice', 'Avg Score', 'Exam Score', 'Actions']} />
             <tbody>
               {filtered.map((s, i) => (
                 <TableRow key={i} idx={i}>
                   <TD mono muted>{i + 1}</TD>
                   <TD><span style={{ fontWeight: 600, color: '#e2e8f0' }}>{s.name}</span></TD>
+                  <TD mono>
+                    {s.username
+                      ? <span style={{ color: '#93c5fd', fontSize: '0.8rem' }}>{s.username}</span>
+                      : <span style={{ color: '#334155' }}>—</span>}
+                  </TD>
                   <TD muted>{s.class}</TD>
                   <TD muted>{s.age || '—'}</TD>
                   <TD muted>
@@ -352,38 +415,33 @@ function StudentsSection({ students, fetchData, coordinatorId }) {
                     <span style={{ fontWeight: 700, color: s.examScore !== 'N/A' ? '#10b981' : '#334155' }}>{s.examScore}</span>
                   </TD>
                   <TD>
-                    {s.quizResults && s.quizResults.length > 0 ? (
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
-                        {s.quizResults.map((qr, qi) => (
-                          <div key={qi} style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.15)', borderRadius: 7, padding: '0.3rem 0.6rem' }}>
-                            <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#ef4444' }}>{qr.quiz_name}</div>
-                            <div style={{ fontSize: '0.7rem', color: '#94a3b8', marginTop: 1 }}>
-                              Score: <span style={{ color: '#10b981', fontWeight: 700 }}>{qr.score}/{qr.total}</span> ({qr.percentage}%)
-                            </div>
-                            <div style={{ fontSize: '0.65rem', color: '#64748b', marginTop: 1 }}>
-                              {new Date(qr.attempted_at).toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' })}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    ) : <span style={{ color: '#334155' }}>—</span>}
-                  </TD>
-                  <TD>
-                    <button 
-                      onClick={() => handleRemove(s.id, s.name)}
-                      disabled={removingId === s.id}
-                      style={{ padding: '0.4rem 0.75rem', fontSize: '0.75rem', fontWeight: 600, color: '#f87171', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: 6, cursor: removingId === s.id ? 'wait' : 'pointer', transition: 'all 0.2s' }}
-                      onMouseEnter={e => e.currentTarget.style.background = 'rgba(239,68,68,0.2)'}
-                      onMouseLeave={e => e.currentTarget.style.background = 'rgba(239,68,68,0.1)'}
-                    >
-                      {removingId === s.id ? '...' : 'Remove'}
-                    </button>
+                    <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                      {s.username && (
+                        <button
+                          onClick={() => handleEdit(s)}
+                          style={{ padding: '0.4rem 0.75rem', fontSize: '0.75rem', fontWeight: 600, color: '#60a5fa', background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.2)', borderRadius: 6, cursor: 'pointer', transition: 'all 0.2s' }}
+                          onMouseEnter={e => e.currentTarget.style.background = 'rgba(59,130,246,0.2)'}
+                          onMouseLeave={e => e.currentTarget.style.background = 'rgba(59,130,246,0.1)'}
+                        >
+                          ✏ Edit
+                        </button>
+                      )}
+                      <button
+                        onClick={() => handleRemove(s.id, s.name)}
+                        disabled={removingId === s.id}
+                        style={{ padding: '0.4rem 0.75rem', fontSize: '0.75rem', fontWeight: 600, color: '#f87171', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: 6, cursor: removingId === s.id ? 'wait' : 'pointer', transition: 'all 0.2s' }}
+                        onMouseEnter={e => e.currentTarget.style.background = 'rgba(239,68,68,0.2)'}
+                        onMouseLeave={e => e.currentTarget.style.background = 'rgba(239,68,68,0.1)'}
+                      >
+                        {removingId === s.id ? '...' : 'Remove'}
+                      </button>
+                    </div>
                   </TD>
                 </TableRow>
               ))}
               {filtered.length === 0 && (
                 <tr>
-                  <td colSpan={10} style={{ padding: '3rem', textAlign: 'center', color: '#334155' }}>
+                  <td colSpan={11} style={{ padding: '3rem', textAlign: 'center', color: '#334155' }}>
                     <div>No students match your filters.</div>
                   </td>
                 </tr>
@@ -392,6 +450,305 @@ function StudentsSection({ students, fetchData, coordinatorId }) {
           </table>
         </div>
       </Card>
+    </div>
+  );
+}
+
+// ── Manage Students Section ───────────────────────────────────
+function ManageStudentsSection({ coordinatorId, fetchData }) {
+  const [tab, setTab] = useState('csv'); // 'csv' | 'manual' | 'results'
+  const [csvText, setCsvText] = useState('');
+  const [parsed, setParsed] = useState([]);
+  const [parseError, setParseError] = useState('');
+  const [uploading, setUploading] = useState(false);
+  const [results, setResults] = useState(null);
+  const [dragOver, setDragOver] = useState(false);
+
+  // Manual add state
+  const [manualForm, setManualForm] = useState({ name: '', classLevel: '', password: '', email: '' });
+  const [manualLoading, setManualLoading] = useState(false);
+  const [manualResult, setManualResult] = useState(null);
+  const [manualError, setManualError] = useState('');
+
+  const CLASS_OPTIONS = ['Level 1','Level 2','Level 3','Level 4','Level 5'];
+
+  const parseCSV = (text) => {
+    setParseError('');
+    const lines = text.trim().split('\n').filter(l => l.trim());
+    if (lines.length < 2) { setParseError('CSV must have a header row and at least one student row.'); return; }
+    const header = lines[0].split(',').map(h => h.trim().toLowerCase().replace(/"/g, ''));
+    const nameIdx = header.findIndex(h => h === 'name' || h === 'student name' || h === 'student_name');
+    const classIdx = header.findIndex(h => h === 'class' || h === 'classlevel' || h === 'grade' || h === 'class level');
+    const passIdx = header.findIndex(h => h === 'password' || h === 'pass');
+    const emailIdx = header.findIndex(h => h === 'email');
+    if (nameIdx === -1) { setParseError('Could not find a "name" column. Please check your CSV headers.'); return; }
+    if (classIdx === -1) { setParseError('Could not find a "class" column. Please check your CSV headers.'); return; }
+    const rows = lines.slice(1).map(line => {
+      const cols = line.split(',').map(c => c.trim().replace(/"/g, ''));
+      return {
+        name: cols[nameIdx] || '',
+        classLevel: cols[classIdx] || '',
+        password: passIdx !== -1 ? cols[passIdx] || '' : '',
+        email: emailIdx !== -1 ? cols[emailIdx] || '' : '',
+      };
+    }).filter(r => r.name);
+    setParsed(rows);
+  };
+
+  const handleFileDrop = (e) => {
+    e.preventDefault(); setDragOver(false);
+    const file = e.dataTransfer?.files[0] || e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => { const txt = ev.target.result; setCsvText(txt); parseCSV(txt); };
+    reader.readAsText(file);
+  };
+
+  const handleCSVText = (text) => { setCsvText(text); if (text.trim()) parseCSV(text); };
+
+  const handleBulkCreate = async () => {
+    if (!parsed.length) return;
+    setUploading(true);
+    try {
+      const res = await fetch(`${API_BASE}/api/coordinator/bulk-create-students`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ coordinatorId, students: parsed }),
+      });
+      const data = await res.json();
+      if (data.success) { setResults(data.results); setTab('results'); fetchData(); }
+      else alert(data.error || 'Failed to create students.');
+    } catch { alert('Network error. Please try again.'); }
+    setUploading(false);
+  };
+
+  const downloadCredentials = () => {
+    if (!results) return;
+    const created = results.filter(r => r.status === 'created');
+    const csv = ['Name,Username,Password,Email', ...created.map(r => `"${r.name}","${r.username}","${r.password}","${r.email}"`)].join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'student_credentials.csv'; a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleManualAdd = async () => {
+    if (!manualForm.name || !manualForm.classLevel) { setManualError('Name and class are required.'); return; }
+    setManualLoading(true); setManualError(''); setManualResult(null);
+    try {
+      const res = await fetch(`${API_BASE}/api/coordinator/add-student`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ coordinatorId, ...manualForm }),
+      });
+      const data = await res.json();
+      if (data.success) { setManualResult(data.student); setManualForm({ name: '', classLevel: '', password: '', email: '' }); fetchData(); }
+      else setManualError(data.error || 'Failed to add student.');
+    } catch { setManualError('Network error.'); }
+    setManualLoading(false);
+  };
+
+  const inputStyle = { width: '100%', boxSizing: 'border-box', padding: '0.65rem 0.9rem', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, color: '#e2e8f0', fontFamily: FONT, fontSize: '0.875rem', outline: 'none' };
+  const labelStyle = { fontSize: '0.75rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.4rem', display: 'block' };
+
+  return (
+    <div>
+      <SectionTitle sub="Upload a CSV or add students manually. Auto-generated credentials can be printed and handed to students.">
+        Manage &amp; Add Students
+      </SectionTitle>
+
+      {/* Tab bar */}
+      <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '0' }}>
+        {[
+          { id: 'csv', label: '📂 CSV Upload' },
+          { id: 'manual', label: '✏️ Add Manually' },
+          ...(results ? [{ id: 'results', label: `✅ Results (${results.length})` }] : []),
+        ].map(t => (
+          <button key={t.id} onClick={() => setTab(t.id)} style={{
+            padding: '0.6rem 1.1rem', border: 'none', background: 'none', cursor: 'pointer',
+            fontFamily: FONT, fontSize: '0.84rem', fontWeight: 700,
+            color: tab === t.id ? '#60a5fa' : '#64748b',
+            borderBottom: tab === t.id ? '2px solid #3b82f6' : '2px solid transparent',
+            transition: 'all 0.15s', marginBottom: '-1px',
+          }}>{t.label}</button>
+        ))}
+      </div>
+
+      {/* CSV UPLOAD TAB */}
+      {tab === 'csv' && (
+        <div>
+          {/* Format guide */}
+          <Card style={{ padding: '1.25rem', marginBottom: '1.25rem', background: 'rgba(59,130,246,0.05)', border: '1px solid rgba(59,130,246,0.2)' }}>
+            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#60a5fa', marginBottom: '0.6rem' }}>📋 Required CSV Format</div>
+            <div style={{ fontFamily: 'monospace', fontSize: '0.78rem', color: '#94a3b8', background: 'rgba(0,0,0,0.3)', padding: '0.75rem', borderRadius: 8, lineHeight: 1.7 }}>
+              name,class,password,email<br/>
+              Arjun Kumar,Level 3,,arjun@school.edu<br/>
+              Priya Sharma,Level 2,MyPass123,<br/>
+              Rohan Nair,Level 3,,
+            </div>
+            <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.6rem' }}>
+              ✅ Only <strong style={{color:'#94a3b8'}}>name</strong> and <strong style={{color:'#94a3b8'}}>class</strong> are required. Leave <em>password</em> and <em>email</em> blank to auto-generate them.
+            </div>
+          </Card>
+
+          {/* Drag & drop zone */}
+          <div
+            onDragOver={e => { e.preventDefault(); setDragOver(true); }}
+            onDragLeave={() => setDragOver(false)}
+            onDrop={handleFileDrop}
+            style={{
+              border: `2px dashed ${dragOver ? '#3b82f6' : 'rgba(255,255,255,0.1)'}`,
+              borderRadius: 14, padding: '2rem', textAlign: 'center', marginBottom: '1rem',
+              background: dragOver ? 'rgba(59,130,246,0.06)' : 'rgba(255,255,255,0.01)',
+              transition: 'all 0.2s', cursor: 'pointer',
+            }}
+            onClick={() => document.getElementById('csv-file-input').click()}
+          >
+            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📁</div>
+            <div style={{ fontSize: '0.9rem', color: '#94a3b8', fontWeight: 600 }}>Drop your CSV file here, or click to browse</div>
+            <div style={{ fontSize: '0.75rem', color: '#475569', marginTop: '0.3rem' }}>Supports .csv files</div>
+            <input id="csv-file-input" type="file" accept=".csv,.txt" style={{ display: 'none' }} onChange={handleFileDrop} />
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+            <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,0.06)' }} />
+            <span style={{ fontSize: '0.75rem', color: '#475569', fontWeight: 600 }}>OR PASTE CSV TEXT BELOW</span>
+            <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,0.06)' }} />
+          </div>
+
+          <textarea
+            value={csvText}
+            onChange={e => handleCSVText(e.target.value)}
+            placeholder={'name,class,password,email\nArjun Kumar,Level 3,,\nPriya Sharma,Level 2,,'}
+            style={{ ...inputStyle, minHeight: 130, resize: 'vertical', fontFamily: 'monospace', fontSize: '0.8rem', marginBottom: '0.75rem' }}
+          />
+
+          {parseError && <div style={{ color: '#f87171', fontSize: '0.82rem', marginBottom: '0.75rem', padding: '0.6rem 1rem', background: 'rgba(239,68,68,0.08)', borderRadius: 8, border: '1px solid rgba(239,68,68,0.2)' }}>⚠️ {parseError}</div>}
+
+          {parsed.length > 0 && (
+            <Card style={{ marginBottom: '1rem' }}>
+              <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#e2e8f0' }}>Preview — {parsed.length} students detected</span>
+              </div>
+              <div style={{ overflowX: 'auto', maxHeight: 280, overflowY: 'auto' }}>
+                <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
+                  <TableHead cols={['Name', 'Class', 'Password', 'Email']} />
+                  <tbody>
+                    {parsed.map((s, i) => (
+                      <TableRow key={i} idx={i}>
+                        <TD><span style={{ fontWeight: 600, color: '#e2e8f0' }}>{s.name}</span></TD>
+                        <TD muted>{s.classLevel}</TD>
+                        <TD muted>{s.password || <em style={{ color: '#475569' }}>auto-generated</em>}</TD>
+                        <TD muted>{s.email || <em style={{ color: '#475569' }}>auto-generated</em>}</TD>
+                      </TableRow>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Card>
+          )}
+
+          <button
+            onClick={handleBulkCreate}
+            disabled={uploading || parsed.length === 0}
+            style={{ padding: '0.75rem 2rem', background: uploading || parsed.length === 0 ? 'rgba(255,255,255,0.05)' : 'linear-gradient(135deg, #2563eb, #3b82f6)', color: parsed.length === 0 ? '#475569' : '#fff', border: 'none', borderRadius: 10, fontFamily: FONT, fontSize: '0.9rem', fontWeight: 700, cursor: uploading || parsed.length === 0 ? 'not-allowed' : 'pointer', transition: 'all 0.2s' }}
+          >
+            {uploading ? 'Creating accounts…' : `🚀 Create ${parsed.length} Student Accounts`}
+          </button>
+        </div>
+      )}
+
+      {/* MANUAL ADD TAB */}
+      {tab === 'manual' && (
+        <div style={{ maxWidth: 500 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+            <div>
+              <label style={labelStyle}>Student Name *</label>
+              <input value={manualForm.name} onChange={e => setManualForm(f => ({ ...f, name: e.target.value }))} placeholder="e.g. Arjun Kumar" style={inputStyle} />
+            </div>
+            <div>
+              <label style={labelStyle}>Class / Level *</label>
+              <select value={manualForm.classLevel} onChange={e => setManualForm(f => ({ ...f, classLevel: e.target.value }))} style={{ ...inputStyle, cursor: 'pointer' }}>
+                <option value="" style={{ background: '#0f172a' }}>Select class…</option>
+                {CLASS_OPTIONS.map(c => <option key={c} value={c} style={{ background: '#0f172a' }}>{c}</option>)}
+              </select>
+            </div>
+            <div>
+              <label style={labelStyle}>Password (optional)</label>
+              <input value={manualForm.password} onChange={e => setManualForm(f => ({ ...f, password: e.target.value }))} placeholder="Leave blank to auto-generate" style={inputStyle} />
+            </div>
+            <div>
+              <label style={labelStyle}>Email (optional)</label>
+              <input value={manualForm.email} onChange={e => setManualForm(f => ({ ...f, email: e.target.value }))} placeholder="student@school.com" type="email" style={inputStyle} />
+            </div>
+          </div>
+
+          {manualError && <div style={{ color: '#f87171', fontSize: '0.82rem', marginBottom: '1rem', padding: '0.6rem 1rem', background: 'rgba(239,68,68,0.08)', borderRadius: 8, border: '1px solid rgba(239,68,68,0.2)' }}>⚠️ {manualError}</div>}
+
+          <button onClick={handleManualAdd} disabled={manualLoading} style={{ padding: '0.75rem 1.75rem', background: manualLoading ? 'rgba(255,255,255,0.05)' : 'linear-gradient(135deg, #2563eb, #3b82f6)', color: '#fff', border: 'none', borderRadius: 10, fontFamily: FONT, fontSize: '0.9rem', fontWeight: 700, cursor: manualLoading ? 'wait' : 'pointer', transition: 'all 0.2s' }}>
+            {manualLoading ? 'Adding…' : '+ Add Student'}
+          </button>
+
+          {manualResult && (
+            <div style={{ marginTop: '1.25rem', padding: '1.25rem', background: 'rgba(16,185,129,0.07)', border: '1px solid rgba(16,185,129,0.2)', borderRadius: 14 }}>
+              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#10b981', marginBottom: '0.75rem' }}>✅ Student account created!</div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
+                {[['Name', manualResult.name], ['Username', manualResult.username], ['Password', manualResult.password], ['Email', manualResult.email]].map(([label, val]) => (
+                  <div key={label}>
+                    <div style={{ fontSize: '0.68rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{label}</div>
+                    <div style={{ fontFamily: label === 'Username' || label === 'Password' ? 'monospace' : 'inherit', fontSize: '0.875rem', color: '#e2e8f0', fontWeight: 600 }}>{val}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* RESULTS TAB */}
+      {tab === 'results' && results && (
+        <div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+            <div style={{ fontSize: '0.85rem', color: '#94a3b8' }}>
+              <span style={{ color: '#10b981', fontWeight: 700 }}>{results.filter(r => r.status === 'created').length} created</span>
+              {results.filter(r => r.status === 'skipped').length > 0 && (
+                <span style={{ color: '#f97316', fontWeight: 700 }}> · {results.filter(r => r.status === 'skipped').length} skipped</span>
+              )}
+            </div>
+            <button onClick={downloadCredentials} style={{ padding: '0.5rem 1.25rem', background: 'rgba(16,185,129,0.1)', color: '#10b981', border: '1px solid rgba(16,185,129,0.25)', borderRadius: 9, fontFamily: FONT, fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer', transition: 'all 0.2s' }}
+              onMouseEnter={e => e.currentTarget.style.background = 'rgba(16,185,129,0.2)'}
+              onMouseLeave={e => e.currentTarget.style.background = 'rgba(16,185,129,0.1)'}
+            >
+              ⬇ Download Credentials CSV
+            </button>
+          </div>
+          <Card>
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
+                <TableHead cols={['Name', 'Username', 'Password', 'Email', 'Status']} />
+                <tbody>
+                  {results.map((r, i) => (
+                    <TableRow key={i} idx={i}>
+                      <TD><span style={{ fontWeight: 600, color: '#e2e8f0' }}>{r.name}</span></TD>
+                      <TD mono>{r.username || '—'}</TD>
+                      <TD mono>{r.password || '—'}</TD>
+                      <TD muted>{r.email || '—'}</TD>
+                      <TD>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '2px 9px', borderRadius: 99, fontSize: '0.72rem', fontWeight: 700,
+                          background: r.status === 'created' ? 'rgba(16,185,129,0.1)' : 'rgba(249,115,22,0.1)',
+                          color: r.status === 'created' ? '#10b981' : '#f97316',
+                          border: `1px solid ${r.status === 'created' ? 'rgba(16,185,129,0.25)' : 'rgba(249,115,22,0.25)'}` }}>
+                          {r.status === 'created' ? '✓ Created' : '✗ Skipped'}
+                        </span>
+                      </TD>
+                    </TableRow>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
@@ -552,6 +909,7 @@ export default function CoordinatorDashboard() {
             <>
               {activeSection === 'overview' && <OverviewSection data={data} />}
               {activeSection === 'students' && <StudentsSection students={data.students} fetchData={fetchData} coordinatorId={coordinatorId} />}
+              {activeSection === 'manage' && <ManageStudentsSection coordinatorId={coordinatorId} fetchData={fetchData} />}
             </>
           ) : null}
         </div>

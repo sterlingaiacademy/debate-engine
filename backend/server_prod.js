@@ -3607,7 +3607,7 @@ app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
 
     // Fetch students linked to this school
     const studentsRes = await db.query(
-      `SELECT id, name, "classLevel" as class, email, olympiad_registered, age, parent_name, parent_phone, city, state, contact_email, subjects
+      `SELECT id, name, "studentId" as username, "classLevel" as class, email, olympiad_registered, age, parent_name, parent_phone, city, state, contact_email, subjects
        FROM users 
        WHERE school_id = $1 AND role = 'student'`,
       [school.id]
@@ -3666,6 +3666,7 @@ app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
       enrichedStudents.push({
         id: student.id,
         name: student.name,
+        username: student.username,
         class: student.class || 'Unknown',
         age: student.age,
         parent_name: student.parent_name,
@@ -3739,7 +3740,170 @@ app.post('/api/coordinator/remove-student', async (req, res) => {
   }
 });
 
+// ==========================================
+// COORDINATOR: BULK CREATE STUDENTS
+// ==========================================
+app.post('/api/coordinator/bulk-create-students', async (req, res) => {
+  try {
+    const { coordinatorId, students } = req.body;
+    if (!coordinatorId || !Array.isArray(students) || students.length === 0) {
+      return res.status(400).json({ error: 'coordinatorId and students array are required' });
+    }
+
+    const schoolRes = await db.query(
+      `SELECT id, name FROM schools WHERE coordinator_login_id = $1`,
+      [coordinatorId]
+    );
+    if (schoolRes.rows.length === 0) {
+      return res.status(404).json({ error: 'School not found' });
+    }
+    const { id: schoolId } = schoolRes.rows[0];
+
+    const results = [];
+    const assignedAgentId = 'agent_0601krh0f23df5br0dahys0kdsbr';
+
+    for (const student of students) {
+      const { name, classLevel, password: rawPassword, email: rawEmail } = student;
+      if (!name || !classLevel) {
+        results.push({ name: name || '?', status: 'skipped', reason: 'Missing name or class' });
+        continue;
+      }
+
+      const baseUsername = name.toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+      let username = baseUsername;
+      let suffix = 2;
+      while (true) {
+        const taken = await db.query(`SELECT id FROM users WHERE LOWER("studentId") = LOWER($1)`, [username]);
+        if (taken.rows.length === 0) break;
+        username = `${baseUsername}_${suffix}`;
+        suffix++;
+      }
+
+      const firstName = name.trim().split(' ')[0];
+      const capFirst = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+      const plainPassword = rawPassword && rawPassword.trim() ? rawPassword.trim() : `${capFirst}${Math.floor(100 + Math.random() * 900)}`;
+      const email = rawEmail && rawEmail.trim() ? rawEmail.trim() : `${username}@school.graceandforce.internal`;
+
+      try {
+        const hashedPassword = await bcrypt.hash(plainPassword, 10);
+        await db.query(
+          `INSERT INTO users (name, "studentId", password, "classLevel", email, "assignedAgentId", school_id, role, olympiad_registered)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, 'student', true)`,
+          [name, username, hashedPassword, classLevel, email, assignedAgentId, schoolId]
+        );
+        await db.query(
+          `INSERT INTO debate_users (user_id, username, class, gforce_tokens) VALUES ($1, $2, $3, 100) ON CONFLICT (user_id) DO NOTHING`,
+          [username, name, classLevel]
+        );
+        results.push({ name, username, password: plainPassword, email, status: 'created' });
+      } catch (err) {
+        results.push({ name, username, status: 'skipped', reason: 'Already exists or DB error' });
+      }
+    }
+
+    res.json({ success: true, results });
+  } catch (err) {
+    console.error('Bulk create students error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// ==========================================
+// COORDINATOR: ADD SINGLE STUDENT
+// ==========================================
+app.post('/api/coordinator/add-student', async (req, res) => {
+  try {
+    const { coordinatorId, name, classLevel, password: rawPassword, email: rawEmail } = req.body;
+    if (!coordinatorId || !name || !classLevel) {
+      return res.status(400).json({ error: 'coordinatorId, name, and classLevel are required' });
+    }
+
+    const schoolRes = await db.query(
+      `SELECT id, name FROM schools WHERE coordinator_login_id = $1`,
+      [coordinatorId]
+    );
+    if (schoolRes.rows.length === 0) return res.status(404).json({ error: 'School not found' });
+    const { id: schoolId } = schoolRes.rows[0];
+
+    const assignedAgentId = 'agent_0601krh0f23df5br0dahys0kdsbr';
+    const baseUsername = name.toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+    let username = baseUsername;
+    let suffix = 2;
+    while (true) {
+      const taken = await db.query(`SELECT id FROM users WHERE LOWER("studentId") = LOWER($1)`, [username]);
+      if (taken.rows.length === 0) break;
+      username = `${baseUsername}_${suffix}`;
+      suffix++;
+    }
+
+    const firstName = name.trim().split(' ')[0];
+    const capFirst = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+    const plainPassword = rawPassword && rawPassword.trim() ? rawPassword.trim() : `${capFirst}${Math.floor(100 + Math.random() * 900)}`;
+    const email = rawEmail && rawEmail.trim() ? rawEmail.trim() : `${username}@school.graceandforce.internal`;
+
+    const hashedPassword = await bcrypt.hash(plainPassword, 10);
+    await db.query(
+      `INSERT INTO users (name, "studentId", password, "classLevel", email, "assignedAgentId", school_id, role, olympiad_registered)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, 'student', true)`,
+      [name, username, hashedPassword, classLevel, email, assignedAgentId, schoolId]
+    );
+    await db.query(
+      `INSERT INTO debate_users (user_id, username, class, gforce_tokens) VALUES ($1, $2, $3, 100) ON CONFLICT (user_id) DO NOTHING`,
+      [username, name, classLevel]
+    );
+
+    res.json({ success: true, student: { name, username, password: plainPassword, email } });
+  } catch (err) {
+    console.error('Add student error:', err);
+    res.status(500).json({ error: err.message || 'Internal server error' });
+  }
+});
+
+// ==========================================
+// COORDINATOR: UPDATE STUDENT CREDENTIALS
+// ==========================================
+app.put('/api/coordinator/update-student', async (req, res) => {
+  try {
+    const { coordinatorId, studentId, newUsername, newPassword } = req.body;
+    if (!coordinatorId || !studentId) {
+      return res.status(400).json({ error: 'coordinatorId and studentId are required' });
+    }
+
+    const schoolRes = await db.query(
+      `SELECT id FROM schools WHERE coordinator_login_id = $1`,
+      [coordinatorId]
+    );
+    if (schoolRes.rows.length === 0) return res.status(404).json({ error: 'School not found' });
+    const schoolId = schoolRes.rows[0].id;
+
+    const studentRes = await db.query(
+      `SELECT id, "studentId" FROM users WHERE "studentId" = $1 AND school_id = $2`,
+      [studentId, schoolId]
+    );
+    if (studentRes.rows.length === 0) return res.status(404).json({ error: 'Student not found in this school' });
+
+    if (newUsername && newUsername !== studentId) {
+      const taken = await db.query(`SELECT id FROM users WHERE LOWER("studentId") = LOWER($1) AND "studentId" != $2`, [newUsername, studentId]);
+      if (taken.rows.length > 0) return res.status(400).json({ error: 'Username already taken' });
+      await db.query(`UPDATE users SET "studentId" = $1 WHERE "studentId" = $2 AND school_id = $3`, [newUsername, studentId, schoolId]);
+      await db.query(`UPDATE debate_users SET user_id = $1 WHERE user_id = $2`, [newUsername, studentId]);
+    }
+
+    if (newPassword && newPassword.trim()) {
+      const hashed = await bcrypt.hash(newPassword.trim(), 10);
+      const effectiveId = newUsername || studentId;
+      await db.query(`UPDATE users SET password = $1 WHERE "studentId" = $2 AND school_id = $3`, [hashed, effectiveId, schoolId]);
+    }
+
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Update student error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.post('/api/olympiad/student/register', async (req, res) => {
+
   try {
     const { name, email, password, classLevel, school_code } = req.body;
 
