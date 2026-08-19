@@ -577,19 +577,28 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
       {/* CSV UPLOAD TAB */}
       {tab === 'csv' && (
         <div>
-          {/* Format guide */}
-          <Card style={{ padding: '1.25rem', marginBottom: '1.25rem', background: 'rgba(59,130,246,0.05)', border: '1px solid rgba(59,130,246,0.2)' }}>
-            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#60a5fa', marginBottom: '0.6rem' }}>📋 Required CSV Format</div>
-            <div style={{ fontFamily: 'monospace', fontSize: '0.78rem', color: '#94a3b8', background: 'rgba(0,0,0,0.3)', padding: '0.75rem', borderRadius: 8, lineHeight: 1.7 }}>
-              name,class,password,email<br/>
-              Arjun Kumar,Level 3,,arjun@school.edu<br/>
-              Priya Sharma,Level 2,MyPass123,<br/>
-              Rohan Nair,Level 3,,
+          {/* Download Template */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.25rem', padding: '1rem 1.25rem', background: 'rgba(59,130,246,0.05)', border: '1px solid rgba(59,130,246,0.2)', borderRadius: 14 }}>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontSize: '0.875rem', fontWeight: 700, color: '#e2e8f0', marginBottom: '0.2rem' }}>📥 Download CSV Template</div>
+              <div style={{ fontSize: '0.78rem', color: '#64748b' }}>Fill in student names and classes. Password and email are optional — leave blank to auto-generate.</div>
             </div>
-            <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.6rem' }}>
-              ✅ Only <strong style={{color:'#94a3b8'}}>name</strong> and <strong style={{color:'#94a3b8'}}>class</strong> are required. Leave <em>password</em> and <em>email</em> blank to auto-generate them.
-            </div>
-          </Card>
+            <button
+              onClick={() => {
+                const csv = 'name,class,password,email\nArjun Kumar,Level 3,,\nPriya Sharma,Level 2,,\nRohan Nair,Level 3,,';
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url; a.download = 'student_upload_template.csv'; a.click();
+                URL.revokeObjectURL(url);
+              }}
+              style={{ padding: '0.6rem 1.25rem', background: 'linear-gradient(135deg, #1d4ed8, #3b82f6)', color: '#fff', border: 'none', borderRadius: 10, fontFamily: FONT, fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0, transition: 'opacity 0.2s' }}
+              onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
+              onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+            >
+              ⬇ Download Template
+            </button>
+          </div>
 
           {/* Drag & drop zone */}
           <div
