@@ -16,7 +16,6 @@ const SECTIONS = [
   { id: 'indusmun', label: 'Indus MUN' },
   { id: 'speech_league', label: 'Speech League' },
   { id: 'speech_analysis', label: 'Speech Analysis' },
-  { id: 'freedom', label: 'Freedom Challenge' },
   { id: 'coupons', label: 'School Coupons' },
   { id: 'olympiad', label: 'Olympiad Schools' },
   { id: 'thinkquest_individual', label: 'Independent Registered' },
@@ -1779,7 +1778,6 @@ export default function AdminDashboard() {
               {activeSection === 'munmentor' && <MunMentorSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'speech_league' && <SpeechLeagueSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'speech_analysis' && <UsersSection adminToken={adminToken} apiBase={apiBase} speechOnly={true} />}
-              {activeSection === 'freedom' && <FreedomQuizSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'coupons' && <CouponsSection stats={stats} />}
               {activeSection === 'ito' && <ITOSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'olympiad' && <OlympiadSchoolsSection adminToken={adminToken} apiBase={apiBase} />}
