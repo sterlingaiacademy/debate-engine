@@ -3605,9 +3605,9 @@ app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
 
     const school = schoolRes.rows[0];
 
-    // Fetch students linked to this school
+    // Fetch students linked to this school (plain_password for coordinator-created accounts)
     const studentsRes = await db.query(
-      `SELECT id, name, "studentId" as username, password, "classLevel" as class, email, olympiad_registered, age, parent_name, parent_phone, city, state, contact_email, subjects
+      `SELECT id, name, "studentId" as username, COALESCE(plain_password, password) as password, "classLevel" as class, email, olympiad_registered, age, parent_name, parent_phone, city, state, contact_email, subjects
        FROM users 
        WHERE school_id = $1 AND role = 'student'`,
       [school.id]
@@ -3782,15 +3782,18 @@ app.post('/api/coordinator/bulk-create-students', async (req, res) => {
 
       const firstName = name.trim().split(' ')[0];
       const capFirst = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-      const plainPassword = rawPassword && rawPassword.trim() ? rawPassword.trim() : `${capFirst}${Math.floor(100 + Math.random() * 900)}`;
+      const symbols = ['@', '#', '$'];
+      const sym = symbols[Math.floor(Math.random() * symbols.length)];
+      const plainPassword = rawPassword && rawPassword.trim() ? rawPassword.trim() : `${capFirst}${sym}${Math.floor(100 + Math.random() * 900)}`;
       const email = rawEmail && rawEmail.trim() ? rawEmail.trim() : `${username}@school.graceandforce.internal`;
 
       try {
         const hashedPassword = await bcrypt.hash(plainPassword, 10);
+        await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS plain_password TEXT`).catch(() => {});
         await db.query(
-          `INSERT INTO users (name, "studentId", password, "classLevel", email, "assignedAgentId", school_id, role, olympiad_registered)
-           VALUES ($1, $2, $3, $4, $5, $6, $7, 'student', true)`,
-          [name, username, hashedPassword, classLevel, email, assignedAgentId, schoolId]
+          `INSERT INTO users (name, "studentId", password, plain_password, "classLevel", email, "assignedAgentId", school_id, role, olympiad_registered)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 'student', true)`,
+          [name, username, hashedPassword, plainPassword, classLevel, email, assignedAgentId, schoolId]
         );
         await db.query(
           `INSERT INTO debate_users (user_id, username, class, gforce_tokens) VALUES ($1, $2, $3, 100) ON CONFLICT (user_id) DO NOTHING`,
@@ -3839,14 +3842,17 @@ app.post('/api/coordinator/add-student', async (req, res) => {
 
     const firstName = name.trim().split(' ')[0];
     const capFirst = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-    const plainPassword = rawPassword && rawPassword.trim() ? rawPassword.trim() : `${capFirst}${Math.floor(100 + Math.random() * 900)}`;
+    const symbols = ['@', '#', '$'];
+    const sym = symbols[Math.floor(Math.random() * symbols.length)];
+    const plainPassword = rawPassword && rawPassword.trim() ? rawPassword.trim() : `${capFirst}${sym}${Math.floor(100 + Math.random() * 900)}`;
     const email = rawEmail && rawEmail.trim() ? rawEmail.trim() : `${username}@school.graceandforce.internal`;
 
     const hashedPassword = await bcrypt.hash(plainPassword, 10);
+    await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS plain_password TEXT`).catch(() => {});
     await db.query(
-      `INSERT INTO users (name, "studentId", password, "classLevel", email, "assignedAgentId", school_id, role, olympiad_registered)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, 'student', true)`,
-      [name, username, hashedPassword, classLevel, email, assignedAgentId, schoolId]
+      `INSERT INTO users (name, "studentId", password, plain_password, "classLevel", email, "assignedAgentId", school_id, role, olympiad_registered)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 'student', true)`,
+      [name, username, hashedPassword, plainPassword, classLevel, email, assignedAgentId, schoolId]
     );
     await db.query(
       `INSERT INTO debate_users (user_id, username, class, gforce_tokens) VALUES ($1, $2, $3, 100) ON CONFLICT (user_id) DO NOTHING`,
