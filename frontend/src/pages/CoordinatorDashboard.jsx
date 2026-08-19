@@ -631,62 +631,92 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
             onDrop={handleFileDrop}
             style={{
               border: `2px dashed ${dragOver ? '#3b82f6' : 'rgba(255,255,255,0.1)'}`,
-              borderRadius: 14, padding: '2rem', textAlign: 'center', marginBottom: '1rem',
+              borderRadius: 14, padding: '1.5rem', textAlign: 'center', marginBottom: '1.25rem',
               background: dragOver ? 'rgba(59,130,246,0.06)' : 'rgba(255,255,255,0.01)',
               transition: 'all 0.2s', cursor: 'pointer',
             }}
             onClick={() => document.getElementById('csv-file-input').click()}
           >
-            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📁</div>
-            <div style={{ fontSize: '0.9rem', color: '#94a3b8', fontWeight: 600 }}>Drop your CSV file here, or click to browse</div>
-            <div style={{ fontSize: '0.75rem', color: '#475569', marginTop: '0.3rem' }}>Supports .csv files</div>
+            <div style={{ fontSize: '1.75rem', marginBottom: '0.4rem' }}>📁</div>
+            <div style={{ fontSize: '0.875rem', color: '#94a3b8', fontWeight: 600 }}>Drop your CSV file here, or click to browse</div>
+            <div style={{ fontSize: '0.72rem', color: '#475569', marginTop: '0.25rem' }}>Supports .csv files — or add rows manually below</div>
             <input id="csv-file-input" type="file" accept=".csv,.txt" style={{ display: 'none' }} onChange={handleFileDrop} />
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-            <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,0.06)' }} />
-            <span style={{ fontSize: '0.75rem', color: '#475569', fontWeight: 600 }}>OR PASTE CSV TEXT BELOW</span>
-            <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,0.06)' }} />
-          </div>
-
-          <textarea
-            value={csvText}
-            onChange={e => handleCSVText(e.target.value)}
-            placeholder={'name,class,email (optional)\nArjun Kumar,Grade 8,\nPriya Sharma,Grade 6,'}
-            style={{ ...inputStyle, minHeight: 130, resize: 'vertical', fontFamily: 'monospace', fontSize: '0.8rem', marginBottom: '0.75rem' }}
-          />
-
           {parseError && <div style={{ color: '#f87171', fontSize: '0.82rem', marginBottom: '0.75rem', padding: '0.6rem 1rem', background: 'rgba(239,68,68,0.08)', borderRadius: 8, border: '1px solid rgba(239,68,68,0.2)' }}>⚠️ {parseError}</div>}
 
-          {parsed.length > 0 && (
-            <Card style={{ marginBottom: '1rem' }}>
-              <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#e2e8f0' }}>Preview — {parsed.length} students detected</span>
-              </div>
-              <div style={{ overflowX: 'auto', maxHeight: 280, overflowY: 'auto' }}>
-                <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-                  <TableHead cols={['Name', 'Class', 'Password', 'Email']} />
-                  <tbody>
-                    {parsed.map((s, i) => (
-                      <TableRow key={i} idx={i}>
-                        <TD><span style={{ fontWeight: 600, color: '#e2e8f0' }}>{s.name}</span></TD>
-                        <TD muted>{s.classLevel}</TD>
-                        <TD muted>{s.password || <em style={{ color: '#475569' }}>auto-generated</em>}</TD>
-                        <TD muted>{s.email || <em style={{ color: '#475569' }}>auto-generated</em>}</TD>
-                      </TableRow>
+          {/* Editable student table */}
+          <Card style={{ marginBottom: '1rem' }}>
+            <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#e2e8f0' }}>
+                {parsed.length > 0 ? `Students — ${parsed.length} added` : 'No students yet'}
+              </span>
+              <button
+                onClick={() => setParsed(p => [...p, { name: '', classLevel: '', email: '' }])}
+                style={{ padding: '0.35rem 0.9rem', fontSize: '0.78rem', fontWeight: 700, color: '#60a5fa', background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.2)', borderRadius: 8, cursor: 'pointer' }}
+              >+ Add Row</button>
+            </div>
+            <div style={{ overflowX: 'auto', maxHeight: 380, overflowY: 'auto' }}>
+              <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr style={{ background: 'rgba(255,255,255,0.03)' }}>
+                    {['#', 'Name *', 'Class *', 'Email (optional)', ''].map((col, i) => (
+                      <th key={i} style={{ padding: '0.6rem 0.85rem', textAlign: 'left', fontSize: '0.7rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.06em', borderBottom: '1px solid rgba(255,255,255,0.06)', whiteSpace: 'nowrap' }}>{col}</th>
                     ))}
-                  </tbody>
-                </table>
-              </div>
-            </Card>
-          )}
+                  </tr>
+                </thead>
+                <tbody>
+                  {parsed.length === 0 ? (
+                    <tr><td colSpan={5} style={{ padding: '2rem', textAlign: 'center', color: '#334155', fontSize: '0.85rem' }}>Upload a CSV or click "+ Add Row" to add students manually</td></tr>
+                  ) : parsed.map((s, i) => (
+                    <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.01)' }}>
+                      <td style={{ padding: '0.45rem 0.85rem', color: '#475569', fontSize: '0.78rem', fontWeight: 600 }}>{i + 1}</td>
+                      <td style={{ padding: '0.35rem 0.5rem' }}>
+                        <input
+                          value={s.name}
+                          onChange={e => setParsed(p => p.map((r, ri) => ri === i ? { ...r, name: e.target.value } : r))}
+                          placeholder="Student name"
+                          style={{ width: '100%', minWidth: 140, padding: '0.4rem 0.6rem', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 7, color: '#e2e8f0', fontFamily: FONT, fontSize: '0.82rem', outline: 'none', boxSizing: 'border-box' }}
+                        />
+                      </td>
+                      <td style={{ padding: '0.35rem 0.5rem' }}>
+                        <select
+                          value={s.classLevel}
+                          onChange={e => setParsed(p => p.map((r, ri) => ri === i ? { ...r, classLevel: e.target.value } : r))}
+                          style={{ width: '100%', minWidth: 110, padding: '0.4rem 0.6rem', background: '#0f172a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 7, color: s.classLevel ? '#e2e8f0' : '#475569', fontFamily: FONT, fontSize: '0.82rem', outline: 'none', cursor: 'pointer' }}
+                        >
+                          <option value="">Select grade…</option>
+                          {CLASS_OPTIONS.map(c => <option key={c} value={c} style={{ background: '#0f172a' }}>{c}</option>)}
+                        </select>
+                      </td>
+                      <td style={{ padding: '0.35rem 0.5rem' }}>
+                        <input
+                          value={s.email}
+                          onChange={e => setParsed(p => p.map((r, ri) => ri === i ? { ...r, email: e.target.value } : r))}
+                          placeholder="Optional"
+                          type="email"
+                          style={{ width: '100%', minWidth: 160, padding: '0.4rem 0.6rem', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 7, color: '#e2e8f0', fontFamily: FONT, fontSize: '0.82rem', outline: 'none', boxSizing: 'border-box' }}
+                        />
+                      </td>
+                      <td style={{ padding: '0.35rem 0.75rem' }}>
+                        <button
+                          onClick={() => setParsed(p => p.filter((_, ri) => ri !== i))}
+                          style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem', color: '#f87171', background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.15)', borderRadius: 6, cursor: 'pointer' }}
+                        >✕</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Card>
 
           <button
             onClick={handleBulkCreate}
-            disabled={uploading || parsed.length === 0}
-            style={{ padding: '0.75rem 2rem', background: uploading || parsed.length === 0 ? 'rgba(255,255,255,0.05)' : 'linear-gradient(135deg, #2563eb, #3b82f6)', color: parsed.length === 0 ? '#475569' : '#fff', border: 'none', borderRadius: 10, fontFamily: FONT, fontSize: '0.9rem', fontWeight: 700, cursor: uploading || parsed.length === 0 ? 'not-allowed' : 'pointer', transition: 'all 0.2s' }}
+            disabled={uploading || parsed.filter(r => r.name && r.classLevel).length === 0}
+            style={{ padding: '0.75rem 2rem', background: uploading || parsed.filter(r => r.name && r.classLevel).length === 0 ? 'rgba(255,255,255,0.05)' : 'linear-gradient(135deg, #2563eb, #3b82f6)', color: parsed.filter(r => r.name && r.classLevel).length === 0 ? '#475569' : '#fff', border: 'none', borderRadius: 10, fontFamily: FONT, fontSize: '0.9rem', fontWeight: 700, cursor: uploading || parsed.filter(r => r.name && r.classLevel).length === 0 ? 'not-allowed' : 'pointer', transition: 'all 0.2s' }}
           >
-            {uploading ? 'Creating accounts…' : `🚀 Create ${parsed.length} Student Accounts`}
+            {uploading ? 'Creating accounts…' : `🚀 Create ${parsed.filter(r => r.name && r.classLevel).length} Student Accounts`}
           </button>
         </div>
       )}
