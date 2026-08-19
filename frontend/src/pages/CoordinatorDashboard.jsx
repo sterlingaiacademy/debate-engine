@@ -470,13 +470,17 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
   const [manualResult, setManualResult] = useState(null);
   const [manualError, setManualError] = useState('');
 
-  // Grade → Level mapping (matches Layout.jsx logic)
+  // Grade → Level mapping — case-insensitive (matches Layout.jsx logic)
   const gradeToLevel = (g) => {
-    if (['KG','Grade 1','Grade 2'].includes(g)) return 'Level 1';
-    if (['Grade 3','Grade 4','Grade 5'].includes(g)) return 'Level 2';
-    if (['Grade 6','Grade 7','Grade 8'].includes(g)) return 'Level 3';
-    if (['Grade 9','Grade 10'].includes(g)) return 'Level 4';
-    if (['Grade 11','Grade 12'].includes(g)) return 'Level 5';
+    if (!g) return g;
+    // Normalize: "GRADE 12" → "Grade 12", "grade 8" → "Grade 8", "KG" → "KG"
+    const norm = g.trim().toLowerCase().replace(/^grade\s*/, 'Grade ');
+    const clean = norm === 'kg' ? 'KG' : norm.replace('grade ', 'Grade ');
+    if (['KG','Grade 1','Grade 2'].includes(clean)) return 'Level 1';
+    if (['Grade 3','Grade 4','Grade 5'].includes(clean)) return 'Level 2';
+    if (['Grade 6','Grade 7','Grade 8'].includes(clean)) return 'Level 3';
+    if (['Grade 9','Grade 10'].includes(clean)) return 'Level 4';
+    if (['Grade 11','Grade 12'].includes(clean)) return 'Level 5';
     return g; // fallback: pass as-is
   };
   const CLASS_OPTIONS = ['KG','Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6','Grade 7','Grade 8','Grade 9','Grade 10','Grade 11','Grade 12'];
@@ -489,14 +493,19 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
     const nameIdx = header.findIndex(h => h === 'name' || h === 'student name' || h === 'student_name');
     const classIdx = header.findIndex(h => h === 'class' || h === 'classlevel' || h === 'grade' || h === 'class level');
     const passIdx = header.findIndex(h => h === 'password' || h === 'pass');
-    const emailIdx = header.findIndex(h => h === 'email');
+    // Match 'email', 'email (optional)', 'email address', etc.
+    const emailIdx = header.findIndex(h => h.startsWith('email'));
     if (nameIdx === -1) { setParseError('Could not find a "name" column. Please check your CSV headers.'); return; }
     if (classIdx === -1) { setParseError('Could not find a "class" column. Please check your CSV headers.'); return; }
     const rows = lines.slice(1).map(line => {
       const cols = line.split(',').map(c => c.trim().replace(/"/g, ''));
+      // Normalize grade casing e.g. GRADE 12 → Grade 12
+      const rawClass = cols[classIdx] || '';
+      const normClass = rawClass.trim().toLowerCase() === 'kg' ? 'KG'
+        : rawClass.replace(/^grade\s*/i, 'Grade ');
       return {
         name: cols[nameIdx] || '',
-        classLevel: cols[classIdx] || '',
+        classLevel: normClass,
         password: passIdx !== -1 ? cols[passIdx] || '' : '',
         email: emailIdx !== -1 ? cols[emailIdx] || '' : '',
       };
