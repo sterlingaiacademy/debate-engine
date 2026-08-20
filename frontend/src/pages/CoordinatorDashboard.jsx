@@ -134,7 +134,7 @@ function ProgressBar({ pct, color = '#3b82f6', height = 6 }) {
 }
 
 // ── Overview Section ─────────────────────────────────────────
-function OverviewSection({ data }) {
+function OverviewSection({ data, setScoreStudent }) {
   const regPct = data.expectedRegistrations > 0 ? Math.round((data.totalRegistrations / data.expectedRegistrations) * 100) : 0;
   const completePct = data.totalRegistrations > 0 ? Math.round((data.olympiadCompleted / data.totalRegistrations) * 100) : 0;
 
@@ -224,7 +224,7 @@ function OverviewSection({ data }) {
         <CardHeader>Recent Students</CardHeader>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-            <TableHead cols={['Student', 'Class', 'Status', 'Practice', 'Score']} />
+            <TableHead cols={['Student', 'Class', 'Status', 'Practice', 'Score', 'Actions']} />
             <tbody>
               {(data.students || []).slice(0, 6).map((s, i) => (
                 <TableRow key={i} idx={i}>
@@ -234,6 +234,16 @@ function OverviewSection({ data }) {
                   <TD muted>{s.dailyPractice}</TD>
                   <TD>
                     <span style={{ fontWeight: 700, color: s.examScore !== 'N/A' ? '#10b981' : '#475569' }}>{s.examScore}</span>
+                  </TD>
+                  <TD>
+                    <button
+                      onClick={() => setScoreStudent(s)}
+                      style={{ padding: '0.3rem 0.6rem', fontSize: '0.7rem', fontWeight: 600, color: '#34d399', background: 'rgba(52,211,153,0.1)', border: '1px solid rgba(52,211,153,0.2)', borderRadius: 5, cursor: 'pointer', transition: 'all 0.2s' }}
+                      onMouseEnter={e => e.currentTarget.style.background = 'rgba(52,211,153,0.2)'}
+                      onMouseLeave={e => e.currentTarget.style.background = 'rgba(52,211,153,0.1)'}
+                    >
+                      📊 Scores
+                    </button>
                   </TD>
                 </TableRow>
               ))}
@@ -256,7 +266,7 @@ function OverviewSection({ data }) {
 }
 
 // ── Students Section ──────────────────────────────────────────
-function StudentsSection({ students, fetchData, coordinatorId }) {
+function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent }) {
   const [search, setSearch] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [sortBy, setSortBy] = useState('name');
@@ -269,7 +279,6 @@ function StudentsSection({ students, fetchData, coordinatorId }) {
   const [editLoading, setEditLoading] = useState(false);
   const [editError, setEditError] = useState('');
   const [editSuccess, setEditSuccess] = useState('');
-  const [scoreStudent, setScoreStudent] = useState(null); // Side menu state
 
   const handleResetPassword = async (s) => {
     setResettingId(s.id);
@@ -528,60 +537,6 @@ function StudentsSection({ students, fetchData, coordinatorId }) {
           </table>
         </div>
       </Card>
-
-      {/* Scores Side Menu */}
-      <div style={{
-        position: 'fixed', top: 0, right: 0, bottom: 0, width: '400px', maxWidth: '100%',
-        background: '#0d1526', borderLeft: '1px solid rgba(255,255,255,0.1)',
-        transform: scoreStudent ? 'translateX(0)' : 'translateX(100%)',
-        transition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-        zIndex: 2000, display: 'flex', flexDirection: 'column', boxShadow: '-10px 0 30px rgba(0,0,0,0.5)'
-      }}>
-        {scoreStudent && (
-          <>
-            <div style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
-                <h2 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#fff', margin: 0 }}>Subject Scores</h2>
-                <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginTop: '0.2rem' }}>{scoreStudent.name} ({scoreStudent.class})</div>
-              </div>
-              <button onClick={() => setScoreStudent(null)} style={{ background: 'none', border: 'none', color: '#94a3b8', fontSize: '1.5rem', cursor: 'pointer' }}>×</button>
-            </div>
-            
-            <div style={{ flex: 1, overflowY: 'auto', padding: '1.5rem' }}>
-              {(!scoreStudent.quizResults || scoreStudent.quizResults.length === 0) ? (
-                <div style={{ textAlign: 'center', color: '#64748b', marginTop: '3rem' }}>
-                  <div style={{ fontSize: '2rem', opacity: 0.5, marginBottom: '0.5rem' }}>📉</div>
-                  <p>No quiz scores available yet.</p>
-                </div>
-              ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  {scoreStudent.quizResults.map((qr, idx) => (
-                    <div key={idx} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 12, padding: '1rem' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                        <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#e2e8f0' }}>{qr.subject || 'Olympiad'}</div>
-                        <div style={{ fontSize: '0.9rem', fontWeight: 800, color: qr.percentage >= 80 ? '#10b981' : (qr.percentage >= 50 ? '#f59e0b' : '#ef4444') }}>
-                          {qr.percentage}%
-                        </div>
-                      </div>
-                      <div style={{ fontSize: '0.75rem', color: '#94a3b8', marginBottom: '0.5rem' }}>{qr.quiz_name}</div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Score: <span style={{ color: '#cbd5e1', fontWeight: 600 }}>{qr.score} / {qr.total}</span></div>
-                        <div style={{ fontSize: '0.7rem', color: '#64748b' }}>{new Date(qr.attempted_at).toLocaleDateString()}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </>
-        )}
-      </div>
-      
-      {/* Backdrop for side menu */}
-      {scoreStudent && (
-        <div onClick={() => setScoreStudent(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', zIndex: 1999 }} />
-      )}
-
     </div>
   );
 }
@@ -942,6 +897,7 @@ export default function CoordinatorDashboard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [lastRefresh, setLastRefresh] = useState(null);
+  const [scoreStudent, setScoreStudent] = useState(null);
 
   const coordinatorId = localStorage.getItem('coordinatorId');
 
@@ -1088,13 +1044,66 @@ export default function CoordinatorDashboard() {
             </div>
           ) : data ? (
             <>
-              {activeSection === 'overview' && <OverviewSection data={data} />}
-              {activeSection === 'students' && <StudentsSection students={data.students} fetchData={fetchData} coordinatorId={coordinatorId} />}
+              {activeSection === 'overview' && <OverviewSection data={data} setScoreStudent={setScoreStudent} />}
+              {activeSection === 'students' && <StudentsSection students={data.students} fetchData={fetchData} coordinatorId={coordinatorId} setScoreStudent={setScoreStudent} />}
               {activeSection === 'manage' && <ManageStudentsSection coordinatorId={coordinatorId} fetchData={fetchData} />}
             </>
           ) : null}
         </div>
       </main>
+
+      {/* Scores Side Menu */}
+      <div style={{
+        position: 'fixed', top: 0, right: 0, bottom: 0, width: '400px', maxWidth: '100%',
+        background: '#0d1526', borderLeft: '1px solid rgba(255,255,255,0.1)',
+        transform: scoreStudent ? 'translateX(0)' : 'translateX(100%)',
+        transition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+        zIndex: 2000, display: 'flex', flexDirection: 'column', boxShadow: '-10px 0 30px rgba(0,0,0,0.5)'
+      }}>
+        {scoreStudent && (
+          <>
+            <div style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div>
+                <h2 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#fff', margin: 0 }}>Subject Scores</h2>
+                <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginTop: '0.2rem' }}>{scoreStudent.name} ({scoreStudent.class})</div>
+              </div>
+              <button onClick={() => setScoreStudent(null)} style={{ background: 'none', border: 'none', color: '#94a3b8', fontSize: '1.5rem', cursor: 'pointer' }}>×</button>
+            </div>
+            
+            <div style={{ flex: 1, overflowY: 'auto', padding: '1.5rem' }}>
+              {(!scoreStudent.quizResults || scoreStudent.quizResults.length === 0) ? (
+                <div style={{ textAlign: 'center', color: '#64748b', marginTop: '3rem' }}>
+                  <div style={{ fontSize: '2rem', opacity: 0.5, marginBottom: '0.5rem' }}>📉</div>
+                  <p>No quiz scores available yet.</p>
+                </div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {scoreStudent.quizResults.map((qr, idx) => (
+                    <div key={idx} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 12, padding: '1rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                        <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#e2e8f0' }}>{qr.subject || 'Olympiad'}</div>
+                        <div style={{ fontSize: '0.9rem', fontWeight: 800, color: qr.percentage >= 80 ? '#10b981' : (qr.percentage >= 50 ? '#f59e0b' : '#ef4444') }}>
+                          {qr.percentage}%
+                        </div>
+                      </div>
+                      <div style={{ fontSize: '0.75rem', color: '#94a3b8', marginBottom: '0.5rem' }}>{qr.quiz_name}</div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Score: <span style={{ color: '#cbd5e1', fontWeight: 600 }}>{qr.score} / {qr.total}</span></div>
+                        <div style={{ fontSize: '0.7rem', color: '#64748b' }}>{new Date(qr.attempted_at).toLocaleDateString()}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </>
+        )}
+      </div>
+      
+      {/* Backdrop for side menu */}
+      {scoreStudent && (
+        <div onClick={() => setScoreStudent(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', zIndex: 1999 }} />
+      )}
     </div>
   );
 }
