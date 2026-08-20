@@ -3628,6 +3628,16 @@ app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
         status = 'Pending';
       }
 
+      // Get quiz results
+      let quizResults = [];
+      try {
+        const quizRes = await db.query(
+          `SELECT quiz_name, subject, score, total, percentage, attempted_at FROM olympiad_quiz_results WHERE user_email=$1 ORDER BY attempted_at DESC`,
+          [student.contact_email || student.email || '']
+        );
+        quizResults = quizRes.rows;
+      } catch(e) { /* table might not exist in local db yet */ }
+
       enrichedStudents.push({
         id: student.id,
         name: student.name,
@@ -3640,7 +3650,8 @@ app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
         status: status,
         dailyPractice: practiceCount,
         avg_score: avgScore,
-        examScore: examScore
+        examScore: examScore,
+        quizResults: quizResults
       });
     }
 
