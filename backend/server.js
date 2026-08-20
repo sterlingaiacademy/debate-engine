@@ -3721,8 +3721,14 @@ app.post('/api/coordinator/bulk-create-students', async (req, res) => {
     const { id: schoolId } = schoolRes.rows[0];
 
     const results = [];
-    const assignedAgentId = 'agent_0601krh0f23df5br0dahys0kdsbr';
-
+    const getAgentIdForClass = (cls) => {
+      const norm = (cls || '').trim().toLowerCase().replace(/^(grade|class)\s*/, 'Grade ').replace('kg', 'KG');
+      if (['Grade 3','Grade 4','Grade 5'].includes(norm)) return 'agent_5201krghdxhqfhtbf4yj22406vyv'; // Level 2
+      if (['Grade 6','Grade 7','Grade 8'].includes(norm)) return 'agent_0601krh0f23df5br0dahys0kdsbr'; // Level 3
+      if (['Grade 9','Grade 10'].includes(norm)) return 'agent_9701krh2p85sfs9vyp7e6e1cqbwc'; // Level 4
+      if (['Grade 11','Grade 12'].includes(norm)) return 'agent_7801krh4jfmdf9asxz901aeac0gt'; // Level 5
+      return 'agent_5301krgg7x98ewm84w8aj2976zqc'; // Level 1 default
+    };
     for (const student of students) {
       const { name, classLevel, password: rawPassword, email: rawEmail } = student;
       if (!name || !classLevel) {
@@ -3753,6 +3759,7 @@ app.post('/api/coordinator/bulk-create-students', async (req, res) => {
 
       try {
         const hashedPassword = await bcrypt.hash(plainPassword, 10);
+        const assignedAgentId = getAgentIdForClass(classLevel);
         // Ensure plain_password column exists
         await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS plain_password TEXT`).catch(() => {});
         await db.query(
@@ -3794,7 +3801,16 @@ app.post('/api/coordinator/add-student', async (req, res) => {
     if (schoolRes.rows.length === 0) return res.status(404).json({ error: 'School not found' });
     const { id: schoolId } = schoolRes.rows[0];
 
-    const assignedAgentId = 'agent_0601krh0f23df5br0dahys0kdsbr';
+    const getAgentIdForClass = (cls) => {
+      const norm = (cls || '').trim().toLowerCase().replace(/^(grade|class)\s*/, 'Grade ').replace('kg', 'KG');
+      if (['Grade 3','Grade 4','Grade 5'].includes(norm)) return 'agent_5201krghdxhqfhtbf4yj22406vyv'; // Level 2
+      if (['Grade 6','Grade 7','Grade 8'].includes(norm)) return 'agent_0601krh0f23df5br0dahys0kdsbr'; // Level 3
+      if (['Grade 9','Grade 10'].includes(norm)) return 'agent_9701krh2p85sfs9vyp7e6e1cqbwc'; // Level 4
+      if (['Grade 11','Grade 12'].includes(norm)) return 'agent_7801krh4jfmdf9asxz901aeac0gt'; // Level 5
+      return 'agent_5301krgg7x98ewm84w8aj2976zqc'; // Level 1 default
+    };
+
+    const assignedAgentId = getAgentIdForClass(classLevel);
     const baseUsername = name.toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
     let username = baseUsername;
     let suffix = 2;
