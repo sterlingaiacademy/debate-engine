@@ -261,12 +261,31 @@ function StudentsSection({ students, fetchData, coordinatorId }) {
   const [filterStatus, setFilterStatus] = useState('all');
   const [sortBy, setSortBy] = useState('name');
   const [removingId, setRemovingId] = useState(null);
-  const [revealedId, setRevealedId] = useState(null); // student id whose credentials are shown
+  const [revealedId, setRevealedId] = useState(null);
+  const [resettingId, setResettingId] = useState(null); // track which student is having password reset
+  const [resetResults, setResetResults] = useState({}); // { studentId: newPassword }
   const [editingStudent, setEditingStudent] = useState(null);
   const [editForm, setEditForm] = useState({ newUsername: '', newPassword: '' });
   const [editLoading, setEditLoading] = useState(false);
   const [editError, setEditError] = useState('');
   const [editSuccess, setEditSuccess] = useState('');
+
+  const handleResetPassword = async (s) => {
+    setResettingId(s.id);
+    try {
+      const res = await fetch(`${API_BASE}/api/coordinator/update-student`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ coordinatorId, studentId: s.username, resetPassword: true }),
+      });
+      const data = await res.json();
+      if (data.success && data.newPassword) {
+        setResetResults(r => ({ ...r, [s.id]: data.newPassword }));
+        fetchData();
+      }
+    } catch {}
+    setResettingId(null);
+  };
 
   const handleEdit = (s) => {
     setEditingStudent(s);
@@ -421,13 +440,24 @@ function StudentsSection({ students, fetchData, coordinatorId }) {
                         </div>
                         {revealedId === s.id && (() => {
                             const isHashed = s.password && (s.password.startsWith('$2a$') || s.password.startsWith('$2b$'));
+                            const justReset = resetResults[s.id];
                             return (
-                              <div style={{ marginTop: '0.3rem', padding: '0.35rem 0.6rem', background: isHashed ? 'rgba(100,116,139,0.1)' : 'rgba(16,185,129,0.08)', border: `1px solid ${isHashed ? 'rgba(100,116,139,0.2)' : 'rgba(16,185,129,0.15)'}`, borderRadius: 7 }}>
-                                <div style={{ fontSize: '0.68rem', color: '#64748b', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.15rem' }}>Password</div>
-                                {isHashed
-                                  ? <span style={{ fontSize: '0.78rem', color: '#64748b', fontStyle: 'italic' }}>Set by student (hidden)</span>
-                                  : <span style={{ fontFamily: 'monospace', fontSize: '0.82rem', color: '#10b981', fontWeight: 700, letterSpacing: '0.04em' }}>{s.password || '—'}</span>
-                                }
+                              <div style={{ marginTop: '0.3rem', padding: '0.4rem 0.6rem', background: isHashed && !justReset ? 'rgba(100,116,139,0.08)' : 'rgba(16,185,129,0.08)', border: `1px solid ${isHashed && !justReset ? 'rgba(100,116,139,0.2)' : 'rgba(16,185,129,0.15)'}`, borderRadius: 7 }}>
+                                <div style={{ fontSize: '0.68rem', color: '#64748b', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.2rem' }}>Password</div>
+                                {justReset ? (
+                                  <span style={{ fontFamily: 'monospace', fontSize: '0.82rem', color: '#10b981', fontWeight: 700 }}>{justReset}</span>
+                                ) : isHashed ? (
+                                  <div>
+                                    <div style={{ fontSize: '0.75rem', color: '#64748b', fontStyle: 'italic', marginBottom: '0.35rem' }}>Password hidden — set before this feature</div>
+                                    <button
+                                      onClick={() => handleResetPassword(s)}
+                                      disabled={resettingId === s.id}
+                                      style={{ padding: '0.3rem 0.75rem', fontSize: '0.75rem', fontWeight: 700, color: '#fff', background: resettingId === s.id ? 'rgba(255,255,255,0.05)' : 'linear-gradient(135deg, #d97706, #f59e0b)', border: 'none', borderRadius: 7, cursor: resettingId === s.id ? 'wait' : 'pointer' }}
+                                    >{resettingId === s.id ? 'Generating…' : '🔑 Generate New Password'}</button>
+                                  </div>
+                                ) : (
+                                  <span style={{ fontFamily: 'monospace', fontSize: '0.82rem', color: '#10b981', fontWeight: 700 }}>{s.password || '—'}</span>
+                                )}
                               </div>
                             );
                           })()}

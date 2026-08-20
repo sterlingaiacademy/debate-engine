@@ -3849,10 +3849,11 @@ app.put('/api/coordinator/update-student', async (req, res) => {
     const schoolId = schoolRes.rows[0].id;
 
     const studentRes = await db.query(
-      `SELECT id, "studentId" FROM users WHERE "studentId" = $1 AND school_id = $2`,
+      `SELECT id, "studentId", name FROM users WHERE "studentId" = $1 AND school_id = $2`,
       [studentId, schoolId]
     );
     if (studentRes.rows.length === 0) return res.status(404).json({ error: 'Student not found in this school' });
+    const student = studentRes.rows[0];
 
     if (newUsername && newUsername !== studentId) {
       const taken = await db.query(`SELECT id FROM users WHERE LOWER("studentId") = LOWER($1) AND "studentId" != $2`, [newUsername, studentId]);
@@ -3861,13 +3862,28 @@ app.put('/api/coordinator/update-student', async (req, res) => {
       await db.query(`UPDATE debate_users SET user_id = $1 WHERE user_id = $2`, [newUsername, studentId]);
     }
 
-    if (newPassword && newPassword.trim()) {
-      const hashed = await bcrypt.hash(newPassword.trim(), 10);
-      const effectiveId = newUsername || studentId;
-      await db.query(`UPDATE users SET password = $1 WHERE "studentId" = $2 AND school_id = $3`, [hashed, effectiveId, schoolId]);
+    const effectiveId = newUsername || studentId;
+    let plainPwd = null;
+
+    if (resetPassword) {
+      const firstName = (student.name || effectiveId).trim().split(' ')[0];
+      const capFirst = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+      const symbols = ['@', '#', '$'];
+      const sym = symbols[Math.floor(Math.random() * symbols.length)];
+      plainPwd = `${capFirst}${sym}${Math.floor(100 + Math.random() * 900)}`;
+    } else if (newPassword && newPassword.trim()) {
+      plainPwd = newPassword.trim();
     }
 
-    res.json({ success: true });
+    if (plainPwd) {
+      const hashed = await bcrypt.hash(plainPwd, 10);
+      await db.query(
+        `UPDATE users SET password = $1, plain_password = $2 WHERE "studentId" = $3 AND school_id = $4`,
+        [hashed, plainPwd, effectiveId, schoolId]
+      );
+    }
+
+    res.json({ success: true, newPassword: plainPwd });
   } catch (err) {
     console.error('Update student error:', err);
     res.status(500).json({ error: 'Internal server error' });
