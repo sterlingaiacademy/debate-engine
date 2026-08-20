@@ -608,7 +608,9 @@ function ScoresSection({ students }) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
           {subjects.map(subject => {
             const rows = subjectRows[subject] || [];
-            const avg = Math.round(rows.reduce((a, r) => a + (r.percentage || 0), 0) / rows.length);
+            // percentage may come as string "30.00%" or number 30 — normalise to number
+            const pct = r => parseFloat(String(r.percentage).replace('%', '')) || 0;
+            const avg = Math.round(rows.reduce((a, r) => a + pct(r), 0) / rows.length);
             const showGradeCol = selectedGrade === 'all';
             return (
               <Card key={subject}>
@@ -635,7 +637,7 @@ function ScoresSection({ students }) {
                       : ['Student', 'Quiz / Test', 'Score', 'Percentage', 'Date']}
                     />
                     <tbody>
-                      {[...rows].sort((a, b) => (b.percentage || 0) - (a.percentage || 0)).map((row, idx) => (
+                      {[...rows].sort((a, b) => pct(b) - pct(a)).map((row, idx) => (
                         <TableRow key={idx} idx={idx}>
                           <TD><span style={{ fontWeight: 600, color: '#e2e8f0' }}>{row.studentName}</span></TD>
                           {showGradeCol && <TD muted>{row.grade}</TD>}
@@ -644,9 +646,9 @@ function ScoresSection({ students }) {
                           <TD>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                               <div style={{ flex: 1, height: 5, background: 'rgba(255,255,255,0.06)', borderRadius: 99, overflow: 'hidden', minWidth: 70 }}>
-                                <div style={{ height: '100%', width: `${Math.min(row.percentage || 0, 100)}%`, background: scoreColor(row.percentage || 0), borderRadius: 99 }} />
+                                <div style={{ height: '100%', width: `${Math.min(pct(row), 100)}%`, background: scoreColor(pct(row)), borderRadius: 99 }} />
                               </div>
-                              <span style={{ fontSize: '0.82rem', fontWeight: 800, color: scoreColor(row.percentage || 0), background: scoreBg(row.percentage || 0), padding: '0.15rem 0.55rem', borderRadius: 6, whiteSpace: 'nowrap' }}>{row.percentage || 0}%</span>
+                              <span style={{ fontSize: '0.82rem', fontWeight: 800, color: scoreColor(pct(row)), background: scoreBg(pct(row)), padding: '0.15rem 0.55rem', borderRadius: 6, whiteSpace: 'nowrap' }}>{pct(row).toFixed(1)}%</span>
                             </div>
                           </TD>
                           <TD muted>{new Date(row.attempted_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</TD>
