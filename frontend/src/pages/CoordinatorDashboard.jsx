@@ -8,7 +8,7 @@ const SECTIONS = [
   { id: 'overview', label: 'Overview', icon: '⊞' },
   { id: 'students', label: 'Students', icon: '◎' },
   { id: 'manage', label: 'Manage Students', icon: '⊕' },
-  { id: 'scores', label: 'Scores', icon: '📊' },
+  { id: 'scores', label: 'Scores', icon: '▤' },
 ];
 
 // ── Reusable primitives ──────────────────────────────────────
@@ -432,7 +432,7 @@ function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent }
       <Card>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-            <TableHead cols={['#', 'Student Name', 'Username', 'Class', 'Age', 'Contact & Location', 'Status', 'Daily Practice', 'Avg Score', 'Exam Score', 'Actions']} />
+            <TableHead cols={['#', 'Student Name', 'Username', 'Class', 'Status', 'Actions']} />
             <tbody>
               {filtered.map((s, i) => (
                 <TableRow key={i} idx={i}>
@@ -447,7 +447,7 @@ function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent }
                             onClick={() => setRevealedId(revealedId === s.id ? null : s.id)}
                             title={revealedId === s.id ? 'Hide password' : 'Show password'}
                             style={{ padding: '0.15rem 0.4rem', fontSize: '0.65rem', color: revealedId === s.id ? '#10b981' : '#64748b', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 5, cursor: 'pointer' }}
-                          >{revealedId === s.id ? '🙈' : '👁'}</button>
+                          >{revealedId === s.id ? 'Hide' : 'Show'}</button>
                         </div>
                         {revealedId === s.id && (() => {
                             const isHashed = s.password && (s.password.startsWith('$2a$') || s.password.startsWith('$2b$'));
@@ -459,12 +459,12 @@ function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent }
                                   <span style={{ fontFamily: 'monospace', fontSize: '0.82rem', color: '#10b981', fontWeight: 700 }}>{justReset}</span>
                                 ) : isHashed ? (
                                   <div>
-                                    <div style={{ fontSize: '0.75rem', color: '#64748b', fontStyle: 'italic', marginBottom: '0.35rem' }}>Password hidden — set before this feature</div>
+                                    <div style={{ fontSize: '0.75rem', color: '#64748b', fontStyle: 'italic', marginBottom: '0.35rem' }}>Password hidden</div>
                                     <button
                                       onClick={() => handleResetPassword(s)}
                                       disabled={resettingId === s.id}
                                       style={{ padding: '0.3rem 0.75rem', fontSize: '0.75rem', fontWeight: 700, color: '#fff', background: resettingId === s.id ? 'rgba(255,255,255,0.05)' : 'linear-gradient(135deg, #d97706, #f59e0b)', border: 'none', borderRadius: 7, cursor: resettingId === s.id ? 'wait' : 'pointer' }}
-                                    >{resettingId === s.id ? 'Generating…' : '🔑 Generate New Password'}</button>
+                                    >{resettingId === s.id ? 'Generating…' : 'Generate New Password'}</button>
                                   </div>
                                 ) : (
                                   <span style={{ fontFamily: 'monospace', fontSize: '0.82rem', color: '#10b981', fontWeight: 700 }}>{s.password || '—'}</span>
@@ -476,24 +476,7 @@ function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent }
                     ) : <span style={{ color: '#334155' }}>—</span>}
                   </TD>
                   <TD muted>{s.class}</TD>
-                  <TD muted>{s.age || '—'}</TD>
-                  <TD muted>
-                    <div style={{ fontSize: '0.75rem', fontWeight: 600 }}>{s.parent_name || '—'} <span style={{fontWeight: 400}}>({s.parent_phone || '—'})</span></div>
-                    <div style={{ fontSize: '0.7rem', color: '#64748b', marginTop: 2 }}>{s.contact_email || '—'}</div>
-                    <div style={{ fontSize: '0.7rem', color: '#64748b', marginTop: 2 }}>{s.city ? `${s.city}, ${s.state || ''}` : '—'}</div>
-                    {s.subjects && <div style={{ fontSize: '0.7rem', color: '#94a3b8', marginTop: 2 }}>{s.subjects}</div>}
-                  </TD>
                   <TD><StatusBadge status={s.status} /></TD>
-                  <TD muted>{s.dailyPractice}</TD>
-                  <TD>
-                    {s.avg_score > 0
-                      ? <span style={{ fontWeight: 700, color: '#60a5fa' }}>{s.avg_score.toFixed(1)}</span>
-                      : <span style={{ color: '#334155' }}>—</span>
-                    }
-                  </TD>
-                  <TD>
-                    <span style={{ fontWeight: 700, color: s.examScore !== 'N/A' ? '#10b981' : '#334155' }}>{s.examScore}</span>
-                  </TD>
                   <TD>
                     <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                       {s.username && (
@@ -503,7 +486,7 @@ function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent }
                           onMouseEnter={e => e.currentTarget.style.background = 'rgba(59,130,246,0.2)'}
                           onMouseLeave={e => e.currentTarget.style.background = 'rgba(59,130,246,0.1)'}
                         >
-                          ✏ Edit
+                          Edit
                         </button>
                       )}
                       <button
@@ -540,7 +523,7 @@ function ScoresSection({ students }) {
 
   const scoreColor = pct => pct >= 80 ? '#10b981' : pct >= 50 ? '#f59e0b' : '#ef4444';
   const scoreBg = pct => pct >= 80 ? 'rgba(16,185,129,0.1)' : pct >= 50 ? 'rgba(245,158,11,0.1)' : 'rgba(239,68,68,0.1)';
-  const SUBJECT_ICONS = { English: '📚', Mathematics: '✖️', Math: '✖️', Science: '🔬', 'Social Science': '🌍', General: '📊' };
+  const SUBJECT_ICONS = { English: 'EN', Mathematics: 'MA', Math: 'MA', Science: 'SC', 'Social Science': 'SS', General: 'GN' };
 
   // Build grade -> subject -> rows
   const gradeMap = {};
@@ -631,7 +614,7 @@ function ScoresSection({ students }) {
               <Card key={subject}>
                 <div style={{ padding: '1rem 1.5rem', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <span style={{ fontSize: '1.4rem' }}>{SUBJECT_ICONS[subject] || '📌'}</span>
+                    <span style={{ fontSize: '1.6rem', width: 40, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(59,130,246,0.1)', borderRadius: 10, color: '#60a5fa', fontSize: '0.75rem', fontWeight: 800, letterSpacing: '-0.02em', flexShrink: 0 }}>{SUBJECT_ICONS[subject] || subject.slice(0,2).toUpperCase()}</span>
                     <div>
                       <h3 style={{ fontSize: '1rem', fontWeight: 800, color: '#e2e8f0', margin: 0 }}>{subject}</h3>
                       <div style={{ fontSize: '0.72rem', color: '#475569', marginTop: '0.1rem' }}>
@@ -799,9 +782,9 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
       {/* Tab bar */}
       <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '0' }}>
         {[
-          { id: 'csv', label: '📂 CSV Upload' },
-          { id: 'manual', label: '✏️ Add Manually' },
-          ...(results ? [{ id: 'results', label: `✅ Results (${results.length})` }] : []),
+          { id: 'csv', label: 'CSV Upload' },
+          { id: 'manual', label: 'Add Manually' },
+          ...(results ? [{ id: 'results', label: `Results (${results.length})` }] : []),
         ].map(t => (
           <button key={t.id} onClick={() => setTab(t.id)} style={{
             padding: '0.6rem 1.1rem', border: 'none', background: 'none', cursor: 'pointer',
@@ -819,7 +802,7 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
           {/* Download Template */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.25rem', padding: '1rem 1.25rem', background: 'rgba(59,130,246,0.05)', border: '1px solid rgba(59,130,246,0.2)', borderRadius: 14 }}>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: '0.875rem', fontWeight: 700, color: '#e2e8f0', marginBottom: '0.2rem' }}>📥 Download CSV Template</div>
+              <div style={{ fontSize: '0.875rem', fontWeight: 700, color: '#e2e8f0', marginBottom: '0.2rem' }}>Download CSV Template</div>
               <div style={{ fontSize: '0.78rem', color: '#64748b' }}>Fill in student names and grades. Password and email are optional — leave blank to auto-generate.</div>
             </div>
             <button
@@ -931,7 +914,7 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
             disabled={uploading || parsed.filter(r => r.name && r.classLevel).length === 0}
             style={{ padding: '0.75rem 2rem', background: uploading || parsed.filter(r => r.name && r.classLevel).length === 0 ? 'rgba(255,255,255,0.05)' : 'linear-gradient(135deg, #2563eb, #3b82f6)', color: parsed.filter(r => r.name && r.classLevel).length === 0 ? '#475569' : '#fff', border: 'none', borderRadius: 10, fontFamily: FONT, fontSize: '0.9rem', fontWeight: 700, cursor: uploading || parsed.filter(r => r.name && r.classLevel).length === 0 ? 'not-allowed' : 'pointer', transition: 'all 0.2s' }}
           >
-            {uploading ? 'Creating accounts…' : `🚀 Create ${parsed.filter(r => r.name && r.classLevel).length} Student Accounts`}
+            {uploading ? 'Creating accounts…' : `Create ${parsed.filter(r => r.name && r.classLevel).length} Student Accounts`}
           </button>
         </div>
       )}
