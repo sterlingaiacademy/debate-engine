@@ -109,7 +109,7 @@ Transcript:
     let aiAnalysis;
     try {
       const message = await anthropic.messages.create({
-        model: "claude-3-haiku-20240307",
+        model: "claude-haiku-4-5-20251001",
         max_tokens: 1024,
         system: "You are an expert public speaking coach. Always respond with only valid JSON.",
         messages: [
@@ -225,7 +225,7 @@ Format strictly as JSON:
     let result;
     try {
       const message = await anthropic.messages.create({
-        model: "claude-3-haiku-20240307",
+        model: "claude-haiku-4-5-20251001",
         max_tokens: 500,
         system: "You are an expert public speaking coach. Always respond with only valid JSON.",
         messages: [
