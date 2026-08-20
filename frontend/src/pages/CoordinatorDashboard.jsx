@@ -536,185 +536,154 @@ function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent }
 
 // ── Scores Section ──────────────────────────────────────────
 function ScoresSection({ students }) {
-  const [selectedSubject, setSelectedSubject] = useState(null);
-  const [selectedGrade, setSelectedGrade] = useState(null);
+  const [selectedGrade, setSelectedGrade] = useState('all');
 
-  // Build subject -> grade -> student scores map from all students' quizResults
-  const subjectMap = {};
+  const scoreColor = pct => pct >= 80 ? '#10b981' : pct >= 50 ? '#f59e0b' : '#ef4444';
+  const scoreBg = pct => pct >= 80 ? 'rgba(16,185,129,0.1)' : pct >= 50 ? 'rgba(245,158,11,0.1)' : 'rgba(239,68,68,0.1)';
+  const SUBJECT_ICONS = { English: '📚', Mathematics: '✖️', Math: '✖️', Science: '🔬', 'Social Science': '🌍', General: '📊' };
+
+  // Build grade -> subject -> rows
+  const gradeMap = {};
   (students || []).forEach(student => {
+    const grade = student.class || 'Unknown';
+    if (!gradeMap[grade]) gradeMap[grade] = {};
     (student.quizResults || []).forEach(qr => {
       const subject = qr.subject || 'General';
-      const grade = student.class || 'Unknown';
-      if (!subjectMap[subject]) subjectMap[subject] = {};
-      if (!subjectMap[subject][grade]) subjectMap[subject][grade] = [];
-      subjectMap[subject][grade].push({ ...qr, studentName: student.name });
+      if (!gradeMap[grade][subject]) gradeMap[grade][subject] = [];
+      gradeMap[grade][subject].push({ ...qr, studentName: student.name });
     });
   });
 
-  const subjects = Object.keys(subjectMap).sort();
-  const grades = selectedSubject ? Object.keys(subjectMap[selectedSubject] || {}).sort((a, b) => {
-    const numA = parseInt(a.replace(/\D/g, '')) || 0;
-    const numB = parseInt(b.replace(/\D/g, '')) || 0;
-    return numA - numB;
-  }) : [];
+  const allGrades = Object.keys(gradeMap).sort((a, b) => {
+    return (parseInt(a.replace(/\D/g, '')) || 0) - (parseInt(b.replace(/\D/g, '')) || 0);
+  });
 
-  const scoreColor = (pct) => pct >= 80 ? '#10b981' : pct >= 50 ? '#f59e0b' : '#ef4444';
-  const scoreBg = (pct) => pct >= 80 ? 'rgba(16,185,129,0.1)' : pct >= 50 ? 'rgba(245,158,11,0.1)' : 'rgba(239,68,68,0.1)';
+  const gradesToShow = selectedGrade === 'all' ? allGrades : [selectedGrade];
 
-  const SUBJECT_ICONS = {
-    'English': '📚',
-    'Mathematics': '✖️',
-    'Math': '✖️',
-    'Science': '🔬',
-    'Social Science': '🌍',
-    'General': '📊',
-  };
+  // Merge subject rows for selected grades
+  const subjectRows = {};
+  gradesToShow.forEach(grade => {
+    Object.entries(gradeMap[grade] || {}).forEach(([subject, rows]) => {
+      if (!subjectRows[subject]) subjectRows[subject] = [];
+      subjectRows[subject].push(...rows.map(r => ({ ...r, grade })));
+    });
+  });
 
-  if (subjects.length === 0) {
+  const subjects = Object.keys(subjectRows).sort();
+  const hasData = allGrades.some(g => Object.keys(gradeMap[g] || {}).some(s => gradeMap[g][s].length > 0));
+
+  if (!hasData) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '40vh', gap: '1rem', color: '#475569' }}>
         <div style={{ fontSize: '3rem' }}>📉</div>
         <h3 style={{ color: '#64748b', fontWeight: 700, margin: 0 }}>No Scores Yet</h3>
-        <p style={{ fontSize: '0.85rem', textAlign: 'center', maxWidth: 360 }}>Once your students complete practice quizzes or olympiad sessions, their scores will appear here organized by subject and grade.</p>
+        <p style={{ fontSize: '0.85rem', textAlign: 'center', maxWidth: 360 }}>Once your students complete practice quizzes or olympiad sessions, their scores will appear here organized by grade and subject.</p>
       </div>
     );
   }
 
   return (
-    <div style={{ display: 'flex', gap: '1.5rem', minHeight: '70vh' }}>
-
-      {/* Left: Subject list */}
-      <div style={{ width: 220, flexShrink: 0 }}>
-        <div style={{ fontSize: '0.68rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.75rem' }}>Subjects</div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-          {subjects.map(subject => {
-            const active = selectedSubject === subject;
-            const totalStudents = Object.values(subjectMap[subject] || {}).reduce((a, arr) => a + arr.length, 0);
+    <div>
+      {/* Grade tabs */}
+      <div style={{ marginBottom: '2rem' }}>
+        <div style={{ fontSize: '0.68rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.85rem' }}>Select Grade</div>
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+          {['all', ...allGrades].map(grade => {
+            const active = selectedGrade === grade;
+            const label = grade === 'all' ? 'All Grades' : grade;
+            const total = grade === 'all'
+              ? allGrades.reduce((sum, g) => sum + Object.values(gradeMap[g] || {}).reduce((a, rows) => a + rows.length, 0), 0)
+              : Object.values(gradeMap[grade] || {}).reduce((a, rows) => a + rows.length, 0);
             return (
-              <button key={subject} onClick={() => { setSelectedSubject(subject); setSelectedGrade(null); }}
+              <button key={grade} onClick={() => setSelectedGrade(grade)}
                 style={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  padding: '0.7rem 1rem', borderRadius: 12, border: 'none', cursor: 'pointer', fontFamily: FONT,
-                  background: active ? 'rgba(59,130,246,0.15)' : 'rgba(255,255,255,0.03)',
-                  color: active ? '#60a5fa' : '#94a3b8',
-                  fontWeight: active ? 700 : 500, fontSize: '0.875rem',
-                  borderLeft: active ? '3px solid #3b82f6' : '3px solid transparent',
-                  transition: 'all 0.15s', textAlign: 'left',
+                  padding: '0.55rem 1.25rem', borderRadius: 99, border: 'none', cursor: 'pointer', fontFamily: FONT,
+                  background: active ? 'linear-gradient(135deg, #3b82f6, #2563eb)' : 'rgba(255,255,255,0.05)',
+                  color: active ? '#fff' : '#64748b',
+                  fontWeight: active ? 700 : 500, fontSize: '0.85rem',
+                  boxShadow: active ? '0 4px 14px rgba(59,130,246,0.4)' : 'none',
+                  transition: 'all 0.2s', display: 'flex', alignItems: 'center', gap: '0.4rem',
                 }}
-                onMouseEnter={e => { if (!active) e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; }}
-                onMouseLeave={e => { if (!active) e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; }}
+                onMouseEnter={e => { if (!active) { e.currentTarget.style.background = 'rgba(255,255,255,0.09)'; e.currentTarget.style.color = '#94a3b8'; } }}
+                onMouseLeave={e => { if (!active) { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#64748b'; } }}
               >
-                <span>{SUBJECT_ICONS[subject] || '📌'} {subject}</span>
-                <span style={{ fontSize: '0.7rem', background: active ? 'rgba(59,130,246,0.2)' : 'rgba(255,255,255,0.06)', borderRadius: 99, padding: '0.1rem 0.5rem', fontWeight: 700 }}>{totalStudents}</span>
+                {label}
+                {total > 0 && <span style={{ fontSize: '0.65rem', background: active ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.08)', borderRadius: 99, padding: '0.05rem 0.45rem', fontWeight: 700 }}>{total}</span>}
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* Center: Grade list (shows when subject selected) */}
-      {selectedSubject && (
-        <div style={{ width: 160, flexShrink: 0 }}>
-          <div style={{ fontSize: '0.68rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.75rem' }}>Grades</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-            <button onClick={() => setSelectedGrade(null)}
-              style={{ padding: '0.6rem 1rem', borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: FONT,
-                background: selectedGrade === null ? 'rgba(59,130,246,0.15)' : 'rgba(255,255,255,0.03)',
-                color: selectedGrade === null ? '#60a5fa' : '#94a3b8',
-                fontWeight: selectedGrade === null ? 700 : 500, fontSize: '0.8rem',
-                borderLeft: selectedGrade === null ? '3px solid #3b82f6' : '3px solid transparent',
-                transition: 'all 0.15s', textAlign: 'left',
-              }}
-            >All Grades</button>
-            {grades.map(grade => {
-              const active = selectedGrade === grade;
-              const count = (subjectMap[selectedSubject][grade] || []).length;
-              return (
-                <button key={grade} onClick={() => setSelectedGrade(grade)}
-                  style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                    padding: '0.6rem 1rem', borderRadius: 10, border: 'none', cursor: 'pointer', fontFamily: FONT,
-                    background: active ? 'rgba(59,130,246,0.15)' : 'rgba(255,255,255,0.03)',
-                    color: active ? '#60a5fa' : '#94a3b8',
-                    fontWeight: active ? 700 : 500, fontSize: '0.8rem',
-                    borderLeft: active ? '3px solid #3b82f6' : '3px solid transparent',
-                    transition: 'all 0.15s',
-                  }}
-                  onMouseEnter={e => { if (!active) e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; }}
-                  onMouseLeave={e => { if (!active) e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; }}
-                >
-                  <span>{grade}</span>
-                  <span style={{ fontSize: '0.65rem', background: active ? 'rgba(59,130,246,0.2)' : 'rgba(255,255,255,0.06)', borderRadius: 99, padding: '0.1rem 0.45rem', fontWeight: 700 }}>{count}</span>
-                </button>
-              );
-            })}
-          </div>
+      {/* Subject cards */}
+      {subjects.length === 0 ? (
+        <div style={{ textAlign: 'center', color: '#334155', marginTop: '3rem' }}>
+          <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📭</div>
+          <div style={{ fontSize: '0.9rem', fontWeight: 600 }}>No scores for this grade yet</div>
+        </div>
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
+          {subjects.map(subject => {
+            const rows = subjectRows[subject] || [];
+            const avg = Math.round(rows.reduce((a, r) => a + (r.percentage || 0), 0) / rows.length);
+            const showGradeCol = selectedGrade === 'all';
+            return (
+              <Card key={subject}>
+                <div style={{ padding: '1rem 1.5rem', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <span style={{ fontSize: '1.4rem' }}>{SUBJECT_ICONS[subject] || '📌'}</span>
+                    <div>
+                      <h3 style={{ fontSize: '1rem', fontWeight: 800, color: '#e2e8f0', margin: 0 }}>{subject}</h3>
+                      <div style={{ fontSize: '0.72rem', color: '#475569', marginTop: '0.1rem' }}>
+                        {rows.length} attempt{rows.length !== 1 ? 's' : ''}
+                        {showGradeCol && ` · ${[...new Set(rows.map(r => r.grade))].join(', ')}`}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ fontSize: '0.63rem', color: '#64748b', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.1rem' }}>Class Avg</div>
+                    <div style={{ fontSize: '1.5rem', fontWeight: 800, color: scoreColor(avg), lineHeight: 1 }}>{avg}%</div>
+                  </div>
+                </div>
+                <div style={{ overflowX: 'auto' }}>
+                  <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
+                    <TableHead cols={showGradeCol
+                      ? ['Student', 'Grade', 'Quiz / Test', 'Score', 'Percentage', 'Date']
+                      : ['Student', 'Quiz / Test', 'Score', 'Percentage', 'Date']}
+                    />
+                    <tbody>
+                      {[...rows].sort((a, b) => (b.percentage || 0) - (a.percentage || 0)).map((row, idx) => (
+                        <TableRow key={idx} idx={idx}>
+                          <TD><span style={{ fontWeight: 600, color: '#e2e8f0' }}>{row.studentName}</span></TD>
+                          {showGradeCol && <TD muted>{row.grade}</TD>}
+                          <TD muted>{row.quiz_name || '—'}</TD>
+                          <TD><span style={{ fontWeight: 700, color: '#cbd5e1' }}>{row.score} / {row.total}</span></TD>
+                          <TD>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                              <div style={{ flex: 1, height: 5, background: 'rgba(255,255,255,0.06)', borderRadius: 99, overflow: 'hidden', minWidth: 70 }}>
+                                <div style={{ height: '100%', width: `${Math.min(row.percentage || 0, 100)}%`, background: scoreColor(row.percentage || 0), borderRadius: 99 }} />
+                              </div>
+                              <span style={{ fontSize: '0.82rem', fontWeight: 800, color: scoreColor(row.percentage || 0), background: scoreBg(row.percentage || 0), padding: '0.15rem 0.55rem', borderRadius: 6, whiteSpace: 'nowrap' }}>{row.percentage || 0}%</span>
+                            </div>
+                          </TD>
+                          <TD muted>{new Date(row.attempted_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</TD>
+                        </TableRow>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </Card>
+            );
+          })}
         </div>
       )}
-
-      {/* Right: Scores table */}
-      <div style={{ flex: 1, minWidth: 0 }}>
-        {!selectedSubject ? (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#334155' }}>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>←</div>
-              <div style={{ fontSize: '0.9rem', fontWeight: 600 }}>Select a subject to view scores</div>
-            </div>
-          </div>
-        ) : (() => {
-          const gradesToShow = selectedGrade ? [selectedGrade] : grades;
-          return (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-              {gradesToShow.map(grade => {
-                const rows = subjectMap[selectedSubject][grade] || [];
-                if (rows.length === 0) return null;
-                const avg = Math.round(rows.reduce((a, r) => a + (r.percentage || 0), 0) / rows.length);
-                return (
-                  <Card key={grade}>
-                    <div style={{ padding: '0.9rem 1.25rem', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                        <h3 style={{ fontSize: '0.95rem', fontWeight: 800, color: '#e2e8f0', margin: 0 }}>{grade}</h3>
-                        <span style={{ fontSize: '0.72rem', color: '#475569', fontWeight: 500 }}>{rows.length} attempt{rows.length !== 1 ? 's' : ''}</span>
-                      </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <span style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 600 }}>Class avg:</span>
-                        <span style={{ fontSize: '0.9rem', fontWeight: 800, color: scoreColor(avg) }}>{avg}%</span>
-                      </div>
-                    </div>
-                    <div style={{ overflowX: 'auto' }}>
-                      <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-                        <TableHead cols={['Student', 'Quiz / Test', 'Score', 'Percentage', 'Date']} />
-                        <tbody>
-                          {rows.sort((a, b) => (b.percentage || 0) - (a.percentage || 0)).map((row, idx) => (
-                            <TableRow key={idx} idx={idx}>
-                              <TD><span style={{ fontWeight: 600, color: '#e2e8f0' }}>{row.studentName}</span></TD>
-                              <TD muted>{row.quiz_name || '—'}</TD>
-                              <TD><span style={{ fontWeight: 700, color: '#cbd5e1' }}>{row.score} / {row.total}</span></TD>
-                              <TD>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                                  <div style={{ flex: 1, height: 5, background: 'rgba(255,255,255,0.06)', borderRadius: 99, overflow: 'hidden', minWidth: 60 }}>
-                                    <div style={{ height: '100%', width: `${Math.min(row.percentage || 0, 100)}%`, background: scoreColor(row.percentage || 0), borderRadius: 99 }} />
-                                  </div>
-                                  <span style={{ fontSize: '0.82rem', fontWeight: 800, color: scoreColor(row.percentage || 0), background: scoreBg(row.percentage || 0), padding: '0.1rem 0.5rem', borderRadius: 6 }}>{row.percentage || 0}%</span>
-                                </div>
-                              </TD>
-                              <TD muted>{new Date(row.attempted_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</TD>
-                            </TableRow>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </Card>
-                );
-              })}
-            </div>
-          );
-        })()}
-      </div>
     </div>
   );
 }
 
-// ── Manage Students Section ───────────────────────────────────
+
+
+
 function ManageStudentsSection({ coordinatorId, fetchData }) {
   const [tab, setTab] = useState('csv'); // 'csv' | 'manual' | 'results'
   const [csvText, setCsvText] = useState('');
