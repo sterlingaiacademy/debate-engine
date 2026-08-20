@@ -539,19 +539,7 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
   const [manualResult, setManualResult] = useState(null);
   const [manualError, setManualError] = useState('');
 
-  // Grade → Level mapping — case-insensitive (matches Layout.jsx logic)
-  const gradeToLevel = (g) => {
-    if (!g) return g;
-    // Normalize: "GRADE 12" → "Grade 12", "grade 8" → "Grade 8", "KG" → "KG"
-    const norm = g.trim().toLowerCase().replace(/^grade\s*/, 'Grade ');
-    const clean = norm === 'kg' ? 'KG' : norm.replace('grade ', 'Grade ');
-    if (['KG','Grade 1','Grade 2'].includes(clean)) return 'Level 1';
-    if (['Grade 3','Grade 4','Grade 5'].includes(clean)) return 'Level 2';
-    if (['Grade 6','Grade 7','Grade 8'].includes(clean)) return 'Level 3';
-    if (['Grade 9','Grade 10'].includes(clean)) return 'Level 4';
-    if (['Grade 11','Grade 12'].includes(clean)) return 'Level 5';
-    return g; // fallback: pass as-is
-  };
+
   const CLASS_OPTIONS = ['KG','Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6','Grade 7','Grade 8','Grade 9','Grade 10','Grade 11','Grade 12'];
 
   const parseCSV = (text) => {
@@ -601,12 +589,10 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
     if (!parsed.length) return;
     setUploading(true);
     try {
-      // Map grade values to Level before sending to backend
-      const studentsWithLevel = parsed.map(s => ({ ...s, classLevel: gradeToLevel(s.classLevel) }));
       const res = await fetch(`${API_BASE}/api/coordinator/bulk-create-students`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ coordinatorId, students: studentsWithLevel }),
+        body: JSON.stringify({ coordinatorId, students: parsed }),
       });
       const data = await res.json();
       if (data.success) { setResults(data.results); setTab('results'); fetchData(); }
@@ -632,7 +618,7 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
       const res = await fetch(`${API_BASE}/api/coordinator/add-student`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ coordinatorId, ...manualForm, classLevel: gradeToLevel(manualForm.classLevel) }),
+        body: JSON.stringify({ coordinatorId, ...manualForm }),
       });
       const data = await res.json();
       if (data.success) { setManualResult(data.student); setManualForm({ name: '', classLevel: '', password: '', email: '' }); fetchData(); }
