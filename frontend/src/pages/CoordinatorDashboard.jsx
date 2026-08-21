@@ -700,13 +700,13 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
     const passIdx = header.findIndex(h => h === 'password' || h === 'pass');
     const emailIdx = header.findIndex(h => h.startsWith('email') || h.startsWith('mail'));
     const phoneIdx = header.findIndex(h => h.startsWith('phone'));
-    // Subject column indices
+    // Subject column indices — use startsWith/includes to handle "(Y/N)" suffix from xlsx headers
     const subjIdx = {
       social_science: header.findIndex(h => h.includes('social')),
-      science: header.findIndex(h => h === 'science'),
-      ct_ai: header.findIndex(h => h.includes('ct') || h.includes('ai')),
-      maths: header.findIndex(h => h === 'maths' || h === 'math' || h === 'mathematics'),
-      english: header.findIndex(h => h === 'english'),
+      science: header.findIndex(h => h.startsWith('science')),
+      ct_ai: header.findIndex(h => h.startsWith('ct')),
+      maths: header.findIndex(h => h.startsWith('maths') || h.startsWith('math')),
+      english: header.findIndex(h => h.startsWith('english')),
     };
     if (nameIdx === -1) { setParseError('Could not find a "name" column. Please check your CSV headers.'); return; }
     if (classIdx === -1) { setParseError('Could not find a "class" or "grade" column. Please check your CSV headers.'); return; }
