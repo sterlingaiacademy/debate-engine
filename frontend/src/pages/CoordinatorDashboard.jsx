@@ -744,9 +744,24 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
     e.preventDefault(); setDragOver(false);
     const file = e.dataTransfer?.files[0] || e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => { const txt = ev.target.result; setCsvText(txt); parseCSV(txt); };
-    reader.readAsText(file);
+    const isXlsx = file.name.endsWith('.xlsx') || file.name.endsWith('.xls') ||
+      file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+    if (isXlsx) {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const data = new Uint8Array(ev.target.result);
+        const wb = XLSX.read(data, { type: 'array' });
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const csv = XLSX.utils.sheet_to_csv(ws);
+        setCsvText(csv);
+        parseCSV(csv);
+      };
+      reader.readAsArrayBuffer(file);
+    } else {
+      const reader = new FileReader();
+      reader.onload = (ev) => { const txt = ev.target.result; setCsvText(txt); parseCSV(txt); };
+      reader.readAsText(file);
+    }
   };
 
   const handleCSVText = (text) => { setCsvText(text); if (text.trim()) parseCSV(text); };
@@ -876,9 +891,9 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
             onClick={() => document.getElementById('csv-file-input').click()}
           >
             <div style={{ fontSize: '1.75rem', marginBottom: '0.4rem' }}>📁</div>
-            <div style={{ fontSize: '0.875rem', color: '#94a3b8', fontWeight: 600 }}>Drop your CSV file here, or click to browse</div>
-            <div style={{ fontSize: '0.72rem', color: '#475569', marginTop: '0.25rem' }}>Supports .csv files — or add rows manually below</div>
-            <input id="csv-file-input" type="file" accept=".csv,.txt" style={{ display: 'none' }} onChange={handleFileDrop} />
+            <div style={{ fontSize: '0.875rem', color: '#94a3b8', fontWeight: 600 }}>Drop your Excel or CSV file here, or click to browse</div>
+            <div style={{ fontSize: '0.72rem', color: '#475569', marginTop: '0.25rem' }}>Supports .xlsx and .csv files</div>
+            <input id="csv-file-input" type="file" accept=".csv,.txt,.xlsx,.xls" style={{ display: 'none' }} onChange={handleFileDrop} />
           </div>
 
           {parseError && <div style={{ color: '#f87171', fontSize: '0.82rem', marginBottom: '0.75rem', padding: '0.6rem 1rem', background: 'rgba(239,68,68,0.08)', borderRadius: 8, border: '1px solid rgba(239,68,68,0.2)' }}>⚠️ {parseError}</div>}
