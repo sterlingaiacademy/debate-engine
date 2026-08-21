@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import * as XLSX from 'xlsx';
 import { API_BASE } from '../api';
 import logoImg from '../assets/logo.png';
 
@@ -824,29 +825,40 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
           {/* Download Template */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.25rem', padding: '1rem 1.25rem', background: 'rgba(59,130,246,0.05)', border: '1px solid rgba(59,130,246,0.2)', borderRadius: 14 }}>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: '0.875rem', fontWeight: 700, color: '#e2e8f0', marginBottom: '0.2rem' }}>Download CSV Template</div>
+              <div style={{ fontSize: '0.875rem', fontWeight: 700, color: '#e2e8f0', marginBottom: '0.2rem' }}>Download Excel Template</div>
               <div style={{ fontSize: '0.78rem', color: '#64748b' }}>Fill in student names, grade (as a number), and mark Y/N for each subject. Email and phone are optional.</div>
             </div>
             <button
               onClick={() => {
-                const header = 'Sl. No.,Students Name,Mail ID (optional),Phone Number (optional),Grade (in number),Social Science (Y/N),Science (Y/N),CT&AI (Y/N),Maths (Y/N),English (Y/N)';
-                const rows = [
-                  '1,Arjun Kumar,,, 8,Y,Y,N,Y,Y',
-                  '2,Priya Sharma,,, 6,Y,N,Y,N,Y',
-                  '3,Rohan Nair,,, 10,N,Y,N,Y,Y',
+                const headers = ['Sl. No.', 'Students Name', 'Mail ID (optional)', 'Phone Number (optional)', 'Grade (in number)', 'Social Science (Y/N)', 'Science (Y/N)', 'CT&AI (Y/N)', 'Maths (Y/N)', 'English (Y/N)'];
+                const sampleRows = [
+                  [1, 'Arjun Kumar', '', '', 8, 'Y', 'Y', 'N', 'Y', 'Y'],
+                  [2, 'Priya Sharma', '', '', 6, 'Y', 'N', 'Y', 'N', 'Y'],
+                  [3, 'Rohan Nair', '', '', 10, 'N', 'Y', 'N', 'Y', 'Y'],
                 ];
-                const csv = [header, ...rows].join('\n');
-                const blob = new Blob([csv], { type: 'text/csv' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url; a.download = 'student_upload_template.csv'; a.click();
-                URL.revokeObjectURL(url);
+                const ws = XLSX.utils.aoa_to_sheet([headers, ...sampleRows]);
+                // Set column widths
+                ws['!cols'] = [
+                  { wch: 8 },   // Sl. No.
+                  { wch: 25 },  // Students Name
+                  { wch: 28 },  // Mail ID
+                  { wch: 28 },  // Phone Number
+                  { wch: 20 },  // Grade
+                  { wch: 22 },  // Social Science
+                  { wch: 16 },  // Science
+                  { wch: 16 },  // CT&AI
+                  { wch: 16 },  // Maths
+                  { wch: 16 },  // English
+                ];
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, 'Students');
+                XLSX.writeFile(wb, 'student_upload_template.xlsx');
               }}
               style={{ padding: '0.6rem 1.25rem', background: 'linear-gradient(135deg, #1d4ed8, #3b82f6)', color: '#fff', border: 'none', borderRadius: 10, fontFamily: FONT, fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0, transition: 'opacity 0.2s' }}
               onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
               onMouseLeave={e => e.currentTarget.style.opacity = '1'}
             >
-              ⬇ Download Template
+              ⬇ Download Template (.xlsx)
             </button>
           </div>
 
