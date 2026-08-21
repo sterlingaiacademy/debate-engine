@@ -3760,50 +3760,58 @@ app.post('/api/coordinator/bulk-create-students', async (req, res) => {
     }
     const { id: schoolId } = schoolRes.rows[0];
 
+    // Run schema migrations ONCE before the loop (not 1000 times)
+    await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS plain_password TEXT`).catch(() => {});
+    await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS subjects JSONB`).catch(() => {});
+    await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS phone TEXT`).catch(() => {});
+
+    // Load all existing usernames into memory once — eliminates N DB queries for dedup
+    const existingRes = await db.query(`SELECT LOWER("studentId") as sid FROM users`);
+    const existingSet = new Set(existingRes.rows.map(r => r.sid));
+
     const results = [];
     const getAgentIdForClass = (cls) => {
-      const norm = (cls || '').trim().toLowerCase().replace(/^(grade|class)\s*/, 'Grade ').replace('kg', 'KG');
-      if (['Grade 3','Grade 4','Grade 5'].includes(norm)) return 'agent_5201krghdxhqfhtbf4yj22406vyv'; // Level 2
-      if (['Grade 6','Grade 7','Grade 8'].includes(norm)) return 'agent_0601krh0f23df5br0dahys0kdsbr'; // Level 3
-      if (['Grade 9','Grade 10'].includes(norm)) return 'agent_9701krh2p85sfs9vyp7e6e1cqbwc'; // Level 4
-      if (['Grade 11','Grade 12'].includes(norm)) return 'agent_7801krh4jfmdf9asxz901aeac0gt'; // Level 5
-      return 'agent_5301krgg7x98ewm84w8aj2976zqc'; // Level 1 default
+      const norm = (cls || '').trim().replace(/^(grade|class)\s*/i, 'Grade ').replace(/\bkg\b/i, 'KG');
+      if (['Grade 3','Grade 4','Grade 5'].includes(norm)) return 'agent_5201krghdxhqfhtbf4yj22406vyv';
+      if (['Grade 6','Grade 7','Grade 8'].includes(norm)) return 'agent_0601krh0f23df5br0dahys0kdsbr';
+      if (['Grade 9','Grade 10'].includes(norm)) return 'agent_9701krh2p85sfs9vyp7e6e1cqbwc';
+      if (['Grade 11','Grade 12'].includes(norm)) return 'agent_7801krh4jfmdf9asxz901aeac0gt';
+      return 'agent_5301krgg7x98ewm84w8aj2976zqc';
     };
+
     for (const student of students) {
-      const { name, classLevel, password: rawPassword, email: rawEmail } = student;
+      const { name, classLevel, email: rawEmail } = student;
       if (!name || !classLevel) {
         results.push({ name: name || '?', status: 'skipped', reason: 'Missing name or class' });
         continue;
       }
 
+      // Dedup via in-memory Set (no extra DB query per student)
       const baseUsername = name.toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
       let username = baseUsername;
       let suffix = 2;
-      while (true) {
-        const taken = await db.query(`SELECT id FROM users WHERE LOWER("studentId") = LOWER($1)`, [username]);
-        if (taken.rows.length === 0) break;
+      while (existingSet.has(username.toLowerCase())) {
         username = `${baseUsername}_${suffix}`;
         suffix++;
       }
+      existingSet.add(username.toLowerCase());
 
       const firstName = name.trim().split(' ')[0];
       const capFirst = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
       const symbols = ['@', '#', '$'];
       const sym = symbols[Math.floor(Math.random() * symbols.length)];
-      const plainPassword = rawPassword && rawPassword.trim() ? rawPassword.trim() : `${capFirst}${sym}${Math.floor(100 + Math.random() * 900)}`;
+      const plainPassword = `${capFirst}${sym}${Math.floor(100 + Math.random() * 900)}`;
       const email = rawEmail && rawEmail.trim() ? rawEmail.trim() : `${username}@school.graceandforce.internal`;
+      const phoneVal = student.phone && student.phone.trim() ? student.phone.trim() : null;
+      const subjectsVal = student.subjects ? JSON.stringify(student.subjects) : null;
+      const assignedAgentId = getAgentIdForClass(classLevel);
 
       try {
-        const hashedPassword = await bcrypt.hash(plainPassword, 10);
-        const assignedAgentId = getAgentIdForClass(classLevel);
-        await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS plain_password TEXT`).catch(() => {});
-        await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS subjects JSONB`).catch(() => {});
-        const subjectsVal = student.subjects ? JSON.stringify(student.subjects) : null;
-        const phoneVal = student.phone && student.phone.trim() ? student.phone.trim() : null;
-        await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS phone TEXT`).catch(() => {});
+        const hashedPassword = await bcrypt.hash(plainPassword, 8); // cost 8 = ~4x faster than cost 10
         await db.query(
           `INSERT INTO users (name, "studentId", password, plain_password, "classLevel", email, phone, subjects, "assignedAgentId", school_id, role, olympiad_registered)
-           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 'student', true)`,
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 'student', true)
+           ON CONFLICT ("studentId") DO NOTHING`,
           [name, username, hashedPassword, plainPassword, classLevel, email, phoneVal, subjectsVal, assignedAgentId, schoolId]
         );
         await db.query(
@@ -3812,7 +3820,7 @@ app.post('/api/coordinator/bulk-create-students', async (req, res) => {
         );
         results.push({ name, username, password: plainPassword, email, status: 'created' });
       } catch (err) {
-        results.push({ name, username, status: 'skipped', reason: 'Already exists or DB error' });
+        results.push({ name, username, status: 'skipped', reason: 'DB error' });
       }
     }
 

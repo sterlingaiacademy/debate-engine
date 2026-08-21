@@ -766,20 +766,40 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
 
   const handleCSVText = (text) => { setCsvText(text); if (text.trim()) parseCSV(text); };
 
+  const [uploadProgress, setUploadProgress] = useState({ done: 0, total: 0 });
+
   const handleBulkCreate = async () => {
     if (!parsed.length) return;
     setUploading(true);
+    const BATCH = 100;
+    const allResults = [];
+    const batches = [];
+    for (let i = 0; i < parsed.length; i += BATCH) batches.push(parsed.slice(i, i + BATCH));
+    setUploadProgress({ done: 0, total: parsed.length });
     try {
-      const res = await fetch(`${API_BASE}/api/coordinator/bulk-create-students`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ coordinatorId, students: parsed }),
-      });
-      const data = await res.json();
-      if (data.success) { setResults(data.results); setTab('results'); fetchData(); }
-      else alert(data.error || 'Failed to create students.');
+      for (const batch of batches) {
+        const res = await fetch(`${API_BASE}/api/coordinator/bulk-create-students`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ coordinatorId, students: batch }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          allResults.push(...data.results);
+          setUploadProgress(p => ({ ...p, done: p.done + batch.length }));
+        } else {
+          alert(data.error || 'Failed to create students.');
+          setUploading(false);
+          setUploadProgress({ done: 0, total: 0 });
+          return;
+        }
+      }
+      setResults(allResults);
+      setTab('results');
+      fetchData();
     } catch { alert('Network error. Please try again.'); }
     setUploading(false);
+    setUploadProgress({ done: 0, total: 0 });
   };
 
   const downloadCredentials = () => {
@@ -982,8 +1002,20 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
             disabled={uploading || parsed.filter(r => r.name && r.classLevel).length === 0}
             style={{ padding: '0.75rem 2rem', background: uploading || parsed.filter(r => r.name && r.classLevel).length === 0 ? 'rgba(255,255,255,0.05)' : 'linear-gradient(135deg, #2563eb, #3b82f6)', color: parsed.filter(r => r.name && r.classLevel).length === 0 ? '#475569' : '#fff', border: 'none', borderRadius: 10, fontFamily: FONT, fontSize: '0.9rem', fontWeight: 700, cursor: uploading || parsed.filter(r => r.name && r.classLevel).length === 0 ? 'not-allowed' : 'pointer', transition: 'all 0.2s' }}
           >
-            {uploading ? 'Creating accounts…' : `Create ${parsed.filter(r => r.name && r.classLevel).length} Student Accounts`}
+            {uploading
+              ? uploadProgress.total > 0 ? `Creating… ${uploadProgress.done}/${uploadProgress.total} students` : 'Creating accounts…'
+              : `Create ${parsed.filter(r => r.name && r.classLevel).length} Student Accounts`}
           </button>
+          {uploading && uploadProgress.total > 0 && (
+            <div style={{ marginTop: '0.75rem', width: '100%', maxWidth: 400 }}>
+              <div style={{ background: 'rgba(255,255,255,0.06)', borderRadius: 99, height: 8, overflow: 'hidden' }}>
+                <div style={{ height: '100%', borderRadius: 99, background: 'linear-gradient(90deg, #2563eb, #60a5fa)', width: `${Math.round((uploadProgress.done / uploadProgress.total) * 100)}%`, transition: 'width 0.3s ease' }} />
+              </div>
+              <div style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: '0.3rem', textAlign: 'center' }}>
+                {Math.round((uploadProgress.done / uploadProgress.total) * 100)}% complete — please don't close this page
+              </div>
+            </div>
+          )}
         </div>
       )}
 
