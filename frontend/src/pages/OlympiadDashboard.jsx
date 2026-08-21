@@ -76,7 +76,7 @@ export default function OlympiadDashboard({ user }) {
     });
   };
 
-  // Map from our JSONB keys → dashboard subject keys
+  // Map from our stored keys → dashboard subject keys
   const SUBJECT_KEY_MAP = {
     english: 'English',
     maths: 'Mathematics',
@@ -88,25 +88,22 @@ export default function OlympiadDashboard({ user }) {
   let userSubjectsArray = [];
   try {
     let subjectsObj = subjectsRaw;
-    // If it came back as a string (TEXT column), parse it
-    if (typeof subjectsRaw === 'string' && subjectsRaw.trim().startsWith('{')) {
-      subjectsObj = JSON.parse(subjectsRaw);
+    if (typeof subjectsRaw === 'string' && subjectsRaw.trim()) {
+      // Strip outer quotes if double-serialized: "\"{ ... }\"" → "{ ... }"
+      let str = subjectsRaw.trim();
+      if (str.startsWith('"') && str.endsWith('"')) str = str.slice(1, -1).replace(/\\"/g, '"');
+      subjectsObj = JSON.parse(str);
     }
     if (subjectsObj && typeof subjectsObj === 'object' && !Array.isArray(subjectsObj)) {
-      // JSONB / parsed object: { english: true, maths: false, ... }
       userSubjectsArray = Object.entries(subjectsObj)
         .filter(([, v]) => v === true)
         .map(([k]) => SUBJECT_KEY_MAP[k])
         .filter(Boolean);
-    } else if (typeof subjectsRaw === 'string' && subjectsRaw.trim()) {
-      // Legacy comma-separated string
-      userSubjectsArray = subjectsRaw.split(',').map(s => s.trim()).filter(Boolean);
     }
   } catch (e) {
-    // Parse failed — unlock all
     userSubjectsArray = [];
   }
-  // If no subjects resolved, unlock everything (backward compat / old accounts)
+  // If nothing resolved, unlock everything (old accounts / no subjects set)
   if (userSubjectsArray.length === 0) userSubjectsArray = SUBJECTS.map(s => s.key);
 
   return (
