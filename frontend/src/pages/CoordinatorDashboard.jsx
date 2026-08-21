@@ -679,42 +679,62 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
   const [dragOver, setDragOver] = useState(false);
 
   // Manual add state
-  const [manualForm, setManualForm] = useState({ name: '', classLevel: '', password: '', email: '' });
+  const [manualForm, setManualForm] = useState({ name: '', classLevel: '', password: '', email: '', phone: '', subjects: { social_science: false, science: false, ct_ai: false, maths: false, english: false } });
   const [manualLoading, setManualLoading] = useState(false);
   const [manualResult, setManualResult] = useState(null);
   const [manualError, setManualError] = useState('');
 
 
   const CLASS_OPTIONS = ['KG','Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6','Grade 7','Grade 8','Grade 9','Grade 10','Grade 11','Grade 12'];
+  const SUBJECTS = ['Social Science', 'Science', 'CT&AI', 'Maths', 'English'];
+  const SUBJECT_KEYS = ['social_science', 'science', 'ct_ai', 'maths', 'english'];
 
   const parseCSV = (text) => {
     setParseError('');
     const lines = text.trim().split('\n').filter(l => l.trim());
     if (lines.length < 2) { setParseError('CSV must have a header row and at least one student row.'); return; }
     const header = lines[0].split(',').map(h => h.trim().toLowerCase().replace(/"/g, ''));
-    const nameIdx = header.findIndex(h => h === 'name' || h === 'student name' || h === 'student_name');
-    const classIdx = header.findIndex(h => h === 'class' || h === 'classlevel' || h === 'grade' || h === 'class level');
+    const nameIdx = header.findIndex(h => h === 'name' || h === 'student name' || h === 'student_name' || h === 'students name');
+    const classIdx = header.findIndex(h => h === 'class' || h === 'classlevel' || h === 'grade' || h === 'class level' || h === 'grade(in number)');
     const passIdx = header.findIndex(h => h === 'password' || h === 'pass');
-    // Match 'email', 'email (optional)', 'email address', etc.
-    const emailIdx = header.findIndex(h => h.startsWith('email'));
+    const emailIdx = header.findIndex(h => h.startsWith('email') || h.startsWith('mail'));
+    const phoneIdx = header.findIndex(h => h.startsWith('phone'));
+    // Subject column indices
+    const subjIdx = {
+      social_science: header.findIndex(h => h.includes('social')),
+      science: header.findIndex(h => h === 'science'),
+      ct_ai: header.findIndex(h => h.includes('ct') || h.includes('ai')),
+      maths: header.findIndex(h => h === 'maths' || h === 'math' || h === 'mathematics'),
+      english: header.findIndex(h => h === 'english'),
+    };
     if (nameIdx === -1) { setParseError('Could not find a "name" column. Please check your CSV headers.'); return; }
-    if (classIdx === -1) { setParseError('Could not find a "class" column. Please check your CSV headers.'); return; }
+    if (classIdx === -1) { setParseError('Could not find a "class" or "grade" column. Please check your CSV headers.'); return; }
     const rows = lines.slice(1).map(line => {
       const cols = line.split(',').map(c => c.trim().replace(/"/g, ''));
-      // Normalize grade casing e.g. GRADE 12 → Grade 12
       const rawClass = cols[classIdx] || '';
+      // Accept plain numbers (8, 9, 12) or "Grade 8" style
       const normClass = rawClass.trim().toLowerCase() === 'kg' ? 'KG'
+        : /^\d+$/.test(rawClass.trim()) ? `Grade ${rawClass.trim()}`
         : rawClass.replace(/^grade\s*/i, 'Grade ');
+      const isY = v => v && v.trim().toLowerCase() === 'y';
       return {
         name: cols[nameIdx] || '',
         classLevel: normClass,
         password: passIdx !== -1 ? cols[passIdx] || '' : '',
         email: emailIdx !== -1 ? cols[emailIdx] || '' : '',
+        phone: phoneIdx !== -1 ? cols[phoneIdx] || '' : '',
+        subjects: {
+          social_science: subjIdx.social_science !== -1 ? isY(cols[subjIdx.social_science]) : false,
+          science: subjIdx.science !== -1 ? isY(cols[subjIdx.science]) : false,
+          ct_ai: subjIdx.ct_ai !== -1 ? isY(cols[subjIdx.ct_ai]) : false,
+          maths: subjIdx.maths !== -1 ? isY(cols[subjIdx.maths]) : false,
+          english: subjIdx.english !== -1 ? isY(cols[subjIdx.english]) : false,
+        },
       };
     }).filter(r => r.name);
     const valid = rows.filter(r => r.classLevel);
     const skipped = rows.length - valid.length;
-    if (skipped > 0) setParseError(`⚠️ ${skipped} row(s) skipped — class/grade is required for every student.`);
+    if (skipped > 0) setParseError(`${skipped} row(s) skipped — class/grade is required for every student.`);
     else setParseError('');
     setParsed(valid);
   };
@@ -766,7 +786,7 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
         body: JSON.stringify({ coordinatorId, ...manualForm }),
       });
       const data = await res.json();
-      if (data.success) { setManualResult(data.student); setManualForm({ name: '', classLevel: '', password: '', email: '' }); fetchData(); }
+      if (data.success) { setManualResult(data.student); setManualForm({ name: '', classLevel: '', password: '', email: '', phone: '', subjects: { social_science: false, science: false, ct_ai: false, maths: false, english: false } }); fetchData(); }
       else setManualError(data.error || 'Failed to add student.');
     } catch { setManualError('Network error.'); }
     setManualLoading(false);
@@ -805,11 +825,17 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.25rem', padding: '1rem 1.25rem', background: 'rgba(59,130,246,0.05)', border: '1px solid rgba(59,130,246,0.2)', borderRadius: 14 }}>
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: '0.875rem', fontWeight: 700, color: '#e2e8f0', marginBottom: '0.2rem' }}>Download CSV Template</div>
-              <div style={{ fontSize: '0.78rem', color: '#64748b' }}>Fill in student names and grades. Password and email are optional — leave blank to auto-generate.</div>
+              <div style={{ fontSize: '0.78rem', color: '#64748b' }}>Fill in student names, grade (as a number), and mark Y/N for each subject. Email and phone are optional.</div>
             </div>
             <button
               onClick={() => {
-                const csv = 'name,class,email (optional)\nArjun Kumar,Grade 8,\nPriya Sharma,Grade 6,\nRohan Nair,Grade 10,';
+                const header = 'Sl. No.,Students Name,Mail ID (optional),Phone Number (optional),Grade (in number),Social Science (Y/N),Science (Y/N),CT&AI (Y/N),Maths (Y/N),English (Y/N)';
+                const rows = [
+                  '1,Arjun Kumar,,, 8,Y,Y,N,Y,Y',
+                  '2,Priya Sharma,,, 6,Y,N,Y,N,Y',
+                  '3,Rohan Nair,,, 10,N,Y,N,Y,Y',
+                ];
+                const csv = [header, ...rows].join('\n');
                 const blob = new Blob([csv], { type: 'text/csv' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -852,7 +878,7 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
                 {parsed.length > 0 ? `Students — ${parsed.length} added` : 'No students yet'}
               </span>
               <button
-                onClick={() => setParsed(p => [...p, { name: '', classLevel: '', email: '' }])}
+                onClick={() => setParsed(p => [...p, { name: '', classLevel: '', email: '', phone: '', subjects: { social_science: false, science: false, ct_ai: false, maths: false, english: false } }])}
                 style={{ padding: '0.35rem 0.9rem', fontSize: '0.78rem', fontWeight: 700, color: '#60a5fa', background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.2)', borderRadius: 8, cursor: 'pointer' }}
               >+ Add Row</button>
             </div>
@@ -860,52 +886,65 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
               <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
                 <thead>
                   <tr style={{ background: 'rgba(255,255,255,0.03)' }}>
-                    {['#', 'Name *', 'Class *', 'Email (optional)', ''].map((col, i) => (
-                      <th key={i} style={{ padding: '0.6rem 0.85rem', textAlign: 'left', fontSize: '0.7rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.06em', borderBottom: '1px solid rgba(255,255,255,0.06)', whiteSpace: 'nowrap' }}>{col}</th>
+                    {['#', 'Name *', 'Grade *', 'Email', 'Phone', 'Soc.Sci', 'Science', 'CT&AI', 'Maths', 'English', ''].map((col, i) => (
+                      <th key={i} style={{ padding: '0.6rem 0.6rem', textAlign: 'left', fontSize: '0.68rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.06em', borderBottom: '1px solid rgba(255,255,255,0.06)', whiteSpace: 'nowrap' }}>{col}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {parsed.length === 0 ? (
-                    <tr><td colSpan={5} style={{ padding: '2rem', textAlign: 'center', color: '#334155', fontSize: '0.85rem' }}>Upload a CSV or click "+ Add Row" to add students manually</td></tr>
-                  ) : parsed.map((s, i) => (
-                    <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.01)' }}>
-                      <td style={{ padding: '0.45rem 0.85rem', color: '#475569', fontSize: '0.78rem', fontWeight: 600 }}>{i + 1}</td>
-                      <td style={{ padding: '0.35rem 0.5rem' }}>
-                        <input
-                          value={s.name}
-                          onChange={e => setParsed(p => p.map((r, ri) => ri === i ? { ...r, name: e.target.value } : r))}
-                          placeholder="Student name"
-                          style={{ width: '100%', minWidth: 140, padding: '0.4rem 0.6rem', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 7, color: '#e2e8f0', fontFamily: FONT, fontSize: '0.82rem', outline: 'none', boxSizing: 'border-box' }}
-                        />
-                      </td>
-                      <td style={{ padding: '0.35rem 0.5rem' }}>
-                        <select
-                          value={s.classLevel}
-                          onChange={e => setParsed(p => p.map((r, ri) => ri === i ? { ...r, classLevel: e.target.value } : r))}
-                          style={{ width: '100%', minWidth: 110, padding: '0.4rem 0.6rem', background: '#0f172a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 7, color: s.classLevel ? '#e2e8f0' : '#475569', fontFamily: FONT, fontSize: '0.82rem', outline: 'none', cursor: 'pointer' }}
-                        >
-                          <option value="">Select grade…</option>
-                          {CLASS_OPTIONS.map(c => <option key={c} value={c} style={{ background: '#0f172a' }}>{c}</option>)}
-                        </select>
-                      </td>
-                      <td style={{ padding: '0.35rem 0.5rem' }}>
-                        <input
-                          value={s.email}
-                          onChange={e => setParsed(p => p.map((r, ri) => ri === i ? { ...r, email: e.target.value } : r))}
-                          placeholder="Optional"
-                          type="email"
-                          style={{ width: '100%', minWidth: 160, padding: '0.4rem 0.6rem', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 7, color: '#e2e8f0', fontFamily: FONT, fontSize: '0.82rem', outline: 'none', boxSizing: 'border-box' }}
-                        />
-                      </td>
-                      <td style={{ padding: '0.35rem 0.75rem' }}>
+                    <tr><td colSpan={11} style={{ padding: '2rem', textAlign: 'center', color: '#334155', fontSize: '0.85rem' }}>Upload a CSV or click "+ Add Row" to add students manually</td></tr>
+                  ) : parsed.map((s, i) => {
+                    const cellInput = (field, placeholder, type = 'text', width = 120) => (
+                      <input
+                        value={s[field] || ''}
+                        onChange={e => setParsed(p => p.map((r, ri) => ri === i ? { ...r, [field]: e.target.value } : r))}
+                        placeholder={placeholder}
+                        type={type}
+                        style={{ width, padding: '0.35rem 0.5rem', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 7, color: '#e2e8f0', fontFamily: FONT, fontSize: '0.8rem', outline: 'none', boxSizing: 'border-box' }}
+                      />
+                    );
+                    const togBtn = (key, label) => {
+                      const on = s.subjects?.[key];
+                      return (
                         <button
-                          onClick={() => setParsed(p => p.filter((_, ri) => ri !== i))}
-                          style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem', color: '#f87171', background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.15)', borderRadius: 6, cursor: 'pointer' }}
-                        >✕</button>
-                      </td>
-                    </tr>
-                  ))}
+                          onClick={() => setParsed(p => p.map((r, ri) => ri === i ? { ...r, subjects: { ...r.subjects, [key]: !on } } : r))}
+                          style={{ padding: '0.25rem 0.55rem', fontSize: '0.72rem', fontWeight: 700, borderRadius: 6, border: 'none', cursor: 'pointer',
+                            background: on ? 'rgba(16,185,129,0.15)' : 'rgba(255,255,255,0.05)',
+                            color: on ? '#10b981' : '#475569' }}
+                        >{on ? 'Y' : 'N'}</button>
+                      );
+                    };
+                    return (
+                      <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.01)' }}>
+                        <td style={{ padding: '0.45rem 0.6rem', color: '#475569', fontSize: '0.78rem', fontWeight: 600 }}>{i + 1}</td>
+                        <td style={{ padding: '0.3rem 0.4rem' }}>{cellInput('name', 'Student name', 'text', 140)}</td>
+                        <td style={{ padding: '0.3rem 0.4rem' }}>
+                          <select
+                            value={s.classLevel}
+                            onChange={e => setParsed(p => p.map((r, ri) => ri === i ? { ...r, classLevel: e.target.value } : r))}
+                            style={{ width: 100, padding: '0.35rem 0.5rem', background: '#0f172a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 7, color: s.classLevel ? '#e2e8f0' : '#475569', fontFamily: FONT, fontSize: '0.8rem', outline: 'none', cursor: 'pointer' }}
+                          >
+                            <option value=''>Grade…</option>
+                            {CLASS_OPTIONS.map(c => <option key={c} value={c} style={{ background: '#0f172a' }}>{c}</option>)}
+                          </select>
+                        </td>
+                        <td style={{ padding: '0.3rem 0.4rem' }}>{cellInput('email', 'Optional', 'email', 140)}</td>
+                        <td style={{ padding: '0.3rem 0.4rem' }}>{cellInput('phone', 'Optional', 'tel', 110)}</td>
+                        <td style={{ padding: '0.3rem 0.5rem', textAlign: 'center' }}>{togBtn('social_science', 'SS')}</td>
+                        <td style={{ padding: '0.3rem 0.5rem', textAlign: 'center' }}>{togBtn('science', 'Sci')}</td>
+                        <td style={{ padding: '0.3rem 0.5rem', textAlign: 'center' }}>{togBtn('ct_ai', 'CT')}</td>
+                        <td style={{ padding: '0.3rem 0.5rem', textAlign: 'center' }}>{togBtn('maths', 'Ma')}</td>
+                        <td style={{ padding: '0.3rem 0.5rem', textAlign: 'center' }}>{togBtn('english', 'En')}</td>
+                        <td style={{ padding: '0.3rem 0.6rem' }}>
+                          <button
+                            onClick={() => setParsed(p => p.filter((_, ri) => ri !== i))}
+                            style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem', color: '#f87171', background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.15)', borderRadius: 6, cursor: 'pointer' }}
+                          >✕</button>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -943,6 +982,24 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
             <div>
               <label style={labelStyle}>Email (optional)</label>
               <input value={manualForm.email} onChange={e => setManualForm(f => ({ ...f, email: e.target.value }))} placeholder="student@school.com" type="email" style={inputStyle} />
+            </div>
+          </div>
+
+          <div style={{ marginBottom: '1rem' }}>
+            <label style={labelStyle}>Subjects Enrolled</label>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.4rem' }}>
+              {SUBJECTS.map((subj, idx) => {
+                const key = SUBJECT_KEYS[idx];
+                const on = manualForm.subjects[key];
+                return (
+                  <button key={key}
+                    onClick={() => setManualForm(f => ({ ...f, subjects: { ...f.subjects, [key]: !on } }))}
+                    style={{ padding: '0.4rem 1rem', borderRadius: 8, border: `1px solid ${on ? 'rgba(59,130,246,0.4)' : 'rgba(255,255,255,0.1)'}`, cursor: 'pointer', fontFamily: FONT, fontSize: '0.82rem', fontWeight: 700,
+                      background: on ? 'rgba(59,130,246,0.15)' : 'rgba(255,255,255,0.03)',
+                      color: on ? '#60a5fa' : '#475569', transition: 'all 0.15s' }}
+                  >{subj}</button>
+                );
+              })}
             </div>
           </div>
 
