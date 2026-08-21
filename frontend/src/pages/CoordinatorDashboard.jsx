@@ -962,26 +962,30 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
 
       {/* MANUAL ADD TAB */}
       {tab === 'manual' && (
-        <div style={{ maxWidth: 500 }}>
+        <div style={{ maxWidth: 560 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
             <div>
               <label style={labelStyle}>Student Name *</label>
               <input value={manualForm.name} onChange={e => setManualForm(f => ({ ...f, name: e.target.value }))} placeholder="e.g. Arjun Kumar" style={inputStyle} />
             </div>
             <div>
-              <label style={labelStyle}>Class / Level *</label>
+              <label style={labelStyle}>Grade *</label>
               <select value={manualForm.classLevel} onChange={e => setManualForm(f => ({ ...f, classLevel: e.target.value }))} style={{ ...inputStyle, cursor: 'pointer' }}>
-                <option value="" style={{ background: '#0f172a' }}>Select class…</option>
+                <option value="" style={{ background: '#0f172a' }}>Select grade…</option>
                 {CLASS_OPTIONS.map(c => <option key={c} value={c} style={{ background: '#0f172a' }}>{c}</option>)}
               </select>
             </div>
             <div>
-              <label style={labelStyle}>Password (optional)</label>
-              <input value={manualForm.password} onChange={e => setManualForm(f => ({ ...f, password: e.target.value }))} placeholder="Leave blank to auto-generate" style={inputStyle} />
-            </div>
-            <div>
               <label style={labelStyle}>Email (optional)</label>
               <input value={manualForm.email} onChange={e => setManualForm(f => ({ ...f, email: e.target.value }))} placeholder="student@school.com" type="email" style={inputStyle} />
+            </div>
+            <div>
+              <label style={labelStyle}>Phone Number (optional)</label>
+              <input value={manualForm.phone} onChange={e => setManualForm(f => ({ ...f, phone: e.target.value }))} placeholder="e.g. 9876543210" type="tel" style={inputStyle} />
+            </div>
+            <div style={{ gridColumn: '1 / -1' }}>
+              <label style={labelStyle}>Password (optional)</label>
+              <input value={manualForm.password} onChange={e => setManualForm(f => ({ ...f, password: e.target.value }))} placeholder="Leave blank to auto-generate" style={inputStyle} />
             </div>
           </div>
 
