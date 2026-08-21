@@ -76,7 +76,28 @@ export default function OlympiadDashboard({ user }) {
     });
   };
 
-  const userSubjectsArray = user?.subjects ? user.subjects.split(',').map(s => s.trim()) : [];
+  // Map from our JSONB keys → dashboard subject keys
+  const SUBJECT_KEY_MAP = {
+    english: 'English',
+    maths: 'Mathematics',
+    science: 'Science',
+    social_science: 'Social Sciences',
+    ct_ai: 'CT & AI',
+  };
+  const subjectsRaw = user?.subjects;
+  let userSubjectsArray = [];
+  if (subjectsRaw && typeof subjectsRaw === 'object') {
+    // JSONB object: { english: true, maths: false, ... }
+    userSubjectsArray = Object.entries(subjectsRaw)
+      .filter(([, v]) => v === true)
+      .map(([k]) => SUBJECT_KEY_MAP[k])
+      .filter(Boolean);
+  } else if (typeof subjectsRaw === 'string' && subjectsRaw.trim()) {
+    // Legacy comma-separated string
+    userSubjectsArray = subjectsRaw.split(',').map(s => s.trim());
+  }
+  // If no subjects selected at all, unlock everything (backward compat)
+  if (userSubjectsArray.length === 0) userSubjectsArray = SUBJECTS.map(s => s.key);
 
   return (
     <div className={`font-body-md text-text-main dark:text-gray-100 bg-bg-base dark:bg-dark-base transition-colors duration-300 min-h-screen flex flex-col relative overflow-x-hidden ${isDarkMode ? 'dark' : ''}`}>
