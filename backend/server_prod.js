@@ -3797,10 +3797,14 @@ app.post('/api/coordinator/bulk-create-students', async (req, res) => {
         const hashedPassword = await bcrypt.hash(plainPassword, 10);
         const assignedAgentId = getAgentIdForClass(classLevel);
         await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS plain_password TEXT`).catch(() => {});
+        await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS subjects JSONB`).catch(() => {});
+        const subjectsVal = student.subjects ? JSON.stringify(student.subjects) : null;
+        const phoneVal = student.phone && student.phone.trim() ? student.phone.trim() : null;
+        await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS phone TEXT`).catch(() => {});
         await db.query(
-          `INSERT INTO users (name, "studentId", password, plain_password, "classLevel", email, "assignedAgentId", school_id, role, olympiad_registered)
-           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 'student', true)`,
-          [name, username, hashedPassword, plainPassword, classLevel, email, assignedAgentId, schoolId]
+          `INSERT INTO users (name, "studentId", password, plain_password, "classLevel", email, phone, subjects, "assignedAgentId", school_id, role, olympiad_registered)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 'student', true)`,
+          [name, username, hashedPassword, plainPassword, classLevel, email, phoneVal, subjectsVal, assignedAgentId, schoolId]
         );
         await db.query(
           `INSERT INTO debate_users (user_id, username, class, gforce_tokens) VALUES ($1, $2, $3, 100) ON CONFLICT (user_id) DO NOTHING`,
@@ -3824,7 +3828,7 @@ app.post('/api/coordinator/bulk-create-students', async (req, res) => {
 // ==========================================
 app.post('/api/coordinator/add-student', async (req, res) => {
   try {
-    const { coordinatorId, name, classLevel, password: rawPassword, email: rawEmail } = req.body;
+    const { coordinatorId, name, classLevel, password: rawPassword, email: rawEmail, phone: rawPhone, subjects } = req.body;
     if (!coordinatorId || !name || !classLevel) {
       return res.status(400).json({ error: 'coordinatorId, name, and classLevel are required' });
     }
@@ -3862,13 +3866,17 @@ app.post('/api/coordinator/add-student', async (req, res) => {
     const sym = symbols[Math.floor(Math.random() * symbols.length)];
     const plainPassword = rawPassword && rawPassword.trim() ? rawPassword.trim() : `${capFirst}${sym}${Math.floor(100 + Math.random() * 900)}`;
     const email = rawEmail && rawEmail.trim() ? rawEmail.trim() : `${username}@school.graceandforce.internal`;
+    const phone = rawPhone && rawPhone.trim() ? rawPhone.trim() : null;
+    const subjectsVal = subjects ? JSON.stringify(subjects) : null;
 
     const hashedPassword = await bcrypt.hash(plainPassword, 10);
     await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS plain_password TEXT`).catch(() => {});
+    await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS subjects JSONB`).catch(() => {});
+    await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS phone TEXT`).catch(() => {});
     await db.query(
-      `INSERT INTO users (name, "studentId", password, plain_password, "classLevel", email, "assignedAgentId", school_id, role, olympiad_registered)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 'student', true)`,
-      [name, username, hashedPassword, plainPassword, classLevel, email, assignedAgentId, schoolId]
+      `INSERT INTO users (name, "studentId", password, plain_password, "classLevel", email, phone, subjects, "assignedAgentId", school_id, role, olympiad_registered)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 'student', true)`,
+      [name, username, hashedPassword, plainPassword, classLevel, email, phone, subjectsVal, assignedAgentId, schoolId]
     );
     await db.query(
       `INSERT INTO debate_users (user_id, username, class, gforce_tokens) VALUES ($1, $2, $3, 100) ON CONFLICT (user_id) DO NOTHING`,
