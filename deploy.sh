@@ -22,6 +22,8 @@ echo ""
 
 ssh "$SERVER" bash << ENDSSH
 set -e
+export NVM_DIR="\$HOME/.nvm"
+[ -s "\$NVM_DIR/nvm.sh" ] && \\. "\$NVM_DIR/nvm.sh"
 
 echo "────────────────────────────────────────────────"
 echo "  [1/6] Pulling latest code from GitHub..."
