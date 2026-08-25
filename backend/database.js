@@ -321,6 +321,19 @@ async function initDB() {
       )
     `);
 
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS teacher_2030_registrations (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        user_id TEXT,
+        full_name TEXT NOT NULL,
+        email TEXT NOT NULL UNIQUE,
+        mobile TEXT NOT NULL,
+        school_name TEXT,
+        designation TEXT,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
     console.log('Vultr database tables verified.');
 
   } catch (err) {

@@ -315,6 +315,46 @@ app.get('/api/indusmun/registrations', requireAdmin, async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// POST /api/teacher2030/register
+app.post('/api/teacher2030/register', async (req, res) => {
+  try {
+    const { userId, fullName, email, mobile, schoolName, designation } = req.body;
+    if (!fullName || !email || !mobile || !schoolName || !designation) {
+      return res.status(400).json({ error: 'All required fields must be filled.' });
+    }
+
+    // Check for duplicates
+    const existing = await db.query(
+      `SELECT id FROM teacher_2030_registrations WHERE email = $1`,
+      [email]
+    );
+    if (existing.rows.length > 0) {
+      return res.status(400).json({ error: 'You have already registered for The Teacher of 2030 with this email address.' });
+    }
+
+    const result = await db.query(
+      `INSERT INTO teacher_2030_registrations (user_id, full_name, email, mobile, school_name, designation)
+       VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+      [userId || null, fullName, email, mobile, schoolName, designation]
+    );
+    res.json({ success: true, data: result.rows[0] });
+  } catch (err) {
+    console.error('Teacher 2030 registration error:', err);
+    res.status(500).json({ error: 'Failed to process registration.' });
+  }
+});
+
+// GET /api/teacher2030/registrations
+app.get('/api/teacher2030/registrations', requireAdmin, async (req, res) => {
+  try {
+    const result = await db.query(`SELECT * FROM teacher_2030_registrations ORDER BY created_at DESC`);
+    res.json({ total: result.rows.length, registrations: result.rows });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Users
 app.post('/api/register', async (req, res) => {
   const { name, studentId, password, classLevel, grade, email, phone, authProvider, referralCode, mobile, schoolName, category, city, state, olympiadSchoolCode, designation } = req.body;

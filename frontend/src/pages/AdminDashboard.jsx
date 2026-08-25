@@ -9,10 +9,10 @@ const FONT = "'Plus Jakarta Sans', 'Google Sans', system-ui, sans-serif";
 const SECTIONS = [
   { id: 'overview', label: 'Overview' },
   { id: 'users', label: 'Users' },
-  { id: 'subscriptions', label: 'Subscriptions' },
   { id: 'debates', label: 'Debates' },
-  { id: 'bootcamp', label: 'Cohort 2.0' },
+  { id: 'olympiad', label: 'Olympiad' },
   { id: 'indusmun', label: 'Indus MUN' },
+  { id: 'teacher2030', label: 'Teacher 2030' },
   { id: 'speech_league', label: 'Speech League' },
   { id: 'speech_analysis', label: 'Speech Analysis' },
   { id: 'coupons', label: 'School Coupons' },
@@ -1018,6 +1018,100 @@ function IndusMunSection({ adminToken, apiBase }) {
   );
 }
 
+// SECTION: Teacher 2030 Registrations
+function Teacher2030Section({ adminToken, apiBase }) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${apiBase}/api/teacher2030/registrations`, {
+        headers: { Authorization: `Bearer ${adminToken}` }
+      });
+      const d = await res.json();
+      setData(d);
+    } catch (e) { console.error(e); }
+    setLoading(false);
+  }, [adminToken, apiBase]);
+
+  useEffect(() => { fetchData(); }, [fetchData]);
+
+  const regs = data?.registrations || [];
+
+  const handleExportCSV = () => {
+    if (regs.length === 0) return;
+    const header = ['Name', 'Email', 'Mobile', 'School/Institution', 'Designation', 'Registration Date'];
+    const rows = regs.map(r => [
+      `"${r.full_name || ''}"`,
+      `"${r.email || ''}"`,
+      `"${r.mobile || ''}"`,
+      `"${r.school_name || ''}"`,
+      `"${r.designation || ''}"`,
+      `"${new Date(r.created_at).toLocaleDateString()}"`
+    ]);
+    const csvContent = [header.join(','), ...rows.map(e => e.join(','))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'Teacher_2030_Registrations.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  return (
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+        <SectionTitle>The Teacher of 2030 Registrations</SectionTitle>
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          <span style={{ color: '#64748b', fontSize: '0.82rem', fontWeight: 700 }}>{regs.length} TOTAL REGISTRATIONS</span>
+          <button onClick={handleExportCSV} style={{ background: '#3b82f6', color: '#fff', border: 'none', padding: '0.5rem 1rem', borderRadius: 6, cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}>
+            Export CSV
+          </button>
+        </div>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+        <StatCard label="Total Registrations" value={regs.length} color="#A855F7" />
+      </div>
+
+      <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
+        {loading ? (
+          <div style={{ textAlign: 'center', padding: '3rem', color: '#64748b' }}>Loading...</div>
+        ) : (
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
+              <TableHead cols={['Name', 'Email', 'Mobile', 'School/Institution', 'Designation', 'Date']} />
+              <tbody>
+                {regs.map((r, i) => (
+                  <TableRow key={r.id} idx={i}>
+                    <TD>
+                      <div style={{ fontWeight: 600, color: '#fff' }}>{r.full_name}</div>
+                    </TD>
+                    <TD>{r.email || '—'}</TD>
+                    <TD mono>{r.mobile}</TD>
+                    <TD>{r.school_name || '—'}</TD>
+                    <TD>{r.designation || '—'}</TD>
+                    <TD>{new Date(r.created_at).toLocaleDateString()}</TD>
+                  </TableRow>
+                ))}
+                {regs.length === 0 && (
+                  <tr>
+                    <td colSpan="6" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>No registrations found.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+
 // ══════════════════════════════════════════════════
 // MAIN ADMIN DASHBOARD
 // ══════════════════════════════════════════════════
@@ -1603,6 +1697,7 @@ export default function AdminDashboard() {
               {activeSection === 'debates' && <DebatesSection stats={stats} />}
               {activeSection === 'bootcamp' && <BootcampSection stats={stats} adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'indusmun' && <IndusMunSection adminToken={adminToken} apiBase={apiBase} />}
+              {activeSection === 'teacher2030' && <Teacher2030Section adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'munmentor' && <MunMentorSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'speech_league' && <SpeechLeagueSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'speech_analysis' && <UsersSection adminToken={adminToken} apiBase={apiBase} speechOnly={true} />}
