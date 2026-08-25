@@ -116,7 +116,7 @@ export default function SpeechLeagueRegister({ user }) {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', background: 'rgba(30, 58, 138, 0.3)', border: '1px solid rgba(59, 130, 246, 0.5)', padding: '1.5rem', borderRadius: 16, color: '#bfdbfe', fontSize: '1.2rem', fontWeight: 600, maxWidth: 400, margin: '0 auto' }}>
             <Calendar size={28} color="#60a5fa" />
             <div>
-              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#fff', letterSpacing: '0.05em' }}>23.08.2026 • SUNDAY</div>
+              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#fff', letterSpacing: '0.05em' }}>30.08.2026 • SUNDAY</div>
               <div style={{ color: '#93c5fd', marginTop: '0.25rem' }}>11:00 AM IST</div>
             </div>
           </div>
