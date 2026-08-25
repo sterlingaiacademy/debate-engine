@@ -12,7 +12,6 @@ const SECTIONS = [
   { id: 'subscriptions', label: 'Subscriptions' },
   { id: 'debates', label: 'Debates' },
   { id: 'bootcamp', label: 'Cohort 2.0' },
-  { id: 'minimun', label: 'Mini MUN' },
   { id: 'indusmun', label: 'Indus MUN' },
   { id: 'speech_league', label: 'Speech League' },
   { id: 'speech_analysis', label: 'Speech Analysis' },
@@ -781,177 +780,7 @@ function MunMentorSection({ adminToken, apiBase }) {
   );
 }
 
-// SECTION: Mini MUN Sunday Registrations
-// ══════════════════════════════════════════════════
-function MiniMunSection({ adminToken, apiBase }) {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [selectedModule, setSelectedModule] = useState(5);
 
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${apiBase}/api/minimun/registrations`, {
-        headers: { Authorization: `Bearer ${adminToken}` }
-      });
-      const d = await res.json();
-      setData(d);
-    } catch (e) { console.error(e); }
-    setLoading(false);
-  }, [adminToken, apiBase]);
-
-  useEffect(() => { fetchData(); }, [fetchData]);
-
-  const regs = (data?.registrations || []).filter(r => r.payment_status === 'paid' && r.module === selectedModule);
-
-  // Compute multiple payments for the current module
-  const multiMap = {};
-  regs.forEach(r => {
-    if (!r.email) return;
-    const e = r.email.toLowerCase().trim();
-    if (!multiMap[e]) {
-      multiMap[e] = { count: 0, rows: [] };
-    }
-    multiMap[e].count++;
-    multiMap[e].rows.push(r);
-  });
-  const multiplePaidUsers = Object.values(multiMap).filter(x => x.count > 1).map(x => ({
-    name: x.rows[0].student_name,
-    email: x.rows[0].email,
-    phone: x.rows[0].mobile,
-    count: x.count,
-    amounts: x.rows.map(r => r.amount / 100).join(', ')
-  }));
-
-  const downloadCSV = () => {
-    const headers = ['Name', 'Email', 'Phone', 'Category', 'Grade/Desig', 'School/Inst.', 'City', 'Speech Score', 'Status', 'Module', 'Registered'];
-    const rows = regs.map(r => [
-      `"${(r.student_name || '').replace(/"/g, '""')}"`,
-      `"${(r.email || '').replace(/"/g, '""')}"`,
-      `"${(r.mobile || '').replace(/"/g, '""')}"`,
-      `"${(r.category || '').replace(/"/g, '""')}"`,
-      `"${(r.grade || '').replace(/"/g, '""')}"`,
-      `"${(r.school_name || '').replace(/"/g, '""')}"`,
-      `"${(r.city || '').replace(/"/g, '""')}"`,
-      r.max_speech_score || 0,
-      r.payment_status,
-      r.module,
-      `"${fmtDate(r.registered_at)}"`
-    ]);
-    const csvContent = [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `minimun_module_${selectedModule}_registrations.csv`;
-    link.click();
-  };
-
-  return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <SectionTitle>Mini MUN Master Class Registrations (Module-{selectedModule})</SectionTitle>
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-          <button onClick={downloadCSV} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '0.5rem 1rem', borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem' }}>
-            <Download size={16} /> Export CSV
-          </button>
-          <select 
-          value={selectedModule} 
-          onChange={(e) => setSelectedModule(Number(e.target.value))}
-          style={{
-            background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
-            color: '#fff', padding: '0.5rem 1rem', borderRadius: 8, outline: 'none', cursor: 'pointer'
-          }}
-        >
-          <option value={5} style={{ background: '#0f172a' }}>Module 5</option>
-          <option value={4} style={{ background: '#0f172a' }}>Module 4</option>
-          <option value={3} style={{ background: '#0f172a' }}>Module 3</option>
-        </select>
-        </div>
-      </div>
-      
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
-        <StatCard label="Paid Registrations" value={regs.length} color="#3b82f6" />
-        <StatCard label="Revenue" value={`₹${regs.reduce((a,b) => a + (b.amount/100), 0).toLocaleString()}`} color="#3b82f6" />
-      </div>
-
-      <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem', alignItems: 'center' }}>
-        <span style={{ color: '#64748b', fontSize: '0.82rem', fontWeight: 700 }}>{regs.length} PAID REGISTRATIONS</span>
-      </div>
-
-      <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
-        {loading ? (
-          <div style={{ textAlign: 'center', padding: '3rem', color: '#64748b' }}>Loading…</div>
-        ) : (
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-              <TableHead cols={['Name', 'Email', 'Phone', 'Category', 'Grade/Desig', 'School/Inst.', 'City', 'Speech Score', 'Status', 'Module', 'Registered']} />
-              <tbody>
-                {regs.map((r, i) => (
-                  <TableRow key={r.id} idx={i}>
-                    <TD>{r.student_name}</TD>
-                    <TD>{r.email || '—'}</TD>
-                    <TD mono>{r.mobile}</TD>
-                    <TD>{r.category || '—'}</TD>
-                    <TD>{r.grade || '—'}</TD>
-                    <TD>{r.school_name || '—'}</TD>
-                    <TD>{r.city || '—'}</TD>
-                    <TD>{r.max_speech_score || 0}</TD>
-                    <TD>
-                      <span style={{ padding: '2px 8px', borderRadius: 99, fontSize: '0.72rem', fontWeight: 700,
-                        background: r.payment_status === 'paid' ? 'rgba(59,130,246,0.12)' : 'rgba(245,158,11,0.12)',
-                        color: r.payment_status === 'paid' ? '#3b82f6' : '#f59e0b',
-                        border: `1px solid ${r.payment_status === 'paid' ? '#3b82f630' : '#f59e0b30'}`,
-                      }}>
-                        {r.payment_status}
-                      </span>
-                    </TD>
-                    <TD style={{ fontWeight: 800, color: '#fbbf24' }}>M{r.module || 1}</TD>
-                    <TD>{fmtDate(r.registered_at)}</TD>
-                  </TableRow>
-                ))}
-                {!regs.length && <tr><td colSpan={11} style={{ textAlign: 'center', padding: '2rem', color: '#64748b' }}>No paid registrations found</td></tr>}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
-
-      {/* Multiple Payments Section */}
-      {multiplePaidUsers.length > 0 && (
-        <div style={{ marginTop: '3rem' }}>
-          <SectionTitle>Multiple Payments Detected (Module-3)</SectionTitle>
-          <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem', alignItems: 'center' }}>
-            <span style={{ color: '#ef4444', fontSize: '0.82rem', fontWeight: 700 }}>{multiplePaidUsers.length} USERS PAID MORE THAN ONCE</span>
-          </div>
-          <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-                <TableHead cols={['Name', 'Email', 'Phone', 'Times Paid', 'Amounts']} />
-                <tbody>
-                  {multiplePaidUsers.map((r, i) => (
-                    <TableRow key={i} idx={i}>
-                      <TD>{r.name}</TD>
-                      <TD>{r.email}</TD>
-                      <TD mono>{r.phone}</TD>
-                      <TD>
-                        <span style={{ background: 'rgba(239,68,68,0.1)', color: '#ef4444', padding: '0.2rem 0.6rem', borderRadius: 99, fontWeight: 700, fontSize: '0.8rem' }}>
-                          {r.count} times
-                        </span>
-                      </TD>
-                      <TD>{r.amounts}</TD>
-                    </TableRow>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ══════════════════════════════════════════════════
 
 // ══════════════════════════════════════════════════
 // ITO SECTION
@@ -1773,7 +1602,6 @@ export default function AdminDashboard() {
               {activeSection === 'subscriptions' && <SubscriptionsSection stats={stats} />}
               {activeSection === 'debates' && <DebatesSection stats={stats} />}
               {activeSection === 'bootcamp' && <BootcampSection stats={stats} adminToken={adminToken} apiBase={apiBase} />}
-              {activeSection === 'minimun' && <MiniMunSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'indusmun' && <IndusMunSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'munmentor' && <MunMentorSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'speech_league' && <SpeechLeagueSection adminToken={adminToken} apiBase={apiBase} />}

@@ -268,7 +268,7 @@ function OverviewSection({ data, setScoreStudent }) {
 }
 
 // ── Students Section ──────────────────────────────────────────
-function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent }) {
+function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent, school }) {
   const [search, setSearch] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [sortBy, setSortBy] = useState('name');
@@ -363,13 +363,20 @@ function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent }
             const rows = (students || []).filter(s => s.username);
             if (!rows.length) return alert('No students with credentials to download.');
             const isHashed = p => p && (p.startsWith('$2a$') || p.startsWith('$2b$'));
-            const csv = ['Name,Username,Password,Email,Class']
-              .concat(rows.map(s => `${s.name},${s.username},${isHashed(s.password) ? 'Set by student' : (s.password || 'N/A')},${s.email || ''},${s.class || ''}`))
-              .join('\n');
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a'); a.href = url; a.download = 'student_credentials.csv'; a.click();
-            URL.revokeObjectURL(url);
+            const sheetData = [
+              ['Name', 'Username', 'Password'],
+              ...rows.map(s => [
+                s.name || '',
+                s.username || '',
+                isHashed(s.password) ? 'Set by student' : (s.password || 'N/A')
+              ])
+            ];
+            const ws = XLSX.utils.aoa_to_sheet(sheetData);
+            ws['!cols'] = [{ wch: 30 }, { wch: 25 }, { wch: 20 }];
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Student Credentials');
+            const schoolLabel = (school || 'School').replace(/[^a-z0-9 ]/gi, '').trim();
+            XLSX.writeFile(wb, `${schoolLabel} Student Credentials.xlsx`);
           }}
           style={{ padding: '0.55rem 1.1rem', background: 'linear-gradient(135deg, #059669, #10b981)', color: '#fff', border: 'none', borderRadius: 10, fontFamily: FONT, fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}
         >⬇ Download Credentials CSV</button>
@@ -433,7 +440,7 @@ function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent }
       <Card>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-            <TableHead cols={['#', 'Student Name', 'Username', 'Class', 'Status', 'Actions']} />
+            <TableHead cols={['#', 'Student Name', 'Username', 'Class', 'Subjects', 'Status', 'Actions']} />
             <tbody>
               {filtered.map((s, i) => (
                 <TableRow key={i} idx={i}>
@@ -477,6 +484,37 @@ function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent }
                     ) : <span style={{ color: '#334155' }}>—</span>}
                   </TD>
                   <TD muted>{s.class}</TD>
+                  <TD>
+                    {(() => {
+                      let subj = s.subjects;
+                      try {
+                        if (typeof subj === 'string') {
+                          if (subj.startsWith('"')) subj = JSON.parse(subj);
+                          if (typeof subj === 'string') subj = JSON.parse(subj);
+                        }
+                      } catch { subj = null; }
+                      const SUBJECT_LABELS = {
+                        socialScience: 'Social Science', social_science: 'Social Science',
+                        english: 'English', hindi: 'Hindi',
+                        maths: 'Maths', mathematics: 'Maths',
+                        science: 'Science',
+                        ct_ai: 'CT & AI', ctAi: 'CT & AI',
+                        gk: 'GK'
+                      };
+                      if (!subj || typeof subj !== 'object') return <span style={{ color: '#334155', fontSize: '0.72rem' }}>—</span>;
+                      const enabled = Object.entries(subj).filter(([,v]) => v === true || v === 'true' || v === 'y' || v === 'Y');
+                      if (!enabled.length) return <span style={{ color: '#334155', fontSize: '0.72rem' }}>None</span>;
+                      return (
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+                          {enabled.map(([key]) => (
+                            <span key={key} style={{ fontSize: '0.65rem', fontWeight: 700, padding: '0.15rem 0.45rem', borderRadius: 4, background: 'rgba(99,102,241,0.12)', color: '#a5b4fc', border: '1px solid rgba(99,102,241,0.3)', whiteSpace: 'nowrap' }}>
+                              {SUBJECT_LABELS[key] || key.replace(/_/g, ' ')}
+                            </span>
+                          ))}
+                        </div>
+                      );
+                    })()}
+                  </TD>
                   <TD><StatusBadge status={s.status} /></TD>
                   <TD>
                     <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
@@ -805,11 +843,16 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
   const downloadCredentials = () => {
     if (!results) return;
     const created = results.filter(r => r.status === 'created');
-    const csv = ['Name,Username,Password,Email', ...created.map(r => `"${r.name}","${r.username}","${r.password}","${r.email}"`)].join('\n');
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a'); a.href = url; a.download = 'student_credentials.csv'; a.click();
-    URL.revokeObjectURL(url);
+    const sheetData = [
+      ['Name', 'Username', 'Password'],
+      ...created.map(r => [r.name || '', r.username || '', r.password || ''])
+    ];
+    const ws = XLSX.utils.aoa_to_sheet(sheetData);
+    ws['!cols'] = [{ wch: 30 }, { wch: 25 }, { wch: 20 }];
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Student Credentials');
+    const schoolLabel = (data.school || 'School').replace(/[^a-z0-9 ]/gi, '').trim();
+    XLSX.writeFile(wb, `${schoolLabel} Student Credentials.xlsx`);
   };
 
   const handleManualAdd = async () => {
@@ -1289,7 +1332,7 @@ export default function CoordinatorDashboard() {
           ) : data ? (
             <>
               {activeSection === 'overview' && <OverviewSection data={data} />}
-              {activeSection === 'students' && <StudentsSection students={data.students} fetchData={fetchData} coordinatorId={coordinatorId} />}
+              {activeSection === 'students' && <StudentsSection students={data.students} fetchData={fetchData} coordinatorId={coordinatorId} school={data.school} />}
               {activeSection === 'manage' && <ManageStudentsSection coordinatorId={coordinatorId} fetchData={fetchData} />}
               {activeSection === 'scores' && <ScoresSection students={data.students} />}
             </>
