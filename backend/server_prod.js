@@ -2472,6 +2472,7 @@ app.get('/api/admin/users', requireAdmin, async (req, res) => {
     const planFilter = req.query.plan || null;
     const gradeFilter = req.query.grade || null;
     const speechOnly = req.query.speechOnly === 'true';
+    const leagueOnly = req.query.leagueOnly === 'true';
 
     let conditions = [];
     let params = [];
@@ -2492,6 +2493,10 @@ app.get('/api/admin/users', requireAdmin, async (req, res) => {
     if (speechOnly) {
       conditions.push(`sas.score IS NOT NULL AND sas.score > 0`);
     }
+    if (leagueOnly) {
+      conditions.push(`sas.is_league = true`);
+      conditions.push(`sas.score IS NOT NULL AND sas.score > 0`);
+    }
 
     const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
 
@@ -2505,7 +2510,7 @@ app.get('/api/admin/users', requireAdmin, async (req, res) => {
        LEFT JOIN speech_analysis_sessions sas ON users."studentId" = sas.student_id
        ${where} 
        GROUP BY users.id
-       ORDER BY ${speechOnly ? 'max_speech_score DESC' : 'users."createdAt" DESC'} LIMIT $${idx} OFFSET $${idx + 1}`,
+       ORDER BY ${(speechOnly || leagueOnly) ? 'max_speech_score DESC' : 'users."createdAt" DESC'} LIMIT $${idx} OFFSET $${idx + 1}`,
       [...params, limit, offset]
     );
 

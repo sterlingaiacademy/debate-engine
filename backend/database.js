@@ -87,7 +87,9 @@ async function initDB() {
     // Add detailed_scores to existing deployments
     try {
       await client.query(`ALTER TABLE speech_analysis_sessions ADD COLUMN IF NOT EXISTS detailed_scores JSONB DEFAULT '{}'::jsonb`);
+      await client.query(`ALTER TABLE speech_analysis_sessions ADD COLUMN IF NOT EXISTS is_league BOOLEAN DEFAULT FALSE`);
     } catch (e) { /* ignore */ }
+
 
     // Index for fast email lookups during login
     await client.query(`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)`);

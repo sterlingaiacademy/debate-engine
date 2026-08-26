@@ -244,7 +244,7 @@ function OverviewSection({ stats }) {
 // ══════════════════════════════════════════════════
 // SECTION: Users (full paginated table)
 // ══════════════════════════════════════════════════
-function UsersSection({ adminToken, apiBase, speechOnly = false }) {
+function UsersSection({ adminToken, apiBase, speechOnly = false, leagueOnly = false }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -261,6 +261,7 @@ function UsersSection({ adminToken, apiBase, speechOnly = false }) {
       if (planFilter !== 'all') params.set('plan', planFilter);
       if (gradeFilter !== 'all') params.set('grade', gradeFilter);
       if (speechOnly) params.set('speechOnly', 'true');
+      if (leagueOnly) params.set('leagueOnly', 'true');
       const res = await fetch(`${apiBase}/api/admin/users?${params}`, {
         headers: { Authorization: `Bearer ${adminToken}` }
       });
@@ -268,13 +269,13 @@ function UsersSection({ adminToken, apiBase, speechOnly = false }) {
       setData(d);
     } catch (e) { console.error(e); }
     setLoading(false);
-  }, [page, search, planFilter, gradeFilter, adminToken, apiBase, speechOnly]);
+  }, [page, search, planFilter, gradeFilter, adminToken, apiBase, speechOnly, leagueOnly]);
 
   useEffect(() => { fetchUsers(); }, [fetchUsers]);
 
   return (
     <div>
-      <SectionTitle>{speechOnly ? 'Speech Analysis Scores' : 'All Users'}</SectionTitle>
+      <SectionTitle>{leagueOnly ? 'Speech League Scores' : speechOnly ? 'Speech Analysis Scores' : 'All Users'}</SectionTitle>
 
       {/* Filters */}
       <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.25rem', flexWrap: 'wrap', alignItems: 'center' }}>
@@ -311,9 +312,9 @@ function UsersSection({ adminToken, apiBase, speechOnly = false }) {
           <div style={{ overflowX: 'auto' }}>
             <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
               <TableHead cols={[
-                'Name', 'Username', 'Email', 'Phone', 'Grade', 'Speech Score',
-                ...(speechOnly ? [] : ['Plan', 'Status', 'Period']),
-                speechOnly ? 'Analyzed' : 'Joined'
+                'Name', 'Username', 'Email', 'Phone', 'Grade', leagueOnly ? 'League Score' : 'Speech Score',
+                ...(speechOnly || leagueOnly ? [] : ['Plan', 'Status', 'Period']),
+                speechOnly || leagueOnly ? 'Analyzed' : 'Joined'
               ]} />
               <tbody>
                 {data?.users?.map((u, i) => (
@@ -324,14 +325,14 @@ function UsersSection({ adminToken, apiBase, speechOnly = false }) {
                     <TD mono>{u.phone || '—'}</TD>
                     <TD>{u.grade || '—'}</TD>
                     <TD>{u.max_speech_score || '—'}</TD>
-                    {!speechOnly && (
+                    {!(speechOnly || leagueOnly) && (
                       <>
                         <TD><PlanBadge plan={u.subscription_plan} /></TD>
                         <TD><StatusDot status={u.subscription_status} /></TD>
                         <TD>{u.subscription_period || '—'}</TD>
                       </>
                     )}
-                    <TD>{fmtDate(speechOnly ? (u.speech_date || u.createdAt) : u.createdAt)}</TD>
+                    <TD>{fmtDate((speechOnly || leagueOnly) ? (u.speech_date || u.createdAt) : u.createdAt)}</TD>
                   </TableRow>
                 ))}
                 {!data?.users?.length && (
@@ -1699,7 +1700,13 @@ export default function AdminDashboard() {
               {activeSection === 'indusmun' && <IndusMunSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'teacher2030' && <Teacher2030Section adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'munmentor' && <MunMentorSection adminToken={adminToken} apiBase={apiBase} />}
-              {activeSection === 'speech_league' && <SpeechLeagueSection adminToken={adminToken} apiBase={apiBase} />}
+              {activeSection === 'speech_league' && (
+                <>
+                  <SpeechLeagueSection adminToken={adminToken} apiBase={apiBase} />
+                  <div style={{ marginTop: '3rem' }} />
+                  <UsersSection adminToken={adminToken} apiBase={apiBase} leagueOnly={true} />
+                </>
+              )}
               {activeSection === 'speech_analysis' && <UsersSection adminToken={adminToken} apiBase={apiBase} speechOnly={true} />}
               {activeSection === 'coupons' && <CouponsSection stats={stats} />}
               {activeSection === 'ito' && <ITOSection adminToken={adminToken} apiBase={apiBase} />}

@@ -16,7 +16,7 @@ const upload = multer({ dest: 'uploads/' });
 
 router.post('/analyze', upload.single('audio'), async (req, res) => {
   try {
-    const { studentId, topic } = req.body;
+    const { studentId, topic, isLeague } = req.body;
 
     if (!req.file) {
       return res.status(400).json({ error: 'No audio file uploaded' });
@@ -163,8 +163,8 @@ Transcript:
     try {
       await db.query(
         `INSERT INTO speech_analysis_sessions 
-         (student_id, topic, score, detailed_scores, wpm, filler_words, strengths, areas_for_improvement, overall_feedback, transcript)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+         (student_id, topic, score, detailed_scores, wpm, filler_words, strengths, areas_for_improvement, overall_feedback, transcript, is_league)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
         [
           studentId,
           topic,
@@ -175,7 +175,8 @@ Transcript:
           JSON.stringify(aiAnalysis.strengths),
           JSON.stringify(aiAnalysis.areasForImprovement),
           aiAnalysis.overallFeedback,
-          transcriptionText
+          transcriptionText,
+          isLeague === 'true' || isLeague === true
         ]
       );
     } catch (dbErr) {
