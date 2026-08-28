@@ -499,15 +499,6 @@ export default function SpeechLeague({ user }) {
 
       <div style={{ maxWidth: 1200, margin: '0 auto', width: '100%', position: 'relative', zIndex: 1 }}>
         
-        {/* Top Dashboard Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', padding: '1rem 0', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            {/* Title removed per request */}
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-          </div>
-        </div>
 
         {error && (
           <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)', padding: '1rem', borderRadius: 12, color: '#ef4444', marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.2)' }}>
