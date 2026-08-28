@@ -625,15 +625,7 @@ export default function SpeechLeague({ user }) {
               >
                 <Square size={32} fill="currentColor" />
               </button>
-              
-              <div ref={transcriptContainerRef} style={{ marginTop: '4rem', padding: '1.5rem', background: 'rgba(0,0,0,0.2)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.05)', textAlign: 'left', minHeight: 120, maxHeight: '30vh', overflowY: 'auto', boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.2)' }}>
-                <h4 style={{ color: '#64748b', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: 1, marginBottom: '1rem' }}>
-                  Live Transcript
-                </h4>
-                <p style={{ color: liveTranscript ? '#cbd5e1' : '#475569', lineHeight: 1.6, fontSize: '1.05rem', fontStyle: liveTranscript ? 'normal' : 'italic', wordBreak: 'break-word', whiteSpace: 'pre-wrap', margin: 0 }}>
-                  {liveTranscript || "Listening... Your speech will appear here in real-time."}
-                </p>
-              </div>
+
             </div>
           </div>
         )}
