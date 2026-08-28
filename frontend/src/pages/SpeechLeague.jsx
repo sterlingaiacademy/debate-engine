@@ -305,6 +305,14 @@ export default function SpeechLeague({ user }) {
               stopRecording: () => recognition.stop()
             };
           } else {
+             setLiveTranscript('Live transcript is not supported in this browser. However, your audio is being recorded for analysis.');
+          }
+        } catch (err) {
+          console.error('Web Speech API Setup Failed:', err);
+        }
+      };
+
+      const connectAssemblyAI = async () => {
         let assemblyAiReady = false;
         try {
           const tokenRes = await fetch(`${API_BASE}/api/speech/realtime-token`);
