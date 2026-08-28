@@ -671,9 +671,31 @@ export default function SpeechLeague({ user }) {
         {/* VIEW: RESULT */}
         {view === 'result' && analysis && (
           <div className="animate-fade-in">
-            <div style={{ marginBottom: '1.5rem', padding: '0 0.5rem' }}>
-              <div style={{ color: '#64748b', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: 1, marginBottom: '0.25rem' }}>Topic</div>
-              <h2 style={{ fontSize: '1.4rem', color: '#e2e8f0', margin: 0, fontWeight: 600 }}>{selectedTopic}</h2>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', padding: '0 0.5rem' }}>
+              <div>
+                <div style={{ color: '#64748b', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: 1, marginBottom: '0.25rem' }}>Topic</div>
+                <h2 style={{ fontSize: '1.4rem', color: '#e2e8f0', margin: 0, fontWeight: 600 }}>{selectedTopic}</h2>
+              </div>
+              <button
+                onClick={() => navigate('/dashboard')}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  color: '#e2e8f0',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  borderRadius: 12,
+                  padding: '0.75rem 1.25rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  transition: 'all 0.2s',
+                }}
+                onMouseOver={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'; }}
+                onMouseOut={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'; }}
+              >
+                <ArrowLeft size={18} /> Back to Dashboard
+              </button>
             </div>
 
             {/* TOP METRICS ROW */}
