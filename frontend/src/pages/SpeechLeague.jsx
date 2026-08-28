@@ -57,8 +57,8 @@ export const playSound = (type) => {
 export default function SpeechLeague({ user }) {
   const navigate = useNavigate();
   
-  // UI States: 'prep', 'countdown', 'recording', 'processing', 'result', 'history'
-  const [view, setView] = useState('prep');
+  // UI States: 'intro', 'prep', 'countdown', 'recording', 'processing', 'result', 'history', 'already-completed'
+  const [view, setView] = useState('intro');
   
   // Topic
   const [selectedTopic, setSelectedTopic] = useState('');
@@ -98,7 +98,7 @@ export default function SpeechLeague({ user }) {
   
   // Recording
   const [isRecording, setIsRecording] = useState(false);
-  const [recordingTime, setRecordingTime] = useState(0);
+  const [recordingTime, setRecordingTime] = useState(180);
   const [analysis, setAnalysis] = useState(null);
   const [error, setError] = useState('');
   const [liveTranscript, setLiveTranscript] = useState('');
@@ -133,6 +133,11 @@ export default function SpeechLeague({ user }) {
       const res = await fetch(`${API_BASE}/api/speech/history/${user?.studentId || user?.username}`);
       const data = await res.json();
       setHistory(data || []);
+      
+      // If mounting and view is intro, check if they already have a league session
+      if (view === 'intro' && data && data.some(s => s.is_league)) {
+        setView('already-completed');
+      }
     } catch (e) {
       console.error(e);
     } finally {
@@ -142,6 +147,10 @@ export default function SpeechLeague({ user }) {
 
   // Cleanup timers on unmount
   useEffect(() => {
+    // Check history silently on mount to enforce one-time participation
+    if (view === 'intro') {
+      fetchHistory();
+    }
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
       if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
@@ -191,17 +200,17 @@ export default function SpeechLeague({ user }) {
     return () => clearInterval(interval);
   }, [view]);
 
-  // Recording Timer
+  // Recording Timer (Count down from 180s)
   useEffect(() => {
     let interval;
     if (view === 'recording') {
       interval = setInterval(() => {
         setRecordingTime(prev => {
-          if (prev >= 180) { // 3 mins max
+          if (prev <= 1) { // 3 mins max reached (counts down to 0)
             stopRecording();
-            return prev;
+            return 0;
           }
-          return prev + 1;
+          return prev - 1;
         });
       }, 1000);
     }
@@ -296,14 +305,6 @@ export default function SpeechLeague({ user }) {
               stopRecording: () => recognition.stop()
             };
           } else {
-             setLiveTranscript('Live transcript is not supported in this browser. However, your audio is being recorded for analysis.');
-          }
-        } catch (err) {
-          console.error('Web Speech API Setup Failed:', err);
-        }
-      };
-
-      const connectAssemblyAI = async () => {
         let assemblyAiReady = false;
         try {
           const tokenRes = await fetch(`${API_BASE}/api/speech/realtime-token`);
@@ -493,7 +494,7 @@ export default function SpeechLeague({ user }) {
         {/* Top Dashboard Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', padding: '1rem 0', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            {view !== 'prep' && (
+            {view !== 'intro' && view !== 'prep' && view !== 'already-completed' && (
               <button 
                 onClick={() => { playSound('click'); setView('prep'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                 style={{ background: 'transparent', border: 'none', color: '#cbd5e1', display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '1.2rem', fontWeight: 600, transition: 'color 0.2s' }}
@@ -503,13 +504,13 @@ export default function SpeechLeague({ user }) {
                 <ArrowLeft size={20} /> Speech League
               </button>
             )}
-            {view === 'prep' && (
+            {(view === 'intro' || view === 'prep' || view === 'already-completed') && (
               <div style={{ fontSize: '1.4rem', fontWeight: 700, color: '#e2e8f0' }}>Speech League</div>
             )}
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-            {view === 'prep' && (
+            {(view === 'intro' || view === 'prep' || view === 'already-completed') && (
               <button 
                 onClick={() => { playSound('click'); setView('history'); }}
                 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', color: '#94a3b8', padding: '0.5rem 1rem', borderRadius: 8, cursor: 'pointer', transition: 'all 0.2s', fontSize: '0.9rem' }}
@@ -529,6 +530,41 @@ export default function SpeechLeague({ user }) {
         )}
 
 
+
+        {/* VIEW: ALREADY COMPLETED */}
+        {view === 'already-completed' && (
+          <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: 'calc(100dvh - 120px)', textAlign: 'center', maxWidth: 600, margin: '0 auto' }}>
+            <div style={{ background: '#0D0D0D', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: 24, padding: '3rem', boxShadow: '0 20px 40px rgba(0,0,0,0.4)' }}>
+              <CheckCircle size={48} color="#10b981" style={{ margin: '0 auto 1.5rem' }} />
+              <h2 style={{ fontSize: '1.8rem', color: '#fff', fontWeight: 800, marginBottom: '1rem' }}>Competition Completed</h2>
+              <p style={{ color: '#cbd5e1', fontSize: '1.1rem', lineHeight: 1.6, marginBottom: '2rem' }}>
+                You have already submitted your speech for the Speech League. Check the Admin Dashboard for the results!
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* VIEW: INTRO */}
+        {view === 'intro' && (
+          <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: 'calc(100dvh - 120px)', textAlign: 'center', maxWidth: 600, margin: '0 auto' }}>
+            <div style={{ background: '#0D0D0D', border: '1px solid rgba(239, 68, 68, 0.2)', borderRadius: 24, padding: '3rem', boxShadow: '0 20px 40px rgba(0,0,0,0.4)' }}>
+              <AlertTriangle size={48} color="#ef4444" style={{ margin: '0 auto 1.5rem' }} />
+              <h2 style={{ fontSize: '1.8rem', color: '#fff', fontWeight: 800, marginBottom: '1rem' }}>Important Warning</h2>
+              <p style={{ color: '#cbd5e1', fontSize: '1.1rem', lineHeight: 1.6, marginBottom: '2rem' }}>
+                This is a <strong>one-time competition</strong> held on <strong>Sunday 30 Aug, 10 AM to 11 AM</strong>. 
+                You can only attempt this once. If you close or refresh this tab before completing your speech, you will lose your progress and cannot start over.
+              </p>
+              <button
+                onClick={() => { playSound('click'); setView('prep'); }}
+                style={{ background: '#ef4444', color: '#fff', border: 'none', padding: '1rem 2.5rem', borderRadius: 99, fontSize: '1.1rem', fontWeight: 700, cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 12px rgba(239, 68, 68, 0.3)' }}
+                onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
+                onMouseLeave={e => e.currentTarget.style.transform = 'none'}
+              >
+                I Understand, Start Competition
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* VIEW: PREP */}
         {view === 'prep' && (
