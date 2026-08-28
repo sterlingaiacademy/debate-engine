@@ -318,9 +318,18 @@ function UsersSection({ adminToken, apiBase, speechOnly = false, leagueOnly = fa
                 speechOnly || leagueOnly ? 'Analyzed' : 'Joined'
               ]} />
               <tbody>
-                {data?.users?.map((u, i) => (
+                {data?.users?.map((u, i) => {
+                  const rank = (page - 1) * 20 + i + 1;
+                  let rankBadge = null;
+                  if (leagueOnly) {
+                    if (rank === 1) rankBadge = <span title="1st Place">🥇 </span>;
+                    else if (rank === 2) rankBadge = <span title="2nd Place">🥈 </span>;
+                    else if (rank === 3) rankBadge = <span title="3rd Place">🥉 </span>;
+                    else rankBadge = <span style={{ color: '#64748b', marginRight: '4px', fontSize: '0.8rem' }}>{rank}. </span>;
+                  }
+                  return (
                   <TableRow key={u.studentId} idx={i}>
-                    <TD>{u.name}</TD>
+                    <TD>{rankBadge}{u.name}</TD>
                     <TD mono>{u.studentId}</TD>
                     <TD>{u.email || '—'}</TD>
                     <TD mono>{u.phone || '—'}</TD>
@@ -335,7 +344,8 @@ function UsersSection({ adminToken, apiBase, speechOnly = false, leagueOnly = fa
                     )}
                     <TD>{fmtDate((speechOnly || leagueOnly) ? (u.speech_date || u.createdAt) : u.createdAt)}</TD>
                   </TableRow>
-                ))}
+                  );
+                })}
                 {!data?.users?.length && (
                   <tr><td colSpan={10} style={{ textAlign: 'center', padding: '2rem', color: '#64748b' }}>No users found</td></tr>
                 )}

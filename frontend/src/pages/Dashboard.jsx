@@ -481,6 +481,17 @@ const SENIOR_MODES = [
     levels: ['Level 3', 'Level 4', 'Level 5'],
   },
   {
+    id: 'speech-league',
+    title: 'Speech League',
+    desc: 'Compete in the Speech League! Get a topic based on your grade and submit your best 3-minute speech.',
+    tag: 'COMPETITION',
+    icon: Trophy,
+    color: '#facc15',
+    grad: 'linear-gradient(135deg, #1a1600, #332b00)',
+    glow: 'rgba(250,204,21,0.25)',
+    path: () => '/speech-league',
+  },
+  {
     id: 'speech-analysis',
     title: 'Speech Analysis',
     desc: 'Analyze your spoken debate speeches with AI to get actionable feedback and metrics.',
@@ -492,17 +503,6 @@ const SENIOR_MODES = [
     path: () => '/speech-analysis',
     levels: ['Level 3', 'Level 4', 'Level 5'],
     locked: true,
-  },
-  {
-    id: 'speech-league',
-    title: 'Speech League',
-    desc: 'Compete in the Speech League! Get a topic based on your grade and submit your best 3-minute speech.',
-    tag: 'COMPETITION',
-    icon: Trophy,
-    color: '#facc15',
-    grad: 'linear-gradient(135deg, #1a1600, #332b00)',
-    glow: 'rgba(250,204,21,0.25)',
-    path: () => '/speech-league',
   }
 ];
 
@@ -512,8 +512,8 @@ const JUNIOR_MODES = [
   { id: 'persona', title: 'Famous Figures', desc: 'Debate as legendary heroes from history!', color: '#d946ef', grad: 'linear-gradient(135deg, #d946ef, #a855f7)', icon: Users, path: () => '/persona', levels: ['Level 3', 'Level 4', 'Level 5'] },
   { id: 'supertutor', title: 'Super Tutor', desc: 'Ask your AI any question — it always helps!', color: '#10b981', grad: 'linear-gradient(135deg, #10b981, #34d399)', icon: Brain, path: () => '/conversational-agent' },
   { id: 'speech-coach', title: 'Speech Coach', desc: 'Improve your speaking skills with AI voice training!', color: '#e879f9', grad: 'linear-gradient(135deg, #e879f9, #a855f7)', icon: Radio, path: () => '/speech-coach', levels: ['Level 3', 'Level 4', 'Level 5'] },
-  { id: 'speech-analysis', title: 'Speech Analysis', desc: 'Get your speeches analyzed by AI for instant feedback!', color: '#3b82f6', grad: 'linear-gradient(135deg, #3b82f6, #60a5fa)', icon: Mic, path: () => '/speech-analysis', levels: ['Level 3', 'Level 4', 'Level 5'], locked: true },
   { id: 'speech-league', title: 'Speech League', desc: 'Compete in the Speech League! Get a topic based on your grade.', color: '#facc15', grad: 'linear-gradient(135deg, #facc15, #fef08a)', icon: Trophy, path: () => '/speech-league' },
+  { id: 'speech-analysis', title: 'Speech Analysis', desc: 'Get your speeches analyzed by AI for instant feedback!', color: '#3b82f6', grad: 'linear-gradient(135deg, #3b82f6, #60a5fa)', icon: Mic, path: () => '/speech-analysis', levels: ['Level 3', 'Level 4', 'Level 5'], locked: true },
 ];
 
 const BADGE_ICON_MAP = {
