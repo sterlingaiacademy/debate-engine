@@ -502,7 +502,9 @@ export default function SpeechLeague({ user }) {
         {/* Top Dashboard Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', padding: '1rem 0', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={{ fontSize: '1.4rem', fontWeight: 700, color: '#e2e8f0' }}>Speech League</div>
+            {(view === 'intro' || view === 'prep' || view === 'already-completed') && (
+              <div style={{ fontSize: '1.4rem', fontWeight: 700, color: '#e2e8f0' }}>Speech League</div>
+            )}
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
