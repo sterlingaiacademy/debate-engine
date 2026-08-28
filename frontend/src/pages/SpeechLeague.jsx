@@ -428,7 +428,7 @@ export default function SpeechLeague({ user }) {
       mediaRecorder.start(1000);
       setView('recording');
       setIsRecording(true);
-      setRecordingTime(0);
+      setRecordingTime(180);
     } catch (err) {
       console.error('Error accessing microphone:', err);
       setError('Could not access your microphone. Please ensure permissions are granted.');
@@ -518,16 +518,6 @@ export default function SpeechLeague({ user }) {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-            {(view === 'intro' || view === 'prep' || view === 'already-completed') && (
-              <button 
-                onClick={() => { playSound('click'); setView('history'); }}
-                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', color: '#94a3b8', padding: '0.5rem 1rem', borderRadius: 8, cursor: 'pointer', transition: 'all 0.2s', fontSize: '0.9rem' }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.color = '#fff'; }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; e.currentTarget.style.color = '#94a3b8'; }}
-              >
-                <History size={16} /> My History
-              </button>
-            )}
           </div>
         </div>
 

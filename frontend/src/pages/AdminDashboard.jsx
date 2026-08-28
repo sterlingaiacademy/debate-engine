@@ -14,6 +14,7 @@ const SECTIONS = [
   { id: 'indusmun', label: 'Indus MUN' },
   { id: 'teacher2030', label: 'Teacher 2030' },
   { id: 'speech_league', label: 'Speech League' },
+  { id: 'speech_league_scores', label: 'Speech League Scores' },
   { id: 'speech_analysis', label: 'Speech Analysis' },
   { id: 'coupons', label: 'School Coupons' },
   { id: 'olympiad', label: 'Olympiad Schools' },
@@ -1700,13 +1701,8 @@ export default function AdminDashboard() {
               {activeSection === 'indusmun' && <IndusMunSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'teacher2030' && <Teacher2030Section adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'munmentor' && <MunMentorSection adminToken={adminToken} apiBase={apiBase} />}
-              {activeSection === 'speech_league' && (
-                <>
-                  <SpeechLeagueSection adminToken={adminToken} apiBase={apiBase} />
-                  <div style={{ marginTop: '3rem' }} />
-                  <UsersSection adminToken={adminToken} apiBase={apiBase} leagueOnly={true} />
-                </>
-              )}
+              {activeSection === 'speech_league' && <SpeechLeagueSection adminToken={adminToken} apiBase={apiBase} />}
+              {activeSection === 'speech_league_scores' && <UsersSection adminToken={adminToken} apiBase={apiBase} leagueOnly={true} />}
               {activeSection === 'speech_analysis' && <UsersSection adminToken={adminToken} apiBase={apiBase} speechOnly={true} />}
               {activeSection === 'coupons' && <CouponsSection stats={stats} />}
               {activeSection === 'ito' && <ITOSection adminToken={adminToken} apiBase={apiBase} />}
