@@ -57,8 +57,45 @@ export const playSound = (type) => {
 export default function SpeechLeague({ user }) {
   const navigate = useNavigate();
   
+  const [isLocked, setIsLocked] = useState(true);
+
+  useEffect(() => {
+    const checkLock = () => {
+      // Target: August 30, 2026, 10:00 AM IST
+      const targetDate = new Date('2026-08-30T10:00:00+05:30').getTime();
+      const now = new Date().getTime();
+      if (now >= targetDate) {
+        setIsLocked(false);
+      } else {
+        setIsLocked(true);
+      }
+    };
+    checkLock();
+    const interval = setInterval(checkLock, 60000);
+    return () => clearInterval(interval);
+  }, []);
+  
   // UI States: 'intro', 'prep', 'countdown', 'recording', 'processing', 'result', 'history', 'already-completed'
   const [view, setView] = useState('intro');
+
+  if (isLocked) {
+    return (
+      <div style={{ flex: 1, background: '#000000', color: '#fff', padding: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center', padding: '4rem 2rem', background: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', maxWidth: '600px', width: '100%' }}>
+          <div style={{ display: 'inline-flex', padding: '1.5rem', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '50%', marginBottom: '2rem' }}>
+            <Clock size={48} color="#e2e8f0" />
+          </div>
+          <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: '#fff', marginBottom: '1rem', letterSpacing: '-0.02em' }}>
+            Speech League is Locked
+          </h1>
+          <p style={{ color: '#94a3b8', fontSize: '1.1rem', margin: '0 auto', lineHeight: 1.6 }}>
+            The competition begins on <strong style={{ color: '#fff' }}>Sunday, 30 August at 10:00 AM IST</strong>. 
+            <br /><br />Please come back at that time to participate.
+          </p>
+        </div>
+      </div>
+    );
+  }
   
   // Topic
   const [selectedTopic, setSelectedTopic] = useState('');
