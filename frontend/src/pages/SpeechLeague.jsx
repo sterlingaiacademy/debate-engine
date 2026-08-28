@@ -502,19 +502,7 @@ export default function SpeechLeague({ user }) {
         {/* Top Dashboard Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', padding: '1rem 0', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            {view !== 'intro' && view !== 'prep' && view !== 'already-completed' && (
-              <button 
-                onClick={() => { playSound('click'); setView('prep'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                style={{ background: 'transparent', border: 'none', color: '#cbd5e1', display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '1.2rem', fontWeight: 600, transition: 'color 0.2s' }}
-                onMouseEnter={e => e.currentTarget.style.color = '#fff'}
-                onMouseLeave={e => e.currentTarget.style.color = '#cbd5e1'}
-              >
-                <ArrowLeft size={20} /> Speech League
-              </button>
-            )}
-            {(view === 'intro' || view === 'prep' || view === 'already-completed') && (
-              <div style={{ fontSize: '1.4rem', fontWeight: 700, color: '#e2e8f0' }}>Speech League</div>
-            )}
+            <div style={{ fontSize: '1.4rem', fontWeight: 700, color: '#e2e8f0' }}>Speech League</div>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
