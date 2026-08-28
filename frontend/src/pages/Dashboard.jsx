@@ -4,7 +4,7 @@ import {
   Play, Trophy, TrendingUp, BarChart2, Star, Zap, Award, Clock,
   MessageSquare, Mic, Flame, Shield, Crown, Sparkles, Target, Heart,
   Sword, BookOpen, FileText, Medal, Gem, RefreshCw, Dumbbell, MessageCircle,
-  Brain, Globe, Users, ChevronRight, Cpu, Radio, CheckCircle2, Flag, X
+  Brain, Globe, Users, ChevronRight, Cpu, Radio, CheckCircle2, Flag, X, Lock
 } from 'lucide-react';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip,
@@ -491,6 +491,7 @@ const SENIOR_MODES = [
     glow: 'rgba(59,130,246,0.25)',
     path: () => '/speech-analysis',
     levels: ['Level 3', 'Level 4', 'Level 5'],
+    locked: true,
   },
   {
     id: 'speech-league',
@@ -511,7 +512,7 @@ const JUNIOR_MODES = [
   { id: 'persona', title: 'Famous Figures', desc: 'Debate as legendary heroes from history!', color: '#d946ef', grad: 'linear-gradient(135deg, #d946ef, #a855f7)', icon: Users, path: () => '/persona', levels: ['Level 3', 'Level 4', 'Level 5'] },
   { id: 'supertutor', title: 'Super Tutor', desc: 'Ask your AI any question — it always helps!', color: '#10b981', grad: 'linear-gradient(135deg, #10b981, #34d399)', icon: Brain, path: () => '/conversational-agent' },
   { id: 'speech-coach', title: 'Speech Coach', desc: 'Improve your speaking skills with AI voice training!', color: '#e879f9', grad: 'linear-gradient(135deg, #e879f9, #a855f7)', icon: Radio, path: () => '/speech-coach', levels: ['Level 3', 'Level 4', 'Level 5'] },
-  { id: 'speech-analysis', title: 'Speech Analysis', desc: 'Get your speeches analyzed by AI for instant feedback!', color: '#3b82f6', grad: 'linear-gradient(135deg, #3b82f6, #60a5fa)', icon: Mic, path: () => '/speech-analysis', levels: ['Level 3', 'Level 4', 'Level 5'] },
+  { id: 'speech-analysis', title: 'Speech Analysis', desc: 'Get your speeches analyzed by AI for instant feedback!', color: '#3b82f6', grad: 'linear-gradient(135deg, #3b82f6, #60a5fa)', icon: Mic, path: () => '/speech-analysis', levels: ['Level 3', 'Level 4', 'Level 5'], locked: true },
   { id: 'speech-league', title: 'Speech League', desc: 'Compete in the Speech League! Get a topic based on your grade.', color: '#facc15', grad: 'linear-gradient(135deg, #facc15, #fef08a)', icon: Trophy, path: () => '/speech-league' },
 ];
 
@@ -917,7 +918,7 @@ export default function Dashboard({ user, setUser }) {
             return (
               <div
                 key={mode.id}
-                onClick={() => navigate(mode.path(isJunior))}
+                onClick={() => { if (!mode.locked) navigate(mode.path(isJunior)); }}
                 className="mode-card"
                 style={{
                   background: mode.grad,
@@ -925,9 +926,19 @@ export default function Dashboard({ user, setUser }) {
                   color: '#fff',
                   minHeight: 200,
                   display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  cursor: mode.locked ? 'not-allowed' : 'pointer',
                   animation: `cardEnter 0.5s cubic-bezier(0.16,1,0.3,1) ${i * 80}ms both`,
                 }}
               >
+                {mode.locked && (
+                  <div style={{ position: 'absolute', inset: 0, background: 'rgba(15,23,42,0.85)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', zIndex: 10, backdropFilter: 'blur(4px)' }}>
+                    <Lock size={32} color="#94a3b8" style={{ marginBottom: '0.75rem' }} />
+                    <span style={{ fontWeight: 800, fontSize: '1rem', color: '#f8fafc', letterSpacing: '-0.01em' }}>Temporarily Locked</span>
+                    <span style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: '0.25rem' }}>Unavailable during competition</span>
+                  </div>
+                )}
                 {/* Top dec */}
 
 
