@@ -381,6 +381,12 @@ function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent, 
             prev.includes(g) ? prev.filter(x => x !== g) : [...prev, g]
           );
 
+          const gradeDisplayLabel = selectedGrades.length === 0
+            ? 'All Grades'
+            : selectedGrades.length === 1
+              ? selectedGrades[0]
+              : selectedGrades.slice().sort((a,b) => parseInt(a)-parseInt(b)).join(' & ');
+
           const handleDownload = () => {
             const isHashed = p => p && (p.startsWith('$2a$') || p.startsWith('$2b$'));
             const allRows = (students || []).filter(s => s.username);
@@ -409,40 +415,42 @@ function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent, 
             ];
 
             const ws = XLSX.utils.aoa_to_sheet(sheetData);
-            ws['!cols'] = [{ wch: 30 }, { wch: 10 }, { wch: 25 }, { wch: 20 }, { wch: 40 }];
+            ws['!cols'] = [{ wch: 30 }, { wch: 12 }, { wch: 25 }, { wch: 20 }, { wch: 40 }];
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, 'Student Credentials');
 
             const schoolLabel = (school || 'School').replace(/[^a-z0-9 ]/gi, '').trim();
-            let gradeLabel;
-            if (selectedGrades.length === 0) gradeLabel = 'All Grades';
-            else if (selectedGrades.length === 1) gradeLabel = `Class ${selectedGrades[0]}`;
-            else gradeLabel = `Class ${selectedGrades.sort((a,b)=>parseInt(a)-parseInt(b)).join('&')}`;
-
+            const gradeLabel = selectedGrades.length === 0 ? 'All Grades' : gradeDisplayLabel;
             XLSX.writeFile(wb, `${schoolLabel} ${gradeLabel} Student Credentials.xlsx`);
           };
 
           return (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.5rem' }}>
-              {/* Grade chips */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.6rem', flexShrink: 0 }}>
+              {/* Grade filter chips */}
               {allGrades.length > 0 && (
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', justifyContent: 'flex-end', maxWidth: 480 }}>
+                <div style={{
+                  display: 'flex', flexWrap: 'wrap', gap: '0.35rem', justifyContent: 'flex-end',
+                  maxWidth: 500, padding: '0.5rem 0.75rem',
+                  background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)',
+                  borderRadius: 12
+                }}>
+                  <span style={{ fontSize: '0.68rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.06em', alignSelf: 'center', marginRight: '0.25rem', whiteSpace: 'nowrap' }}>Filter:</span>
                   <button
                     onClick={() => setSelectedGrades([])}
-                    style={{ padding: '0.25rem 0.65rem', borderRadius: 99, fontSize: '0.72rem', fontWeight: 700, cursor: 'pointer',
+                    style={{ padding: '0.2rem 0.6rem', borderRadius: 99, fontSize: '0.72rem', fontWeight: 700, cursor: 'pointer', lineHeight: 1.4,
                       border: selectedGrades.length === 0 ? '1px solid #10b981' : '1px solid rgba(255,255,255,0.1)',
-                      background: selectedGrades.length === 0 ? 'rgba(16,185,129,0.15)' : 'rgba(255,255,255,0.04)',
+                      background: selectedGrades.length === 0 ? 'rgba(16,185,129,0.18)' : 'transparent',
                       color: selectedGrades.length === 0 ? '#10b981' : '#64748b', transition: 'all 0.15s' }}>
-                    All Grades
+                    All
                   </button>
                   {allGrades.map(g => (
                     <button key={g}
                       onClick={() => toggleGrade(g)}
-                      style={{ padding: '0.25rem 0.65rem', borderRadius: 99, fontSize: '0.72rem', fontWeight: 700, cursor: 'pointer',
+                      style={{ padding: '0.2rem 0.6rem', borderRadius: 99, fontSize: '0.72rem', fontWeight: 700, cursor: 'pointer', lineHeight: 1.4,
                         border: selectedGrades.includes(g) ? '1px solid #6366f1' : '1px solid rgba(255,255,255,0.1)',
-                        background: selectedGrades.includes(g) ? 'rgba(99,102,241,0.2)' : 'rgba(255,255,255,0.04)',
+                        background: selectedGrades.includes(g) ? 'rgba(99,102,241,0.2)' : 'transparent',
                         color: selectedGrades.includes(g) ? '#a5b4fc' : '#64748b', transition: 'all 0.15s' }}>
-                      Class {g}
+                      {g}
                     </button>
                   ))}
                 </div>
@@ -450,12 +458,13 @@ function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent, 
               {/* Download button */}
               <button
                 onClick={handleDownload}
-                style={{ padding: '0.55rem 1.1rem', background: 'linear-gradient(135deg, #059669, #10b981)', color: '#fff', border: 'none', borderRadius: 10, fontFamily: FONT, fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
-                ⬇ Download {selectedGrades.length === 0 ? 'All Grades' : selectedGrades.length === 1 ? `Class ${selectedGrades[0]}` : `Class ${selectedGrades.sort((a,b)=>parseInt(a)-parseInt(b)).join('&')}`} CSV
+                style={{ padding: '0.55rem 1.1rem', background: 'linear-gradient(135deg, #059669, #10b981)', color: '#fff', border: 'none', borderRadius: 10, fontFamily: FONT, fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap', alignSelf: 'flex-end' }}>
+                ⬇ Download {gradeDisplayLabel} CSV
               </button>
             </div>
           );
         })()}
+
       </div>
 
       {/* Edit student modal */}
