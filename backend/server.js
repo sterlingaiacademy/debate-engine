@@ -3588,7 +3588,7 @@ app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
 
     // Fetch students linked to this school (plain_password for coordinator-created accounts)
     const studentsRes = await db.query(
-      `SELECT id, name, "studentId" as username, COALESCE(plain_password, password) as password, "classLevel" as class, email, olympiad_registered, age, parent_name, parent_phone, city, state, contact_email
+      `SELECT id, name, "studentId" as username, COALESCE(plain_password, password) as password, "classLevel" as class, email, olympiad_registered, age, parent_name, parent_phone, city, state, contact_email, subjects
        FROM users 
        WHERE school_id = $1 AND role = 'student'`,
       [school.id]
@@ -3652,6 +3652,7 @@ app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
         age: student.age,
         parent_name: student.parent_name,
         parent_phone: student.parent_phone,
+        subjects: student.subjects || {},
         status: status,
         dailyPractice: practiceCount,
         avg_score: avgScore,
@@ -3868,7 +3869,7 @@ app.post('/api/coordinator/add-student', async (req, res) => {
 // ==========================================
 app.put('/api/coordinator/update-student', async (req, res) => {
   try {
-    const { coordinatorId, studentId, newUsername, newPassword } = req.body;
+    const { coordinatorId, studentId, newUsername, newPassword, newName, newClass, newSubjects, resetPassword } = req.body;
     if (!coordinatorId || !studentId) {
       return res.status(400).json({ error: 'coordinatorId and studentId are required' });
     }
@@ -3887,6 +3888,7 @@ app.put('/api/coordinator/update-student', async (req, res) => {
     if (studentRes.rows.length === 0) return res.status(404).json({ error: 'Student not found in this school' });
     const student = studentRes.rows[0];
 
+    // Update username
     if (newUsername && newUsername !== studentId) {
       const taken = await db.query(`SELECT id FROM users WHERE LOWER("studentId") = LOWER($1) AND "studentId" != $2`, [newUsername, studentId]);
       if (taken.rows.length > 0) return res.status(400).json({ error: 'Username already taken' });
@@ -3895,10 +3897,26 @@ app.put('/api/coordinator/update-student', async (req, res) => {
     }
 
     const effectiveId = newUsername || studentId;
+
+    // Update name
+    if (newName && newName.trim()) {
+      await db.query(`UPDATE users SET name = $1 WHERE "studentId" = $2 AND school_id = $3`, [newName.trim(), effectiveId, schoolId]);
+    }
+
+    // Update class / grade
+    if (newClass && newClass.trim()) {
+      await db.query(`UPDATE users SET "classLevel" = $1, grade = $1 WHERE "studentId" = $2 AND school_id = $3`, [newClass.trim(), effectiveId, schoolId]);
+    }
+
+    // Update subjects
+    if (newSubjects && typeof newSubjects === 'object') {
+      await db.query(`UPDATE users SET subjects = $1 WHERE "studentId" = $2 AND school_id = $3`, [JSON.stringify(newSubjects), effectiveId, schoolId]);
+    }
+
     let plainPwd = null;
 
     if (resetPassword) {
-      const firstName = (student.name || effectiveId).trim().split(' ')[0];
+      const firstName = (newName || student.name || effectiveId).trim().split(' ')[0];
       const capFirst = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
       const symbols = ['@', '#', '$'];
       const sym = symbols[Math.floor(Math.random() * symbols.length)];

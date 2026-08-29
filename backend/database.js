@@ -123,6 +123,8 @@ async function initDB() {
     await addColumnSafeUsers('parent_name', 'TEXT', "NULL");
     await addColumnSafeUsers('parent_phone', 'TEXT', "NULL");
     await addColumnSafeUsers('contact_email', 'TEXT', "NULL");
+    await addColumnSafeUsers('subjects', 'JSONB', "'{}'::jsonb");
+    await addColumnSafeUsers('plain_password', 'TEXT', "NULL");
 
     const addColumnSafeDebateUsers = async (col, type, def) => {
       try {

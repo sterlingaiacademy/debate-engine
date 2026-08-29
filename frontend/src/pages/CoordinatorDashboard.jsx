@@ -277,7 +277,9 @@ function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent, 
   const [resettingId, setResettingId] = useState(null); // track which student is having password reset
   const [resetResults, setResetResults] = useState({}); // { studentId: newPassword }
   const [editingStudent, setEditingStudent] = useState(null);
-  const [editForm, setEditForm] = useState({ newUsername: '', newPassword: '' });
+  const SUBJECT_KEYS = ['social_science', 'science', 'ct_ai', 'maths', 'english'];
+  const SUBJECT_LABELS_MAP = { social_science: 'Social Science', science: 'Science', ct_ai: 'CT & AI', maths: 'Maths', english: 'English' };
+  const [editForm, setEditForm] = useState({ newName: '', newUsername: '', newPassword: '', newClass: '', newSubjects: {} });
   const [editLoading, setEditLoading] = useState(false);
   const [editError, setEditError] = useState('');
   const [editSuccess, setEditSuccess] = useState('');
@@ -301,7 +303,9 @@ function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent, 
 
   const handleEdit = (s) => {
     setEditingStudent(s);
-    setEditForm({ newUsername: s.username || '', newPassword: '' });
+    let subj = s.subjects;
+    if (typeof subj === 'string') { try { subj = JSON.parse(subj); } catch { subj = {}; } }
+    setEditForm({ newName: s.name || '', newUsername: s.username || '', newPassword: '', newClass: s.class || '', newSubjects: subj || {} });
     setEditError(''); setEditSuccess('');
   };
 
@@ -312,10 +316,18 @@ function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent, 
       const res = await fetch(`${API_BASE}/api/coordinator/update-student`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ coordinatorId, studentId: editingStudent.username, newUsername: editForm.newUsername || undefined, newPassword: editForm.newPassword || undefined }),
+        body: JSON.stringify({
+          coordinatorId,
+          studentId: editingStudent.username,
+          newName: editForm.newName || undefined,
+          newUsername: editForm.newUsername !== editingStudent.username ? editForm.newUsername : undefined,
+          newPassword: editForm.newPassword || undefined,
+          newClass: editForm.newClass || undefined,
+          newSubjects: editForm.newSubjects
+        }),
       });
       const data = await res.json();
-      if (data.success) { setEditSuccess('Credentials updated!'); fetchData(); setTimeout(() => setEditingStudent(null), 1200); }
+      if (data.success) { setEditSuccess('Student updated!'); fetchData(); setTimeout(() => setEditingStudent(null), 1200); }
       else setEditError(data.error || 'Failed to update.');
     } catch { setEditError('Network error.'); }
     setEditLoading(false);
@@ -382,22 +394,58 @@ function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent, 
         >⬇ Download Credentials CSV</button>
       </div>
 
-      {/* Edit credentials modal */}
+      {/* Edit student modal */}
       {editingStudent && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
-          <div style={{ background: '#0d1526', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 20, padding: '2rem', width: '100%', maxWidth: 420, fontFamily: FONT }}>
-            <div style={{ fontSize: '1rem', fontWeight: 800, color: '#fff', marginBottom: '0.25rem' }}>Edit Credentials</div>
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(8px)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem', overflowY: 'auto' }}>
+          <div style={{ background: '#0d1526', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 20, padding: '2rem', width: '100%', maxWidth: 480, fontFamily: FONT, margin: 'auto' }}>
+            <div style={{ fontSize: '1rem', fontWeight: 800, color: '#fff', marginBottom: '0.25rem' }}>Edit Student</div>
             <div style={{ fontSize: '0.8rem', color: '#475569', marginBottom: '1.5rem' }}>{editingStudent.name}</div>
+
+            {/* Name */}
+            <div style={{ marginBottom: '1rem' }}>
+              <label style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: '0.4rem' }}>Full Name</label>
+              <input value={editForm.newName} onChange={e => setEditForm(f => ({ ...f, newName: e.target.value }))}
+                style={{ width: '100%', boxSizing: 'border-box', padding: '0.65rem 0.9rem', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, color: '#e2e8f0', fontFamily: FONT, fontSize: '0.875rem', outline: 'none' }} />
+            </div>
+
+            {/* Class */}
+            <div style={{ marginBottom: '1rem' }}>
+              <label style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: '0.4rem' }}>Class / Grade</label>
+              <input value={editForm.newClass} onChange={e => setEditForm(f => ({ ...f, newClass: e.target.value }))} placeholder="e.g. 8B or 10A"
+                style={{ width: '100%', boxSizing: 'border-box', padding: '0.65rem 0.9rem', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, color: '#e2e8f0', fontFamily: FONT, fontSize: '0.875rem', outline: 'none' }} />
+            </div>
+
+            {/* Subjects */}
+            <div style={{ marginBottom: '1rem' }}>
+              <label style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: '0.5rem' }}>Subjects</label>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                {SUBJECT_KEYS.map(key => {
+                  const active = editForm.newSubjects[key] === true || editForm.newSubjects[key] === 'true';
+                  return (
+                    <button key={key} type="button"
+                      onClick={() => setEditForm(f => ({ ...f, newSubjects: { ...f.newSubjects, [key]: !active } }))}
+                      style={{ padding: '0.35rem 0.8rem', borderRadius: 8, fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer', border: active ? '1px solid #6366f1' : '1px solid rgba(255,255,255,0.1)', background: active ? 'rgba(99,102,241,0.2)' : 'rgba(255,255,255,0.04)', color: active ? '#a5b4fc' : '#64748b', transition: 'all 0.15s' }}>
+                      {SUBJECT_LABELS_MAP[key]}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Username */}
             <div style={{ marginBottom: '1rem' }}>
               <label style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: '0.4rem' }}>Username</label>
               <input value={editForm.newUsername} onChange={e => setEditForm(f => ({ ...f, newUsername: e.target.value }))}
                 style={{ width: '100%', boxSizing: 'border-box', padding: '0.65rem 0.9rem', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, color: '#e2e8f0', fontFamily: 'monospace', fontSize: '0.875rem', outline: 'none' }} />
             </div>
+
+            {/* Password */}
             <div style={{ marginBottom: '1.25rem' }}>
               <label style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: '0.4rem' }}>New Password (leave blank to keep current)</label>
               <input type="password" value={editForm.newPassword} onChange={e => setEditForm(f => ({ ...f, newPassword: e.target.value }))} placeholder="Enter new password"
                 style={{ width: '100%', boxSizing: 'border-box', padding: '0.65rem 0.9rem', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, color: '#e2e8f0', fontFamily: FONT, fontSize: '0.875rem', outline: 'none' }} />
             </div>
+
             {editError && <div style={{ color: '#f87171', fontSize: '0.8rem', marginBottom: '0.75rem' }}>⚠️ {editError}</div>}
             {editSuccess && <div style={{ color: '#10b981', fontSize: '0.8rem', marginBottom: '0.75rem' }}>✅ {editSuccess}</div>}
             <div style={{ display: 'flex', gap: '0.75rem' }}>
