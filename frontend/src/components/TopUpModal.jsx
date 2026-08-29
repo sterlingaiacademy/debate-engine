@@ -182,7 +182,7 @@ export default function TopUpModal({ user, onDismiss, onSuccess }) {
           <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>⚡</div>
           <h2 style={{ fontSize: '1.75rem', fontWeight: 900, color: '#fff', margin: '0 0 0.5rem' }}>Time Added!</h2>
           <p style={{ color: '#94a3b8', fontSize: '1rem', margin: '0 0 1.5rem' }}>
-            <strong style={{ color: '#fb923c' }}>{success.hours}</strong> has been added to your account for today.
+            <strong style={{ color: '#fb923c' }}>{success.hours}</strong> added to your account. No expiry — lasts until you use them up.
           </p>
           <button
             onClick={() => { if (onDismiss) onDismiss(); window.location.reload(); }}

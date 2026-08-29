@@ -1009,11 +1009,11 @@ app.post('/api/payment/verify-topup', async (req, res) => {
       )
     `);
     await db.query(
-      `INSERT INTO topup_credits (user_id, bonus_seconds, effect_date, source, razorpay_payment_id, expires_at) VALUES ($1, $2, $3, 'payment', $4, NOW() + INTERVAL '30 days')`,
+      `INSERT INTO topup_credits (user_id, bonus_seconds, effect_date, source, razorpay_payment_id, expires_at) VALUES ($1, $2, $3, 'payment', $4, NULL)`,
       [studentId, bonusSeconds, currentDateIST, razorpay_payment_id]
     );
 
-    res.json({ success: true, bonusSeconds, message: `+${bonusSeconds / 3600} hours added! Valid for 30 days.` });
+    res.json({ success: true, bonusSeconds, message: `+${Math.round(bonusSeconds / 60)} minutes added! No expiry — lasts until used.` });
   } catch (err) {
     console.error('Verify topup error:', err);
     res.status(500).json({ error: err.message });
