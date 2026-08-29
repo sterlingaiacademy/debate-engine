@@ -283,6 +283,7 @@ function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent, 
   const [editLoading, setEditLoading] = useState(false);
   const [editError, setEditError] = useState('');
   const [editSuccess, setEditSuccess] = useState('');
+  const [selectedGrades, setSelectedGrades] = useState([]); // [] = all grades
 
   const handleResetPassword = async (s) => {
     setResettingId(s.id);
@@ -370,28 +371,91 @@ function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent, 
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
         <SectionTitle sub={`${(students || []).length} total students registered under your school`}>All Students</SectionTitle>
-        <button
-          onClick={() => {
-            const rows = (students || []).filter(s => s.username);
-            if (!rows.length) return alert('No students with credentials to download.');
+
+        {/* Grade-based CSV download panel */}
+        {(() => {
+          const allGrades = [...new Set((students || []).map(s => (s.class || '').toString().trim()).filter(Boolean))]
+            .sort((a, b) => { const na = parseInt(a); const nb = parseInt(b); return isNaN(na) || isNaN(nb) ? a.localeCompare(b) : na - nb; });
+
+          const toggleGrade = (g) => setSelectedGrades(prev =>
+            prev.includes(g) ? prev.filter(x => x !== g) : [...prev, g]
+          );
+
+          const handleDownload = () => {
             const isHashed = p => p && (p.startsWith('$2a$') || p.startsWith('$2b$'));
+            const allRows = (students || []).filter(s => s.username);
+            const rows = selectedGrades.length === 0
+              ? allRows
+              : allRows.filter(s => selectedGrades.includes((s.class || '').toString().trim()));
+
+            if (!rows.length) return alert('No students found for the selected grade(s).');
+
+            const getSubjectList = (subj) => {
+              if (!subj) return '';
+              let obj = subj;
+              if (typeof obj === 'string') { try { obj = JSON.parse(obj); } catch { return ''; } }
+              return SUBJECT_KEYS.filter(k => obj[k] === true || obj[k] === 'true').map(k => SUBJECT_LABELS_MAP[k]).join(', ');
+            };
+
             const sheetData = [
-              ['Name', 'Username', 'Password'],
+              ['Name', 'Class', 'Username', 'Password', 'Subjects'],
               ...rows.map(s => [
                 s.name || '',
+                s.class || '',
                 s.username || '',
-                isHashed(s.password) ? 'Set by student' : (s.password || 'N/A')
+                isHashed(s.password) ? 'Set by student' : (s.password || 'N/A'),
+                getSubjectList(s.subjects)
               ])
             ];
+
             const ws = XLSX.utils.aoa_to_sheet(sheetData);
-            ws['!cols'] = [{ wch: 30 }, { wch: 25 }, { wch: 20 }];
+            ws['!cols'] = [{ wch: 30 }, { wch: 10 }, { wch: 25 }, { wch: 20 }, { wch: 40 }];
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, 'Student Credentials');
+
             const schoolLabel = (school || 'School').replace(/[^a-z0-9 ]/gi, '').trim();
-            XLSX.writeFile(wb, `${schoolLabel} Student Credentials.xlsx`);
-          }}
-          style={{ padding: '0.55rem 1.1rem', background: 'linear-gradient(135deg, #059669, #10b981)', color: '#fff', border: 'none', borderRadius: 10, fontFamily: FONT, fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}
-        >⬇ Download Credentials CSV</button>
+            let gradeLabel;
+            if (selectedGrades.length === 0) gradeLabel = 'All Grades';
+            else if (selectedGrades.length === 1) gradeLabel = `Class ${selectedGrades[0]}`;
+            else gradeLabel = `Class ${selectedGrades.sort((a,b)=>parseInt(a)-parseInt(b)).join('&')}`;
+
+            XLSX.writeFile(wb, `${schoolLabel} ${gradeLabel} Student Credentials.xlsx`);
+          };
+
+          return (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.5rem' }}>
+              {/* Grade chips */}
+              {allGrades.length > 0 && (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', justifyContent: 'flex-end', maxWidth: 480 }}>
+                  <button
+                    onClick={() => setSelectedGrades([])}
+                    style={{ padding: '0.25rem 0.65rem', borderRadius: 99, fontSize: '0.72rem', fontWeight: 700, cursor: 'pointer',
+                      border: selectedGrades.length === 0 ? '1px solid #10b981' : '1px solid rgba(255,255,255,0.1)',
+                      background: selectedGrades.length === 0 ? 'rgba(16,185,129,0.15)' : 'rgba(255,255,255,0.04)',
+                      color: selectedGrades.length === 0 ? '#10b981' : '#64748b', transition: 'all 0.15s' }}>
+                    All Grades
+                  </button>
+                  {allGrades.map(g => (
+                    <button key={g}
+                      onClick={() => toggleGrade(g)}
+                      style={{ padding: '0.25rem 0.65rem', borderRadius: 99, fontSize: '0.72rem', fontWeight: 700, cursor: 'pointer',
+                        border: selectedGrades.includes(g) ? '1px solid #6366f1' : '1px solid rgba(255,255,255,0.1)',
+                        background: selectedGrades.includes(g) ? 'rgba(99,102,241,0.2)' : 'rgba(255,255,255,0.04)',
+                        color: selectedGrades.includes(g) ? '#a5b4fc' : '#64748b', transition: 'all 0.15s' }}>
+                      Class {g}
+                    </button>
+                  ))}
+                </div>
+              )}
+              {/* Download button */}
+              <button
+                onClick={handleDownload}
+                style={{ padding: '0.55rem 1.1rem', background: 'linear-gradient(135deg, #059669, #10b981)', color: '#fff', border: 'none', borderRadius: 10, fontFamily: FONT, fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                ⬇ Download {selectedGrades.length === 0 ? 'All Grades' : selectedGrades.length === 1 ? `Class ${selectedGrades[0]}` : `Class ${selectedGrades.sort((a,b)=>parseInt(a)-parseInt(b)).join('&')}`} CSV
+              </button>
+            </div>
+          );
+        })()}
       </div>
 
       {/* Edit student modal */}
