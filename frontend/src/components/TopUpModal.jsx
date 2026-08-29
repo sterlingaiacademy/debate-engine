@@ -5,6 +5,18 @@ import { API_BASE } from '../api';
 
 const TOPUP_PLANS = [
   {
+    id: 99,
+    label: 'Quick Start',
+    hours: '15 Mins',
+    seconds: 900,
+    price: '₹99',
+    desc: 'A quick boost to finish your session',
+    gradient: 'linear-gradient(135deg, #10b981 0%, #34d399 100%)',
+    glow: 'rgba(16,185,129,0.35)',
+    badge: '⚡',
+    validity: '30 days',
+  },
+  {
     id: 499,
     label: 'Quick Boost',
     hours: '60 Mins',
@@ -13,7 +25,7 @@ const TOPUP_PLANS = [
     desc: 'Perfect for a focused practice session',
     gradient: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
     glow: 'rgba(249,115,22,0.35)',
-    badge: '⚡',
+    badge: '🔥',
     validity: '30 days',
   },
   {
@@ -141,7 +153,7 @@ export default function TopUpModal({ user, onDismiss, onSuccess }) {
           return;
         }
 
-        const seconds = code === 'TOPUP999' ? 18000 : code === 'TOPUP499' ? 9000 : 0;
+        const seconds = code === 'TOPUP999' ? 7200 : code === 'TOPUP499' ? 3600 : code === 'TOPUP99' ? 900 : 0;
         if (seconds && onSuccess) setTimeout(() => onSuccess(seconds), 1500);
       } else {
         setCouponStatus({ loading: false, msg: data.error || 'Invalid code', type: 'error' });
@@ -348,7 +360,7 @@ export default function TopUpModal({ user, onDismiss, onSuccess }) {
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <input
             type="text"
-            placeholder="TOPUP499 / TOPUP999"
+            placeholder="TOPUP99 / TOPUP499 / TOPUP999"
             value={couponCode}
             onChange={e => { setCouponCode(e.target.value.toUpperCase()); setCouponStatus({ loading: false, msg: '', type: '' }); }}
             onKeyDown={e => e.key === 'Enter' && handleCouponRedeem()}

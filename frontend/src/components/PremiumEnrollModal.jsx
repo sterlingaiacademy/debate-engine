@@ -315,8 +315,8 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
                 <BatteryCharging size={16} color="#fb923c" strokeWidth={2.5} />
                 <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#fb923c' }}>Quick Top-Up — Continue Now</span>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.65rem' }}>
-                {[{ amount: 499, hours: '60 mins', emoji: '⚡' }, { amount: 999, hours: '120 mins', emoji: '🚀', popular: true }].map(t => (
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.65rem' }}>
+                {[{ amount: 99, hours: '15 mins', emoji: '⚡' }, { amount: 499, hours: '60 mins', emoji: '🔥' }, { amount: 999, hours: '120 mins', emoji: '🚀', popular: true }].map(t => (
                   <button
                     key={t.amount}
                     onClick={() => handleTopUp(t.amount, t.hours)}
@@ -383,8 +383,8 @@ export default function PremiumEnrollModal({ user, onDismiss, mode = 'limit' }) 
               <BatteryCharging size={15} color="#fb923c" strokeWidth={2.5} />
               <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#fb923c' }}>Need time today? Quick Top-Up</span>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
-              {[{ amount: 499, hours: '60 mins', emoji: '⚡' }, { amount: 999, hours: '120 mins', emoji: '🚀' }].map(t => (
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.6rem' }}>
+              {[{ amount: 99, hours: '15 mins', emoji: '⚡' }, { amount: 499, hours: '60 mins', emoji: '🔥' }, { amount: 999, hours: '120 mins', emoji: '🚀' }].map(t => (
                 <button
                   key={t.amount}
                   onClick={() => handleTopUp(t.amount, t.hours)}

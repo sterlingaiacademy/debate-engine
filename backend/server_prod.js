@@ -930,8 +930,8 @@ app.post('/api/coupons/redeem', async (req, res) => {
     );
 
     // For topup coupons, also insert into topup_credits (30-day validity)
-    if (code === 'TOPUP499' || code === 'TOPUP999') {
-      const bonusSeconds = code === 'TOPUP499' ? 3600 : 7200;
+    if (code === 'TOPUP99' || code === 'TOPUP499' || code === 'TOPUP999') {
+      const bonusSeconds = code === 'TOPUP999' ? 7200 : code === 'TOPUP499' ? 3600 : 900;
       await db.query(`
         CREATE TABLE IF NOT EXISTS topup_credits (
           id SERIAL PRIMARY KEY, user_id TEXT NOT NULL, bonus_seconds INTEGER NOT NULL,
@@ -948,6 +948,7 @@ app.post('/api/coupons/redeem', async (req, res) => {
 
     const MSG_MAP = {
       'VVIP30':   'VVIP coupon redeemed! +30 minutes added for today. 🎉',
+      'TOPUP99':  'Top-up redeemed! +15 mins added. Valid for 30 days. ⚡',
       'TOPUP499': 'Top-up redeemed! +60 mins added. Valid for 30 days. ⚡',
       'TOPUP999': 'Top-up redeemed! +120 mins added. Valid for 30 days. ⚡',
     };
@@ -967,7 +968,7 @@ app.post('/api/payment/create-topup-order', async (req, res) => {
   try {
     const { amount, studentId } = req.body;
     if (!amount || !studentId) return res.status(400).json({ error: 'amount and studentId are required' });
-    if (![499, 999].includes(Number(amount))) return res.status(400).json({ error: 'Invalid amount. Use 499 or 999.' });
+    if (![99, 499, 999].includes(Number(amount))) return res.status(400).json({ error: 'Invalid amount. Use 99, 499 or 999.' });
 
     const order = await razorpayInstance.orders.create({
       amount: Number(amount) * 100, // paise
@@ -996,7 +997,7 @@ app.post('/api/payment/verify-topup', async (req, res) => {
       return res.status(400).json({ error: 'Invalid payment signature' });
     }
 
-    const bonusSeconds = Number(amount) === 999 ? 7200 : 3600;
+    const bonusSeconds = Number(amount) === 999 ? 7200 : Number(amount) === 499 ? 3600 : 900; // 99 = 15 mins
     const currentDateIST = getISTDateString();
 
     await db.query(`
