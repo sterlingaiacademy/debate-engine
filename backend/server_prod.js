@@ -3948,7 +3948,7 @@ app.post('/api/coordinator/add-student', async (req, res) => {
 // ==========================================
 app.put('/api/coordinator/update-student', async (req, res) => {
   try {
-    const { coordinatorId, studentId, newUsername, newPassword, resetPassword } = req.body;
+    const { coordinatorId, studentId, newUsername, newPassword, newName, newClass, newSubjects, resetPassword } = req.body;
     if (!coordinatorId || !studentId) {
       return res.status(400).json({ error: 'coordinatorId and studentId are required' });
     }
@@ -3967,6 +3967,7 @@ app.put('/api/coordinator/update-student', async (req, res) => {
     if (studentRes.rows.length === 0) return res.status(404).json({ error: 'Student not found in this school' });
     const student = studentRes.rows[0];
 
+    // Update username
     if (newUsername && newUsername !== studentId) {
       const taken = await db.query(`SELECT id FROM users WHERE LOWER("studentId") = LOWER($1) AND "studentId" != $2`, [newUsername, studentId]);
       if (taken.rows.length > 0) return res.status(400).json({ error: 'Username already taken' });
@@ -3975,11 +3976,33 @@ app.put('/api/coordinator/update-student', async (req, res) => {
     }
 
     const effectiveId = newUsername || studentId;
+
+    // Update name
+    if (newName && newName.trim()) {
+      await db.query(`UPDATE users SET name = $1 WHERE "studentId" = $2 AND school_id = $3`, [newName.trim(), effectiveId, schoolId]);
+    }
+
+    // Update class / grade (strip any trailing letter division e.g. "8B" -> "8")
+    if (newClass && newClass.trim()) {
+      const cleanClass = newClass.trim().replace(/[A-Za-z]+$/, '').trim();
+      await db.query(`UPDATE users SET "classLevel" = $1, grade = $1 WHERE "studentId" = $2 AND school_id = $3`, [cleanClass || newClass.trim(), effectiveId, schoolId]);
+    }
+
+    // Update subjects
+    if (newSubjects && typeof newSubjects === 'object') {
+      try {
+        await db.query(`UPDATE users SET subjects = $1 WHERE "studentId" = $2 AND school_id = $3`, [JSON.stringify(newSubjects), effectiveId, schoolId]);
+      } catch (e) {
+        // subjects column may not exist — add it first
+        await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS subjects JSONB DEFAULT '{}'::jsonb`);
+        await db.query(`UPDATE users SET subjects = $1 WHERE "studentId" = $2 AND school_id = $3`, [JSON.stringify(newSubjects), effectiveId, schoolId]);
+      }
+    }
+
     let plainPwd = null;
 
     if (resetPassword) {
-      // Auto-generate a new readable password for this student
-      const firstName = (student.name || effectiveId).trim().split(' ')[0];
+      const firstName = (newName || student.name || effectiveId).trim().split(' ')[0];
       const capFirst = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
       const symbols = ['@', '#', '$'];
       const sym = symbols[Math.floor(Math.random() * symbols.length)];
