@@ -70,11 +70,21 @@ export default function SpeechLeague({ user }) {
   useEffect(() => {
     let topic = 'Are Schools Preparing Students for Real Life?'; // Default Cat III
     if (user?.classLevel || user?.grade) {
-      const g = (user.classLevel || user.grade).toLowerCase();
-      if (g.includes('5') || g.includes('6') || g.includes('7')) {
-        topic = 'Kindness Is a Superpower';
-      } else if (g.includes('8') || g.includes('9') || g.includes('10')) {
-        topic = 'Marks Do Not Define Intelligence';
+      const g = String(user.classLevel || user.grade).toLowerCase();
+      const match = g.match(/\d+/);
+      if (match) {
+        const gradeNum = parseInt(match[0], 10);
+        if (gradeNum >= 1 && gradeNum <= 7) {
+          topic = 'Kindness Is a Superpower';
+        } else if (gradeNum >= 8 && gradeNum <= 10) {
+          topic = 'Marks Do Not Define Intelligence';
+        }
+      } else {
+        if (g.includes('5') || g.includes('6') || g.includes('7')) {
+          topic = 'Kindness Is a Superpower';
+        } else if (g.includes('8') || g.includes('9') || g.includes('10')) {
+          topic = 'Marks Do Not Define Intelligence';
+        }
       }
     }
     setSelectedTopic(topic);
