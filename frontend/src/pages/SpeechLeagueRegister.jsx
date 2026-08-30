@@ -117,7 +117,7 @@ export default function SpeechLeagueRegister({ user }) {
             <Calendar size={28} color="#60a5fa" />
             <div>
               <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#fff', letterSpacing: '0.05em' }}>30.08.2026 • SUNDAY</div>
-              <div style={{ color: '#93c5fd', marginTop: '0.25rem' }}>11:00 AM IST</div>
+              <div style={{ color: '#93c5fd', marginTop: '0.25rem' }}>Starts 10:00 AM IST (All Day)</div>
             </div>
           </div>
         </div>
