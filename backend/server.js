@@ -3069,6 +3069,26 @@ app.get('/api/freedom-quiz/certificate-status/:email', (req, res) => {
   }
 });
 
+// GET /api/teacher2030/certificate-status/:email
+app.get('/api/teacher2030/certificate-status/:email', (req, res) => {
+  try {
+    const email = req.params.email.toLowerCase().trim();
+    const certPath = path.join(__dirname, 'teacher2030_certificates.json');
+    if (!fs.existsSync(certPath)) {
+      return res.status(500).json({ error: 'Certificate database not found.' });
+    }
+    const certData = JSON.parse(fs.readFileSync(certPath, 'utf8'));
+    
+    if (certData[email]) {
+      return res.json({ success: true, student: certData[email] });
+    } else {
+      return res.status(404).json({ error: 'No certificate found for this email address. Please make sure you are using the exact email you registered with.' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // GET /api/minimun/certificate-status/:email
 app.get('/api/minimun/certificate-status/:email', (req, res) => {
   try {

@@ -44,6 +44,7 @@ const MiniMunMod3CertificateDownload = lazy(() => import('./pages/MiniMunMod3Cer
 const MiniMunMod4CertificateDownload = lazy(() => import('./pages/MiniMunMod4CertificateDownload'));
 const TeachersChallengeCertificateDownload = lazy(() => import('./pages/TeachersChallengeCertificateDownload'));
 const FreedomQuizCertificateDownload = lazy(() => import('./pages/FreedomQuizCertificateDownload'));
+const Teacher2030CertificateDownload = lazy(() => import('./pages/Teacher2030CertificateDownload'));
 
 const ITORegister = lazy(() => import('./pages/ITORegister'));
 const SpeechAnalysis = lazy(() => import('./pages/SpeechAnalysis'));
@@ -286,6 +287,9 @@ function App() {
               <Route path="/olympiad/report-card" element={user ? <OlympiadReportCard user={user} /> : <Navigate to="/" />} />
 
               <Route path="/ito-register" element={user ? <ITORegister user={user} /> : <Navigate to="/" />} />
+              <Route path="/certificate/teachers-challenge" element={<TeachersChallengeCertificateDownload />} />
+              <Route path="/certificate/teacher-2030" element={<Teacher2030CertificateDownload />} />
+              <Route path="/certificate/freedom-quiz" element={<FreedomQuizCertificateDownload />} />
               <Route path="/certificates" element={user ? <CertificatesHub /> : <Navigate to="/" />} />
               <Route path="/certificates/model-un-quiz" element={user ? <UNCertificateDownload /> : <Navigate to="/" />} />
               <Route path="/quiz-certificate" element={user ? <UNCertificateDownload /> : <Navigate to="/" />} />

@@ -269,6 +269,42 @@ export default function CertificatesHub() {
               <ChevronRight size={18} color="#06b6d4" />
             </div>
           </div>
+
+          {/* Tile 8: Teacher of 2030 */}
+          <div 
+            onClick={() => navigate('/certificate/teacher-2030')}
+            style={{ 
+              background: '#1e293b', 
+              borderRadius: 20, 
+              padding: '2rem', 
+              boxShadow: '0 10px 30px rgba(0,0,0,0.3)', 
+              border: '1px solid rgba(255,255,255,0.05)', 
+              cursor: 'pointer',
+              transition: 'transform 0.2s, borderColor 0.2s',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1rem',
+              position: 'relative'
+            }}
+            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.borderColor = 'rgba(236,72,153,0.3)'; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)'; }}
+          >
+            <div style={{ width: 60, height: 60, background: 'rgba(236,72,153,0.1)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(236,72,153,0.2)' }}>
+              <Award size={30} color="#ec4899" />
+            </div>
+            
+            <div>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#fff', marginBottom: '0.3rem' }}>Teacher of 2030</h2>
+              <p style={{ color: '#94a3b8', fontSize: '0.85rem', lineHeight: 1.5 }}>
+                Download your certificate of participation for the Teacher of 2030 programme.
+              </p>
+            </div>
+            
+            <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+              <span style={{ color: '#ec4899', fontSize: '0.9rem', fontWeight: 600 }}>Download Now</span>
+              <ChevronRight size={18} color="#ec4899" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
