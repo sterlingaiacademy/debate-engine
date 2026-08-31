@@ -480,17 +480,7 @@ const SENIOR_MODES = [
     path: () => '/speech-coach',
     levels: ['Level 3', 'Level 4', 'Level 5'],
   },
-  {
-    id: 'speech-league',
-    title: 'Speech League',
-    desc: 'Compete in the Speech League! Get a topic based on your grade and submit your best 3-minute speech.',
-    tag: 'COMPETITION',
-    icon: Trophy,
-    color: '#facc15',
-    grad: 'linear-gradient(135deg, #1a1600, #332b00)',
-    glow: 'rgba(250,204,21,0.25)',
-    path: () => '/speech-league',
-  },
+
   {
     id: 'speech-analysis',
     title: 'Speech Analysis',
@@ -512,7 +502,7 @@ const JUNIOR_MODES = [
   { id: 'persona', title: 'Famous Figures', desc: 'Debate as legendary heroes from history!', color: '#d946ef', grad: 'linear-gradient(135deg, #d946ef, #a855f7)', icon: Users, path: () => '/persona', levels: ['Level 3', 'Level 4', 'Level 5'] },
   { id: 'supertutor', title: 'Super Tutor', desc: 'Ask your AI any question — it always helps!', color: '#10b981', grad: 'linear-gradient(135deg, #10b981, #34d399)', icon: Brain, path: () => '/conversational-agent' },
   { id: 'speech-coach', title: 'Speech Coach', desc: 'Improve your speaking skills with AI voice training!', color: '#e879f9', grad: 'linear-gradient(135deg, #e879f9, #a855f7)', icon: Radio, path: () => '/speech-coach', levels: ['Level 3', 'Level 4', 'Level 5'] },
-  { id: 'speech-league', title: 'Speech League', desc: 'Compete in the Speech League! Get a topic based on your grade.', color: '#facc15', grad: 'linear-gradient(135deg, #facc15, #fef08a)', icon: Trophy, path: () => '/speech-league' },
+
   { id: 'speech-analysis', title: 'Speech Analysis', desc: 'Get your speeches analyzed by AI for instant feedback!', color: '#3b82f6', grad: 'linear-gradient(135deg, #3b82f6, #60a5fa)', icon: Mic, path: () => '/speech-analysis', levels: ['Level 3', 'Level 4', 'Level 5'], locked: true },
 ];
 
@@ -970,41 +960,7 @@ export default function Dashboard({ user, setUser }) {
         <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1rem' }}>Upcoming Courses/Programmes</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem', marginBottom: '2rem' }}>
           
-          {/* G-Talk Cohort 2 */}
-        <div
-          onClick={() => navigate('/cohort')}
-          style={{
-            borderRadius: 18, padding: '1.4rem 1.5rem', cursor: 'pointer',
-            background: 'linear-gradient(135deg, #1e0f2d 0%, #291244 100%)',
-            border: '1px solid rgba(168,85,247,0.2)',
-            position: 'relative', overflow: 'hidden',
-            transition: 'transform 0.25s, box-shadow 0.25s',
-            boxShadow: '0 4px 24px rgba(168,85,247,0.1)',
-          }}
-          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(168,85,247,0.3)'; }}
-          onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 4px 24px rgba(168,85,247,0.1)'; }}
-        >
-          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #a855f7, #e879f9)' }} />
-          <div style={{ position: 'absolute', top: -40, right: -40, width: 130, height: 130, borderRadius: '50%', background: 'radial-gradient(circle, rgba(168,85,247,0.15) 0%, transparent 70%)', pointerEvents: 'none' }} />
-          
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
-            <span style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.12em', color: '#a855f7', background: 'rgba(168,85,247,0.1)', border: '1px solid rgba(168,85,247,0.22)', padding: '0.2rem 0.65rem', borderRadius: 99 }}>
-              LIVE COHORT 2.0
-            </span>
-            <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(168,85,247,0.1)', border: '1px solid rgba(168,85,247,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Users size={16} color="#a855f7" strokeWidth={2.5} />
-            </div>
-          </div>
-          <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fff', marginBottom: '0.25rem', letterSpacing: '-0.01em' }}>
-            G-Talk <span style={{ color: '#a855f7' }}>Cohort 2</span>
-          </div>
-          <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '1rem', lineHeight: 1.5 }}>
-            Master Public Speaking & Debating with live online sessions, interactive exercises, and peer feedback.
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#a855f7' }}>
-            Learn More <ChevronRight size={14} />
-          </div>
-        </div>
+
 
 
 
@@ -1095,41 +1051,7 @@ export default function Dashboard({ user, setUser }) {
           </div>
         </div>
 
-        {/* Speech League */}
-        <div
-          onClick={() => navigate('/speech-league-register')}
-          style={{
-            borderRadius: 18, padding: '1.4rem 1.5rem', cursor: 'pointer',
-            background: 'linear-gradient(135deg, #1e1b4b 0%, #312e81 100%)',
-            border: '1px solid rgba(234,179,8,0.2)',
-            position: 'relative', overflow: 'hidden',
-            transition: 'transform 0.25s, box-shadow 0.25s',
-            boxShadow: '0 4px 24px rgba(234,179,8,0.1)',
-          }}
-          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(234,179,8,0.2)'; }}
-          onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 4px 24px rgba(234,179,8,0.1)'; }}
-        >
-          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #eab308, #fef08a)' }} />
-          <div style={{ position: 'absolute', top: -40, right: -40, width: 130, height: 130, borderRadius: '50%', background: 'radial-gradient(circle, rgba(234,179,8,0.15) 0%, transparent 70%)', pointerEvents: 'none' }} />
-          
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
-            <span style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.12em', color: '#eab308', background: 'rgba(234,179,8,0.1)', border: '1px solid rgba(234,179,8,0.22)', padding: '0.2rem 0.65rem', borderRadius: 99 }}>
-              MONTHLY COMPETITION
-            </span>
-            <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(234,179,8,0.1)', border: '1px solid rgba(234,179,8,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Mic size={16} color="#eab308" strokeWidth={2.5} />
-            </div>
-          </div>
-          <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fff', marginBottom: '0.25rem', letterSpacing: '-0.01em' }}>
-            Speech <span style={{ color: '#eab308' }}>League</span>
-          </div>
-          <div style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '1rem', lineHeight: 1.5 }}>
-            Grace & Force Monthly Speech League. Speak. Persuade. Shine.
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#eab308' }}>
-            Register Now <ChevronRight size={14} />
-          </div>
-        </div>
+
 
       </div>
       </div>
