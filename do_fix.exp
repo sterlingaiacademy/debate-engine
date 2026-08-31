@@ -1,0 +1,21 @@
+#!/usr/bin/expect -f
+set timeout -1
+set password "wvpi2!ZnTcV];ncy"
+
+spawn scp -o StrictHostKeyChecking=no fix_user.js graceandforce@65.20.85.75:~/fix_user.js
+expect {
+    "password:" {
+        send "$password\r"
+        exp_continue
+    }
+    eof
+}
+
+spawn ssh -o StrictHostKeyChecking=no graceandforce@65.20.85.75 "bash -c 'source ~/.nvm/nvm.sh && mv ~/fix_user.js ~/debate-engine/backend/fix_user.js && cd ~/debate-engine/backend && node fix_user.js'"
+expect {
+    "password:" {
+        send "$password\r"
+        exp_continue
+    }
+    eof
+}

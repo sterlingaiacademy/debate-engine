@@ -1,0 +1,17 @@
+#!/usr/bin/expect -f
+set timeout -1
+set password "wvpi2!ZnTcV];ncy"
+
+spawn bash ./deploy.sh
+
+expect {
+    "password:" {
+        send "$password\r"
+        exp_continue
+    }
+    "sudo" {
+        send "$password\r"
+        exp_continue
+    }
+    eof
+}

@@ -139,7 +139,7 @@ export default function SpeechLeague({ user }) {
   const fetchHistory = async () => {
     try {
       setHistoryLoading(true);
-      const res = await fetch(`${API_BASE}/api/speech/history/${user?.studentId || user?.username}`);
+      const res = await fetch(`${API_BASE}/api/speech/history/${user?.studentId || user?.username}?t=${Date.now()}`);
       const data = await res.json();
       setHistory(data || []);
       

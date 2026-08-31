@@ -1,0 +1,6 @@
+#!/usr/bin/expect -f
+set timeout 30
+spawn ssh graceandforce@65.20.85.75 "source ~/.nvm/nvm.sh && pm2 show grace-api | grep -E 'script|exec file|entry point'"
+expect "password:"
+send "wvpi2!ZnTcV];ncy\r"
+expect eof

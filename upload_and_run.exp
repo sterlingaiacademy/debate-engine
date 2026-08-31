@@ -1,0 +1,14 @@
+#!/usr/bin/expect -f
+set timeout 60
+
+# Upload the fix script
+spawn scp fix_grades.js graceandforce@65.20.85.75:/home/graceandforce/debate-engine/backend/fix_grades.js
+expect "password:"
+send "wvpi2!ZnTcV];ncy\r"
+expect eof
+
+# Run it
+spawn ssh graceandforce@65.20.85.75 "source ~/.nvm/nvm.sh && cd /home/graceandforce/debate-engine/backend && node fix_grades.js"
+expect "password:"
+send "wvpi2!ZnTcV];ncy\r"
+expect eof

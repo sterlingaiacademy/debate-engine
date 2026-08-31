@@ -1,0 +1,10 @@
+#!/usr/bin/expect -f
+set timeout 60
+spawn scp delete_students.js graceandforce@65.20.85.75:/home/graceandforce/debate-engine/backend/delete_students.js
+expect "password:"
+send "wvpi2!ZnTcV];ncy\r"
+expect eof
+spawn ssh graceandforce@65.20.85.75 "source ~/.nvm/nvm.sh && cd /home/graceandforce/debate-engine/backend && node delete_students.js"
+expect "password:"
+send "wvpi2!ZnTcV];ncy\r"
+expect eof

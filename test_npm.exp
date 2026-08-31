@@ -1,0 +1,10 @@
+#!/usr/bin/expect -f
+set timeout -1
+spawn ssh graceandforce@65.20.85.75
+expect "password:"
+send "wvpi2!ZnTcV];ncy\r"
+expect "$ "
+send "which npm\r"
+expect "$ "
+send "exit\r"
+expect eof

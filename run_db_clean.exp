@@ -1,0 +1,10 @@
+#!/usr/bin/expect -f
+set timeout 30
+spawn ssh graceandforce@65.20.85.75 "source ~/.nvm/nvm.sh && cd /home/graceandforce/debate-engine/backend && cat << 'INNER' > clean.js
+const db = require('./database');
+db.query('DELETE FROM speech_analysis_sessions WHERE is_league = true').then((res)=>console.log('DB Cleaned, rows deleted:', res.rowCount)).catch(console.error).finally(()=>process.exit(0));
+INNER
+node clean.js"
+expect "password:"
+send "wvpi2!ZnTcV];ncy\r"
+expect eof
