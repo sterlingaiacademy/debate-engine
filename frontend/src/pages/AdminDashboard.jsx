@@ -1499,7 +1499,8 @@ export default function AdminDashboard() {
   if (!adminToken) return null;
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', fontFamily: FONT, background: '#06080F', color: '#f1f5f9' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', height: '100%', fontFamily: FONT, background: '#06080F', color: '#f1f5f9' }}>
+      <style>{`html, body, #root { background: #06080F !important; min-height: 100%; }`}</style>
       {/* Background decoration */}
       <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
         <div style={{ position: 'absolute', top: '-10%', right: '-5%', width: 500, height: 500, background: 'radial-gradient(circle, rgba(249,115,22,0.06) 0%, transparent 70%)', borderRadius: '50%' }} />
