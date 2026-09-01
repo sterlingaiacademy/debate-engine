@@ -1335,7 +1335,8 @@ export default function CoordinatorDashboard() {
   const ACCENT = '#3b82f6';
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', fontFamily: FONT, background: '#06080F', color: '#f1f5f9' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', height: '100%', fontFamily: FONT, background: '#06080F', color: '#f1f5f9' }}>
+      <style>{`html, body, #root { background: #06080F !important; min-height: 100%; }`}</style>
       {/* Background */}
       <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
         <div style={{ position: 'absolute', top: '-15%', right: '-10%', width: 600, height: 600, background: 'radial-gradient(circle, rgba(59,130,246,0.07) 0%, transparent 70%)', borderRadius: '50%' }} />

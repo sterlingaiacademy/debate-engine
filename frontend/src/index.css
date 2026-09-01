@@ -155,14 +155,14 @@
    ================================================================ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { color-scheme: light; font-size: 16px; background-color: var(--color-bg-base); transition: background-color 0.3s ease, color 0.3s ease; }
-html.dark { color-scheme: dark; background-color: var(--color-dark-base); }
+html { color-scheme: dark; font-size: 16px; background-color: #06080F; transition: background-color 0.3s ease, color 0.3s ease; }
+html.dark { color-scheme: dark; background-color: #06080F; }
 
 body {
   font-family: var(--font-sans);
-  background-color: var(--color-bg-base);
+  background-color: #06080F;
   color: var(--text-primary);
-  min-height: 100vh;
+  min-height: 100%;
   line-height: 1.6;
   transition: background-color 0.3s ease, color 0.3s ease;
   -webkit-font-smoothing: antialiased;
