@@ -10,7 +10,6 @@ const SECTIONS = [
   { id: 'overview', label: 'Overview' },
   { id: 'users', label: 'Users' },
   { id: 'debates', label: 'Debates' },
-  { id: 'olympiad', label: 'Olympiad' },
   { id: 'indusmun', label: 'Indus MUN' },
 
   { id: 'speech_league', label: 'Speech League' },
