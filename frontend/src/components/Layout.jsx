@@ -198,8 +198,14 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
           flexShrink: 0,
           gap: '0.5rem',
         }}>
+          {/* Logo (Always visible, scaled when collapsed) */}
           <Link to="/dashboard" onClick={() => isMobile && setMobileMenuOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', overflow: 'hidden' }}>
-            <img src={logoImg} alt="G FORCE" style={{ height: 32, width: 'auto', flexShrink: 0 }} />
+            <img src={logoImg} alt="G FORCE" style={{ 
+              height: isCollapsed && !isMobile ? 'auto' : 32, 
+              width: isCollapsed && !isMobile ? '100%' : 'auto', 
+              maxWidth: isCollapsed && !isMobile ? '40px' : 'none',
+              flexShrink: 0 
+            }} />
             {(!isCollapsed || isMobile) && (
               <span style={{
                 fontWeight: 900, fontSize: '1.35rem', letterSpacing: '-0.02em',
@@ -214,7 +220,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
             )}
           </Link>
 
-          {/* Desktop Collapse Toggle */}
+          {/* Desktop Collapse Toggle (Inside header when expanded) */}
           {!isMobile && !isCollapsed && (
             <button
               onClick={() => setIsCollapsed(true)}
@@ -234,6 +240,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
             </button>
           )}
 
+          {/* Mobile Close Button */}
           {isMobile && (
             <button 
               type="button"
@@ -245,12 +252,12 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
           )}
         </div>
 
-        {/* Collapsed expand button (Desktop only) */}
+        {/* Desktop Expand Toggle (Below header when collapsed) */}
         {!isMobile && isCollapsed && (
           <button
             onClick={() => setIsCollapsed(false)}
             style={{
-              margin: '0.75rem auto',
+              margin: '0.75rem auto 0',
               background: 'transparent',
               border: 'none',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
