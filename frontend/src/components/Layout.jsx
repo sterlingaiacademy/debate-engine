@@ -240,7 +240,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
             onClick={() => setIsCollapsed(!isCollapsed)}
             style={{
               position: 'absolute',
-              right: '-16px',
+              right: isCollapsed ? '-16px' : '16px',
               top: '28px',
               background: isJunior ? '#fff' : '#0a0a0a',
               border: isJunior ? '1px solid rgba(124,58,237,0.1)' : '1px solid rgba(255,255,255,0.1)',
