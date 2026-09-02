@@ -162,13 +162,13 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
 
       {/* SIDEBAR */}
       <aside style={{
+        position: 'relative',
         width: isMobile ? 280 : SIDEBAR_W,
         flexShrink: 0,
         display: 'flex',
         flexDirection: 'column',
         transition: isMobile ? 'transform 0.3s cubic-bezier(0.16,1,0.3,1)' : 'width 0.3s cubic-bezier(0.16,1,0.3,1)',
         zIndex: 70,
-        overflow: 'hidden',
         ...(isMobile ? {
           position: 'fixed', top: 0, bottom: 0, left: 0,
           transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(-100%)',
@@ -222,33 +222,6 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
             )}
           </Link>
 
-          {/* Desktop Toggle Button (Inside header for both states) */}
-          {!isMobile && (
-            <button
-              onClick={() => setIsCollapsed(!isCollapsed)}
-              style={{
-                background: 'transparent',
-                border: 'none',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: '#64748b',
-                cursor: 'pointer', flexShrink: 0,
-                padding: '4px',
-              }}
-            >
-              {isCollapsed ? (
-                <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect width="18" height="18" x="3" y="3" rx="3.5" />
-                  <rect x="7" y="7" width="5" height="10" rx="1.5" fill="currentColor" stroke="none" />
-                </svg>
-              ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect width="18" height="18" x="3" y="3" rx="3.5" />
-                  <path d="M9 8v8" />
-                </svg>
-              )}
-            </button>
-          )}
-
           {/* Mobile Close Button */}
           {isMobile && (
             <button 
@@ -260,6 +233,38 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
             </button>
           )}
         </div>
+
+        {/* Floating Desktop Toggle Button */}
+        {!isMobile && (
+          <button
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            style={{
+              position: 'absolute',
+              right: '-16px',
+              top: '28px',
+              background: isJunior ? '#fff' : '#0a0a0a',
+              border: isJunior ? '1px solid rgba(124,58,237,0.1)' : '1px solid rgba(255,255,255,0.1)',
+              borderRadius: '8px',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              color: '#64748b',
+              cursor: 'pointer',
+              padding: '4px',
+              zIndex: 100,
+            }}
+          >
+            {isCollapsed ? (
+              <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect width="18" height="18" x="3" y="3" rx="3.5" />
+                <rect x="7" y="7" width="5" height="10" rx="1.5" fill="currentColor" stroke="none" />
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect width="18" height="18" x="3" y="3" rx="3.5" />
+                <path d="M9 8v8" />
+              </svg>
+            )}
+          </button>
+        )}
 
         {/* ── Nav Links ── */}
         <nav style={{
