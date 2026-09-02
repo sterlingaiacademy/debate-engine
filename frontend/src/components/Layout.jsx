@@ -84,7 +84,6 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
     !isJunior && { name: 'Analytics',   path: '/analytics',   match: '/analytics',  icon: BarChart2 },
     !isJunior && { name: 'Leaderboard', path: '/leaderboard', match: '/leaderboard', icon: Trophy },
     { name: 'Certificates', path: '/certificates', match: '/certificates', icon: Award },
-    { name: 'Cohort 2.0',     path: '/cohort', match: '/cohort', icon: Presentation },
     { name: 'Settings',   path: '/settings',    match: '/settings',   icon: Settings },
   ].filter(Boolean);
 
