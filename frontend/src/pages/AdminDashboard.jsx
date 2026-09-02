@@ -313,7 +313,8 @@ function UsersSection({ adminToken, apiBase, speechOnly = false, leagueOnly = fa
           <div style={{ overflowX: 'auto' }}>
             <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
               <TableHead cols={[
-                'Name', 'Username', 'Email', 'Phone', 'Grade', leagueOnly ? 'League Score' : 'Speech Score',
+                'Name', 'Username', 'Email', 'Phone', 'Grade',
+                ...(speechOnly || leagueOnly ? [leagueOnly ? 'League Score' : 'Speech Score'] : []),
                 ...(speechOnly || leagueOnly ? [] : ['Plan', 'Status', 'Period']),
                 speechOnly || leagueOnly ? 'Analyzed' : 'Joined'
               ]} />
@@ -334,7 +335,7 @@ function UsersSection({ adminToken, apiBase, speechOnly = false, leagueOnly = fa
                     <TD>{u.email || '—'}</TD>
                     <TD mono>{u.phone || '—'}</TD>
                     <TD>{u.grade || '—'}</TD>
-                    <TD>{u.max_speech_score || '—'}</TD>
+                    {(speechOnly || leagueOnly) && <TD>{u.max_speech_score || '—'}</TD>}
                     {!(speechOnly || leagueOnly) && (
                       <>
                         <TD><PlanBadge plan={u.subscription_plan} /></TD>
