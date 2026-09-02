@@ -2,7 +2,7 @@ import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LogOut, LayoutDashboard, Mic, BarChart2, Trophy,
-  Zap, Flame, ChevronRight, ChevronLeft, Settings, BookOpen, Gamepad2, Menu, X, Crown, Globe, Users, Brain, Radio, Scroll, Target, Presentation, FileQuestion, Award
+  Zap, Flame, Settings, BookOpen, Gamepad2, Menu, X, Crown, Globe, Users, Brain, Radio, Scroll, Target, Presentation, FileQuestion, Award
 } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 import PremiumEnrollModal from './PremiumEnrollModal';
@@ -119,19 +119,6 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
     borderRadius: isJunior ? 99 : '0 10px 10px 0',
   };
 
-  const BottomTabItem = ({ name, icon: Icon, path, isActive, isJunior }) => (
-    <Link to={path} onClick={() => setMobileMenuOpen(false)} style={{
-      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
-      textDecoration: 'none', padding: '8px 4px',
-      color: isActive ? (isJunior ? '#7c3aed' : '#FF6B00') : '#64748b',
-      flex: 1,
-      WebkitTapHighlightColor: 'transparent',
-    }}>
-      <Icon size={24} strokeWidth={isActive ? 2.5 : 2} />
-      <span style={{ fontSize: '10px', fontWeight: isActive ? 800 : 600 }}>{name}</span>
-    </Link>
-  );
-
   return (
     <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', height: '100dvh', overflow: 'hidden', background: isJunior ? 'var(--bg-secondary)' : '#000' }}>
       
@@ -156,7 +143,6 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
             </span>
           </Link>
           
-          {/* Stats removed */}
         </header>
       )}
 
@@ -228,20 +214,24 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
             )}
           </Link>
 
-          {!isCollapsed && !isMobile && (
+          {/* Desktop Collapse Toggle */}
+          {!isMobile && !isCollapsed && (
             <button
               onClick={() => setIsCollapsed(true)}
               style={{
                 background: 'transparent',
-                border: isJunior ? '1.5px solid rgba(124,58,237,0.2)' : '1px solid rgba(255,255,255,0.1)',
-                borderRadius: '50%',
-                width: 28, height: 28,
+                border: 'none',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: isJunior ? '#7c3aed' : '#64748b',
+                color: '#64748b',
                 cursor: 'pointer', flexShrink: 0,
+                padding: '4px',
               }}
             >
-              <ChevronLeft size={14} />
+              <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect width="18" height="18" x="3" y="3" rx="2" />
+                <path d="M9 3v18" />
+                <path d="M3 5C3 3.89543 3.89543 3 5 3H9V21H5C3.89543 21 3 20.1046 3 19V5Z" fill="currentColor" stroke="none" />
+              </svg>
             </button>
           )}
 
@@ -262,16 +252,18 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
             onClick={() => setIsCollapsed(false)}
             style={{
               margin: '0.75rem auto',
-              background: isJunior ? 'rgba(124,58,237,0.08)' : 'rgba(255,255,255,0.04)',
-              border: isJunior ? '1.5px solid rgba(124,58,237,0.2)' : '1px solid rgba(255,255,255,0.08)',
-              borderRadius: '50%',
-              width: 32, height: 32,
+              background: 'transparent',
+              border: 'none',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              color: isJunior ? '#7c3aed' : '#64748b',
+              color: '#64748b',
               cursor: 'pointer', flexShrink: 0,
+              padding: '4px',
             }}
           >
-            <ChevronRight size={14} />
+            <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect width="18" height="18" x="3" y="3" rx="2" />
+              <path d="M9 3v18" />
+            </svg>
           </button>
         )}
 
