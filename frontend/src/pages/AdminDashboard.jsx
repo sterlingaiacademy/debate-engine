@@ -315,7 +315,7 @@ function UsersSection({ adminToken, apiBase, speechOnly = false, leagueOnly = fa
               <TableHead cols={[
                 'Name', 'Username', 'Email', 'Phone', 'Grade',
                 ...(speechOnly || leagueOnly ? [leagueOnly ? 'League Score' : 'Speech Score'] : []),
-                ...(speechOnly || leagueOnly ? [] : ['Plan', 'Status', 'Period']),
+                ...(speechOnly || leagueOnly ? [] : ['Plan']),
                 speechOnly || leagueOnly ? 'Analyzed' : 'Joined'
               ]} />
               <tbody>
@@ -339,8 +339,6 @@ function UsersSection({ adminToken, apiBase, speechOnly = false, leagueOnly = fa
                     {!(speechOnly || leagueOnly) && (
                       <>
                         <TD><PlanBadge plan={u.subscription_plan} /></TD>
-                        <TD><StatusDot status={u.subscription_status} /></TD>
-                        <TD>{u.subscription_period || '—'}</TD>
                       </>
                     )}
                     <TD>{fmtDate((speechOnly || leagueOnly) ? (u.speech_date || u.createdAt) : u.createdAt)}</TD>
