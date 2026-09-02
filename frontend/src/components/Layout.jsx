@@ -96,7 +96,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
   };
   const tierColor = TIER_COLORS[user?.rank] || '#64748b';
 
-  const SIDEBAR_W = isCollapsed && !isMobile ? 72 : 264;
+  const SIDEBAR_W = isCollapsed && !isMobile ? 80 : 264;
 
   const activeStyle = isJunior
     ? {
@@ -191,7 +191,7 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
         {/* Logo Row (Desktop/Mobile Menu Header) */}
         <div style={{
           display: 'flex', 
-          flexDirection: isCollapsed && !isMobile ? 'column' : 'row',
+          flexDirection: 'row',
           alignItems: 'center',
           justifyContent: isCollapsed && !isMobile ? 'flex-start' : 'space-between',
           padding: isMobile ? '1.25rem 1.25rem 1.25rem 1.5rem' : (isCollapsed ? '1.5rem 0 0.5rem 0.5rem' : '1.5rem 1rem 0.5rem 1.25rem'),
