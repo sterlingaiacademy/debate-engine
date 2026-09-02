@@ -2503,7 +2503,7 @@ app.get('/api/admin/users', requireAdmin, async (req, res) => {
 
     const countRes = await db.query(`SELECT COUNT(DISTINCT users.id) AS count FROM users LEFT JOIN speech_analysis_sessions sas ON users."studentId" = sas.student_id ${where}`, params);
     const usersRes = await db.query(
-      `SELECT users.name, users."studentId", users.email, users.phone, users."classLevel", users.grade,
+      `SELECT users.name, users."studentId", users.email, COALESCE(users.phone, users.parent_phone) as phone, users."classLevel", users.grade,
               users.subscription_plan, users.subscription_period, users.subscription_status, users."createdAt",
               COALESCE(MAX(sas.score), 0) AS max_speech_score,
               MAX(sas.created_at) AS speech_date
