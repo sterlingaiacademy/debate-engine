@@ -253,7 +253,7 @@ function App() {
             <Route path="/coordinator-dashboard" element={<CoordinatorDashboard />} />
             
             <Route path="/olympiad-dashboard" element={user ? <OlympiadDashboard user={user} /> : <Navigate to="/" />} />
-            <Route element={<Layout user={user} onLogout={handleLogout} onSwitchProfile={handleSwitchProfile} />}>
+            <Route element={<Layout user={user} setUser={setUser} onLogout={handleLogout} onSwitchProfile={handleSwitchProfile} />}>
               <Route path="/dashboard" element={user ? <Dashboard user={user} setUser={setUser} /> : <Navigate to="/" />} />
               <Route path="/debate" element={user ? <DebateArena user={user} /> : <Navigate to="/" />} />
               <Route path="/results/:sessionId" element={user ? <Results user={user} /> : <Navigate to="/" />} />

@@ -6,9 +6,10 @@ import {
 } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 import PremiumEnrollModal from './PremiumEnrollModal';
+import Topbar from './Topbar';
 
 
-export default function Layout({ user, onLogout, onSwitchProfile }) {
+export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
   const location = useLocation();
   const { pathname, search } = location;
   const mainScrollRef = useRef(null);
@@ -234,38 +235,6 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
           )}
         </div>
 
-        {/* Floating Desktop Toggle Button */}
-        {!isMobile && (
-          <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            style={{
-              position: 'absolute',
-              right: isCollapsed ? '-16px' : '16px',
-              top: '28px',
-              background: isJunior ? '#fff' : '#0a0a0a',
-              border: isJunior ? '1px solid rgba(124,58,237,0.1)' : '1px solid rgba(255,255,255,0.1)',
-              borderRadius: '8px',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              color: '#64748b',
-              cursor: 'pointer',
-              padding: '4px',
-              zIndex: 100,
-            }}
-          >
-            {isCollapsed ? (
-              <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect width="18" height="18" x="3" y="3" rx="3.5" />
-                <rect x="7" y="7" width="5" height="10" rx="1.5" fill="currentColor" stroke="none" />
-              </svg>
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect width="18" height="18" x="3" y="3" rx="3.5" />
-                <path d="M9 8v8" />
-              </svg>
-            )}
-          </button>
-        )}
-
         {/* ── Nav Links ── */}
         <nav style={{
           flex: 1,
@@ -481,28 +450,35 @@ export default function Layout({ user, onLogout, onSwitchProfile }) {
         </div>
       </aside>
 
-      {/* ─── MAIN CONTENT ─── */}
-      <main ref={mainScrollRef} id="main-scroll-container" style={{
-        flex: 1,
-        overflowX: 'hidden',
-        overflowY: isFullScreenRoute ? 'hidden' : 'auto',
-        padding: isFullScreenRoute ? 0 : isFullWidthRoute ? (isMobile ? '0 0 calc(80px + env(safe-area-inset-bottom, 0px)) 0' : 0) : (isMobile ? '1rem 1rem calc(80px + env(safe-area-inset-bottom, 0px)) 1rem' : '2rem 1.5rem'),
-        display: 'flex', flexDirection: 'column', alignItems: 'center',
-        position: 'relative', zIndex: 10,
-        background: isJunior
-          ? 'linear-gradient(135deg, #faf5ff 0%, #fff0f7 50%, #f0f9ff 100%)'
-          : '#000',
-      }}>
-        <div style={{
-          width: '100%',
-          maxWidth: (isFullScreenRoute || isFullWidthRoute) ? '100%' : '1100px',
-          flex: isFullScreenRoute ? '1 1 100%' : '1 0 auto',
-          display: 'flex', flexDirection: 'column',
-          minHeight: 0,
+      {/* ─── RIGHT SIDE (TOPBAR + MAIN CONTENT) ─── */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        
+        {/* TOPBAR */}
+        <Topbar user={user} setUser={setUser} isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} isMobile={isMobile} />
+
+        {/* ─── MAIN CONTENT ─── */}
+        <main ref={mainScrollRef} id="main-scroll-container" style={{
+          flex: 1,
+          overflowX: 'hidden',
+          overflowY: isFullScreenRoute ? 'hidden' : 'auto',
+          padding: isFullScreenRoute ? 0 : isFullWidthRoute ? (isMobile ? '0 0 calc(80px + env(safe-area-inset-bottom, 0px)) 0' : 0) : (isMobile ? '1rem 1rem calc(80px + env(safe-area-inset-bottom, 0px)) 1rem' : '2rem 1.5rem'),
+          display: 'flex', flexDirection: 'column', alignItems: 'center',
+          position: 'relative', zIndex: 10,
+          background: isJunior
+            ? 'linear-gradient(135deg, #faf5ff 0%, #fff0f7 50%, #f0f9ff 100%)'
+            : '#000',
         }}>
-          <Outlet />
-        </div>
-      </main>
+          <div style={{
+            width: '100%',
+            maxWidth: (isFullScreenRoute || isFullWidthRoute) ? '100%' : '1100px',
+            flex: isFullScreenRoute ? '1 1 100%' : '1 0 auto',
+            display: 'flex', flexDirection: 'column',
+            minHeight: 0,
+          }}>
+            <Outlet />
+          </div>
+        </main>
+      </div>
 
       {/* ─── MOBILE BOTTOM NAVIGATION ─── */}
       {isMobile && !isFullScreenRoute && (
