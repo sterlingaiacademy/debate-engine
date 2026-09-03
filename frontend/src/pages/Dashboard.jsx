@@ -668,6 +668,10 @@ export default function Dashboard({ user, setUser }) {
     return true;
   });
 
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
+
+
   /* ─── Chart theming ─── */
   const chartBg    = isJunior ? '#fff' : 'transparent';
   const gridColor  = isJunior ? 'rgba(124,58,237,0.1)' : 'rgba(255,255,255,0.05)';
@@ -687,6 +691,13 @@ export default function Dashboard({ user, setUser }) {
         </div>
       )}
       <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', paddingBottom: '4rem' }}>
+
+        <div style={{ padding: '0 0.5rem' }}>
+          <div style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.2rem' }}>My Workspace</div>
+          <h1 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0, letterSpacing: '-0.02em' }}>
+            {greeting}, {user?.name?.split(' ')[0] || 'Student'}
+          </h1>
+        </div>
 
       {/* ── Hero Greeting ── */}
       <div className="welcome-card animate-fade-in" style={{
