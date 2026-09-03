@@ -691,14 +691,28 @@ export default function Dashboard({ user, setUser }) {
         </div>
       )}
       <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', paddingBottom: '4rem' }}>
-
         <div style={{ padding: '0 0.5rem' }}>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.4rem',
+            padding: '0.35rem 0.8rem',
+            background: 'var(--surface-color, rgba(255,255,255,0.03))',
+            border: '1px solid var(--border-color, rgba(255,255,255,0.1))',
+            borderRadius: '999px',
+            fontSize: '0.75rem',
+            fontWeight: 500,
+            color: 'var(--text-primary, #fff)',
+            marginBottom: '1.25rem',
+          }}>
+            <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10b981' }}></div>
+            Grade {user?.grade || '10'} Student
+          </div>
           <div style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.2rem' }}>My Workspace</div>
           <h1 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0, letterSpacing: '-0.02em' }}>
             {greeting}, {user?.name?.split(' ')[0] || 'Student'}
           </h1>
         </div>
-
       {/* ── Hero Greeting ── */}
       <div className="welcome-card animate-fade-in dashboard-hero-container" style={{
         position: 'relative', overflow: 'hidden',
