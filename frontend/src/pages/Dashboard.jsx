@@ -977,6 +977,7 @@ export default function Dashboard({ user, setUser }) {
             <div style={{ background: '#fff', color: '#7c3aed', padding: '0.6rem 1.25rem', borderRadius: 99, fontSize: '0.85rem', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '0.4rem', boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }}>
               Upgrade <ChevronRight size={16} strokeWidth={3} />
             </div>
+          </div>
         )}
 
         {/* ── Mode Cards ── */}
