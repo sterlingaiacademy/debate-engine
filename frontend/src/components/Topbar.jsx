@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-import { API_BASE } from '../config';
+import { API_BASE } from '../api';
 
 export default function Topbar({ user, setUser, isCollapsed, setIsCollapsed, isMobile }) {
   const location = useLocation();
