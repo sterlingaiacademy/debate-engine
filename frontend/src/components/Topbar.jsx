@@ -30,7 +30,7 @@ export default function Topbar({ user, setUser, isCollapsed, setIsCollapsed, isM
     return 'Home';
   };
 
-  const breadcrumbText = getBreadcrumb(location.pathname);
+  const breadcrumbText = getBreadcrumb(location.pathname + location.search);
 
   // Stats / Time Limits logic
   const [stats, setStats] = useState(null);
