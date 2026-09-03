@@ -10,14 +10,15 @@ export default function Topbar({ user, setUser, isCollapsed, setIsCollapsed, isM
   // Breadcrumb mapping
   const getBreadcrumb = (path) => {
     if (path.includes('dashboard')) return 'Home';
-    if (path.includes('mock-un') || path.includes('mun30')) return 'Model UN';
-    if (path.includes('persona')) return 'Famous Figures';
+    if (path.includes('mock-un')) return 'Model UN';
+    if (path.includes('mun30')) return 'MUN 30 Boot Camp';
+    if (path.includes('persona')) return 'Wisdom Arena';
     if (path.includes('conversational-agent')) return 'Super Tutor';
     if (path.includes('speech-coach')) return 'Speech Coach';
     if (path.includes('speech-analysis')) return 'Speech Analysis';
     if (path.includes('debate')) return 'Debate';
     if (path.includes('vocab')) return 'Vocab Trainer';
-    if (path.includes('analytics')) return 'Stats';
+    if (path.includes('analytics')) return 'Analytics';
     if (path.includes('leaderboard')) return 'Leaderboard';
     if (path.includes('word-scramble')) return 'Word Scramble';
     if (path.includes('settings')) return 'Settings';
