@@ -797,6 +797,19 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; }
   }
 }
 
+.dashboard-hero-container {
+  margin: 0 -1.5rem;
+  padding: 2rem 1.5rem;
+  border-radius: 24px;
+}
+@media (max-width: 768px) {
+  .dashboard-hero-container {
+    margin: 0 -1rem;
+    padding: 2rem 1rem;
+    border-radius: 0;
+  }
+}
+
 /* ================================================================
    XP BAR
    ================================================================ */

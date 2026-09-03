@@ -700,9 +700,8 @@ export default function Dashboard({ user, setUser }) {
         </div>
 
       {/* ── Hero Greeting ── */}
-      <div className="welcome-card animate-fade-in" style={{
+      <div className="welcome-card animate-fade-in dashboard-hero-container" style={{
         position: 'relative', overflow: 'hidden',
-        borderRadius: 24, padding: '2rem 2.5rem',
         background: 'linear-gradient(135deg, rgba(255,107,0,0.08) 0%, rgba(0,0,0,0) 60%)',
         border: '1px solid rgba(255,107,0,0.12)',
       }}>
@@ -926,8 +925,7 @@ export default function Dashboard({ user, setUser }) {
       <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', paddingBottom: '3rem' }}>
 
       {/* ── Hero Welcome Card ── */}
-      <div className="welcome-card" style={{
-        borderRadius: 28, padding: '1.75rem 2rem',
+      <div className="welcome-card dashboard-hero-container" style={{
         background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 60%, #e879f9 100%)',
         color: '#fff', position: 'relative', overflow: 'hidden',
         boxShadow: '0 12px 40px rgba(124,58,237,0.4)',
