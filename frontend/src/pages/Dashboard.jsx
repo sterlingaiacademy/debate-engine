@@ -726,14 +726,13 @@ export default function Dashboard({ user, setUser }) {
             </div>
           </div>
         )}
-      </div>
 
-      {/* ── Mode Cards ── */}
-      <div>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-          <h2 style={{ fontSize: '1.1rem', fontWeight: 800, margin: 0, color: 'var(--text-primary)' }}>Choose Your Mode</h2>
-        </div>
-        <div className="no-scrollbar modes-container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '1rem' }}>
+        {/* ── Mode Cards ── */}
+        <div style={{ marginTop: ((!user?.subscription_plan || user?.subscription_plan === 'free') && stats?.timeLimits && stats.timeLimits.remainingRanked <= 0) ? '2rem' : '0' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0, color: '#fff' }}>Choose Your Mode</h2>
+          </div>
+          <div className="no-scrollbar modes-container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '1rem' }}>
           {availableModes.map((mode, i) => {
             const Icon = mode.icon;
             return (
@@ -783,6 +782,7 @@ export default function Dashboard({ user, setUser }) {
               </div>
             );
           })}
+          </div>
         </div>
       </div>
 
@@ -977,14 +977,12 @@ export default function Dashboard({ user, setUser }) {
             <div style={{ background: '#fff', color: '#7c3aed', padding: '0.6rem 1.25rem', borderRadius: 99, fontSize: '0.85rem', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '0.4rem', boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }}>
               Upgrade <ChevronRight size={16} strokeWidth={3} />
             </div>
-          </div>
         )}
-      </div>
 
-      {/* ── Mode Cards ── */}
-      <div>
-        <h2 style={{ fontSize: '1.15rem', fontWeight: 900, margin: '0 0 1rem', color: 'var(--j-text)' }}>Let's Practice!</h2>
-        <div className="no-scrollbar modes-container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%,200px), 1fr))', gap: '1rem' }}>
+        {/* ── Mode Cards ── */}
+        <div style={{ marginTop: '2rem' }}>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 900, margin: '0 0 1.5rem', color: '#fff' }}>Let's Practice!</h2>
+          <div className="no-scrollbar modes-container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%,200px), 1fr))', gap: '1rem' }}>
           {availableModes.map((mode, i) => {
             const Icon = mode.icon;
             return (
@@ -1016,6 +1014,7 @@ export default function Dashboard({ user, setUser }) {
               </div>
             );
           })}
+          </div>
         </div>
       </div>
     </div>
