@@ -127,7 +127,17 @@ export default function Topbar({ user, setUser, isCollapsed, setIsCollapsed, isM
               e.currentTarget.style.borderColor = isJunior ? 'rgba(124,58,237,0.1)' : 'rgba(255,255,255,0.1)';
             }}
           >
-            <Menu size={20} />
+            {isCollapsed ? (
+              <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect width="18" height="18" x="3" y="3" rx="3.5" />
+                <rect x="7" y="7" width="5" height="10" rx="1.5" fill="currentColor" stroke="none" />
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect width="18" height="18" x="3" y="3" rx="3.5" />
+                <path d="M9 8v8" />
+              </svg>
+            )}
           </button>
         )}
         
