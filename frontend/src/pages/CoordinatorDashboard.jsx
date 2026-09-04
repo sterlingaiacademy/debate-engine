@@ -1523,7 +1523,10 @@ export default function CoordinatorDashboard() {
 
         {/* Nav */}
         <nav style={{ flex: 1, padding: '1rem 0.6rem', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
-          {SECTIONS.map(s => {
+          {SECTIONS.filter(s => {
+            if (s.id === 'teachers') return coordinatorId === 'COORD-GURUKULAM';
+            return true;
+          }).map(s => {
             const active = activeSection === s.id;
             return (
               <button key={s.id} onClick={() => setActiveSection(s.id)}
