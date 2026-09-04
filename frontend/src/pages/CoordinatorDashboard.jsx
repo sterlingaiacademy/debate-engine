@@ -10,6 +10,7 @@ const SECTIONS = [
   { id: 'students', label: 'Students', icon: '◎' },
   { id: 'manage', label: 'Manage Students', icon: '⊕' },
   { id: 'scores', label: 'Scores', icon: '▤' },
+  { id: 'teachers', label: 'Teachers', icon: '👨‍🏫' },
 ];
 
 // ── Reusable primitives ──────────────────────────────────────
@@ -829,7 +830,160 @@ function ScoresSection({ students }) {
 
 
 
+
+
+// ── Teachers Section ─────────────────────────────────────────────
+function TeachersSection({ coordinatorId }) {
+  const [teachers, setTeachers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({ name: '', class_sections: '', password: '', email: '' });
+  const [creating, setCreating] = useState(false);
+  const [createResult, setCreateResult] = useState(null);
+  const [createError, setCreateError] = useState('');
+  const [copied, setCopied] = useState(null);
+
+  const FONT_LOCAL = "'Plus Jakarta Sans', 'Google Sans', system-ui, sans-serif";
+  const inputSt = { width: '100%', padding: '0.6rem 0.85rem', background: '#0f172a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, color: '#e2e8f0', fontFamily: FONT_LOCAL, fontSize: '0.9rem', outline: 'none', boxSizing: 'border-box' };
+  const labelSt = { display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem' };
+
+  const load = () => {
+    fetch(`${API_BASE}/api/coordinator/teachers/${coordinatorId}`)
+      .then(r => r.json())
+      .then(d => { setTeachers(d.teachers || []); setLoading(false); })
+      .catch(() => setLoading(false));
+  };
+
+  useEffect(() => { load(); }, [coordinatorId]);
+
+  const copy = (text, key) => {
+    navigator.clipboard.writeText(text);
+    setCopied(key);
+    setTimeout(() => setCopied(null), 1500);
+  };
+
+  const handleCreate = async () => {
+    if (!form.name) { setCreateError('Teacher name is required.'); return; }
+    setCreating(true); setCreateError('');
+    try {
+      const res = await fetch(`${API_BASE}/api/coordinator/create-teacher`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ coordinatorId, ...form })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      setCreateResult(data.teacher);
+      setForm({ name: '', class_sections: '', password: '', email: '' });
+      load();
+    } catch (e) { setCreateError(e.message); }
+    finally { setCreating(false); }
+  };
+
+  return (
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+        <div>
+          <h2 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#fff', margin: 0 }}>👨‍🏫 Teachers</h2>
+          <p style={{ color: '#64748b', fontSize: '0.82rem', margin: '0.2rem 0 0' }}>{teachers.length} teacher{teachers.length !== 1 ? 's' : ''} registered</p>
+        </div>
+        <button onClick={() => { setShowForm(v => !v); setCreateResult(null); setCreateError(''); }}
+          style={{ padding: '0.7rem 1.5rem', background: showForm ? 'rgba(255,255,255,0.05)' : 'linear-gradient(135deg,#2563eb,#3b82f6)', border: 'none', borderRadius: 10, color: showForm ? '#64748b' : '#fff', fontFamily: FONT_LOCAL, fontSize: '0.9rem', fontWeight: 700, cursor: 'pointer', transition: 'all 0.18s' }}>
+          {showForm ? '✕ Close' : '+ Add Teacher'}
+        </button>
+      </div>
+
+      {showForm && (
+        <div style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, padding: '1.5rem', marginBottom: '1.5rem' }}>
+          <div style={{ fontWeight: 700, color: '#e2e8f0', marginBottom: '1rem' }}>Create Teacher Account</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
+            <div>
+              <label style={labelSt}>Full Name *</label>
+              <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="e.g. Meera Sharma" style={inputSt} />
+            </div>
+            <div>
+              <label style={labelSt}>Assigned Sections</label>
+              <input value={form.class_sections} onChange={e => setForm(f => ({ ...f, class_sections: e.target.value }))} placeholder="e.g. 7A, 8B, 9C" style={inputSt} />
+            </div>
+            <div>
+              <label style={labelSt}>Password (optional)</label>
+              <input value={form.password} onChange={e => setForm(f => ({ ...f, password: e.target.value }))} placeholder="Auto-generated if blank" style={inputSt} />
+            </div>
+            <div>
+              <label style={labelSt}>Email (optional)</label>
+              <input value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} placeholder="teacher@school.com" style={inputSt} />
+            </div>
+          </div>
+          <p style={{ fontSize: '0.78rem', color: '#475569', marginBottom: '0.75rem' }}>ℹ️ The teacher will log in at <strong style={{ color: '#94a3b8' }}>graceandforce.com/login</strong> with their username and password, and will be redirected to the Teacher Dashboard automatically.</p>
+          {createError && <div style={{ color: '#f87171', fontSize: '0.82rem', marginBottom: '0.75rem' }}>⚠️ {createError}</div>}
+          <button onClick={handleCreate} disabled={creating}
+            style={{ padding: '0.7rem 1.75rem', background: creating ? 'rgba(255,255,255,0.05)' : 'linear-gradient(135deg,#2563eb,#3b82f6)', border: 'none', borderRadius: 10, color: '#fff', fontFamily: FONT_LOCAL, fontSize: '0.9rem', fontWeight: 700, cursor: creating ? 'wait' : 'pointer', transition: 'all 0.18s' }}>
+            {creating ? 'Creating…' : '+ Create Teacher Account'}
+          </button>
+
+          {createResult && (
+            <div style={{ marginTop: '1rem', padding: '1rem', background: 'rgba(16,185,129,0.07)', border: '1px solid rgba(16,185,129,0.2)', borderRadius: 12 }}>
+              <div style={{ color: '#10b981', fontWeight: 700, fontSize: '0.85rem', marginBottom: '0.5rem' }}>✅ Teacher account created!</div>
+              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                {[['Username', createResult.username], ['Password', createResult.password]].map(([label, val]) => (
+                  <div key={label} style={{ background: 'rgba(255,255,255,0.05)', borderRadius: 8, padding: '0.5rem 0.85rem', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 600 }}>{label}:</span>
+                    <span style={{ fontSize: '0.85rem', color: '#e2e8f0', fontWeight: 700 }}>{val}</span>
+                    <button onClick={() => copy(val, label)} style={{ background: 'none', border: 'none', color: copied === label ? '#10b981' : '#64748b', cursor: 'pointer', fontSize: '0.8rem' }}>
+                      {copied === label ? '✓' : '⎘'}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {loading ? (
+        <div style={{ color: '#475569', textAlign: 'center', padding: '3rem' }}>Loading…</div>
+      ) : teachers.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '3rem', color: '#475569' }}>
+          <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>👨‍🏫</div>
+          <div style={{ fontWeight: 700, color: '#64748b' }}>No teachers yet</div>
+          <div style={{ fontSize: '0.85rem', marginTop: '0.25rem' }}>Click "+ Add Teacher" to create the first teacher account</div>
+        </div>
+      ) : (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '0.75rem' }}>
+          {teachers.map(t => (
+            <div key={t.username} style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 14, padding: '1.1rem 1.25rem' }}>
+              <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', marginBottom: '0.75rem' }}>
+                <div style={{ width: 42, height: 42, borderRadius: '50%', background: 'linear-gradient(135deg,#2563eb,#7c3aed)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', fontWeight: 800, color: '#fff', flexShrink: 0 }}>
+                  {t.name?.charAt(0).toUpperCase() || 'T'}
+                </div>
+                <div>
+                  <div style={{ fontWeight: 700, color: '#e2e8f0', fontSize: '0.95rem' }}>{t.name}</div>
+                  {t.class_section && <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.1rem' }}>Sections: {t.class_section}</div>}
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                {[['Username', t.username], ['Password', t.password]].map(([label, val]) => val ? (
+                  <div key={label} style={{ background: 'rgba(255,255,255,0.05)', borderRadius: 8, padding: '0.4rem 0.75rem', display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.68rem', color: '#64748b', fontWeight: 600 }}>{label}:</span>
+                    <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>{val}</span>
+                    <button onClick={() => copy(val, `${t.username}-${label}`)} style={{ background: 'none', border: 'none', color: copied === `${t.username}-${label}` ? '#10b981' : '#475569', cursor: 'pointer', fontSize: '0.75rem' }}>
+                      {copied === `${t.username}-${label}` ? '✓' : '⎘'}
+                    </button>
+                  </div>
+                ) : null)}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+
+
 function ManageStudentsSection({ coordinatorId, fetchData }) {
+
   const [tab, setTab] = useState('csv'); // 'csv' | 'manual' | 'results'
   const [csvText, setCsvText] = useState('');
   const [parsed, setParsed] = useState([]);
@@ -1457,6 +1611,7 @@ export default function CoordinatorDashboard() {
               {activeSection === 'students' && <StudentsSection students={data.students} fetchData={fetchData} coordinatorId={coordinatorId} school={data.school} />}
               {activeSection === 'manage' && <ManageStudentsSection coordinatorId={coordinatorId} fetchData={fetchData} />}
               {activeSection === 'scores' && <ScoresSection students={data.students} />}
+              {activeSection === 'teachers' && <TeachersSection coordinatorId={coordinatorId} />}
             </>
           ) : null}
         </div>
