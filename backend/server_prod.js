@@ -4366,3 +4366,339 @@ setInterval(async () => {
     console.error("Error in automated coupon expiration job:", error);
   }
 }, 12 * 60 * 60 * 1000); // 12 hours
+
+
+// ==========================================
+// TEACHER DASHBOARD APIs
+// ==========================================
+
+// Ensure teacher-related columns/tables exist
+(async () => {
+  try {
+    await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS class_section VARCHAR(50)`);
+    await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS teacher_id TEXT`);
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS teacher_assignments (
+        id SERIAL PRIMARY KEY,
+        teacher_id TEXT NOT NULL,
+        school_id INTEGER NOT NULL,
+        title TEXT NOT NULL,
+        description TEXT,
+        task_type VARCHAR(20) DEFAULT 'text',
+        class_section VARCHAR(50),
+        due_date TIMESTAMP,
+        created_at TIMESTAMP DEFAULT NOW()
+      )
+    `);
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS student_submissions (
+        id SERIAL PRIMARY KEY,
+        assignment_id INTEGER REFERENCES teacher_assignments(id) ON DELETE CASCADE,
+        student_id TEXT NOT NULL,
+        student_name TEXT,
+        class_section VARCHAR(50),
+        content TEXT,
+        audio_url TEXT,
+        ai_feedback TEXT,
+        ai_transcript TEXT,
+        status VARCHAR(20) DEFAULT 'submitted',
+        teacher_note TEXT,
+        submitted_at TIMESTAMP DEFAULT NOW(),
+        reviewed_at TIMESTAMP
+      )
+    `);
+    console.log('Teacher tables verified.');
+  } catch (err) {
+    console.error('Teacher table setup error:', err.message);
+  }
+})();
+
+// GET /api/teacher/dashboard/:teacherId — overview stats
+app.get('/api/teacher/dashboard/:teacherId', async (req, res) => {
+  try {
+    const { teacherId } = req.params;
+    const teacherRes = await db.query(
+      `SELECT id, name, school_id, class_section FROM users WHERE "studentId" = $1 AND role = 'teacher'`,
+      [teacherId]
+    );
+    if (teacherRes.rows.length === 0) return res.status(404).json({ error: 'Teacher not found' });
+    const teacher = teacherRes.rows[0];
+
+    const studentsRes = await db.query(
+      `SELECT COUNT(*) as total FROM users WHERE school_id = $1 AND role = 'student' AND teacher_id = $2`,
+      [teacher.school_id, teacherId]
+    );
+    const assignmentsRes = await db.query(
+      `SELECT COUNT(*) as total FROM teacher_assignments WHERE teacher_id = $1`,
+      [teacherId]
+    );
+    const pendingRes = await db.query(
+      `SELECT COUNT(*) as total FROM student_submissions ss
+       JOIN teacher_assignments ta ON ss.assignment_id = ta.id
+       WHERE ta.teacher_id = $1 AND ss.status = 'submitted'`,
+      [teacherId]
+    );
+
+    res.json({
+      teacher: { name: teacher.name, school_id: teacher.school_id },
+      stats: {
+        totalStudents: parseInt(studentsRes.rows[0].total),
+        totalAssignments: parseInt(assignmentsRes.rows[0].total),
+        pendingReviews: parseInt(pendingRes.rows[0].total)
+      }
+    });
+  } catch (err) {
+    console.error('Teacher dashboard error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// GET /api/teacher/students/:teacherId — students grouped by section
+app.get('/api/teacher/students/:teacherId', async (req, res) => {
+  try {
+    const { teacherId } = req.params;
+    const teacherRes = await db.query(
+      `SELECT school_id FROM users WHERE "studentId" = $1 AND role = 'teacher'`,
+      [teacherId]
+    );
+    if (teacherRes.rows.length === 0) return res.status(404).json({ error: 'Teacher not found' });
+    const { school_id } = teacherRes.rows[0];
+
+    const studentsRes = await db.query(
+      `SELECT id, name, "studentId" as username, plain_password as password, "classLevel" as class_level, class_section, email
+       FROM users WHERE school_id = $1 AND role = 'student' AND teacher_id = $2
+       ORDER BY class_section, name`,
+      [school_id, teacherId]
+    );
+    res.json({ students: studentsRes.rows });
+  } catch (err) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// POST /api/teacher/students/add — teacher adds a student to their class
+app.post('/api/teacher/students/add', async (req, res) => {
+  try {
+    const { teacherId, name, classLevel, class_section, password: rawPassword, email: rawEmail } = req.body;
+    if (!teacherId || !name || !classLevel) {
+      return res.status(400).json({ error: 'teacherId, name, and classLevel are required' });
+    }
+    const teacherRes = await db.query(
+      `SELECT school_id FROM users WHERE "studentId" = $1 AND role = 'teacher'`,
+      [teacherId]
+    );
+    if (teacherRes.rows.length === 0) return res.status(404).json({ error: 'Teacher not found' });
+    const { school_id } = teacherRes.rows[0];
+
+    const getAgentIdForClass = (cls) => {
+      const norm = (cls || '').trim().toLowerCase().replace(/^(grade|class)\s*/, 'Grade ').replace('kg', 'KG');
+      if (['Grade 3','Grade 4','Grade 5'].includes(norm)) return 'agent_5201krghdxhqfhtbf4yj22406vyv';
+      if (['Grade 6','Grade 7','Grade 8'].includes(norm)) return 'agent_0601krh0f23df5br0dahys0kdsbr';
+      if (['Grade 9','Grade 10'].includes(norm)) return 'agent_9701krh2p85sfs9vyp7e6e1cqbwc';
+      if (['Grade 11','Grade 12'].includes(norm)) return 'agent_7801krh4jfmdf9asxz901aeac0gt';
+      return 'agent_5301krgg7x98ewm84w8aj2976zqc';
+    };
+
+    const baseUsername = name.toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+    let username = baseUsername;
+    let suffix = 2;
+    while (true) {
+      const taken = await db.query(`SELECT id FROM users WHERE LOWER("studentId") = LOWER($1)`, [username]);
+      if (taken.rows.length === 0) break;
+      username = `${baseUsername}_${suffix++}`;
+    }
+    const firstName = name.trim().split(' ')[0];
+    const capFirst = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+    const plainPassword = rawPassword?.trim() || `${capFirst}@${Math.floor(100 + Math.random() * 900)}`;
+    const email = rawEmail?.trim() || `${username}@school.graceandforce.internal`;
+    const hashedPassword = await bcrypt.hash(plainPassword, 10);
+    const assignedAgentId = getAgentIdForClass(classLevel);
+
+    const result = await db.query(
+      `INSERT INTO users (name, "studentId", password, plain_password, "classLevel", class_section, email, "assignedAgentId", school_id, teacher_id, role, olympiad_registered)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 'student', true) RETURNING id`,
+      [name, username, hashedPassword, plainPassword, classLevel, class_section || null, email, assignedAgentId, school_id, teacherId]
+    );
+    await db.query(
+      `INSERT INTO debate_users (user_id, username, class, gforce_tokens) VALUES ($1, $2, $3, 100) ON CONFLICT (user_id) DO NOTHING`,
+      [username, name, classLevel]
+    );
+    res.json({ success: true, student: { name, username, password: plainPassword, email, class_section } });
+  } catch (err) {
+    console.error('Teacher add student error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// GET /api/teacher/assignments/:teacherId
+app.get('/api/teacher/assignments/:teacherId', async (req, res) => {
+  try {
+    const { teacherId } = req.params;
+    const assignments = await db.query(
+      `SELECT ta.*, 
+        (SELECT COUNT(*) FROM student_submissions ss WHERE ss.assignment_id = ta.id) as total_submissions,
+        (SELECT COUNT(*) FROM student_submissions ss WHERE ss.assignment_id = ta.id AND ss.status = 'submitted') as pending_count,
+        (SELECT COUNT(*) FROM student_submissions ss WHERE ss.assignment_id = ta.id AND ss.status = 'verified') as verified_count
+       FROM teacher_assignments ta WHERE ta.teacher_id = $1 ORDER BY ta.created_at DESC`,
+      [teacherId]
+    );
+    res.json({ assignments: assignments.rows });
+  } catch (err) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// POST /api/teacher/assignments/create
+app.post('/api/teacher/assignments/create', async (req, res) => {
+  try {
+    const { teacherId, title, description, task_type, class_section, due_date } = req.body;
+    if (!teacherId || !title) return res.status(400).json({ error: 'teacherId and title are required' });
+    const teacherRes = await db.query(
+      `SELECT school_id FROM users WHERE "studentId" = $1 AND role = 'teacher'`,
+      [teacherId]
+    );
+    if (teacherRes.rows.length === 0) return res.status(404).json({ error: 'Teacher not found' });
+    const { school_id } = teacherRes.rows[0];
+    const result = await db.query(
+      `INSERT INTO teacher_assignments (teacher_id, school_id, title, description, task_type, class_section, due_date)
+       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+      [teacherId, school_id, title, description || null, task_type || 'text', class_section || null, due_date || null]
+    );
+    res.json({ success: true, assignment: result.rows[0] });
+  } catch (err) {
+    console.error('Create assignment error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// GET /api/teacher/submissions/:teacherId
+app.get('/api/teacher/submissions/:teacherId', async (req, res) => {
+  try {
+    const { teacherId } = req.params;
+    const { status } = req.query;
+    let query = `
+      SELECT ss.*, ta.title as assignment_title, ta.task_type, ta.class_section as assignment_section
+      FROM student_submissions ss
+      JOIN teacher_assignments ta ON ss.assignment_id = ta.id
+      WHERE ta.teacher_id = $1
+    `;
+    const params = [teacherId];
+    if (status) { query += ` AND ss.status = $2`; params.push(status); }
+    query += ` ORDER BY ss.submitted_at DESC`;
+    const result = await db.query(query, params);
+    res.json({ submissions: result.rows });
+  } catch (err) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// POST /api/teacher/submissions/:id/verify
+app.post('/api/teacher/submissions/:id/verify', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { teacher_note } = req.body;
+    await db.query(
+      `UPDATE student_submissions SET status = 'verified', teacher_note = $1, reviewed_at = NOW() WHERE id = $2`,
+      [teacher_note || null, id]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// POST /api/teacher/submissions/:id/return
+app.post('/api/teacher/submissions/:id/return', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { teacher_note } = req.body;
+    await db.query(
+      `UPDATE student_submissions SET status = 'returned', teacher_note = $1, reviewed_at = NOW() WHERE id = $2`,
+      [teacher_note || '', id]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// POST /api/teacher/submissions/create — student submits work
+app.post('/api/teacher/submissions/create', async (req, res) => {
+  try {
+    const { assignment_id, student_id, student_name, class_section, content } = req.body;
+    if (!assignment_id || !student_id) return res.status(400).json({ error: 'assignment_id and student_id are required' });
+    const result = await db.query(
+      `INSERT INTO student_submissions (assignment_id, student_id, student_name, class_section, content, status)
+       VALUES ($1, $2, $3, $4, $5, 'submitted') RETURNING *`,
+      [assignment_id, student_id, student_name || '', class_section || null, content || '']
+    );
+    res.json({ success: true, submission: result.rows[0] });
+  } catch (err) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// ==========================================
+// COORDINATOR: CREATE TEACHER ACCOUNT
+// ==========================================
+app.post('/api/coordinator/create-teacher', async (req, res) => {
+  try {
+    const { coordinatorId, name, class_sections, password: rawPassword, email: rawEmail } = req.body;
+    if (!coordinatorId || !name) return res.status(400).json({ error: 'coordinatorId and name are required' });
+
+    const schoolRes = await db.query(
+      `SELECT id, name FROM schools WHERE coordinator_login_id = $1`,
+      [coordinatorId]
+    );
+    if (schoolRes.rows.length === 0) return res.status(404).json({ error: 'School not found' });
+    const { id: schoolId } = schoolRes.rows[0];
+
+    const baseUsername = `teacher_${name.toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '')}`;
+    let username = baseUsername;
+    let suffix = 2;
+    while (true) {
+      const taken = await db.query(`SELECT id FROM users WHERE LOWER("studentId") = LOWER($1)`, [username]);
+      if (taken.rows.length === 0) break;
+      username = `${baseUsername}_${suffix++}`;
+    }
+    const firstName = name.trim().split(' ')[0];
+    const capFirst = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+    const plainPassword = rawPassword?.trim() || `${capFirst}@${Math.floor(100 + Math.random() * 900)}`;
+    const email = rawEmail?.trim() || `${username}@school.graceandforce.internal`;
+    const hashedPassword = await bcrypt.hash(plainPassword, 10);
+    const classSectionStr = Array.isArray(class_sections) ? class_sections.join(',') : (class_sections || '');
+
+    await db.query(
+      `INSERT INTO users (name, "studentId", password, plain_password, "classLevel", class_section, email, "assignedAgentId", school_id, role)
+       VALUES ($1, $2, $3, $4, 'Teacher', $5, $6, '', $7, 'teacher')`,
+      [name, username, hashedPassword, plainPassword, classSectionStr, email, schoolId]
+    );
+
+    res.json({ success: true, teacher: { name, username, password: plainPassword, email, class_sections: classSectionStr } });
+  } catch (err) {
+    console.error('Create teacher error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// GET /api/coordinator/teachers/:coordinatorId — list all teachers for a school
+app.get('/api/coordinator/teachers/:coordinatorId', async (req, res) => {
+  try {
+    const { coordinatorId } = req.params;
+    const schoolRes = await db.query(
+      `SELECT id FROM schools WHERE coordinator_login_id = $1`,
+      [coordinatorId]
+    );
+    if (schoolRes.rows.length === 0) return res.status(404).json({ error: 'School not found' });
+    const { id: schoolId } = schoolRes.rows[0];
+    const teachers = await db.query(
+      `SELECT id, name, "studentId" as username, plain_password as password, class_section, email 
+       FROM users WHERE school_id = $1 AND role = 'teacher' ORDER BY name`,
+      [schoolId]
+    );
+    res.json({ teachers: teachers.rows });
+  } catch (err) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
