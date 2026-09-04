@@ -4454,24 +4454,116 @@ app.get('/api/teacher/dashboard/:teacherId', async (req, res) => {
   }
 });
 
-// GET /api/teacher/students/:teacherId — students grouped by section
+// GET /api/teacher/students/:teacherId — students in teacher's assigned sections
 app.get('/api/teacher/students/:teacherId', async (req, res) => {
   try {
     const { teacherId } = req.params;
     const teacherRes = await db.query(
-      `SELECT school_id FROM users WHERE "studentId" = $1 AND role = 'teacher'`,
+      `SELECT school_id, class_section FROM users WHERE "studentId" = $1 AND role = 'teacher'`,
       [teacherId]
     );
     if (teacherRes.rows.length === 0) return res.status(404).json({ error: 'Teacher not found' });
-    const { school_id } = teacherRes.rows[0];
+    const { school_id, class_section } = teacherRes.rows[0];
 
-    const studentsRes = await db.query(
-      `SELECT id, name, "studentId" as username, plain_password as password, "classLevel" as class_level, class_section, email
-       FROM users WHERE school_id = $1 AND role = 'student' AND teacher_id = $2
-       ORDER BY class_section, name`,
-      [school_id, teacherId]
-    );
+    // Teacher's sections are stored as comma-separated e.g. "7A,8B"
+    const sections = (class_section || '').split(',').map(s => s.trim()).filter(Boolean);
+
+    let studentsRes;
+    if (sections.length > 0) {
+      // Fetch students whose class_section matches any of the teacher's sections
+      studentsRes = await db.query(
+        `SELECT id, name, "studentId" as username, plain_password as password, "classLevel" as class_level, class_section, email
+         FROM users WHERE school_id = $1 AND role = 'student'
+         AND class_section = ANY($2::text[])
+         ORDER BY class_section, name`,
+        [school_id, sections]
+      );
+    } else {
+      // No sections assigned — show all students in the school
+      studentsRes = await db.query(
+        `SELECT id, name, "studentId" as username, plain_password as password, "classLevel" as class_level, class_section, email
+         FROM users WHERE school_id = $1 AND role = 'student'
+         ORDER BY class_section, name`,
+        [school_id]
+      );
+    }
     res.json({ students: studentsRes.rows });
+  } catch (err) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// POST /api/coordinator/add-student — coordinator adds a student (Gurukulam)
+app.post('/api/coordinator/add-student', async (req, res) => {
+  try {
+    const { coordinatorId, name, classLevel, class_section, password: rawPassword, email: rawEmail } = req.body;
+    if (!coordinatorId || !name || !classLevel || !class_section) {
+      return res.status(400).json({ error: 'coordinatorId, name, classLevel, and class_section are required' });
+    }
+    const schoolRes = await db.query(
+      `SELECT id FROM schools WHERE coordinator_login_id = $1`,
+      [coordinatorId]
+    );
+    if (schoolRes.rows.length === 0) return res.status(404).json({ error: 'School not found' });
+    const { id: schoolId } = schoolRes.rows[0];
+
+    const getAgentIdForClass = (cls) => {
+      const norm = (cls || '').trim().toLowerCase().replace(/^(grade|class)\s*/, 'Grade ').replace('kg', 'KG');
+      if (['Grade 3','Grade 4','Grade 5'].includes(norm)) return 'agent_5201krghdxhqfhtbf4yj22406vyv';
+      if (['Grade 6','Grade 7','Grade 8'].includes(norm)) return 'agent_0601krh0f23df5br0dahys0kdsbr';
+      if (['Grade 9','Grade 10'].includes(norm)) return 'agent_9701krh2p85sfs9vyp7e6e1cqbwc';
+      if (['Grade 11','Grade 12'].includes(norm)) return 'agent_7801krh4jfmdf9asxz901aeac0gt';
+      return 'agent_5301krgg7x98ewm84w8aj2976zqc';
+    };
+
+    const baseUsername = name.toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+    let username = baseUsername;
+    let suffix = 2;
+    while (true) {
+      const taken = await db.query(`SELECT id FROM users WHERE LOWER("studentId") = LOWER($1)`, [username]);
+      if (taken.rows.length === 0) break;
+      username = `${baseUsername}_${suffix++}`;
+    }
+    const firstName = name.trim().split(' ')[0];
+    const capFirst = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+    const plainPassword = rawPassword?.trim() || `${capFirst}@${Math.floor(100 + Math.random() * 900)}`;
+    const email = rawEmail?.trim() || `${username}@school.graceandforce.internal`;
+    const hashedPassword = await bcrypt.hash(plainPassword, 10);
+    const assignedAgentId = getAgentIdForClass(classLevel);
+
+    await db.query(
+      `INSERT INTO users (name, "studentId", password, plain_password, "classLevel", class_section, email, "assignedAgentId", school_id, role, olympiad_registered)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, 'student', true)`,
+      [name, username, hashedPassword, plainPassword, classLevel, class_section, email, assignedAgentId, schoolId]
+    );
+    await db.query(
+      `INSERT INTO debate_users (user_id, username, class, gforce_tokens) VALUES ($1, $2, $3, 100) ON CONFLICT (user_id) DO NOTHING`,
+      [username, name, classLevel]
+    );
+    res.json({ success: true, student: { name, username, password: plainPassword, email, class_section } });
+  } catch (err) {
+    console.error('Coordinator add student error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// GET /api/coordinator/students/:coordinatorId — list all students for the school
+app.get('/api/coordinator/students/:coordinatorId', async (req, res) => {
+  try {
+    const { coordinatorId } = req.params;
+    const schoolRes = await db.query(
+      `SELECT id FROM schools WHERE coordinator_login_id = $1`,
+      [coordinatorId]
+    );
+    if (schoolRes.rows.length === 0) return res.status(404).json({ error: 'School not found' });
+    const { id: schoolId } = schoolRes.rows[0];
+    const students = await db.query(
+      `SELECT id, name, "studentId" as username, plain_password as password, "classLevel" as class_level, class_section, email
+       FROM users WHERE school_id = $1 AND role = 'student'
+       ORDER BY class_section, name`,
+      [schoolId]
+    );
+    res.json({ students: students.rows });
   } catch (err) {
     res.status(500).json({ error: 'Internal server error' });
   }

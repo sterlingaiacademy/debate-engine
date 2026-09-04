@@ -11,6 +11,7 @@ const SECTIONS = [
   { id: 'manage', label: 'Manage Students', icon: '⊕' },
   { id: 'scores', label: 'Scores', icon: '▤' },
   { id: 'teachers', label: 'Teachers', icon: '👨‍🏫' },
+  { id: 'add-students', label: 'Add Students', icon: '➕' },
 ];
 
 // ── Reusable primitives ──────────────────────────────────────
@@ -982,7 +983,151 @@ function TeachersSection({ coordinatorId }) {
 
 
 
+
+// ── AddStudentsSection (Gurukulam only) ──────────────────────
+function AddStudentsSection({ coordinatorId }) {
+  const [form, setForm] = useState({ name: '', classLevel: '', class_section: '' });
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState(null); // { type: 'success'|'error', text, creds }
+  const [students, setStudents] = useState([]);
+  const [loadingList, setLoadingList] = useState(true);
+
+  const GRADES = ['Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6','Grade 7','Grade 8','Grade 9','Grade 10','Grade 11','Grade 12'];
+
+  const fetchStudents = async () => {
+    setLoadingList(true);
+    try {
+      const res = await fetch(`${API_BASE}/api/coordinator/students/${coordinatorId}`);
+      const d = await res.json();
+      setStudents(d.students || []);
+    } catch {}
+    setLoadingList(false);
+  };
+
+  useEffect(() => { fetchStudents(); }, []);
+
+  const handleAdd = async () => {
+    if (!form.name.trim() || !form.classLevel || !form.class_section.trim()) {
+      setMessage({ type: 'error', text: 'Please fill in all fields.' });
+      return;
+    }
+    setSaving(true);
+    setMessage(null);
+    try {
+      const res = await fetch(`${API_BASE}/api/coordinator/add-student`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ coordinatorId, ...form }),
+      });
+      const d = await res.json();
+      if (!res.ok) throw new Error(d.error || 'Failed');
+      setMessage({ type: 'success', text: `✅ ${d.student.name} added!`, creds: d.student });
+      setForm({ name: '', classLevel: '', class_section: '' });
+      fetchStudents();
+    } catch (e) {
+      setMessage({ type: 'error', text: e.message });
+    }
+    setSaving(false);
+  };
+
+  const inp = (field, placeholder, type = 'text') => (
+    <input
+      type={type}
+      placeholder={placeholder}
+      value={form[field]}
+      onChange={e => setForm(f => ({ ...f, [field]: e.target.value }))}
+      style={{ padding: '0.6rem 0.85rem', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#e2e8f0', fontFamily: FONT, fontSize: '0.88rem', outline: 'none', width: '100%', boxSizing: 'border-box' }}
+    />
+  );
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      {/* Add student form */}
+      <Card>
+        <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+          <h2 style={{ margin: 0, fontSize: '1rem', fontWeight: 800, color: '#e2e8f0' }}>➕ Add Student</h2>
+          <p style={{ margin: '0.25rem 0 0', fontSize: '0.78rem', color: '#64748b' }}>Students are auto-assigned to the teacher handling their section.</p>
+        </div>
+        <div style={{ padding: '1.25rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+          {inp('name', 'Full Name *')}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+            <select
+              value={form.classLevel}
+              onChange={e => setForm(f => ({ ...f, classLevel: e.target.value }))}
+              style={{ padding: '0.6rem 0.85rem', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: form.classLevel ? '#e2e8f0' : '#475569', fontFamily: FONT, fontSize: '0.88rem', outline: 'none' }}
+            >
+              <option value="">Grade / Class *</option>
+              {GRADES.map(g => <option key={g} value={g} style={{ background: '#0f172a' }}>{g}</option>)}
+            </select>
+            {inp('class_section', 'Section (e.g. 7A, 8B) *')}
+          </div>
+
+          {message && (
+            <div style={{ padding: '0.75rem 1rem', borderRadius: 8, background: message.type === 'success' ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.1)', border: `1px solid ${message.type === 'success' ? 'rgba(16,185,129,0.25)' : 'rgba(239,68,68,0.25)'}`, color: message.type === 'success' ? '#10b981' : '#f87171', fontSize: '0.82rem', fontWeight: 600 }}>
+              {message.text}
+              {message.creds && (
+                <div style={{ marginTop: '0.5rem', padding: '0.5rem 0.75rem', background: 'rgba(0,0,0,0.3)', borderRadius: 6, fontFamily: 'monospace', fontSize: '0.78rem', color: '#cbd5e1' }}>
+                  <div>Username: <strong>{message.creds.username}</strong></div>
+                  <div>Password: <strong>{message.creds.password}</strong></div>
+                  <div>Section: <strong>{message.creds.class_section}</strong></div>
+                </div>
+              )}
+            </div>
+          )}
+
+          <button
+            onClick={handleAdd}
+            disabled={saving}
+            style={{ padding: '0.7rem 1.5rem', background: saving ? 'rgba(255,255,255,0.05)' : 'linear-gradient(135deg,#2563eb,#3b82f6)', color: saving ? '#475569' : '#fff', border: 'none', borderRadius: 9, fontFamily: FONT, fontSize: '0.88rem', fontWeight: 700, cursor: saving ? 'not-allowed' : 'pointer' }}
+          >
+            {saving ? 'Adding…' : '+ Add Student'}
+          </button>
+        </div>
+      </Card>
+
+      {/* Students list */}
+      <Card>
+        <div style={{ padding: '1rem 1.5rem', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h2 style={{ margin: 0, fontSize: '1rem', fontWeight: 800, color: '#e2e8f0' }}>👨‍🎓 All Students ({students.length})</h2>
+          <button onClick={fetchStudents} style={{ padding: '0.35rem 0.85rem', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 7, color: '#94a3b8', fontFamily: FONT, fontSize: '0.75rem', cursor: 'pointer' }}>↻ Refresh</button>
+        </div>
+        <div style={{ overflowX: 'auto' }}>
+          {loadingList ? (
+            <div style={{ padding: '2rem', textAlign: 'center', color: '#475569' }}>Loading…</div>
+          ) : students.length === 0 ? (
+            <div style={{ padding: '2.5rem', textAlign: 'center', color: '#475569', fontSize: '0.88rem' }}>No students yet. Add your first student above!</div>
+          ) : (
+            <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
+              <thead>
+                <tr style={{ background: 'rgba(255,255,255,0.02)' }}>
+                  {['Name','Username','Password','Grade','Section'].map(h => (
+                    <th key={h} style={{ padding: '0.65rem 1rem', textAlign: 'left', fontSize: '0.68rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {students.map((s, i) => (
+                  <tr key={s.id || i} style={{ borderBottom: '1px solid rgba(255,255,255,0.03)', background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.015)' }}>
+                    <td style={{ padding: '0.6rem 1rem', fontWeight: 700, color: '#e2e8f0', fontSize: '0.85rem' }}>{s.name}</td>
+                    <td style={{ padding: '0.6rem 1rem', fontFamily: 'monospace', fontSize: '0.78rem', color: '#94a3b8' }}>{s.username}</td>
+                    <td style={{ padding: '0.6rem 1rem', fontFamily: 'monospace', fontSize: '0.78rem', color: '#60a5fa' }}>{s.password}</td>
+                    <td style={{ padding: '0.6rem 1rem', fontSize: '0.82rem', color: '#94a3b8' }}>{s.class_level || s.classLevel}</td>
+                    <td style={{ padding: '0.6rem 1rem' }}>
+                      <span style={{ padding: '0.2rem 0.6rem', background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.2)', borderRadius: 99, fontSize: '0.72rem', fontWeight: 700, color: '#60a5fa' }}>{s.class_section || '—'}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+      </Card>
+    </div>
+  );
+}
+
 function ManageStudentsSection({ coordinatorId, fetchData }) {
+
 
   const [tab, setTab] = useState('csv'); // 'csv' | 'manual' | 'results'
   const [csvText, setCsvText] = useState('');
@@ -1525,6 +1670,8 @@ export default function CoordinatorDashboard() {
         <nav style={{ flex: 1, padding: '1rem 0.6rem', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
           {SECTIONS.filter(s => {
             if (s.id === 'teachers') return coordinatorId === 'COORD-GURUKULAM';
+            if (s.id === 'add-students') return coordinatorId === 'COORD-GURUKULAM';
+            if (['students','manage','scores'].includes(s.id)) return coordinatorId !== 'COORD-GURUKULAM';
             return true;
           }).map(s => {
             const active = activeSection === s.id;
@@ -1615,6 +1762,7 @@ export default function CoordinatorDashboard() {
               {activeSection === 'manage' && <ManageStudentsSection coordinatorId={coordinatorId} fetchData={fetchData} />}
               {activeSection === 'scores' && <ScoresSection students={data.students} />}
               {activeSection === 'teachers' && <TeachersSection coordinatorId={coordinatorId} />}
+              {activeSection === 'add-students' && <AddStudentsSection coordinatorId={coordinatorId} />}
             </>
           ) : null}
         </div>
