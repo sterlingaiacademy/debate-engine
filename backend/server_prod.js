@@ -557,6 +557,7 @@ app.post('/api/login', async (req, res) => {
         assignedAgentId: user.assignedAgentId, 
         email: user.email, 
         phone: user.phone,
+        role: user.role || 'student',
         subscription_plan: user.subscription_plan || 'free',
         subscription_period: user.subscription_period || 'monthly',
         subscription_status: user.subscription_status || 'inactive',
