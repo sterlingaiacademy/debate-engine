@@ -777,7 +777,7 @@ function ScoresSection({ students }) {
               <Card key={subject}>
                 <div style={{ padding: '1rem 1.5rem', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <span style={{ fontSize: '1.6rem', width: 40, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(59,130,246,0.1)', borderRadius: 10, color: '#60a5fa', fontSize: '0.75rem', fontWeight: 800, letterSpacing: '-0.02em', flexShrink: 0 }}>{SUBJECT_ICONS[subject] || subject.slice(0,2).toUpperCase()}</span>
+                    <span style={{ width: 40, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(59,130,246,0.1)', borderRadius: 10, color: '#60a5fa', fontSize: '0.75rem', fontWeight: 800, letterSpacing: '-0.02em', flexShrink: 0 }}>{SUBJECT_ICONS[subject] || subject.slice(0,2).toUpperCase()}</span>
                     <div>
                       <h3 style={{ fontSize: '1rem', fontWeight: 800, color: '#e2e8f0', margin: 0 }}>{subject}</h3>
                       <div style={{ fontSize: '0.72rem', color: '#475569', marginTop: '0.1rem' }}>
