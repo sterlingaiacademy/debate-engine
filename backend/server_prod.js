@@ -562,6 +562,7 @@ app.post('/api/login', async (req, res) => {
         subscription_period: user.subscription_period || 'monthly',
         subscription_status: user.subscription_status || 'inactive',
         olympiad_registered: user.olympiad_registered || false,
+        indusmun_registered: user.indusmun_registered || false,
         olympiad_school_name: user.olympiad_school_name || null,
         subjects: user.subjects || null,
         avatar: user.avatar || `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(user.name || 'User')}`
@@ -2527,14 +2528,15 @@ app.get('/api/admin/users', requireAdmin, async (req, res) => {
   }
 });
 
-// GET /api/admin/olympiad/schools — fetch all schools (pending and approved)
+// GET /api/admin/olympiad/schools — ThinkQuest schools (events='thinkquest' or 'both')
 app.get('/api/admin/olympiad/schools', requireAdmin, async (req, res) => {
   try {
     const query = `
       SELECT id, name, principal_name, coordinator_name, contact_email, contact_phone, 
              school_code, coordinator_login_id, expected_students, classes_participating, 
-             status, created_at 
+             status, events, created_at 
       FROM schools 
+      WHERE events IN ('thinkquest','both') OR events IS NULL
       ORDER BY created_at DESC
     `;
     const result = await db.query(query);
@@ -2542,6 +2544,38 @@ app.get('/api/admin/olympiad/schools', requireAdmin, async (req, res) => {
   } catch (err) {
     console.error('Error fetching schools:', err);
     res.status(500).json({ error: 'Failed to fetch schools' });
+  }
+});
+
+// GET /api/admin/indusmun/schools — Indus MUN schools (events='indusmun' or 'both')
+app.get('/api/admin/indusmun/schools', requireAdmin, async (req, res) => {
+  try {
+    const result = await db.query(`
+      SELECT id, name, principal_name, coordinator_name, contact_email, contact_phone, 
+             school_code, coordinator_login_id, expected_students, classes_participating, 
+             status, events, created_at 
+      FROM schools WHERE events IN ('indusmun','both')
+      ORDER BY created_at DESC
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch Indus MUN schools' });
+  }
+});
+
+// GET /api/admin/both-events/schools — schools registered for both events
+app.get('/api/admin/both-events/schools', requireAdmin, async (req, res) => {
+  try {
+    const result = await db.query(`
+      SELECT id, name, principal_name, coordinator_name, contact_email, contact_phone, 
+             school_code, coordinator_login_id, expected_students, classes_participating, 
+             status, events, created_at 
+      FROM schools WHERE events = 'both'
+      ORDER BY created_at DESC
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch both-events schools' });
   }
 });
 
@@ -3472,20 +3506,27 @@ app.get('/api/minimun/registrations', requireAdmin, async (req, res) => {
 // 1. School Registration
 app.post('/api/olympiad/school/register', async (req, res) => {
   try {
-    const { name, principal_name, coordinator_name, contact_email, contact_phone, expected_students, classes_participating } = req.body;
+    const { name, principal_name, coordinator_name, contact_email, contact_phone, expected_students, classes_participating, events } = req.body;
     
     if (!name || !contact_email) {
       return res.status(400).json({ error: 'School name and contact email are required' });
     }
+    if (!events || !['thinkquest','indusmun','both'].includes(events)) {
+      return res.status(400).json({ error: 'Please select at least one event.' });
+    }
+
+    // Run DB migrations for new columns
+    await db.query(`ALTER TABLE schools ADD COLUMN IF NOT EXISTS events TEXT DEFAULT 'thinkquest'`).catch(() => {});
+    await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS indusmun_registered BOOLEAN DEFAULT FALSE`).catch(() => {});
 
     // Generate unique school code
     const school_code = Math.random().toString(36).substring(2, 8).toUpperCase();
     const coordinator_login_id = `COORD-${school_code}`;
 
-    const result = await db.query(
-      `INSERT INTO schools (name, principal_name, coordinator_name, contact_email, contact_phone, school_code, coordinator_login_id, expected_students, classes_participating, status) 
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, 'pending') RETURNING id`,
-      [name, principal_name, coordinator_name, contact_email, contact_phone, school_code, coordinator_login_id, expected_students || 0, classes_participating || '']
+    await db.query(
+      `INSERT INTO schools (name, principal_name, coordinator_name, contact_email, contact_phone, school_code, coordinator_login_id, expected_students, classes_participating, events, status) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 'pending') RETURNING id`,
+      [name, principal_name, coordinator_name, contact_email, contact_phone, school_code, coordinator_login_id, expected_students || 0, classes_participating || '', events]
     );
 
     res.json({ 
@@ -3509,7 +3550,7 @@ app.post('/api/olympiad/verify-school', async (req, res) => {
       return res.status(400).json({ error: 'School code is required.' });
     }
 
-    const schoolRes = await db.query(`SELECT id, name FROM schools WHERE school_code = $1`, [school_code]);
+    const schoolRes = await db.query(`SELECT id, name, events FROM schools WHERE school_code = $1`, [school_code]);
     if (schoolRes.rows.length === 0) {
       return res.status(404).json({ error: 'Invalid School Code' });
     }
@@ -3634,6 +3675,73 @@ app.get('/api/admin/olympiad/independent-students', requireAdmin, async (req, re
   } catch (err) {
     console.error('Error fetching independent students:', err);
     res.status(500).json({ error: 'Failed to fetch independent students' });
+  }
+});
+
+// POST /api/indusmun/enroll — individual user enrolls for Indus MUN (with or without school code)
+app.post('/api/indusmun/enroll', async (req, res) => {
+  try {
+    const { email, school_code, name, classLevel, city, state, parentPhone } = req.body;
+    if (!email) return res.status(400).json({ error: 'Email is required' });
+
+    await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS indusmun_registered BOOLEAN DEFAULT FALSE`).catch(() => {});
+
+    if (school_code && school_code !== 'INDIVIDUAL') {
+      // School-code based enroll: verify school has indusmun event
+      const schoolRes = await db.query(
+        `SELECT id, events FROM schools WHERE school_code = $1 AND status = 'approved'`,
+        [school_code]
+      );
+      if (schoolRes.rows.length === 0) return res.status(404).json({ error: 'Invalid or unapproved school code' });
+      const { id: schoolId, events } = schoolRes.rows[0];
+      if (events !== 'indusmun' && events !== 'both') {
+        return res.status(400).json({ error: 'This school is not registered for Indus MUN' });
+      }
+      await db.query(
+        `UPDATE users SET indusmun_registered = true, school_id = $1 WHERE email = $2`,
+        [schoolId, email]
+      );
+    } else {
+      // Individual enroll
+      await db.query(`UPDATE users SET indusmun_registered = true WHERE email = $1`, [email]);
+      // Store in a separate table for admin visibility
+      await db.query(`
+        CREATE TABLE IF NOT EXISTS indusmun_individuals (
+          id SERIAL PRIMARY KEY,
+          name VARCHAR(255),
+          email VARCHAR(255),
+          mobile VARCHAR(50),
+          grade VARCHAR(100),
+          city VARCHAR(255),
+          state VARCHAR(255),
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+      `);
+      await db.query(
+        `INSERT INTO indusmun_individuals (name, email, mobile, grade, city, state) VALUES ($1,$2,$3,$4,$5,$6)
+         ON CONFLICT DO NOTHING`,
+        [name || '', email, parentPhone || '', classLevel || '', city || '', state || '']
+      );
+    }
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Indus MUN enroll error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// GET /api/admin/indusmun/independent-students — list individually registered Indus MUN participants
+app.get('/api/admin/indusmun/independent-students', requireAdmin, async (req, res) => {
+  try {
+    await db.query(`CREATE TABLE IF NOT EXISTS indusmun_individuals (
+      id SERIAL PRIMARY KEY, name VARCHAR(255), email VARCHAR(255),
+      mobile VARCHAR(50), grade VARCHAR(100), city VARCHAR(255), state VARCHAR(255),
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )`);
+    const result = await db.query(`SELECT * FROM indusmun_individuals ORDER BY created_at DESC`);
+    res.json({ students: result.rows });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch' });
   }
 });
 
@@ -3819,18 +3927,22 @@ app.post('/api/coordinator/bulk-create-students', async (req, res) => {
     }
 
     const schoolRes = await db.query(
-      `SELECT id, name FROM schools WHERE coordinator_login_id = $1`,
+      `SELECT id, name, events FROM schools WHERE coordinator_login_id = $1`,
       [coordinatorId]
     );
     if (schoolRes.rows.length === 0) {
       return res.status(404).json({ error: 'School not found' });
     }
-    const { id: schoolId } = schoolRes.rows[0];
+    const { id: schoolId, events: schoolEvents } = schoolRes.rows[0];
+    // Determine which event flags to set based on school's registered events
+    const setOlympiad = !schoolEvents || schoolEvents === 'thinkquest' || schoolEvents === 'both';
+    const setIndusMun = schoolEvents === 'indusmun' || schoolEvents === 'both';
 
     // Run schema migrations ONCE before the loop (not 1000 times)
     await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS plain_password TEXT`).catch(() => {});
     await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS subjects JSONB`).catch(() => {});
     await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS phone TEXT`).catch(() => {});
+    await db.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS indusmun_registered BOOLEAN DEFAULT FALSE`).catch(() => {});
 
     // Load all existing usernames into memory once — eliminates N DB queries for dedup
     const existingRes = await db.query(`SELECT LOWER("studentId") as sid FROM users`);
@@ -3874,12 +3986,12 @@ app.post('/api/coordinator/bulk-create-students', async (req, res) => {
       const assignedAgentId = getAgentIdForClass(classLevel);
 
       try {
-        const hashedPassword = await bcrypt.hash(plainPassword, 8); // cost 8 = ~4x faster than cost 10
+        const hashedPassword = await bcrypt.hash(plainPassword, 8);
         await db.query(
-          `INSERT INTO users (name, "studentId", password, plain_password, "classLevel", email, phone, subjects, "assignedAgentId", school_id, role, olympiad_registered)
-           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 'student', true)
+          `INSERT INTO users (name, "studentId", password, plain_password, "classLevel", email, phone, subjects, "assignedAgentId", school_id, role, olympiad_registered, indusmun_registered)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 'student', $11, $12)
            ON CONFLICT ("studentId") DO NOTHING`,
-          [name, username, hashedPassword, plainPassword, classLevel, email, phoneVal, subjectsVal, assignedAgentId, schoolId]
+          [name, username, hashedPassword, plainPassword, classLevel, email, phoneVal, subjectsVal, assignedAgentId, schoolId, setOlympiad, setIndusMun]
         );
         await db.query(
           `INSERT INTO debate_users (user_id, username, class, gforce_tokens) VALUES ($1, $2, $3, 100) ON CONFLICT (user_id) DO NOTHING`,

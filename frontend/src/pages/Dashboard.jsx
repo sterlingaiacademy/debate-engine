@@ -575,6 +575,273 @@ const StatBadge = ({ icon: Icon, label, value, color, isJunior }) => (
 /* ────────────────────────────────────────────────────────────────────────── */
 /*  MAIN COMPONENT                                                            */
 /* ────────────────────────────────────────────────────────────────────────── */
+
+// ── Indus MUN Modal ─────────────────────────────────────────────────────────
+const IndusMunModal = ({ user, onDismiss, onSuccess }) => {
+  const [step, setStep] = useState(1);
+  const [code, setCode] = useState('');
+  const [schoolName, setSchoolName] = useState('');
+  const [error, setError] = useState('');
+
+  const [formData, setFormData] = useState({
+    name: user?.name || '',
+    classLevel: '',
+    email: user?.email || '',
+    countryCode: '+91',
+    phone: '',
+    city: '',
+    state: '',
+  });
+
+  const [indForm, setIndForm] = useState({
+    studentName: user?.name || '',
+    email: user?.email || '',
+    mobile: user?.phone || '',
+    countryCode: '+91',
+    schoolName: user?.school || '',
+    grade: '',
+    city: '',
+    state: '',
+  });
+
+  const [indSubmitting, setIndSubmitting] = useState(false);
+  const [indError, setIndError] = useState('');
+
+  const handleIndChange = (e) => setIndForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+
+  const inputStyle = {
+    width: '100%', padding: '0.8rem 1rem', borderRadius: 8,
+    background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(99,102,241,0.2)',
+    color: '#fff', fontSize: '0.9rem', outline: 'none', marginBottom: '1rem',
+    boxSizing: 'border-box', height: '46px'
+  };
+
+  const handleIndividualEnroll = async (e) => {
+    e.preventDefault();
+    if (!indForm.studentName || !indForm.email || !indForm.mobile || !indForm.grade || !indForm.city || !indForm.state) {
+      setIndError('Please fill in all required fields.');
+      return;
+    }
+    setIndSubmitting(true);
+    setIndError('');
+    try {
+      const res = await fetch(`${API_BASE}/api/indusmun/enroll`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: indForm.email,
+          school_code: 'INDIVIDUAL',
+          name: indForm.studentName,
+          classLevel: indForm.grade,
+          city: indForm.city,
+          state: indForm.state,
+          parentPhone: `${indForm.countryCode} ${indForm.mobile.trim()}`,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to register.');
+      setSchoolName('INDIVIDUAL');
+      setStep(3);
+    } catch (err) {
+      setIndError(err.message || 'Network error. Please try again.');
+      setIndSubmitting(false);
+    }
+  };
+
+  const handleVerify = async (isIndividual = false) => {
+    setError('');
+    if (isIndividual) {
+      setCode('INDIVIDUAL');
+      setSchoolName('Independent Participant');
+      setStep(4);
+      return;
+    }
+    try {
+      const res = await fetch(`${API_BASE}/api/olympiad/verify-school`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ school_code: code })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        const evt = data.school?.events || 'thinkquest';
+        if (evt !== 'indusmun' && evt !== 'both') {
+          setError('This school is not registered for Indus MUN.');
+          return;
+        }
+        setSchoolName(data.school.name);
+        setStep(2);
+      } else {
+        setError(data.error || 'Invalid School Code');
+      }
+    } catch (e) {
+      setError('Error verifying code. Check connection.');
+    }
+  };
+
+  const handleEnroll = async () => {
+    setError('');
+    try {
+      const res = await fetch(`${API_BASE}/api/indusmun/enroll`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: user.email,
+          school_code: code,
+          name: formData.name,
+          classLevel: formData.classLevel,
+          city: formData.city,
+          state: formData.state,
+          parentPhone: `${formData.countryCode} ${formData.phone.trim()}`,
+        })
+      });
+      const data = await res.json();
+      if (res.ok) { setStep(3); }
+      else { setError(data.error || 'Enrollment failed.'); }
+    } catch (e) {
+      setError('Error enrolling. Please try again.');
+    }
+  };
+
+  const COLOR = '#818cf8';
+  const COLOR_DARK = '#6366f1';
+
+  return (
+    <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 99999, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)', animation: 'fadeIn 0.2s' }}>
+      <div style={{ width: '95%', maxWidth: step === 4 ? '660px' : '420px', maxHeight: step === 4 ? '96vh' : '90vh', overflowY: step === 4 ? 'visible' : 'auto', background: 'linear-gradient(135deg, #050514 0%, #0d0d2e 100%)', border: `1px solid rgba(99,102,241,0.3)`, borderRadius: 24, padding: step === 4 ? '1.5rem 1.75rem' : '2rem', position: 'relative', boxShadow: '0 24px 60px rgba(0,0,0,0.5)', animation: 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)' }}>
+        {step !== 3 && (
+          <button onClick={onDismiss} style={{ position: 'absolute', top: 16, right: 16, background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: 32, height: 32, borderRadius: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <X size={18} />
+          </button>
+        )}
+
+        {step === 1 && (
+          <>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+              <div style={{ width: 44, height: 44, borderRadius: 12, background: `rgba(99,102,241,0.15)`, border: `1px solid rgba(99,102,241,0.3)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Globe size={24} color={COLOR} strokeWidth={2.5} />
+              </div>
+              <div>
+                <h2 style={{ fontSize: '1.25rem', fontWeight: 900, color: '#fff', margin: 0, letterSpacing: '-0.02em' }}>Indus <span style={{ color: COLOR }}>MUN</span></h2>
+                <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginTop: '0.15rem' }}>Enter your School Code to join</div>
+              </div>
+            </div>
+            {error && <div style={{ color: COLOR, fontSize: '0.85rem', marginBottom: '1rem', textAlign: 'center' }}>{error}</div>}
+            <input
+              type="text"
+              placeholder="ENTER SCHOOL CODE"
+              value={code}
+              onChange={e => setCode(e.target.value.toUpperCase())}
+              style={{ ...inputStyle, textAlign: 'center', fontSize: '1.1rem', fontWeight: 700, letterSpacing: '0.1em' }}
+              autoFocus
+            />
+            <button
+              onClick={() => handleVerify(false)}
+              disabled={!code.trim()}
+              style={{ width: '100%', padding: '1rem', borderRadius: 12, background: code.trim() ? COLOR_DARK : `rgba(99,102,241,0.3)`, color: '#fff', fontSize: '1.05rem', fontWeight: 800, border: 'none', cursor: code.trim() ? 'pointer' : 'not-allowed', transition: 'all 0.2s', marginBottom: '1rem' }}
+            >
+              Verify Code
+            </button>
+            <div style={{ textAlign: 'center', color: '#94a3b8', fontSize: '0.85rem', marginBottom: '1rem' }}>OR</div>
+            <button
+              onClick={() => setStep(4)}
+              style={{ width: '100%', padding: '1rem', borderRadius: 12, background: 'transparent', border: `1px solid ${COLOR_DARK}`, color: COLOR, fontSize: '1.05rem', fontWeight: 800, cursor: 'pointer', transition: 'all 0.2s' }}
+            >
+              Individual Registration
+            </button>
+          </>
+        )}
+
+        {step === 2 && (
+          <>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 900, color: '#fff', margin: 0, marginBottom: '0.5rem', textAlign: 'center' }}>Student Details</h2>
+            <div style={{ fontSize: '0.85rem', color: COLOR, textAlign: 'center', marginBottom: '1.25rem', fontWeight: 600 }}>Enrolling in: {schoolName}</div>
+            {error && <div style={{ color: COLOR, fontSize: '0.85rem', marginBottom: '1rem', textAlign: 'center' }}>{error}</div>}
+            <input type="text" placeholder="Full Name *" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} style={inputStyle} />
+            <input type="email" placeholder="Email Address *" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} style={inputStyle} />
+            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
+              <select value={formData.countryCode} onChange={e => setFormData({...formData, countryCode: e.target.value})} style={{ ...inputStyle, width: '90px', padding: '0 0.5rem', marginBottom: 0, flexShrink: 0 }}>
+                {COUNTRY_CODES.map(c => <option key={c.code} value={c.code} style={{ background: '#1e293b', color: '#fff' }}>{c.code}</option>)}
+              </select>
+              <input type="tel" placeholder="WhatsApp Number *" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} style={{ ...inputStyle, flex: 1, marginBottom: 0 }} />
+            </div>
+            <select value={formData.classLevel} onChange={e => setFormData({...formData, classLevel: e.target.value})} style={{...inputStyle, appearance: 'none', backgroundColor: 'rgba(0,0,0,0.4)', color: formData.classLevel ? '#fff' : '#94a3b8'}}>
+              <option value="" disabled>Select Grade *</option>
+              {Array.from({length: 7}, (_, i) => `Grade ${i + 6}`).map(c => <option key={c} value={c}>{c}</option>)}
+            </select>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <input type="text" placeholder="City *" value={formData.city} onChange={e => setFormData({...formData, city: e.target.value})} style={{ ...inputStyle, flex: 1, marginBottom: 0 }} />
+              <input type="text" placeholder="State *" value={formData.state} onChange={e => setFormData({...formData, state: e.target.value})} style={{ ...inputStyle, flex: 1, marginBottom: 0 }} />
+            </div>
+            <button
+              onClick={handleEnroll}
+              disabled={!formData.name || !formData.classLevel || !formData.email || !formData.phone || !formData.city || !formData.state}
+              style={{ width: '100%', padding: '1rem', borderRadius: 12, background: (formData.name && formData.classLevel && formData.email && formData.phone && formData.city && formData.state) ? COLOR_DARK : `rgba(99,102,241,0.3)`, color: '#fff', fontSize: '1.05rem', fontWeight: 800, border: 'none', cursor: 'pointer', transition: 'all 0.2s', marginTop: '1rem' }}
+            >
+              Complete Enrollment
+            </button>
+          </>
+        )}
+
+        {step === 3 && (
+          <div style={{ textAlign: 'center', padding: '1rem 0' }}>
+            <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem' }}>
+              <Globe size={32} color="#fff" />
+            </div>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 900, color: '#fff', margin: '0 0 0.5rem 0' }}>Success!</h2>
+            <p style={{ color: '#94a3b8', fontSize: '0.95rem', lineHeight: 1.5, marginBottom: '2rem' }}>
+              You have been successfully enrolled {schoolName === 'INDIVIDUAL' ? 'as an independent participant' : `in ${schoolName}`} for Indus MUN!
+            </p>
+            <button
+              onClick={onSuccess}
+              style={{ width: '100%', padding: '1rem', borderRadius: 12, background: COLOR_DARK, color: '#fff', fontSize: '1.05rem', fontWeight: 800, border: 'none', cursor: 'pointer' }}
+            >
+              Enter Indus MUN Dashboard
+            </button>
+          </div>
+        )}
+
+        {step === 4 && (
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.1rem' }}>
+              <div style={{ width: 42, height: 42, borderRadius: 12, background: `rgba(99,102,241,0.15)`, border: `1px solid rgba(99,102,241,0.3)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <Globe size={22} color={COLOR} strokeWidth={2.5} />
+              </div>
+              <div>
+                <h2 style={{ fontSize: '1.2rem', fontWeight: 900, color: '#fff', margin: 0, letterSpacing: '-0.02em' }}>Individual <span style={{ color: COLOR }}>Registration</span></h2>
+                <div style={{ fontSize: '0.8rem', color: '#94a3b8', marginTop: '0.1rem' }}>Indus MUN</div>
+              </div>
+            </div>
+            {indError && <div style={{ color: COLOR, fontSize: '0.85rem', marginBottom: '0.75rem', textAlign: 'center' }}>{indError}</div>}
+            <form onSubmit={handleIndividualEnroll}>
+              <input name="studentName" type="text" placeholder="Full Name *" value={indForm.studentName} onChange={handleIndChange} style={inputStyle} />
+              <input name="email" type="email" placeholder="Email *" value={indForm.email} onChange={handleIndChange} style={inputStyle} />
+              <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
+                <select name="countryCode" value={indForm.countryCode} onChange={handleIndChange} style={{ ...inputStyle, width: '90px', padding: '0 0.5rem', marginBottom: 0, flexShrink: 0 }}>
+                  {COUNTRY_CODES.map(c => <option key={c.code} value={c.code} style={{ background: '#1e293b', color: '#fff' }}>{c.code}</option>)}
+                </select>
+                <input name="mobile" type="tel" placeholder="WhatsApp Number *" value={indForm.mobile} onChange={handleIndChange} style={{ ...inputStyle, flex: 1, marginBottom: 0 }} />
+              </div>
+              <input name="schoolName" type="text" placeholder="School Name" value={indForm.schoolName} onChange={handleIndChange} style={inputStyle} />
+              <select name="grade" value={indForm.grade} onChange={handleIndChange} style={{...inputStyle, appearance: 'none', backgroundColor: 'rgba(0,0,0,0.4)', color: indForm.grade ? '#fff' : '#94a3b8'}}>
+                <option value="" disabled>Select Grade *</option>
+                {Array.from({length: 7}, (_, i) => `Grade ${i + 6}`).map(c => <option key={c} value={c}>{c}</option>)}
+              </select>
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <input name="city" type="text" placeholder="City *" value={indForm.city} onChange={handleIndChange} style={{ ...inputStyle, flex: 1, marginBottom: 0 }} />
+                <input name="state" type="text" placeholder="State *" value={indForm.state} onChange={handleIndChange} style={{ ...inputStyle, flex: 1, marginBottom: 0 }} />
+              </div>
+              <button type="submit" disabled={indSubmitting} style={{ width: '100%', padding: '1rem', borderRadius: 12, background: COLOR_DARK, color: '#fff', fontSize: '1.05rem', fontWeight: 800, border: 'none', cursor: 'pointer', transition: 'all 0.2s', marginTop: '1rem' }}>
+                {indSubmitting ? 'Registering...' : 'Complete Registration'}
+              </button>
+            </form>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 export default function Dashboard({ user, setUser }) {
   const navigate = useNavigate();
   const [stats, setStats] = useState(() =>
@@ -583,6 +850,7 @@ export default function Dashboard({ user, setUser }) {
   const [loading, setLoading] = useState(!stats);
   const [showPremiumModal, setShowPremiumModal] = useState(false);
   const [showThinkQuestModal, setShowThinkQuestModal] = useState(false);
+  const [showIndusMunModal, setShowIndusMunModal] = useState(false);
 
   const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user?.classLevel) && !['Professional', 'College Student'].includes(user?.grade);
 
@@ -872,47 +1140,52 @@ export default function Dashboard({ user, setUser }) {
           </div>
         </div>
 
-
-
-        {/* Indus MUN Hybrid */}
+        {/* Indus MUN */}
         <div
-          onClick={() => navigate('/indus-mun')}
+          onClick={() => {
+            if (user?.indusmun_registered) {
+              navigate('/indusmun-dashboard');
+            } else {
+              setShowIndusMunModal(true);
+            }
+          }}
           style={{
             borderRadius: 18, padding: '1.4rem 1.5rem', cursor: 'pointer',
-            background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
-            border: '1px solid rgba(234,179,8,0.2)',
+            background: 'linear-gradient(135deg, #0a0a2e 0%, #1a1a4e 100%)',
+            border: '1px solid rgba(99,102,241,0.3)',
             position: 'relative', overflow: 'hidden',
             transition: 'transform 0.25s, box-shadow 0.25s',
-            boxShadow: '0 4px 24px rgba(234,179,8,0.1)',
+            boxShadow: '0 4px 24px rgba(99,102,241,0.12)',
           }}
-          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(234,179,8,0.3)'; }}
-          onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 4px 24px rgba(234,179,8,0.1)'; }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(99,102,241,0.35)'; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 4px 24px rgba(99,102,241,0.12)'; }}
         >
-          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #eab308, #fef08a)' }} />
-          <div style={{ position: 'absolute', top: -40, right: -40, width: 130, height: 130, borderRadius: '50%', background: 'radial-gradient(circle, rgba(234,179,8,0.15) 0%, transparent 70%)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #6366f1, #a5b4fc)' }} />
+          <div style={{ position: 'absolute', top: -40, right: -40, width: 130, height: 130, borderRadius: '50%', background: 'radial-gradient(circle, rgba(99,102,241,0.18) 0%, transparent 70%)', pointerEvents: 'none' }} />
           
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
-            <span style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.12em', color: '#eab308', background: 'rgba(234,179,8,0.1)', border: '1px solid rgba(234,179,8,0.22)', padding: '0.2rem 0.65rem', borderRadius: 99 }}>
-              NEW EVENT
-            </span>
-            <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(234,179,8,0.1)', border: '1px solid rgba(234,179,8,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Globe size={16} color="#eab308" strokeWidth={2.5} />
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
+                <span style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.12em', color: '#818cf8', background: 'rgba(99,102,241,0.12)', border: '1px solid rgba(99,102,241,0.3)', padding: '0.2rem 0.65rem', borderRadius: 99 }}>
+                  {user?.indusmun_registered ? 'ENROLLED' : 'NEW EVENT'}
+                </span>
+                <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(99,102,241,0.12)', border: '1px solid rgba(99,102,241,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Globe size={16} color="#818cf8" strokeWidth={2.5} />
+                </div>
+              </div>
+              <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fff', marginBottom: '0.25rem', letterSpacing: '-0.01em' }}>
+                <span style={{ color: '#818cf8' }}>Indus</span> MUN
+              </div>
+              <div style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '1rem', lineHeight: 1.5 }}>
+                International Model United Nations for Grades 6–12.
+              </div>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#818cf8' }}>
+              {user?.indusmun_registered ? 'Enter Dashboard' : 'Register Now'} <ChevronRight size={14} />
             </div>
           </div>
-          <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fff', marginBottom: '0.25rem', letterSpacing: '-0.01em' }}>
-            Indus MUN <span style={{ color: '#eab308' }}>Hybrid</span>
-          </div>
-          <div style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '1rem', lineHeight: 1.5 }}>
-            International Hybrid MUN for Grades 6 to 12. Registration is Free.
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#eab308' }}>
-            Register Now <ChevronRight size={14} />
-          </div>
         </div>
-
-
-
-      </div>
+        </div>
       </div>
     </div>
 
@@ -924,6 +1197,17 @@ export default function Dashboard({ user, setUser }) {
             if (setUser) setUser({ ...user, olympiad_registered: true });
             setShowThinkQuestModal(false);
             navigate('/olympiad-dashboard');
+          }}
+        />
+      )}
+      {showIndusMunModal && (
+        <IndusMunModal
+          user={user}
+          onDismiss={() => setShowIndusMunModal(false)}
+          onSuccess={() => {
+            if (setUser) setUser({ ...user, indusmun_registered: true });
+            setShowIndusMunModal(false);
+            navigate('/indusmun-dashboard');
           }}
         />
       )}

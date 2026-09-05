@@ -10,14 +10,16 @@ const SECTIONS = [
   { id: 'overview', label: 'Overview' },
   { id: 'users', label: 'Users' },
   { id: 'debates', label: 'Debates' },
-  { id: 'indusmun', label: 'Indus MUN' },
-
+  { id: 'indusmun', label: 'Indus MUN Registrations' },
   { id: 'speech_league', label: 'Speech League' },
   { id: 'speech_league_scores', label: 'Speech League Scores' },
   { id: 'speech_analysis', label: 'Speech Analysis' },
   { id: 'coupons', label: 'School Coupons' },
-  { id: 'olympiad', label: 'Olympiad Schools' },
-  { id: 'thinkquest_individual', label: 'Independent Registered' },
+  { id: 'olympiad', label: 'ThinkQuest Schools' },
+  { id: 'indusmun_schools', label: 'Indus MUN Schools' },
+  { id: 'both_events_schools', label: 'Both Events Schools' },
+  { id: 'thinkquest_individual', label: 'TQ Independent' },
+  { id: 'indusmun_individual', label: 'IndusMUN Independent' },
   { id: 'quiz_results', label: 'Quiz Results' },
 ];
 
@@ -892,7 +894,7 @@ function OlympiadSchoolsSection({ adminToken, apiBase }) {
   return (
     <div>
       <SectionTitle>
-        Olympiad School Registrations
+        ThinkQuest School Registrations
         {!loading && schools.length > 0 && (
           <span style={{ background: 'rgba(255,255,255,0.03)', color: '#94a3b8', padding: '0.2rem 0.6rem', borderRadius: 8, fontSize: '0.75rem', fontWeight: 600, border: '1px solid rgba(255,255,255,0.06)' }}>
             {schools.length} Total
@@ -945,6 +947,127 @@ function OlympiadSchoolsSection({ adminToken, apiBase }) {
                     <TD>
                       <button onClick={() => handleAction(s.id, 'remove')} style={{ padding: '0.3rem 0.6rem', background: 'transparent', color: '#ef4444', border: '1px solid #ef4444', borderRadius: 4, cursor: 'pointer', fontSize: '0.75rem' }}>Remove</button>
                     </TD>
+                  </TableRow>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════════════════════
+// SECTION: Indus MUN Schools (reusable generic schools table)
+// ══════════════════════════════════════════════════
+function GenericSchoolsSection({ adminToken, apiBase, endpoint, title, accentColor = '#6366f1' }) {
+  const [schools, setSchools] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchSchools = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${apiBase}${endpoint}`, { headers: { 'Authorization': `Bearer ${adminToken}` } });
+      if (res.ok) setSchools(await res.json());
+    } catch (err) { console.error(err); }
+    setLoading(false);
+  }, [adminToken, apiBase, endpoint]);
+
+  useEffect(() => { fetchSchools(); }, [fetchSchools]);
+
+  return (
+    <div>
+      <SectionTitle>
+        {title}
+        {!loading && schools.length > 0 && (
+          <span style={{ background: 'rgba(255,255,255,0.03)', color: '#94a3b8', padding: '0.2rem 0.6rem', borderRadius: 8, fontSize: '0.75rem', fontWeight: 600, border: '1px solid rgba(255,255,255,0.06)' }}>
+            {schools.length} Total
+          </span>
+        )}
+      </SectionTitle>
+      <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
+        {loading ? (
+          <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>Loading...</div>
+        ) : schools.length === 0 ? (
+          <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>No schools found</div>
+        ) : (
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
+              <TableHead cols={['School', 'Coordinator', 'Contact', 'Events', 'Status', 'Credentials']} />
+              <tbody>
+                {schools.map((s, idx) => (
+                  <TableRow key={s.id} idx={idx}>
+                    <TD>
+                      <div style={{ fontWeight: 600, color: '#fff' }}>{s.name}</div>
+                      <div style={{ fontSize: '0.75rem', color: '#64748b' }}>{fmtDate(s.created_at)}</div>
+                    </TD>
+                    <TD>{s.coordinator_name}</TD>
+                    <TD>
+                      <div>{s.contact_email}</div>
+                      <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>{s.contact_phone}</div>
+                    </TD>
+                    <TD>
+                      <span style={{ padding: '0.2rem 0.6rem', borderRadius: 99, fontSize: '0.7rem', fontWeight: 700, background: `${accentColor}22`, color: accentColor, border: `1px solid ${accentColor}44` }}>
+                        {s.events || 'thinkquest'}
+                      </span>
+                    </TD>
+                    <TD><StatusDot status={s.status === 'approved' ? 'active' : (s.status === 'rejected' ? 'halted' : 'pending')} /></TD>
+                    <TD mono>
+                      {s.status === 'approved' && (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+                          <div><span style={{ color: '#94a3b8' }}>Code:</span> <span style={{ color: '#fca5a5' }}>{s.school_code}</span></div>
+                          <div><span style={{ color: '#94a3b8' }}>ID:</span> <span style={{ color: '#fca5a5' }}>{s.coordinator_login_id}</span></div>
+                        </div>
+                      )}
+                    </TD>
+                  </TableRow>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════════════════════
+// SECTION: Indus MUN Independent
+// ══════════════════════════════════════════════════
+function IndusMunIndividualSection({ adminToken, apiBase }) {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(`${apiBase}/api/admin/indusmun/independent-students`, { headers: { 'Authorization': `Bearer ${adminToken}` } })
+      .then(r => r.json())
+      .then(d => { setData(d.students || []); setLoading(false); })
+      .catch(() => setLoading(false));
+  }, [adminToken, apiBase]);
+
+  return (
+    <div>
+      <SectionTitle>Indus MUN — Independent Registrants ({data.length})</SectionTitle>
+      <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
+        {loading ? (
+          <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>Loading...</div>
+        ) : data.length === 0 ? (
+          <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>No independent registrants yet</div>
+        ) : (
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
+              <TableHead cols={['Name', 'Email', 'Grade', 'City', 'State', 'Phone', 'Registered']} />
+              <tbody>
+                {data.map((s, idx) => (
+                  <TableRow key={s.id} idx={idx}>
+                    <TD><div style={{ fontWeight: 600, color: '#fff' }}>{s.name}</div></TD>
+                    <TD>{s.email}</TD>
+                    <TD>{s.grade}</TD>
+                    <TD>{s.city}</TD>
+                    <TD>{s.state}</TD>
+                    <TD>{s.mobile}</TD>
+                    <TD>{fmtDate(s.created_at)}</TD>
                   </TableRow>
                 ))}
               </tbody>
@@ -1624,7 +1747,10 @@ export default function AdminDashboard() {
               {activeSection === 'coupons' && <CouponsSection stats={stats} />}
               {activeSection === 'ito' && <ITOSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'olympiad' && <OlympiadSchoolsSection adminToken={adminToken} apiBase={apiBase} />}
+              {activeSection === 'indusmun_schools' && <GenericSchoolsSection adminToken={adminToken} apiBase={apiBase} endpoint="/api/admin/indusmun/schools" title="Indus MUN School Registrations" accentColor="#6366f1" />}
+              {activeSection === 'both_events_schools' && <GenericSchoolsSection adminToken={adminToken} apiBase={apiBase} endpoint="/api/admin/both-events/schools" title="Both Events School Registrations" accentColor="#f59e0b" />}
               {activeSection === 'thinkquest_individual' && <ThinkQuestIndividualSection adminToken={adminToken} apiBase={apiBase} />}
+              {activeSection === 'indusmun_individual' && <IndusMunIndividualSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'quiz_results' && <QuizResultsSection adminToken={adminToken} apiBase={apiBase} />}
             </>
           ) : null}

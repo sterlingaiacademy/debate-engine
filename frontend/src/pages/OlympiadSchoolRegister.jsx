@@ -15,6 +15,7 @@ export default function OlympiadSchoolRegister() {
     class_from: '',
     class_to: ''
   });
+  const [selectedEvents, setSelectedEvents] = useState({ thinkquest: false, indusmun: false });
   const [loading, setLoading] = useState(false);
   const [successData, setSuccessData] = useState(null);
   const [error, setError] = useState(null);
@@ -22,15 +23,30 @@ export default function OlympiadSchoolRegister() {
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  const toggleEvent = (key) => setSelectedEvents(prev => ({ ...prev, [key]: !prev[key] }));
+
+  const getEventsValue = () => {
+    if (selectedEvents.thinkquest && selectedEvents.indusmun) return 'both';
+    if (selectedEvents.thinkquest) return 'thinkquest';
+    if (selectedEvents.indusmun) return 'indusmun';
+    return null;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const eventsValue = getEventsValue();
+    if (!eventsValue) {
+      setError('Please select at least one event to register for.');
+      return;
+    }
     setLoading(true);
     setError(null);
     try {
       const payload = {
         ...formData,
         contact_phone: `${formData.contact_phone_code} ${formData.contact_phone_number}`,
-        classes_participating: (formData.class_from && formData.class_to) ? `${formData.class_from} to ${formData.class_to}` : ''
+        classes_participating: (formData.class_from && formData.class_to) ? `${formData.class_from} to ${formData.class_to}` : '',
+        events: eventsValue,
       };
       const res = await fetch(`${API_BASE}/api/olympiad/school/register`, {
         method: 'POST',
@@ -266,9 +282,49 @@ export default function OlympiadSchoolRegister() {
               </div>
             </div>
             
+            {/* Event Selection */}
+            <div style={{ marginTop: '0.5rem' }}>
+              <label style={labelStyle}>Register For *</label>
+              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                {[
+                  { key: 'thinkquest', label: 'ThinkQuest Olympiad' },
+                  { key: 'indusmun', label: 'Indus MUN' },
+                ].map(({ key, label }) => (
+                  <div
+                    key={key}
+                    onClick={() => toggleEvent(key)}
+                    style={{
+                      flex: 1, minWidth: '180px', display: 'flex', alignItems: 'center', gap: '0.75rem',
+                      padding: '0.9rem 1.25rem', borderRadius: 10, cursor: 'pointer', userSelect: 'none',
+                      border: `1.5px solid ${selectedEvents[key] ? THEME.red : THEME.inputBorder}`,
+                      background: selectedEvents[key] ? 'rgba(218,41,28,0.08)' : THEME.inputBg,
+                      transition: 'all 0.2s'
+                    }}
+                  >
+                    <div style={{
+                      width: 20, height: 20, borderRadius: 4, flexShrink: 0, border: `2px solid ${selectedEvents[key] ? THEME.red : '#4b5563'}`,
+                      background: selectedEvents[key] ? THEME.red : 'transparent',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s'
+                    }}>
+                      {selectedEvents[key] && (
+                        <svg width="11" height="9" viewBox="0 0 11 9" fill="none">
+                          <path d="M1 4.5L4 7.5L10 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )}
+                    </div>
+                    <span style={{ color: selectedEvents[key] ? '#fff' : THEME.textMuted, fontWeight: 700, fontSize: '0.9rem' }}>{label}</span>
+                  </div>
+                ))}
+              </div>
+              {!getEventsValue() && error && error.includes('event') && (
+                <div style={{ color: '#fca5a5', fontSize: '0.8rem', marginTop: '0.4rem' }}>Please select at least one event.</div>
+              )}
+            </div>
+
             <button className="oly-btn" disabled={loading} type="submit" style={{ marginTop: '1rem', padding: '1.25rem', background: THEME.red, color: 'white', fontWeight: 800, border: 'none', cursor: loading ? 'wait' : 'pointer', fontSize: '1.05rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
               {loading ? 'Processing...' : 'Submit Registration'}
             </button>
+
           </form>
         </div>
       </div>

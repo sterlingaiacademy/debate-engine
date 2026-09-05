@@ -55,7 +55,7 @@ const OlympiadStudentRegister = lazy(() => import('./pages/OlympiadStudentRegist
 const OlympiadPractice = lazy(() => import('./pages/OlympiadPractice'));
 const OlympiadArena = lazy(() => import('./pages/OlympiadArena'));
 const CoordinatorDashboard = lazy(() => import('./pages/CoordinatorDashboard'));
-const TeacherDashboard = lazy(() => import('./pages/TeacherDashboard'));
+const IndusMunDashboard = lazy(() => import('./pages/IndusMunDashboard'));
 const OlympiadReportCard = lazy(() => import('./pages/OlympiadReportCard'));
 const OlympiadDashboard = lazy(() => import('./pages/OlympiadDashboard'));
 const OlympiadIndividualRegister = lazy(() => import('./pages/OlympiadIndividualRegister'));
@@ -252,7 +252,7 @@ function App() {
             <Route path="/thinkquest/individual-register" element={<OlympiadIndividualRegister />} />
             <Route path="/olympiad/student-registration" element={<Navigate to="/register" />} />
             <Route path="/coordinator-dashboard" element={<CoordinatorDashboard />} />
-            <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
+            <Route path="/indusmun-dashboard" element={user ? <IndusMunDashboard user={user} /> : <Navigate to="/" />} />
             
             <Route path="/olympiad-dashboard" element={user ? <OlympiadDashboard user={user} /> : <Navigate to="/" />} />
             <Route element={<Layout user={user} setUser={setUser} onLogout={handleLogout} onSwitchProfile={handleSwitchProfile} />}>

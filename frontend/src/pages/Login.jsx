@@ -120,13 +120,8 @@ export default function Login({ onLogin }) {
       if (!res.ok) throw new Error(data.error || 'Login failed');
 
       localStorage.setItem('token', data.token);
-      if (data.user?.role === 'teacher') {
-        localStorage.setItem('teacherUser', JSON.stringify(data.user));
-        navigate('/teacher-dashboard');
-      } else {
-        onLogin(data.user);
-        navigate('/dashboard');
-      }
+      onLogin(data.user);
+      navigate('/dashboard');
     } catch (err) {
       setError(err.message);
       setLoading(false);

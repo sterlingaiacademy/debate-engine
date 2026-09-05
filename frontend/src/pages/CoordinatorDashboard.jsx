@@ -10,8 +10,6 @@ const SECTIONS = [
   { id: 'students', label: 'Students', icon: '◎' },
   { id: 'manage', label: 'Manage Students', icon: '⊕' },
   { id: 'scores', label: 'Scores', icon: '▤' },
-  { id: 'teachers', label: 'Teachers', icon: '👨‍🏫' },
-  { id: 'add-students', label: 'Add Students', icon: '➕' },
 ];
 
 // ── Reusable primitives ──────────────────────────────────────
@@ -1668,12 +1666,7 @@ export default function CoordinatorDashboard() {
 
         {/* Nav */}
         <nav style={{ flex: 1, padding: '1rem 0.6rem', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
-          {SECTIONS.filter(s => {
-            if (s.id === 'teachers') return coordinatorId === 'COORD-GURUKULAM';
-            if (s.id === 'add-students') return coordinatorId === 'COORD-GURUKULAM';
-            if (['students','manage','scores'].includes(s.id)) return coordinatorId !== 'COORD-GURUKULAM';
-            return true;
-          }).map(s => {
+          {SECTIONS.map(s => {
             const active = activeSection === s.id;
             return (
               <button key={s.id} onClick={() => setActiveSection(s.id)}
@@ -1761,8 +1754,7 @@ export default function CoordinatorDashboard() {
               {activeSection === 'students' && <StudentsSection students={data.students} fetchData={fetchData} coordinatorId={coordinatorId} school={data.school} />}
               {activeSection === 'manage' && <ManageStudentsSection coordinatorId={coordinatorId} fetchData={fetchData} />}
               {activeSection === 'scores' && <ScoresSection students={data.students} />}
-              {activeSection === 'teachers' && <TeachersSection coordinatorId={coordinatorId} />}
-              {activeSection === 'add-students' && <AddStudentsSection coordinatorId={coordinatorId} />}
+
             </>
           ) : null}
         </div>
