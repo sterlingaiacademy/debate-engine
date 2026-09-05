@@ -9,7 +9,7 @@ set -e
 
 SERVER="graceandforce@65.20.85.75"
 APP_DIR="/home/graceandforce/debate-engine"
-BRANCH="main"
+BRANCH="analyze-entire-project-scope"
 
 echo ""
 echo "╔══════════════════════════════════════════════╗"
