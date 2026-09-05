@@ -2694,9 +2694,8 @@ app.get('/api/admin/bootcamp', requireAdmin, async (req, res) => {
 
 
 if (require.main === module) {
-  app.listen(PORT, async () => {
-    console.log(`Server running on port ${PORT}`);
-    // One-time migration: ensure events column exists and backfill NULL → 'thinkquest'
+  // Run DB migrations BEFORE accepting connections
+  (async () => {
     try {
       await db.query(`ALTER TABLE schools ADD COLUMN IF NOT EXISTS events TEXT DEFAULT 'thinkquest'`);
       const { rowCount } = await db.query(`UPDATE schools SET events = 'thinkquest' WHERE events IS NULL`);
@@ -2706,7 +2705,10 @@ if (require.main === module) {
     } catch (e) {
       console.error('Startup migration error:', e.message);
     }
-  });
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })();
 }
 
 module.exports = app;
