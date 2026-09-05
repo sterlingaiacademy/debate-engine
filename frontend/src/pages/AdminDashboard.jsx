@@ -11,7 +11,6 @@ const SECTIONS = [
   { id: 'users', label: 'Users' },
   { id: 'subscriptions', label: 'Subscriptions' },
   { id: 'debates', label: 'Debates' },
-  { id: 'speech_league', label: 'Speech League' },
   { id: 'speech_league_scores', label: 'Speech League Scores' },
   { id: 'speech_analysis', label: 'Speech Analysis' },
   { id: 'coupons', label: 'School Coupons' },
@@ -20,7 +19,6 @@ const SECTIONS = [
   { id: 'both_events_schools', label: 'Both Events Schools' },
   { id: 'thinkquest_individual', label: 'TQ Independent' },
   { id: 'indusmun_individual', label: 'IndusMUN Independent' },
-  { id: 'indusmun', label: 'Indus MUN Registrations' },
   { id: 'quiz_results', label: 'Quiz Results' },
 ];
 
