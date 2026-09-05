@@ -9,17 +9,21 @@ const FONT = "'Plus Jakarta Sans', 'Google Sans', system-ui, sans-serif";
 const SECTIONS = [
   { id: 'overview', label: 'Overview' },
   { id: 'users', label: 'Users' },
+  { id: 'subscriptions', label: 'Subscriptions' },
   { id: 'debates', label: 'Debates' },
-  { id: 'indusmun', label: 'Indus MUN Registrations' },
+  { id: 'bootcamp', label: 'Bootcamp' },
+  { id: 'munmentor', label: 'MUN Mentor' },
   { id: 'speech_league', label: 'Speech League' },
   { id: 'speech_league_scores', label: 'Speech League Scores' },
   { id: 'speech_analysis', label: 'Speech Analysis' },
   { id: 'coupons', label: 'School Coupons' },
+  { id: 'ito', label: 'ITO' },
   { id: 'olympiad', label: 'ThinkQuest Schools' },
   { id: 'indusmun_schools', label: 'Indus MUN Schools' },
   { id: 'both_events_schools', label: 'Both Events Schools' },
   { id: 'thinkquest_individual', label: 'TQ Independent' },
   { id: 'indusmun_individual', label: 'IndusMUN Independent' },
+  { id: 'indusmun', label: 'Indus MUN Registrations' },
   { id: 'quiz_results', label: 'Quiz Results' },
 ];
 
