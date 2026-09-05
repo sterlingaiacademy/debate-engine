@@ -19,6 +19,7 @@ const SECTIONS = [
   { id: 'both_events_schools', label: 'Both Events Schools' },
   { id: 'thinkquest_individual', label: 'TQ Independent' },
   { id: 'indusmun_individual', label: 'IndusMUN Independent' },
+  { id: 'indusmun', label: 'Indus MUN Registrations' },
   { id: 'quiz_results', label: 'Quiz Results' },
 ];
 
