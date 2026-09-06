@@ -121,7 +121,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', height: '100dvh', overflow: 'hidden', background: isJunior ? 'var(--bg-secondary)' : '#06080f' }}>
+    <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', height: '100svh', minHeight: '-webkit-fill-available', overflow: 'hidden', background: isJunior ? 'var(--bg-secondary)' : '#06080f' }}>
       
       {/* Mobile Top Header */}
       {isMobile && !isFullScreenRoute && (

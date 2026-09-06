@@ -196,7 +196,12 @@ html.dark body {
   background-color: var(--color-dark-base);
 }
 
-#root { display: flex; flex-direction: column; min-height: 100vh; }
+#root { display: flex; flex-direction: column; min-height: 100svh; min-height: 100vh; }
+
+/* iOS Safari viewport height fix */
+html, body {
+  height: -webkit-fill-available;
+}
 
 /* ================================================================
    JUNIOR THEME — Vivid, Playful, Adventure-Game
