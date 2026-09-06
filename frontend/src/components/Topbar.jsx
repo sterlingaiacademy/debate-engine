@@ -6,37 +6,46 @@ import { API_BASE } from '../api';
 /* ── Circular Progress Ring ─────────────────────────────────────────────────
    Initial ↔ percentage cross-fades on hover with CSS transitions          */
 function RingAvatar({ pct, initial, avatar, accent, hovered, size = 24 }) {
-  const stroke = 2;
-  const gap    = 2.5; // spacing between ring and inner content
-  const r      = (size - stroke) / 2;
-  const circ   = 2 * Math.PI * r;
-  // Ensure a tiny dot is visible even at 0% to match reference
-  const filled = circ * Math.max(Math.min(pct, 100), 0.5) / 100; 
+  // Use a high internal viewBox resolution for silky-smooth curves
+  const vb      = 100;
+  const stroke  = 6;   // in viewBox units (~1.5px rendered at 32px)
+  const gap     = 9;   // in viewBox units
+  const r       = (vb - stroke) / 2;
+  const circ    = 2 * Math.PI * r;
+  const filled  = circ * Math.max(Math.min(pct, 100), 0.5) / 100;
 
-  const ringColor = 'rgba(255, 255, 255, 0.75)';
-  const trackColor = 'rgba(255,255,255,0.08)';
+  const ringColor  = 'rgba(255,255,255,0.80)';
+  const trackColor = 'rgba(255,255,255,0.10)';
 
-  // Pick a stable background color based on the initial letter (simple hash)
-  const colors = ['#e11d48', '#c2185b', '#7c3aed', '#2563eb', '#059669', '#d97706'];
+  // Stable background color from initial letter
+  const colors   = ['#e11d48', '#c2185b', '#7c3aed', '#2563eb', '#059669', '#d97706'];
   const charCode = initial ? initial.charCodeAt(0) : 0;
-  const bgColor = colors[charCode % colors.length];
+  const bgColor  = colors[charCode % colors.length];
+
+  // Convert vb units to real px for the inner-circle inset
+  const insetPx  = ((stroke + gap) / vb) * size;
 
   return (
     <div style={{ position: 'relative', width: size, height: size, cursor: 'pointer', flexShrink: 0 }}>
-      {/* SVG ring */}
-      <svg width={size} height={size} style={{ position: 'absolute', inset: 0, transform: 'rotate(-90deg)' }}>
-        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={trackColor} strokeWidth={stroke} />
-        <circle cx={size/2} cy={size/2} r={r} fill="none"
+      {/* SVG ring — high-res viewBox for anti-aliased smoothness */}
+      <svg
+        width={size} height={size}
+        viewBox={`0 0 ${vb} ${vb}`}
+        style={{ position: 'absolute', inset: 0, transform: 'rotate(-90deg)', overflow: 'visible' }}
+        shapeRendering="geometricPrecision"
+      >
+        <circle cx={vb/2} cy={vb/2} r={r} fill="none" stroke={trackColor} strokeWidth={stroke} />
+        <circle cx={vb/2} cy={vb/2} r={r} fill="none"
           stroke={ringColor} strokeWidth={stroke}
           strokeDasharray={`${filled} ${circ - filled}`}
           strokeLinecap="round"
-          style={{ transition: 'stroke-dasharray 0.5s ease' }}
+          style={{ transition: 'stroke-dasharray 0.6s cubic-bezier(0.4,0,0.2,1)' }}
         />
       </svg>
 
       {/* Centre — cross-fade initial ↔ % */}
       <div style={{
-        position: 'absolute', inset: stroke + gap, borderRadius: '50%',
+        position: 'absolute', inset: insetPx, borderRadius: '50%',
         background: avatar ? 'transparent' : bgColor,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         overflow: 'hidden',
