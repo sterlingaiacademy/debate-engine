@@ -8,6 +8,24 @@ import logoImg from '../assets/logo.png';
 import PremiumEnrollModal from './PremiumEnrollModal';
 import Topbar from './Topbar';
 
+// Mobile bottom nav tab item
+function BottomTabItem({ name, icon: Icon, path, isActive, isJunior }) {
+  return (
+    <Link
+      to={path}
+      style={{
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
+        textDecoration: 'none', flex: 1, padding: '8px 4px',
+        color: isActive ? (isJunior ? '#7c3aed' : '#FF6B00') : '#64748b',
+        WebkitTapHighlightColor: 'transparent',
+      }}
+    >
+      <Icon size={24} strokeWidth={isActive ? 2.5 : 2} />
+      <span style={{ fontSize: '10px', fontWeight: isActive ? 800 : 600 }}>{name}</span>
+    </Link>
+  );
+}
+
 
 export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
   const location = useLocation();
