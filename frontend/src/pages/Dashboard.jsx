@@ -981,8 +981,8 @@ export default function Dashboard({ user, setUser }) {
             ) : 'Grade 10 Student'}
           </div>
           {/* Greeting row with avatar */}
-          <div style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.4rem', paddingLeft: 'calc(72px + 0.85rem)' }}>My Workspace</div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+          {/* Greeting row with avatar */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
             {/* Round avatar */}
             <div style={{
               width: 72, height: 72, borderRadius: '50%', flexShrink: 0,
@@ -994,9 +994,12 @@ export default function Dashboard({ user, setUser }) {
             }}>
               {user?.name?.charAt(0).toUpperCase() || '?'}
             </div>
-            <h1 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0, letterSpacing: '-0.02em' }}>
-              {greeting}, {user?.name?.split(' ')[0] || 'Student'}
-            </h1>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <div style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.15rem' }}>My Workspace</div>
+              <h1 style={{ fontSize: '2.2rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0, letterSpacing: '-0.02em' }}>
+                {greeting}, {user?.name?.split(' ')[0] || 'Student'}
+              </h1>
+            </div>
           </div>
         </div>
       {/* ── Hero Greeting ── */}
