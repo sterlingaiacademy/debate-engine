@@ -320,9 +320,9 @@ export default function Topbar({ user, setUser, isCollapsed, setIsCollapsed, isM
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
             title={isCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
-            style={{ background: isJunior ? '#fff' : '#0a0a0a', border: isJunior ? '1px solid rgba(124,58,237,0.1)' : '1px solid rgba(255,255,255,0.1)', borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', cursor: 'pointer', padding: 5, transition: 'all 0.2s' }}
-            onMouseEnter={e => { e.currentTarget.style.color = isJunior ? '#7c3aed' : '#fff'; e.currentTarget.style.borderColor = isJunior ? 'rgba(124,58,237,0.3)' : 'rgba(255,255,255,0.2)'; }}
-            onMouseLeave={e => { e.currentTarget.style.color = '#64748b'; e.currentTarget.style.borderColor = isJunior ? 'rgba(124,58,237,0.1)' : 'rgba(255,255,255,0.1)'; }}
+            style={{ background: 'none', border: 'none', borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', cursor: 'pointer', padding: 5, transition: 'all 0.2s' }}
+            onMouseEnter={e => { e.currentTarget.style.color = isJunior ? '#7c3aed' : '#fff'; }}
+            onMouseLeave={e => { e.currentTarget.style.color = '#64748b'; }}
           >
             {isCollapsed
               ? <svg xmlns="http://www.w3.org/2000/svg" width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="3.5"/><rect x="7" y="7" width="5" height="10" rx="1.5" fill="currentColor" stroke="none"/></svg>
