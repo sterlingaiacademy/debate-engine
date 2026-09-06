@@ -134,7 +134,8 @@ function ProfileDropdown({ user, timeLimits, isJunior, onLogout, onClose }) {
       borderRadius: 13,
       boxShadow: '0 20px 60px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,255,255,0.03)',
       overflow: 'hidden',
-      animation: 'fadeIn 0.12s ease',
+      animation: 'dropdownIn 0.2s cubic-bezier(0.16,1,0.3,1)',
+      transformOrigin: 'top right',
     }}>
 
       {/* ── Daily Time + Upgrade ── */}
@@ -227,7 +228,7 @@ function ProfileDropdown({ user, timeLimits, isJunior, onLogout, onClose }) {
               style={{
                 flex: 1, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
                 borderRadius: 7, padding: '0.4rem 0.6rem', color: '#ffedd5',
-                fontSize: '0.78rem', fontFamily: 'monospace', textTransform: 'uppercase', outline: 'none',
+                fontSize: '0.78rem', fontFamily: 'inherit', letterSpacing: '0.05em', textTransform: 'uppercase', outline: 'none',
               }}
               autoFocus
               onKeyDown={e => e.key === 'Enter' && handleRedeem()}
