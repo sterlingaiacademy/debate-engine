@@ -981,7 +981,7 @@ export default function Dashboard({ user, setUser }) {
             ) : 'Grade 10 Student'}
           </div>
           {/* Greeting row with avatar */}
-          <div style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.4rem' }}>My Workspace</div>
+          <div style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.4rem', paddingLeft: 'calc(52px + 0.85rem)' }}>My Workspace</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
             {/* Round avatar */}
             <div style={{
