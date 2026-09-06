@@ -6,16 +6,16 @@ import { API_BASE } from '../api';
 /* ── Circular Progress Ring ─────────────────────────────────────────────────
    Initial ↔ percentage cross-fades on hover with CSS transitions          */
 function RingAvatar({ pct, initial, avatar, accent, hovered, size = 24 }) {
-  // Use a high internal viewBox resolution for silky-smooth curves
-  const vb      = 100;
-  const stroke  = 6;   // in viewBox units (~1.5px rendered at 32px)
-  const gap     = 9;   // in viewBox units
+  // 400-unit viewBox for ultra-smooth anti-aliased curves at any size
+  const vb      = 400;
+  const stroke  = 18;  // ~1.4px rendered at 32px
+  const gap     = 28;
   const r       = (vb - stroke) / 2;
   const circ    = 2 * Math.PI * r;
   const filled  = circ * Math.max(Math.min(pct, 100), 0.5) / 100;
 
-  const ringColor  = 'rgba(255,255,255,0.80)';
-  const trackColor = 'rgba(255,255,255,0.10)';
+  const ringColor  = 'rgba(255,255,255,0.72)';
+  const trackColor = 'rgba(255,255,255,0.08)';
 
   // Stable background color from initial letter
   const colors   = ['#e11d48', '#c2185b', '#7c3aed', '#2563eb', '#059669', '#d97706'];
@@ -27,7 +27,7 @@ function RingAvatar({ pct, initial, avatar, accent, hovered, size = 24 }) {
 
   return (
     <div style={{ position: 'relative', width: size, height: size, cursor: 'pointer', flexShrink: 0 }}>
-      {/* SVG ring — high-res viewBox for anti-aliased smoothness */}
+      {/* SVG ring — 400-unit viewBox for ultra-smooth rendering */}
       <svg
         width={size} height={size}
         viewBox={`0 0 ${vb} ${vb}`}
