@@ -981,16 +981,16 @@ export default function Dashboard({ user, setUser }) {
             ) : 'Grade 10 Student'}
           </div>
           {/* Greeting row with avatar */}
-          <div style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.4rem', paddingLeft: 'calc(52px + 0.85rem)' }}>My Workspace</div>
+          <div style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.4rem', paddingLeft: 'calc(72px + 0.85rem)' }}>My Workspace</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
             {/* Round avatar */}
             <div style={{
-              width: 52, height: 52, borderRadius: '50%', flexShrink: 0,
+              width: 72, height: 72, borderRadius: '50%', flexShrink: 0,
               background: 'linear-gradient(135deg, rgba(255,107,0,0.25) 0%, rgba(255,107,0,0.1) 100%)',
               border: '2px solid rgba(255,107,0,0.3)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '1.35rem', fontWeight: 900, color: '#FF6B00',
-              boxShadow: '0 4px 20px rgba(255,107,0,0.15)',
+              fontSize: '1.9rem', fontWeight: 900, color: '#FF6B00',
+              boxShadow: '0 4px 24px rgba(255,107,0,0.2)',
             }}>
               {user?.name?.charAt(0).toUpperCase() || '?'}
             </div>
