@@ -48,6 +48,21 @@ export default function UpgradeRequired({ user }) {
   const featureKey = searchParams.get('feature') || 'mun30';
   const feature = FEATURE_CONFIG[featureKey] || FEATURE_CONFIG.mun30;
 
+  const plan = user?.subscription_plan;
+  // MAX plan unlocks everything; pro+ unlocks mun30
+  const isAlreadyUnlocked =
+    plan === 'max' ||
+    (feature.requiredPlanId === 'pro' && (plan === 'pro' || plan === 'max')) ||
+    (feature.requiredPlanId === 'max' && plan === 'max');
+
+  // Redirect to the feature if they already have access
+  useEffect(() => {
+    if (isAlreadyUnlocked) {
+      const dest = featureKey === 'mun30' ? '/mun30' : featureKey === 'diplomat365' ? '/diplomat' : '/dashboard';
+      navigate(dest, { replace: true });
+    }
+  }, [isAlreadyUnlocked, featureKey, navigate]);
+
   const [yearly, setYearly] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [paymentError, setPaymentError] = useState('');
@@ -227,6 +242,7 @@ export default function UpgradeRequired({ user }) {
           }}>
             <Lock size={12} strokeWidth={2.5} /> {feature.requiredPlan} Plan Required
           </div>
+          {/* Note for clarity */}
 
           {/* Icon */}
           <div style={{
