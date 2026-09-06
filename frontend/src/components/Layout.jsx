@@ -472,7 +472,8 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         
         {/* TOPBAR — desktop only; mobile already has the top header */}
-        {!isMobile && <Topbar user={user} setUser={setUser} isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} isMobile={isMobile} />}
+        {!isMobile && <Topbar user={user} setUser={setUser} isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} isMobile={isMobile} onLogout={onLogout} />}
+
 
         {/* ─── MAIN CONTENT ─── */}
         <main ref={mainScrollRef} id="main-scroll-container" style={{
