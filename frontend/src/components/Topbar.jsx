@@ -163,35 +163,15 @@ function ProfileDropdown({ user, timeLimits, isJunior, onLogout, onClose }) {
             {totalMin !== null ? `${totalMin} min` : '—'}
           </span>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.8rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.6rem' }}>
           <span style={{ fontSize: '0.78rem', color: '#64748b' }}>Remaining</span>
           <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#f1f5f9' }}>
             {remMin !== null ? `${remMin} min` : '—'}
           </span>
         </div>
-        {/* Ring-style progress bar */}
-        {(() => {
-          const rVb = 100, rStroke = 8, rR = (rVb - rStroke) / 2;
-          const rCirc = 2 * Math.PI * rR;
-          const rFilled = rCirc * Math.min(pct, 100) / 100;
-          return (
-            <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: '0.2rem' }}>
-              <svg width={56} height={56} viewBox={`0 0 ${rVb} ${rVb}`}
-                style={{ transform: 'rotate(-90deg)' }} shapeRendering="geometricPrecision">
-                <circle cx={rVb/2} cy={rVb/2} r={rR} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth={rStroke} />
-                <circle cx={rVb/2} cy={rVb/2} r={rR} fill="none"
-                  stroke="rgba(255,255,255,0.75)" strokeWidth={rStroke}
-                  strokeDasharray={`${rFilled} ${rCirc - rFilled}`}
-                  strokeLinecap="round"
-                  style={{ transition: 'stroke-dasharray 0.6s cubic-bezier(0.4,0,0.2,1)' }}
-                />
-              </svg>
-              <div style={{ position: 'absolute', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: 56, pointerEvents: 'none' }}>
-                <span style={{ fontSize: '0.7rem', fontWeight: 800, color: '#f1f5f9', lineHeight: 1 }}>{Math.round(pct)}%</span>
-              </div>
-            </div>
-          );
-        })()}
+        <div style={{ height: 3, background: 'rgba(255,255,255,0.06)', borderRadius: 99, overflow: 'hidden' }}>
+          <div style={{ height: '100%', width: `${pct}%`, background: 'rgba(255,255,255,0.6)', borderRadius: 99, transition: 'width 0.5s ease' }} />
+        </div>
       </div>
 
       {/* ── Plan / User Info ── */}
