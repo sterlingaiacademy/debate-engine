@@ -121,7 +121,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', height: '100dvh', overflow: 'hidden', background: isJunior ? 'var(--bg-secondary)' : '#000' }}>
+    <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', height: '100dvh', overflow: 'hidden', background: isJunior ? 'var(--bg-secondary)' : '#06080f' }}>
       
       {/* Mobile Top Header */}
       {isMobile && !isFullScreenRoute && (
@@ -453,8 +453,8 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
       {/* ─── RIGHT SIDE (TOPBAR + MAIN CONTENT) ─── */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         
-        {/* TOPBAR */}
-        <Topbar user={user} setUser={setUser} isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} isMobile={isMobile} />
+        {/* TOPBAR — desktop only; mobile already has the top header */}
+        {!isMobile && <Topbar user={user} setUser={setUser} isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} isMobile={isMobile} />}
 
         {/* ─── MAIN CONTENT ─── */}
         <main ref={mainScrollRef} id="main-scroll-container" style={{
@@ -466,7 +466,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
           position: 'relative', zIndex: 10,
           background: isJunior
             ? 'linear-gradient(135deg, #faf5ff 0%, #fff0f7 50%, #f0f9ff 100%)'
-            : '#000',
+            : '#06080f',
         }}>
           <div style={{
             width: '100%',
