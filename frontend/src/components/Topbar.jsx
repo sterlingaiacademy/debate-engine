@@ -5,16 +5,21 @@ import { API_BASE } from '../api';
 
 /* ── Circular Progress Ring ─────────────────────────────────────────────────
    Initial ↔ percentage cross-fades on hover with CSS transitions          */
-function RingAvatar({ pct, initial, avatar, accent, hovered, size = 42 }) {
-  const stroke = 2.5;
-  const gap    = 3; // spacing between ring and inner content
+function RingAvatar({ pct, initial, avatar, accent, hovered, size = 38 }) {
+  const stroke = 2;
+  const gap    = 2.5; // spacing between ring and inner content
   const r      = (size - stroke) / 2;
   const circ   = 2 * Math.PI * r;
   // Ensure a tiny dot is visible even at 0% to match reference
   const filled = circ * Math.max(Math.min(pct, 100), 0.5) / 100; 
 
-  const ringColor = '#ffffff';
-  const trackColor = 'rgba(255,255,255,0.12)';
+  const ringColor = 'rgba(255, 255, 255, 0.75)';
+  const trackColor = 'rgba(255,255,255,0.08)';
+
+  // Pick a stable background color based on the initial letter (simple hash)
+  const colors = ['#e11d48', '#c2185b', '#7c3aed', '#2563eb', '#059669', '#d97706'];
+  const charCode = initial ? initial.charCodeAt(0) : 0;
+  const bgColor = colors[charCode % colors.length];
 
   return (
     <div style={{ position: 'relative', width: size, height: size, cursor: 'pointer', flexShrink: 0 }}>
@@ -32,7 +37,7 @@ function RingAvatar({ pct, initial, avatar, accent, hovered, size = 42 }) {
       {/* Centre — cross-fade initial ↔ % */}
       <div style={{
         position: 'absolute', inset: stroke + gap, borderRadius: '50%',
-        background: 'transparent',
+        background: avatar ? 'transparent' : bgColor,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         overflow: 'hidden',
       }}>
@@ -47,14 +52,14 @@ function RingAvatar({ pct, initial, avatar, accent, hovered, size = 42 }) {
           {avatar ? (
             <img src={avatar} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
           ) : (
-            <span style={{ fontSize: 14, fontWeight: 700, color: '#f8fafc', lineHeight: 1, userSelect: 'none' }}>{initial}</span>
+            <span style={{ fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,0.9)', lineHeight: 1, userSelect: 'none' }}>{initial}</span>
           )}
         </div>
 
         {/* Percentage */}
         <span style={{
           position: 'absolute',
-          fontSize: 11, fontWeight: 700, color: '#ffffff',
+          fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.9)',
           opacity: hovered ? 1 : 0,
           transform: hovered ? 'scale(1)' : 'scale(0.8)',
           transition: 'opacity 0.22s ease, transform 0.22s ease',
