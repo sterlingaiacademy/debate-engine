@@ -8,7 +8,7 @@ import { API_BASE } from '../api';
 function RingAvatar({ pct, initial, avatar, accent, hovered, size = 24 }) {
   // 400-unit viewBox for ultra-smooth anti-aliased curves at any size
   const vb      = 400;
-  const stroke  = 18;  // ~1.4px rendered at 32px
+  const stroke  = 26;  // slightly thicker
   const gap     = 28;
   const r       = (vb - stroke) / 2;
   const circ    = 2 * Math.PI * r;
