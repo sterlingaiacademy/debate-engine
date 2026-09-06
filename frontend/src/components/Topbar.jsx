@@ -5,7 +5,7 @@ import { API_BASE } from '../api';
 
 /* ── Circular Progress Ring ─────────────────────────────────────────────────
    Initial ↔ percentage cross-fades on hover with CSS transitions          */
-function RingAvatar({ pct, initial, avatar, accent, hovered, size = 32 }) {
+function RingAvatar({ pct, initial, avatar, accent, hovered, size = 28 }) {
   const stroke = 2;
   const gap    = 2.5; // spacing between ring and inner content
   const r      = (size - stroke) / 2;
@@ -52,14 +52,14 @@ function RingAvatar({ pct, initial, avatar, accent, hovered, size = 32 }) {
           {avatar ? (
             <img src={avatar} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
           ) : (
-            <span style={{ fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.9)', lineHeight: 1, userSelect: 'none' }}>{initial}</span>
+            <span style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.9)', lineHeight: 1, userSelect: 'none' }}>{initial}</span>
           )}
         </div>
 
         {/* Percentage */}
         <span style={{
           position: 'absolute',
-          fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.9)',
+          fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,0.9)',
           opacity: hovered ? 1 : 0,
           transform: hovered ? 'scale(1)' : 'scale(0.8)',
           transition: 'opacity 0.22s ease, transform 0.22s ease',
