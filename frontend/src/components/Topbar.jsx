@@ -5,39 +5,43 @@ import { API_BASE } from '../api';
 
 /* ── Circular Progress Ring ─────────────────────────────────────────────────
    Initial ↔ percentage cross-fades on hover with CSS transitions          */
-function RingAvatar({ pct, initial, accent, hovered, size = 40 }) {
-  const stroke = 3;
+function RingAvatar({ pct, initial, accent, hovered, size = 42 }) {
+  const stroke = 2.5;
+  const gap    = 3; // spacing between ring and inner content
   const r      = (size - stroke) / 2;
   const circ   = 2 * Math.PI * r;
-  const filled = circ * Math.min(Math.max(pct, 0), 100) / 100;
-  const ringColor = pct > 50 ? '#10b981' : pct > 20 ? '#f59e0b' : pct > 0 ? '#ef4444' : '#334155';
+  // Ensure a tiny dot is visible even at 0% to match reference
+  const filled = circ * Math.max(Math.min(pct, 100), 0.5) / 100; 
+
+  const ringColor = '#ffffff';
+  const trackColor = 'rgba(255,255,255,0.12)';
 
   return (
     <div style={{ position: 'relative', width: size, height: size, cursor: 'pointer', flexShrink: 0 }}>
       {/* SVG ring */}
       <svg width={size} height={size} style={{ position: 'absolute', inset: 0, transform: 'rotate(-90deg)' }}>
-        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth={stroke} />
+        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={trackColor} strokeWidth={stroke} />
         <circle cx={size/2} cy={size/2} r={r} fill="none"
           stroke={ringColor} strokeWidth={stroke}
           strokeDasharray={`${filled} ${circ - filled}`}
           strokeLinecap="round"
-          style={{ transition: 'stroke-dasharray 0.5s ease, stroke 0.3s ease' }}
+          style={{ transition: 'stroke-dasharray 0.5s ease' }}
         />
       </svg>
 
       {/* Centre — cross-fade initial ↔ % */}
       <div style={{
-        position: 'absolute', inset: stroke + 2, borderRadius: '50%',
-        background: `${accent}18`, border: `1.5px solid ${accent}33`,
+        position: 'absolute', inset: stroke + gap, borderRadius: '50%',
+        background: 'transparent',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         overflow: 'hidden',
       }}>
         {/* Initial letter */}
         <span style={{
           position: 'absolute',
-          fontSize: 14, fontWeight: 900, color: '#fff',
+          fontSize: 14, fontWeight: 700, color: '#f8fafc',
           opacity: hovered ? 0 : 1,
-          transform: hovered ? 'scale(0.7)' : 'scale(1)',
+          transform: hovered ? 'scale(0.8)' : 'scale(1)',
           transition: 'opacity 0.22s ease, transform 0.22s ease',
           lineHeight: 1, userSelect: 'none',
         }}>{initial}</span>
@@ -45,9 +49,9 @@ function RingAvatar({ pct, initial, accent, hovered, size = 40 }) {
         {/* Percentage */}
         <span style={{
           position: 'absolute',
-          fontSize: 10, fontWeight: 800, color: ringColor,
+          fontSize: 11, fontWeight: 700, color: '#ffffff',
           opacity: hovered ? 1 : 0,
-          transform: hovered ? 'scale(1)' : 'scale(0.7)',
+          transform: hovered ? 'scale(1)' : 'scale(0.8)',
           transition: 'opacity 0.22s ease, transform 0.22s ease',
           lineHeight: 1, userSelect: 'none',
         }}>{pct}%</span>
@@ -331,7 +335,7 @@ export default function Topbar({ user, setUser, isCollapsed, setIsCollapsed, isM
               onClick={() => setShowMenu(v => !v)}
               style={{ display: 'inline-flex' }}
             >
-              <RingAvatar pct={pct} initial={initial} accent={accent} hovered={hovered} size={40} />
+              <RingAvatar pct={pct} initial={initial} accent={accent} hovered={hovered} size={42} />
             </div>
             {showMenu && (
               <ProfileDropdown
