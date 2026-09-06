@@ -277,6 +277,11 @@ html, body {
   to   { opacity: 1; transform: translateY(0)   scale(1); }
 }
 
+@keyframes couponSlideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 @keyframes cardEnter {
   from { opacity: 0; transform: translateY(28px) scale(0.97); }
   to   { opacity: 1; transform: translateY(0) scale(1); }

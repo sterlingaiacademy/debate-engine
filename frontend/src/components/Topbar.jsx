@@ -134,7 +134,7 @@ function ProfileDropdown({ user, timeLimits, isJunior, onLogout, onClose }) {
       borderRadius: 13,
       boxShadow: '0 20px 60px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,255,255,0.03)',
       overflow: 'hidden',
-      animation: 'dropdownIn 0.2s cubic-bezier(0.16,1,0.3,1)',
+      animation: 'dropdownIn 0.35s cubic-bezier(0.16,1,0.3,1)',
       transformOrigin: 'top right',
     }}>
 
@@ -142,10 +142,6 @@ function ProfileDropdown({ user, timeLimits, isJunior, onLogout, onClose }) {
       <div style={{ padding: '0.95rem 1rem', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.8rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-            <div style={{
-              width: 7, height: 7, borderRadius: '50%', background: accent,
-              boxShadow: `0 0 6px ${accent}`,
-            }} />
             <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#f1f5f9' }}>Daily Time</span>
           </div>
           {/* Only show Upgrade button if NOT on MAX plan */}
@@ -167,15 +163,35 @@ function ProfileDropdown({ user, timeLimits, isJunior, onLogout, onClose }) {
             {totalMin !== null ? `${totalMin} min` : '—'}
           </span>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.6rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.8rem' }}>
           <span style={{ fontSize: '0.78rem', color: '#64748b' }}>Remaining</span>
-          <span style={{ fontSize: '0.78rem', fontWeight: 800, color: barColor }}>
+          <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#f1f5f9' }}>
             {remMin !== null ? `${remMin} min` : '—'}
           </span>
         </div>
-        <div style={{ height: 4, background: 'rgba(255,255,255,0.06)', borderRadius: 99, overflow: 'hidden' }}>
-          <div style={{ height: '100%', width: `${pct}%`, background: barColor, borderRadius: 99, transition: 'width 0.5s ease' }} />
-        </div>
+        {/* Ring-style progress bar */}
+        {(() => {
+          const rVb = 100, rStroke = 8, rR = (rVb - rStroke) / 2;
+          const rCirc = 2 * Math.PI * rR;
+          const rFilled = rCirc * Math.min(pct, 100) / 100;
+          return (
+            <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: '0.2rem' }}>
+              <svg width={56} height={56} viewBox={`0 0 ${rVb} ${rVb}`}
+                style={{ transform: 'rotate(-90deg)' }} shapeRendering="geometricPrecision">
+                <circle cx={rVb/2} cy={rVb/2} r={rR} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth={rStroke} />
+                <circle cx={rVb/2} cy={rVb/2} r={rR} fill="none"
+                  stroke="rgba(255,255,255,0.75)" strokeWidth={rStroke}
+                  strokeDasharray={`${rFilled} ${rCirc - rFilled}`}
+                  strokeLinecap="round"
+                  style={{ transition: 'stroke-dasharray 0.6s cubic-bezier(0.4,0,0.2,1)' }}
+                />
+              </svg>
+              <div style={{ position: 'absolute', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: 56, pointerEvents: 'none' }}>
+                <span style={{ fontSize: '0.7rem', fontWeight: 800, color: '#f1f5f9', lineHeight: 1 }}>{Math.round(pct)}%</span>
+              </div>
+            </div>
+          );
+        })()}
       </div>
 
       {/* ── Plan / User Info ── */}
@@ -221,9 +237,9 @@ function ProfileDropdown({ user, timeLimits, isJunior, onLogout, onClose }) {
             {couponStatus.type === 'success' ? '✓' : '✗'} {couponStatus.msg}
           </div>
         ) : (
-          <div style={{ display: 'flex', gap: 6, padding: '0.3rem 0.4rem', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: 6, padding: '0.3rem 0.4rem', alignItems: 'center', animation: 'couponSlideIn 0.28s cubic-bezier(0.16,1,0.3,1)' }}>
             <input
-              type="text" placeholder="ENTER CODE" value={couponCode}
+              type="text" placeholder="Enter code" value={couponCode}
               onChange={e => setCouponCode(e.target.value.toUpperCase())}
               style={{
                 flex: 1, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
