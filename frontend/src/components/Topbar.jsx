@@ -5,7 +5,7 @@ import { API_BASE } from '../api';
 
 /* ── Circular Progress Ring ─────────────────────────────────────────────────
    Initial ↔ percentage cross-fades on hover with CSS transitions          */
-function RingAvatar({ pct, initial, accent, hovered, size = 42 }) {
+function RingAvatar({ pct, initial, avatar, accent, hovered, size = 42 }) {
   const stroke = 2.5;
   const gap    = 3; // spacing between ring and inner content
   const r      = (size - stroke) / 2;
@@ -36,15 +36,20 @@ function RingAvatar({ pct, initial, accent, hovered, size = 42 }) {
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         overflow: 'hidden',
       }}>
-        {/* Initial letter */}
-        <span style={{
-          position: 'absolute',
-          fontSize: 14, fontWeight: 700, color: '#f8fafc',
+        {/* Initial letter / Avatar */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
           opacity: hovered ? 0 : 1,
           transform: hovered ? 'scale(0.8)' : 'scale(1)',
           transition: 'opacity 0.22s ease, transform 0.22s ease',
-          lineHeight: 1, userSelect: 'none',
-        }}>{initial}</span>
+        }}>
+          {avatar ? (
+            <img src={avatar} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
+          ) : (
+            <span style={{ fontSize: 14, fontWeight: 700, color: '#f8fafc', lineHeight: 1, userSelect: 'none' }}>{initial}</span>
+          )}
+        </div>
 
         {/* Percentage */}
         <span style={{
@@ -335,7 +340,7 @@ export default function Topbar({ user, setUser, isCollapsed, setIsCollapsed, isM
               onClick={() => setShowMenu(v => !v)}
               style={{ display: 'inline-flex' }}
             >
-              <RingAvatar pct={pct} initial={initial} accent={accent} hovered={hovered} size={42} />
+              <RingAvatar pct={pct} initial={initial} avatar={user?.avatar} accent={accent} hovered={hovered} size={42} />
             </div>
             {showMenu && (
               <ProfileDropdown

@@ -991,8 +991,13 @@ export default function Dashboard({ user, setUser }) {
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: '1.9rem', fontWeight: 900, color: '#FF6B00',
               boxShadow: '0 4px 24px rgba(255,107,0,0.2)',
+              overflow: 'hidden',
             }}>
-              {user?.name?.charAt(0).toUpperCase() || '?'}
+              {user?.avatar ? (
+                <img src={user.avatar} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              ) : (
+                user?.name?.charAt(0).toUpperCase() || '?'
+              )}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <div style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.15rem' }}>My Workspace</div>
