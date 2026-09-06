@@ -345,7 +345,7 @@ export default function Topbar({ user, setUser, isCollapsed, setIsCollapsed, isM
               onClick={() => setShowMenu(v => !v)}
               style={{ display: 'inline-flex' }}
             >
-              <RingAvatar pct={pct} initial={initial} avatar={user?.avatar} accent={accent} hovered={hovered} size={42} />
+              <RingAvatar pct={pct} initial={initial} avatar={user?.avatar} accent={accent} hovered={hovered} size={24} />
             </div>
             {showMenu && (
               <ProfileDropdown
