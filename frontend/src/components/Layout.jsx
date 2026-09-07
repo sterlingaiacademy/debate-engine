@@ -493,7 +493,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
         }}>
           <div style={{
             width: '100%',
-            maxWidth: (isFullScreenRoute || isFullWidthRoute) ? '100%' : (pathname === '/dashboard' ? '1400px' : '1100px'),
+            maxWidth: (isFullScreenRoute || isFullWidthRoute) ? '100%' : '1100px',
             flex: isFullScreenRoute ? '1 1 100%' : '1 0 auto',
             display: 'flex', flexDirection: 'column',
             minHeight: 0,

@@ -988,7 +988,7 @@ export default function Dashboard({ user, setUser }) {
         boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
         borderRadius: 0,
         minHeight: '100vh',
-        margin: '-1.25rem',
+        margin: '-0.5rem',
       }}>
         <div>
           <div style={{
