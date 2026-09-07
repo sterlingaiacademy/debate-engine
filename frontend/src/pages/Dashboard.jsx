@@ -500,9 +500,9 @@ const SENIOR_MODES = [
     desc: 'AI music training for all grades — pitch, rhythm, and expression scored in real time.',
     tag: 'MUSIC',
     icon: Music,
-    color: '#10b981',
-    grad: 'linear-gradient(135deg, #001a11, #002d1c)',
-    glow: 'rgba(16,185,129,0.25)',
+    color: '#e11d48',
+    grad: 'linear-gradient(135deg, #1a0008, #30000f)',
+    glow: 'rgba(225,29,72,0.25)',
     path: () => '/sangeet',
     available: true,
   }
@@ -516,7 +516,7 @@ const JUNIOR_MODES = [
   { id: 'speech-coach', title: 'Speech Coach', desc: 'Improve your speaking skills with AI voice training!', color: '#e879f9', grad: 'linear-gradient(135deg, #e879f9, #a855f7)', icon: Radio, path: () => '/speech-coach', levels: ['Level 3', 'Level 4', 'Level 5'] },
 
   { id: 'speech-analysis', title: 'Speech Analysis', desc: 'Get your speeches analyzed by AI for instant feedback!', color: '#3b82f6', grad: 'linear-gradient(135deg, #3b82f6, #60a5fa)', icon: Mic, path: () => '/speech-analysis', levels: ['Level 3', 'Level 4', 'Level 5'] },
-  { id: 'sangeet', title: 'Sangeet Music', desc: 'Train your voice and musical ear with real-time AI pitch scoring!', color: '#10b981', grad: 'linear-gradient(135deg, #10b981, #34d399)', icon: Music, path: () => '/sangeet' },
+  { id: 'sangeet', title: 'Sangeet Music', desc: 'Train your voice and musical ear with real-time AI pitch scoring!', color: '#e11d48', grad: 'linear-gradient(135deg, #e11d48, #f43f5e)', icon: Music, path: () => '/sangeet' },
 ];
 
 const BADGE_ICON_MAP = {
