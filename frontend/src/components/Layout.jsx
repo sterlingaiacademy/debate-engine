@@ -201,11 +201,11 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
           borderRight: '2px solid rgba(124,58,237,0.1)',
           boxShadow: '4px 0 24px rgba(124,58,237,0.08)',
         } : {
-          background: 'linear-gradient(180deg, rgba(15,23,42,0.95) 0%, rgba(10,15,30,0.98) 100%)',
+          background: 'linear-gradient(180deg, rgba(8,10,18,0.97) 0%, rgba(6,8,15,0.99) 100%)',
           backdropFilter: 'blur(32px)',
           WebkitBackdropFilter: 'blur(32px)',
-          borderRight: '1px solid rgba(255,255,255,0.1)',
-          boxShadow: '4px 0 48px rgba(0,0,0,0.8)',
+          borderRight: '1px solid rgba(255,255,255,0.07)',
+          boxShadow: '1px 0 0 0 rgba(255,255,255,0.04), 4px 0 32px rgba(0,0,0,0.6)',
         }),
       }}>
 
