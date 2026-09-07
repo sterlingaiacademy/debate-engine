@@ -976,7 +976,8 @@ export default function Dashboard({ user, setUser }) {
       <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
         <div style={{ position: 'absolute', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,107,0,0.09) 0%, transparent 70%)', top: '-15%', left: '-10%', animation: 'dashOrb1 14s ease-in-out infinite' }} />
         <div style={{ position: 'absolute', width: 450, height: 450, borderRadius: '50%', background: 'radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 70%)', bottom: '5%', right: '-8%', animation: 'dashOrb2 18s ease-in-out infinite' }} />
-        <div style={{ position: 'absolute', width: 300, height: 300, borderRadius: '50%', background: 'radial-gradient(circle, rgba(16,185,129,0.06) 0%, transparent 70%)', top: '45%', right: '25%', animation: 'dashOrb3 22s ease-in-out infinite' }} />
+
+
       </div>
       <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', paddingBottom: '4rem', position: 'relative', zIndex: 1 }}>
         <div style={{ marginTop: '2.5rem' }}>
