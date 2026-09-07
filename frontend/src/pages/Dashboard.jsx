@@ -1032,14 +1032,7 @@ export default function Dashboard({ user, setUser }) {
             </div>
           </div>
         </div>
-      {/* ── Hero Greeting ── */}
-      <div className="welcome-card animate-fade-in dashboard-hero-container" style={{
-        position: 'relative', overflow: 'hidden',
-        background: 'transparent',
-        border: 'none',
-        boxShadow: 'none',
-        borderRadius: 0,
-      }}>
+      {/* ── Hero Greeting Removed ── */}
 
         {/* Demo Account Upgrade Banner (Senior) */}
         {(!user?.subscription_plan || user?.subscription_plan === 'free') && stats?.timeLimits && stats.timeLimits.remainingRanked <= 0 && (
@@ -1144,7 +1137,6 @@ export default function Dashboard({ user, setUser }) {
           })}
           </div>
         </div>
-      </div>
 
             {/* ── Event Tiles ── */}
       <div style={{ marginTop: '2rem' }}>
