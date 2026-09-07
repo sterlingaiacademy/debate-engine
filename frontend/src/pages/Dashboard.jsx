@@ -1064,7 +1064,7 @@ export default function Dashboard({ user, setUser }) {
         )}
 
         {/* ── Mode Cards ── */}
-        <div style={{ marginTop: ((!user?.subscription_plan || user?.subscription_plan === 'free') && stats?.timeLimits && stats.timeLimits.remainingRanked <= 0) ? '2rem' : '0' }}>
+        <div style={{ marginTop: '2.5rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
             <h2 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0, color: '#fff' }}>Choose Your Mode</h2>
           </div>
