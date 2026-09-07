@@ -1105,8 +1105,7 @@ export default function Dashboard({ user, setUser }) {
                   e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >
-                {/* Subtle colour wash in corner */}
-                <div style={{ position: 'absolute', top: -40, right: -40, width: 120, height: 120, borderRadius: '50%', background: `radial-gradient(circle, ${mode.color}18 0%, transparent 70%)`, pointerEvents: 'none' }} />
+
 
                 {mode.locked && (
                   <div style={{ position: 'absolute', inset: 0, background: 'rgba(15,23,42,0.85)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', zIndex: 10, backdropFilter: 'blur(4px)' }}>
