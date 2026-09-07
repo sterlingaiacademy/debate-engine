@@ -2,7 +2,7 @@ import { useState, useEffect, useLayoutEffect, useRef, useMemo } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LogOut, LayoutDashboard, Mic, BarChart2, Trophy,
-  Zap, Flame, Settings, BookOpen, Gamepad2, Menu, X, Crown, Globe, Users, Brain, Radio, Scroll, Target, Presentation, FileQuestion, Award, ChevronRight
+  Zap, Flame, Settings, BookOpen, Gamepad2, Menu, X, Crown, Globe, Users, Brain, Radio, Scroll, Target, Presentation, FileQuestion, Award, ChevronRight, Music
 } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 import PremiumEnrollModal from './PremiumEnrollModal';
@@ -94,6 +94,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
     { name: 'Super Tutor', path: isJunior ? '/conversational-agent' : '/debate-instructions?next=/conversational-agent', match: '/conversational-agent', icon: Brain },
     isLevel3Plus && { name: 'Speech Coach', path: isJunior ? '/speech-coach' : '/debate-instructions?next=/speech-coach', match: '/speech-coach', icon: Radio },
     isLevel3Plus && { name: 'Speech Analysis', path: '/speech-analysis', match: '/speech-analysis', icon: Mic },
+    { name: 'Sangeet', path: '/sangeet', match: '/sangeet', icon: Music },
     // MUN 30-Day — Pro & Max full access; Free sees it locked
     { name: 'MUN 30 Boot Camp', path: '/mun30', match: '/mun30', icon: Target, locked: isFree, plan: 'Pro' },
     // Diplomat 365 — Max only; Pro & Free see it locked
