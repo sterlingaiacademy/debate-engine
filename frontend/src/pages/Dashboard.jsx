@@ -1036,11 +1036,7 @@ export default function Dashboard({ user, setUser }) {
         boxShadow: 'none',
         borderRadius: 0,
       }}>
-        {/* Subtle ambient orbs — same as SangeetSession */}
-        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,107,0,0.07) 0%, transparent 70%)', top: '-20%', right: '-5%' }} />
-          <div style={{ position: 'absolute', width: 350, height: 350, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,107,0,0.04) 0%, transparent 70%)', bottom: '-10%', left: '-5%' }} />
-        </div>
+
         {/* Demo Account Upgrade Banner (Senior) */}
         {(!user?.subscription_plan || user?.subscription_plan === 'free') && stats?.timeLimits && stats.timeLimits.remainingRanked <= 0 && (
           <div 
@@ -1084,10 +1080,10 @@ export default function Dashboard({ user, setUser }) {
                 onClick={() => { if (!mode.locked) navigate(mode.path(isJunior)); }}
                 className="mode-card"
                 style={{
-                  background: 'rgba(255,255,255,0.03)',
+                  background: 'rgba(255,255,255,0.04)',
                   backdropFilter: 'blur(20px)',
                   WebkitBackdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(255,255,255,0.07)',
+                  border: '1px solid rgba(255,255,255,0.08)',
                   color: '#fff',
                   minHeight: 200,
                   display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
@@ -1096,17 +1092,18 @@ export default function Dashboard({ user, setUser }) {
                   cursor: mode.locked ? 'not-allowed' : 'pointer',
                   animation: `cardEnter 0.5s cubic-bezier(0.16,1,0.3,1) ${i * 80}ms both`,
                   transition: 'border-color 0.3s, box-shadow 0.3s, transform 0.2s cubic-bezier(0.34,1.56,0.64,1)',
-                  boxShadow: '0 20px 60px rgba(0,0,0,0.35)',
+                  boxShadow: '0 0 0 1px rgba(255,255,255,0.02), 0 20px 60px rgba(0,0,0,0.4)',
+                  borderRadius: 20,
                 }}
                 onMouseEnter={e => {
                   if (mode.locked) return;
                   e.currentTarget.style.borderColor = `${mode.color}40`;
-                  e.currentTarget.style.boxShadow = `0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px ${mode.color}25, 0 0 30px ${mode.color}15`;
+                  e.currentTarget.style.boxShadow = `0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px ${mode.color}40, 0 0 30px ${mode.color}15`;
                   e.currentTarget.style.transform = 'translateY(-4px)';
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)';
-                  e.currentTarget.style.boxShadow = '0 20px 60px rgba(0,0,0,0.35)';
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
+                  e.currentTarget.style.boxShadow = '0 0 0 1px rgba(255,255,255,0.02), 0 20px 60px rgba(0,0,0,0.4)';
                   e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >
