@@ -271,7 +271,7 @@ export default function Register({ onLogin }) {
 
   return (
     <div style={{
-      display: 'flex', minHeight: '100vh', width: '100%',
+      display: 'flex', minHeight: '111.111vh', width: '100%',
       fontFamily: GOOGLE_SANS, background: '#06080F', position: 'relative', overflow: 'auto'
     }}>
       {/* Background decoration */}
