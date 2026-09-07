@@ -106,18 +106,21 @@ const PitchVisualizer = forwardRef(function PitchVisualizer(
       historyRef.current    = [];
       deviationsRef.current = [];
       drawLoop();
-    } catch (e) {
-      console.error('PitchVisualizer mic error:', e);
+    } catch (err) {
+      console.error('Audio start error:', err);
     }
   }
 
   function stopAudio() {
-    cancelAnimationFrame(rafRef.current);
-    streamRef.current?.getTracks().forEach(t => t.stop());
-    streamRef.current = null;
-    audioCtxRef.current?.close();
-    audioCtxRef.current = null;
-    analyserRef.current = null;
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    if (audioCtxRef.current) audioCtxRef.current.close();
+    if (streamRef.current) streamRef.current.getTracks().forEach(t => t.stop());
+    historyRef.current = [];
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
   }
 
   function drawLoop() {
@@ -149,8 +152,8 @@ const PitchVisualizer = forwardRef(function PitchVisualizer(
     const byteBuf = new Uint8Array(analyser.fftSize);
     analyser.getByteTimeDomainData(byteBuf);
     ctx.beginPath();
-    ctx.strokeStyle = `${color}40`;
-    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = `${color}25`;
+    ctx.lineWidth = 3;
     const sw = W / byteBuf.length;
     for (let i = 0; i < byteBuf.length; i++) {
       const y = ((byteBuf[i] / 128) * H) / 2;
@@ -169,20 +172,42 @@ const PitchVisualizer = forwardRef(function PitchVisualizer(
 
       history.forEach((item, i) => {
         const norm  = (item.hz - minHz) / range;
-        const barH  = Math.max(4, norm * H * 0.7);
+        const barH  = Math.max(8, norm * (H - 40)); // Leave room at top
         const alpha = 0.2 + (i / history.length) * 0.8;
         const hex   = Math.round(alpha * 255).toString(16).padStart(2, '0');
+        
         ctx.fillStyle = `${color}${hex}`;
-        ctx.fillRect(i * barW, H - barH, barW - 1, barH);
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = `${color}${hex}`;
+        
+        const x = i * barW + 2;
+        const y = H - barH;
+        const w = Math.max(2, barW - 6);
+        const r = Math.min(w / 2, 8);
+        
+        ctx.beginPath();
+        if (ctx.roundRect) {
+          ctx.roundRect(x, y, w, barH + 20, [r, r, 0, 0]);
+        } else {
+          ctx.fillRect(x, y, w, barH + 20); // Fallback
+        }
+        ctx.fill();
+        ctx.shadowBlur = 0; // reset
       });
 
       // Current note label
       const last = history[history.length - 1];
       if (last) {
-        ctx.font      = 'bold 18px Inter, sans-serif';
-        ctx.fillStyle = color;
+        ctx.font      = '900 42px Inter, sans-serif';
         ctx.textAlign = 'right';
-        ctx.fillText(`${last.sargam} (${last.cents >= 0 ? '+' : ''}${last.cents}¢)`, W - 8, 24);
+        ctx.textBaseline = 'top';
+        const text = `${last.sargam} (${last.cents >= 0 ? '+' : ''}${last.cents}¢)`;
+        
+        ctx.shadowBlur = 24;
+        ctx.shadowColor = color;
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(text, W - 32, 32);
+        ctx.shadowBlur = 0;
       }
     }
 
@@ -190,12 +215,31 @@ const PitchVisualizer = forwardRef(function PitchVisualizer(
   }
 
   return (
-    <canvas
-      ref={canvasRef}
-      width={600}
-      height={100}
-      style={{ width: '100%', height: 100, borderRadius: 8, background: 'rgba(255,255,255,0.03)' }}
-    />
+    <div style={{
+      position: 'relative',
+      width: '100%',
+      height: 180,
+      borderRadius: 24,
+      background: 'linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)',
+      border: '1px solid rgba(255,255,255,0.08)',
+      overflow: 'hidden',
+      boxShadow: 'inset 0 2px 20px rgba(255,255,255,0.03), 0 20px 40px rgba(0,0,0,0.3)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }}>
+      {!isRecording && (
+        <div style={{ position: 'absolute', zIndex: 10, color: 'rgba(255,255,255,0.4)', fontSize: '1.1rem', fontWeight: 600, letterSpacing: '0.05em' }}>
+          Mic Standby
+        </div>
+      )}
+      <canvas
+        ref={canvasRef}
+        width={1000}
+        height={360}
+        style={{ width: '100%', height: '100%', display: 'block', opacity: isRecording ? 1 : 0.2, transition: 'opacity 0.4s' }}
+      />
+    </div>
   );
 });
 
