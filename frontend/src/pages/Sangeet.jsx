@@ -36,12 +36,13 @@ export default function Sangeet() {
 
   return (
     <div style={{
-      minHeight: '100vh',
+      minHeight: '100%',
       background: '#04060d',
       fontFamily: "'Inter', sans-serif",
       color: '#fff',
       position: 'relative',
       overflow: 'hidden',
+      zoom: window.innerWidth >= 1024 ? 1.222 : 1,
     }}>
 
       {/* ── Animated background orbs ── */}
