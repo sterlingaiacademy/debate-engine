@@ -1080,20 +1080,21 @@ export default function Dashboard({ user, setUser }) {
                 onClick={() => { if (!mode.locked) navigate(mode.path(isJunior)); }}
                 className="mode-card"
                 style={{
-                  background: 'rgba(255,255,255,0.04)',
+                  background: 'rgba(255,255,255,0.08)',
                   backdropFilter: 'blur(20px)',
                   WebkitBackdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(255,255,255,0.08)',
+                  border: '1px solid rgba(255,255,255,0.15)',
                   color: '#fff',
-                  minHeight: 200,
+                  minHeight: 240,
+                  padding: '2.5rem 2rem',
                   display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
                   position: 'relative',
                   overflow: 'hidden',
                   cursor: mode.locked ? 'not-allowed' : 'pointer',
                   animation: `cardEnter 0.5s cubic-bezier(0.16,1,0.3,1) ${i * 80}ms both`,
                   transition: 'border-color 0.3s, box-shadow 0.3s, transform 0.2s cubic-bezier(0.34,1.56,0.64,1)',
-                  boxShadow: '0 0 0 1px rgba(255,255,255,0.02), 0 20px 60px rgba(0,0,0,0.4)',
-                  borderRadius: 20,
+                  boxShadow: '0 0 0 1px rgba(255,255,255,0.04), 0 24px 70px rgba(0,0,0,0.5)',
+                  borderRadius: 24,
                 }}
                 onMouseEnter={e => {
                   if (mode.locked) return;
