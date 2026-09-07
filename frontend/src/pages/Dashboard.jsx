@@ -972,7 +972,13 @@ export default function Dashboard({ user, setUser }) {
           <PremiumEnrollModal user={user} onDismiss={() => setShowPremiumModal(false)} />
         </div>
       )}
-      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', paddingBottom: '4rem' }}>
+      {/* Animated orbs — fixed behind everything */}
+      <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,107,0,0.09) 0%, transparent 70%)', top: '-15%', left: '-10%', animation: 'dashOrb1 14s ease-in-out infinite' }} />
+        <div style={{ position: 'absolute', width: 450, height: 450, borderRadius: '50%', background: 'radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 70%)', bottom: '5%', right: '-8%', animation: 'dashOrb2 18s ease-in-out infinite' }} />
+        <div style={{ position: 'absolute', width: 300, height: 300, borderRadius: '50%', background: 'radial-gradient(circle, rgba(16,185,129,0.06) 0%, transparent 70%)', top: '45%', right: '25%', animation: 'dashOrb3 22s ease-in-out infinite' }} />
+      </div>
+      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', paddingBottom: '4rem', position: 'relative', zIndex: 1 }}>
         <div style={{ marginTop: '2.5rem' }}>
           <div style={{
             display: 'inline-flex',
@@ -1073,8 +1079,10 @@ export default function Dashboard({ user, setUser }) {
                 onClick={() => { if (!mode.locked) navigate(mode.path(isJunior)); }}
                 className="mode-card"
                 style={{
-                  background: mode.grad,
-                  border: `1px solid ${mode.color}25`,
+                  background: 'rgba(255,255,255,0.03)',
+                  backdropFilter: 'blur(18px)',
+                  WebkitBackdropFilter: 'blur(18px)',
+                  border: `1px solid rgba(255,255,255,0.07)`,
                   color: '#fff',
                   minHeight: 200,
                   display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
@@ -1082,8 +1090,24 @@ export default function Dashboard({ user, setUser }) {
                   overflow: 'hidden',
                   cursor: mode.locked ? 'not-allowed' : 'pointer',
                   animation: `cardEnter 0.5s cubic-bezier(0.16,1,0.3,1) ${i * 80}ms both`,
+                  transition: 'border-color 0.25s, box-shadow 0.25s, transform 0.2s cubic-bezier(0.34,1.56,0.64,1)',
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+                }}
+                onMouseEnter={e => {
+                  if (mode.locked) return;
+                  e.currentTarget.style.borderColor = `${mode.color}45`;
+                  e.currentTarget.style.boxShadow = `0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px ${mode.color}25, 0 0 30px ${mode.color}15`;
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)';
+                  e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.3)';
+                  e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >
+                {/* Subtle colour wash in corner */}
+                <div style={{ position: 'absolute', top: -40, right: -40, width: 120, height: 120, borderRadius: '50%', background: `radial-gradient(circle, ${mode.color}18 0%, transparent 70%)`, pointerEvents: 'none' }} />
+
                 {mode.locked && (
                   <div style={{ position: 'absolute', inset: 0, background: 'rgba(15,23,42,0.85)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', zIndex: 10, backdropFilter: 'blur(4px)' }}>
                     <Lock size={32} color="#94a3b8" style={{ marginBottom: '0.75rem' }} />
@@ -1091,20 +1115,18 @@ export default function Dashboard({ user, setUser }) {
                     <span style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: '0.25rem' }}>Unavailable during competition</span>
                   </div>
                 )}
-                {/* Top dec */}
-
 
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                    <div style={{ width: 44, height: 44, borderRadius: 12, background: `${mode.color}25`, border: `1px solid ${mode.color}40`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ width: 44, height: 44, borderRadius: 12, background: `${mode.color}18`, border: `1px solid ${mode.color}35`, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 0 16px ${mode.color}20` }}>
                       <Icon size={22} color={mode.color} strokeWidth={2} />
                     </div>
-                    <span style={{ fontSize: '0.65rem', fontWeight: 800, letterSpacing: '0.1em', color: mode.color, background: `${mode.color}18`, border: `1px solid ${mode.color}30`, padding: '0.2rem 0.6rem', borderRadius: 99 }}>
+                    <span style={{ fontSize: '0.65rem', fontWeight: 800, letterSpacing: '0.1em', color: mode.color, background: `${mode.color}15`, border: `1px solid ${mode.color}30`, padding: '0.2rem 0.6rem', borderRadius: 99 }}>
                       {mode.tag}
                     </span>
                   </div>
                   <h3 style={{ fontSize: '1.2rem', fontWeight: 800, margin: '0 0 0.4rem', letterSpacing: '-0.01em' }}>{mode.title}</h3>
-                  <p style={{ fontSize: '0.85rem', opacity: 0.75, margin: 0, lineHeight: 1.55 }}>{mode.desc}</p>
+                  <p style={{ fontSize: '0.85rem', color: '#64748b', margin: 0, lineHeight: 1.6 }}>{mode.desc}</p>
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '1.5rem', fontSize: '0.85rem', fontWeight: 700, color: mode.color }}>
