@@ -1031,14 +1031,16 @@ export default function Dashboard({ user, setUser }) {
       {/* ── Hero Greeting ── */}
       <div className="welcome-card animate-fade-in dashboard-hero-container" style={{
         position: 'relative', overflow: 'hidden',
-        background: '#13141c',
-        border: '1px solid rgba(255,255,255,0.10)',
-        boxShadow: '0 0 0 1px rgba(255,255,255,0.03), 0 24px 80px rgba(0,0,0,0.6)',
-        borderRadius: 20,
+        background: 'transparent',
+        border: 'none',
+        boxShadow: 'none',
+        borderRadius: 0,
       }}>
-        {/* Background decoration */}
-
-
+        {/* Subtle ambient orbs — same as SangeetSession */}
+        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,107,0,0.07) 0%, transparent 70%)', top: '-20%', right: '-5%' }} />
+          <div style={{ position: 'absolute', width: 350, height: 350, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,107,0,0.04) 0%, transparent 70%)', bottom: '-10%', left: '-5%' }} />
+        </div>
         {/* Demo Account Upgrade Banner (Senior) */}
         {(!user?.subscription_plan || user?.subscription_plan === 'free') && stats?.timeLimits && stats.timeLimits.remainingRanked <= 0 && (
           <div 
@@ -1085,7 +1087,7 @@ export default function Dashboard({ user, setUser }) {
                   background: 'rgba(255,255,255,0.03)',
                   backdropFilter: 'blur(20px)',
                   WebkitBackdropFilter: 'blur(20px)',
-                  border: `1px solid rgba(255,255,255,0.07)`,
+                  border: '1px solid rgba(255,255,255,0.07)',
                   color: '#fff',
                   minHeight: 200,
                   display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
