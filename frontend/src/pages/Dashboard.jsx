@@ -983,12 +983,10 @@ export default function Dashboard({ user, setUser }) {
         display: 'flex', flexDirection: 'column', gap: '1.75rem', 
         padding: '3rem', paddingBottom: '4rem', 
         position: 'relative', zIndex: 1,
-        background: 'rgba(255,255,255,0.04)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255,255,255,0.08)',
-        boxShadow: '0 0 0 1px rgba(255,255,255,0.02), 0 20px 60px rgba(0,0,0,0.4)',
-        borderRadius: 24,
+        background: '#04060d',
+        border: '1px solid rgba(255,255,255,0.03)',
+        boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
+        borderRadius: 0,
         minHeight: 'calc(100vh - 100px)',
       }}>
         <div>
