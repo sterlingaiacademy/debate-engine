@@ -125,17 +125,18 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
         borderRadius: 99,
       }
     : {
-        background: 'rgba(255,107,0,0.12)',
+        background: 'linear-gradient(135deg, rgba(255,107,0,0.18) 0%, rgba(255,107,0,0.08) 100%)',
         color: '#FF6B00',
         borderLeft: '3px solid #FF6B00',
-        borderRadius: '0 10px 10px 0',
+        borderRadius: '0 12px 12px 0',
+        boxShadow: '0 0 20px rgba(255,107,0,0.12), inset 0 0 0 1px rgba(255,107,0,0.12)',
       };
 
   const inactiveStyle = {
     background: 'transparent',
     color: isJunior ? 'var(--j-purple)' : '#64748b',
     borderLeft: isJunior ? 'none' : '3px solid transparent',
-    borderRadius: isJunior ? 99 : '0 10px 10px 0',
+    borderRadius: isJunior ? 99 : '0 12px 12px 0',
   };
 
   return (
@@ -200,11 +201,11 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
           borderRight: '2px solid rgba(124,58,237,0.1)',
           boxShadow: '4px 0 24px rgba(124,58,237,0.08)',
         } : {
-          background: 'rgba(4,6,13,0.65)',
-          backdropFilter: 'blur(28px)',
-          WebkitBackdropFilter: 'blur(28px)',
-          borderRight: '1px solid rgba(255,255,255,0.06)',
-          boxShadow: '4px 0 48px rgba(0,0,0,0.7)',
+          background: 'linear-gradient(180deg, rgba(15,23,42,0.95) 0%, rgba(10,15,30,0.98) 100%)',
+          backdropFilter: 'blur(32px)',
+          WebkitBackdropFilter: 'blur(32px)',
+          borderRight: '1px solid rgba(255,255,255,0.1)',
+          boxShadow: '4px 0 48px rgba(0,0,0,0.8)',
         }),
       }}>
 
@@ -215,7 +216,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
           alignItems: 'center',
           justifyContent: isCollapsed && !isMobile ? 'center' : 'space-between',
           padding: isMobile ? '1.25rem 1.25rem 1.25rem 1.5rem' : (isCollapsed ? '1.5rem 0 0.5rem 0' : '1.5rem 1rem 0.5rem 1.25rem'),
-          borderBottom: isJunior ? '2px solid rgba(124,58,237,0.08)' : '1px solid rgba(255,255,255,0.05)',
+          borderBottom: isJunior ? '2px solid rgba(124,58,237,0.08)' : '1px solid rgba(255,255,255,0.1)',
           minHeight: 72,
           flexShrink: 0,
           gap: isCollapsed && !isMobile ? '0.75rem' : '0.5rem',
@@ -299,14 +300,16 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
                   if (!isActive) {
                     e.currentTarget.style.background = isJunior
                       ? 'rgba(124,58,237,0.08)'
-                      : 'rgba(255,255,255,0.05)';
+                      : 'rgba(255,255,255,0.06)';
                     e.currentTarget.style.color = isJunior ? '#7c3aed' : '#e2e8f0';
+                    e.currentTarget.style.borderLeftColor = 'rgba(255,255,255,0.12)';
                   }
                 }}
                 onMouseLeave={e => {
                   if (!isActive) {
                     e.currentTarget.style.background = 'transparent';
                     e.currentTarget.style.color = isJunior ? 'var(--j-purple)' : '#64748b';
+                    e.currentTarget.style.borderLeftColor = 'transparent';
                   }
                 }}
               >
