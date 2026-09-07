@@ -51,7 +51,7 @@ export default function Sangeet() {
         <div style={{ position: 'absolute', width: 350, height: 350, borderRadius: '50%', background: 'radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%)', top: '40%', right: '20%', animation: 'drift3 22s ease-in-out infinite' }} />
       </div>
 
-      <div style={{ position: 'relative', zIndex: 10, maxWidth: 900, margin: '0 auto', padding: '3rem 1.5rem 4rem' }}>
+      <div style={{ position: 'relative', zIndex: 10, maxWidth: 1050, margin: '0 auto', padding: '3rem 1.5rem 4rem' }}>
 
         {/* ── Hero ── */}
         <div style={{ marginBottom: '2.75rem', animation: 'fadeUp 0.5s ease both' }}>
