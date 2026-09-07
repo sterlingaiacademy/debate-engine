@@ -54,6 +54,9 @@ app.use(express.json({
 // Speech Coach Routes
 app.use('/api/speech', require('./api/speech_coach'));
 
+// Sangeet Music Scoring Routes
+app.use('/api/sangeet', require('./api/sangeet'));
+
 // Helper for IST Date (Resets at 12:00 AM IST)
 function getISTDateString() {
   const now = new Date();

@@ -90,6 +90,27 @@ async function initDB() {
       await client.query(`ALTER TABLE speech_analysis_sessions ADD COLUMN IF NOT EXISTS is_league BOOLEAN DEFAULT FALSE`);
     } catch (e) { /* ignore */ }
 
+    // ── Sangeet music scoring table ─────────────────────────────────────────
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS sangeet_scores (
+        id               SERIAL PRIMARY KEY,
+        student_id       TEXT NOT NULL,
+        grade            TEXT NOT NULL,
+        task_type        TEXT,
+        prompt           TEXT,
+        pitch_score      INTEGER,
+        rhythm_score     INTEGER,
+        expression_score INTEGER,
+        overall_score    INTEGER,
+        feedback         TEXT,
+        passed           BOOLEAN DEFAULT FALSE,
+        created_at       TIMESTAMPTZ DEFAULT NOW()
+      )
+    `);
+    try {
+      await client.query(`CREATE INDEX IF NOT EXISTS idx_sangeet_student ON sangeet_scores(student_id)`);
+    } catch (e) { /* ignore */ }
+
 
     // Index for fast email lookups during login
     await client.query(`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)`);

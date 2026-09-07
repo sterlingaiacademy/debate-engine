@@ -73,6 +73,8 @@ const Teacher2030CertificateDownload = lazy(() => import('./pages/Teacher2030Cer
 const ITORegister = lazy(() => import('./pages/ITORegister'));
 const SpeechAnalysis = lazy(() => import('./pages/SpeechAnalysis'));
 const SpeechLeague = lazy(() => import('./pages/SpeechLeague'));
+const Sangeet = lazy(() => import('./pages/Sangeet'));
+const SangeetSession = lazy(() => import('./pages/SangeetSession'));
 
 const OlympiadSchoolRegister = lazy(() => import('./pages/OlympiadSchoolRegister'));
 const OlympiadStudentRegister = lazy(() => import('./pages/OlympiadStudentRegister'));
@@ -295,6 +297,9 @@ function App() {
               <Route path="/speech-coach" element={user ? <ConversationalAgent user={user} agentId="agent_7601krh244qdes5s5db2rjhn1kt4" mode="speech-coach" /> : <Navigate to="/" />} />
               <Route path="/speech-analysis" element={user ? <SpeechAnalysis user={user} /> : <Navigate to="/" />} />
               <Route path="/speech-league" element={user ? <SpeechLeague user={user} /> : <Navigate to="/" />} />
+              <Route path="/sangeet" element={user ? <Sangeet user={user} /> : <Navigate to="/" />} />
+              <Route path="/sangeet/session" element={user ? <SangeetSession user={user} /> : <Navigate to="/" />} />
+
               <Route path="/debate-instructions" element={user ? <DebateInstructions user={user} /> : <Navigate to="/" />} />
               <Route path="/vocab-trainer" element={user ? <VocabTrainer user={user} /> : <Navigate to="/" />} />
               <Route path="/word-scramble" element={user ? <WordScramble user={user} /> : <Navigate to="/" />} />
