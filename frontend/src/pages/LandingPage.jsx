@@ -284,6 +284,7 @@ export default function LandingPage() {
       <section
         className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-32 pb-20 md:pt-40 md:pb-24 w-full overflow-hidden"
         style={{
+          minHeight: '111.111vh',
           background: 'radial-gradient(circle at 50% -20%, #161214 0%, #06080F 60%)',
           animation: "fadeIn 0.6s ease-out"
         }}
