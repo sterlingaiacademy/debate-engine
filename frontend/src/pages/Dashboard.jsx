@@ -1162,17 +1162,26 @@ export default function Dashboard({ user, setUser }) {
           }}
           style={{
             borderRadius: 18, padding: '1.4rem 1.5rem', cursor: 'pointer',
-            background: 'linear-gradient(135deg, #1f0505 0%, #3d0a0a 100%)',
-            border: '1px solid rgba(239,68,68,0.2)',
+            background: 'rgba(255,255,255,0.03)',
+            backdropFilter: 'blur(18px)',
+            WebkitBackdropFilter: 'blur(18px)',
+            border: '1px solid rgba(239,68,68,0.18)',
             position: 'relative', overflow: 'hidden',
-            transition: 'transform 0.25s, box-shadow 0.25s',
-            boxShadow: '0 4px 24px rgba(239,68,68,0.1)',
+            transition: 'transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s, border-color 0.22s',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
           }}
-          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(239,68,68,0.3)'; }}
-          onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 4px 24px rgba(239,68,68,0.1)'; }}
+          onMouseEnter={e => {
+            e.currentTarget.style.transform = 'translateY(-3px)';
+            e.currentTarget.style.boxShadow = '0 16px 48px rgba(239,68,68,0.2), 0 0 0 1px rgba(239,68,68,0.25)';
+            e.currentTarget.style.borderColor = 'rgba(239,68,68,0.35)';
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.transform = '';
+            e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.3)';
+            e.currentTarget.style.borderColor = 'rgba(239,68,68,0.18)';
+          }}
         >
-          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #ef4444, #fca5a5)' }} />
-          <div style={{ position: 'absolute', top: -40, right: -40, width: 130, height: 130, borderRadius: '50%', background: 'radial-gradient(circle, rgba(239,68,68,0.15) 0%, transparent 70%)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #ef4444, #fca5a5)', opacity: 0.8 }} />
           
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
             <div>
@@ -1180,14 +1189,14 @@ export default function Dashboard({ user, setUser }) {
                 <span style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.12em', color: '#ef4444', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.22)', padding: '0.2rem 0.65rem', borderRadius: 99 }}>
                   NEW CHALLENGE
                 </span>
-                <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 14px rgba(239,68,68,0.15)' }}>
                   <Star size={16} color="#ef4444" strokeWidth={2.5} />
                 </div>
               </div>
               <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fff', marginBottom: '0.25rem', letterSpacing: '-0.01em' }}>
                 <span style={{ color: '#ef4444' }}>ThinkQuest</span> Olympiad
               </div>
-              <div style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '1rem', lineHeight: 1.5 }}>
+              <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '1rem', lineHeight: 1.5 }}>
                 Practice daily for the Grand Cognitive Challenge!
               </div>
             </div>
@@ -1208,32 +1217,41 @@ export default function Dashboard({ user, setUser }) {
           }}
           style={{
             borderRadius: 18, padding: '1.4rem 1.5rem', cursor: 'pointer',
-            background: 'linear-gradient(135deg, #0a0a2e 0%, #1a1a4e 100%)',
-            border: '1px solid rgba(99,102,241,0.3)',
+            background: 'rgba(255,255,255,0.03)',
+            backdropFilter: 'blur(18px)',
+            WebkitBackdropFilter: 'blur(18px)',
+            border: '1px solid rgba(99,102,241,0.2)',
             position: 'relative', overflow: 'hidden',
-            transition: 'transform 0.25s, box-shadow 0.25s',
-            boxShadow: '0 4px 24px rgba(99,102,241,0.12)',
+            transition: 'transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s, border-color 0.22s',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
           }}
-          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(99,102,241,0.35)'; }}
-          onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 4px 24px rgba(99,102,241,0.12)'; }}
+          onMouseEnter={e => {
+            e.currentTarget.style.transform = 'translateY(-3px)';
+            e.currentTarget.style.boxShadow = '0 16px 48px rgba(99,102,241,0.2), 0 0 0 1px rgba(99,102,241,0.25)';
+            e.currentTarget.style.borderColor = 'rgba(99,102,241,0.38)';
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.transform = '';
+            e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.3)';
+            e.currentTarget.style.borderColor = 'rgba(99,102,241,0.2)';
+          }}
         >
-          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #6366f1, #a5b4fc)' }} />
-          <div style={{ position: 'absolute', top: -40, right: -40, width: 130, height: 130, borderRadius: '50%', background: 'radial-gradient(circle, rgba(99,102,241,0.18) 0%, transparent 70%)', pointerEvents: 'none' }} />
-          
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #6366f1, #a5b4fc)', opacity: 0.8 }} />
+
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
                 <span style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.12em', color: '#818cf8', background: 'rgba(99,102,241,0.12)', border: '1px solid rgba(99,102,241,0.3)', padding: '0.2rem 0.65rem', borderRadius: 99 }}>
                   {user?.indusmun_registered ? 'ENROLLED' : 'NEW EVENT'}
                 </span>
-                <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(99,102,241,0.12)', border: '1px solid rgba(99,102,241,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(99,102,241,0.12)', border: '1px solid rgba(99,102,241,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 14px rgba(99,102,241,0.15)' }}>
                   <Globe size={16} color="#818cf8" strokeWidth={2.5} />
                 </div>
               </div>
               <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fff', marginBottom: '0.25rem', letterSpacing: '-0.01em' }}>
                 <span style={{ color: '#818cf8' }}>Indus</span> MUN
               </div>
-              <div style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '1rem', lineHeight: 1.5 }}>
+              <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '1rem', lineHeight: 1.5 }}>
                 International Model United Nations for Grades 6–12.
               </div>
             </div>

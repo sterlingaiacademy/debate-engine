@@ -200,10 +200,11 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
           borderRight: '2px solid rgba(124,58,237,0.1)',
           boxShadow: '4px 0 24px rgba(124,58,237,0.08)',
         } : {
-          background: 'rgba(10,10,10,0.98)',
-          backdropFilter: 'blur(20px)',
+          background: 'rgba(4,6,13,0.65)',
+          backdropFilter: 'blur(28px)',
+          WebkitBackdropFilter: 'blur(28px)',
           borderRight: '1px solid rgba(255,255,255,0.06)',
-          boxShadow: '4px 0 32px rgba(0,0,0,0.5)',
+          boxShadow: '4px 0 48px rgba(0,0,0,0.7)',
         }),
       }}>
 
