@@ -203,6 +203,12 @@ html, body {
   height: -webkit-fill-available;
 }
 
+@media (min-width: 1024px) {
+  html {
+    zoom: 0.9;
+  }
+}
+
 /* ================================================================
    JUNIOR THEME — Vivid, Playful, Adventure-Game
    ================================================================ */
