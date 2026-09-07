@@ -1030,12 +1030,10 @@ export default function Dashboard({ user, setUser }) {
         </div>
       {/* ── Hero Greeting ── */}
       <div className="welcome-card animate-fade-in dashboard-hero-container" style={{
-        position: 'relative', overflow: 'hidden',
-        background: 'rgba(255,255,255,0.03)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255,255,255,0.07)',
-        boxShadow: '0 20px 60px rgba(0,0,0,0.35)',
+        position: 'relative', overflow: 'visible',
+        background: 'transparent',
+        border: 'none',
+        boxShadow: 'none',
       }}>
         {/* Background decoration */}
 
@@ -1084,8 +1082,8 @@ export default function Dashboard({ user, setUser }) {
                 className="mode-card"
                 style={{
                   background: 'rgba(255,255,255,0.03)',
-                  backdropFilter: 'blur(18px)',
-                  WebkitBackdropFilter: 'blur(18px)',
+                  backdropFilter: 'blur(20px)',
+                  WebkitBackdropFilter: 'blur(20px)',
                   border: `1px solid rgba(255,255,255,0.07)`,
                   color: '#fff',
                   minHeight: 200,
@@ -1094,18 +1092,18 @@ export default function Dashboard({ user, setUser }) {
                   overflow: 'hidden',
                   cursor: mode.locked ? 'not-allowed' : 'pointer',
                   animation: `cardEnter 0.5s cubic-bezier(0.16,1,0.3,1) ${i * 80}ms both`,
-                  transition: 'border-color 0.25s, box-shadow 0.25s, transform 0.2s cubic-bezier(0.34,1.56,0.64,1)',
-                  boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+                  transition: 'border-color 0.3s, box-shadow 0.3s, transform 0.2s cubic-bezier(0.34,1.56,0.64,1)',
+                  boxShadow: '0 20px 60px rgba(0,0,0,0.35)',
                 }}
                 onMouseEnter={e => {
                   if (mode.locked) return;
-                  e.currentTarget.style.borderColor = `${mode.color}45`;
-                  e.currentTarget.style.boxShadow = `0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px ${mode.color}25, 0 0 30px ${mode.color}15`;
-                  e.currentTarget.style.transform = 'translateY(-3px)';
+                  e.currentTarget.style.borderColor = `${mode.color}40`;
+                  e.currentTarget.style.boxShadow = `0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px ${mode.color}25, 0 0 30px ${mode.color}15`;
+                  e.currentTarget.style.transform = 'translateY(-4px)';
                 }}
                 onMouseLeave={e => {
                   e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)';
-                  e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.3)';
+                  e.currentTarget.style.boxShadow = '0 20px 60px rgba(0,0,0,0.35)';
                   e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >
