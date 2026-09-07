@@ -141,7 +141,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', height: isMobile ? '100svh' : '100%', minHeight: isMobile ? '-webkit-fill-available' : '100%', overflow: 'hidden', background: isJunior ? 'var(--bg-secondary)' : '#06080f' }}>
+    <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', height: isMobile ? '100svh' : '111.111vh', minHeight: isMobile ? '-webkit-fill-available' : '111.111vh', overflow: 'hidden', background: isJunior ? 'var(--bg-secondary)' : '#06080f' }}>
       
       {/* Mobile Top Header */}
       {isMobile && !isFullScreenRoute && (
