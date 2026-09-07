@@ -996,7 +996,7 @@ export default function Dashboard({ user, setUser }) {
             fontSize: '0.75rem',
             fontWeight: 500,
             color: 'var(--text-primary, #fff)',
-            marginBottom: '1.25rem',
+            marginBottom: '1.75rem',
           }}>
             <div className="animate-pulse" style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 8px rgba(16,185,129,0.5)' }}></div>
             {user?.grade ? (
@@ -1064,7 +1064,7 @@ export default function Dashboard({ user, setUser }) {
         )}
 
         {/* ── Mode Cards ── */}
-        <div style={{ marginTop: '2.5rem' }}>
+        <div style={{ marginTop: '1.5rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
             <h2 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0, color: '#fff' }}>Choose Your Mode</h2>
           </div>
