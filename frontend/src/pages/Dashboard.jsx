@@ -979,8 +979,19 @@ export default function Dashboard({ user, setUser }) {
 
 
       </div>
-      <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', paddingBottom: '4rem', position: 'relative', zIndex: 1 }}>
-        <div style={{ marginTop: '2.5rem' }}>
+      <div className="animate-fade-in dashboard-master-tile" style={{ 
+        display: 'flex', flexDirection: 'column', gap: '1.75rem', 
+        padding: '3rem', paddingBottom: '4rem', 
+        position: 'relative', zIndex: 1,
+        background: 'rgba(255,255,255,0.04)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        border: '1px solid rgba(255,255,255,0.08)',
+        boxShadow: '0 0 0 1px rgba(255,255,255,0.02), 0 20px 60px rgba(0,0,0,0.4)',
+        borderRadius: 24,
+        minHeight: 'calc(100vh - 100px)',
+      }}>
+        <div>
           <div style={{
             display: 'inline-flex',
             alignItems: 'center',
