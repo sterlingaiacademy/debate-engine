@@ -7,49 +7,7 @@ import { API_BASE } from '../api';
 
 const PASS_THRESHOLD = 60;
 
-// ── Scoring helpers ───────────────────────────────────────────────────────────
-function computePitchScore(deviations, tolerance) {
-  if (!deviations || deviations.length === 0) return 20; // no voice detected
-  const avg = deviations.reduce((a, b) => a + b, 0) / deviations.length;
-  const t   = tolerance.pitchCents;
-  if (avg <= t * 0.25) return 100;
-  if (avg <= t * 0.50) return 90;
-  if (avg <= t * 0.75) return 78;
-  if (avg <= t)        return 65;
-  if (avg <= t * 1.50) return 50;
-  if (avg <= t * 2.00) return 35;
-  return 22;
-}
 
-function computeRhythmScore(onsetTimes, tolerance) {
-  if (!onsetTimes || onsetTimes.length < 3) return 62; // not enough claps to judge
-  const gaps = [];
-  for (let i = 1; i < onsetTimes.length; i++) gaps.push(onsetTimes[i] - onsetTimes[i - 1]);
-  if (gaps.length < 2) return 62;
-  const mean   = gaps.reduce((a, b) => a + b, 0) / gaps.length;
-  const stddev = Math.sqrt(gaps.map(g => (g - mean) ** 2).reduce((a, b) => a + b, 0) / gaps.length);
-  const t = tolerance.rhythmMs;
-  if (stddev < t * 0.25) return 100;
-  if (stddev < t * 0.50) return 88;
-  if (stddev < t * 0.75) return 74;
-  if (stddev < t)        return 60;
-  if (stddev < t * 1.50) return 46;
-  return 30;
-}
-
-function buildFeedback(pitchScore, rhythmScore) {
-  const p =
-    pitchScore >= 88 ? 'Excellent pitch accuracy — your ear is very precise!' :
-    pitchScore >= 72 ? 'Good pitch! Keep focusing on centring your notes cleanly.' :
-    pitchScore >= 55 ? 'Your pitch is developing. Try humming slowly against a drone.' :
-    'Focus on matching the target note. Practice with a tanpura drone in the background.';
-  const r =
-    rhythmScore >= 88 ? 'Your timing is rock-steady — great rhythm sense!' :
-    rhythmScore >= 72 ? 'Good rhythm. Try counting aloud while you sing or clap.' :
-    rhythmScore >= 55 ? 'Timing is improving — practice with a metronome at a slow tempo.' :
-    'Focus on keeping a steady beat. Clap to a metronome before singing.';
-  return `${p} ${r}`;
-}
 
 export default function SangeetSession({ user }) {
   const navigate       = useNavigate();
@@ -67,11 +25,12 @@ export default function SangeetSession({ user }) {
   const [currentNote,setCurrentNote]= useState(null);
   const [score,      setScore]      = useState(null);
 
-  const timerRef      = useRef(null);
-  const onsetTimesRef = useRef([]);
-  const lastHzRef     = useRef(null);
-  // Store pitch deviations directly in the parent — avoids cross-ref timing issues
-  const pitchDevsRef  = useRef([]);
+  const timerRef       = useRef(null);
+  const onsetTimesRef  = useRef([]);
+  const lastHzRef      = useRef(null);
+  // Full pitch reading log — sent to Claude for AI scoring
+  const pitchReadingsRef = useRef([]); // [{hz, sargam, cents}]
+  const pitchDevsRef     = useRef([]); // |cents| only, for local fallback
 
   const prompt      = prompts[promptIdx];
   const totalPrompts= prompts.length;
@@ -82,9 +41,10 @@ export default function SangeetSession({ user }) {
 
   // ── Reset pitch data when a new session starts ─────────────────────────────
   function resetRecordingData() {
-    pitchDevsRef.current  = [];
-    onsetTimesRef.current = [];
-    lastHzRef.current     = null;
+    pitchDevsRef.current    = [];
+    pitchReadingsRef.current = [];
+    onsetTimesRef.current   = [];
+    lastHzRef.current       = null;
   }
 
   // ── Countdown → record ─────────────────────────────────────────────────────
@@ -127,6 +87,8 @@ export default function SangeetSession({ user }) {
   // ── Real-time pitch events (collected in parent ref) ───────────────────────
   const handlePitchDetected = useCallback((info) => {
     setCurrentNote(info);
+    // Store full reading for Claude
+    pitchReadingsRef.current.push({ hz: Math.round(info.hz), sargam: info.sargam, cents: info.cents });
     pitchDevsRef.current.push(Math.abs(info.cents));
     // Onset tracking — note changes > 20 Hz = new onset
     if (lastHzRef.current === null || Math.abs(info.hz - lastHzRef.current) > 20) {
@@ -139,21 +101,13 @@ export default function SangeetSession({ user }) {
   async function finishRecording() {
     setPhase('processing'); // show the processing screen immediately
 
-    const deviations  = [...pitchDevsRef.current];
-    const onsets      = [...onsetTimesRef.current];
-    const pitchScore  = computePitchScore(deviations, tolerance);
-    const rhythmScore = computeRhythmScore(onsets, tolerance);
-
-    const pitchData = deviations.length > 0 ? {
-      avgDeviation: deviations.reduce((a, b) => a + b, 0) / deviations.length,
-      maxDeviation: Math.max(...deviations),
-      smoothness:   Math.round((deviations.filter(d => d <= 25).length / deviations.length) * 100),
-      notesSung:    deviations.length,
-    } : null;
+    const deviations   = [...pitchDevsRef.current];
+    const onsets       = [...onsetTimesRef.current];
+    const pitchReadings = [...pitchReadingsRef.current];
 
     // Guarantee at least 1.5 s of "processing" screen so user can see it
     const [serverResult] = await Promise.all([
-      submitScore(pitchScore, rhythmScore, pitchData),
+      submitScore(pitchReadings, onsets.length),
       new Promise(r => setTimeout(r, 1500)),
     ]);
 
@@ -161,7 +115,7 @@ export default function SangeetSession({ user }) {
     setPhase('results');
   }
 
-  async function submitScore(pitchScore, rhythmScore, pitchData) {
+  async function submitScore(pitchReadings, onsetCount) {
     try {
       const studentId = user?.studentId || user?.id || 'anonymous';
       const resp = await fetch(`${API_BASE}/api/sangeet/score`, {
@@ -170,30 +124,21 @@ export default function SangeetSession({ user }) {
         body: JSON.stringify({
           studentId,
           grade,
-          taskType:   prompt.type,
-          prompt:     prompt.task,
-          pitchScore,
-          rhythmScore,
-          pitchData,
-          raga:       prompt.raga || null,
+          taskType:     prompt.type,
+          prompt:       prompt.task,
+          pitchReadings, // full array of {hz, sargam, cents}
+          onsetCount,
+          raga:          prompt.raga || null,
         }),
       });
       if (!resp.ok) throw new Error('Server error');
       return await resp.json();
     } catch {
-      // Graceful offline fallback
-      const needsExpr = gradeNum >= 7 && weights.expression > 0;
-      const exprScore = needsExpr ? Math.round((pitchScore + rhythmScore) / 2) : null;
-      const overall   = needsExpr
-        ? Math.round(pitchScore * weights.pitch + rhythmScore * weights.rhythm + (exprScore ?? 0) * weights.expression)
-        : Math.round(pitchScore * weights.pitch + rhythmScore * weights.rhythm);
+      // Offline fallback — clearly mark as unscored
       return {
-        pitchScore, rhythmScore,
-        expressionScore: exprScore,
-        overallScore: Math.max(0, Math.min(100, overall)),
-        feedback: buildFeedback(pitchScore, rhythmScore),
-        passed: overall >= PASS_THRESHOLD,
-        grade,
+        pitchScore: 0, rhythmScore: 0, expressionScore: 0, overallScore: 0,
+        feedback: 'Could not reach the scoring server. Please check your connection and try again.',
+        passed: false, grade,
       };
     }
   }
