@@ -1031,8 +1031,11 @@ export default function Dashboard({ user, setUser }) {
       {/* ── Hero Greeting ── */}
       <div className="welcome-card animate-fade-in dashboard-hero-container" style={{
         position: 'relative', overflow: 'hidden',
-        background: 'linear-gradient(135deg, rgba(255,107,0,0.08) 0%, rgba(0,0,0,0) 60%)',
-        border: '1px solid rgba(255,107,0,0.12)',
+        background: 'rgba(255,255,255,0.03)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        border: '1px solid rgba(255,255,255,0.07)',
+        boxShadow: '0 20px 60px rgba(0,0,0,0.35)',
       }}>
         {/* Background decoration */}
 
