@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef, useMemo } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LogOut, LayoutDashboard, Mic, BarChart2, Trophy,
@@ -498,7 +498,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
             display: 'flex', flexDirection: 'column',
             minHeight: 0,
           }}>
-            <Outlet />
+            {useMemo(() => <Outlet />, [pathname])}
           </div>
         </main>
       </div>
