@@ -1,0 +1,20 @@
+#!/usr/bin/expect -f
+set timeout -1
+set password "wvpi2!ZnTcV];ncy"
+
+spawn scp backend/migrate_indus.js graceandforce@65.20.85.75:/home/graceandforce/debate-engine/backend/
+expect "password:"
+send "$password\r"
+expect eof
+
+spawn ssh graceandforce@65.20.85.75
+expect "password:"
+send "$password\r"
+expect "$ "
+
+send "cd /home/graceandforce/debate-engine/backend && node migrate_indus.js\r"
+expect "$ "
+send "rm migrate_indus.js\r"
+expect "$ "
+send "exit\r"
+expect eof

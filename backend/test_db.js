@@ -1,12 +1,25 @@
-const { Pool } = require('pg');
 require('dotenv').config();
+const { Pool } = require('pg');
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  user: process.env.VULTR_DB_USER,
+  host: process.env.VULTR_DB_HOST,
+  database: process.env.VULTR_DB_NAME,
+  password: process.env.VULTR_DB_PASSWORD,
+  port: process.env.VULTR_DB_PORT,
   ssl: { rejectUnauthorized: false }
 });
-async function test() {
-  const res = await pool.query("SELECT column_name FROM information_schema.columns WHERE table_name = 'users'");
-  console.log(res.rows.map(r => r.column_name).join(', '));
-  process.exit(0);
+
+async function run() {
+  try {
+    const res = await pool.query('SELECT * FROM indus_mun_registrations');
+    console.log(`Found ${res.rows.length} rows in indus_mun_registrations`);
+    if(res.rows.length > 0) {
+      console.log('Sample:', res.rows[0]);
+    }
+  } catch(e) {
+    console.error(e);
+  } finally {
+    pool.end();
+  }
 }
-test();
+run();

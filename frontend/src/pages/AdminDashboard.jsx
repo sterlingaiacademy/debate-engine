@@ -19,7 +19,7 @@ const SECTIONS = [
   { id: 'both_events_schools', label: 'Both Events Schools' },
   { id: 'thinkquest_individual', label: 'TQ Independent' },
   { id: 'indusmun_individual', label: 'IndusMUN Independent' },
-  { id: 'indusmun', label: 'Indus MUN Registrations' },
+
   { id: 'quiz_results', label: 'Quiz Results' },
 ];
 
@@ -1083,73 +1083,6 @@ function IndusMunIndividualSection({ adminToken, apiBase }) {
 // MAIN ADMIN DASHBOARD
 // ══════════════════════════════════════════════════
 
-// SECTION: Indus MUN Registrations
-// ══════════════════════════════════════════════════
-function IndusMunSection({ adminToken, apiBase }) {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${apiBase}/api/indusmun/registrations`, {
-        headers: { Authorization: `Bearer ${adminToken}` }
-      });
-      const d = await res.json();
-      setData(d);
-    } catch (e) { console.error(e); }
-    setLoading(false);
-  }, [adminToken, apiBase]);
-
-  useEffect(() => { fetchData(); }, [fetchData]);
-
-  const regs = data?.registrations || [];
-
-  return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-        <SectionTitle>Indus MUN Registrations</SectionTitle>
-        <span style={{ color: '#64748b', fontSize: '0.82rem', fontWeight: 700 }}>{regs.length} TOTAL REGISTRATIONS</span>
-      </div>
-
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
-        <StatCard label="Total Registrations" value={regs.length} color="#F97316" />
-      </div>
-
-      <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
-        {loading ? (
-          <div style={{ textAlign: 'center', padding: '3rem', color: '#64748b' }}>Loading...</div>
-        ) : (
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
-              <TableHead cols={['Name', 'Email', 'Mobile', 'School', 'Grade', 'Speech Score']} />
-              <tbody>
-                {regs.map((r, i) => (
-                  <TableRow key={r.id} idx={i}>
-                    <TD>
-                      <div style={{ fontWeight: 600, color: '#fff' }}>{r.student_name}</div>
-                      <div style={{ fontSize: '0.75rem', color: '#64748b' }}>{new Date(r.created_at).toLocaleDateString()}</div>
-                    </TD>
-                    <TD>{r.email || '—'}</TD>
-                    <TD mono>{r.mobile}</TD>
-                    <TD>{r.school_name || '—'}</TD>
-                    <TD>{r.grade || '—'}</TD>
-                    <TD>{r.max_speech_score || 0}</TD>
-                  </TableRow>
-                ))}
-                {regs.length === 0 && (
-                  <tr>
-                    <td colSpan="6" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>No registrations found.</td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
 
 
 
@@ -1738,7 +1671,7 @@ export default function AdminDashboard() {
               {activeSection === 'subscriptions' && <SubscriptionsSection stats={stats} />}
               {activeSection === 'debates' && <DebatesSection stats={stats} />}
               {activeSection === 'bootcamp' && <BootcampSection stats={stats} adminToken={adminToken} apiBase={apiBase} />}
-              {activeSection === 'indusmun' && <IndusMunSection adminToken={adminToken} apiBase={apiBase} />}
+
 
               {activeSection === 'munmentor' && <MunMentorSection adminToken={adminToken} apiBase={apiBase} />}
               {activeSection === 'speech_league' && <SpeechLeagueSection adminToken={adminToken} apiBase={apiBase} />}
