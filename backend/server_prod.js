@@ -4562,7 +4562,7 @@ app.get('/api/admin/olympiad/quiz-results', requireAdmin, async (req, res) => {
              u.name as student_name, u."classLevel" as grade_level, u.city, u.state, u.school_id
       FROM olympiad_mock_results mr
       LEFT JOIN users u ON u.email = mr.user_email
-      WHERE u.school_id IS NULL
+      WHERE mr.user_email NOT LIKE '%@school.graceandforce.internal'
       ORDER BY mr.attempted_at DESC
     `);
     res.json({ results: result.rows });
