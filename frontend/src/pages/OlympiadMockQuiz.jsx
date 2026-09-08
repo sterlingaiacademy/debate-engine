@@ -86,7 +86,7 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
       setRevealed(prev => ({ ...prev, [current]: true }));
     } else {
       setAnimate(false);
-      setTimeout(() => { setTimeLeft(15); setCurrent(c => c + 1); setAnimate(true); }, 180);
+      setTimeout(() => { setCurrent(c => c + 1); setAnimate(true); }, 180);
     }
   };
 
