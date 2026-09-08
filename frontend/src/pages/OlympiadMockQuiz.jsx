@@ -36,7 +36,17 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
     fetch(`${API_BASE}/api/olympiad/mock/status/${subjectKey}/${gradeNum}?email=${encodeURIComponent(user.email)}`)
       .then(r => r.json())
       .then(data => {
-        if (data.attempted) { setResult(data.result); setPhase('result'); }
+        if (data.attempted) {
+          let parsedBreakdown = [];
+          if (data.result && data.result.answers) {
+            try {
+              const parsed = typeof data.result.answers === 'string' ? JSON.parse(data.result.answers) : data.result.answers;
+              if (Array.isArray(parsed)) parsedBreakdown = parsed;
+            } catch(e) {}
+          }
+          setResult({ ...data.result, breakdown: parsedBreakdown });
+          setPhase('result');
+        }
         else return fetch(`${API_BASE}/api/olympiad/mock/${subjectKey}/${gradeNum}`).then(r => r.json()).then(q => {
           const ca = {};
           q.questions.forEach((qu, i) => { ca[i] = qu.correct; });
@@ -87,20 +97,24 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
     }
     setSubmitting(true);
     try {
-      const res = await fetch(`${API_BASE}/api/olympiad/mock/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user_email: user.email, subject: subjectKey, grade: gradeNum, quiz_name: quiz?.quiz_name, score: calculateScore(), total: quiz?.total, answers, correctAnswers }) });
-      const data = await res.json();
-      if (data.error) throw new Error(data.error);
-      
-      // Build breakdown manually
+      // Build breakdown with full text
       const breakdown = quiz.questions.map(q => {
         const isCorrect = answers[q.id] === q.correct;
+        const selectedOpt = q.options.find(o => o.letter === answers[q.id]);
+        const correctOpt = q.options.find(o => o.letter === q.correct);
         return {
           question: q.question,
           selected: answers[q.id],
+          selectedText: selectedOpt ? selectedOpt.text : '',
           correct: q.correct,
+          correctText: correctOpt ? correctOpt.text : '',
           isCorrect
         };
       });
+
+      const res = await fetch(`${API_BASE}/api/olympiad/mock/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user_email: user.email, subject: subjectKey, grade: gradeNum, quiz_name: quiz?.quiz_name, score: calculateScore(), total: quiz?.total, answers: breakdown }) });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
       
       setResult({ ...data, score: calculateScore(), total: quiz?.total, breakdown }); 
       setPhase('result');
@@ -183,15 +197,21 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
                           <p style={{ fontSize: '0.75rem', lineHeight: '1.4', marginBottom: '0.375rem' }} className="text-text-main dark:text-white/90">
                             <span className="text-text-muted dark:text-white/40 font-bold" style={{ marginRight: '0.25rem' }}>Q{i+1}.</span> {b.question}
                           </p>
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', marginTop: '0.375rem' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                              <span className="text-text-muted dark:text-white/40" style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.05em', width: '3.5rem' }}>Selected</span>
-                              <span className={`font-medium ${b.isCorrect ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`} style={{ fontSize: '0.75rem' }}>{b.selected || '—'}</span>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem', marginTop: '0.5rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
+                              <span className="text-text-muted dark:text-white/40 mt-0.5" style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.05em', width: '3.5rem', flexShrink: 0 }}>Selected</span>
+                              <div style={{ flex: 1, minWidth: 0, display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+                                <span className={`font-bold ${b.isCorrect ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`} style={{ fontSize: '0.75rem' }}>{b.selected || '—'}</span>
+                                {b.selectedText && <span className="text-text-main dark:text-white/80" style={{ fontSize: '0.75rem' }}>- {b.selectedText}</span>}
+                              </div>
                             </div>
                             {!b.isCorrect && (
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                <span className="text-text-muted dark:text-white/40" style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.05em', width: '3.5rem' }}>Correct</span>
-                                <span className="text-green-600 dark:text-green-400 font-medium" style={{ fontSize: '0.75rem' }}>{b.correct}</span>
+                              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
+                                <span className="text-text-muted dark:text-white/40 mt-0.5" style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.05em', width: '3.5rem', flexShrink: 0 }}>Correct</span>
+                                <div style={{ flex: 1, minWidth: 0, display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+                                  <span className="text-green-600 dark:text-green-400 font-bold" style={{ fontSize: '0.75rem' }}>{b.correct}</span>
+                                  {b.correctText && <span className="text-text-main dark:text-white/80" style={{ fontSize: '0.75rem' }}>- {b.correctText}</span>}
+                                </div>
                               </div>
                             )}
                           </div>
