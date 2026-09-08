@@ -3835,10 +3835,8 @@ app.get('/api/coordinator/dashboard/:coordinatorId', async (req, res) => {
       try {
         await ensureQuizTable();
         const quizRes = await db.query(
-          `SELECT quiz_name, subject, score, total, percentage, attempted_at FROM olympiad_quiz_results WHERE user_email=$1
-     UNION ALL
-     SELECT quiz_name, subject, score, total, percentage, attempted_at FROM olympiad_mock_results WHERE user_email=$1
-     ORDER BY attempted_at DESC`,
+          `SELECT quiz_name, subject, score, total, percentage, attempted_at FROM olympiad_mock_results WHERE user_email=$1
+           ORDER BY attempted_at DESC`,
           [student.contact_email || student.email || '']
         );
         quizResults = quizRes.rows;
@@ -4560,11 +4558,11 @@ app.get('/api/admin/olympiad/quiz-results', requireAdmin, async (req, res) => {
   try {
     await ensureQuizTable();
     const result = await db.query(`
-      SELECT qr.id, qr.user_email, qr.quiz_name, qr.subject, qr.grade, qr.score, qr.total, qr.percentage, qr.attempted_at,
+      SELECT mr.id, mr.user_email, mr.quiz_name, mr.subject, mr.grade, mr.score, mr.total, mr.percentage, mr.attempted_at,
              u.name as student_name, u."classLevel" as grade_level, u.city, u.state, u.school_id
-      FROM olympiad_quiz_results qr
-      LEFT JOIN users u ON u.email = qr.user_email
-      ORDER BY qr.attempted_at DESC
+      FROM olympiad_mock_results mr
+      LEFT JOIN users u ON u.email = mr.user_email
+      ORDER BY mr.attempted_at DESC
     `);
     res.json({ results: result.rows });
   } catch (err) {
