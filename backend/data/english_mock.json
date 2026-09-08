@@ -1,0 +1,4041 @@
+{
+  "6": [
+    {
+      "passage": "Text 1: The Refill Station Notice\n\nGREENFIELD SCHOOL - WATER REFILL WEEK\nTo reduce single-use plastic, three filtered-water refill stations will operate from 8:00 a.m. to 3:30 p.m. Students should bring a clean, labelled bottle. Disposable cups will not be supplied.\nStation\nLocation\nBest time to use\nA\nBeside the library\nBefore assembly\nB\nNear the playground\nLunch break\nC\nOutside the science lab\nAfter sports practice\nOn Friday, class monitors will record how many bottles are refilled. The class with the highest average number of refills per student will receive a certificate. Report leaks to the school office instead of trying to repair a station yourself.",
+      "questions": [
+        {
+          "question": "What must a student bring to use a refill station?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A disposable cup"
+            },
+            {
+              "letter": "B",
+              "text": "A clean, labelled bottle"
+            },
+            {
+              "letter": "C",
+              "text": "A library card"
+            },
+            {
+              "letter": "D",
+              "text": "A sports uniform"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which station is most suitable for a student finishing football practice?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Station A"
+            },
+            {
+              "letter": "B",
+              "text": "Station B"
+            },
+            {
+              "letter": "C",
+              "text": "Station C"
+            },
+            {
+              "letter": "D",
+              "text": "The school office"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why will the school compare the average number of refills per student?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Classes may have different numbers of students"
+            },
+            {
+              "letter": "B",
+              "text": "Water bottles are different sizes"
+            },
+            {
+              "letter": "C",
+              "text": "Some stations close earlier"
+            },
+            {
+              "letter": "D",
+              "text": "Only monitors may refill bottles"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What should a student do after noticing water leaking from a station?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Repair it immediately"
+            },
+            {
+              "letter": "B",
+              "text": "Move the station"
+            },
+            {
+              "letter": "C",
+              "text": "Ignore it until Friday"
+            },
+            {
+              "letter": "D",
+              "text": "Inform the school office"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "What is the main purpose of the notice?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To sell labelled bottles"
+            },
+            {
+              "letter": "B",
+              "text": "To explain a water-saving initiative and its rules"
+            },
+            {
+              "letter": "C",
+              "text": "To announce a sports competition"
+            },
+            {
+              "letter": "D",
+              "text": "To compare the science laboratories"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Text 2: The Extra Chair\n\nWhen Kabir entered the art room, every group seemed complete. Four students were painting a city scene, while another group was building a cardboard tower. An empty chair stood near a quiet student named Tara, but the table was covered with carefully sorted paper strips.\n\"Is anyone sitting here?\" Kabir asked.\nTara shook her head. \"I am trying to weave a basket, but the strips keep slipping.\"\nKabir almost joined the city-painting group. Their bright poster looked exciting and nearly finished. Then he noticed Tara holding three loose strips with both hands. He pulled over the empty chair and said, \"Perhaps one of us can hold while the other weaves.\"\nTheir first attempt collapsed. On the second, they clipped the base before weaving. By the end of the lesson, the basket was uneven but strong enough to hold six paintbrushes. Tara placed a small card beside it: \"Designed by two patient problem-solvers.\" Kabir smiled. The unfinished basket suddenly seemed more interesting than the polished city scene.",
+      "questions": [
+        {
+          "question": "Why did Kabir nearly join the city-painting group?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Its work looked attractive and almost complete"
+            },
+            {
+              "letter": "B",
+              "text": "Tara asked him to leave"
+            },
+            {
+              "letter": "C",
+              "text": "He did not enjoy making things"
+            },
+            {
+              "letter": "D",
+              "text": "The teacher assigned him to that group"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What problem did Tara face?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "She had lost the paintbrushes"
+            },
+            {
+              "letter": "B",
+              "text": "The cardboard tower was too short"
+            },
+            {
+              "letter": "C",
+              "text": "The paper strips would not stay in place"
+            },
+            {
+              "letter": "D",
+              "text": "Her city poster had no colour"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "What does Kabir's decision to sit with Tara suggest about him?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "He wanted the easiest task"
+            },
+            {
+              "letter": "B",
+              "text": "He was willing to help with a difficult task"
+            },
+            {
+              "letter": "C",
+              "text": "He disliked working with others"
+            },
+            {
+              "letter": "D",
+              "text": "He wanted to finish before everyone else"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why was the card beside the basket appropriate?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The basket won a prize"
+            },
+            {
+              "letter": "B",
+              "text": "The teacher wrote the card"
+            },
+            {
+              "letter": "C",
+              "text": "Their success required cooperation and persistence"
+            },
+            {
+              "letter": "D",
+              "text": "They copied another group's design"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "What change occurs in Kabir by the end of the story?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "He values the process of solving a problem more than a polished result"
+            },
+            {
+              "letter": "B",
+              "text": "He decides that painting is always boring"
+            },
+            {
+              "letter": "C",
+              "text": "He believes imperfect work should be hidden"
+            },
+            {
+              "letter": "D",
+              "text": "He stops caring about the art lesson"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Text 3: A Cooler Street\n\nOn sunny days, streets without shade can become much hotter than nearby parks. Trees cool a street in two ways. Their leaves block some sunlight, and water released from their leaves helps cool the surrounding air.\nPlanting any tree anywhere is not enough. A young tree needs space for roots, regular watering and protection from damage. Town planners must also choose species that suit the local climate. A tree planted directly beneath power lines may later require heavy cutting, while a tree with weak branches may be unsafe beside a busy path.\nSome towns begin with a tree survey. They record where shade is missing, which trees are healthy and where underground pipes are located. This takes time, but it helps the town plant the right tree in the right place. The aim is not simply to count trees; it is to create shade that can last.",
+      "questions": [
+        {
+          "question": "According to the text, how do trees cool the air?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They make roads narrower"
+            },
+            {
+              "letter": "B",
+              "text": "They block sunlight and release water from their leaves"
+            },
+            {
+              "letter": "C",
+              "text": "They move underground pipes"
+            },
+            {
+              "letter": "D",
+              "text": "They absorb all the heat at night"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why might a tree under power lines become a problem?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Its roots cannot use water"
+            },
+            {
+              "letter": "B",
+              "text": "Its leaves will change colour"
+            },
+            {
+              "letter": "C",
+              "text": "It may need severe cutting as it grows"
+            },
+            {
+              "letter": "D",
+              "text": "It will attract too many birds"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "What is the purpose of a tree survey?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To find suitable places and conditions for planting"
+            },
+            {
+              "letter": "B",
+              "text": "To give every street the same tree"
+            },
+            {
+              "letter": "C",
+              "text": "To remove all old trees"
+            },
+            {
+              "letter": "D",
+              "text": "To measure the speed of traffic"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What does the final sentence mean by 'shade that can last'?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Shade should be painted on the road"
+            },
+            {
+              "letter": "B",
+              "text": "Trees should be chosen and cared for so they survive"
+            },
+            {
+              "letter": "C",
+              "text": "People should remain indoors"
+            },
+            {
+              "letter": "D",
+              "text": "Only fully grown trees should be planted"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which information would best strengthen the author's argument?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The favourite tree colours of residents"
+            },
+            {
+              "letter": "B",
+              "text": "The number of cars sold in the town"
+            },
+            {
+              "letter": "C",
+              "text": "Temperature measurements from shaded and unshaded streets"
+            },
+            {
+              "letter": "D",
+              "text": "A list of streets in alphabetical order"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Text 4: Comparing Two Breakfast Cereals\n\nThe information below is for one 30-gram serving. A student wants a cereal that contains more fibre and less added sugar.\nNutrient per serving\nCereal Sunrise\nCereal GrainStart\nFibre\n2 g\n5 g\nAdded sugar\n9 g\n4 g\nProtein\n3 g\n4 g\nEnergy\n118 kcal\n122 kcal\nThe front of the Sunrise box says, \"Made with whole grain\". The GrainStart box says, \"No artificial colours\". These statements may be true, but they do not provide all the information needed for the student's choice.",
+      "questions": [
+        {
+          "question": "Which cereal better matches the student's two stated needs?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Sunrise, because it has less protein"
+            },
+            {
+              "letter": "B",
+              "text": "Sunrise, because it contains whole grain"
+            },
+            {
+              "letter": "C",
+              "text": "GrainStart, because it has more fibre and less added sugar"
+            },
+            {
+              "letter": "D",
+              "text": "Both cereals match equally"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "How much more fibre does GrainStart provide per serving?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "2 g"
+            },
+            {
+              "letter": "B",
+              "text": "3 g"
+            },
+            {
+              "letter": "C",
+              "text": "4 g"
+            },
+            {
+              "letter": "D",
+              "text": "5 g"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why are the claims on the front of the boxes insufficient for this decision?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They do not show the fibre and added-sugar comparison"
+            },
+            {
+              "letter": "B",
+              "text": "They prove that both cereals are unhealthy"
+            },
+            {
+              "letter": "C",
+              "text": "They refer to serving sizes larger than 30 grams"
+            },
+            {
+              "letter": "D",
+              "text": "They show that energy is the only important nutrient"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "A student eats two servings of Sunrise. How much added sugar is consumed?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "9 g"
+            },
+            {
+              "letter": "B",
+              "text": "13 g"
+            },
+            {
+              "letter": "C",
+              "text": "18 g"
+            },
+            {
+              "letter": "D",
+              "text": "27 g"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Which is the best habit when comparing packaged foods?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Choose the brightest box"
+            },
+            {
+              "letter": "B",
+              "text": "Read only the largest claim"
+            },
+            {
+              "letter": "C",
+              "text": "Compare nutrition information using the same serving size"
+            },
+            {
+              "letter": "D",
+              "text": "Assume the more expensive product is healthier"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Text 5: Two Reviews of the Same Nature Trail\n\nREVIEW 1 - Dev: The lakeside trail is perfect for beginners. Direction signs appear at every turn, and most of the path is flat. I completed it in forty minutes. The bird-watching platform was crowded, so arrive early if you want a quiet visit.\nREVIEW 2 - Sana: The trail has beautiful views, but calling it completely easy is misleading. After rain, the final section becomes muddy and slippery. I also needed insect repellent near the lake. The signs were clear, and the rest area was clean.\nPARK NOTE: The trail is 2.8 kilometres long. The final 400 metres have a natural soil surface. Visitors should check the weather and wear suitable footwear.",
+      "questions": [
+        {
+          "question": "On which point do both reviewers agree?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The trail is always quiet"
+            },
+            {
+              "letter": "B",
+              "text": "The signs are clear"
+            },
+            {
+              "letter": "C",
+              "text": "The final section is paved"
+            },
+            {
+              "letter": "D",
+              "text": "Insect repellent is unnecessary"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why might Dev and Sana describe the difficulty differently?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They visited under different conditions"
+            },
+            {
+              "letter": "B",
+              "text": "Only Sana completed the trail"
+            },
+            {
+              "letter": "C",
+              "text": "Dev used a bicycle"
+            },
+            {
+              "letter": "D",
+              "text": "The park note changed the trail length"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Which statement from Sana is most strongly supported by the park note?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The lake has beautiful views"
+            },
+            {
+              "letter": "B",
+              "text": "The rest area was clean"
+            },
+            {
+              "letter": "C",
+              "text": "The final section can be difficult after rain"
+            },
+            {
+              "letter": "D",
+              "text": "The platform is too small"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "A family with young children plans to visit after heavy rain. What is the most useful advice?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Ignore the weather because the path is flat"
+            },
+            {
+              "letter": "B",
+              "text": "Wear suitable footwear and take care on the final section"
+            },
+            {
+              "letter": "C",
+              "text": "Visit only the bird-watching platform"
+            },
+            {
+              "letter": "D",
+              "text": "Complete the trail in exactly forty minutes"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why is reading both reviews more useful than reading only one?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Together they provide different experiences and possible conditions"
+            },
+            {
+              "letter": "B",
+              "text": "Together they guarantee that every visitor will agree"
+            },
+            {
+              "letter": "C",
+              "text": "They make the official park note unnecessary"
+            },
+            {
+              "letter": "D",
+              "text": "They prove that online reviews are always correct"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    }
+  ],
+  "7": [
+    {
+      "passage": "Text 1: The Canteen Waste Audit\n\nFor five school days, the Eco Club weighed unopened food and edible leftovers placed in the canteen waste bin. The same weighing method was used each day.\nDay\nMeals served\nEdible food wasted\nMonday\n210\n18 kg\nTuesday\n205\n16 kg\nWednesday\n212\n11 kg\nThursday\n208\n10 kg\nFriday\n215\n9 kg\nOn Wednesday, the canteen began offering a smaller first serving. Students could return for more at no extra cost. The Eco Club concluded that this change probably reduced waste and recommended continuing it for another month.",
+      "questions": [
+        {
+          "question": "On which day was the greatest amount of edible food wasted?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Monday"
+            },
+            {
+              "letter": "B",
+              "text": "Tuesday"
+            },
+            {
+              "letter": "C",
+              "text": "Wednesday"
+            },
+            {
+              "letter": "D",
+              "text": "Friday"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What change began on Wednesday?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Meals became more expensive"
+            },
+            {
+              "letter": "B",
+              "text": "Students received a smaller first serving and could ask for more"
+            },
+            {
+              "letter": "C",
+              "text": "The canteen stopped serving lunch"
+            },
+            {
+              "letter": "D",
+              "text": "Only Eco Club members could eat"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why is the word 'probably' appropriate in the club's conclusion?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The recorded weights are certainly wrong"
+            },
+            {
+              "letter": "B",
+              "text": "The change and the decrease occurred together, but other causes were not tested"
+            },
+            {
+              "letter": "C",
+              "text": "No meals were served after Tuesday"
+            },
+            {
+              "letter": "D",
+              "text": "Waste cannot be measured in kilograms"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which additional information would best test the club's conclusion?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The colour of the canteen walls"
+            },
+            {
+              "letter": "B",
+              "text": "Students' favourite school subjects"
+            },
+            {
+              "letter": "C",
+              "text": "Waste measurements over several more weeks using the same system"
+            },
+            {
+              "letter": "D",
+              "text": "The names of students who ate lunch"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Which statement best summarises the data?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Waste rose whenever more meals were served"
+            },
+            {
+              "letter": "B",
+              "text": "Waste decreased after the smaller-serving system began"
+            },
+            {
+              "letter": "C",
+              "text": "Friday had the fewest meals and most waste"
+            },
+            {
+              "letter": "D",
+              "text": "Meal numbers fell sharply throughout the week"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Text 2: The Silent Demonstration\n\nNisha had rehearsed every sentence for the science exhibition. Her model showed how a pulley could lift a heavy box with less effort. Just before the judges arrived, the string slipped out of its wheel.\n\"We should hide the model and explain it from the chart,\" whispered Joel.\nNisha looked at the loose string, then at the visitors waiting. Instead of beginning her memorised speech, she said, \"Our machine has developed a problem. We will show you how we find it.\" She asked Joel to hold the frame while she traced the path of the string. A younger visitor pointed to a narrow groove where the string had caught.\nThey reset the string, tested the pulley and lifted the box. The judges asked fewer questions about the polished chart and more about the repair. Later, Nisha admitted that the broken demonstration had taught her more than the perfect rehearsals.",
+      "questions": [
+        {
+          "question": "Why did Joel suggest hiding the model?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "He wanted to keep the pulley"
+            },
+            {
+              "letter": "B",
+              "text": "He feared the failed model would harm their presentation"
+            },
+            {
+              "letter": "C",
+              "text": "The chart was missing"
+            },
+            {
+              "letter": "D",
+              "text": "Visitors were not allowed to see machines"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "How did Nisha respond to the unexpected problem?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "She pretended nothing was wrong"
+            },
+            {
+              "letter": "B",
+              "text": "She ended the exhibition"
+            },
+            {
+              "letter": "C",
+              "text": "She turned the repair into part of the demonstration"
+            },
+            {
+              "letter": "D",
+              "text": "She blamed the younger visitor"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why does the writer mention the younger visitor's observation?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To show that useful ideas can come from unexpected people"
+            },
+            {
+              "letter": "B",
+              "text": "To prove that children should judge exhibitions"
+            },
+            {
+              "letter": "C",
+              "text": "To suggest that Nisha did not understand pulleys"
+            },
+            {
+              "letter": "D",
+              "text": "To show that the chart was inaccurate"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What did the judges appear to value most?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A speech delivered from memory"
+            },
+            {
+              "letter": "B",
+              "text": "The size of the cardboard chart"
+            },
+            {
+              "letter": "C",
+              "text": "The team's problem-solving process"
+            },
+            {
+              "letter": "D",
+              "text": "The weight of the box"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Which theme is most clearly developed?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Mistakes should always be hidden"
+            },
+            {
+              "letter": "B",
+              "text": "Adapting honestly can be more valuable than appearing perfect"
+            },
+            {
+              "letter": "C",
+              "text": "Competitions are more important than learning"
+            },
+            {
+              "letter": "D",
+              "text": "Working alone produces the best results"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Text 3: Bringing Back a Coral Reef\n\nCoral reefs support many sea creatures, but damaged reefs do not recover quickly. In some locations, scientists grow small coral pieces in underwater nurseries. When the pieces become larger, trained divers attach them to damaged parts of a reef.\nThis work can help, but it is not a complete solution. If water remains too warm or polluted, newly planted coral may die. Different coral species also respond differently to heat and disease. Scientists therefore monitor survival rates instead of assuming that every planted piece will succeed.\nLocal action matters as well. Reducing dirty water flowing from land, protecting fish that keep algae under control and limiting damage from anchors can improve the reef's chance of recovery. Coral planting is most useful when it is combined with action on the causes of damage.",
+      "questions": [
+        {
+          "question": "What happens in an underwater coral nursery?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Fish are trained to clean reefs"
+            },
+            {
+              "letter": "B",
+              "text": "Small coral pieces are grown before being attached to a reef"
+            },
+            {
+              "letter": "C",
+              "text": "Warm water is stored for experiments"
+            },
+            {
+              "letter": "D",
+              "text": "Anchors are repaired by divers"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why do scientists monitor survival rates?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "All coral species grow at the same speed"
+            },
+            {
+              "letter": "B",
+              "text": "Planting guarantees that coral will survive"
+            },
+            {
+              "letter": "C",
+              "text": "Coral pieces may respond differently to harmful conditions"
+            },
+            {
+              "letter": "D",
+              "text": "Divers cannot identify coral"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "What is the author's main argument?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Coral planting should replace every other conservation action"
+            },
+            {
+              "letter": "B",
+              "text": "Coral reefs can recover without human help"
+            },
+            {
+              "letter": "C",
+              "text": "Planting can help, but causes of reef damage must also be addressed"
+            },
+            {
+              "letter": "D",
+              "text": "Only local fishers can protect coral reefs"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "In the text, what does 'This work' refer to?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Growing and attaching coral pieces"
+            },
+            {
+              "letter": "B",
+              "text": "Measuring the temperature on land"
+            },
+            {
+              "letter": "C",
+              "text": "Training fish to avoid anchors"
+            },
+            {
+              "letter": "D",
+              "text": "Removing every form of algae"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Which project best follows the article's advice?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Plant coral while allowing polluted water to enter the sea"
+            },
+            {
+              "letter": "B",
+              "text": "Plant one coral species and stop checking it"
+            },
+            {
+              "letter": "C",
+              "text": "Plant coral and also reduce pollution and anchor damage"
+            },
+            {
+              "letter": "D",
+              "text": "Wait for all reefs to repair themselves"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Text 4: A Post and a Fact-Check\n\nSOCIAL MEDIA POST: \"A video says keeping a metal spoon in a bowl of fruit makes every fruit stay fresh for two extra weeks. My neighbour tried it once and says it worked. Share this secret with everyone!\"\nFACT-CHECK NOTE: Fruit spoils at different rates depending on type, ripeness, temperature, moisture and storage. One person's experience does not show that the spoon caused the result. A fair test would use similar fruit from the same batch, store it under the same conditions, place a spoon with only one group and repeat the test several times.",
+      "questions": [
+        {
+          "question": "What evidence does the social media post provide?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A controlled laboratory study"
+            },
+            {
+              "letter": "B",
+              "text": "One neighbour's experience"
+            },
+            {
+              "letter": "C",
+              "text": "Results from several repeated tests"
+            },
+            {
+              "letter": "D",
+              "text": "Measurements from different temperatures"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why is the post's claim weak?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Metal spoons do not exist"
+            },
+            {
+              "letter": "B",
+              "text": "It does not show that the spoon caused the fruit to remain fresh"
+            },
+            {
+              "letter": "C",
+              "text": "Fruit can never remain fresh"
+            },
+            {
+              "letter": "D",
+              "text": "The video is shorter than two weeks"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What is the purpose of using fruit from the same batch in a fair test?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To reduce differences unrelated to the spoon"
+            },
+            {
+              "letter": "B",
+              "text": "To make the fruit taste sweeter"
+            },
+            {
+              "letter": "C",
+              "text": "To ensure every fruit spoils immediately"
+            },
+            {
+              "letter": "D",
+              "text": "To increase the number of spoons"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Which action is most responsible before sharing the claim?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Add a more exciting headline"
+            },
+            {
+              "letter": "B",
+              "text": "Ask only people who already agree"
+            },
+            {
+              "letter": "C",
+              "text": "Look for reliable evidence or conduct a fair test"
+            },
+            {
+              "letter": "D",
+              "text": "Remove the mention of the neighbour"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "What important difference exists between the two texts?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The post makes a confident claim; the fact-check explains uncertainty and testing"
+            },
+            {
+              "letter": "B",
+              "text": "The post uses evidence from many sources; the note uses none"
+            },
+            {
+              "letter": "C",
+              "text": "Both texts prove the spoon works"
+            },
+            {
+              "letter": "D",
+              "text": "Both texts ask readers to share immediately"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Text 5: Community Help Day Schedule\n\nVolunteers may choose one morning task and one afternoon task. Anyone under 14 must work with an adult. Gloves are supplied for all outdoor tasks.\nTask\nTime\nSpecial requirement\nPack food boxes\n9:00-11:00\nIndoor; ages 11+\nClean riverside path\n9:30-12:00\nClosed shoes required\nRead to younger children\n1:00-2:30\nPrepare one short story\nPlant native shrubs\n2:00-4:00\nOutdoor; tools supplied\nRegistration closes on Thursday. If heavy rain is forecast, outdoor tasks will be postponed, but indoor tasks will continue at the listed times.",
+      "questions": [
+        {
+          "question": "Which task begins earliest?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Pack food boxes"
+            },
+            {
+              "letter": "B",
+              "text": "Clean riverside path"
+            },
+            {
+              "letter": "C",
+              "text": "Read to younger children"
+            },
+            {
+              "letter": "D",
+              "text": "Plant native shrubs"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What must a volunteer prepare for the reading task?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A pair of gloves"
+            },
+            {
+              "letter": "B",
+              "text": "A short story"
+            },
+            {
+              "letter": "C",
+              "text": "Gardening tools"
+            },
+            {
+              "letter": "D",
+              "text": "A food box"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "A 13-year-old wants to clean the riverside path. What is required?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "An adult partner and closed shoes"
+            },
+            {
+              "letter": "B",
+              "text": "A prepared story and gloves from home"
+            },
+            {
+              "letter": "C",
+              "text": "No registration"
+            },
+            {
+              "letter": "D",
+              "text": "Only gardening experience"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What happens if heavy rain is forecast?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Every task is cancelled"
+            },
+            {
+              "letter": "B",
+              "text": "Only indoor tasks are postponed"
+            },
+            {
+              "letter": "C",
+              "text": "Outdoor tasks are postponed while indoor tasks continue"
+            },
+            {
+              "letter": "D",
+              "text": "The registration deadline changes"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Which plan follows all the rules for an adult volunteer?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Clean the path from 9:30 and pack food boxes at 10:00"
+            },
+            {
+              "letter": "B",
+              "text": "Pack food boxes in the morning and plant shrubs in the afternoon"
+            },
+            {
+              "letter": "C",
+              "text": "Read to children at 1:00 and plant shrubs at 2:00"
+            },
+            {
+              "letter": "D",
+              "text": "Choose two morning tasks and no afternoon task"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ],
+  "8": [
+    {
+      "passage": "Text 1: The E-Waste Collection Plan\n\nThe Digital Responsibility Club will collect unwanted electronic items next Saturday. Working devices should not be discarded merely because a newer model is available. The club will first check whether an item can be repaired, reused or donated. Only items that cannot be used safely will be sent to a certified recycler.\nAccepted\nNot accepted\nMobile phones and chargers\nLoose household batteries\nKeyboards and computer mice\nLight bulbs\nSmall speakers and headphones\nLarge appliances\nBefore handing in a phone or tablet, owners must remove personal accounts and, if possible, erase stored data. The club cannot promise that donated items will go to a particular person. A report will show how many items were repaired, donated and recycled, but it will not publish owners' names.",
+      "questions": [
+        {
+          "question": "Which item can be handed in at the collection?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A loose battery"
+            },
+            {
+              "letter": "B",
+              "text": "A refrigerator"
+            },
+            {
+              "letter": "C",
+              "text": "A computer mouse"
+            },
+            {
+              "letter": "D",
+              "text": "A light bulb"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why does the club check items before recycling them?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Reuse or repair may extend their useful life"
+            },
+            {
+              "letter": "B",
+              "text": "Recycling is forbidden"
+            },
+            {
+              "letter": "C",
+              "text": "New devices cannot be donated"
+            },
+            {
+              "letter": "D",
+              "text": "Owners must receive the same item back"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What privacy step is required before submitting a phone?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Publish the owner's name"
+            },
+            {
+              "letter": "B",
+              "text": "Remove accounts and erase data if possible"
+            },
+            {
+              "letter": "C",
+              "text": "Give the club every password"
+            },
+            {
+              "letter": "D",
+              "text": "Send it directly to a named person"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which result will appear in the club's report?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A list of each owner's files"
+            },
+            {
+              "letter": "B",
+              "text": "The person receiving every donated device"
+            },
+            {
+              "letter": "C",
+              "text": "The numbers repaired, donated and recycled"
+            },
+            {
+              "letter": "D",
+              "text": "The passwords removed from phones"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Which statement best expresses the club's approach?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Recycle every device immediately"
+            },
+            {
+              "letter": "B",
+              "text": "Buy newer devices whenever possible"
+            },
+            {
+              "letter": "C",
+              "text": "Keep all unwanted electronics at home"
+            },
+            {
+              "letter": "D",
+              "text": "Prefer safe reuse and repair before recycling"
+            }
+          ],
+          "correct": "D"
+        }
+      ]
+    },
+    {
+      "passage": "Text 2: The Delayed Applause\n\nAarohi's violin solo ended, but the hall remained silent. For one uncomfortable second, she wondered whether she had missed the final note. Then she saw the conductor's raised hand. The last sound was still travelling through the hall, too soft to hear clearly but somehow present in the waiting faces.\nThe conductor lowered his hand. Applause broke out, louder than Aarohi expected. Backstage, her friend Sameer said, \"That pause was dramatic. Did you plan it?\"\nAarohi shook her head. \"I thought something had gone wrong.\"\nLater, the conductor explained that the quiet after a piece was part of listening. \"An ending is not only the moment a musician stops,\" he said. \"It is also the moment the audience realises what it has heard.\" On the bus home, Aarohi did not replay the applause in her mind. She remembered the silence before it.",
+      "questions": [
+        {
+          "question": "Why did the audience remain silent immediately after the solo?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They disliked the performance"
+            },
+            {
+              "letter": "B",
+              "text": "The conductor asked them to wait"
+            },
+            {
+              "letter": "C",
+              "text": "Aarohi had forgotten the final note"
+            },
+            {
+              "letter": "D",
+              "text": "The hall was empty"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What did Aarohi first believe the silence might mean?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The music was still playing loudly"
+            },
+            {
+              "letter": "B",
+              "text": "The audience wanted another song"
+            },
+            {
+              "letter": "C",
+              "text": "She had made a mistake"
+            },
+            {
+              "letter": "D",
+              "text": "Sameer had planned a surprise"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "What does the conductor mean when he says the quiet is 'part of listening'?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Silence gives listeners time to absorb the music"
+            },
+            {
+              "letter": "B",
+              "text": "Audiences should never applaud"
+            },
+            {
+              "letter": "C",
+              "text": "Musicians need silence to tune instruments"
+            },
+            {
+              "letter": "D",
+              "text": "The final note must always be repeated"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Why does Aarohi remember the silence more than the applause?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It was the loudest part of the concert"
+            },
+            {
+              "letter": "B",
+              "text": "It changed her understanding of how an audience experiences music"
+            },
+            {
+              "letter": "C",
+              "text": "She forgot that anyone applauded"
+            },
+            {
+              "letter": "D",
+              "text": "Sameer told her to ignore praise"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which technique does the writer use in the opening paragraph?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A scientific explanation"
+            },
+            {
+              "letter": "B",
+              "text": "Suspense created by delaying the reason for the silence"
+            },
+            {
+              "letter": "C",
+              "text": "A list of concert rules"
+            },
+            {
+              "letter": "D",
+              "text": "Humour based on a misunderstanding between friends"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Text 3: Sleep and Word Memory\n\nA school research group explored whether sleep might be linked to memory. Forty volunteers studied the same list of twenty unfamiliar words at 8:00 p.m. Group A then followed their usual bedtime and reported an average of eight hours of sleep. Group B stayed at a supervised school event until 1:00 a.m. and reported an average of five hours of sleep.\nGroup\nAverage sleep\nAverage words recalled next morning\nA\n8 hours\n15\nB\n5 hours\n10\nThe researchers wrote, \"In this small study, the group reporting more sleep remembered more words. However, the groups may also have differed in tiredness, activities during the evening or other ways. The result should not be treated as proof that exactly eight hours will produce the same score for every person.\"",
+      "questions": [
+        {
+          "question": "What was the average difference in words recalled by the two groups?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "3 words"
+            },
+            {
+              "letter": "B",
+              "text": "5 words"
+            },
+            {
+              "letter": "C",
+              "text": "8 words"
+            },
+            {
+              "letter": "D",
+              "text": "10 words"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why did both groups study the same word list at the same time?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To make the comparison more controlled"
+            },
+            {
+              "letter": "B",
+              "text": "To guarantee identical sleep"
+            },
+            {
+              "letter": "C",
+              "text": "To make every volunteer recall twenty words"
+            },
+            {
+              "letter": "D",
+              "text": "To test vocabulary instead of memory"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Why do the researchers avoid claiming definite proof?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The result showed no difference"
+            },
+            {
+              "letter": "B",
+              "text": "Forty people cannot remember words"
+            },
+            {
+              "letter": "C",
+              "text": "Other differences between the groups could have affected recall"
+            },
+            {
+              "letter": "D",
+              "text": "Group B slept for eight hours"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Which headline most accurately reports the finding?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Eight Hours of Sleep Guarantees Perfect Memory"
+            },
+            {
+              "letter": "B",
+              "text": "Small Study Finds More Recall in Group Reporting More Sleep"
+            },
+            {
+              "letter": "C",
+              "text": "Staying Awake Improves Every Student's Vocabulary"
+            },
+            {
+              "letter": "D",
+              "text": "Scientists Prove Everyone Needs the Same Bedtime"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which follow-up study would improve the evidence?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Use more participants and control their evening activities"
+            },
+            {
+              "letter": "B",
+              "text": "Ask volunteers which group they preferred"
+            },
+            {
+              "letter": "C",
+              "text": "Give each group a different word list"
+            },
+            {
+              "letter": "D",
+              "text": "Remove the morning recall test"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Text 4: Views on a Town Bicycle Scheme\n\nTOWN PROPOSAL: Fifty shared bicycles will be placed at five stations. The first thirty minutes of each trip will be free. The town expects short bicycle journeys to reduce traffic near the market. Users must be at least 14 and wear a helmet.\nSHOP OWNER: \"Fewer cars could make the market street safer, but one proposed station would replace three loading spaces. Shops still need morning deliveries.\"\nSTUDENT: \"The scheme could help teenagers travel independently. It will work better if stations are also placed near schools and if safe cycle lanes connect them.\"\nACCESS GROUP: \"Bicycles will not suit everyone. The plan should not reduce accessible parking or block pavements used by wheelchair users.\"",
+      "questions": [
+        {
+          "question": "What outcome does the town expect?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "More long-distance car journeys"
+            },
+            {
+              "letter": "B",
+              "text": "Less traffic near the market"
+            },
+            {
+              "letter": "C",
+              "text": "The removal of every parking space"
+            },
+            {
+              "letter": "D",
+              "text": "Free bicycles for private ownership"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What concern does the shop owner raise?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Students may cycle to school"
+            },
+            {
+              "letter": "B",
+              "text": "Helmets will cost too much"
+            },
+            {
+              "letter": "C",
+              "text": "A station could interfere with deliveries"
+            },
+            {
+              "letter": "D",
+              "text": "The market street is already closed"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "On which principle do the student and Access Group most clearly agree?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Station locations and routes affect whether the scheme works for people"
+            },
+            {
+              "letter": "B",
+              "text": "All parking should be removed"
+            },
+            {
+              "letter": "C",
+              "text": "Only adults should use bicycles"
+            },
+            {
+              "letter": "D",
+              "text": "The first thirty minutes should cost money"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Which revision responds to all three comments most effectively?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Place every station in the market"
+            },
+            {
+              "letter": "B",
+              "text": "Remove accessible parking and loading spaces"
+            },
+            {
+              "letter": "C",
+              "text": "Consult users, protect access and deliveries, and connect useful locations with safe lanes"
+            },
+            {
+              "letter": "D",
+              "text": "Cancel deliveries during school hours"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why are several viewpoints included?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To show that the proposal has benefits and practical trade-offs"
+            },
+            {
+              "letter": "B",
+              "text": "To prove that the scheme has already failed"
+            },
+            {
+              "letter": "C",
+              "text": "To provide instructions for repairing bicycles"
+            },
+            {
+              "letter": "D",
+              "text": "To advertise one shop"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Text 5: Choosing a Study Lamp\n\nBoth lamps are advertised for desk use. The estimated yearly electricity cost assumes three hours of use per day.\nFeature\nLamp BrightLite\nLamp EcoBeam\nPurchase price\nRs 900\nRs 1,250\nEstimated yearly electricity cost\nRs 420\nRs 210\nBrightness settings\n2\n4\nWarranty\n1 year\n3 years\nBrightLite advertisement: \"The budget-friendly choice!\" EcoBeam advertisement: \"Save money every year!\" Actual cost will depend on how often the lamp is used and the local electricity price.",
+      "questions": [
+        {
+          "question": "Which lamp has the lower purchase price?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "BrightLite"
+            },
+            {
+              "letter": "B",
+              "text": "EcoBeam"
+            },
+            {
+              "letter": "C",
+              "text": "Both cost the same"
+            },
+            {
+              "letter": "D",
+              "text": "The table does not say"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "After two years, what is the estimated purchase price plus electricity cost for BrightLite?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Rs 1,110"
+            },
+            {
+              "letter": "B",
+              "text": "Rs 1,320"
+            },
+            {
+              "letter": "C",
+              "text": "Rs 1,740"
+            },
+            {
+              "letter": "D",
+              "text": "Rs 2,150"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "After two years, which lamp has the lower estimated total cost?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "BrightLite by Rs 70"
+            },
+            {
+              "letter": "B",
+              "text": "EcoBeam by Rs 70"
+            },
+            {
+              "letter": "C",
+              "text": "BrightLite by Rs 350"
+            },
+            {
+              "letter": "D",
+              "text": "Both are equal"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why might the actual saving differ from the advertisement?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Warranty length changes every day"
+            },
+            {
+              "letter": "B",
+              "text": "Use time and electricity prices may differ from the estimate"
+            },
+            {
+              "letter": "C",
+              "text": "A lamp cannot have brightness settings"
+            },
+            {
+              "letter": "D",
+              "text": "Purchase prices are never relevant"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which conclusion is most reasonable?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "BrightLite is always the best choice"
+            },
+            {
+              "letter": "B",
+              "text": "EcoBeam costs more initially but may cost less over time"
+            },
+            {
+              "letter": "C",
+              "text": "EcoBeam uses twice as much electricity"
+            },
+            {
+              "letter": "D",
+              "text": "Advertisements provide all information needed"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ],
+  "9": [
+    {
+      "passage": "Text 1: Testing Cool Roofs\n\nA housing society painted one similar-sized building roof with a light, reflective coating and left another roof dark. Sensors recorded roof-surface temperatures at 2:00 p.m. on four clear days.\nDay\nDark roof\nReflective roof\nDifference\n1\n58 C\n44 C\n14 C\n2\n61 C\n46 C\n15 C\n3\n57 C\n43 C\n14 C\n4\n60 C\n45 C\n15 C\nResidents in the coated building also reported that top-floor rooms felt cooler. The society noted, however, that comfort reports are subjective and that electricity use was not measured. Roof condition, insulation and local weather could influence results elsewhere.",
+      "questions": [
+        {
+          "question": "What pattern appears in the temperature data?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The reflective roof was cooler on all four days"
+            },
+            {
+              "letter": "B",
+              "text": "Both roofs had identical temperatures"
+            },
+            {
+              "letter": "C",
+              "text": "The dark roof became cooler each day"
+            },
+            {
+              "letter": "D",
+              "text": "The reflective roof was cooler only once"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What was the largest recorded temperature difference?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "14 C"
+            },
+            {
+              "letter": "B",
+              "text": "15 C"
+            },
+            {
+              "letter": "C",
+              "text": "16 C"
+            },
+            {
+              "letter": "D",
+              "text": "18 C"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why are residents' comfort reports described as subjective?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Room temperatures cannot be measured"
+            },
+            {
+              "letter": "B",
+              "text": "Different people may experience and report comfort differently"
+            },
+            {
+              "letter": "C",
+              "text": "Only roof colours affect comfort"
+            },
+            {
+              "letter": "D",
+              "text": "Residents did not know which building they lived in"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which claim is NOT supported by the study?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The coated roof had a lower afternoon surface temperature"
+            },
+            {
+              "letter": "B",
+              "text": "The coating reduced electricity use by a known amount"
+            },
+            {
+              "letter": "C",
+              "text": "Top-floor residents reported cooler rooms"
+            },
+            {
+              "letter": "D",
+              "text": "Results elsewhere may depend on other factors"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What additional measurement would best show whether the coating saved energy?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Number of windows in the town"
+            },
+            {
+              "letter": "B",
+              "text": "Paint colour preferred by residents"
+            },
+            {
+              "letter": "C",
+              "text": "Comparable air-conditioning electricity use before and after coating"
+            },
+            {
+              "letter": "D",
+              "text": "Height of trees in a distant park"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Text 2: The Recommendation\n\nThe new library screen greeted Ishan with a row of books labelled \"Chosen for You\". Adventure, football, space travel - each matched something he had borrowed before. He selected the first title, then noticed a thin green book displayed on the librarian's desk.\n\"Why isn't that on my list?\" he asked.\nMrs D'Souza examined the cover. \"Perhaps the system has not learned that you might enjoy poems about ordinary objects.\"\n\"I have never borrowed poetry.\"\n\"Exactly,\" she replied.\nIshan opened the book to a poem about a cracked teacup. It was strange, brief and unexpectedly funny. He borrowed it along with the recommended adventure. The following week, the screen proudly added three poetry books to his list. Ishan laughed. The machine had learned something new about him, but only after he had first learned it himself.",
+      "questions": [
+        {
+          "question": "How did the screen choose books for Ishan?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "From his previous borrowing patterns"
+            },
+            {
+              "letter": "B",
+              "text": "By asking the librarian to guess"
+            },
+            {
+              "letter": "C",
+              "text": "By selecting only new books"
+            },
+            {
+              "letter": "D",
+              "text": "From the colour of each cover"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What does Mrs D'Souza mean by 'Exactly'?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Ishan should never read poetry"
+            },
+            {
+              "letter": "B",
+              "text": "The system cannot recommend an interest he has never explored"
+            },
+            {
+              "letter": "C",
+              "text": "The green book is already on his list"
+            },
+            {
+              "letter": "D",
+              "text": "Adventure books and poems are identical"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why is the cracked-teacup poem important to the story?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It confirms that recommendations are always wrong"
+            },
+            {
+              "letter": "B",
+              "text": "It gives Ishan an experience outside his usual pattern"
+            },
+            {
+              "letter": "C",
+              "text": "It damages the library screen"
+            },
+            {
+              "letter": "D",
+              "text": "It teaches the machine to repair cups"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What irony appears at the end?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The machine recommends poetry only after Ishan discovers it without the machine"
+            },
+            {
+              "letter": "B",
+              "text": "The library removes every adventure book"
+            },
+            {
+              "letter": "C",
+              "text": "Mrs D'Souza refuses to lend the poem"
+            },
+            {
+              "letter": "D",
+              "text": "Ishan stops reading altogether"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Which central idea is developed?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Technology should make every decision for readers"
+            },
+            {
+              "letter": "B",
+              "text": "Past choices can guide recommendations but may also limit discovery"
+            },
+            {
+              "letter": "C",
+              "text": "Poetry is always better than adventure"
+            },
+            {
+              "letter": "D",
+              "text": "Libraries no longer need human guidance"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Text 3: A Microplastic Sampling Report\n\nStudents collected one-litre surface-water samples from three points along a river. They filtered each sample and counted suspected plastic fragments under a microscope. The counts are averages from three samples at each site.\nSite\nLocation\nAverage suspected fragments per litre\nA\nUpstream of town\n4\nB\nBelow storm-water outlet\n17\nC\nTwo kilometres downstream\n11\nThe students concluded that Site B had the highest count in their samples. They did not conclude that the outlet caused all the fragments. Only surface water was sampled, and visual identification can confuse plastic with some natural fibres. Laboratory confirmation and sampling on more dates would improve the study.",
+      "questions": [
+        {
+          "question": "Which site had the highest average count?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Site A"
+            },
+            {
+              "letter": "B",
+              "text": "Site B"
+            },
+            {
+              "letter": "C",
+              "text": "Site C"
+            },
+            {
+              "letter": "D",
+              "text": "All sites were equal"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why should the students avoid saying the outlet caused all the fragments?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Site B had no fragments"
+            },
+            {
+              "letter": "B",
+              "text": "The study found an association but did not identify every source"
+            },
+            {
+              "letter": "C",
+              "text": "River water never moves"
+            },
+            {
+              "letter": "D",
+              "text": "Natural fibres cannot be seen"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What is one limitation of the sampling method?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The students sampled only surface water"
+            },
+            {
+              "letter": "B",
+              "text": "They collected samples from three sites"
+            },
+            {
+              "letter": "C",
+              "text": "They recorded the locations"
+            },
+            {
+              "letter": "D",
+              "text": "They calculated averages"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Which follow-up would most improve confidence in the identification?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Use differently coloured sample bottles"
+            },
+            {
+              "letter": "B",
+              "text": "Ask residents to estimate the number"
+            },
+            {
+              "letter": "C",
+              "text": "Confirm suspected fragments using laboratory analysis"
+            },
+            {
+              "letter": "D",
+              "text": "Remove Site A from the report"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Which is the most accurate report headline?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Storm Outlet Proven to Create Every River Plastic"
+            },
+            {
+              "letter": "B",
+              "text": "Student Samples Find Highest Suspected Fragment Count at Site B"
+            },
+            {
+              "letter": "C",
+              "text": "Entire River Declared Plastic-Free"
+            },
+            {
+              "letter": "D",
+              "text": "Natural Fibres Found Only Upstream"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Text 4: Messages About Volunteer Hours\n\nEMAIL FROM ACTIVITIES COORDINATOR - Monday: Students may count up to eight hours from approved community projects this term. Submit the organisation's signed record within seven days of completing the activity.\nCLASS GROUP MESSAGE - Tuesday: Someone said online awareness posts count as volunteer hours even if no organisation supervises them. Just take screenshots.\nCLARIFICATION FROM ACTIVITIES COORDINATOR - Wednesday: Online work qualifies only when it is assigned and verified by an approved organisation. Independent posts do not qualify. Students unsure about a project should seek approval before starting.",
+      "questions": [
+        {
+          "question": "What is the maximum number of volunteer hours that may be counted?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Seven"
+            },
+            {
+              "letter": "B",
+              "text": "Eight"
+            },
+            {
+              "letter": "C",
+              "text": "Ten"
+            },
+            {
+              "letter": "D",
+              "text": "There is no limit"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What evidence must be submitted for an approved activity?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A friend's message"
+            },
+            {
+              "letter": "B",
+              "text": "An unsigned screenshot"
+            },
+            {
+              "letter": "C",
+              "text": "The organisation's signed record"
+            },
+            {
+              "letter": "D",
+              "text": "A personal diary only"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why is the Tuesday message unreliable?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It is an informal claim contradicted by the official clarification"
+            },
+            {
+              "letter": "B",
+              "text": "It was sent before Wednesday"
+            },
+            {
+              "letter": "C",
+              "text": "Screenshots can never be created"
+            },
+            {
+              "letter": "D",
+              "text": "Online work is always forbidden"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "A student wants to design online posters for a registered charity. What should the student do first?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Post them independently and ask later"
+            },
+            {
+              "letter": "B",
+              "text": "Seek approval and ensure the charity will verify the work"
+            },
+            {
+              "letter": "C",
+              "text": "Count unlimited hours"
+            },
+            {
+              "letter": "D",
+              "text": "Ask a classmate to sign the record"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which reading strategy is most important when the messages conflict?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Trust the shortest message"
+            },
+            {
+              "letter": "B",
+              "text": "Use the message with the most exciting claim"
+            },
+            {
+              "letter": "C",
+              "text": "Identify the authoritative source and the latest clarification"
+            },
+            {
+              "letter": "D",
+              "text": "Combine all claims as if they were equally reliable"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Text 5: Should School Start Later?\n\nSTUDENT COUNCIL VIEW: Beginning secondary school thirty minutes later may help students arrive more alert. The council's survey found that 62% of 480 students said they struggled to concentrate in the first lesson. It proposes a one-term trial followed by attendance and learning surveys.\nTRANSPORT MANAGER'S RESPONSE: A later start may require additional buses because the same vehicles currently serve primary and secondary routes at different times. Changing one timetable may therefore increase costs or delay primary routes.\nPARENT ASSOCIATION NOTE: Some families support a trial, but later dismissal could affect sports, part-time work and childcare. The association asks the school to publish a complete timetable before making a decision.",
+      "questions": [
+        {
+          "question": "What evidence does the Student Council use?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A survey of 480 students"
+            },
+            {
+              "letter": "B",
+              "text": "A national transport report"
+            },
+            {
+              "letter": "C",
+              "text": "A one-year attendance study"
+            },
+            {
+              "letter": "D",
+              "text": "Interviews with primary pupils only"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What limitation does the survey evidence have?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It includes too many timetable details"
+            },
+            {
+              "letter": "B",
+              "text": "It reports students' perceptions rather than proving a later start improves learning"
+            },
+            {
+              "letter": "C",
+              "text": "It measures bus costs accurately"
+            },
+            {
+              "letter": "D",
+              "text": "It shows that no student is tired"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What connection does the transport manager identify?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A later secondary start could disrupt the shared bus schedule"
+            },
+            {
+              "letter": "B",
+              "text": "Sports always begin before school"
+            },
+            {
+              "letter": "C",
+              "text": "Primary schools use no buses"
+            },
+            {
+              "letter": "D",
+              "text": "A later start reduces all costs"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Which action best addresses all three viewpoints?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Change the time permanently tomorrow"
+            },
+            {
+              "letter": "B",
+              "text": "Reject the idea because it has costs"
+            },
+            {
+              "letter": "C",
+              "text": "Plan a limited trial with transport, dismissal and learning impacts measured"
+            },
+            {
+              "letter": "D",
+              "text": "Survey only students who support the proposal"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "What is the main value of reading the three texts together?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They reveal academic, transport and family consequences of one decision"
+            },
+            {
+              "letter": "B",
+              "text": "They show that every group supports the same plan"
+            },
+            {
+              "letter": "C",
+              "text": "They prove surveys are useless"
+            },
+            {
+              "letter": "D",
+              "text": "They provide the final timetable"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    }
+  ],
+  "10": [
+    {
+      "passage": "Text 1: Mapping Heat Across a City\n\nA student team placed identical temperature sensors at four sites from 1:00 p.m. to 3:00 p.m. on the same clear day. Each sensor was fixed two metres above the ground and shaded from direct sunlight.\nSite\nMain surface\nTree cover\nAverage air temperature\nCentral market\nAsphalt\n5%\n38.6 C\nBus depot\nConcrete\n2%\n39.1 C\nRiverside park\nGrass/soil\n68%\n34.7 C\nResidential lane\nMixed\n32%\n36.2 C\nThe team observed that sites with more vegetation were cooler in this small survey. It warned that one afternoon of data cannot represent every season. Wind, building height, traffic and distance from water may also influence local temperature.",
+      "questions": [
+        {
+          "question": "Which site recorded the highest average air temperature?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Central market"
+            },
+            {
+              "letter": "B",
+              "text": "Bus depot"
+            },
+            {
+              "letter": "C",
+              "text": "Riverside park"
+            },
+            {
+              "letter": "D",
+              "text": "Residential lane"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why were the sensors shaded from direct sunlight?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To measure air conditions more comparably rather than the heating of the sensor itself"
+            },
+            {
+              "letter": "B",
+              "text": "To make the parks appear cooler"
+            },
+            {
+              "letter": "C",
+              "text": "To prevent wind from reaching them"
+            },
+            {
+              "letter": "D",
+              "text": "To increase the temperature readings"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What relationship is visible in this dataset?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "More tree cover is associated with lower recorded temperature"
+            },
+            {
+              "letter": "B",
+              "text": "More asphalt is associated with lower temperature"
+            },
+            {
+              "letter": "C",
+              "text": "All sites with traffic have the same temperature"
+            },
+            {
+              "letter": "D",
+              "text": "Distance from water is the only influence"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Why can the survey not prove that tree cover alone caused the differences?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Temperature cannot be measured outdoors"
+            },
+            {
+              "letter": "B",
+              "text": "Several site characteristics differ, and only one afternoon was studied"
+            },
+            {
+              "letter": "C",
+              "text": "The sensors were identical"
+            },
+            {
+              "letter": "D",
+              "text": "Tree cover was recorded as a percentage"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which follow-up would best strengthen the investigation?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Repeat measurements across seasons and compare similar sites with different tree cover"
+            },
+            {
+              "letter": "B",
+              "text": "Ask residents to guess each temperature"
+            },
+            {
+              "letter": "C",
+              "text": "Use a different temperature scale at every site"
+            },
+            {
+              "letter": "D",
+              "text": "Measure only the hottest site"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Text 2: A Quiet Correction\n\nThe school magazine was due at the printer by noon when Leena noticed a sentence in the lead article: \"The old auditorium will be demolished next month, the caretaker confirmed.\" She had recorded the interview herself. The caretaker had said the building might close for repairs; he had said nothing about demolition.\nThe article's writer, Varun, glanced at the clock. \"It is one word. The headline is already designed. If we change it now, we miss the deadline.\"\nLeena imagined the rumour racing through alumni groups before the first copy reached a classroom. She deleted 'demolished', replaced it with 'may close for repairs', and called the printer. The magazine would arrive a day late.\nThe next morning, no one congratulated her. Most students did not even know there had been a choice. On the empty space where the magazines should have been, Leena placed a note: \"Delayed while we checked an important fact.\" It was the least dramatic sentence she had written all year, and the one she was proudest to sign.",
+      "questions": [
+        {
+          "question": "What factual problem does Leena identify?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The caretaker denied giving an interview"
+            },
+            {
+              "letter": "B",
+              "text": "The article turns a possible repair closure into a confirmed demolition"
+            },
+            {
+              "letter": "C",
+              "text": "The printer changed the headline"
+            },
+            {
+              "letter": "D",
+              "text": "The auditorium had already been demolished"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What is Varun's main reason for resisting the correction?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "He has stronger evidence"
+            },
+            {
+              "letter": "B",
+              "text": "He dislikes the caretaker"
+            },
+            {
+              "letter": "C",
+              "text": "He prioritises meeting the printing deadline"
+            },
+            {
+              "letter": "D",
+              "text": "He wants to close the auditorium"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why does Leena imagine alumni groups?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To consider how quickly an inaccurate claim could spread"
+            },
+            {
+              "letter": "B",
+              "text": "To invite alumni to repair the building"
+            },
+            {
+              "letter": "C",
+              "text": "To find a new printer"
+            },
+            {
+              "letter": "D",
+              "text": "To make the headline more dramatic"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What does the final sentence reveal about Leena's values?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "She values public attention above accuracy"
+            },
+            {
+              "letter": "B",
+              "text": "She sees responsible, accurate reporting as an achievement even when unnoticed"
+            },
+            {
+              "letter": "C",
+              "text": "She regrets changing the article"
+            },
+            {
+              "letter": "D",
+              "text": "She believes every publication should be late"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which conflict drives the story?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Creativity versus sport"
+            },
+            {
+              "letter": "B",
+              "text": "Speed and drama versus accuracy and responsibility"
+            },
+            {
+              "letter": "C",
+              "text": "Students versus alumni"
+            },
+            {
+              "letter": "D",
+              "text": "Repairs versus demolition costs"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Text 3: Low-Cost Air-Quality Sensors\n\nSmall air-quality sensors allow schools and residents to observe how particle levels change across streets and times of day. Because they are cheaper than reference-grade monitoring stations, many sensors can be installed. This wider coverage can reveal local patterns that a single station might miss.\nTheir readings, however, require care. Humidity can affect some sensors, and two devices placed side by side may report slightly different values. Researchers often compare, or calibrate, low-cost sensors against a reference instrument. They also examine trends over time rather than treating one unusual reading as a confirmed pollution event.\nThese sensors are therefore useful neither as toys nor as perfect replacements for official stations. Their strength lies in providing additional evidence when their limitations, maintenance and calibration are made clear.",
+      "questions": [
+        {
+          "question": "What advantage do low-cost sensors offer?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They never require maintenance"
+            },
+            {
+              "letter": "B",
+              "text": "They can provide wider local coverage"
+            },
+            {
+              "letter": "C",
+              "text": "They replace every official station"
+            },
+            {
+              "letter": "D",
+              "text": "They are unaffected by humidity"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What does calibration involve in this context?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Painting all sensors the same colour"
+            },
+            {
+              "letter": "B",
+              "text": "Comparing sensor readings with a reference instrument"
+            },
+            {
+              "letter": "C",
+              "text": "Removing every high reading"
+            },
+            {
+              "letter": "D",
+              "text": "Installing sensors only indoors"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why should one unusual reading be treated cautiously?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Pollution never changes quickly"
+            },
+            {
+              "letter": "B",
+              "text": "A single reading may reflect error or temporary conditions"
+            },
+            {
+              "letter": "C",
+              "text": "Trends contain less information"
+            },
+            {
+              "letter": "D",
+              "text": "Official stations cannot measure particles"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What is the author's position?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The sensors are useless"
+            },
+            {
+              "letter": "B",
+              "text": "The sensors are completely accurate"
+            },
+            {
+              "letter": "C",
+              "text": "The sensors are valuable when used with transparent safeguards"
+            },
+            {
+              "letter": "D",
+              "text": "Only students should interpret the data"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Which report uses sensor data most responsibly?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "One high reading proves the entire town is unsafe"
+            },
+            {
+              "letter": "B",
+              "text": "Calibrated sensors showed a repeated rush-hour pattern, though humidity remains a limitation"
+            },
+            {
+              "letter": "C",
+              "text": "Every low reading should be ignored"
+            },
+            {
+              "letter": "D",
+              "text": "The cheapest sensor must be the most accurate"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Text 4: A Phone-Free Classroom Trial\n\nSCHOOL REPORT: During a six-week trial, students placed phones in numbered pouches during four Grade 10 lessons. Teachers recorded fewer interruptions: the weekly average fell from 31 to 12. In an anonymous survey, 58% of students said concentration improved, while 27% reported no change and 15% said they felt less able to manage urgent family communication.\nSTUDENT REPRESENTATIVE: \"The reduction in interruptions matters, but one rule may not fit every situation. Students with medical or family needs require a clear exception process. We should also learn self-management, not depend forever on locked storage.\"\nTEACHER RESPONSE: \"The trial did not lock phones away for the entire day. Students could access them between lessons, and the office remained available for emergencies. A longer trial should compare learning outcomes, not interruptions alone.\"",
+      "questions": [
+        {
+          "question": "What directly measured result changed during the trial?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Examination scores doubled"
+            },
+            {
+              "letter": "B",
+              "text": "Weekly interruptions decreased"
+            },
+            {
+              "letter": "C",
+              "text": "All students preferred the pouches"
+            },
+            {
+              "letter": "D",
+              "text": "Family emergencies ended"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What concern is shared by the student representative and teacher?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The trial should consider more than a simple ban"
+            },
+            {
+              "letter": "B",
+              "text": "Phones should be removed for the whole day"
+            },
+            {
+              "letter": "C",
+              "text": "Interruptions did not decrease"
+            },
+            {
+              "letter": "D",
+              "text": "Surveys should never be used"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Why can the report not yet claim improved learning?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It measured interruptions and perceptions, not learning outcomes"
+            },
+            {
+              "letter": "B",
+              "text": "Six weeks is longer than a school term"
+            },
+            {
+              "letter": "C",
+              "text": "Teachers did not know phones existed"
+            },
+            {
+              "letter": "D",
+              "text": "No students took part"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Which policy revision best reflects all the evidence?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Apply a permanent rule with no exceptions"
+            },
+            {
+              "letter": "B",
+              "text": "End the trial because 15% raised a concern"
+            },
+            {
+              "letter": "C",
+              "text": "Continue a monitored trial, add clear exceptions and measure learning"
+            },
+            {
+              "letter": "D",
+              "text": "Allow unrestricted phone use in every lesson"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "What is the function of the percentages in the school report?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They show that student experiences were not identical"
+            },
+            {
+              "letter": "B",
+              "text": "They prove that the majority is always correct"
+            },
+            {
+              "letter": "C",
+              "text": "They identify individual students"
+            },
+            {
+              "letter": "D",
+              "text": "They replace the interruption count"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Text 5: The Weekend Fare Trial\n\nA city reduced weekend bus fares for three months. The table compares the trial with the same months in the previous year.\nMeasure\nPrevious year\nFare-trial year\nChange\nWeekend passenger trips\n420,000\n525,000\n+25%\nAverage fare per trip\nRs 28\nRs 19\n-32%\nWeekend fare revenue\nRs 11.76 million\nRs 9.98 million\n-15%\nThe transport department said the lower fare was associated with higher ridership but lower fare revenue. A newspaper headline stated, \"Cheaper Fares Remove 100,000 Cars from Roads.\" The department had not counted car journeys, and some new bus trips may previously have been made by walking, cycling or not at all.",
+      "questions": [
+        {
+          "question": "What happened to weekend passenger trips during the trial?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They decreased by 15%"
+            },
+            {
+              "letter": "B",
+              "text": "They increased by 25%"
+            },
+            {
+              "letter": "C",
+              "text": "They stayed unchanged"
+            },
+            {
+              "letter": "D",
+              "text": "They increased by 32%"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why did fare revenue fall despite higher ridership?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The average fare per trip was substantially lower"
+            },
+            {
+              "letter": "B",
+              "text": "No passengers paid fares"
+            },
+            {
+              "letter": "C",
+              "text": "The city stopped weekend buses"
+            },
+            {
+              "letter": "D",
+              "text": "Every trip replaced a car journey"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What is wrong with the newspaper headline?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It reports the fare reduction"
+            },
+            {
+              "letter": "B",
+              "text": "It assumes unmeasured car-trip replacement"
+            },
+            {
+              "letter": "C",
+              "text": "It states that ridership increased"
+            },
+            {
+              "letter": "D",
+              "text": "It mentions roads"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which conclusion is supported by the data?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The trial caused 100,000 drivers to use buses"
+            },
+            {
+              "letter": "B",
+              "text": "Lower fares were accompanied by more bus trips and less fare revenue"
+            },
+            {
+              "letter": "C",
+              "text": "Walking declined by exactly 25%"
+            },
+            {
+              "letter": "D",
+              "text": "The trial reduced total operating costs"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What evidence is needed to assess traffic impact?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Passenger opinions about seat colour"
+            },
+            {
+              "letter": "B",
+              "text": "Counts or travel surveys showing which transport modes the added trips replaced"
+            },
+            {
+              "letter": "C",
+              "text": "The number of bus tickets printed"
+            },
+            {
+              "letter": "D",
+              "text": "A list of driver names"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ],
+  "11": [
+    {
+      "passage": "Text 1: Note-Taking and Recall - Research Summary\n\nA college invited 120 volunteers to watch the same twenty-minute recorded lecture. Students were randomly assigned to take notes either by hand or on a laptop with internet access disabled. Immediately afterward, both groups completed a factual recall test. One week later, 94 participants returned for a test requiring them to explain and apply the lecture's ideas.\nGroup\nImmediate factual test\nOne-week application test\nHandwritten notes\n78%\n71%\nLaptop notes\n81%\n64%\nThe researchers found a small immediate advantage for laptop note-takers and a larger later advantage for handwritten note-takers on the application test. They cautioned that participants who returned after one week may differ from those who did not, and that one lecture cannot represent every subject, learner or note-taking method.",
+      "questions": [
+        {
+          "question": "What was the main reason for random assignment?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To reduce systematic differences between the two groups"
+            },
+            {
+              "letter": "B",
+              "text": "To ensure everyone preferred the assigned method"
+            },
+            {
+              "letter": "C",
+              "text": "To increase the lecture length"
+            },
+            {
+              "letter": "D",
+              "text": "To prevent any participant from leaving"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What contrast appears in the results?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Laptop users scored higher on both tests"
+            },
+            {
+              "letter": "B",
+              "text": "Handwritten-note users scored higher immediately"
+            },
+            {
+              "letter": "C",
+              "text": "Laptop users had a slight immediate advantage, but handwritten-note users did better later on application"
+            },
+            {
+              "letter": "D",
+              "text": "Both groups had identical results"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why does the return rate matter when interpreting the later test?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Only returning students had watched the lecture"
+            },
+            {
+              "letter": "B",
+              "text": "The 94 returners may not represent all 120 original participants"
+            },
+            {
+              "letter": "C",
+              "text": "Factual questions cannot be scored"
+            },
+            {
+              "letter": "D",
+              "text": "Random assignment happens after the final test"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which conclusion is justified?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Handwriting is superior for every learner and task"
+            },
+            {
+              "letter": "B",
+              "text": "Laptop use always prevents understanding"
+            },
+            {
+              "letter": "C",
+              "text": "In this study, note-taking mode was associated with different advantages on two tests"
+            },
+            {
+              "letter": "D",
+              "text": "Internet access caused the score difference"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Which replication would broaden the evidence most effectively?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Use several subjects, longer periods and diverse learners"
+            },
+            {
+              "letter": "B",
+              "text": "Repeat the same lecture with only the highest scorers"
+            },
+            {
+              "letter": "C",
+              "text": "Remove the later test"
+            },
+            {
+              "letter": "D",
+              "text": "Allow one group to see the answer key"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Text 2: Who Is the Author? - Paired Views\n\nVIEW A - Student Editor: \"When a writer uses a generative tool to suggest phrases, the final writer can still be the author - if the person decides the argument, checks every claim, reshapes the language and discloses substantial assistance. Tools have long helped writers spell, translate and revise. The central question is not whether a tool was used, but who exercised judgment.\"\nVIEW B - Literature Teacher: \"Judgment matters, but disclosure alone does not settle authorship. If a system supplies the structure, examples and distinctive expression, the student's opportunity to think through language may shrink. Schools assess learning as well as products. A polished text cannot demonstrate a student's ability if the important composing decisions were outsourced.\"",
+      "questions": [
+        {
+          "question": "What principle is central to View A?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Any tool use destroys authorship"
+            },
+            {
+              "letter": "B",
+              "text": "Authorship depends mainly on human judgment and responsibility"
+            },
+            {
+              "letter": "C",
+              "text": "Disclosure is never needed"
+            },
+            {
+              "letter": "D",
+              "text": "Spelling tools write complete arguments"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What additional concern does View B introduce?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The price of software"
+            },
+            {
+              "letter": "B",
+              "text": "Whether students lose the learning gained through composing"
+            },
+            {
+              "letter": "C",
+              "text": "Whether tools can correct spelling"
+            },
+            {
+              "letter": "D",
+              "text": "Whether teachers read polished work"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "On what point do both writers agree?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The amount and kind of human decision-making matter"
+            },
+            {
+              "letter": "B",
+              "text": "Generated text should always receive full marks"
+            },
+            {
+              "letter": "C",
+              "text": "Tools should be banned from every task"
+            },
+            {
+              "letter": "D",
+              "text": "Authorship is determined only by disclosure"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Which case would View B most likely regard as weak evidence of student ability?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A student checks grammar after writing a complete essay"
+            },
+            {
+              "letter": "B",
+              "text": "A student asks a tool to generate the structure, evidence and final wording"
+            },
+            {
+              "letter": "C",
+              "text": "A student consults a dictionary"
+            },
+            {
+              "letter": "D",
+              "text": "A student receives a teacher's comment on one paragraph"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why is the question 'Who exercised judgment?' not sufficient for View B?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Judgment cannot be observed"
+            },
+            {
+              "letter": "B",
+              "text": "An assessment must also consider which learning-relevant decisions the student actually practised"
+            },
+            {
+              "letter": "C",
+              "text": "Students never make judgments"
+            },
+            {
+              "letter": "D",
+              "text": "Literature has no structure"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Text 3: The Water-Bill Anomaly\n\nA residential complex reviewed monthly water use after receiving an unusually high bill. Meter readings were taken at the same time on the first day of each month.\nMonth\nMetered use\nOccupied flats\nRecorded maintenance event\nJanuary\n1.82 million L\n96\nNone\nFebruary\n1.79 million L\n95\nNone\nMarch\n2.61 million L\n94\nUnderground pipe leak found 18 March\nApril\n1.76 million L\n94\nLeak repaired 1 April\nThe manager attributed the entire March increase to the leak. An auditor agreed that the timing strongly implicated the leak but noted that daily readings were unavailable. Changes in gardening, cleaning or unreported occupancy could also have contributed. The auditor recommended installing zone meters and taking weekly readings.",
+      "questions": [
+        {
+          "question": "What makes March stand out?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It had the most occupied flats"
+            },
+            {
+              "letter": "B",
+              "text": "Its metered use was much higher despite slightly lower occupancy"
+            },
+            {
+              "letter": "C",
+              "text": "No maintenance event was recorded"
+            },
+            {
+              "letter": "D",
+              "text": "The meter was read on a different date"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What evidence supports the manager's explanation?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Use returned near earlier levels after the leak was repaired"
+            },
+            {
+              "letter": "B",
+              "text": "Occupancy rose sharply in March"
+            },
+            {
+              "letter": "C",
+              "text": "January had no water use"
+            },
+            {
+              "letter": "D",
+              "text": "Weekly readings identified the exact leak volume"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Why does the auditor avoid attributing the entire increase to the leak?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The leak was found in April"
+            },
+            {
+              "letter": "B",
+              "text": "Other uses were not fully measured and daily data were unavailable"
+            },
+            {
+              "letter": "C",
+              "text": "Metered use cannot reveal change"
+            },
+            {
+              "letter": "D",
+              "text": "The number of flats is irrelevant"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "How would zone meters help?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They could locate which part of the complex accounts for unusual use"
+            },
+            {
+              "letter": "B",
+              "text": "They would reduce occupancy"
+            },
+            {
+              "letter": "C",
+              "text": "They would eliminate gardening"
+            },
+            {
+              "letter": "D",
+              "text": "They would replace all bills with estimates"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Which statement best distinguishes the manager's and auditor's reasoning?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The manager rejects the leak; the auditor proves it caused nothing"
+            },
+            {
+              "letter": "B",
+              "text": "The manager makes a complete causal claim; the auditor treats the leak as likely but not exclusive"
+            },
+            {
+              "letter": "C",
+              "text": "Both claim that occupancy doubled"
+            },
+            {
+              "letter": "D",
+              "text": "Both say no further monitoring is useful"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Text 4: The Empty Platform\n\nBy the station clock, the last train had left seven minutes ago. Mira stood beneath the timetable and insisted that the clock was fast. It had always been fast, she told herself, although she could not remember ever checking it.\nAcross the tracks, a tea seller stacked metal cups. \"No more trains tonight,\" he called.\nMira lifted her suitcase as if the train might appear in answer. Her brother's message - DON'T MISS IT AGAIN - glowed on her phone. She turned the screen face down.\nA distant light trembled beyond the curve. For a moment she smiled. Then it rose above the tracks and separated into two headlights on the road behind the station. The tea seller did not look up.\nMira sat on the suitcase. \"The timetable must be wrong,\" she said, but this time quietly, to no one who had asked.",
+      "questions": [
+        {
+          "question": "What does Mira initially claim about the clock?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It has stopped"
+            },
+            {
+              "letter": "B",
+              "text": "It is seven minutes slow"
+            },
+            {
+              "letter": "C",
+              "text": "It is fast"
+            },
+            {
+              "letter": "D",
+              "text": "It belongs to the tea seller"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Which detail most strongly suggests this is not the first train Mira has missed?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The tea seller stacks cups"
+            },
+            {
+              "letter": "B",
+              "text": "Her brother writes 'Don't miss it again'"
+            },
+            {
+              "letter": "C",
+              "text": "The station has a timetable"
+            },
+            {
+              "letter": "D",
+              "text": "A road passes behind the station"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why does Mira turn her phone face down?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The battery is empty"
+            },
+            {
+              "letter": "B",
+              "text": "She wants to avoid confronting her brother's reminder"
+            },
+            {
+              "letter": "C",
+              "text": "She needs the screen as a mirror"
+            },
+            {
+              "letter": "D",
+              "text": "The tea seller asks for it"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What is the effect of the distant light becoming car headlights?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It briefly raises and then removes Mira's hope"
+            },
+            {
+              "letter": "B",
+              "text": "It proves another train is approaching"
+            },
+            {
+              "letter": "C",
+              "text": "It changes the station clock"
+            },
+            {
+              "letter": "D",
+              "text": "It shows the tea seller was mistaken"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What does Mira's final quiet statement reveal?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Her certainty has strengthened"
+            },
+            {
+              "letter": "B",
+              "text": "She may be beginning to recognise her own responsibility"
+            },
+            {
+              "letter": "C",
+              "text": "She has discovered a printing error"
+            },
+            {
+              "letter": "D",
+              "text": "She plans to catch a bus immediately"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Text 5: A Clothing Brand's Green Claim\n\nBRAND ADVERTISEMENT: \"Our new Ocean Line is sustainable fashion. Each shirt contains fabric made with recovered plastic. By choosing Ocean Line, you are helping clean the planet.\"\nINDEPENDENT REVIEW: The shirts contain 30% recycled polyester and 70% newly produced cotton. The company reports the recycled content but does not publish data on water use, factory energy, product lifespan or end-of-life recycling. Recovered plastic can reduce demand for some new material, yet synthetic fabric may release fibres during washing. The word 'sustainable' describes many impacts and cannot be established by one feature alone.\nCOMPANY RESPONSE: \"The Ocean Line is an early step, not our final goal. Next year we will publish supplier energy data and test a fibre-catching wash bag.\"",
+      "questions": [
+        {
+          "question": "Which fact supports part of the advertisement?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The shirt contains some recycled polyester"
+            },
+            {
+              "letter": "B",
+              "text": "The shirt contains no new material"
+            },
+            {
+              "letter": "C",
+              "text": "All factory energy is renewable"
+            },
+            {
+              "letter": "D",
+              "text": "The garment can be recycled forever"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Why does the independent review question the word 'sustainable'?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Recycled material has no value"
+            },
+            {
+              "letter": "B",
+              "text": "The claim relies on one feature while other environmental impacts are unreported"
+            },
+            {
+              "letter": "C",
+              "text": "Cotton is a synthetic fibre"
+            },
+            {
+              "letter": "D",
+              "text": "Advertisements may not mention products"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What possible trade-off does the review identify?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Recycled polyester may reduce new material use but can still shed fibres"
+            },
+            {
+              "letter": "B",
+              "text": "Long-lasting products always use more water"
+            },
+            {
+              "letter": "C",
+              "text": "Supplier data prevents recycling"
+            },
+            {
+              "letter": "D",
+              "text": "Wash bags create new cotton"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What does the company's response implicitly acknowledge?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The current claim covers every environmental effect"
+            },
+            {
+              "letter": "B",
+              "text": "The current effort and evidence are incomplete"
+            },
+            {
+              "letter": "C",
+              "text": "No shirts contain recycled material"
+            },
+            {
+              "letter": "D",
+              "text": "Independent review is unnecessary"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which revised claim would be most precise?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The world's only green shirt"
+            },
+            {
+              "letter": "B",
+              "text": "A perfect solution to ocean pollution"
+            },
+            {
+              "letter": "C",
+              "text": "Made with 30% recycled polyester; wider impact data to be published"
+            },
+            {
+              "letter": "D",
+              "text": "Buy this shirt to clean the entire planet"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    }
+  ],
+  "12": [
+    {
+      "passage": "Text 1: Recognising Manipulative Posts - Research Abstract\n\nResearchers randomly assigned 600 senior-secondary students to one of two three-minute online activities. The intervention group completed an interactive exercise explaining tactics such as emotional language, false experts and misleading comparisons. The comparison group completed an unrelated digital-skills exercise. Neither activity discussed the specific posts used in the later test.\nOutcome measured immediately after activity\nIntervention group\nComparison group\nCorrect identification of manipulative posts\n74%\n61%\nIntention to share posts\n28%\n30%\nThe authors concluded that the brief exercise improved immediate recognition in this sample but produced no clear difference in intended sharing. They cautioned that intention is not the same as actual behaviour, the test occurred immediately, and participants were drawn mainly from English-medium urban schools.",
+      "questions": [
+        {
+          "question": "Why is random assignment important in this study?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It helps make pre-existing differences less likely to explain the group result"
+            },
+            {
+              "letter": "B",
+              "text": "It guarantees that every student answers correctly"
+            },
+            {
+              "letter": "C",
+              "text": "It ensures the sample represents every country"
+            },
+            {
+              "letter": "D",
+              "text": "It removes the need for a comparison group"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What effect is most clearly supported by the results?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The exercise eliminated sharing"
+            },
+            {
+              "letter": "B",
+              "text": "The exercise improved immediate identification of manipulative posts"
+            },
+            {
+              "letter": "C",
+              "text": "The exercise changed actual online behaviour for a year"
+            },
+            {
+              "letter": "D",
+              "text": "The comparison exercise reduced digital skill"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why can the study not establish a change in actual sharing behaviour?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Students saw no online activity"
+            },
+            {
+              "letter": "B",
+              "text": "It measured stated intention, not observed behaviour"
+            },
+            {
+              "letter": "C",
+              "text": "Random assignment was used"
+            },
+            {
+              "letter": "D",
+              "text": "Both groups studied specific test posts"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which claim goes beyond the evidence?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The intervention group scored 13 percentage points higher on recognition"
+            },
+            {
+              "letter": "B",
+              "text": "The sharing-intention difference was small"
+            },
+            {
+              "letter": "C",
+              "text": "The activity permanently protects all teenagers from misinformation"
+            },
+            {
+              "letter": "D",
+              "text": "The findings may not generalise to every school context"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Which headline is most accurate?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Three-Minute Exercise Ends Online Misinformation"
+            },
+            {
+              "letter": "B",
+              "text": "Brief Media-Literacy Exercise Improves Immediate Recognition in Student Trial"
+            },
+            {
+              "letter": "C",
+              "text": "Students Refuse to Share Any Posts After Training"
+            },
+            {
+              "letter": "D",
+              "text": "Urban Schools Proven More Accurate Than Rural Schools"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Text 2: A Basic Services Pilot\n\nThe fictional city of Navapur proposes a one-year pilot for 500 low-income households. Participants would receive free local bus passes and subsidised after-school care. The stated goal is to reduce two practical barriers to stable work: travel cost and care responsibilities.\nBudget item\nPlanned cost\nBus passes\nRs 6.0 million\nAfter-school care\nRs 12.5 million\nAdministration and evaluation\nRs 2.5 million\nTotal\nRs 21.0 million\nSUPPORTER: \"Cash income is not the only issue. Reliable transport and care can make it possible to accept work or training. Measuring attendance, employment stability and participant experience will show whether the package helps.\"\nCRITIC: \"A pilot without a comparable non-participant group may show change but not prove what caused it. The city should also report who could not obtain a place, whether providers have capacity and what happens when the subsidy ends.\"",
+      "questions": [
+        {
+          "question": "What theory connects the two services to the pilot's goal?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Transport and care barriers can prevent people from sustaining work or training"
+            },
+            {
+              "letter": "B",
+              "text": "Every household needs the same amount of cash"
+            },
+            {
+              "letter": "C",
+              "text": "Bus use automatically creates jobs"
+            },
+            {
+              "letter": "D",
+              "text": "After-school care lowers city revenue"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What percentage of the total budget is allocated to after-school care?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Approximately 40%"
+            },
+            {
+              "letter": "B",
+              "text": "Approximately 50%"
+            },
+            {
+              "letter": "C",
+              "text": "Approximately 60%"
+            },
+            {
+              "letter": "D",
+              "text": "Approximately 75%"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "What is the critic's main methodological concern?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The pilot lasts too long to evaluate"
+            },
+            {
+              "letter": "B",
+              "text": "Without a suitable comparison, observed changes cannot confidently be attributed to the programme"
+            },
+            {
+              "letter": "C",
+              "text": "Participant experience cannot be recorded"
+            },
+            {
+              "letter": "D",
+              "text": "Administrative spending is zero"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which evaluation plan best answers both viewpoints?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Report only the number of bus passes issued"
+            },
+            {
+              "letter": "B",
+              "text": "Track participant outcomes and experiences, capacity limits, non-participants and post-pilot effects"
+            },
+            {
+              "letter": "C",
+              "text": "Assume employment change is caused by the pilot"
+            },
+            {
+              "letter": "D",
+              "text": "Exclude households that face difficulties"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What policy trade-off is implicit in the critic's final question?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Temporary support may create benefits that are difficult to maintain after funding ends"
+            },
+            {
+              "letter": "B",
+              "text": "Bus passes can never be temporary"
+            },
+            {
+              "letter": "C",
+              "text": "Evaluation prevents service delivery"
+            },
+            {
+              "letter": "D",
+              "text": "Provider capacity always increases automatically"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Text 3: Remote-Proctoring Debate\n\nUNIVERSITY STATEMENT: \"Remote-proctoring software allows students to sit examinations away from campus. The system verifies identity, records the session and flags unusual patterns for human review. A flag is not itself proof of misconduct. Recordings are retained for thirty days unless an investigation requires longer storage.\"\nPRIVACY OFFICER: \"The university should collect only what is necessary, publish who can access recordings and provide a non-biometric alternative. Students need a practical way to challenge a flag and correct inaccurate personal data.\"\nACCESS ADVOCATE: \"Remote exams can help students who live far away or have mobility constraints, but automated flags may disadvantage people with involuntary movements, unstable internet or assistive technology. An alternative must be equally available, not an inconvenient exception that carries a penalty.\"",
+      "questions": [
+        {
+          "question": "What safeguard is already stated by the university?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Every flag results in automatic punishment"
+            },
+            {
+              "letter": "B",
+              "text": "Unusual patterns are reviewed by a human"
+            },
+            {
+              "letter": "C",
+              "text": "All recordings are stored permanently"
+            },
+            {
+              "letter": "D",
+              "text": "Biometric verification is optional for everyone"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What concern links the privacy officer and access advocate?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Students need meaningful alternatives and protection from unjust automated decisions"
+            },
+            {
+              "letter": "B",
+              "text": "Remote assessment should always replace campus exams"
+            },
+            {
+              "letter": "C",
+              "text": "Recordings should be public"
+            },
+            {
+              "letter": "D",
+              "text": "Internet instability proves misconduct"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Why does the access advocate distinguish an available alternative from an equally available one?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A nominal option may still be burdensome, delayed or penalised"
+            },
+            {
+              "letter": "B",
+              "text": "All students prefer biometric systems"
+            },
+            {
+              "letter": "C",
+              "text": "Alternatives cannot verify learning"
+            },
+            {
+              "letter": "D",
+              "text": "Campus exams require no planning"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Which policy most closely addresses all three texts?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Punish every flagged student immediately"
+            },
+            {
+              "letter": "B",
+              "text": "Retain all recordings indefinitely"
+            },
+            {
+              "letter": "C",
+              "text": "Use human review, limited retention, transparent access, appeals and a genuinely equivalent alternative"
+            },
+            {
+              "letter": "D",
+              "text": "Remove every identity check without replacement"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "What unresolved question remains after reading the texts?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Whether the system records examination sessions"
+            },
+            {
+              "letter": "B",
+              "text": "How accurately flags perform across different student circumstances"
+            },
+            {
+              "letter": "C",
+              "text": "Whether the university conducts exams"
+            },
+            {
+              "letter": "D",
+              "text": "Whether students can live away from campus"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Text 4: The Returned Key\n\nOn the morning after the farewell, Arun found the brass key on his desk. No note accompanied it. His father had carried it for thirty years, though the lock it once opened had been replaced when the old shop became a pharmacy.\nAt the station the previous evening, Arun had tried to return it. \"You should keep this,\" he had said, closing his father's fingers around the metal.\nHis father had looked past him toward the departure board. \"A key is useful only if you know what it opens.\"\nNow the key lay beside Arun's new office pass, the obsolete teeth dark against the smooth plastic. He considered calling. Instead, he threaded both onto the same ring. When he left for work, the brass key struck the plastic card at every step - a small, irregular sound he could neither silence nor mistake for music.",
+      "questions": [
+        {
+          "question": "Why is the brass key literally obsolete?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It is made of plastic"
+            },
+            {
+              "letter": "B",
+              "text": "Its original lock has been replaced"
+            },
+            {
+              "letter": "C",
+              "text": "Arun has lost it"
+            },
+            {
+              "letter": "D",
+              "text": "The shop remains unchanged"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What may the father's statement imply beyond the literal meaning?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Objects or inheritances have value only when their meaning is understood"
+            },
+            {
+              "letter": "B",
+              "text": "Every old building must be reopened"
+            },
+            {
+              "letter": "C",
+              "text": "Arun should become a locksmith"
+            },
+            {
+              "letter": "D",
+              "text": "Office passes are more musical than keys"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What contrast is created by placing the key beside the office pass?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Public transport and private travel"
+            },
+            {
+              "letter": "B",
+              "text": "Inherited past and present identity"
+            },
+            {
+              "letter": "C",
+              "text": "Silence and speech"
+            },
+            {
+              "letter": "D",
+              "text": "Wealth and poverty"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why does Arun put both objects on the same ring?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "He has discovered they open the same lock"
+            },
+            {
+              "letter": "B",
+              "text": "He attempts to carry his past into his present rather than choose one"
+            },
+            {
+              "letter": "C",
+              "text": "He wants to damage the office pass"
+            },
+            {
+              "letter": "D",
+              "text": "His father instructs him to do so"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What does the final phrase 'neither silence nor mistake for music' suggest?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The memory is persistent and meaningful but not comfortably resolved"
+            },
+            {
+              "letter": "B",
+              "text": "Arun is delighted by the pleasant sound"
+            },
+            {
+              "letter": "C",
+              "text": "The key has lost all symbolic value"
+            },
+            {
+              "letter": "D",
+              "text": "The office pass no longer works"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Text 5: Reporting a Job-Training Programme\n\nA newspaper examined a six-month digital-skills programme. Admission was competitive, and applicants completed a motivation interview.\nGroup\nNumber\nEmployed six months later\nEnrolled participants\n300\n216 (72%)\nApplicants not admitted\n500\n250 (50%)\nThe programme's advertisement said, \"Training raises employment by 22 percentage points.\" The newspaper noted that admitted applicants may have differed in motivation, prior skill, interview performance or available time. It also found that 48 enrolled participants left before completing the programme, although the advertisement counted them in the participant group.",
+      "questions": [
+        {
+          "question": "How was the advertised 22-percentage-point difference calculated?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "72% minus 50%"
+            },
+            {
+              "letter": "B",
+              "text": "300 minus 216"
+            },
+            {
+              "letter": "C",
+              "text": "500 minus 250"
+            },
+            {
+              "letter": "D",
+              "text": "216 divided by 48"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Why does competitive admission weaken a causal interpretation?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The two groups may differ in characteristics related to employment"
+            },
+            {
+              "letter": "B",
+              "text": "The percentages use the same unit"
+            },
+            {
+              "letter": "C",
+              "text": "No applicants were interviewed"
+            },
+            {
+              "letter": "D",
+              "text": "Everyone completed the programme"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What can the data establish with confidence?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Training alone caused every employment difference"
+            },
+            {
+              "letter": "B",
+              "text": "The enrolled group had a higher employment rate six months later"
+            },
+            {
+              "letter": "C",
+              "text": "Non-admitted applicants received identical training"
+            },
+            {
+              "letter": "D",
+              "text": "Dropping out had no effect"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why is information about the 48 early leavers relevant?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It helps distinguish the effect of being admitted from completing the training"
+            },
+            {
+              "letter": "B",
+              "text": "It proves that they were all unemployed"
+            },
+            {
+              "letter": "C",
+              "text": "It changes the number of non-admitted applicants"
+            },
+            {
+              "letter": "D",
+              "text": "It removes selection bias automatically"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Which design would best estimate the programme's causal effect?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Compare participants with people who never sought work"
+            },
+            {
+              "letter": "B",
+              "text": "Randomly offer places among similarly eligible applicants when demand exceeds capacity"
+            },
+            {
+              "letter": "C",
+              "text": "Interview only successful graduates"
+            },
+            {
+              "letter": "D",
+              "text": "Use the advertisement as the sole evidence"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ]
+}
