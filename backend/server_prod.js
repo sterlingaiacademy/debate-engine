@@ -4501,6 +4501,12 @@ app.post('/api/olympiad/mock/submit', async (req, res) => {
     const userRes = await db.query('SELECT id FROM users WHERE email = $1', [user_email]);
     const user_id = userRes.rows.length > 0 ? userRes.rows[0].id : null;
 
+    const existing = await db.query(
+      `SELECT id FROM olympiad_mock_results WHERE user_email=$1 AND quiz_name=$2 LIMIT 1`,
+      [user_email, quiz_name]
+    );
+    if (existing.rows.length > 0) return res.status(400).json({ error: 'Already attempted' });
+
     await db.query(
       `INSERT INTO olympiad_mock_results (user_id, user_email, quiz_name, subject, grade, score, total, percentage, answers) 
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
