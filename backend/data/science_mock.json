@@ -1,0 +1,3909 @@
+{
+  "6": [
+    {
+      "passage": "Testing a Solar Cooker\nStudents tested the same solar cooker at three reflector angles. Each test used 500 mL of water at 25 degrees C for 30 minutes under similar sunshine.\nReflector angle\nFinal water temperature\n20 degrees\n54 degrees C\n45 degrees\n68 degrees C\n70 degrees\n62 degrees C\n",
+      "questions": [
+        {
+          "question": "Which reflector angle heated the water most in this test?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "20 degrees"
+            },
+            {
+              "letter": "B",
+              "text": "45 degrees"
+            },
+            {
+              "letter": "C",
+              "text": "70 degrees"
+            },
+            {
+              "letter": "D",
+              "text": "All were equal"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why was the same volume of water used each time?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To change the reflector"
+            },
+            {
+              "letter": "B",
+              "text": "To avoid using a thermometer"
+            },
+            {
+              "letter": "C",
+              "text": "To keep the amount being heated constant"
+            },
+            {
+              "letter": "D",
+              "text": "To make sunlight stronger"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "What is the dependent variable in the investigation?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Starting water volume"
+            },
+            {
+              "letter": "B",
+              "text": "Reflector angle"
+            },
+            {
+              "letter": "C",
+              "text": "Amount of sunshine"
+            },
+            {
+              "letter": "D",
+              "text": "Final water temperature"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Which conclusion is justified?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A 45-degree angle was most effective under the tested conditions"
+            },
+            {
+              "letter": "B",
+              "text": "A 45-degree angle is best everywhere and at all times"
+            },
+            {
+              "letter": "C",
+              "text": "Solar cookers cannot heat water"
+            },
+            {
+              "letter": "D",
+              "text": "A 70-degree angle always cools water"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What would best test whether the result is consistent?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Paint each thermometer a different colour"
+            },
+            {
+              "letter": "B",
+              "text": "Repeat the angles on several similar sunny days"
+            },
+            {
+              "letter": "C",
+              "text": "Use different water volumes for each angle"
+            },
+            {
+              "letter": "D",
+              "text": "Record only the hottest result"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "How Quickly Does Sugar Dissolve?\nOne spoon of sugar was added to 200 mL of water. The mixture was stirred at the same speed until no crystals were visible.\nWater temperature\nTime for sugar to dissolve\n10 degrees C\n180 seconds\n25 degrees C\n90 seconds\n50 degrees C\n35 seconds\n",
+      "questions": [
+        {
+          "question": "What pattern is shown by the data?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Cold water dissolved the most sugar"
+            },
+            {
+              "letter": "B",
+              "text": "Sugar dissolved more slowly as temperature rose"
+            },
+            {
+              "letter": "C",
+              "text": "Sugar dissolved faster in warmer water"
+            },
+            {
+              "letter": "D",
+              "text": "Temperature made no difference"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "What factor was deliberately changed?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Sugar amount"
+            },
+            {
+              "letter": "B",
+              "text": "Water volume"
+            },
+            {
+              "letter": "C",
+              "text": "Stirring speed"
+            },
+            {
+              "letter": "D",
+              "text": "Water temperature"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Why was the stirring speed kept the same?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Stirring can also affect dissolving time"
+            },
+            {
+              "letter": "B",
+              "text": "Stirring changes sugar into salt"
+            },
+            {
+              "letter": "C",
+              "text": "Warm water cannot be stirred"
+            },
+            {
+              "letter": "D",
+              "text": "The spoon measures temperature"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Which explanation best fits the result?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Crystals grow faster in warm water"
+            },
+            {
+              "letter": "B",
+              "text": "Particles move and mix more rapidly in warmer water"
+            },
+            {
+              "letter": "C",
+              "text": "Sugar becomes colder than ice"
+            },
+            {
+              "letter": "D",
+              "text": "Water disappears at 50 degrees C"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What cannot be concluded from this investigation?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Temperature affected dissolving time"
+            },
+            {
+              "letter": "B",
+              "text": "The 50-degree water gave the shortest time"
+            },
+            {
+              "letter": "C",
+              "text": "Warmer water can dissolve an unlimited amount of sugar"
+            },
+            {
+              "letter": "D",
+              "text": "The same sugar amount was used"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Inside the Compost Bins\nA school compared three compost bins for four weeks. All bins began with 10 kg of material and received the same amount of water.\nBin\nMaterial and treatment\nHighest temperature\nMass after four weeks\nA\nChopped scraps, turned weekly\n55 degrees C\n6.2 kg\nB\nWhole scraps, not turned\n38 degrees C\n8.1 kg\nC\nDry leaves only, turned weekly\n31 degrees C\n9.0 kg\nActive decomposers release heat as they break down organic material.\n",
+      "questions": [
+        {
+          "question": "Which bin showed the strongest signs of rapid decomposition?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Bin B"
+            },
+            {
+              "letter": "B",
+              "text": "Bin C"
+            },
+            {
+              "letter": "C",
+              "text": "All were identical"
+            },
+            {
+              "letter": "D",
+              "text": "Bin A"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Which evidence supports that answer?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It had the highest temperature and greatest mass loss"
+            },
+            {
+              "letter": "B",
+              "text": "It contained only leaves"
+            },
+            {
+              "letter": "C",
+              "text": "It was never turned"
+            },
+            {
+              "letter": "D",
+              "text": "It stayed driest"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Why might chopping scraps speed decomposition?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It stops oxygen entering"
+            },
+            {
+              "letter": "B",
+              "text": "It gives decomposers more surface area to act on"
+            },
+            {
+              "letter": "C",
+              "text": "It removes all microorganisms"
+            },
+            {
+              "letter": "D",
+              "text": "It makes the scraps inorganic"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why is Bin C useful in the comparison?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It has more starting mass"
+            },
+            {
+              "letter": "B",
+              "text": "It receives no water"
+            },
+            {
+              "letter": "C",
+              "text": "It provides a different material condition for comparison"
+            },
+            {
+              "letter": "D",
+              "text": "It proves leaves never decompose"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Which additional measurement would improve the investigation?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The names of students nearby"
+            },
+            {
+              "letter": "B",
+              "text": "The cost of garden tools"
+            },
+            {
+              "letter": "C",
+              "text": "The colour of the bin lids only"
+            },
+            {
+              "letter": "D",
+              "text": "Moisture and temperature recorded regularly"
+            }
+          ],
+          "correct": "D"
+        }
+      ]
+    },
+    {
+      "passage": "Pulse Recovery After Exercise\nArun counted his pulse for one minute at rest and after two minutes of step exercise.\nMeasurement time\nPulse rate\nBefore exercise\n78 beats/min\nImmediately after\n142 beats/min\nAfter 2 minutes rest\n104 beats/min\nAfter 5 minutes rest\n82 beats/min\n",
+      "questions": [
+        {
+          "question": "How did exercise immediately affect Arun's pulse?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It increased by 64 beats/min"
+            },
+            {
+              "letter": "B",
+              "text": "It stayed at 78 beats/min"
+            },
+            {
+              "letter": "C",
+              "text": "It stopped briefly"
+            },
+            {
+              "letter": "D",
+              "text": "It decreased by 64 beats/min"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What does the five-minute reading show?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "His heart had stopped working"
+            },
+            {
+              "letter": "B",
+              "text": "His pulse had nearly returned to the resting rate"
+            },
+            {
+              "letter": "C",
+              "text": "His pulse was still increasing"
+            },
+            {
+              "letter": "D",
+              "text": "Exercise had no effect"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why does pulse usually rise during exercise?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The lungs stop exchanging gases"
+            },
+            {
+              "letter": "B",
+              "text": "The body temperature must fall to zero"
+            },
+            {
+              "letter": "C",
+              "text": "Muscles need more oxygen and nutrients"
+            },
+            {
+              "letter": "D",
+              "text": "Blood no longer moves"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why should Arun count for the same length of time at every stage?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To force the pulse to slow"
+            },
+            {
+              "letter": "B",
+              "text": "To change the exercise"
+            },
+            {
+              "letter": "C",
+              "text": "To avoid recording numbers"
+            },
+            {
+              "letter": "D",
+              "text": "To make the rates comparable"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "What is the main limitation of using only Arun's readings?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "One person may not represent all students"
+            },
+            {
+              "letter": "B",
+              "text": "Exercise never changes pulse"
+            },
+            {
+              "letter": "C",
+              "text": "Five minutes is longer than two minutes"
+            },
+            {
+              "letter": "D",
+              "text": "Pulse cannot be counted"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "A Bottle Water Filter\nStudents poured muddy pond water through a bottle containing gravel, sand and charcoal. Turbidity, a measure of cloudiness, fell from 60 NTU to 8 NTU. The class did not test for microorganisms or dissolved chemicals.\nThe teacher warned students not to drink the filtered water.\n",
+      "questions": [
+        {
+          "question": "What change did the filter produce?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The water became more cloudy"
+            },
+            {
+              "letter": "B",
+              "text": "Turbidity fell by 52 NTU"
+            },
+            {
+              "letter": "C",
+              "text": "All chemicals disappeared"
+            },
+            {
+              "letter": "D",
+              "text": "The water became sterile"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why was the teacher's warning scientifically sensible?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Turbidity cannot be measured"
+            },
+            {
+              "letter": "B",
+              "text": "Charcoal turns water into salt"
+            },
+            {
+              "letter": "C",
+              "text": "Clearer water may still contain harmful microbes or dissolved substances"
+            },
+            {
+              "letter": "D",
+              "text": "Sand always makes water poisonous"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "What was the measured outcome of the test?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Number of gravel pieces"
+            },
+            {
+              "letter": "B",
+              "text": "Taste of the water"
+            },
+            {
+              "letter": "C",
+              "text": "Bottle height"
+            },
+            {
+              "letter": "D",
+              "text": "Turbidity before and after filtering"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Which test is most important before considering the water safe to drink?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Test for disease-causing microorganisms and harmful chemicals"
+            },
+            {
+              "letter": "B",
+              "text": "Count the sand grains"
+            },
+            {
+              "letter": "C",
+              "text": "Measure only the water colour"
+            },
+            {
+              "letter": "D",
+              "text": "Check the bottle label"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    }
+  ],
+  "7": [
+    {
+      "passage": "Choosing an Insulated Cup\nStudents poured equal amounts of water at 80 degrees C into four cups. The cups were placed together in a room at 24 degrees C. Water temperature was measured after 20 minutes.\nCup\nMaterial\nTemperature after 20 minutes\nA\nPaper\n55 degrees C\nB\nFoam\n63 degrees C\nC\nMetal\n42 degrees C\nD\nMetal wrapped in cloth\n58 degrees C\n",
+      "questions": [
+        {
+          "question": "Which cup reduced heat loss most effectively?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Unwrapped cup"
+            },
+            {
+              "letter": "B",
+              "text": "Paper cup"
+            },
+            {
+              "letter": "C",
+              "text": "Foam cup"
+            },
+            {
+              "letter": "D",
+              "text": "Metal cup"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "What evidence shows that cloth improved the metal cup?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Cup C was warmer than Cup B"
+            },
+            {
+              "letter": "B",
+              "text": "Both metal cups reached 80 degrees C"
+            },
+            {
+              "letter": "C",
+              "text": "The room was 24 degrees C"
+            },
+            {
+              "letter": "D",
+              "text": "Cup D remained 16 degrees C warmer than Cup C"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Why did the unwrapped metal cup cool most?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Metal is a relatively good conductor of heat"
+            },
+            {
+              "letter": "B",
+              "text": "Metal creates cold"
+            },
+            {
+              "letter": "C",
+              "text": "Water cannot remain in metal"
+            },
+            {
+              "letter": "D",
+              "text": "The cup increased room temperature to 80 degrees C"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Which variable was measured as the outcome?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Starting water amount"
+            },
+            {
+              "letter": "B",
+              "text": "Temperature after 20 minutes"
+            },
+            {
+              "letter": "C",
+              "text": "Room location"
+            },
+            {
+              "letter": "D",
+              "text": "Cup material"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which procedure would improve reliability?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Place the cups in different rooms"
+            },
+            {
+              "letter": "B",
+              "text": "Remove the thermometer from one cup"
+            },
+            {
+              "letter": "C",
+              "text": "Repeat each cup test and calculate mean temperatures"
+            },
+            {
+              "letter": "D",
+              "text": "Use a different water volume in every cup"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Yeast and Balloon Inflation\nEqual amounts of yeast, sugar solution and air were placed in bottles. A balloon was fitted to each bottle, and the bottles were kept at different temperatures for 30 minutes.\nTemperature\nGas collected in balloon\n5 degrees C\n2 mL\n25 degrees C\n38 mL\n40 degrees C\n24 mL\n60 degrees C\n0 mL\nYeast releases carbon dioxide when it respires using sugar.\n",
+      "questions": [
+        {
+          "question": "At which tested temperature was yeast activity greatest?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "40 degrees C"
+            },
+            {
+              "letter": "B",
+              "text": "60 degrees C"
+            },
+            {
+              "letter": "C",
+              "text": "5 degrees C"
+            },
+            {
+              "letter": "D",
+              "text": "25 degrees C"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "What does the balloon volume provide an estimate of?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Amount of carbon dioxide released"
+            },
+            {
+              "letter": "B",
+              "text": "Mass of the bottle"
+            },
+            {
+              "letter": "C",
+              "text": "Colour of the yeast"
+            },
+            {
+              "letter": "D",
+              "text": "Amount of oxygen in the room"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Why may no gas have been collected at 60 degrees C?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The sugar froze"
+            },
+            {
+              "letter": "B",
+              "text": "The high temperature may have damaged or killed the yeast cells"
+            },
+            {
+              "letter": "C",
+              "text": "Carbon dioxide became solid"
+            },
+            {
+              "letter": "D",
+              "text": "The balloon produced oxygen"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What should be kept constant to isolate the effect of temperature?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Balloon volume after the test"
+            },
+            {
+              "letter": "B",
+              "text": "Rate of respiration"
+            },
+            {
+              "letter": "C",
+              "text": "Amounts of yeast and sugar solution"
+            },
+            {
+              "letter": "D",
+              "text": "Temperature"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Which conclusion goes beyond the data?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Sixty degrees C produced no measurable gas"
+            },
+            {
+              "letter": "B",
+              "text": "Yeast activity differed across the tested temperatures"
+            },
+            {
+              "letter": "C",
+              "text": "Twenty-five degrees C produced the most gas in this test"
+            },
+            {
+              "letter": "D",
+              "text": "All yeast everywhere grows best at exactly 25 degrees C"
+            }
+          ],
+          "correct": "D"
+        }
+      ]
+    },
+    {
+      "passage": "Air Near the School Gate\nA class used the same calibrated particle sensor at three school locations. PM2.5 values are in micrograms per cubic metre; higher values indicate more fine particles.\nLocation\n8:00 a.m.\n1:00 p.m.\n4:00 p.m.\nMain gate\n48\n24\n52\nBus parking area\n55\n29\n61\nGarden\n18\n15\n20\nVehicle arrivals are busiest before school and at closing time. Wind direction was not recorded.\n",
+      "questions": [
+        {
+          "question": "Where and when was the highest PM2.5 value recorded?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Bus parking area at 4:00 p.m."
+            },
+            {
+              "letter": "B",
+              "text": "Garden at 4:00 p.m."
+            },
+            {
+              "letter": "C",
+              "text": "Garden at 1:00 p.m."
+            },
+            {
+              "letter": "D",
+              "text": "Main gate at 8:00 a.m."
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What pattern appears at the gate and bus area?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The garden is always most polluted"
+            },
+            {
+              "letter": "B",
+              "text": "Values are higher near busy arrival and closing times"
+            },
+            {
+              "letter": "C",
+              "text": "Values remain exactly constant"
+            },
+            {
+              "letter": "D",
+              "text": "Midday always has the highest value"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why can the data not prove that buses caused all the particles?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Three locations were included"
+            },
+            {
+              "letter": "B",
+              "text": "Particles cannot be measured"
+            },
+            {
+              "letter": "C",
+              "text": "Wind and other sources were not monitored"
+            },
+            {
+              "letter": "D",
+              "text": "The same sensor was used"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why is using the same calibrated sensor helpful?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It guarantees zero pollution"
+            },
+            {
+              "letter": "B",
+              "text": "It controls traffic volume"
+            },
+            {
+              "letter": "C",
+              "text": "It changes wind direction"
+            },
+            {
+              "letter": "D",
+              "text": "It reduces differences caused by instruments"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Which action is most directly supported for further investigation?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Record wind and vehicle numbers while taking repeated PM2.5 readings"
+            },
+            {
+              "letter": "B",
+              "text": "Ban all outdoor activity after one day"
+            },
+            {
+              "letter": "C",
+              "text": "Measure only inside one classroom"
+            },
+            {
+              "letter": "D",
+              "text": "Use an uncalibrated sensor at each site"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Snails in a Wetland\nAn unfamiliar snail species appeared in a wetland. Scientists marked six similar plots. Three plots were fenced to exclude the new snails, while three remained open.\nPlot type\nNative plant cover at start\nNative plant cover after eight weeks\nNew snails per plot\nFenced\n62%\n59%\n0-2\nOpen\n64%\n31%\n18-27\n",
+      "questions": [
+        {
+          "question": "Which result supports the idea that the new snails harm native plants?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Plant cover increased equally in both groups"
+            },
+            {
+              "letter": "B",
+              "text": "Plant cover fell much more in open plots with many snails"
+            },
+            {
+              "letter": "C",
+              "text": "Fenced plots began with no plants"
+            },
+            {
+              "letter": "D",
+              "text": "Open plots had no snails"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why were several plots used for each treatment?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To remove the need for measurements"
+            },
+            {
+              "letter": "B",
+              "text": "To make the wetland smaller"
+            },
+            {
+              "letter": "C",
+              "text": "To assess natural variation and make the result more reliable"
+            },
+            {
+              "letter": "D",
+              "text": "To ensure every plot had different starting cover"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "What is the role of the fenced plots?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They increase the snail population"
+            },
+            {
+              "letter": "B",
+              "text": "They change the plant species"
+            },
+            {
+              "letter": "C",
+              "text": "They prove fencing is harmless"
+            },
+            {
+              "letter": "D",
+              "text": "They provide a comparison with few or no new snails"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Why should scientists be cautious before releasing a predator to control the snails?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The predator could also affect native species"
+            },
+            {
+              "letter": "B",
+              "text": "Predators cannot eat snails"
+            },
+            {
+              "letter": "C",
+              "text": "The wetland has plants"
+            },
+            {
+              "letter": "D",
+              "text": "Fences already measure temperature"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Which observation would most strengthen a cause-and-effect claim?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The snail shells are colourful"
+            },
+            {
+              "letter": "B",
+              "text": "Similar plant decline occurs when snails are experimentally added to matched plots"
+            },
+            {
+              "letter": "C",
+              "text": "A student dislikes the snails"
+            },
+            {
+              "letter": "D",
+              "text": "The wetland has cloudy days"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Bulbs in Series and Parallel\nStudents connected two identical bulbs to the same battery in different circuits. Brightness was measured with a light sensor.\nCircuit\nConnection\nBrightness of each bulb\nIf one bulb is removed\nA\nOne bulb only\n100 units\nCircuit opens\nB\nTwo bulbs in series\n42 units\nBoth go out\nC\nTwo bulbs in parallel\n91 units\nOther bulb stays on\n",
+      "questions": [
+        {
+          "question": "Which circuit made each of two bulbs brightest?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Circuit A"
+            },
+            {
+              "letter": "B",
+              "text": "Circuit B"
+            },
+            {
+              "letter": "C",
+              "text": "Circuit C"
+            },
+            {
+              "letter": "D",
+              "text": "All gave 42 units"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why are bulbs dimmer in the series circuit?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "No charge moves in series"
+            },
+            {
+              "letter": "B",
+              "text": "Each bulb creates another battery"
+            },
+            {
+              "letter": "C",
+              "text": "Parallel circuits contain no wires"
+            },
+            {
+              "letter": "D",
+              "text": "The battery's potential difference is shared across the bulbs"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Which observation identifies the parallel circuit?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The other bulb stays on when one is removed"
+            },
+            {
+              "letter": "B",
+              "text": "Only one bulb can be connected"
+            },
+            {
+              "letter": "C",
+              "text": "Brightness becomes zero before removal"
+            },
+            {
+              "letter": "D",
+              "text": "Both bulbs go out when one is removed"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Why were identical bulbs and the same battery used?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To change bulb colour"
+            },
+            {
+              "letter": "B",
+              "text": "To make connection type the main changed factor"
+            },
+            {
+              "letter": "C",
+              "text": "To make every circuit parallel"
+            },
+            {
+              "letter": "D",
+              "text": "To prevent electric current"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ],
+  "8": [
+    {
+      "passage": "Acidic Water and Limestone\nEqual limestone chips were placed in 100 mL of solutions for 24 hours. All chips began with a mass of 10.0 g.\nSolution pH\nFinal mass\nMass lost\n7\n9.9 g\n0.1 g\n5\n9.5 g\n0.5 g\n3\n8.2 g\n1.8 g\nLimestone contains calcium carbonate, which reacts with acids.\n",
+      "questions": [
+        {
+          "question": "What relationship is shown by the results?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Higher pH caused greater mass loss"
+            },
+            {
+              "letter": "B",
+              "text": "pH had no relationship with mass"
+            },
+            {
+              "letter": "C",
+              "text": "Every chip gained mass"
+            },
+            {
+              "letter": "D",
+              "text": "Lower pH was associated with greater limestone mass loss"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Why was a pH 7 solution included?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "As a near-neutral comparison"
+            },
+            {
+              "letter": "B",
+              "text": "To guarantee the largest reaction"
+            },
+            {
+              "letter": "C",
+              "text": "To make the chips acidic before testing"
+            },
+            {
+              "letter": "D",
+              "text": "As the dependent variable"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What chemical explanation fits the mass loss?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Calcium carbonate cannot react"
+            },
+            {
+              "letter": "B",
+              "text": "Acid reacts with calcium carbonate and products leave the chip"
+            },
+            {
+              "letter": "C",
+              "text": "Acid changes mass into temperature"
+            },
+            {
+              "letter": "D",
+              "text": "Limestone absorbs all the water"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which factor should have been kept constant?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Mass lost"
+            },
+            {
+              "letter": "B",
+              "text": "Final mass"
+            },
+            {
+              "letter": "C",
+              "text": "Initial surface area of the limestone chips"
+            },
+            {
+              "letter": "D",
+              "text": "Solution pH"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "What would improve the reliability of each value?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Use a different volume at every pH"
+            },
+            {
+              "letter": "B",
+              "text": "Round all masses to 10 g"
+            },
+            {
+              "letter": "C",
+              "text": "Remove the pH 7 comparison"
+            },
+            {
+              "letter": "D",
+              "text": "Test several chips at each pH and calculate a mean"
+            }
+          ],
+          "correct": "D"
+        }
+      ]
+    },
+    {
+      "passage": "Power for an Island\nAn island uses about 150 MWh of electricity each day. Engineers compared three renewable sources. Daily output varies with conditions.\nSource\nTypical daily output\nMain limitation\nSolar\n60 MWh\nNo generation at night; cloudy-day variation\nWind\n80 MWh\nLow output during calm weather\nSmall hydro\n50 MWh\nReduced output in dry months\nThe island can also install batteries, reduce demand at peak times, or retain an emergency generator.\n",
+      "questions": [
+        {
+          "question": "Which pair has the highest typical combined output?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Solar and wind"
+            },
+            {
+              "letter": "B",
+              "text": "Solar and hydro"
+            },
+            {
+              "letter": "C",
+              "text": "Wind and hydro"
+            },
+            {
+              "letter": "D",
+              "text": "Solar alone"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Why might a 140 MWh solar-wind total still be insufficient?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Batteries create electricity from nothing"
+            },
+            {
+              "letter": "B",
+              "text": "Typical output is below demand and both sources vary"
+            },
+            {
+              "letter": "C",
+              "text": "MWh measures temperature"
+            },
+            {
+              "letter": "D",
+              "text": "Hydro is always unavailable"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What is the main value of combining several sources?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It guarantees no equipment failure"
+            },
+            {
+              "letter": "B",
+              "text": "It makes daily demand zero"
+            },
+            {
+              "letter": "C",
+              "text": "Their different patterns can reduce dependence on one condition"
+            },
+            {
+              "letter": "D",
+              "text": "It removes all costs"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "How could batteries help the island?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Increase wind speed"
+            },
+            {
+              "letter": "B",
+              "text": "Produce fuel without energy input"
+            },
+            {
+              "letter": "C",
+              "text": "Stop dry seasons"
+            },
+            {
+              "letter": "D",
+              "text": "Store surplus energy for use when generation is low"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "What additional information is most important before choosing a system?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Hourly and seasonal generation, demand, costs and environmental effects"
+            },
+            {
+              "letter": "B",
+              "text": "The colour of each power station"
+            },
+            {
+              "letter": "C",
+              "text": "The engineers' favourite source"
+            },
+            {
+              "letter": "D",
+              "text": "Only the highest single daily value"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Antibiotics and Bacterial Growth\nA laboratory placed antibiotic discs on bacterial cultures. A clear zone around a disc shows where bacteria did not grow. Larger zones indicate greater sensitivity under the test conditions.\nCulture\nClear zone around Antibiotic A\nClear zone around Antibiotic B\nBefore repeated exposure\n18 mm\n12 mm\nAfter repeated low-dose exposure\n4 mm\n11 mm\n",
+      "questions": [
+        {
+          "question": "What happened to sensitivity to Antibiotic A after repeated low-dose exposure?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It increased greatly"
+            },
+            {
+              "letter": "B",
+              "text": "It decreased"
+            },
+            {
+              "letter": "C",
+              "text": "It stayed exactly the same"
+            },
+            {
+              "letter": "D",
+              "text": "It could not be measured"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which explanation best fits the smaller clear zone?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The disc produced more oxygen"
+            },
+            {
+              "letter": "B",
+              "text": "Antibiotic A became food"
+            },
+            {
+              "letter": "C",
+              "text": "More bacteria could grow near Antibiotic A"
+            },
+            {
+              "letter": "D",
+              "text": "The bacteria became viruses"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "How can incomplete or unnecessary antibiotic use promote resistance?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "All bacteria become identical immediately"
+            },
+            {
+              "letter": "B",
+              "text": "Antibiotics teach viruses to divide"
+            },
+            {
+              "letter": "C",
+              "text": "The body stops producing cells"
+            },
+            {
+              "letter": "D",
+              "text": "Susceptible bacteria may die while resistant survivors reproduce"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Why should antibiotics not be used to treat a common viral cold?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Antibiotics target bacteria, not viruses"
+            },
+            {
+              "letter": "B",
+              "text": "Viruses are larger than people"
+            },
+            {
+              "letter": "C",
+              "text": "Colds contain no genetic material"
+            },
+            {
+              "letter": "D",
+              "text": "Antibiotics always increase fever"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What limitation applies to this laboratory result?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The cultures contained no bacteria"
+            },
+            {
+              "letter": "B",
+              "text": "Disc tests alone do not show how a medicine will perform in every patient"
+            },
+            {
+              "letter": "C",
+              "text": "Clear zones cannot be measured"
+            },
+            {
+              "letter": "D",
+              "text": "Bacteria never change"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Reducing Noise in a Classroom\nA speaker produced the same sound in an empty classroom. Students placed different materials on one wall and measured the sound level at the opposite wall.\nWall treatment\nSound level before\nSound level after\nAcoustic foam\n78 dB\n62 dB\nHeavy curtain\n78 dB\n69 dB\nPlant screen\n78 dB\n75 dB\n",
+      "questions": [
+        {
+          "question": "Which treatment produced the greatest measured reduction?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Plant screen"
+            },
+            {
+              "letter": "B",
+              "text": "All were equal"
+            },
+            {
+              "letter": "C",
+              "text": "Acoustic foam"
+            },
+            {
+              "letter": "D",
+              "text": "Heavy curtain"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "By how many decibels did the heavy curtain reduce the reading?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "16 dB"
+            },
+            {
+              "letter": "B",
+              "text": "69 dB"
+            },
+            {
+              "letter": "C",
+              "text": "3 dB"
+            },
+            {
+              "letter": "D",
+              "text": "9 dB"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Why was the same speaker sound used in each test?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To control the sound source"
+            },
+            {
+              "letter": "B",
+              "text": "To change the wall size"
+            },
+            {
+              "letter": "C",
+              "text": "To make decibels a material"
+            },
+            {
+              "letter": "D",
+              "text": "To remove all echoes"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Which claim is supported?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Curtains are better than foam"
+            },
+            {
+              "letter": "B",
+              "text": "Foam reduced the measured sound level most in this setup"
+            },
+            {
+              "letter": "C",
+              "text": "Foam removes every sound in every room"
+            },
+            {
+              "letter": "D",
+              "text": "Plants always increase noise"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What follow-up would make the result more useful for a real class?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Record only the quietest instant"
+            },
+            {
+              "letter": "B",
+              "text": "Change the classroom for every reading without comparison"
+            },
+            {
+              "letter": "C",
+              "text": "Measure at several positions with students present and repeat trials"
+            },
+            {
+              "letter": "D",
+              "text": "Use a different speaker volume for each material"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Pondweed and Light\nA lamp was placed at different distances from pondweed. Students counted gas bubbles released in one minute as an estimate of photosynthesis rate.\nLamp distance\nMean bubbles per minute\n10 cm\n42\n20 cm\n40 cm\n11\n60 cm\n7\n",
+      "questions": [
+        {
+          "question": "What pattern is shown?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Bubble rate increased with distance"
+            },
+            {
+              "letter": "B",
+              "text": "Distance made no difference"
+            },
+            {
+              "letter": "C",
+              "text": "No gas was released"
+            },
+            {
+              "letter": "D",
+              "text": "Bubble rate decreased as the lamp moved farther away"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Why does moving the lamp affect photosynthesis?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Light intensity reaching the pondweed changes"
+            },
+            {
+              "letter": "B",
+              "text": "The pondweed changes species"
+            },
+            {
+              "letter": "C",
+              "text": "Water becomes soil"
+            },
+            {
+              "letter": "D",
+              "text": "Bubbles absorb the lamp"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Which variable should be controlled because the lamp may affect it?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Photosynthesis rate"
+            },
+            {
+              "letter": "B",
+              "text": "Water temperature"
+            },
+            {
+              "letter": "C",
+              "text": "Lamp distance"
+            },
+            {
+              "letter": "D",
+              "text": "Bubble count"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why is counting bubbles only an estimate of gas production?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Plants never release gases"
+            },
+            {
+              "letter": "B",
+              "text": "Minutes cannot be measured"
+            },
+            {
+              "letter": "C",
+              "text": "Bubble sizes may differ"
+            },
+            {
+              "letter": "D",
+              "text": "Oxygen has no volume"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    }
+  ],
+  "9": [
+    {
+      "passage": "Microplastics Along a River\nStudents collected three one-litre surface-water samples at each river site on the same morning. They filtered the water and counted suspected plastic fibres under a microscope.\nSite\nDescription\nMean suspected fibres per litre\nU\nUpstream of town\n6\nM\nBelow a storm-water outlet\n21\nD\nDownstream of a laundry district\n38\nThe samples were collected two days after heavy rain. The students did not chemically confirm that every fibre was plastic.\n",
+      "questions": [
+        {
+          "question": "Which result is consistent with additional fibre sources within the town?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Counts increased from upstream to downstream"
+            },
+            {
+              "letter": "B",
+              "text": "All sites had exactly six fibres"
+            },
+            {
+              "letter": "C",
+              "text": "The upstream site had the highest count"
+            },
+            {
+              "letter": "D",
+              "text": "No fibres were observed"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Why are three samples at each site better than one?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They make the river flow backward"
+            },
+            {
+              "letter": "B",
+              "text": "They show some local variation and allow a mean to be calculated"
+            },
+            {
+              "letter": "C",
+              "text": "They guarantee every fibre is plastic"
+            },
+            {
+              "letter": "D",
+              "text": "They remove the effect of rain"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why can the laundry district not be named as the only cause?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Downstream water contains no particles"
+            },
+            {
+              "letter": "B",
+              "text": "The samples were larger than one litre"
+            },
+            {
+              "letter": "C",
+              "text": "Other sources, storm runoff and river transport may also contribute"
+            },
+            {
+              "letter": "D",
+              "text": "Laundry never releases fibres"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "What is the purpose of chemical confirmation?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To count the townspeople"
+            },
+            {
+              "letter": "B",
+              "text": "To measure river depth"
+            },
+            {
+              "letter": "C",
+              "text": "To change the sample volume"
+            },
+            {
+              "letter": "D",
+              "text": "To distinguish plastic fibres from natural fibres"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Which sampling plan would best test the effect of rain?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Sample the same sites repeatedly before and after rainfall"
+            },
+            {
+              "letter": "B",
+              "text": "Sample only Site D once more"
+            },
+            {
+              "letter": "C",
+              "text": "Use different filter sizes at every site"
+            },
+            {
+              "letter": "D",
+              "text": "Count only the largest fibre"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Interpreting Vaccine Data\nDuring an outbreak, a town reviewed records for residents of similar age.\nGroup\nNumber of people\nConfirmed infections\nVaccinated\n8,000\n160 (2%)\nNot vaccinated\n2,000\n100 (5%)\nVaccination was a personal choice. The groups may also have differed in health, occupation, previous infection or protective behaviour.\n",
+      "questions": [
+        {
+          "question": "What is the absolute difference in infection rates?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "2 percentage points"
+            },
+            {
+              "letter": "B",
+              "text": "3 percentage points"
+            },
+            {
+              "letter": "C",
+              "text": "5 percentage points"
+            },
+            {
+              "letter": "D",
+              "text": "60 percentage points"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What relative reduction is suggested by comparing 2% with 5%?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "About 20%"
+            },
+            {
+              "letter": "B",
+              "text": "About 40%"
+            },
+            {
+              "letter": "C",
+              "text": "About 60%"
+            },
+            {
+              "letter": "D",
+              "text": "About 80%"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Which conclusion is directly supported?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Vaccination prevented every infection"
+            },
+            {
+              "letter": "B",
+              "text": "The two groups were identical in every way"
+            },
+            {
+              "letter": "C",
+              "text": "The vaccine caused all differences"
+            },
+            {
+              "letter": "D",
+              "text": "The vaccinated group had a lower recorded infection rate"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Why is causal interpretation limited?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "People were not randomly assigned, so confounding differences may remain"
+            },
+            {
+              "letter": "B",
+              "text": "Infections cannot be confirmed"
+            },
+            {
+              "letter": "C",
+              "text": "The vaccinated group was larger"
+            },
+            {
+              "letter": "D",
+              "text": "The study used percentages"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What additional analysis would strengthen the comparison?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Compare only the total infection numbers"
+            },
+            {
+              "letter": "B",
+              "text": "Adjust for exposure, health and behaviour differences"
+            },
+            {
+              "letter": "C",
+              "text": "Ignore group sizes"
+            },
+            {
+              "letter": "D",
+              "text": "Remove all vaccinated records"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Testing Cool Roofs\nThree identical model buildings were placed in sunlight for four hours. Only the roof surface differed.\nRoof\nRoof surface temperature\nIndoor air temperature\nSpecial requirement\nBlack sheet\n68 degrees C\n39 degrees C\nNone\nWhite coating\n43 degrees C\n32 degrees C\nRecoating over time\nLiving green roof\n47 degrees C\n31 degrees C\nWater and structural support\n",
+      "questions": [
+        {
+          "question": "Which roof produced the lowest indoor temperature?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Black sheet"
+            },
+            {
+              "letter": "B",
+              "text": "White coating"
+            },
+            {
+              "letter": "C",
+              "text": "Living green roof"
+            },
+            {
+              "letter": "D",
+              "text": "All were 39 degrees C"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why did the white surface stay cooler than the black surface?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It produced more sunlight"
+            },
+            {
+              "letter": "B",
+              "text": "It had no atoms"
+            },
+            {
+              "letter": "C",
+              "text": "It increased heat absorption"
+            },
+            {
+              "letter": "D",
+              "text": "It reflected a larger fraction of incoming radiation"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "What trade-off is shown for the green roof?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Low indoor temperature with added water and support needs"
+            },
+            {
+              "letter": "B",
+              "text": "Highest temperature with no maintenance"
+            },
+            {
+              "letter": "C",
+              "text": "No cooling and no mass"
+            },
+            {
+              "letter": "D",
+              "text": "Lower reflection with zero plant growth"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Why were the model buildings made identical?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To prevent solar radiation"
+            },
+            {
+              "letter": "B",
+              "text": "To isolate the effect of roof type"
+            },
+            {
+              "letter": "C",
+              "text": "To ensure all roofs were black"
+            },
+            {
+              "letter": "D",
+              "text": "To make indoor temperature the independent variable"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why should the findings be tested on real buildings?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "White surfaces do not exist outdoors"
+            },
+            {
+              "letter": "B",
+              "text": "Real roofs receive no sunlight"
+            },
+            {
+              "letter": "C",
+              "text": "Building size, ventilation, climate and construction may change performance"
+            },
+            {
+              "letter": "D",
+              "text": "Models cannot have temperatures"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Reaction Rate of Effervescent Tablets\nOne tablet was added to 200 mL of water in each test. Students recorded the time until bubbling stopped.\nTablet form\nWater temperature\nTime\nWhole\n15 degrees C\n180 s\nCrushed\n15 degrees C\n80 s\nWhole\n40 degrees C\n70 s\nCrushed\n40 degrees C\n30 s\n",
+      "questions": [
+        {
+          "question": "Which conditions gave the fastest reaction?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Whole tablet in cold water"
+            },
+            {
+              "letter": "B",
+              "text": "Crushed tablet in cold water"
+            },
+            {
+              "letter": "C",
+              "text": "Whole tablet in warm water"
+            },
+            {
+              "letter": "D",
+              "text": "Crushed tablet in warm water"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "What effect did crushing have at 15 degrees C?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It reduced the reaction time by 100 s"
+            },
+            {
+              "letter": "B",
+              "text": "It stopped the reaction"
+            },
+            {
+              "letter": "C",
+              "text": "It changed the water volume"
+            },
+            {
+              "letter": "D",
+              "text": "It increased the reaction time by 100 s"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Why can crushing increase reaction rate?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It freezes the water"
+            },
+            {
+              "letter": "B",
+              "text": "It exposes a greater surface area for collisions"
+            },
+            {
+              "letter": "C",
+              "text": "It lowers the number of particles to zero"
+            },
+            {
+              "letter": "D",
+              "text": "It removes the reactants"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which comparison isolates the effect of temperature for whole tablets?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Rows 2 and 3"
+            },
+            {
+              "letter": "B",
+              "text": "Rows 3 and 4"
+            },
+            {
+              "letter": "C",
+              "text": "Rows 1 and 3"
+            },
+            {
+              "letter": "D",
+              "text": "Rows 1 and 2"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "What should be measured to check that the same total reaction occurred in each test?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Colour of the beaker label"
+            },
+            {
+              "letter": "B",
+              "text": "Time of day only"
+            },
+            {
+              "letter": "C",
+              "text": "Sound of one bubble"
+            },
+            {
+              "letter": "D",
+              "text": "Total gas volume released"
+            }
+          ],
+          "correct": "D"
+        }
+      ]
+    },
+    {
+      "passage": "A Purple-Flower Cross\nIn a plant species, purple flower colour (P) is dominant to white (p). Two heterozygous purple plants, Pp and Pp, were crossed. Among 200 offspring, 152 had purple flowers and 48 had white flowers.\n",
+      "questions": [
+        {
+          "question": "What proportion of white-flowered offspring is predicted by a Pp x Pp cross?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "25%"
+            },
+            {
+              "letter": "B",
+              "text": "50%"
+            },
+            {
+              "letter": "C",
+              "text": "75%"
+            },
+            {
+              "letter": "D",
+              "text": "0%"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Which genotype must a white-flowered offspring have?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "pP"
+            },
+            {
+              "letter": "B",
+              "text": "pp"
+            },
+            {
+              "letter": "C",
+              "text": "PP"
+            },
+            {
+              "letter": "D",
+              "text": "Pp"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "How closely do the observed results match the predicted 3:1 phenotype ratio?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They show no purple offspring"
+            },
+            {
+              "letter": "B",
+              "text": "They prove dominance changed"
+            },
+            {
+              "letter": "C",
+              "text": "They are close: 76% purple and 24% white"
+            },
+            {
+              "letter": "D",
+              "text": "They are exactly 50% of each"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why might observed numbers not be exactly 150 purple and 50 white?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Genes stop existing in large samples"
+            },
+            {
+              "letter": "B",
+              "text": "Every white plant changes colour"
+            },
+            {
+              "letter": "C",
+              "text": "Ratios cannot be predicted"
+            },
+            {
+              "letter": "D",
+              "text": "Random sampling variation occurs in fertilisation and survival"
+            }
+          ],
+          "correct": "D"
+        }
+      ]
+    }
+  ],
+  "10": [
+    {
+      "passage": "Weather, Climate and a Warming Record\nA city calculated mean annual temperature for successive periods. The same weather station and corrected methods were used.\nPeriod\nMean annual temperature\n1991-2000\n24.1 degrees C\n2001-2010\n24.5 degrees C\n2011-2020\n25.0 degrees C\n2021-2025\n25.3 degrees C\nDuring one week in 2025, the city also experienced an unusually cold day.\n",
+      "questions": [
+        {
+          "question": "What long-term change is shown from the first to the last period?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A decrease of 1.2 degrees C"
+            },
+            {
+              "letter": "B",
+              "text": "An increase of 1.2 degrees C"
+            },
+            {
+              "letter": "C",
+              "text": "An increase of 24.1 degrees C"
+            },
+            {
+              "letter": "D",
+              "text": "No change"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why does one cold day not disprove the warming pattern?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Climate changes every hour"
+            },
+            {
+              "letter": "B",
+              "text": "The table contains no temperatures"
+            },
+            {
+              "letter": "C",
+              "text": "Weather varies from day to day, while climate describes long-term patterns"
+            },
+            {
+              "letter": "D",
+              "text": "Cold days cannot be measured"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Which claim is supported by the table?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Carbon dioxide was the only possible cause"
+            },
+            {
+              "letter": "B",
+              "text": "Every year was warmer than the previous year"
+            },
+            {
+              "letter": "C",
+              "text": "No cold weather occurred"
+            },
+            {
+              "letter": "D",
+              "text": "The city's recorded mean temperature rose across the periods"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Why is using consistent, corrected measurements important?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It reduces artificial changes caused by instruments or methods"
+            },
+            {
+              "letter": "B",
+              "text": "It makes all years equally hot"
+            },
+            {
+              "letter": "C",
+              "text": "It removes natural variability"
+            },
+            {
+              "letter": "D",
+              "text": "It selects only warm days"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What additional evidence is needed to explain the cause of the trend?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Only the station's paint colour"
+            },
+            {
+              "letter": "B",
+              "text": "Data on greenhouse gases, land use, aerosols and other climate influences"
+            },
+            {
+              "letter": "C",
+              "text": "A photograph of one thermometer"
+            },
+            {
+              "letter": "D",
+              "text": "The coldest hour in one week"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Estimating Nitrate in River Water\nA colorimeter measured absorbance for nitrate standards. Greater absorbance indicates a higher nitrate concentration within the calibrated range.\nNitrate concentration\nAbsorbance\n0 mg/L\n0.00\n10 mg/L\n0.12\n20 mg/L\n0.25\n40 mg/L\n0.51\nRiver sample\n0.31\n",
+      "questions": [
+        {
+          "question": "What nitrate concentration is the river sample closest to by interpolation?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "About 5 mg/L"
+            },
+            {
+              "letter": "B",
+              "text": "About 15 mg/L"
+            },
+            {
+              "letter": "C",
+              "text": "About 25 mg/L"
+            },
+            {
+              "letter": "D",
+              "text": "About 60 mg/L"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why is the 0 mg/L standard useful?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It has the highest nitrate level"
+            },
+            {
+              "letter": "B",
+              "text": "It makes the sample more concentrated"
+            },
+            {
+              "letter": "C",
+              "text": "It replaces the colorimeter"
+            },
+            {
+              "letter": "D",
+              "text": "It provides a blank or baseline absorbance"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Why should the river sample be measured several times?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To estimate measurement variability and a mean"
+            },
+            {
+              "letter": "B",
+              "text": "To force the absorbance to zero"
+            },
+            {
+              "letter": "C",
+              "text": "To change nitrate into oxygen"
+            },
+            {
+              "letter": "D",
+              "text": "To remove the standards"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Why would a sample absorbance of 0.80 require dilution or a wider calibration?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Dilution increases unknown concentration"
+            },
+            {
+              "letter": "B",
+              "text": "It lies outside the measured standard range"
+            },
+            {
+              "letter": "C",
+              "text": "It proves nitrate is absent"
+            },
+            {
+              "letter": "D",
+              "text": "Absorbance cannot exceed 0.51"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which factor could falsely increase the reading if not controlled?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The table heading"
+            },
+            {
+              "letter": "B",
+              "text": "Using a clean cuvette"
+            },
+            {
+              "letter": "C",
+              "text": "Cloudiness or another substance that absorbs the measured light"
+            },
+            {
+              "letter": "D",
+              "text": "The written unit mg/L"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Speed and Stopping Distance\nA test car with the same driver and tyres was stopped on level roads. Total stopping distance includes distance travelled during reaction time and braking.\nSpeed\nDry road\nWet road\n30 km/h\n14 m\n20 m\n50 km/h\n28 m\n41 m\n70 km/h\n50 m\n74 m\n",
+      "questions": [
+        {
+          "question": "What happens to stopping distance as speed increases?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It always decreases"
+            },
+            {
+              "letter": "B",
+              "text": "It remains 14 m"
+            },
+            {
+              "letter": "C",
+              "text": "It becomes independent of the road"
+            },
+            {
+              "letter": "D",
+              "text": "It increases by more than a simple fixed amount"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "At 70 km/h, how much farther did the car travel on the wet road?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "24 m"
+            },
+            {
+              "letter": "B",
+              "text": "74 m"
+            },
+            {
+              "letter": "C",
+              "text": "6 m"
+            },
+            {
+              "letter": "D",
+              "text": "13 m"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Why does a wet road increase braking distance?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Gravity stops acting"
+            },
+            {
+              "letter": "B",
+              "text": "Tyre-road friction is generally reduced"
+            },
+            {
+              "letter": "C",
+              "text": "The car loses mass"
+            },
+            {
+              "letter": "D",
+              "text": "Reaction time becomes zero"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which variable was controlled in this comparison?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Speed"
+            },
+            {
+              "letter": "B",
+              "text": "Road condition"
+            },
+            {
+              "letter": "C",
+              "text": "Vehicle, driver and tyres"
+            },
+            {
+              "letter": "D",
+              "text": "Stopping distance"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why should each test be repeated?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A repeat guarantees a shorter distance"
+            },
+            {
+              "letter": "B",
+              "text": "Wet roads cannot be measured once"
+            },
+            {
+              "letter": "C",
+              "text": "The speedometer works only twice"
+            },
+            {
+              "letter": "D",
+              "text": "Stopping and reaction measurements contain variation"
+            }
+          ],
+          "correct": "D"
+        }
+      ]
+    },
+    {
+      "passage": "Temperature and Enzyme Activity\nAn enzyme was mixed with the same substrate concentration at pH 7. Product formed per minute was measured.\nTemperature\nProduct formed per minute\n10 degrees C\n2 units\n25 degrees C\n7 units\n37 degrees C\n10 units\n50 degrees C\n3 units\n70 degrees C\n0 units\n",
+      "questions": [
+        {
+          "question": "What was the optimum tested temperature for this enzyme?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "37 degrees C"
+            },
+            {
+              "letter": "B",
+              "text": "70 degrees C"
+            },
+            {
+              "letter": "C",
+              "text": "10 degrees C"
+            },
+            {
+              "letter": "D",
+              "text": "25 degrees C"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Why did activity increase from 10 degrees C to 37 degrees C?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "pH fell to zero"
+            },
+            {
+              "letter": "B",
+              "text": "Particles moved faster, increasing successful enzyme-substrate encounters"
+            },
+            {
+              "letter": "C",
+              "text": "The enzyme gained unlimited active sites"
+            },
+            {
+              "letter": "D",
+              "text": "The substrate became an enzyme"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why may activity fall sharply at high temperature?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "All molecular motion stops"
+            },
+            {
+              "letter": "B",
+              "text": "Substrate concentration must increase"
+            },
+            {
+              "letter": "C",
+              "text": "The enzyme's active-site shape may be disrupted by denaturation"
+            },
+            {
+              "letter": "D",
+              "text": "The enzyme becomes a metal"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why were pH and substrate concentration controlled?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Neither can ever change"
+            },
+            {
+              "letter": "B",
+              "text": "They are the dependent variable"
+            },
+            {
+              "letter": "C",
+              "text": "They measure temperature"
+            },
+            {
+              "letter": "D",
+              "text": "Both can independently affect enzyme rate"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Which statement is not justified?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Every enzyme has exactly the same optimum temperature"
+            },
+            {
+              "letter": "B",
+              "text": "Temperature affected the reaction rate"
+            },
+            {
+              "letter": "C",
+              "text": "This enzyme had highest measured activity at 37 degrees C"
+            },
+            {
+              "letter": "D",
+              "text": "High temperature reduced activity"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Is a Solar Home 'Zero Carbon'?\nIn one month, a home used 450 kWh of electricity. Its rooftop panels generated 280 kWh. The home imported the remaining 170 kWh from the grid. At sunny midday it sometimes exported power, but at night it imported power.\nAn advertisement called the home 'zero-carbon because it has solar panels'. Manufacturing the panels and the grid's energy sources were not included in the claim.\n",
+      "questions": [
+        {
+          "question": "What fraction of monthly use was matched by solar generation?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "About 50%"
+            },
+            {
+              "letter": "B",
+              "text": "About 62%"
+            },
+            {
+              "letter": "C",
+              "text": "About 100%"
+            },
+            {
+              "letter": "D",
+              "text": "About 38%"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why is the 'zero-carbon' claim incomplete?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Night-time electricity has no source"
+            },
+            {
+              "letter": "B",
+              "text": "kWh is a unit of carbon mass"
+            },
+            {
+              "letter": "C",
+              "text": "The home still imports grid electricity and life-cycle emissions are omitted"
+            },
+            {
+              "letter": "D",
+              "text": "Solar panels cannot generate electricity"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why can the home export at midday and import at night in the same month?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Electricity use is always zero at midday"
+            },
+            {
+              "letter": "B",
+              "text": "The grid stores no information"
+            },
+            {
+              "letter": "C",
+              "text": "Panels operate only at night"
+            },
+            {
+              "letter": "D",
+              "text": "Generation and demand occur at different times"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "What addition could increase direct use of midday solar energy at night?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A battery storage system"
+            },
+            {
+              "letter": "B",
+              "text": "A darker roof above the panels"
+            },
+            {
+              "letter": "C",
+              "text": "Removing the electricity meter"
+            },
+            {
+              "letter": "D",
+              "text": "A larger grid import"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    }
+  ],
+  "11": [
+    {
+      "passage": "Evaluating a Carbon-Capture Pilot\nA factory installed a carbon-capture unit on one production line. A similar line without capture was monitored as a comparison. Production changed by less than 2%. Emissions are tonnes of carbon dioxide per month.\nLine\nBefore pilot\nDuring pilot\nCapture line\n1,000\n720\nComparison line\n980\n930\nOperating the capture unit required additional electricity. The electricity source and long-term storage leakage were not included in the factory's headline claim.\n",
+      "questions": [
+        {
+          "question": "What was the raw emissions reduction on the capture line?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "50 tonnes"
+            },
+            {
+              "letter": "B",
+              "text": "230 tonnes"
+            },
+            {
+              "letter": "C",
+              "text": "280 tonnes"
+            },
+            {
+              "letter": "D",
+              "text": "720 tonnes"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Using the comparison line's 50-tonne decline, what reduction is more plausibly associated with the pilot?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "About 280 tonnes"
+            },
+            {
+              "letter": "B",
+              "text": "About 930 tonnes"
+            },
+            {
+              "letter": "C",
+              "text": "About 50 tonnes"
+            },
+            {
+              "letter": "D",
+              "text": "About 230 tonnes"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Why is the comparison line valuable?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It indicates background change that occurred without the capture unit"
+            },
+            {
+              "letter": "B",
+              "text": "It guarantees random assignment"
+            },
+            {
+              "letter": "C",
+              "text": "It supplies electricity to the pilot"
+            },
+            {
+              "letter": "D",
+              "text": "It converts carbon dioxide into oxygen"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Which omission could reduce the pilot's net climate benefit?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The calendar month label"
+            },
+            {
+              "letter": "B",
+              "text": "Electricity-related emissions and possible storage leakage"
+            },
+            {
+              "letter": "C",
+              "text": "The names of line workers"
+            },
+            {
+              "letter": "D",
+              "text": "The colour of the capture pipes"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What design would strengthen causal inference further?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Remove the comparison line"
+            },
+            {
+              "letter": "B",
+              "text": "Change production and capture technology simultaneously"
+            },
+            {
+              "letter": "C",
+              "text": "Use several comparable lines assigned to capture or control and monitor them over time"
+            },
+            {
+              "letter": "D",
+              "text": "Report only the lowest monthly value"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "A Randomised Medicine Trial\nFour hundred adults with the same diagnosed infection were randomly assigned to a new medicine or placebo. Neither participants nor assessors knew the assignments until analysis.\nGroup\nRecovered by Day 7\nReported serious adverse effect\nNew medicine (200)\n136 (68%)\n24 (12%)\nPlacebo (200)\n110 (55%)\n10 (5%)\nPregnant adults and people over 75 were excluded from the trial.\n",
+      "questions": [
+        {
+          "question": "What was the absolute increase in Day 7 recovery?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "23 percentage points"
+            },
+            {
+              "letter": "B",
+              "text": "5 percentage points"
+            },
+            {
+              "letter": "C",
+              "text": "12 percentage points"
+            },
+            {
+              "letter": "D",
+              "text": "13 percentage points"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Approximately how many people would need treatment for one additional Day 7 recovery?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "About 8"
+            },
+            {
+              "letter": "B",
+              "text": "About 20"
+            },
+            {
+              "letter": "C",
+              "text": "About 2"
+            },
+            {
+              "letter": "D",
+              "text": "About 4"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What is the purpose of double blinding?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Remove the need for randomisation"
+            },
+            {
+              "letter": "B",
+              "text": "Reduce expectation and assessment bias"
+            },
+            {
+              "letter": "C",
+              "text": "Increase the medicine dose"
+            },
+            {
+              "letter": "D",
+              "text": "Guarantee no adverse effects"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What trade-off must be considered?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The medicine had no measurable benefit"
+            },
+            {
+              "letter": "B",
+              "text": "Adverse effects occurred only in the placebo group"
+            },
+            {
+              "letter": "C",
+              "text": "Higher recovery was accompanied by a higher serious-adverse-effect rate"
+            },
+            {
+              "letter": "D",
+              "text": "The placebo recovered everyone"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why should results not automatically be generalised to excluded groups?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Randomisation makes all populations identical"
+            },
+            {
+              "letter": "B",
+              "text": "Age cannot affect medicine response"
+            },
+            {
+              "letter": "C",
+              "text": "Excluded groups received the placebo"
+            },
+            {
+              "letter": "D",
+              "text": "Their benefits and risks may differ and were not tested"
+            }
+          ],
+          "correct": "D"
+        }
+      ]
+    },
+    {
+      "passage": "Why Low Satellites Lose Altitude\nEarth's atmosphere becomes thinner with altitude but does not end suddenly. Satellites in low orbit collide with sparse atmospheric particles and lose orbital energy.\nInitial altitude\nRelative drag\nTypical lifetime without reboost\n250 km\nHigh\nWeeks to months\n400 km\nModerate\nMonths to years\n800 km\nVery low\nDecades or longer\nStrong solar activity can heat and expand the upper atmosphere, increasing drag at a given altitude.\n",
+      "questions": [
+        {
+          "question": "Why does a satellite at 250 km usually decay faster than one at 800 km?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Atmospheric density and drag are greater at lower altitude"
+            },
+            {
+              "letter": "B",
+              "text": "Gravity exists only below 400 km"
+            },
+            {
+              "letter": "C",
+              "text": "High satellites have no velocity"
+            },
+            {
+              "letter": "D",
+              "text": "The 250 km satellite has no mass"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "How can strong solar activity affect a low satellite?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It always raises the satellite automatically"
+            },
+            {
+              "letter": "B",
+              "text": "Expanded upper atmosphere can increase drag and shorten lifetime"
+            },
+            {
+              "letter": "C",
+              "text": "It removes Earth's atmosphere"
+            },
+            {
+              "letter": "D",
+              "text": "It switches off gravity"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What does a reboost manoeuvre do?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Removes all atmospheric particles"
+            },
+            {
+              "letter": "B",
+              "text": "Changes the satellite into a meteor"
+            },
+            {
+              "letter": "C",
+              "text": "Adds orbital energy to raise or maintain altitude"
+            },
+            {
+              "letter": "D",
+              "text": "Stops the satellite relative to Earth"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why should the lifetimes be read as ranges rather than exact predictions?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Altitude cannot be measured"
+            },
+            {
+              "letter": "B",
+              "text": "All satellites have identical designs"
+            },
+            {
+              "letter": "C",
+              "text": "The atmosphere is perfectly constant"
+            },
+            {
+              "letter": "D",
+              "text": "Drag, solar activity, satellite shape and mass vary"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Which statement best uses the table?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Higher initial altitude is associated with lower drag and longer lifetime"
+            },
+            {
+              "letter": "B",
+              "text": "Every 400 km satellite lasts exactly one year"
+            },
+            {
+              "letter": "C",
+              "text": "Satellites at 800 km experience no forces"
+            },
+            {
+              "letter": "D",
+              "text": "Orbital lifetime is unrelated to the atmosphere"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Comparing Water with a Buffer\nEqual drops of dilute acid were added to 50 mL samples. Both samples started at pH 7.0.\nAcid added\nWater pH\nBuffer pH\n0 drops\n7.0\n7.0\n5 drops\n4.2\n6.8\n10 drops\n3.1\n6.5\n20 drops\n2.4\n3.6\n",
+      "questions": [
+        {
+          "question": "What property of the buffer is demonstrated up to 10 drops?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It converts all water to base"
+            },
+            {
+              "letter": "B",
+              "text": "It resists large changes in pH"
+            },
+            {
+              "letter": "C",
+              "text": "It prevents acid being added"
+            },
+            {
+              "letter": "D",
+              "text": "It keeps pH exactly 7 under all conditions"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What does the sharp fall by 20 drops suggest?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The pH scale reversed"
+            },
+            {
+              "letter": "B",
+              "text": "The sample volume became zero"
+            },
+            {
+              "letter": "C",
+              "text": "The buffer capacity was being exceeded"
+            },
+            {
+              "letter": "D",
+              "text": "The acid became neutral"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why can a weak acid and its conjugate base form a buffer?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They remove all ions"
+            },
+            {
+              "letter": "B",
+              "text": "They make pH independent of concentration"
+            },
+            {
+              "letter": "C",
+              "text": "They stop molecular collisions"
+            },
+            {
+              "letter": "D",
+              "text": "They can consume added base or acid through reversible reactions"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Which condition must be matched for a fair comparison?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Sample volume and acid concentration"
+            },
+            {
+              "letter": "B",
+              "text": "Final pH"
+            },
+            {
+              "letter": "C",
+              "text": "Number of ions after reaction"
+            },
+            {
+              "letter": "D",
+              "text": "Buffer capacity"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Which conclusion is justified by the buffer results?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Twenty drops caused no chemical change"
+            },
+            {
+              "letter": "B",
+              "text": "The tested buffer reduced pH change until its capacity was approached"
+            },
+            {
+              "letter": "C",
+              "text": "All buffers work at every pH"
+            },
+            {
+              "letter": "D",
+              "text": "Water is a stronger buffer than the buffer solution"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Detecting Species with Environmental DNA\nResearchers tested filtered pond water for DNA from a rare frog. A positive control contained known frog DNA; a negative control contained clean laboratory water.\nSample\nFrog DNA result\nPositive control\nDetected\nNegative control\nDetected at low level\nPond A\nDetected\nPond B\nNot detected\nPond C\nDetected\n",
+      "questions": [
+        {
+          "question": "What problem is revealed by the negative control?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "No DNA method was used"
+            },
+            {
+              "letter": "B",
+              "text": "Every pond contains frogs"
+            },
+            {
+              "letter": "C",
+              "text": "Possible contamination during sampling or analysis"
+            },
+            {
+              "letter": "D",
+              "text": "The positive control failed"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why does the control problem weaken the Pond A and C results?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Frog DNA cannot exist in water"
+            },
+            {
+              "letter": "B",
+              "text": "Controls measure pond depth"
+            },
+            {
+              "letter": "C",
+              "text": "A positive result always proves a living adult is present"
+            },
+            {
+              "letter": "D",
+              "text": "Detected DNA might partly come from contamination"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Why does 'not detected' at Pond B not prove absence?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "DNA may be unevenly distributed, degraded or below the detection limit"
+            },
+            {
+              "letter": "B",
+              "text": "Negative results always mean contamination"
+            },
+            {
+              "letter": "C",
+              "text": "Frogs contain no DNA"
+            },
+            {
+              "letter": "D",
+              "text": "The positive control was detected"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What is the best next step?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Use a larger font in the data table"
+            },
+            {
+              "letter": "B",
+              "text": "Repeat sampling with strict contamination controls and confirm positives independently"
+            },
+            {
+              "letter": "C",
+              "text": "Declare frogs present in every pond"
+            },
+            {
+              "letter": "D",
+              "text": "Discard all controls"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ],
+  "12": [
+    {
+      "passage": "Air Pollution and Asthma Risk\nA five-year cohort study followed 20,000 adults without asthma at enrolment. Residential PM2.5 exposure was estimated from monitoring and satellite models.\nExposure quartile\nNew asthma cases per 1,000\nAdjusted relative risk\nLowest\n18\n1.00\nSecond\n22\n1.16\nThird\n27\n1.37\nHighest\n34\n1.68\nThe adjusted model included age, smoking, occupation and income. Indoor pollution and residential mobility were measured imperfectly.\n",
+      "questions": [
+        {
+          "question": "What pattern is evident across exposure quartiles?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Asthma falls steadily with exposure"
+            },
+            {
+              "letter": "B",
+              "text": "All quartiles have identical risk"
+            },
+            {
+              "letter": "C",
+              "text": "Relative risk is unrelated to cases"
+            },
+            {
+              "letter": "D",
+              "text": "Higher estimated exposure is associated with higher asthma incidence"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Why were smoking and occupation included in the adjusted model?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They may confound the association with asthma"
+            },
+            {
+              "letter": "B",
+              "text": "They are outcomes caused by asthma in every case"
+            },
+            {
+              "letter": "C",
+              "text": "They convert relative risk into temperature"
+            },
+            {
+              "letter": "D",
+              "text": "They guarantee random exposure"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Which feature supports, but does not prove, a causal interpretation?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The study lasted more than one day"
+            },
+            {
+              "letter": "B",
+              "text": "A graded exposure-response pattern"
+            },
+            {
+              "letter": "C",
+              "text": "Use of four table rows"
+            },
+            {
+              "letter": "D",
+              "text": "The lowest group is labelled 1.00"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What important limitation remains?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Asthma cannot be diagnosed"
+            },
+            {
+              "letter": "B",
+              "text": "Adjusted analyses eliminate all bias"
+            },
+            {
+              "letter": "C",
+              "text": "Residual confounding and exposure misclassification may remain"
+            },
+            {
+              "letter": "D",
+              "text": "No participant was followed"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Which follow-up could strengthen causal evidence?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Remove all low-exposure participants"
+            },
+            {
+              "letter": "B",
+              "text": "Use only one unadjusted case count"
+            },
+            {
+              "letter": "C",
+              "text": "Ask participants to guess satellite readings"
+            },
+            {
+              "letter": "D",
+              "text": "Study asthma changes after a policy produces a well-defined pollution reduction"
+            }
+          ],
+          "correct": "D"
+        }
+      ]
+    },
+    {
+      "passage": "Choosing Long-Duration Energy Storage\nA grid operator compared storage systems. Round-trip efficiency is the percentage of input electricity returned after storage.\nTechnology\nRound-trip efficiency\nTypical discharge duration\nIndicative cycle life\nLithium-ion battery\n90%\n1-4 hours\n3,000-6,000\nFlow battery\n75%\n4-12 hours\n10,000+\nHydrogen system\n38%\nDays to months\nDepends on equipment\n",
+      "questions": [
+        {
+          "question": "How much electricity would a 90%-efficient system return from 100 MWh input?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "90 MWh"
+            },
+            {
+              "letter": "B",
+              "text": "10 MWh"
+            },
+            {
+              "letter": "C",
+              "text": "38 MWh"
+            },
+            {
+              "letter": "D",
+              "text": "75 MWh"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Why might hydrogen still be considered despite low round-trip efficiency?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It needs no conversion equipment"
+            },
+            {
+              "letter": "B",
+              "text": "It may provide storage over days or seasons"
+            },
+            {
+              "letter": "C",
+              "text": "It always has zero infrastructure cost"
+            },
+            {
+              "letter": "D",
+              "text": "It returns more energy than supplied"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which technology appears strongest where very frequent cycling is central?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Lithium-ion, because all cells last forever"
+            },
+            {
+              "letter": "B",
+              "text": "No comparison is possible"
+            },
+            {
+              "letter": "C",
+              "text": "Flow battery, because of its high indicative cycle life"
+            },
+            {
+              "letter": "D",
+              "text": "Hydrogen, because efficiency is 38%"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why is there no universally best option in the table?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Scientific measurements cannot compare technologies"
+            },
+            {
+              "letter": "B",
+              "text": "All three have identical properties"
+            },
+            {
+              "letter": "C",
+              "text": "Duration never matters to a grid"
+            },
+            {
+              "letter": "D",
+              "text": "Efficiency, duration, lifetime, cost, scale and impact involve trade-offs"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "What evidence is missing for a full life-cycle decision?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Costs, materials, emissions, degradation and site constraints"
+            },
+            {
+              "letter": "B",
+              "text": "Only the spelling of technology names"
+            },
+            {
+              "letter": "C",
+              "text": "The operator's favourite colour"
+            },
+            {
+              "letter": "D",
+              "text": "Whether 100 is larger than 90"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Selecting a CRISPR Guide\nResearchers tested three CRISPR guide RNAs in cultured cells. Desired edit rate and the most common measured off-target edit are shown.\nGuide\nDesired edit rate\nOff-target edit rate\nA\n82%\n7%\nB\n68%\n1%\nC\n91%\n12%\nOnly predicted off-target sites were sequenced, and the experiment used one cell line.\n",
+      "questions": [
+        {
+          "question": "Which guide provides the lowest measured off-target rate?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Guide A"
+            },
+            {
+              "letter": "B",
+              "text": "Guide B"
+            },
+            {
+              "letter": "C",
+              "text": "Guide C"
+            },
+            {
+              "letter": "D",
+              "text": "All are 1%"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "What trade-off is clearest when comparing Guides B and C?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Guide B has both the highest desired and off-target rate"
+            },
+            {
+              "letter": "B",
+              "text": "Guide C makes no desired edits"
+            },
+            {
+              "letter": "C",
+              "text": "Higher desired editing with substantially higher measured off-target editing"
+            },
+            {
+              "letter": "D",
+              "text": "Identical efficacy and specificity"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why is sequencing only predicted sites a limitation?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Predicted sites contain no DNA"
+            },
+            {
+              "letter": "B",
+              "text": "Sequencing creates every mutation"
+            },
+            {
+              "letter": "C",
+              "text": "Desired edits cannot be measured"
+            },
+            {
+              "letter": "D",
+              "text": "Unexpected off-target changes elsewhere may be missed"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "What control is essential for interpreting unintended changes?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Cells handled identically without the active guide-editing treatment"
+            },
+            {
+              "letter": "B",
+              "text": "A different microscope colour"
+            },
+            {
+              "letter": "C",
+              "text": "A sample containing no cells"
+            },
+            {
+              "letter": "D",
+              "text": "Only the guide with the highest edit rate"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Why would heritable human editing require evidence beyond this experiment?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A 91% edit rate proves complete safety"
+            },
+            {
+              "letter": "B",
+              "text": "Long-term, multi-tissue safety and ethical consequences extend beyond one cultured cell line"
+            },
+            {
+              "letter": "C",
+              "text": "Human cells contain no chromosomes"
+            },
+            {
+              "letter": "D",
+              "text": "Off-target effects matter only in plants"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Solar Cells on Hot Roofs\nA solar module was tested at constant irradiance. Output efficiency fell as cell temperature rose.\nCell temperature\nElectrical efficiency\n15 degrees C\n22.0%\n25 degrees C\n20.0%\n45 degrees C\n17.5%\n65 degrees C\n15.2%\nIn the field, hot sunny conditions can raise both irradiance and cell temperature. Active cooling also consumes energy.\n",
+      "questions": [
+        {
+          "question": "What is the measured efficiency change from 25 degrees C to 45 degrees C?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "No change"
+            },
+            {
+              "letter": "B",
+              "text": "An increase of 2.5 percentage points"
+            },
+            {
+              "letter": "C",
+              "text": "A decrease of 2.5 percentage points"
+            },
+            {
+              "letter": "D",
+              "text": "A decrease of 20 percentage points"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "Why was irradiance held constant in the test?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To make temperature impossible to measure"
+            },
+            {
+              "letter": "B",
+              "text": "To simulate every outdoor condition"
+            },
+            {
+              "letter": "C",
+              "text": "To eliminate electrical output"
+            },
+            {
+              "letter": "D",
+              "text": "To isolate the effect of cell temperature"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "Why can a hot sunny day still produce high total power despite lower efficiency?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Higher incoming irradiance may partly outweigh the efficiency loss"
+            },
+            {
+              "letter": "B",
+              "text": "Efficiency and power are identical quantities"
+            },
+            {
+              "letter": "C",
+              "text": "Heat creates sunlight inside the module"
+            },
+            {
+              "letter": "D",
+              "text": "Cell temperature never changes outdoors"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "What trade-off applies to active cooling?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Cooling has no cost or maintenance"
+            },
+            {
+              "letter": "B",
+              "text": "Cooling may raise module efficiency but uses energy and equipment"
+            },
+            {
+              "letter": "C",
+              "text": "Cooling guarantees unlimited efficiency"
+            },
+            {
+              "letter": "D",
+              "text": "Cooling eliminates irradiance"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Why should the table not be extrapolated far beyond 65 degrees C without testing?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Solar cells stop containing matter"
+            },
+            {
+              "letter": "B",
+              "text": "Constant irradiance becomes a temperature"
+            },
+            {
+              "letter": "C",
+              "text": "The relationship may become non-linear or the module may degrade"
+            },
+            {
+              "letter": "D",
+              "text": "Percentages cannot be used above 65"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "A Lake with Two Stable States\nA shallow lake shifted from clear water with aquatic plants to turbid water dominated by algae after years of phosphorus input. Managers later reduced external phosphorus.\nPhase\nExternal phosphorus index\nAlgae concentration\nWater state\nBefore shift\n55\nLow\nClear\nAt shift\n70\nRapidly rising\nTurbid\nAfter reduction\n50\nStill high\nTurbid\nAfter plant restoration\n45\nDeclining\nReturning clear\nSediment can release stored phosphorus, and loss of plants can keep sediment suspended. Therefore, reversing the pressure may not immediately reverse the lake state.\n",
+      "questions": [
+        {
+          "question": "Why did reducing the phosphorus index to 50 not immediately restore clear water?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Phosphorus has no role in lakes"
+            },
+            {
+              "letter": "B",
+              "text": "The index was lower than 55"
+            },
+            {
+              "letter": "C",
+              "text": "Aquatic plants always increase turbidity"
+            },
+            {
+              "letter": "D",
+              "text": "Internal feedbacks and stored phosphorus helped maintain the turbid state"
+            }
+          ],
+          "correct": "D"
+        },
+        {
+          "question": "What concept is illustrated by different shift and recovery conditions?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Hysteresis: recovery does not simply retrace the degradation path"
+            },
+            {
+              "letter": "B",
+              "text": "Conservation of electric charge"
+            },
+            {
+              "letter": "C",
+              "text": "Random mutation"
+            },
+            {
+              "letter": "D",
+              "text": "Uniform circular motion"
+            }
+          ],
+          "correct": "A"
+        },
+        {
+          "question": "Why might plant restoration assist recovery?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Plants turn algae into fish directly"
+            },
+            {
+              "letter": "B",
+              "text": "Plants can stabilise sediment and compete with algae for resources"
+            },
+            {
+              "letter": "C",
+              "text": "Plants create external phosphorus"
+            },
+            {
+              "letter": "D",
+              "text": "Plants prevent any sunlight entering water"
+            }
+          ],
+          "correct": "B"
+        },
+        {
+          "question": "Which would be a useful early-warning signal before a state shift?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The lake's name"
+            },
+            {
+              "letter": "B",
+              "text": "A constant laboratory label"
+            },
+            {
+              "letter": "C",
+              "text": "Increasing variability and slow recovery after small disturbances"
+            },
+            {
+              "letter": "D",
+              "text": "A single unchanged clear-water observation"
+            }
+          ],
+          "correct": "C"
+        },
+        {
+          "question": "What management conclusion best follows? Answer Key - Quick Reference 1-D | 2-A | 3-B | 4-C | 5-D | 6-A | 7-B | 8-C | 9-D | 10-A | 11-B | 12-C | 13-D | 14-A | 15-B | 16-C | 17-D | 18-A | 19-B | 20-C | 21-D | 22-A | 23-B | 24-C | 25-D",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Once turbid, a lake can never recover"
+            },
+            {
+              "letter": "B",
+              "text": "External inputs are the only process that matters"
+            },
+            {
+              "letter": "C",
+              "text": "Plant restoration always works immediately"
+            },
+            {
+              "letter": "D",
+              "text": "Preventing nutrient accumulation may be easier than reversing a well-established turbid state"
+            }
+          ],
+          "correct": "D"
+        }
+      ]
+    }
+  ]
+}

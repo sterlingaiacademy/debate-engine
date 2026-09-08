@@ -4407,6 +4407,7 @@ app.get('/api/olympiad/quiz/status/:subject/:grade', async (req, res) => {
 // ==========================================
 const subjectMockQuestions = {
   english: require('./data/english_mock.json'),
+  science: require('./data/science_mock.json'),
 };
 
 async function ensureMockTable() {
@@ -4437,26 +4438,33 @@ app.get('/api/olympiad/mock/:subject/:grade', async (req, res) => {
     const raw = bank[String(grade)];
     if (!raw) return res.status(404).json({ error: 'No mock questions for this grade' });
     
-    const shuffledPassages = raw.sort(() => Math.random() - 0.5).slice(0, 3);
+    // Flatten all questions to easily pick exactly 15
+    let allQs = [];
+    raw.forEach(p => {
+      p.questions.forEach(q => {
+        allQs.push({ passage: p.passage, ...q });
+      });
+    });
+    
+    // Pick exactly first 15 questions as requested
+    const selectedQs = allQs.slice(0, 15);
     
     const questions = [];
     const letters = ['A', 'B', 'C', 'D'];
     
-    shuffledPassages.forEach(p => {
-      p.questions.forEach(q => {
-        const originalOptions = q.options.slice();
-        const originalCorrectText = originalOptions.find(o => o.letter === q.correct)?.text;
-        const shuffled = originalOptions.map(o => o.text).sort(() => Math.random() - 0.5);
-        const newOptions = shuffled.map((text, idx) => ({ letter: letters[idx], text }));
-        const newCorrectLetter = newOptions.find(o => o.text === originalCorrectText)?.letter || q.correct;
-        
-        questions.push({
-          id: questions.length,
-          passage: p.passage,
-          question: q.question,
-          options: newOptions,
-          correct: newCorrectLetter
-        });
+    selectedQs.forEach((q, idx) => {
+      const originalOptions = q.options.slice();
+      const originalCorrectText = originalOptions.find(o => o.letter === q.correct)?.text;
+      const shuffled = originalOptions.map(o => o.text).sort(() => Math.random() - 0.5);
+      const newOptions = shuffled.map((text, i) => ({ letter: letters[i], text }));
+      const newCorrectLetter = newOptions.find(o => o.text === originalCorrectText)?.letter || q.correct;
+      
+      questions.push({
+        id: idx,
+        passage: q.passage,
+        question: q.question,
+        options: newOptions,
+        correct: newCorrectLetter
       });
     });
 

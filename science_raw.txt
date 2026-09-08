@@ -1,0 +1,1823 @@
+THINKQUEST
+Science Mock Test Series
+PISA-Style Scientific Literacy Assessment
+GRADES 5 TO 12
+8 grade-specific tests | 25 marks per grade 
+
+
+Progression Across Grades
+Grade
+Primary scientific-literacy emphasis
+Time
+5
+Observe patterns, compare simple tests and use everyday evidence
+40 min
+6
+Identify variables, explain basic systems and judge fair tests
+40 min
+7
+Connect mechanisms with data and recognise investigation limits
+45 min
+8
+Interpret multi-variable evidence and evaluate practical decisions
+45 min
+9
+Use quantitative evidence; distinguish association from causation
+50 min
+10
+Analyse models, calibration, rates, risk and environmental claims
+55 min
+11
+Evaluate controls, uncertainty, trade-offs and experimental inference
+60 min
+12
+Critique methodology, systems evidence, ethics and complex decisions
+60 min
+
+
+Competencies Assessed
+	•	Explaining phenomena scientifically
+	•	Interpreting data and evidence scientifically
+	•	Evaluating and designing scientific enquiry
+	•	Distinguishing observation, inference, association and causation
+	•	Using evidence to compare solutions, risks and trade-offs
+	•	Recognising uncertainty, limitations and the need for further evidence
+Note: All scenarios, institutions and datasets are fictional and created for educational assessment practice. Each MCQ carries one mark.
+
+THINKQUEST MOCK TEST
+Science - Grade 5
+PISA-Style Scientific Literacy Assessment
+Questions
+Marks
+Suggested Time
+Format
+25
+25
+40 minutes
+MCQ
+
+
+Instructions: Read each situation, diagram description or dataset carefully. Select the most appropriate answer. Correct answers are marked for the teacher's reference.
+Unit 1: Which Ice Cube Melts Fastest?
+Meera placed four ice cubes, each with a starting mass of 30 grams, on different plates. She left them for 15 minutes and then measured the ice that remained.
+Setup
+Plate
+Location
+Ice remaining
+A
+Metal
+In sunlight
+8 g
+B
+Metal
+In shade
+24 g
+C
+Plastic
+In sunlight
+14 g
+D
+Plastic
+In shade
+27 g
+
+
+All plates were the same size. Meera said, 'Sunlight makes ice melt faster.' Her teacher reminded her that one trial may not be enough to make a strong conclusion.
+	•	In which setup did the least ice melt?
+	•	Setup D  (Correct Answer)
+	•	Setup A
+	•	Setup B
+	•	Setup C
+	•	Which comparison best tests Meera's claim about sunlight?
+	•	C with D, because their locations and plates both differ
+	•	A with B, because both use metal plates  (Correct Answer)
+	•	A with C, because both are in sunlight
+	•	B with C, because their plates differ
+	•	Why did all ice cubes start with the same mass?
+	•	To change the plate temperature
+	•	To make them look alike
+	•	To make the comparison fair  (Correct Answer)
+	•	To stop them melting
+	•	What conclusion is supported by setups A and B?
+	•	Plastic is colder than metal
+	•	Metal prevents melting
+	•	Shade always freezes water
+	•	The ice on the sunlit metal plate melted more  (Correct Answer)
+	•	What should Meera do to make her result more reliable?
+	•	Repeat each setup several times  (Correct Answer)
+	•	Use only one ice cube
+	•	Change every condition
+	•	Measure by looking only
+Unit 2: Watering Bean Plants
+A class grew identical bean seedlings for two weeks. Each plant received a different amount of water every day. The same soil, pot size and amount of light were used.
+Plant
+Water each day
+Height after two weeks
+A
+0 mL
+2 cm
+B
+20 mL
+9 cm
+C
+40 mL
+13 cm
+D
+80 mL
+8 cm
+
+
+	•	Which plant grew tallest in this investigation?
+	•	Plant B
+	•	Plant C  (Correct Answer)
+	•	Plant D
+	•	Plant A
+	•	What was the factor deliberately changed by the class?
+	•	Pot size
+	•	Amount of light
+	•	Amount of water  (Correct Answer)
+	•	Type of bean
+	•	Why were the soil and pot size kept the same?
+	•	To prevent measurement
+	•	To give Plant C an advantage
+	•	To make the plants shorter
+	•	To ensure water was the main changed factor  (Correct Answer)
+	•	Which statement best matches the results?
+	•	Forty millilitres gave the greatest growth in this test  (Correct Answer)
+	•	Eighty millilitres stopped all growth
+	•	More water always produced more growth
+	•	Plants can grow without any water
+	•	What follow-up test would help find the best daily water amount more precisely?
+	•	Measure only the pot colour
+	•	Test amounts between 20 mL and 80 mL  (Correct Answer)
+	•	Use different bean types in every pot
+	•	Put every plant in a different room
+Unit 3: A Stick and Its Shadow
+Rohan placed a one-metre stick upright in the same school courtyard and recorded its shadow on a clear day.
+Time
+Shadow length
+Shadow direction
+9:00 a.m.
+180 cm
+West
+12:00 noon
+75 cm
+North
+3:00 p.m.
+145 cm
+East
+
+
+The stick did not move during the investigation.
+	•	At what recorded time was the shadow shortest?
+	•	It was equal at all times
+	•	9:00 a.m.
+	•	12:00 noon  (Correct Answer)
+	•	3:00 p.m.
+	•	What does the shortest shadow suggest about the Sun at noon?
+	•	It had stopped moving
+	•	It was behind a cloud
+	•	It was closest to Earth
+	•	It was highest in the sky  (Correct Answer)
+	•	Why was the same stick kept in the same place?
+	•	To control factors other than time  (Correct Answer)
+	•	To make the courtyard warmer
+	•	To change the direction of north
+	•	To make its shadow disappear
+	•	Based on the pattern, what is most likely at 1:00 p.m.?
+	•	The shadow is shorter than at noon
+	•	The shadow is longer than at noon but shorter than at 3:00 p.m.  (Correct Answer)
+	•	There is no shadow
+	•	The shadow remains exactly 75 cm
+	•	Why should Rohan avoid claiming that every day will give exactly these lengths?
+	•	The stick is one metre tall
+	•	Noon always follows morning
+	•	Clouds and the Sun's seasonal position can change results  (Correct Answer)
+	•	Shadows cannot be measured
+Unit 4: Keeping a Drink Cool
+Four identical bottles each contained water at 10 degrees C. Students wrapped three bottles in different materials and left all four in the same warm room for 30 minutes.
+Bottle
+Wrapping
+Temperature after 30 minutes
+A
+None
+31 degrees C
+B
+Cotton cloth
+25 degrees C
+C
+Foil and bubble wrap
+20 degrees C
+D
+Newspaper
+27 degrees C
+
+
+	•	Which wrapping kept the water coolest?
+	•	Newspaper
+	•	No wrapping
+	•	Cotton cloth
+	•	Foil and bubble wrap  (Correct Answer)
+	•	How much did the temperature of Bottle C rise?
+	•	10 degrees C  (Correct Answer)
+	•	15 degrees C
+	•	20 degrees C
+	•	30 degrees C
+	•	Which condition was important for a fair comparison?
+	•	Using bottles with different amounts of water
+	•	Leaving the bottles for the same time  (Correct Answer)
+	•	Placing each bottle in a different room
+	•	Starting with different temperatures
+	•	What do the results show about the best wrapping?
+	•	It created cold energy
+	•	It completely stopped heat transfer
+	•	It slowed the warming of the water  (Correct Answer)
+	•	It made the room colder
+	•	Which change would improve confidence in the result?
+	•	Remove the thermometers
+	•	Use a different starting temperature for every bottle
+	•	Check only the bottle colours
+	•	Repeat the test with several bottles for each wrapping  (Correct Answer)
+Unit 5: Trouble in the School Pond
+After heavy rain, water carrying garden fertiliser entered one side of a school pond. A week later, students noticed thick algae and several fish near the surface.
+Pond site
+Dissolved oxygen before sunrise
+Algae cover
+Fish seen gasping
+Near the drain
+3 mg/L
+70%
+12
+Far from the drain
+7 mg/L
+20%
+1
+
+
+Algae can use nutrients in fertiliser. At night, algae and other organisms use oxygen. Decomposers also use oxygen when dead algae break down.
+	•	At which site was dissolved oxygen lower?
+	•	Near the drain  (Correct Answer)
+	•	Far from the drain
+	•	It was equal
+	•	It was not measured
+	•	Which observation is most closely linked with low oxygen?
+	•	Clear water
+	•	More fish gasping  (Correct Answer)
+	•	Fewer nutrients
+	•	Less algae
+	•	How could fertiliser contribute to the pond problem?
+	•	It removes all decomposers
+	•	It prevents rain from falling
+	•	It may increase algae growth, followed by greater oxygen use  (Correct Answer)
+	•	It turns fish into algae
+	•	What action would best address the source of the problem?
+	•	Catch every fish
+	•	Measure only at noon
+	•	Add more fertiliser
+	•	Prevent fertiliser-rich runoff entering the pond  (Correct Answer)
+	•	Why can the class not prove from these two measurements that low oxygen caused every fish problem?
+	•	Only one time and two sites were sampled, and other causes were not ruled out  (Correct Answer)
+	•	Algae never use nutrients
+	•	The pond has two sides
+	•	Oxygen has no effect on fish
+Answer Key - Quick Reference
+1-A | 2-B | 3-C | 4-D | 5-A | 6-B | 7-C | 8-D | 9-A | 10-B | 11-C | 12-D | 13-A | 14-B | 15-C | 16-D | 17-A | 18-B | 19-C | 20-D | 21-A | 22-B | 23-C | 24-D | 25-A
+
+THINKQUEST MOCK TEST
+Science - Grade 6
+PISA-Style Scientific Literacy Assessment
+Questions
+Marks
+Suggested Time
+Format
+25
+25
+40 minutes
+MCQ
+
+
+Instructions: Read each situation, diagram description or dataset carefully. Select the most appropriate answer. Correct answers are marked for the teacher's reference.
+Unit 1: Testing a Solar Cooker
+Students tested the same solar cooker at three reflector angles. Each test used 500 mL of water at 25 degrees C for 30 minutes under similar sunshine.
+Reflector angle
+Final water temperature
+20 degrees
+54 degrees C
+45 degrees
+68 degrees C
+70 degrees
+62 degrees C
+
+
+	•	Which reflector angle heated the water most in this test?
+	•	20 degrees
+	•	45 degrees  (Correct Answer)
+	•	70 degrees
+	•	All were equal
+	•	Why was the same volume of water used each time?
+	•	To change the reflector
+	•	To avoid using a thermometer
+	•	To keep the amount being heated constant  (Correct Answer)
+	•	To make sunlight stronger
+	•	What is the dependent variable in the investigation?
+	•	Starting water volume
+	•	Reflector angle
+	•	Amount of sunshine
+	•	Final water temperature  (Correct Answer)
+	•	Which conclusion is justified?
+	•	A 45-degree angle was most effective under the tested conditions  (Correct Answer)
+	•	A 45-degree angle is best everywhere and at all times
+	•	Solar cookers cannot heat water
+	•	A 70-degree angle always cools water
+	•	What would best test whether the result is consistent?
+	•	Paint each thermometer a different colour
+	•	Repeat the angles on several similar sunny days  (Correct Answer)
+	•	Use different water volumes for each angle
+	•	Record only the hottest result
+Unit 2: How Quickly Does Sugar Dissolve?
+One spoon of sugar was added to 200 mL of water. The mixture was stirred at the same speed until no crystals were visible.
+Water temperature
+Time for sugar to dissolve
+10 degrees C
+180 seconds
+25 degrees C
+90 seconds
+50 degrees C
+35 seconds
+
+
+	•	What pattern is shown by the data?
+	•	Cold water dissolved the most sugar
+	•	Sugar dissolved more slowly as temperature rose
+	•	Sugar dissolved faster in warmer water  (Correct Answer)
+	•	Temperature made no difference
+	•	What factor was deliberately changed?
+	•	Sugar amount
+	•	Water volume
+	•	Stirring speed
+	•	Water temperature  (Correct Answer)
+	•	Why was the stirring speed kept the same?
+	•	Stirring can also affect dissolving time  (Correct Answer)
+	•	Stirring changes sugar into salt
+	•	Warm water cannot be stirred
+	•	The spoon measures temperature
+	•	Which explanation best fits the result?
+	•	Crystals grow faster in warm water
+	•	Particles move and mix more rapidly in warmer water  (Correct Answer)
+	•	Sugar becomes colder than ice
+	•	Water disappears at 50 degrees C
+	•	What cannot be concluded from this investigation?
+	•	Temperature affected dissolving time
+	•	The 50-degree water gave the shortest time
+	•	Warmer water can dissolve an unlimited amount of sugar  (Correct Answer)
+	•	The same sugar amount was used
+Unit 3: Inside the Compost Bins
+A school compared three compost bins for four weeks. All bins began with 10 kg of material and received the same amount of water.
+Bin
+Material and treatment
+Highest temperature
+Mass after four weeks
+A
+Chopped scraps, turned weekly
+55 degrees C
+6.2 kg
+B
+Whole scraps, not turned
+38 degrees C
+8.1 kg
+C
+Dry leaves only, turned weekly
+31 degrees C
+9.0 kg
+
+
+Active decomposers release heat as they break down organic material.
+	•	Which bin showed the strongest signs of rapid decomposition?
+	•	Bin B
+	•	Bin C
+	•	All were identical
+	•	Bin A  (Correct Answer)
+	•	Which evidence supports that answer?
+	•	It had the highest temperature and greatest mass loss  (Correct Answer)
+	•	It contained only leaves
+	•	It was never turned
+	•	It stayed driest
+	•	Why might chopping scraps speed decomposition?
+	•	It stops oxygen entering
+	•	It gives decomposers more surface area to act on  (Correct Answer)
+	•	It removes all microorganisms
+	•	It makes the scraps inorganic
+	•	Why is Bin C useful in the comparison?
+	•	It has more starting mass
+	•	It receives no water
+	•	It provides a different material condition for comparison  (Correct Answer)
+	•	It proves leaves never decompose
+	•	Which additional measurement would improve the investigation?
+	•	The names of students nearby
+	•	The cost of garden tools
+	•	The colour of the bin lids only
+	•	Moisture and temperature recorded regularly  (Correct Answer)
+Unit 4: Pulse Recovery After Exercise
+Arun counted his pulse for one minute at rest and after two minutes of step exercise.
+Measurement time
+Pulse rate
+Before exercise
+78 beats/min
+Immediately after
+142 beats/min
+After 2 minutes rest
+104 beats/min
+After 5 minutes rest
+82 beats/min
+
+
+	•	How did exercise immediately affect Arun's pulse?
+	•	It increased by 64 beats/min  (Correct Answer)
+	•	It stayed at 78 beats/min
+	•	It stopped briefly
+	•	It decreased by 64 beats/min
+	•	What does the five-minute reading show?
+	•	His heart had stopped working
+	•	His pulse had nearly returned to the resting rate  (Correct Answer)
+	•	His pulse was still increasing
+	•	Exercise had no effect
+	•	Why does pulse usually rise during exercise?
+	•	The lungs stop exchanging gases
+	•	The body temperature must fall to zero
+	•	Muscles need more oxygen and nutrients  (Correct Answer)
+	•	Blood no longer moves
+	•	Why should Arun count for the same length of time at every stage?
+	•	To force the pulse to slow
+	•	To change the exercise
+	•	To avoid recording numbers
+	•	To make the rates comparable  (Correct Answer)
+	•	What is the main limitation of using only Arun's readings?
+	•	One person may not represent all students  (Correct Answer)
+	•	Exercise never changes pulse
+	•	Five minutes is longer than two minutes
+	•	Pulse cannot be counted
+Unit 5: A Bottle Water Filter
+Students poured muddy pond water through a bottle containing gravel, sand and charcoal. Turbidity, a measure of cloudiness, fell from 60 NTU to 8 NTU. The class did not test for microorganisms or dissolved chemicals.
+The teacher warned students not to drink the filtered water.
+	•	What change did the filter produce?
+	•	The water became more cloudy
+	•	Turbidity fell by 52 NTU  (Correct Answer)
+	•	All chemicals disappeared
+	•	The water became sterile
+	•	Why was the teacher's warning scientifically sensible?
+	•	Turbidity cannot be measured
+	•	Charcoal turns water into salt
+	•	Clearer water may still contain harmful microbes or dissolved substances  (Correct Answer)
+	•	Sand always makes water poisonous
+	•	What was the measured outcome of the test?
+	•	Number of gravel pieces
+	•	Taste of the water
+	•	Bottle height
+	•	Turbidity before and after filtering  (Correct Answer)
+	•	Which test is most important before considering the water safe to drink?
+	•	Test for disease-causing microorganisms and harmful chemicals  (Correct Answer)
+	•	Count the sand grains
+	•	Measure only the water colour
+	•	Check the bottle label
+	•	What comparison would strengthen the test of the filter?
+	•	Ask one student whether it looks clean
+	•	Keep an unfiltered sample from the same pond water  (Correct Answer)
+	•	Use water from a different pond as the only sample
+	•	Change all filter materials at once
+Answer Key - Quick Reference
+1-B | 2-C | 3-D | 4-A | 5-B | 6-C | 7-D | 8-A | 9-B | 10-C | 11-D | 12-A | 13-B | 14-C | 15-D | 16-A | 17-B | 18-C | 19-D | 20-A | 21-B | 22-C | 23-D | 24-A | 25-B
+
+THINKQUEST MOCK TEST
+Science - Grade 7
+PISA-Style Scientific Literacy Assessment
+Questions
+Marks
+Suggested Time
+Format
+25
+25
+45 minutes
+MCQ
+
+
+Instructions: Read each situation, diagram description or dataset carefully. Select the most appropriate answer. Correct answers are marked for the teacher's reference.
+Unit 1: Choosing an Insulated Cup
+Students poured equal amounts of water at 80 degrees C into four cups. The cups were placed together in a room at 24 degrees C. Water temperature was measured after 20 minutes.
+Cup
+Material
+Temperature after 20 minutes
+A
+Paper
+55 degrees C
+B
+Foam
+63 degrees C
+C
+Metal
+42 degrees C
+D
+Metal wrapped in cloth
+58 degrees C
+
+
+	•	Which cup reduced heat loss most effectively?
+	•	Unwrapped cup
+	•	Paper cup
+	•	Foam cup  (Correct Answer)
+	•	Metal cup
+	•	What evidence shows that cloth improved the metal cup?
+	•	Cup C was warmer than Cup B
+	•	Both metal cups reached 80 degrees C
+	•	The room was 24 degrees C
+	•	Cup D remained 16 degrees C warmer than Cup C  (Correct Answer)
+	•	Why did the unwrapped metal cup cool most?
+	•	Metal is a relatively good conductor of heat  (Correct Answer)
+	•	Metal creates cold
+	•	Water cannot remain in metal
+	•	The cup increased room temperature to 80 degrees C
+	•	Which variable was measured as the outcome?
+	•	Starting water amount
+	•	Temperature after 20 minutes  (Correct Answer)
+	•	Room location
+	•	Cup material
+	•	Which procedure would improve reliability?
+	•	Place the cups in different rooms
+	•	Remove the thermometer from one cup
+	•	Repeat each cup test and calculate mean temperatures  (Correct Answer)
+	•	Use a different water volume in every cup
+Unit 2: Yeast and Balloon Inflation
+Equal amounts of yeast, sugar solution and air were placed in bottles. A balloon was fitted to each bottle, and the bottles were kept at different temperatures for 30 minutes.
+Temperature
+Gas collected in balloon
+5 degrees C
+2 mL
+25 degrees C
+38 mL
+40 degrees C
+24 mL
+60 degrees C
+0 mL
+
+
+Yeast releases carbon dioxide when it respires using sugar.
+	•	At which tested temperature was yeast activity greatest?
+	•	40 degrees C
+	•	60 degrees C
+	•	5 degrees C
+	•	25 degrees C  (Correct Answer)
+	•	What does the balloon volume provide an estimate of?
+	•	Amount of carbon dioxide released  (Correct Answer)
+	•	Mass of the bottle
+	•	Colour of the yeast
+	•	Amount of oxygen in the room
+	•	Why may no gas have been collected at 60 degrees C?
+	•	The sugar froze
+	•	The high temperature may have damaged or killed the yeast cells  (Correct Answer)
+	•	Carbon dioxide became solid
+	•	The balloon produced oxygen
+	•	What should be kept constant to isolate the effect of temperature?
+	•	Balloon volume after the test
+	•	Rate of respiration
+	•	Amounts of yeast and sugar solution  (Correct Answer)
+	•	Temperature
+	•	Which conclusion goes beyond the data?
+	•	Sixty degrees C produced no measurable gas
+	•	Yeast activity differed across the tested temperatures
+	•	Twenty-five degrees C produced the most gas in this test
+	•	All yeast everywhere grows best at exactly 25 degrees C  (Correct Answer)
+Unit 3: Air Near the School Gate
+A class used the same calibrated particle sensor at three school locations. PM2.5 values are in micrograms per cubic metre; higher values indicate more fine particles.
+Location
+8:00 a.m.
+1:00 p.m.
+4:00 p.m.
+Main gate
+48
+24
+52
+Bus parking area
+55
+29
+61
+Garden
+18
+15
+20
+
+
+Vehicle arrivals are busiest before school and at closing time. Wind direction was not recorded.
+	•	Where and when was the highest PM2.5 value recorded?
+	•	Bus parking area at 4:00 p.m.  (Correct Answer)
+	•	Garden at 4:00 p.m.
+	•	Garden at 1:00 p.m.
+	•	Main gate at 8:00 a.m.
+	•	What pattern appears at the gate and bus area?
+	•	The garden is always most polluted
+	•	Values are higher near busy arrival and closing times  (Correct Answer)
+	•	Values remain exactly constant
+	•	Midday always has the highest value
+	•	Why can the data not prove that buses caused all the particles?
+	•	Three locations were included
+	•	Particles cannot be measured
+	•	Wind and other sources were not monitored  (Correct Answer)
+	•	The same sensor was used
+	•	Why is using the same calibrated sensor helpful?
+	•	It guarantees zero pollution
+	•	It controls traffic volume
+	•	It changes wind direction
+	•	It reduces differences caused by instruments  (Correct Answer)
+	•	Which action is most directly supported for further investigation?
+	•	Record wind and vehicle numbers while taking repeated PM2.5 readings  (Correct Answer)
+	•	Ban all outdoor activity after one day
+	•	Measure only inside one classroom
+	•	Use an uncalibrated sensor at each site
+Unit 4: Snails in a Wetland
+An unfamiliar snail species appeared in a wetland. Scientists marked six similar plots. Three plots were fenced to exclude the new snails, while three remained open.
+Plot type
+Native plant cover at start
+Native plant cover after eight weeks
+New snails per plot
+Fenced
+62%
+59%
+0-2
+Open
+64%
+31%
+18-27
+
+
+	•	Which result supports the idea that the new snails harm native plants?
+	•	Plant cover increased equally in both groups
+	•	Plant cover fell much more in open plots with many snails  (Correct Answer)
+	•	Fenced plots began with no plants
+	•	Open plots had no snails
+	•	Why were several plots used for each treatment?
+	•	To remove the need for measurements
+	•	To make the wetland smaller
+	•	To assess natural variation and make the result more reliable  (Correct Answer)
+	•	To ensure every plot had different starting cover
+	•	What is the role of the fenced plots?
+	•	They increase the snail population
+	•	They change the plant species
+	•	They prove fencing is harmless
+	•	They provide a comparison with few or no new snails  (Correct Answer)
+	•	Why should scientists be cautious before releasing a predator to control the snails?
+	•	The predator could also affect native species  (Correct Answer)
+	•	Predators cannot eat snails
+	•	The wetland has plants
+	•	Fences already measure temperature
+	•	Which observation would most strengthen a cause-and-effect claim?
+	•	The snail shells are colourful
+	•	Similar plant decline occurs when snails are experimentally added to matched plots  (Correct Answer)
+	•	A student dislikes the snails
+	•	The wetland has cloudy days
+Unit 5: Bulbs in Series and Parallel
+Students connected two identical bulbs to the same battery in different circuits. Brightness was measured with a light sensor.
+Circuit
+Connection
+Brightness of each bulb
+If one bulb is removed
+A
+One bulb only
+100 units
+Circuit opens
+B
+Two bulbs in series
+42 units
+Both go out
+C
+Two bulbs in parallel
+91 units
+Other bulb stays on
+
+
+	•	Which circuit made each of two bulbs brightest?
+	•	Circuit A
+	•	Circuit B
+	•	Circuit C  (Correct Answer)
+	•	All gave 42 units
+	•	Why are bulbs dimmer in the series circuit?
+	•	No charge moves in series
+	•	Each bulb creates another battery
+	•	Parallel circuits contain no wires
+	•	The battery's potential difference is shared across the bulbs  (Correct Answer)
+	•	Which observation identifies the parallel circuit?
+	•	The other bulb stays on when one is removed  (Correct Answer)
+	•	Only one bulb can be connected
+	•	Brightness becomes zero before removal
+	•	Both bulbs go out when one is removed
+	•	Why were identical bulbs and the same battery used?
+	•	To change bulb colour
+	•	To make connection type the main changed factor  (Correct Answer)
+	•	To make every circuit parallel
+	•	To prevent electric current
+	•	Which safety step is appropriate before changing connections?
+	•	Short-circuit the battery
+	•	Use damaged insulation
+	•	Disconnect the battery  (Correct Answer)
+	•	Touch bare wires with wet hands
+Answer Key - Quick Reference
+1-C | 2-D | 3-A | 4-B | 5-C | 6-D | 7-A | 8-B | 9-C | 10-D | 11-A | 12-B | 13-C | 14-D | 15-A | 16-B | 17-C | 18-D | 19-A | 20-B | 21-C | 22-D | 23-A | 24-B | 25-C
+
+THINKQUEST MOCK TEST
+Science - Grade 8
+PISA-Style Scientific Literacy Assessment
+Questions
+Marks
+Suggested Time
+Format
+25
+25
+45 minutes
+MCQ
+
+
+Instructions: Read each situation, diagram description or dataset carefully. Select the most appropriate answer. Correct answers are marked for the teacher's reference.
+Unit 1: Acidic Water and Limestone
+Equal limestone chips were placed in 100 mL of solutions for 24 hours. All chips began with a mass of 10.0 g.
+Solution pH
+Final mass
+Mass lost
+7
+9.9 g
+0.1 g
+5
+9.5 g
+0.5 g
+3
+8.2 g
+1.8 g
+
+
+Limestone contains calcium carbonate, which reacts with acids.
+	•	What relationship is shown by the results?
+	•	Higher pH caused greater mass loss
+	•	pH had no relationship with mass
+	•	Every chip gained mass
+	•	Lower pH was associated with greater limestone mass loss  (Correct Answer)
+	•	Why was a pH 7 solution included?
+	•	As a near-neutral comparison  (Correct Answer)
+	•	To guarantee the largest reaction
+	•	To make the chips acidic before testing
+	•	As the dependent variable
+	•	What chemical explanation fits the mass loss?
+	•	Calcium carbonate cannot react
+	•	Acid reacts with calcium carbonate and products leave the chip  (Correct Answer)
+	•	Acid changes mass into temperature
+	•	Limestone absorbs all the water
+	•	Which factor should have been kept constant?
+	•	Mass lost
+	•	Final mass
+	•	Initial surface area of the limestone chips  (Correct Answer)
+	•	Solution pH
+	•	What would improve the reliability of each value?
+	•	Use a different volume at every pH
+	•	Round all masses to 10 g
+	•	Remove the pH 7 comparison
+	•	Test several chips at each pH and calculate a mean  (Correct Answer)
+Unit 2: Power for an Island
+An island uses about 150 MWh of electricity each day. Engineers compared three renewable sources. Daily output varies with conditions.
+Source
+Typical daily output
+Main limitation
+Solar
+60 MWh
+No generation at night; cloudy-day variation
+Wind
+80 MWh
+Low output during calm weather
+Small hydro
+50 MWh
+Reduced output in dry months
+
+
+The island can also install batteries, reduce demand at peak times, or retain an emergency generator.
+	•	Which pair has the highest typical combined output?
+	•	Solar and wind  (Correct Answer)
+	•	Solar and hydro
+	•	Wind and hydro
+	•	Solar alone
+	•	Why might a 140 MWh solar-wind total still be insufficient?
+	•	Batteries create electricity from nothing
+	•	Typical output is below demand and both sources vary  (Correct Answer)
+	•	MWh measures temperature
+	•	Hydro is always unavailable
+	•	What is the main value of combining several sources?
+	•	It guarantees no equipment failure
+	•	It makes daily demand zero
+	•	Their different patterns can reduce dependence on one condition  (Correct Answer)
+	•	It removes all costs
+	•	How could batteries help the island?
+	•	Increase wind speed
+	•	Produce fuel without energy input
+	•	Stop dry seasons
+	•	Store surplus energy for use when generation is low  (Correct Answer)
+	•	What additional information is most important before choosing a system?
+	•	Hourly and seasonal generation, demand, costs and environmental effects  (Correct Answer)
+	•	The colour of each power station
+	•	The engineers' favourite source
+	•	Only the highest single daily value
+Unit 3: Antibiotics and Bacterial Growth
+A laboratory placed antibiotic discs on bacterial cultures. A clear zone around a disc shows where bacteria did not grow. Larger zones indicate greater sensitivity under the test conditions.
+Culture
+Clear zone around Antibiotic A
+Clear zone around Antibiotic B
+Before repeated exposure
+18 mm
+12 mm
+After repeated low-dose exposure
+4 mm
+11 mm
+
+
+	•	What happened to sensitivity to Antibiotic A after repeated low-dose exposure?
+	•	It increased greatly
+	•	It decreased  (Correct Answer)
+	•	It stayed exactly the same
+	•	It could not be measured
+	•	Which explanation best fits the smaller clear zone?
+	•	The disc produced more oxygen
+	•	Antibiotic A became food
+	•	More bacteria could grow near Antibiotic A  (Correct Answer)
+	•	The bacteria became viruses
+	•	How can incomplete or unnecessary antibiotic use promote resistance?
+	•	All bacteria become identical immediately
+	•	Antibiotics teach viruses to divide
+	•	The body stops producing cells
+	•	Susceptible bacteria may die while resistant survivors reproduce  (Correct Answer)
+	•	Why should antibiotics not be used to treat a common viral cold?
+	•	Antibiotics target bacteria, not viruses  (Correct Answer)
+	•	Viruses are larger than people
+	•	Colds contain no genetic material
+	•	Antibiotics always increase fever
+	•	What limitation applies to this laboratory result?
+	•	The cultures contained no bacteria
+	•	Disc tests alone do not show how a medicine will perform in every patient  (Correct Answer)
+	•	Clear zones cannot be measured
+	•	Bacteria never change
+Unit 4: Reducing Noise in a Classroom
+A speaker produced the same sound in an empty classroom. Students placed different materials on one wall and measured the sound level at the opposite wall.
+Wall treatment
+Sound level before
+Sound level after
+Acoustic foam
+78 dB
+62 dB
+Heavy curtain
+78 dB
+69 dB
+Plant screen
+78 dB
+75 dB
+
+
+	•	Which treatment produced the greatest measured reduction?
+	•	Plant screen
+	•	All were equal
+	•	Acoustic foam  (Correct Answer)
+	•	Heavy curtain
+	•	By how many decibels did the heavy curtain reduce the reading?
+	•	16 dB
+	•	69 dB
+	•	3 dB
+	•	9 dB  (Correct Answer)
+	•	Why was the same speaker sound used in each test?
+	•	To control the sound source  (Correct Answer)
+	•	To change the wall size
+	•	To make decibels a material
+	•	To remove all echoes
+	•	Which claim is supported?
+	•	Curtains are better than foam
+	•	Foam reduced the measured sound level most in this setup  (Correct Answer)
+	•	Foam removes every sound in every room
+	•	Plants always increase noise
+	•	What follow-up would make the result more useful for a real class?
+	•	Record only the quietest instant
+	•	Change the classroom for every reading without comparison
+	•	Measure at several positions with students present and repeat trials  (Correct Answer)
+	•	Use a different speaker volume for each material
+Unit 5: Pondweed and Light
+A lamp was placed at different distances from pondweed. Students counted gas bubbles released in one minute as an estimate of photosynthesis rate.
+Lamp distance
+Mean bubbles per minute
+10 cm
+42
+20 cm
+25
+40 cm
+11
+60 cm
+7
+
+
+	•	What pattern is shown?
+	•	Bubble rate increased with distance
+	•	Distance made no difference
+	•	No gas was released
+	•	Bubble rate decreased as the lamp moved farther away  (Correct Answer)
+	•	Why does moving the lamp affect photosynthesis?
+	•	Light intensity reaching the pondweed changes  (Correct Answer)
+	•	The pondweed changes species
+	•	Water becomes soil
+	•	Bubbles absorb the lamp
+	•	Which variable should be controlled because the lamp may affect it?
+	•	Photosynthesis rate
+	•	Water temperature  (Correct Answer)
+	•	Lamp distance
+	•	Bubble count
+	•	Why is counting bubbles only an estimate of gas production?
+	•	Plants never release gases
+	•	Minutes cannot be measured
+	•	Bubble sizes may differ  (Correct Answer)
+	•	Oxygen has no volume
+	•	Which method would measure oxygen production more directly?
+	•	Count leaves only
+	•	Measure lamp colour
+	•	Remove the water
+	•	Collect and measure the gas volume  (Correct Answer)
+Answer Key - Quick Reference
+1-D | 2-A | 3-B | 4-C | 5-D | 6-A | 7-B | 8-C | 9-D | 10-A | 11-B | 12-C | 13-D | 14-A | 15-B | 16-C | 17-D | 18-A | 19-B | 20-C | 21-D | 22-A | 23-B | 24-C | 25-D
+
+THINKQUEST MOCK TEST
+Science - Grade 9
+PISA-Style Scientific Literacy Assessment
+Questions
+Marks
+Suggested Time
+Format
+25
+25
+50 minutes
+MCQ
+
+
+Instructions: Read each situation, diagram description or dataset carefully. Select the most appropriate answer. Correct answers are marked for the teacher's reference.
+Unit 1: Microplastics Along a River
+Students collected three one-litre surface-water samples at each river site on the same morning. They filtered the water and counted suspected plastic fibres under a microscope.
+Site
+Description
+Mean suspected fibres per litre
+U
+Upstream of town
+6
+M
+Below a storm-water outlet
+21
+D
+Downstream of a laundry district
+38
+
+
+The samples were collected two days after heavy rain. The students did not chemically confirm that every fibre was plastic.
+	•	Which result is consistent with additional fibre sources within the town?
+	•	Counts increased from upstream to downstream  (Correct Answer)
+	•	All sites had exactly six fibres
+	•	The upstream site had the highest count
+	•	No fibres were observed
+	•	Why are three samples at each site better than one?
+	•	They make the river flow backward
+	•	They show some local variation and allow a mean to be calculated  (Correct Answer)
+	•	They guarantee every fibre is plastic
+	•	They remove the effect of rain
+	•	Why can the laundry district not be named as the only cause?
+	•	Downstream water contains no particles
+	•	The samples were larger than one litre
+	•	Other sources, storm runoff and river transport may also contribute  (Correct Answer)
+	•	Laundry never releases fibres
+	•	What is the purpose of chemical confirmation?
+	•	To count the townspeople
+	•	To measure river depth
+	•	To change the sample volume
+	•	To distinguish plastic fibres from natural fibres  (Correct Answer)
+	•	Which sampling plan would best test the effect of rain?
+	•	Sample the same sites repeatedly before and after rainfall  (Correct Answer)
+	•	Sample only Site D once more
+	•	Use different filter sizes at every site
+	•	Count only the largest fibre
+Unit 2: Interpreting Vaccine Data
+During an outbreak, a town reviewed records for residents of similar age.
+Group
+Number of people
+Confirmed infections
+Vaccinated
+8,000
+160 (2%)
+Not vaccinated
+2,000
+100 (5%)
+
+
+Vaccination was a personal choice. The groups may also have differed in health, occupation, previous infection or protective behaviour.
+	•	What is the absolute difference in infection rates?
+	•	2 percentage points
+	•	3 percentage points  (Correct Answer)
+	•	5 percentage points
+	•	60 percentage points
+	•	What relative reduction is suggested by comparing 2% with 5%?
+	•	About 20%
+	•	About 40%
+	•	About 60%  (Correct Answer)
+	•	About 80%
+	•	Which conclusion is directly supported?
+	•	Vaccination prevented every infection
+	•	The two groups were identical in every way
+	•	The vaccine caused all differences
+	•	The vaccinated group had a lower recorded infection rate  (Correct Answer)
+	•	Why is causal interpretation limited?
+	•	People were not randomly assigned, so confounding differences may remain  (Correct Answer)
+	•	Infections cannot be confirmed
+	•	The vaccinated group was larger
+	•	The study used percentages
+	•	What additional analysis would strengthen the comparison?
+	•	Compare only the total infection numbers
+	•	Adjust for exposure, health and behaviour differences  (Correct Answer)
+	•	Ignore group sizes
+	•	Remove all vaccinated records
+Unit 3: Testing Cool Roofs
+Three identical model buildings were placed in sunlight for four hours. Only the roof surface differed.
+Roof
+Roof surface temperature
+Indoor air temperature
+Special requirement
+Black sheet
+68 degrees C
+39 degrees C
+None
+White coating
+43 degrees C
+32 degrees C
+Recoating over time
+Living green roof
+47 degrees C
+31 degrees C
+Water and structural support
+
+
+	•	Which roof produced the lowest indoor temperature?
+	•	Black sheet
+	•	White coating
+	•	Living green roof  (Correct Answer)
+	•	All were 39 degrees C
+	•	Why did the white surface stay cooler than the black surface?
+	•	It produced more sunlight
+	•	It had no atoms
+	•	It increased heat absorption
+	•	It reflected a larger fraction of incoming radiation  (Correct Answer)
+	•	What trade-off is shown for the green roof?
+	•	Low indoor temperature with added water and support needs  (Correct Answer)
+	•	Highest temperature with no maintenance
+	•	No cooling and no mass
+	•	Lower reflection with zero plant growth
+	•	Why were the model buildings made identical?
+	•	To prevent solar radiation
+	•	To isolate the effect of roof type  (Correct Answer)
+	•	To ensure all roofs were black
+	•	To make indoor temperature the independent variable
+	•	Why should the findings be tested on real buildings?
+	•	White surfaces do not exist outdoors
+	•	Real roofs receive no sunlight
+	•	Building size, ventilation, climate and construction may change performance  (Correct Answer)
+	•	Models cannot have temperatures
+Unit 4: Reaction Rate of Effervescent Tablets
+One tablet was added to 200 mL of water in each test. Students recorded the time until bubbling stopped.
+Tablet form
+Water temperature
+Time
+Whole
+15 degrees C
+180 s
+Crushed
+15 degrees C
+80 s
+Whole
+40 degrees C
+70 s
+Crushed
+40 degrees C
+30 s
+
+
+	•	Which conditions gave the fastest reaction?
+	•	Whole tablet in cold water
+	•	Crushed tablet in cold water
+	•	Whole tablet in warm water
+	•	Crushed tablet in warm water  (Correct Answer)
+	•	What effect did crushing have at 15 degrees C?
+	•	It reduced the reaction time by 100 s  (Correct Answer)
+	•	It stopped the reaction
+	•	It changed the water volume
+	•	It increased the reaction time by 100 s
+	•	Why can crushing increase reaction rate?
+	•	It freezes the water
+	•	It exposes a greater surface area for collisions  (Correct Answer)
+	•	It lowers the number of particles to zero
+	•	It removes the reactants
+	•	Which comparison isolates the effect of temperature for whole tablets?
+	•	Rows 2 and 3
+	•	Rows 3 and 4
+	•	Rows 1 and 3  (Correct Answer)
+	•	Rows 1 and 2
+	•	What should be measured to check that the same total reaction occurred in each test?
+	•	Colour of the beaker label
+	•	Time of day only
+	•	Sound of one bubble
+	•	Total gas volume released  (Correct Answer)
+Unit 5: A Purple-Flower Cross
+In a plant species, purple flower colour (P) is dominant to white (p). Two heterozygous purple plants, Pp and Pp, were crossed. Among 200 offspring, 152 had purple flowers and 48 had white flowers.
+	•	What proportion of white-flowered offspring is predicted by a Pp x Pp cross?
+	•	25%  (Correct Answer)
+	•	50%
+	•	75%
+	•	0%
+	•	Which genotype must a white-flowered offspring have?
+	•	pP
+	•	pp  (Correct Answer)
+	•	PP
+	•	Pp
+	•	How closely do the observed results match the predicted 3:1 phenotype ratio?
+	•	They show no purple offspring
+	•	They prove dominance changed
+	•	They are close: 76% purple and 24% white  (Correct Answer)
+	•	They are exactly 50% of each
+	•	Why might observed numbers not be exactly 150 purple and 50 white?
+	•	Genes stop existing in large samples
+	•	Every white plant changes colour
+	•	Ratios cannot be predicted
+	•	Random sampling variation occurs in fertilisation and survival  (Correct Answer)
+	•	Which statement is most accurate?
+	•	The results support, but do not prove universally, the proposed inheritance model  (Correct Answer)
+	•	The results prove environment never affects plants
+	•	Every purple plant must be PP
+	•	White is the dominant trait
+Answer Key - Quick Reference
+1-A | 2-B | 3-C | 4-D | 5-A | 6-B | 7-C | 8-D | 9-A | 10-B | 11-C | 12-D | 13-A | 14-B | 15-C | 16-D | 17-A | 18-B | 19-C | 20-D | 21-A | 22-B | 23-C | 24-D | 25-A
+
+THINKQUEST MOCK TEST
+Science - Grade 10
+PISA-Style Scientific Literacy Assessment
+Questions
+Marks
+Suggested Time
+Format
+25
+25
+55 minutes
+MCQ
+
+
+Instructions: Read each situation, diagram description or dataset carefully. Select the most appropriate answer. Correct answers are marked for the teacher's reference.
+Unit 1: Weather, Climate and a Warming Record
+A city calculated mean annual temperature for successive periods. The same weather station and corrected methods were used.
+Period
+Mean annual temperature
+1991-2000
+24.1 degrees C
+2001-2010
+24.5 degrees C
+2011-2020
+25.0 degrees C
+2021-2025
+25.3 degrees C
+
+
+During one week in 2025, the city also experienced an unusually cold day.
+	•	What long-term change is shown from the first to the last period?
+	•	A decrease of 1.2 degrees C
+	•	An increase of 1.2 degrees C  (Correct Answer)
+	•	An increase of 24.1 degrees C
+	•	No change
+	•	Why does one cold day not disprove the warming pattern?
+	•	Climate changes every hour
+	•	The table contains no temperatures
+	•	Weather varies from day to day, while climate describes long-term patterns  (Correct Answer)
+	•	Cold days cannot be measured
+	•	Which claim is supported by the table?
+	•	Carbon dioxide was the only possible cause
+	•	Every year was warmer than the previous year
+	•	No cold weather occurred
+	•	The city's recorded mean temperature rose across the periods  (Correct Answer)
+	•	Why is using consistent, corrected measurements important?
+	•	It reduces artificial changes caused by instruments or methods  (Correct Answer)
+	•	It makes all years equally hot
+	•	It removes natural variability
+	•	It selects only warm days
+	•	What additional evidence is needed to explain the cause of the trend?
+	•	Only the station's paint colour
+	•	Data on greenhouse gases, land use, aerosols and other climate influences  (Correct Answer)
+	•	A photograph of one thermometer
+	•	The coldest hour in one week
+Unit 2: Estimating Nitrate in River Water
+A colorimeter measured absorbance for nitrate standards. Greater absorbance indicates a higher nitrate concentration within the calibrated range.
+Nitrate concentration
+Absorbance
+0 mg/L
+0.00
+10 mg/L
+0.12
+20 mg/L
+0.25
+40 mg/L
+0.51
+River sample
+0.31
+
+
+	•	What nitrate concentration is the river sample closest to by interpolation?
+	•	About 5 mg/L
+	•	About 15 mg/L
+	•	About 25 mg/L  (Correct Answer)
+	•	About 60 mg/L
+	•	Why is the 0 mg/L standard useful?
+	•	It has the highest nitrate level
+	•	It makes the sample more concentrated
+	•	It replaces the colorimeter
+	•	It provides a blank or baseline absorbance  (Correct Answer)
+	•	Why should the river sample be measured several times?
+	•	To estimate measurement variability and a mean  (Correct Answer)
+	•	To force the absorbance to zero
+	•	To change nitrate into oxygen
+	•	To remove the standards
+	•	Why would a sample absorbance of 0.80 require dilution or a wider calibration?
+	•	Dilution increases unknown concentration
+	•	It lies outside the measured standard range  (Correct Answer)
+	•	It proves nitrate is absent
+	•	Absorbance cannot exceed 0.51
+	•	Which factor could falsely increase the reading if not controlled?
+	•	The table heading
+	•	Using a clean cuvette
+	•	Cloudiness or another substance that absorbs the measured light  (Correct Answer)
+	•	The written unit mg/L
+Unit 3: Speed and Stopping Distance
+A test car with the same driver and tyres was stopped on level roads. Total stopping distance includes distance travelled during reaction time and braking.
+Speed
+Dry road
+Wet road
+30 km/h
+14 m
+20 m
+50 km/h
+28 m
+41 m
+70 km/h
+50 m
+74 m
+
+
+	•	What happens to stopping distance as speed increases?
+	•	It always decreases
+	•	It remains 14 m
+	•	It becomes independent of the road
+	•	It increases by more than a simple fixed amount  (Correct Answer)
+	•	At 70 km/h, how much farther did the car travel on the wet road?
+	•	24 m  (Correct Answer)
+	•	74 m
+	•	6 m
+	•	13 m
+	•	Why does a wet road increase braking distance?
+	•	Gravity stops acting
+	•	Tyre-road friction is generally reduced  (Correct Answer)
+	•	The car loses mass
+	•	Reaction time becomes zero
+	•	Which variable was controlled in this comparison?
+	•	Speed
+	•	Road condition
+	•	Vehicle, driver and tyres  (Correct Answer)
+	•	Stopping distance
+	•	Why should each test be repeated?
+	•	A repeat guarantees a shorter distance
+	•	Wet roads cannot be measured once
+	•	The speedometer works only twice
+	•	Stopping and reaction measurements contain variation  (Correct Answer)
+Unit 4: Temperature and Enzyme Activity
+An enzyme was mixed with the same substrate concentration at pH 7. Product formed per minute was measured.
+Temperature
+Product formed per minute
+10 degrees C
+2 units
+25 degrees C
+7 units
+37 degrees C
+10 units
+50 degrees C
+3 units
+70 degrees C
+0 units
+
+
+	•	What was the optimum tested temperature for this enzyme?
+	•	37 degrees C  (Correct Answer)
+	•	70 degrees C
+	•	10 degrees C
+	•	25 degrees C
+	•	Why did activity increase from 10 degrees C to 37 degrees C?
+	•	pH fell to zero
+	•	Particles moved faster, increasing successful enzyme-substrate encounters  (Correct Answer)
+	•	The enzyme gained unlimited active sites
+	•	The substrate became an enzyme
+	•	Why may activity fall sharply at high temperature?
+	•	All molecular motion stops
+	•	Substrate concentration must increase
+	•	The enzyme's active-site shape may be disrupted by denaturation  (Correct Answer)
+	•	The enzyme becomes a metal
+	•	Why were pH and substrate concentration controlled?
+	•	Neither can ever change
+	•	They are the dependent variable
+	•	They measure temperature
+	•	Both can independently affect enzyme rate  (Correct Answer)
+	•	Which statement is not justified?
+	•	Every enzyme has exactly the same optimum temperature  (Correct Answer)
+	•	Temperature affected the reaction rate
+	•	This enzyme had highest measured activity at 37 degrees C
+	•	High temperature reduced activity
+Unit 5: Is a Solar Home 'Zero Carbon'?
+In one month, a home used 450 kWh of electricity. Its rooftop panels generated 280 kWh. The home imported the remaining 170 kWh from the grid. At sunny midday it sometimes exported power, but at night it imported power.
+An advertisement called the home 'zero-carbon because it has solar panels'. Manufacturing the panels and the grid's energy sources were not included in the claim.
+	•	What fraction of monthly use was matched by solar generation?
+	•	About 50%
+	•	About 62%  (Correct Answer)
+	•	About 100%
+	•	About 38%
+	•	Why is the 'zero-carbon' claim incomplete?
+	•	Night-time electricity has no source
+	•	kWh is a unit of carbon mass
+	•	The home still imports grid electricity and life-cycle emissions are omitted  (Correct Answer)
+	•	Solar panels cannot generate electricity
+	•	Why can the home export at midday and import at night in the same month?
+	•	Electricity use is always zero at midday
+	•	The grid stores no information
+	•	Panels operate only at night
+	•	Generation and demand occur at different times  (Correct Answer)
+	•	What addition could increase direct use of midday solar energy at night?
+	•	A battery storage system  (Correct Answer)
+	•	A darker roof above the panels
+	•	Removing the electricity meter
+	•	A larger grid import
+	•	What evidence is needed for a stronger carbon claim?
+	•	One sunny-hour reading
+	•	Grid emission factors and life-cycle emissions for the system  (Correct Answer)
+	•	Only the panel colour
+	•	The number of rooms
+Answer Key - Quick Reference
+1-B | 2-C | 3-D | 4-A | 5-B | 6-C | 7-D | 8-A | 9-B | 10-C | 11-D | 12-A | 13-B | 14-C | 15-D | 16-A | 17-B | 18-C | 19-D | 20-A | 21-B | 22-C | 23-D | 24-A | 25-B
+
+THINKQUEST MOCK TEST
+Science - Grade 11
+PISA-Style Scientific Literacy Assessment
+Questions
+Marks
+Suggested Time
+Format
+25
+25
+60 minutes
+MCQ
+
+
+Instructions: Read each situation, diagram description or dataset carefully. Select the most appropriate answer. Correct answers are marked for the teacher's reference.
+Unit 1: Evaluating a Carbon-Capture Pilot
+A factory installed a carbon-capture unit on one production line. A similar line without capture was monitored as a comparison. Production changed by less than 2%. Emissions are tonnes of carbon dioxide per month.
+Line
+Before pilot
+During pilot
+Capture line
+1,000
+720
+Comparison line
+980
+930
+
+
+Operating the capture unit required additional electricity. The electricity source and long-term storage leakage were not included in the factory's headline claim.
+	•	What was the raw emissions reduction on the capture line?
+	•	50 tonnes
+	•	230 tonnes
+	•	280 tonnes  (Correct Answer)
+	•	720 tonnes
+	•	Using the comparison line's 50-tonne decline, what reduction is more plausibly associated with the pilot?
+	•	About 280 tonnes
+	•	About 930 tonnes
+	•	About 50 tonnes
+	•	About 230 tonnes  (Correct Answer)
+	•	Why is the comparison line valuable?
+	•	It indicates background change that occurred without the capture unit  (Correct Answer)
+	•	It guarantees random assignment
+	•	It supplies electricity to the pilot
+	•	It converts carbon dioxide into oxygen
+	•	Which omission could reduce the pilot's net climate benefit?
+	•	The calendar month label
+	•	Electricity-related emissions and possible storage leakage  (Correct Answer)
+	•	The names of line workers
+	•	The colour of the capture pipes
+	•	What design would strengthen causal inference further?
+	•	Remove the comparison line
+	•	Change production and capture technology simultaneously
+	•	Use several comparable lines assigned to capture or control and monitor them over time  (Correct Answer)
+	•	Report only the lowest monthly value
+Unit 2: A Randomised Medicine Trial
+Four hundred adults with the same diagnosed infection were randomly assigned to a new medicine or placebo. Neither participants nor assessors knew the assignments until analysis.
+Group
+Recovered by Day 7
+Reported serious adverse effect
+New medicine (200)
+136 (68%)
+24 (12%)
+Placebo (200)
+110 (55%)
+10 (5%)
+
+
+Pregnant adults and people over 75 were excluded from the trial.
+	•	What was the absolute increase in Day 7 recovery?
+	•	23 percentage points
+	•	5 percentage points
+	•	12 percentage points
+	•	13 percentage points  (Correct Answer)
+	•	Approximately how many people would need treatment for one additional Day 7 recovery?
+	•	About 8  (Correct Answer)
+	•	About 20
+	•	About 2
+	•	About 4
+	•	What is the purpose of double blinding?
+	•	Remove the need for randomisation
+	•	Reduce expectation and assessment bias  (Correct Answer)
+	•	Increase the medicine dose
+	•	Guarantee no adverse effects
+	•	What trade-off must be considered?
+	•	The medicine had no measurable benefit
+	•	Adverse effects occurred only in the placebo group
+	•	Higher recovery was accompanied by a higher serious-adverse-effect rate  (Correct Answer)
+	•	The placebo recovered everyone
+	•	Why should results not automatically be generalised to excluded groups?
+	•	Randomisation makes all populations identical
+	•	Age cannot affect medicine response
+	•	Excluded groups received the placebo
+	•	Their benefits and risks may differ and were not tested  (Correct Answer)
+Unit 3: Why Low Satellites Lose Altitude
+Earth's atmosphere becomes thinner with altitude but does not end suddenly. Satellites in low orbit collide with sparse atmospheric particles and lose orbital energy.
+Initial altitude
+Relative drag
+Typical lifetime without reboost
+250 km
+High
+Weeks to months
+400 km
+Moderate
+Months to years
+800 km
+Very low
+Decades or longer
+
+
+Strong solar activity can heat and expand the upper atmosphere, increasing drag at a given altitude.
+	•	Why does a satellite at 250 km usually decay faster than one at 800 km?
+	•	Atmospheric density and drag are greater at lower altitude  (Correct Answer)
+	•	Gravity exists only below 400 km
+	•	High satellites have no velocity
+	•	The 250 km satellite has no mass
+	•	How can strong solar activity affect a low satellite?
+	•	It always raises the satellite automatically
+	•	Expanded upper atmosphere can increase drag and shorten lifetime  (Correct Answer)
+	•	It removes Earth's atmosphere
+	•	It switches off gravity
+	•	What does a reboost manoeuvre do?
+	•	Removes all atmospheric particles
+	•	Changes the satellite into a meteor
+	•	Adds orbital energy to raise or maintain altitude  (Correct Answer)
+	•	Stops the satellite relative to Earth
+	•	Why should the lifetimes be read as ranges rather than exact predictions?
+	•	Altitude cannot be measured
+	•	All satellites have identical designs
+	•	The atmosphere is perfectly constant
+	•	Drag, solar activity, satellite shape and mass vary  (Correct Answer)
+	•	Which statement best uses the table?
+	•	Higher initial altitude is associated with lower drag and longer lifetime  (Correct Answer)
+	•	Every 400 km satellite lasts exactly one year
+	•	Satellites at 800 km experience no forces
+	•	Orbital lifetime is unrelated to the atmosphere
+Unit 4: Comparing Water with a Buffer
+Equal drops of dilute acid were added to 50 mL samples. Both samples started at pH 7.0.
+Acid added
+Water pH
+Buffer pH
+0 drops
+7.0
+7.0
+5 drops
+4.2
+6.8
+10 drops
+3.1
+6.5
+20 drops
+2.4
+3.6
+
+
+	•	What property of the buffer is demonstrated up to 10 drops?
+	•	It converts all water to base
+	•	It resists large changes in pH  (Correct Answer)
+	•	It prevents acid being added
+	•	It keeps pH exactly 7 under all conditions
+	•	What does the sharp fall by 20 drops suggest?
+	•	The pH scale reversed
+	•	The sample volume became zero
+	•	The buffer capacity was being exceeded  (Correct Answer)
+	•	The acid became neutral
+	•	Why can a weak acid and its conjugate base form a buffer?
+	•	They remove all ions
+	•	They make pH independent of concentration
+	•	They stop molecular collisions
+	•	They can consume added base or acid through reversible reactions  (Correct Answer)
+	•	Which condition must be matched for a fair comparison?
+	•	Sample volume and acid concentration  (Correct Answer)
+	•	Final pH
+	•	Number of ions after reaction
+	•	Buffer capacity
+	•	Which conclusion is justified by the buffer results?
+	•	Twenty drops caused no chemical change
+	•	The tested buffer reduced pH change until its capacity was approached  (Correct Answer)
+	•	All buffers work at every pH
+	•	Water is a stronger buffer than the buffer solution
+Unit 5: Detecting Species with Environmental DNA
+Researchers tested filtered pond water for DNA from a rare frog. A positive control contained known frog DNA; a negative control contained clean laboratory water.
+Sample
+Frog DNA result
+Positive control
+Detected
+Negative control
+Detected at low level
+Pond A
+Detected
+Pond B
+Not detected
+Pond C
+Detected
+
+
+	•	What problem is revealed by the negative control?
+	•	No DNA method was used
+	•	Every pond contains frogs
+	•	Possible contamination during sampling or analysis  (Correct Answer)
+	•	The positive control failed
+	•	Why does the control problem weaken the Pond A and C results?
+	•	Frog DNA cannot exist in water
+	•	Controls measure pond depth
+	•	A positive result always proves a living adult is present
+	•	Detected DNA might partly come from contamination  (Correct Answer)
+	•	Why does 'not detected' at Pond B not prove absence?
+	•	DNA may be unevenly distributed, degraded or below the detection limit  (Correct Answer)
+	•	Negative results always mean contamination
+	•	Frogs contain no DNA
+	•	The positive control was detected
+	•	What is the best next step?
+	•	Use a larger font in the data table
+	•	Repeat sampling with strict contamination controls and confirm positives independently  (Correct Answer)
+	•	Declare frogs present in every pond
+	•	Discard all controls
+	•	What can clean eDNA evidence establish most directly?
+	•	That reproduction occurred that day
+	•	That every frog remained alive
+	•	That target DNA was present in the sampled water  (Correct Answer)
+	•	The exact number and health of frogs
+Answer Key - Quick Reference
+1-C | 2-D | 3-A | 4-B | 5-C | 6-D | 7-A | 8-B | 9-C | 10-D | 11-A | 12-B | 13-C | 14-D | 15-A | 16-B | 17-C | 18-D | 19-A | 20-B | 21-C | 22-D | 23-A | 24-B | 25-C
+
+THINKQUEST MOCK TEST
+Science - Grade 12
+PISA-Style Scientific Literacy Assessment
+Questions
+Marks
+Suggested Time
+Format
+25
+25
+60 minutes
+MCQ
+
+
+Instructions: Read each situation, diagram description or dataset carefully. Select the most appropriate answer. Correct answers are marked for the teacher's reference.
+Unit 1: Air Pollution and Asthma Risk
+A five-year cohort study followed 20,000 adults without asthma at enrolment. Residential PM2.5 exposure was estimated from monitoring and satellite models.
+Exposure quartile
+New asthma cases per 1,000
+Adjusted relative risk
+Lowest
+18
+1.00
+Second
+22
+1.16
+Third
+27
+1.37
+Highest
+34
+1.68
+
+
+The adjusted model included age, smoking, occupation and income. Indoor pollution and residential mobility were measured imperfectly.
+	•	What pattern is evident across exposure quartiles?
+	•	Asthma falls steadily with exposure
+	•	All quartiles have identical risk
+	•	Relative risk is unrelated to cases
+	•	Higher estimated exposure is associated with higher asthma incidence  (Correct Answer)
+	•	Why were smoking and occupation included in the adjusted model?
+	•	They may confound the association with asthma  (Correct Answer)
+	•	They are outcomes caused by asthma in every case
+	•	They convert relative risk into temperature
+	•	They guarantee random exposure
+	•	Which feature supports, but does not prove, a causal interpretation?
+	•	The study lasted more than one day
+	•	A graded exposure-response pattern  (Correct Answer)
+	•	Use of four table rows
+	•	The lowest group is labelled 1.00
+	•	What important limitation remains?
+	•	Asthma cannot be diagnosed
+	•	Adjusted analyses eliminate all bias
+	•	Residual confounding and exposure misclassification may remain  (Correct Answer)
+	•	No participant was followed
+	•	Which follow-up could strengthen causal evidence?
+	•	Remove all low-exposure participants
+	•	Use only one unadjusted case count
+	•	Ask participants to guess satellite readings
+	•	Study asthma changes after a policy produces a well-defined pollution reduction  (Correct Answer)
+Unit 2: Choosing Long-Duration Energy Storage
+A grid operator compared storage systems. Round-trip efficiency is the percentage of input electricity returned after storage.
+Technology
+Round-trip efficiency
+Typical discharge duration
+Indicative cycle life
+Lithium-ion battery
+90%
+1-4 hours
+3,000-6,000
+Flow battery
+75%
+4-12 hours
+10,000+
+Hydrogen system
+38%
+Days to months
+Depends on equipment
+
+
+	•	How much electricity would a 90%-efficient system return from 100 MWh input?
+	•	90 MWh  (Correct Answer)
+	•	10 MWh
+	•	38 MWh
+	•	75 MWh
+	•	Why might hydrogen still be considered despite low round-trip efficiency?
+	•	It needs no conversion equipment
+	•	It may provide storage over days or seasons  (Correct Answer)
+	•	It always has zero infrastructure cost
+	•	It returns more energy than supplied
+	•	Which technology appears strongest where very frequent cycling is central?
+	•	Lithium-ion, because all cells last forever
+	•	No comparison is possible
+	•	Flow battery, because of its high indicative cycle life  (Correct Answer)
+	•	Hydrogen, because efficiency is 38%
+	•	Why is there no universally best option in the table?
+	•	Scientific measurements cannot compare technologies
+	•	All three have identical properties
+	•	Duration never matters to a grid
+	•	Efficiency, duration, lifetime, cost, scale and impact involve trade-offs  (Correct Answer)
+	•	What evidence is missing for a full life-cycle decision?
+	•	Costs, materials, emissions, degradation and site constraints  (Correct Answer)
+	•	Only the spelling of technology names
+	•	The operator's favourite colour
+	•	Whether 100 is larger than 90
+Unit 3: Selecting a CRISPR Guide
+Researchers tested three CRISPR guide RNAs in cultured cells. Desired edit rate and the most common measured off-target edit are shown.
+Guide
+Desired edit rate
+Off-target edit rate
+A
+82%
+7%
+B
+68%
+1%
+C
+91%
+12%
+
+
+Only predicted off-target sites were sequenced, and the experiment used one cell line.
+	•	Which guide provides the lowest measured off-target rate?
+	•	Guide A
+	•	Guide B  (Correct Answer)
+	•	Guide C
+	•	All are 1%
+	•	What trade-off is clearest when comparing Guides B and C?
+	•	Guide B has both the highest desired and off-target rate
+	•	Guide C makes no desired edits
+	•	Higher desired editing with substantially higher measured off-target editing  (Correct Answer)
+	•	Identical efficacy and specificity
+	•	Why is sequencing only predicted sites a limitation?
+	•	Predicted sites contain no DNA
+	•	Sequencing creates every mutation
+	•	Desired edits cannot be measured
+	•	Unexpected off-target changes elsewhere may be missed  (Correct Answer)
+	•	What control is essential for interpreting unintended changes?
+	•	Cells handled identically without the active guide-editing treatment  (Correct Answer)
+	•	A different microscope colour
+	•	A sample containing no cells
+	•	Only the guide with the highest edit rate
+	•	Why would heritable human editing require evidence beyond this experiment?
+	•	A 91% edit rate proves complete safety
+	•	Long-term, multi-tissue safety and ethical consequences extend beyond one cultured cell line  (Correct Answer)
+	•	Human cells contain no chromosomes
+	•	Off-target effects matter only in plants
+Unit 4: Solar Cells on Hot Roofs
+A solar module was tested at constant irradiance. Output efficiency fell as cell temperature rose.
+Cell temperature
+Electrical efficiency
+15 degrees C
+22.0%
+25 degrees C
+20.0%
+45 degrees C
+17.5%
+65 degrees C
+15.2%
+
+
+In the field, hot sunny conditions can raise both irradiance and cell temperature. Active cooling also consumes energy.
+	•	What is the measured efficiency change from 25 degrees C to 45 degrees C?
+	•	No change
+	•	An increase of 2.5 percentage points
+	•	A decrease of 2.5 percentage points  (Correct Answer)
+	•	A decrease of 20 percentage points
+	•	Why was irradiance held constant in the test?
+	•	To make temperature impossible to measure
+	•	To simulate every outdoor condition
+	•	To eliminate electrical output
+	•	To isolate the effect of cell temperature  (Correct Answer)
+	•	Why can a hot sunny day still produce high total power despite lower efficiency?
+	•	Higher incoming irradiance may partly outweigh the efficiency loss  (Correct Answer)
+	•	Efficiency and power are identical quantities
+	•	Heat creates sunlight inside the module
+	•	Cell temperature never changes outdoors
+	•	What trade-off applies to active cooling?
+	•	Cooling has no cost or maintenance
+	•	Cooling may raise module efficiency but uses energy and equipment  (Correct Answer)
+	•	Cooling guarantees unlimited efficiency
+	•	Cooling eliminates irradiance
+	•	Why should the table not be extrapolated far beyond 65 degrees C without testing?
+	•	Solar cells stop containing matter
+	•	Constant irradiance becomes a temperature
+	•	The relationship may become non-linear or the module may degrade  (Correct Answer)
+	•	Percentages cannot be used above 65
+Unit 5: A Lake with Two Stable States
+A shallow lake shifted from clear water with aquatic plants to turbid water dominated by algae after years of phosphorus input. Managers later reduced external phosphorus.
+Phase
+External phosphorus index
+Algae concentration
+Water state
+Before shift
+55
+Low
+Clear
+At shift
+70
+Rapidly rising
+Turbid
+After reduction
+50
+Still high
+Turbid
+After plant restoration
+45
+Declining
+Returning clear
+
+
+Sediment can release stored phosphorus, and loss of plants can keep sediment suspended. Therefore, reversing the pressure may not immediately reverse the lake state.
+	•	Why did reducing the phosphorus index to 50 not immediately restore clear water?
+	•	Phosphorus has no role in lakes
+	•	The index was lower than 55
+	•	Aquatic plants always increase turbidity
+	•	Internal feedbacks and stored phosphorus helped maintain the turbid state  (Correct Answer)
+	•	What concept is illustrated by different shift and recovery conditions?
+	•	Hysteresis: recovery does not simply retrace the degradation path  (Correct Answer)
+	•	Conservation of electric charge
+	•	Random mutation
+	•	Uniform circular motion
+	•	Why might plant restoration assist recovery?
+	•	Plants turn algae into fish directly
+	•	Plants can stabilise sediment and compete with algae for resources  (Correct Answer)
+	•	Plants create external phosphorus
+	•	Plants prevent any sunlight entering water
+	•	Which would be a useful early-warning signal before a state shift?
+	•	The lake's name
+	•	A constant laboratory label
+	•	Increasing variability and slow recovery after small disturbances  (Correct Answer)
+	•	A single unchanged clear-water observation
+	•	What management conclusion best follows?
+	•	Once turbid, a lake can never recover
+	•	External inputs are the only process that matters
+	•	Plant restoration always works immediately
+	•	Preventing nutrient accumulation may be easier than reversing a well-established turbid state  (Correct Answer)
+Answer Key - Quick Reference
+1-D | 2-A | 3-B | 4-C | 5-D | 6-A | 7-B | 8-C | 9-D | 10-A | 11-B | 12-C | 13-D | 14-A | 15-B | 16-C | 17-D | 18-A | 19-B | 20-C | 21-D | 22-A | 23-B | 24-C | 25-D
