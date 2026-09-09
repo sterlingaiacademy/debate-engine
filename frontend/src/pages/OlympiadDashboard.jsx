@@ -109,11 +109,11 @@ export default function OlympiadDashboard({ user }) {
   if (userSubjectsArray.length === 0) userSubjectsArray = SUBJECTS.map(s => s.key);
 
   return (
-    <div className={`font-body-md text-text-main dark:text-gray-100 bg-bg-base dark:bg-dark-base transition-colors duration-300 h-screen w-full flex flex-col relative overflow-y-auto overflow-x-hidden ${isDarkMode ? 'dark' : ''}`} style={{ overscrollBehavior: 'none' }}>
+    <div className={`font-body-md text-text-main dark:text-gray-100 bg-bg-base dark:bg-dark-base transition-colors duration-300 min-h-screen flex flex-col relative overflow-x-hidden ${isDarkMode ? 'dark' : ''}`}>
       {/* Navigation Shell (TopAppBar) */}
-      <nav className="sticky top-0 left-0 w-full z-50 hidden md:block bg-bg-base/80 dark:bg-dark-base/80 backdrop-blur-md border-b border-gray-200/50 dark:border-white/5">
-        <div className="max-w-[1100px] w-full mx-auto px-6 h-20 flex justify-between items-center">
-          <button onClick={() => navigate('/dashboard')} className="px-6 py-2 rounded-full bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal hover:shadow-neo-btn-inset-portal dark:hover:shadow-neo-btn-inset-dark-portal transition-shadow duration-300 text-sm font-semibold text-text-main dark:text-gray-200 cursor-pointer border-none">
+      <nav className="absolute top-0 left-0 w-full z-50 hidden md:block">
+        <div className="max-w-[1100px] w-full mx-auto px-6 h-24 flex justify-between items-center">
+          <button onClick={() => navigate('/dashboard')} className="px-6 py-2.5 rounded-full bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal hover:shadow-neo-btn-inset-portal dark:hover:shadow-neo-btn-inset-dark-portal transition-shadow duration-300 text-sm font-semibold text-text-main dark:text-gray-200 cursor-pointer border-none">
             Back to Dashboard
           </button>
           <button onClick={toggleTheme} className="w-10 h-10 rounded-full bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal hover:shadow-neo-btn-inset-portal dark:hover:shadow-neo-btn-inset-dark-portal transition-all duration-300 flex items-center justify-center text-text-main dark:text-gray-200 cursor-pointer border-none">
@@ -127,7 +127,7 @@ export default function OlympiadDashboard({ user }) {
       </nav>
 
       {/* Main Container */}
-      <main className="max-w-[1100px] w-full mx-auto px-6 pb-12 relative z-10 flex-1 mt-8 md:mt-12">
+      <main className="max-w-[1100px] w-full mx-auto px-6 pb-12 relative z-10 flex-1" style={{ marginTop: '120px' }}>
         {/* Back Button Mobile */}
         <button onClick={() => navigate('/dashboard')} className="md:hidden inline-flex items-center gap-2 px-6 py-3 rounded-full bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal hover:shadow-neo-inset-portal dark:hover:shadow-neo-inset-dark-portal transition-shadow text-sm text-text-main dark:text-gray-200 font-semibold mb-8 group cursor-pointer border-none">
           <span className="material-symbols-outlined text-[18px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
