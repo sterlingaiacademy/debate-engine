@@ -4408,6 +4408,7 @@ app.get('/api/olympiad/quiz/status/:subject/:grade', async (req, res) => {
 const subjectMockQuestions = {
   english: require('./data/english_mock.json'),
   science: require('./data/science_mock.json'),
+  mathematics: require('./data/mathematics_mock.json'),
 };
 
 async function ensureMockTable() {

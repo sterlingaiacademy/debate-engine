@@ -1,0 +1,207 @@
+Grade 6 Mathematics Challenge: Real-World Math Explorers
+Welcome to Grade 6 Math Challenge! Read each scenario carefully, select the correct option, and review the explanations to deepen your mathematical reasoning.
+Section 1: Ratios, Proportions & Percentages
+
+1. School Lemonade Stand Ratio
+For a school fundraiser, students mix 2 cups of lemon juice with 5 cups of water to make lemonade. If they use 6 cups of lemon juice, how many cups of water do they need to keep the same taste?
+A) 10 cups
+B) 15 cups ✔ (Correct Answer)
+C) 18 cups
+D) 20 cups
+Explanation: The ratio of lemon juice to water is 2 : 5. Multiplying the lemon juice by 3 (2 × 3 = 6) means we must also multiply the water by 3: 5 × 3 = 15 cups.
+
+2. Discount on a Backpack
+A school store offers a 20% discount on a backpack that originally costs $40. How much money do you save with the discount?
+A) $4
+B) $8 ✔ (Correct Answer)
+C) $10
+D) $32
+Explanation: Calculate 20% of $40: (20 / 100) × 40 = 0.20 × 40 = $8 savings.
+
+3. Classroom Gender Ratio
+In a Grade 6 class of 30 students, 18 are girls and 12 are boys. What is the simplified ratio of girls to total students?
+A) 2 : 3
+B) 3 : 5 ✔ (Correct Answer)
+C) 3 : 2
+D) 5 : 3
+Explanation: Ratio of girls to total students = 18 : 30. Divide both numbers by their greatest common factor (6): 18 ÷ 6 = 3 and 30 ÷ 6 = 5, giving 3 : 5.
+
+4. Unit Price Shopping
+A supermarket sells a pack of 4 notebooks for $6.00 and a pack of 10 identical notebooks for $13.00. What is the cost per notebook in the 4-pack?
+A) $1.25
+B) $1.50 ✔ (Correct Answer)
+C) $1.60
+D) $2.00
+Explanation: Unit price = Total Cost ÷ Quantity = $6.00 ÷ 4 = $1.50 per notebook.
+
+5. Test Score Percentage
+Daniel scored 21 out of 25 on his science quiz. What percentage score did Daniel get?
+A) 75%
+B) 80%
+C) 84% ✔ (Correct Answer)
+D) 88%
+Explanation: Fraction = 21 / 25. Multiply numerator and denominator by 4 to get a fraction over 100: (21 × 4) / (25 × 4) = 84 / 100 = 84%.
+
+6. Speed and Distance
+A cyclist travels at a constant speed of 12 kilometers per hour. How many kilometers will the cyclist cover in 2.5 hours?
+A) 24 km
+B) 30 km ✔ (Correct Answer)
+C) 36 km
+D) 48 km
+Explanation: Distance = Speed × Time = 12 km/h × 2.5 hours = 30 km.
+
+7. Model Scale Conversion
+On a map, 1 centimeter represents an actual distance of 5 kilometers. If two towns are 7 centimeters apart on the map, what is the actual distance between them?
+A) 25 km
+B) 30 km
+C) 35 km ✔ (Correct Answer)
+D) 40 km
+Explanation: Actual distance = Map distance × Scale factor = 7 cm × 5 km/cm = 35 kilometers.
+Section 2: Integers & Expression Expressions
+
+8. Sub-Zero Temperatures
+At midnight, the temperature in a mountain village was -4°C. By morning, the temperature dropped by another 3°C. What was the temperature in the morning?
+A) -1°C
+B) -7°C ✔ (Correct Answer)
+C) 1°C
+D) 7°C
+Explanation: Start at -4°C and subtract 3°C (drop): -4 - 3 = -7°C.
+
+9. Evaluating Algebraic Expressions
+What is the value of the expression 3x + 5 when x = 4?
+A) 12
+B) 17 ✔ (Correct Answer)
+C) 20
+D) 27
+Explanation: Substitute x = 4 into the expression: 3(4) + 5 = 12 + 5 = 17.
+
+10. Order of Operations (PEMDAS)
+What is the correct result for the calculation: 18 - 2 × 3 + 4?
+A) 12
+B) 16 ✔ (Correct Answer)
+C) 52
+D) 56
+Explanation: Multiply first: 2 × 3 = 6. Then perform addition and subtraction from left to right: 18 - 6 + 4 = 12 + 4 = 16.
+
+11. Exponent Practice
+What is the value of 24 + 32?
+A) 14
+B) 22
+C) 25 ✔ (Correct Answer)
+D) 32
+Explanation: 24 = 2 × 2 × 2 × 2 = 16. 32 = 3 × 3 = 9. Adding them together: 16 + 9 = 25.
+
+12. Ocean Depth Elevation
+A submarine is floating at -150 meters relative to sea level. It rises by 60 meters. What is its new position?
+A) -90 meters ✔ (Correct Answer)
+B) -210 meters
+C) 90 meters
+D) 210 meters
+Explanation: Starting position -150 m plus elevation +60 m: -150 + 60 = -90 meters.
+Section 3: Geometry, Area & Volume
+
+13. Area of a Triangle
+A triangular park banner has a base of 10 meters and a height of 6 meters. What is its surface area?
+A) 16 sq m
+B) 30 sq m ✔ (Correct Answer)
+C) 60 sq m
+D) 120 sq m
+Explanation: Area of a triangle = (1/2) × base × height = (1/2) × 10 × 6 = 5 × 6 = 30 square meters.
+
+14. Volume of a Fish Tank
+A rectangular fish tank has a length of 50 cm, width of 20 cm, and height of 30 cm. What is the volume of the tank in cubic centimeters?
+A) 3,000 cm³
+B) 10,000 cm³
+C) 30,000 cm³ ✔ (Correct Answer)
+D) 300,000 cm³
+Explanation: Volume = length × width × height = 50 × 20 × 30 = 1,000 × 30 = 30,000 cm³.
+
+15. Area of a Parallelogram
+A paved pathway is shaped like a parallelogram with a base of 8 meters and a perpendicular height of 4 meters. What is its area?
+A) 16 sq m
+B) 24 sq m
+C) 32 sq m ✔ (Correct Answer)
+D) 64 sq m
+Explanation: Area of a parallelogram = base × height = 8 × 4 = 32 square meters.
+
+16. Coordinate Grid Distance
+Point A is located at (2, 3) and Point B is located at (2, 9) on a standard coordinate plane. What is the vertical distance between Points A and B?
+A) 4 units
+B) 6 units ✔ (Correct Answer)
+C) 8 units
+D) 12 units
+Explanation: Since x-coordinates are identical (2), find the difference in y-coordinates: 9 - 3 = 6 units.
+
+17. Surface Area of a Cube
+A wooden block cube measures 3 cm on each edge. What is the total surface area of all six faces of the cube?
+A) 27 sq cm
+B) 54 sq cm ✔ (Correct Answer)
+C) 36 sq cm
+D) 72 sq cm
+Explanation: Area of 1 face = 3 × 3 = 9 sq cm. A cube has 6 identical faces: 6 × 9 = 54 square centimeters.
+
+18. Missing Angle in a Triangle
+Two interior angles of a triangle measure 50° and 70°. What is the measure of the third interior angle?
+A) 60° ✔ (Correct Answer)
+B) 70°
+C) 80°
+D) 90°
+Explanation: The sum of interior angles in any triangle is 180°. 180° - (50° + 70°) = 180° - 120° = 60°.
+Section 4: Data Analysis, Probability & Equations
+
+19. Solving Simple One-Step Equations
+Solve for y: y + 14 = 35.
+A) 19
+B) 21 ✔ (Correct Answer)
+C) 22
+D) 49
+Explanation: Subtract 14 from both sides: y = 35 - 14 = 21.
+
+20. Finding the Median Score
+Here are five test scores: 7, 12, 15, 18, 20. What is the median score of this dataset?
+A) 12
+B) 15 ✔ (Correct Answer)
+C) 14.4
+D) 18
+Explanation: The data is already ordered from least to greatest. The middle (3rd) number is 15.
+
+21. Range of Daily Temperatures
+Over five days, recorded temperatures were: 18°C, 22°C, 15°C, 25°C, 20°C. What is the range of these temperatures?
+A) 10°C ✔ (Correct Answer)
+B) 12°C
+C) 15°C
+D) 25°C
+Explanation: Range = Maximum value - Minimum value = 25°C - 15°C = 10°C.
+
+22. Fair Spinner Probability
+A spinner is divided into 8 equal sections numbered 1 through 8. What is the probability of spinning an even number?
+A) 1/4
+B) 1/2 ✔ (Correct Answer)
+C) 3/8
+D) 5/8
+Explanation: Even numbers are 2, 4, 6, 8 (4 outcomes out of 8 possible). Probability = 4/8 = 1/2.
+
+23. Reading a Double Bar Graph Concept
+In a survey comparing preferred sports between Grade 5 and Grade 6, 16 Grade 6 students preferred soccer out of 40 total Grade 6 students. What percentage of Grade 6 students preferred soccer?
+A) 30%
+B) 35%
+C) 40% ✔ (Correct Answer)
+D) 45%
+Explanation: Percentage = (16 / 40) × 100 = 0.40 × 100 = 40%.
+
+24. Multiplicative Equation Solving
+Solve for m: 6m = 42.
+A) 6
+B) 7 ✔ (Correct Answer)
+C) 8
+D) 36
+Explanation: Divide both sides by 6: m = 42 ÷ 6 = 7.
+
+25. Calculating Mean Heights
+Four plants have heights of 10 cm, 12 cm, 14 cm, and 16 cm. What is the mean height of the plants?
+A) 12 cm
+B) 13 cm ✔ (Correct Answer)
+C) 14 cm
+D) 15 cm
+Explanation: Mean = Sum of heights ÷ count = (10 + 12 + 14 + 16) ÷ 4 = 52 ÷ 4 = 13 cm.
+

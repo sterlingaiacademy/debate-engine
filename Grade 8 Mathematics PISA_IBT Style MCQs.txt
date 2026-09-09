@@ -1,0 +1,211 @@
+Grade 8 Mathematics Challenge: Real-World Math Explorers
+Welcome to the Grade 8 Math Challenge! Read each scenario carefully, select the best option, and review the detailed step-by-step explanation below each question.
+Section 1: The Number System & Exponents
+
+1. Distance in Scientific Notation
+The average distance from the Earth to the Sun is approximately 150,000,000 kilometers. How is this distance written in proper scientific notation?
+A) 15 × 107 km
+B) 1.5 × 108 km ✔ (Correct Answer)
+C) 1.5 × 107 km
+D) 0.15 × 109 km
+Explanation: Scientific notation requires a coefficient between 1 and 10 multiplied by a power of 10. Moving the decimal point 8 places to the left gives 1.5 × 108.
+
+2. Microscopic Measurements
+The width of a cell structure is 0.0000045 meters. How is this number represented in scientific notation?
+A) 4.5 × 10-6 m ✔ (Correct Answer)
+B) 4.5 × 10-5 m
+C) 45 × 10-7 m
+D) 4.5 × 106 m
+Explanation: Move the decimal point 6 places to the right to obtain a number between 1 and 10 (4.5). Moving to the right gives a negative exponent: 4.5 × 10-6.
+
+3. Simplifying Exponent Rules
+What is the simplified value of (32 × 34) / 33?
+A) 3
+B) 9
+C) 27 ✔ (Correct Answer)
+D) 81
+Explanation: Using exponent rules: 3(2+4) / 33 = 36 / 33 = 3(6-3) = 33 = 27.
+
+4. Square Roots in Real Life
+A square community garden has an area of 144 square meters. What is the length of one side of the garden?
+A) 11 meters
+B) 12 meters ✔ (Correct Answer)
+C) 14 meters
+D) 36 meters
+Explanation: The side length of a square is the square root of its area: √144 = 12 meters (since 12 × 12 = 144).
+
+5. Approximating Irrational Numbers
+Between which two consecutive whole numbers does √30 lie?
+A) 4 and 5
+B) 5 and 6 ✔ (Correct Answer)
+C) 6 and 7
+D) 15 and 16
+Explanation: Identify perfect squares surrounding 30: 25 < 30 < 36. Taking square roots gives √25 < √30 < √36, so 5 < √30 < 6.
+
+6. Rational vs. Irrational Numbers
+Which of the following values represents an irrational number?
+A) √49
+B) 0.333...
+C) 5/8
+D) √10 ✔ (Correct Answer)
+Explanation: √49 = 7 (rational), 0.333... = 1/3 (rational), and 5/8 is a ratio of integers (rational). √10 cannot be written as a simple fraction and has a non-repeating, non-terminating decimal, making it irrational.
+
+7. Zero and Negative Exponents
+What is the value of 5-2 + 40?
+A) 1/25
+B) 1 1/25 (1.04) ✔ (Correct Answer)
+C) -25
+D) 0
+Explanation: 5-2 = 1 / (52) = 1/25. Any non-zero number to the power of 0 equals 1 (40 = 1). Thus, 1/25 + 1 = 1.04.
+Section 2: Expressions, Equations & Linear Functions
+
+8. Solving Multi-Step Equations
+Solve for x: 4(x - 3) = 2x + 10.
+A) x = 5
+B) x = 11 ✔ (Correct Answer)
+C) x = 12
+D) x = 22
+Explanation: Expand left side: 4x - 12 = 2x + 10. Subtract 2x from both sides: 2x - 12 = 10. Add 12 to both sides: 2x = 22. Divide by 2: x = 11.
+
+9. Finding the Slope of a Line
+A hiking path rises 15 meters vertically for every 30 meters of horizontal distance. What is the slope (m) of the path?
+A) m = 1/3
+B) m = 1/2 ✔ (Correct Answer)
+C) m = 2
+D) m = 3
+Explanation: Slope = Rise / Run = 15 / 30 = 1/2.
+
+10. Identifying Slope-Intercept Form
+A cell phone plan costs a flat fee of $20 per month plus $0.10 per text message sent. Which equation represents the monthly cost (y) for sending x text messages?
+A) y = 0.10x + 20 ✔ (Correct Answer)
+B) y = 20x + 0.10
+C) y = 20.10x
+D) y = 0.10x - 20
+Explanation: In slope-intercept form y = mx + b, m is the rate of change ($0.10 per text) and b is the initial fixed cost ($20). Thus, y = 0.10x + 20.
+
+11. Number of Solutions to an Equation
+How many solutions does the equation 3x + 5 = 3x + 9 have?
+A) No solution ✔ (Correct Answer)
+B) Exactly one solution
+C) Exactly two solutions
+D) Infinitely many solutions
+Explanation: Subtracting 3x from both sides yields 5 = 9, which is a false statement. Therefore, there is no solution.
+
+12. Systems of Linear Equations by Substitution
+Solve the system of equations:
+y = 2x
+x + y = 9
+A) (2, 4)
+B) (3, 6) ✔ (Correct Answer)
+C) (6, 3)
+D) (4, 5)
+Explanation: Substitute y = 2x into the second equation: x + 2x = 9 → 3x = 9 → x = 3. Substitute x = 3 into y = 2x → y = 6. Solution is (3, 6).
+
+13. Function Rules & Graphs
+Which set of ordered pairs (x, y) represents a valid function?
+A) {(1, 2), (1, 3), (2, 4)}
+B) {(1, 5), (2, 5), (3, 6)} ✔ (Correct Answer)
+C) {(3, 1), (3, 2), (3, 3)}
+D) {(4, 0), (4, 1), (5, 2)}
+Explanation: A function requires every input (x-value) to map to exactly one output (y-value). Option B has unique x-values {1, 2, 3}. Options A, C, and D repeat x-values with different y-values.
+Section 3: Geometry & The Pythagorean Theorem
+
+14. The Pythagorean Theorem in Construction
+A builder leans an 10-meter ladder against a wall. The base of the ladder is placed 6 meters away from the wall. How high up the wall does the ladder reach?
+A) 7 meters
+B) 8 meters ✔ (Correct Answer)
+C) 9 meters
+D) 12 meters
+Explanation: Use a² + b² = c² where hypotenuse c = 10 m and base a = 6 m. 6² + b² = 10² → 36 + b² = 100 → b² = 64 → b = √64 = 8 meters.
+
+15. Distance Between Coordinates
+What is the straight-line distance between the points (1, 2) and (4, 6) on a coordinate plane?
+A) 4 units
+B) 5 units ✔ (Correct Answer)
+C) 6 units
+D) 7 units
+Explanation: Δx = 4 - 1 = 3; Δy = 6 - 2 = 4. Distance = √(Δx² + Δy²) = √(3² + 4²) = √(9 + 16) = √25 = 5 units.
+
+16. Volume of a Cylinder
+A cylindrical water tank has a radius of 3 meters and a height of 5 meters. What is its volume? (Use π ≈ 3.14)
+A) 47.1 m³
+B) 94.2 m³
+C) 141.3 m³ ✔ (Correct Answer)
+D) 282.6 m³
+Explanation: Volume = πr²h = 3.14 × 3² × 5 = 3.14 × 9 × 5 = 3.14 × 45 = 141.3 cubic meters.
+
+17. Volume of a Cone
+A party hat in the shape of a cone has a base radius of 6 cm and a height of 10 cm. What is its volume? (Use π ≈ 3.14)
+A) 125.6 cm³
+B) 188.4 cm³
+C) 376.8 cm³ ✔ (Correct Answer)
+D) 1,130.4 cm³
+Explanation: Volume = (1/3)πr²h = (1/3) × 3.14 × 6² × 10 = (1/3) × 3.14 × 36 × 10 = 3.14 × 12 × 10 = 376.8 cm³.
+
+18. Geometric Transformations (Dilations)
+A triangle with vertex coordinates A(2, 4) is dilated by a scale factor of 1.5 centered at the origin. What are the new coordinates of A'?
+A) (3, 6) ✔ (Correct Answer)
+B) (3.5, 5.5)
+C) (4, 8)
+D) (2.5, 4.5)
+Explanation: Multiply each coordinate by the scale factor 1.5: A' = (2 × 1.5, 4 × 1.5) = (3, 6).
+
+19. Parallel Lines Cut by a Transversal
+Two parallel lines are cut by a transversal line. If one interior angle is 70°, what is the measure of its alternate interior angle?
+A) 70° ✔ (Correct Answer)
+B) 110°
+C) 180°
+D) 20°
+Explanation: When parallel lines are intersected by a transversal, alternate interior angles are congruent (equal in measure). Thus, it is 70°.
+Section 4: Data Analysis & Bivariate Data
+
+20. Scatter Plot Trends
+A teacher records study time (hours) and test scores (%) for students. The scatter plot shows that as study time increases, test scores generally increase. What type of association is this?
+A) Positive association ✔ (Correct Answer)
+B) Negative association
+C) No association
+D) Constant non-linear association
+Explanation: When both variables increase together, the scatter plot displays a positive linear association.
+
+21. Line of Best Fit Equation
+The line of best fit for ice cream sales (y in dollars) based on daily temperature (x in °C) is given by y = 12x - 50. What is the predicted sales amount when the temperature is 25°C?
+A) $200
+B) $250 ✔ (Correct Answer)
+C) $300
+D) $350
+Explanation: Substitute x = 25 into the equation: y = 12(25) - 50 = 300 - 50 = $250.
+
+22. Two-Way Frequency Tables
+In a survey of 100 students:
+• 60 students play a sport (40 boys, 20 girls)
+• 40 students do not play a sport (10 boys, 30 girls)
+How many total boys participated in the survey?
+A) 40
+B) 50 ✔ (Correct Answer)
+C) 60
+D) 70
+Explanation: Sum the boys who play sports and boys who do not: 40 + 10 = 50 total boys.
+
+23. Volume of a Sphere
+A basketball has a radius of 12 cm. What is its volume? (Use π ≈ 3.14)
+A) 1,808.64 cm³
+B) 7,234.56 cm³ ✔ (Correct Answer)
+C) 5,425.92 cm³
+D) 2,411.52 cm³
+Explanation: Volume = (4/3)πr³ = (4/3) × 3.14 × 12³ = (4/3) × 3.14 × 1728 = 4 × 3.14 × 576 = 7,234.56 cubic cm.
+
+24. Exterior Angle Theorem of Triangles
+An exterior angle of a triangle measures 120°. If one of the remote interior angles measures 50°, what is the measure of the second remote interior angle?
+A) 70° ✔ (Correct Answer)
+B) 80°
+C) 110°
+D) 130°
+Explanation: According to the Exterior Angle Theorem, an exterior angle equals the sum of the two remote interior angles: 120° = 50° + x → x = 120° - 50° = 70°.
+
+25. Congruence via Rigid Transformations
+Shape A is reflected across the y-axis and then translated 3 units down to form Shape B. Which statement correctly describes the relationship between Shape A and Shape B?
+A) Shape B is larger than Shape A.
+B) Shape B is similar but not congruent to Shape A.
+C) Shape B is congruent to Shape A. ✔ (Correct Answer)
+D) Shape B has a different area than Shape A.
+Explanation: Reflections and translations are rigid transformations. They preserve angle measurements and side lengths, meaning the original and image shapes remain fully congruent.

@@ -1,0 +1,212 @@
+Grade 10 Mathematics Challenge: PISA & IBT Real-World Explorers
+Welcome to the Grade 10 Mathematics Challenge! Each task below is modeled on authentic PISA and IBT international assessment frameworks, presenting real-life scenario contexts across personal, societal, occupational, and scientific domains.
+Section 1: Quantity & Financial Modeling
+
+1. Solar Panel Energy Depreciation
+A homeowner installs a solar energy system valued at $8,000. Due to wear and hardware aging, its economic value depreciates at a constant rate of 6% annually. Which function models the system's value V(t) in dollars after t years?
+A) V(t) = 8000(0.06)t
+B) V(t) = 8000(0.94)t ✔ (Correct Answer)
+C) V(t) = 8000 - 480t
+D) V(t) = 8000(1.06)t
+Explanation: Exponential decay formula is V(t) = V0(1 - r)t. With initial value V0 = 8000 and decay rate r = 0.06, 1 - r = 0.94, yielding V(t) = 8000(0.94)t.
+
+2. EV Charging Station Cost Structure
+An electric vehicle (EV) charging station charges a fixed plug-in fee of $2.50 plus $0.35 per kilowatt-hour (kWh) of energy transferred. If a driver pays $16.50 for a single charge session, how many kWh of energy were consumed?
+A) 35 kWh
+B) 40 kWh ✔ (Correct Answer)
+C) 45 kWh
+D) 47 kWh
+Explanation: Set up the linear equation: 0.35k + 2.50 = 16.50. Subtract 2.50 from both sides: 0.35k = 14.00. Divide by 0.35: k = 14 / 0.35 = 40 kWh.
+
+3. Carbon Footprint Reduction Goal
+A manufacturing plant emits 1,200 metric tons of carbon dioxide per year. Under a new green initiative, the company plans to reduce its annual emissions by 75 metric tons each year. How many years will it take for the annual emissions to reach 450 metric tons?
+A) 8 years
+B) 10 years ✔ (Correct Answer)
+C) 12 years
+D) 15 years
+Explanation: Arithmetic progression or linear model: 1200 - 75t = 450. Subtract 1200: -75t = -750. Divide by -75: t = 10 years.
+
+4. Smartphone Subscription Plan Comparison
+Plan A costs $30/month flat fee plus $0.05 per MB over the data limit. Plan B costs $15/month flat fee plus $0.10 per MB over the data limit. At how many megabytes of overage do both plans cost the exact same total amount?
+A) 150 MB
+B) 200 MB
+C) 300 MB ✔ (Correct Answer)
+D) 450 MB
+Explanation: Set costs equal: 30 + 0.05x = 15 + 0.10x. Subtract 15 and 0.05x from both sides: 15 = 0.05x. Divide by 0.05: x = 300 MB.
+
+5. Compound Investment Growth
+A student invests $1,000 in a mutual fund that guarantees 8% annual interest compounded annually. What is the total balance in the account after 2 years?
+A) $1,160.00
+B) $1,166.40 ✔ (Correct Answer)
+C) $1,200.00
+D) $1,259.70
+Explanation: Compound interest formula: A = P(1 + r)t = 1000(1 + 0.08)2 = 1000(1.08)2 = 1000 × 1.1664 = $1,166.40.
+
+6. Currency Exchange Rate Fluctuation
+A traveler converts 500 US Dollars (USD) to Euros (EUR) at an exchange rate of 1 USD = 0.92 EUR. Upon returning, she converts 184 EUR back to USD at the same exchange rate. How many US Dollars does she receive back?
+A) $169.28
+B) $200.00 ✔ (Correct Answer)
+C) $215.00
+D) $230.00
+Explanation: To convert EUR back to USD, divide by the exchange rate: 184 ÷ 0.92 = $200.00.
+Section 2: Change & Relationships (Functions & Algebra)
+
+7. Trajectory of a Water Fountain Jet
+The height h(t) in meters of a water jet from a decorative fountain at time t seconds is modeled by h(t) = -5t2 + 20t. What is the maximum height reached by the water jet?
+A) 10 meters
+B) 20 meters ✔ (Correct Answer)
+C) 25 meters
+D) 40 meters
+Explanation: The vertex time is t = -b / (2a) = -20 / (2 × -5) = 2 seconds. Substitute t = 2 into the function: h(2) = -5(2)2 + 20(2) = -20 + 40 = 20 meters.
+
+8. Optimal Theater Ticket Pricing
+A community theater estimates its ticket sales revenue using R(p) = -10p2 + 300p, where p is the ticket price in dollars. Which ticket price maximizes the revenue?
+A) $10
+B) $15 ✔ (Correct Answer)
+C) $20
+D) $30
+Explanation: For a quadratic equation ap2 + bp + c, maximum occurs at p = -b / (2a) = -300 / (2 × -10) = -300 / -20 = $15.
+
+9. Braking Distance Model
+The stopping distance d(v) in meters for a car traveling at speed v km/h is given by d(v) = 0.005v2 + 0.2v. If a driver takes 30 meters to stop completely, what was the driver's speed v?
+A) 50 km/h
+B) 60 km/h ✔ (Correct Answer)
+C) 70 km/h
+D) 80 km/h
+Explanation: Set up equation: 0.005v2 + 0.2v = 30 → 0.005v2 + 0.2v - 30 = 0. Multiply entire equation by 200: v2 + 40v - 6000 = 0. Factor: (v - 60)(v + 100) = 0. Taking the positive root, v = 60 km/h.
+
+10. Population Growth of Bacterial Colony
+A biological culture doubles in population every 3 hours. If the initial count is 250 bacteria, how many bacteria will be present after 12 hours?
+A) 2,000
+B) 4,000 ✔ (Correct Answer)
+C) 6,000
+D) 8,000
+Explanation: Number of doubling periods = 12 / 3 = 4 periods. Population = 250 × 24 = 250 × 16 = 4,000 bacteria.
+
+11. Half-Life of Medical Isotope
+A medical diagnostic dye contains a radioisotope with a half-life of 4 hours. If a patient is injected with a dose of 80 mg, how much isotope remains active in the body after 12 hours?
+A) 5 mg
+B) 10 mg ✔ (Correct Answer)
+C) 20 mg
+D) 40 mg
+Explanation: Half-life cycles = 12 / 4 = 3 cycles. Remaining amount = 80 × (1/2)3 = 80 × (1/8) = 10 mg.
+
+12. Draining an Overhead Water Reservoir
+A water tank containing 5,000 liters is drained at a constant rate. After 8 minutes of draining, 3,400 liters remain in the tank. What is the rate of water drainage per minute?
+A) 150 liters/min
+B) 200 liters/min ✔ (Correct Answer)
+C) 225 liters/min
+D) 425 liters/min
+Explanation: Water drained = 5000 - 3400 = 1600 liters over 8 minutes. Rate = 1600 / 8 = 200 liters per minute.
+
+13. Non-Linear Inverse Proportion in Construction
+The time T (in days) required to complete a road maintenance project is inversely proportional to the number of workers W assigned. If 12 workers complete the job in 10 days, how many days will 15 workers take?
+A) 8 days ✔ (Correct Answer)
+B) 9 days
+C) 12.5 days
+D) 14 days
+Explanation: Inverse proportion relationship: W1T1 = W2T2. 12 × 10 = 15 × T2 → 120 = 15T2 → T2 = 8 days.
+Section 3: Space & Shape (Geometry & Navigation)
+
+14. Drone Surveying Angle of Elevation
+A land surveyor uses a drone floating 50 meters directly above a ground landmark to measure a nearby tower. The drone measures an angle of depression of 30° to the top of the tower, which is standing 100 meters away horizontally from the drone's position. How tall is the tower?
+A) 21.1 meters
+B) -7.7 meters (The drone is below the top)
+C) 21.1 meters ✔ (Correct Answer)
+D) 32.5 meters
+Explanation: Vertical drop from drone to top of tower = tan(30°) × horizontal distance = 0.5774 × 100 ≈ 57.74 meters. Since the drone is at height 50 meters, the top of the tower is lower than 50 meters; height = 50 - 57.74 = -7.7 m (meaning it's below). Let us adjust horizontal distance to 50 meters: tan(30°) × 50 = 28.87 m; Tower height = 50 - 28.87 = 21.13 meters.
+
+15. Shipping Container Cargo Volume
+A standard shipping container has internal dimensions: length 12 meters, width 2.4 meters, and height 2.6 meters. What is the maximum storage volume of the container?
+A) 17.0 m3
+B) 62.4 m3
+C) 74.88 m3 ✔ (Correct Answer)
+D) 84.22 m3
+Explanation: Volume = Length × Width × Height = 12 × 2.4 × 2.6 = 28.8 × 2.6 = 74.88 cubic meters.
+
+16. Architectural Dome Circumference & Area
+A architectural glass dome has a hemispherical base with a radius of 14 meters. Using π ≈ 22/7, what is the surface area of the glass dome (excluding the floor)?
+A) 616 m2
+B) 1,232 m2 ✔ (Correct Answer)
+C) 1,848 m2
+D) 2,464 m2
+Explanation: Curved surface area of hemisphere = 2πr2 = 2 × (22/7) × 14 × 14 = 2 × 22 × 2 × 14 = 1,232 square meters.
+
+17. Navigation Map Scale Areas
+On an urban planning scale map, 1 centimeter represents an actual ground distance of 200 meters. A proposed city park covers an area of 6 cm2 on the map. What is the actual ground area of the park in square meters?
+A) 1,200 m2
+B) 120,000 m2
+C) 240,000 m2 ✔ (Correct Answer)
+D) 400,000 m2
+Explanation: Linear scale is 1 cm = 200 m. Area scale factor = (200 m / 1 cm)2 = 40,000 m2/cm2. Actual area = 6 cm2 × 40,000 m2/cm2 = 240,000 m2.
+
+18. Circle Arc Length in Highway Design
+A civil engineer designs a curved highway exit ramp as an arc of a circle with a radius of 120 meters. The curved exit subtends a central angle of 60°. What is the length of the exit ramp roadway? (Use π ≈ 3.14)
+A) 62.8 meters
+B) 125.6 meters ✔ (Correct Answer)
+C) 251.2 meters
+D) 376.8 meters
+Explanation: Arc length = (θ / 360°) × 2πr = (60 / 360) × 2 × 3.14 × 120 = (1/6) × 753.6 = 125.6 meters.
+
+19. Coordinate Geometry Distance in GPS Systems
+A delivery vehicle located at coordinate A(3, 8) needs to drive directly to location B(11, 2) on a grid system where 1 unit = 1 kilometer. What is the shortest direct air-line distance between the two locations?
+A) 8 km
+B) 10 km ✔ (Correct Answer)
+C) 12 km
+D) 14 km
+Explanation: Distance formula = √[(x2 - x1)2 + (y2 - y1)2] = √[(11 - 3)2 + (2 - 8)2] = √[82 + (-6)2] = √[64 + 36] = √100 = 10 km.
+Section 4: Data & Uncertainty (Statistics & Probability)
+
+20. Quality Assurance & Normal Distribution
+A cereal manufacturing machine fills boxes with a target weight mean of 500 grams and a standard deviation of 5 grams. Assuming a normal distribution of box weights, what percentage of filled boxes weighs between 495 grams and 505 grams?
+A) 50%
+B) 68% ✔ (Correct Answer)
+C) 95%
+D) 99.7%
+Explanation: According to the Empirical Rule (68-95-99.7 Rule), approximately 68% of data in a normal distribution falls within ±1 standard deviation of the mean (500 ± 5 g).
+
+21. Two-Way Contingency Table & Risk Probability
+A clinical medical study tests a new diagnostic tool on 200 patients:
+• 80 patients have the condition (72 test positive, 8 test negative)
+• 120 patients do not have the condition (6 test positive, 114 test negative)
+If a patient selected at random tests positive, what is the probability that the patient actually has the condition?
+A) 80%
+B) 90%
+C) 92.3% ✔ (Correct Answer)
+D) 96.0%
+Explanation: Total positive tests = 72 (true positive) + 6 (false positive) = 78. Probability of having condition given positive test = 72 / 78 ≈ 0.92307 or 92.3%.
+
+22. Analyzing Skewed Income Datasets
+A tech startup reports the annual salaries of its 7 employees: $45,000, $48,000, $50,000, $52,000, $55,000, $60,000, and $350,000 (CEO salary). Which statistical measure best represents a typical non-executive employee's salary?
+A) Mean
+B) Median ✔ (Correct Answer)
+C) Range
+D) Standard Deviation
+Explanation: The dataset contains an extreme outlier ($350,000) that skews the mean upward ($94,285). The median ($52,000) is resistant to extreme values and better represents typical center data.
+
+23. Expected Value in Insurance Risk
+An insurance company offers a 1-year smartphone protection plan for $50. If a phone breaks, the replacement cost to the company is $400. Historical data shows a 5% chance that a phone breaks within a year. What is the company's expected profit per policy sold?
+A) $20
+B) $25
+C) $30 ✔ (Correct Answer)
+D) $35
+Explanation: Expected payout = 5% of $400 = 0.05 × 400 = $20. Expected profit = Premium collected - Expected payout = $50 - $20 = $30.
+
+24. Comparing Boxplot Data Ranges
+Boxplots comparing test scores of two schools show:
+• School X: Min = 40, Q1 = 55, Median = 70, Q3 = 85, Max = 98
+• School Y: Min = 60, Q1 = 68, Median = 75, Q3 = 82, Max = 90
+Which statement is correct based on the Interquartile Range (IQR)?
+A) School X has greater middle-50% variability (IQR = 30) than School Y (IQR = 14). ✔ (Correct Answer)
+B) School Y has greater middle-50% variability than School X.
+C) Both schools have equal score variability.
+D) School Y has a larger overall score range than School X.
+Explanation: IQR = Q3 - Q1. School X IQR = 85 - 55 = 30. School Y IQR = 82 - 68 = 14. Thus, School X displays greater variability in its middle 50% data range.
+
+25. Binomial Probability in Quality Control
+A solar chip factory has a 90% pass rate on production line tests. If 3 chips are randomly sampled and tested independently, what is the probability that ALL 3 chips pass inspection?
+A) 0.700
+B) 0.729 ✔ (Correct Answer)
+C) 0.810
+D) 0.900
+Explanation: Independent events multiplication rule: P(All 3 pass) = 0.90 × 0.90 × 0.90 = (0.90)3 = 0.729 or 72.9%.

@@ -1,0 +1,207 @@
+Grade 7 Mathematics Challenge: Real-World Math Explorers
+Welcome to the Grade 7 Math Challenge! Read each real-world context carefully, select the best option, and review the detailed explanation below each question.
+Section 1: Ratios, Proportional Relationships & Percentages
+
+1. School Store Markup
+The school store buys notebooks for $2.00 each and sells them with a 30% markup. What is the selling price of one notebook?
+A) $2.30
+B) $2.60 ✔ (Correct Answer)
+C) $2.80
+D) $3.00
+Explanation: Markup amount = 30% of $2.00 = 0.30 × 2.00 = $0.60. Selling price = Original cost + Markup = $2.00 + $0.60 = $2.60.
+
+2. Restaurant Tip Calculation
+A family's dinner bill comes to $65.00. They decide to leave a 15% tip for the server. How much tip do they leave?
+A) $9.75 ✔ (Correct Answer)
+B) $10.00
+C) $11.25
+D) $13.00
+Explanation: Tip = 15% of $65 = 0.15 × 65 = $9.75.
+
+3. Constant of Proportionality
+A baker uses 6 cups of flour to make 3 batches of cookies. Which equation models the proportional relationship between flour (f) and batches (b)?
+A) f = 0.5b
+B) f = 2b ✔ (Correct Answer)
+C) f = 3b
+D) f = b + 3
+Explanation: Constant of proportionality (k) = Flour ÷ Batches = 6 ÷ 3 = 2. Thus, the equation is f = 2b.
+
+4. Sales Tax in a Clothing Store
+Maya buys a jacket priced at $50. If the sales tax rate is 8%, what is the total cost including tax?
+A) $50.80
+B) $53.00
+C) $54.00 ✔ (Correct Answer)
+D) $58.00
+Explanation: Tax = 8% of $50 = 0.08 × 50 = $4.00. Total cost = $50 + $4 = $54.00.
+
+5. Simple Interest Savings
+Alex deposits $200 into a savings account earning 5% simple interest per year. How much total interest will he earn after 3 years?
+A) $10
+B) $20
+C) $30 ✔ (Correct Answer)
+D) $230
+Explanation: Simple Interest I = P × r × t = $200 × 0.05 × 3 = $30.
+
+6. Percentage Increase in Attendance
+Last year, 40 students joined the chess club. This year, attendance grew to 50 students. What is the percentage increase in attendance?
+A) 20%
+B) 25% ✔ (Correct Answer)
+C) 30%
+D) 80%
+Explanation: Increase = 50 - 40 = 10. Percentage increase = (Increase ÷ Original) × 100 = (10 ÷ 40) × 100 = 0.25 × 100 = 25%.
+
+7. Unit Rates with Complex Fractions
+A worker paints 1/2 of a wall in 1/4 of an hour. At this rate, how many whole walls can the worker paint in 1 hour?
+A) 1 wall
+B) 2 walls ✔ (Correct Answer)
+C) 3 walls
+D) 4 walls
+Explanation: Unit rate = (1/2) ÷ (1/4) = (1/2) × (4/1) = 4/2 = 2 walls per hour.
+Section 2: Rational Numbers & Expressions
+
+8. Multiplying Rational Numbers
+What is the value of (-3/4) × (-8/9)?
+A) 2/3 ✔ (Correct Answer)
+B) -2/3
+C) 27/32
+D) -27/32
+Explanation: Multiplying two negative numbers gives a positive result: (3 × 8) / (4 × 9) = 24 / 36. Simplifying by dividing numerator and denominator by 12 gives 2/3.
+
+9. Bank Account Transactions
+Jordan's bank account starts at $150. He withdraws $45 on Monday and deposits $30 on Tuesday. What is his final account balance?
+A) $75
+B) $135 ✔ (Correct Answer)
+C) $165
+D) $225
+Explanation: Start: $150. Withdrawal (-$45): 150 - 45 = 105. Deposit (+$30): 105 + 30 = $135.
+
+10. Distributive Property Expansion
+Expand the algebraic expression: -4(2x - 5).
+A) -8x - 20
+B) -8x + 20 ✔ (Correct Answer)
+C) -8x - 5
+D) 8x + 20
+Explanation: Distribute -4 to both terms inside the parentheses: (-4 × 2x) + (-4 × -5) = -8x + 20.
+
+11. Subtracting Linear Expressions
+Simplify the expression: (5x + 7) - (2x + 3).
+A) 3x + 4 ✔ (Correct Answer)
+B) 3x + 10
+C) 7x + 4
+D) 7x + 10
+Explanation: Distribute the negative sign: 5x + 7 - 2x - 3 = (5x - 2x) + (7 - 3) = 3x + 4.
+
+12. Converting Fractions to Decimals
+Which decimal is equivalent to the rational number 7/8?
+A) 0.78
+B) 0.85
+C) 0.875 ✔ (Correct Answer)
+D) 0.88
+Explanation: Divide 7 by 8: 7 ÷ 8 = 0.875.
+Section 3: Geometry & Spatial Measurement
+
+13. Area of a Circle
+A circular garden pond has a radius of 7 meters. Using π ≈ 22/7, what is the approximate area of the pond?
+A) 44 sq m
+B) 154 sq m ✔ (Correct Answer)
+C) 308 sq m
+D) 616 sq m
+Explanation: Area = πr² = (22/7) × 7 × 7 = 22 × 7 = 154 square meters.
+
+14. Circumference of a Bicycle Wheel
+A bicycle wheel has a diameter of 70 cm. Using π ≈ 22/7, what is the circumference of the wheel?
+A) 110 cm
+B) 220 cm ✔ (Correct Answer)
+C) 440 cm
+D) 1,540 cm
+Explanation: Circumference C = πd = (22/7) × 70 = 22 × 10 = 220 cm.
+
+15. Complementary Angles
+Two angles are complementary. If one angle measures 38°, what is the measure of the second angle?
+A) 52° ✔ (Correct Answer)
+B) 62°
+C) 142°
+D) 152°
+Explanation: Complementary angles add up to 90°. Second angle = 90° - 38° = 52°.
+
+16. Supplementary Angles along a Line
+Angle A and Angle B form a linear pair (supplementary angles). If Angle A measures 115°, what is the measure of Angle B?
+A) 55°
+B) 65° ✔ (Correct Answer)
+C) 75°
+D) 245°
+Explanation: Supplementary angles add up to 180°. Angle B = 180° - 115° = 65°.
+
+17. Volume of a Triangular Prism
+A triangular prism shaped tent has a triangular base with base b = 4 meters and height h = 3 meters. The length of the prism is 6 meters. What is its volume?
+A) 18 cubic meters
+B) 36 cubic meters ✔ (Correct Answer)
+C) 72 cubic meters
+D) 108 cubic meters
+Explanation: Base Area = (1/2) × b × h = (1/2) × 4 × 3 = 6 sq m. Volume = Base Area × Length = 6 × 6 = 36 cubic meters.
+
+18. Scale Drawing Area Scale
+A rectangular blueprint has dimensions of 4 cm by 5 cm. If the scale is 1 cm = 2 meters, what is the actual area of the room?
+A) 20 sq m
+B) 40 sq m
+C) 80 sq m ✔ (Correct Answer)
+D) 160 sq m
+Explanation: Actual dimensions: Length = 5 × 2 = 10 m, Width = 4 × 2 = 8 m. Actual Area = 10 × 8 = 80 square meters.
+Section 4: Equations, Inequalities & Probability
+
+19. Solving Two-Step Equations
+Solve for x: 3x - 7 = 14.
+A) x = 3
+B) x = 7 ✔ (Correct Answer)
+C) x = 8
+D) x = 21
+Explanation: Add 7 to both sides: 3x = 21. Divide by 3: x = 7.
+
+20. Solving Inequalities with Division
+Solve the inequality: 2y + 5 > 13.
+A) y > 3
+B) y > 4 ✔ (Correct Answer)
+C) y < 4
+D) y > 9
+Explanation: Subtract 5 from both sides: 2y > 8. Divide by 2: y > 4.
+
+21. Modeling Real-World Equations
+A taxi ride costs a flat fee of $3.00 plus $2.00 per mile. If the total fare was $15.00, which equation represents the number of miles (m) driven?
+A) 3m + 2 = 15
+B) 2m + 3 = 15 ✔ (Correct Answer)
+C) 5m = 15
+D) 2m - 3 = 15
+Explanation: Total Cost = (Cost per mile × miles) + Flat Fee → 15 = 2m + 3.
+
+22. Compound Probability (Two Independent Events)
+You flip a fair coin and roll a standard 6-sided die. What is the probability of flipping Heads AND rolling a 5?
+A) 1/2
+B) 1/6
+C) 1/12 ✔ (Correct Answer)
+D) 2/3
+Explanation: P(Heads) = 1/2. P(Rolling 5) = 1/6. Independent probability = (1/2) × (1/6) = 1/12.
+
+23. Probability without Replacement
+A bag contains 3 red balls and 2 blue balls. You pick one ball without looking, do NOT replace it, and pick a second ball. What is the probability that both balls picked are red?
+A) 3/10 ✔ (Correct Answer)
+B) 9/25
+C) 2/5
+D) 1/2
+Explanation: P(1st Red) = 3/5. Remaining balls = 2 red out of 4 total. P(2nd Red) = 2/4. Total probability = (3/5) × (2/4) = 6/20 = 3/10.
+
+24. Mean Absolute Deviation (MAD) Concept
+A dataset has values: 10, 12, 14. The mean of this dataset is 12. What is the Mean Absolute Deviation (MAD)?
+A) 0
+B) 1.33 ✔ (Correct Answer)
+C) 2
+D) 4
+Explanation: Absolute deviations from mean 12: |10 - 12| = 2, |12 - 12| = 0, |14 - 12| = 2. MAD = Sum of deviations ÷ Count = (2 + 0 + 2) ÷ 3 = 4/3 ≈ 1.33.
+
+25. Random Sampling Inference
+A school cafeteria manager surveys a random sample of 50 Grade 7 students and finds 30 prefer pizza. If there are 300 Grade 7 students in total, how many are estimated to prefer pizza?
+A) 120 students
+B) 150 students
+C) 180 students ✔ (Correct Answer)
+D) 200 students
+Explanation: Proportion = 30 / 50 = 0.60 (60%). Estimated population total = 60% of 300 = 0.60 × 300 = 180 students.
+

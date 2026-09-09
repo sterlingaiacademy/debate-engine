@@ -1,0 +1,5418 @@
+{
+  "5": [
+    {
+      "passage": "The School Library Books",
+      "questions": [
+        {
+          "question": "A primary school library receives 4 boxes of new books. Each box contains 25 books. How many new books does the library receive in total?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "80 books"
+            },
+            {
+              "letter": "B",
+              "text": "100 books"
+            },
+            {
+              "letter": "C",
+              "text": "120 books"
+            },
+            {
+              "letter": "D",
+              "text": "125 books"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Baking Cupcakes",
+      "questions": [
+        {
+          "question": "Sarah bakes 48 delicious chocolate cupcakes for a class party. She wants to share them equally among 6 tables. How many cupcakes will each table get?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "6 cupcakes"
+            },
+            {
+              "letter": "B",
+              "text": "7 cupcakes"
+            },
+            {
+              "letter": "C",
+              "text": "8 cupcakes"
+            },
+            {
+              "letter": "D",
+              "text": "9 cupcakes"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Saving for a Toy Car",
+      "questions": [
+        {
+          "question": "Liam saves $15 every week from his pocket money. How much money will he have saved after 6 weeks?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$75"
+            },
+            {
+              "letter": "B",
+              "text": "$80"
+            },
+            {
+              "letter": "C",
+              "text": "$90"
+            },
+            {
+              "letter": "D",
+              "text": "$100"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Fruit Basket Fractions",
+      "questions": [
+        {
+          "question": "In a fruit bowl, there are 10 fruits in total: 3 apples, 4 bananas, and 3 oranges. What fraction of the fruit bowl is made up of bananas?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "3/10"
+            },
+            {
+              "letter": "B",
+              "text": "4/10"
+            },
+            {
+              "letter": "C",
+              "text": "6/10"
+            },
+            {
+              "letter": "D",
+              "text": "7/10"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Decimal Juice Bottles",
+      "questions": [
+        {
+          "question": "Emma buys two bottles of juice. One bottle contains 1.25 liters and the other contains 0.75 liters. How many liters of juice does she have altogether?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "1.50 liters"
+            },
+            {
+              "letter": "B",
+              "text": "1.75 liters"
+            },
+            {
+              "letter": "C",
+              "text": "2.00 liters"
+            },
+            {
+              "letter": "D",
+              "text": "2.25 liters"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Pizza Party Fractions",
+      "questions": [
+        {
+          "question": "A pizza is divided into 8 equal slices. Alex eats 2 slices and Maya eats 3 slices. What fraction of the pizza is left over?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "3/8"
+            },
+            {
+              "letter": "B",
+              "text": "4/8"
+            },
+            {
+              "letter": "C",
+              "text": "5/8"
+            },
+            {
+              "letter": "D",
+              "text": "6/8"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Grocery Store Rounding",
+      "questions": [
+        {
+          "question": "A bag of apples costs $4.87. What is $4.87 rounded to the nearest dollar?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$4.00"
+            },
+            {
+              "letter": "B",
+              "text": "$4.50"
+            },
+            {
+              "letter": "C",
+              "text": "$4.90"
+            },
+            {
+              "letter": "D",
+              "text": "$5.00"
+            }
+          ],
+          "correct": "D"
+        }
+      ]
+    },
+    {
+      "passage": "The Bus Schedule Pattern",
+      "questions": [
+        {
+          "question": "Buses leave the station at regular intervals: 8:05 AM, 8:20 AM, 8:35 AM, and 8:50 AM. Following this pattern, when will the next bus leave?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "9:00 AM"
+            },
+            {
+              "letter": "B",
+              "text": "9:05 AM"
+            },
+            {
+              "letter": "C",
+              "text": "9:10 AM"
+            },
+            {
+              "letter": "D",
+              "text": "9:15 AM"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Tile Pattern Challenge",
+      "questions": [
+        {
+          "question": "A decorative floor design follows a growing tile pattern:\nStep 1: 3 tiles | Step 2: 6 tiles | Step 3: 9 tiles | Step 4: 12 tiles\nHow many tiles will be needed for Step 6?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "15 tiles"
+            },
+            {
+              "letter": "B",
+              "text": "18 tiles"
+            },
+            {
+              "letter": "C",
+              "text": "21 tiles"
+            },
+            {
+              "letter": "D",
+              "text": "24 tiles"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Missing Number Mystery",
+      "questions": [
+        {
+          "question": "Look at this number sequence: 5, 10, 20, 40, ___, 160. What is the missing number?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "50"
+            },
+            {
+              "letter": "B",
+              "text": "60"
+            },
+            {
+              "letter": "C",
+              "text": "80"
+            },
+            {
+              "letter": "D",
+              "text": "100"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Number Machine Rule",
+      "questions": [
+        {
+          "question": "An input-output machine transforms numbers:\nInput 2 → Output 7\nInput 4 → Output 11\nInput 6 → Output 15\nIf the input is 10, what will be the output?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "19"
+            },
+            {
+              "letter": "B",
+              "text": "21"
+            },
+            {
+              "letter": "C",
+              "text": "23"
+            },
+            {
+              "letter": "D",
+              "text": "25"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "House Numbers on Green Street",
+      "questions": [
+        {
+          "question": "All houses on the north side of Green Street have even numbers: 102, 104, 106, 108... What will be the number of the 7th house in this row?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "110"
+            },
+            {
+              "letter": "B",
+              "text": "112"
+            },
+            {
+              "letter": "C",
+              "text": "114"
+            },
+            {
+              "letter": "D",
+              "text": "116"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Fencing the Garden",
+      "questions": [
+        {
+          "question": "Mr. Green is building a rectangular vegetable garden that is 8 meters long and 5 meters wide. How many meters of fencing does he need to put all around the border?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "13 meters"
+            },
+            {
+              "letter": "B",
+              "text": "26 meters"
+            },
+            {
+              "letter": "C",
+              "text": "40 meters"
+            },
+            {
+              "letter": "D",
+              "text": "50 meters"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Carpet Area",
+      "questions": [
+        {
+          "question": "A square rug measures 4 meters on each side. What is the total area covered by the rug in square meters?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "8 sq m"
+            },
+            {
+              "letter": "B",
+              "text": "12 sq m"
+            },
+            {
+              "letter": "C",
+              "text": "16 sq m"
+            },
+            {
+              "letter": "D",
+              "text": "20 sq m"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Identifying Triangles",
+      "questions": [
+        {
+          "question": "A triangle has three equal sides of length 6 cm each. What type of triangle is this?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Right-angled triangle"
+            },
+            {
+              "letter": "B",
+              "text": "Isosceles triangle"
+            },
+            {
+              "letter": "C",
+              "text": "Equilateral triangle"
+            },
+            {
+              "letter": "D",
+              "text": "Scalene triangle"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Clock Hands Angle",
+      "questions": [
+        {
+          "question": "When a clock displays exactly 3:00, what kind of angle is formed between the hour hand and the minute hand?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Acute angle"
+            },
+            {
+              "letter": "B",
+              "text": "Right angle"
+            },
+            {
+              "letter": "C",
+              "text": "Obtuse angle"
+            },
+            {
+              "letter": "D",
+              "text": "Straight angle"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Symmetry in Shapes",
+      "questions": [
+        {
+          "question": "How many lines of symmetry does a standard regular square have?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "1"
+            },
+            {
+              "letter": "B",
+              "text": "2"
+            },
+            {
+              "letter": "C",
+              "text": "4"
+            },
+            {
+              "letter": "D",
+              "text": "8"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Gift Box Nets",
+      "questions": [
+        {
+          "question": "Which 3D shape can be constructed by folding six identical square faces together?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Pyramid"
+            },
+            {
+              "letter": "B",
+              "text": "Cylinder"
+            },
+            {
+              "letter": "C",
+              "text": "Rectangular Prism"
+            },
+            {
+              "letter": "D",
+              "text": "Cube"
+            }
+          ],
+          "correct": "D"
+        }
+      ]
+    },
+    {
+      "passage": "Morning Bus Ride",
+      "questions": [
+        {
+          "question": "Noah gets on the school bus at 7:45 AM. The ride takes 35 minutes. At what time does he arrive at school?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "8:15 AM"
+            },
+            {
+              "letter": "B",
+              "text": "8:20 AM"
+            },
+            {
+              "letter": "C",
+              "text": "8:25 AM"
+            },
+            {
+              "letter": "D",
+              "text": "8:30 AM"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Baking Conversion",
+      "questions": [
+        {
+          "question": "A cake recipe requires 2.5 kilograms of flour. How many grams is this equal to?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "250 grams"
+            },
+            {
+              "letter": "B",
+              "text": "2,500 grams"
+            },
+            {
+              "letter": "C",
+              "text": "25,000 grams"
+            },
+            {
+              "letter": "D",
+              "text": "250,000 grams"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Water Jug Measurement",
+      "questions": [
+        {
+          "question": "A water jug holds 3 liters of water. If David drinks 750 milliliters from the jug, how much water is left inside?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "2,250 milliliters"
+            },
+            {
+              "letter": "B",
+              "text": "2,500 milliliters"
+            },
+            {
+              "letter": "C",
+              "text": "2,750 milliliters"
+            },
+            {
+              "letter": "D",
+              "text": "3,250 milliliters"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Favorite Pets Survey",
+      "questions": [
+        {
+          "question": "In a survey of 30 Grade 5 students:\n• 12 chose Dogs\n• 10 chose Cats\n• 5 chose Fish\n• The remaining students chose Birds.\nHow many students chose Birds as their favorite pet?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "2 students"
+            },
+            {
+              "letter": "B",
+              "text": "3 students"
+            },
+            {
+              "letter": "C",
+              "text": "4 students"
+            },
+            {
+              "letter": "D",
+              "text": "5 students"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Reading Temperature",
+      "questions": [
+        {
+          "question": "At 6:00 AM, the outside temperature was 18°C. By 1:00 PM, the temperature rose by 9°C. What was the temperature at 1:00 PM?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "25°C"
+            },
+            {
+              "letter": "B",
+              "text": "27°C"
+            },
+            {
+              "letter": "C",
+              "text": "28°C"
+            },
+            {
+              "letter": "D",
+              "text": "29°C"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Weekly Test Scores Average",
+      "questions": [
+        {
+          "question": "Mia scores 80, 90, and 100 on three weekly math quizzes. What is her average (mean) quiz score?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "85"
+            },
+            {
+              "letter": "B",
+              "text": "90"
+            },
+            {
+              "letter": "C",
+              "text": "95"
+            },
+            {
+              "letter": "D",
+              "text": "100"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Probability with Colored Marbles",
+      "questions": [
+        {
+          "question": "A pouch contains 5 red marbles, 5 blue marbles, and 10 green marbles. If you reach in without looking, which color are you most likely to pull out?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Red"
+            },
+            {
+              "letter": "B",
+              "text": "Blue"
+            },
+            {
+              "letter": "C",
+              "text": "Green"
+            },
+            {
+              "letter": "D",
+              "text": "Red and Blue are equally likely"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    }
+  ],
+  "6": [
+    {
+      "passage": "School Lemonade Stand Ratio",
+      "questions": [
+        {
+          "question": "For a school fundraiser, students mix 2 cups of lemon juice with 5 cups of water to make lemonade. If they use 6 cups of lemon juice, how many cups of water do they need to keep the same taste?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "10 cups"
+            },
+            {
+              "letter": "B",
+              "text": "15 cups"
+            },
+            {
+              "letter": "C",
+              "text": "18 cups"
+            },
+            {
+              "letter": "D",
+              "text": "20 cups"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Discount on a Backpack",
+      "questions": [
+        {
+          "question": "A school store offers a 20% discount on a backpack that originally costs $40. How much money do you save with the discount?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$4"
+            },
+            {
+              "letter": "B",
+              "text": "$8"
+            },
+            {
+              "letter": "C",
+              "text": "$10"
+            },
+            {
+              "letter": "D",
+              "text": "$32"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Classroom Gender Ratio",
+      "questions": [
+        {
+          "question": "In a Grade 6 class of 30 students, 18 are girls and 12 are boys. What is the simplified ratio of girls to total students?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "2 : 3"
+            },
+            {
+              "letter": "B",
+              "text": "3 : 5"
+            },
+            {
+              "letter": "C",
+              "text": "3 : 2"
+            },
+            {
+              "letter": "D",
+              "text": "5 : 3"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Unit Price Shopping",
+      "questions": [
+        {
+          "question": "A supermarket sells a pack of 4 notebooks for $6.00 and a pack of 10 identical notebooks for $13.00. What is the cost per notebook in the 4-pack?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$1.25"
+            },
+            {
+              "letter": "B",
+              "text": "$1.50"
+            },
+            {
+              "letter": "C",
+              "text": "$1.60"
+            },
+            {
+              "letter": "D",
+              "text": "$2.00"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Test Score Percentage",
+      "questions": [
+        {
+          "question": "Daniel scored 21 out of 25 on his science quiz. What percentage score did Daniel get?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "75%"
+            },
+            {
+              "letter": "B",
+              "text": "80%"
+            },
+            {
+              "letter": "C",
+              "text": "84%"
+            },
+            {
+              "letter": "D",
+              "text": "88%"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Speed and Distance",
+      "questions": [
+        {
+          "question": "A cyclist travels at a constant speed of 12 kilometers per hour. How many kilometers will the cyclist cover in 2.5 hours?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "24 km"
+            },
+            {
+              "letter": "B",
+              "text": "30 km"
+            },
+            {
+              "letter": "C",
+              "text": "36 km"
+            },
+            {
+              "letter": "D",
+              "text": "48 km"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Model Scale Conversion",
+      "questions": [
+        {
+          "question": "On a map, 1 centimeter represents an actual distance of 5 kilometers. If two towns are 7 centimeters apart on the map, what is the actual distance between them?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "25 km"
+            },
+            {
+              "letter": "B",
+              "text": "30 km"
+            },
+            {
+              "letter": "C",
+              "text": "35 km"
+            },
+            {
+              "letter": "D",
+              "text": "40 km"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Sub-Zero Temperatures",
+      "questions": [
+        {
+          "question": "At midnight, the temperature in a mountain village was -4°C. By morning, the temperature dropped by another 3°C. What was the temperature in the morning?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "-1°C"
+            },
+            {
+              "letter": "B",
+              "text": "-7°C"
+            },
+            {
+              "letter": "C",
+              "text": "1°C"
+            },
+            {
+              "letter": "D",
+              "text": "7°C"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Evaluating Algebraic Expressions",
+      "questions": [
+        {
+          "question": "What is the value of the expression 3x + 5 when x = 4?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "12"
+            },
+            {
+              "letter": "B",
+              "text": "17"
+            },
+            {
+              "letter": "C",
+              "text": "20"
+            },
+            {
+              "letter": "D",
+              "text": "27"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Order of Operations (PEMDAS)",
+      "questions": [
+        {
+          "question": "What is the correct result for the calculation: 18 - 2 × 3 + 4?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "12"
+            },
+            {
+              "letter": "B",
+              "text": "16"
+            },
+            {
+              "letter": "C",
+              "text": "52"
+            },
+            {
+              "letter": "D",
+              "text": "56"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Exponent Practice",
+      "questions": [
+        {
+          "question": "What is the value of 24 + 32?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "14"
+            },
+            {
+              "letter": "B",
+              "text": "22"
+            },
+            {
+              "letter": "C",
+              "text": "25"
+            },
+            {
+              "letter": "D",
+              "text": "32"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Ocean Depth Elevation",
+      "questions": [
+        {
+          "question": "A submarine is floating at -150 meters relative to sea level. It rises by 60 meters. What is its new position?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "-90 meters"
+            },
+            {
+              "letter": "B",
+              "text": "-210 meters"
+            },
+            {
+              "letter": "C",
+              "text": "90 meters"
+            },
+            {
+              "letter": "D",
+              "text": "210 meters"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Area of a Triangle",
+      "questions": [
+        {
+          "question": "A triangular park banner has a base of 10 meters and a height of 6 meters. What is its surface area?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "16 sq m"
+            },
+            {
+              "letter": "B",
+              "text": "30 sq m"
+            },
+            {
+              "letter": "C",
+              "text": "60 sq m"
+            },
+            {
+              "letter": "D",
+              "text": "120 sq m"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Volume of a Fish Tank",
+      "questions": [
+        {
+          "question": "A rectangular fish tank has a length of 50 cm, width of 20 cm, and height of 30 cm. What is the volume of the tank in cubic centimeters?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "3,000 cm³"
+            },
+            {
+              "letter": "B",
+              "text": "10,000 cm³"
+            },
+            {
+              "letter": "C",
+              "text": "30,000 cm³"
+            },
+            {
+              "letter": "D",
+              "text": "300,000 cm³"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Area of a Parallelogram",
+      "questions": [
+        {
+          "question": "A paved pathway is shaped like a parallelogram with a base of 8 meters and a perpendicular height of 4 meters. What is its area?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "16 sq m"
+            },
+            {
+              "letter": "B",
+              "text": "24 sq m"
+            },
+            {
+              "letter": "C",
+              "text": "32 sq m"
+            },
+            {
+              "letter": "D",
+              "text": "64 sq m"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Coordinate Grid Distance",
+      "questions": [
+        {
+          "question": "Point A is located at (2, 3) and Point B is located at (2, 9) on a standard coordinate plane. What is the vertical distance between Points A and B?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "4 units"
+            },
+            {
+              "letter": "B",
+              "text": "6 units"
+            },
+            {
+              "letter": "C",
+              "text": "8 units"
+            },
+            {
+              "letter": "D",
+              "text": "12 units"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Surface Area of a Cube",
+      "questions": [
+        {
+          "question": "A wooden block cube measures 3 cm on each edge. What is the total surface area of all six faces of the cube?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "27 sq cm"
+            },
+            {
+              "letter": "B",
+              "text": "54 sq cm"
+            },
+            {
+              "letter": "C",
+              "text": "36 sq cm"
+            },
+            {
+              "letter": "D",
+              "text": "72 sq cm"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Missing Angle in a Triangle",
+      "questions": [
+        {
+          "question": "Two interior angles of a triangle measure 50° and 70°. What is the measure of the third interior angle?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "60°"
+            },
+            {
+              "letter": "B",
+              "text": "70°"
+            },
+            {
+              "letter": "C",
+              "text": "80°"
+            },
+            {
+              "letter": "D",
+              "text": "90°"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Solving Simple One-Step Equations",
+      "questions": [
+        {
+          "question": "Solve for y: y + 14 = 35.",
+          "options": [
+            {
+              "letter": "A",
+              "text": "19"
+            },
+            {
+              "letter": "B",
+              "text": "21"
+            },
+            {
+              "letter": "C",
+              "text": "22"
+            },
+            {
+              "letter": "D",
+              "text": "49"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Finding the Median Score",
+      "questions": [
+        {
+          "question": "Here are five test scores: 7, 12, 15, 18, 20. What is the median score of this dataset?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "12"
+            },
+            {
+              "letter": "B",
+              "text": "15"
+            },
+            {
+              "letter": "C",
+              "text": "14.4"
+            },
+            {
+              "letter": "D",
+              "text": "18"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Range of Daily Temperatures",
+      "questions": [
+        {
+          "question": "Over five days, recorded temperatures were: 18°C, 22°C, 15°C, 25°C, 20°C. What is the range of these temperatures?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "10°C"
+            },
+            {
+              "letter": "B",
+              "text": "12°C"
+            },
+            {
+              "letter": "C",
+              "text": "15°C"
+            },
+            {
+              "letter": "D",
+              "text": "25°C"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Fair Spinner Probability",
+      "questions": [
+        {
+          "question": "A spinner is divided into 8 equal sections numbered 1 through 8. What is the probability of spinning an even number?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "1/4"
+            },
+            {
+              "letter": "B",
+              "text": "1/2"
+            },
+            {
+              "letter": "C",
+              "text": "3/8"
+            },
+            {
+              "letter": "D",
+              "text": "5/8"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Reading a Double Bar Graph Concept",
+      "questions": [
+        {
+          "question": "In a survey comparing preferred sports between Grade 5 and Grade 6, 16 Grade 6 students preferred soccer out of 40 total Grade 6 students. What percentage of Grade 6 students preferred soccer?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "30%"
+            },
+            {
+              "letter": "B",
+              "text": "35%"
+            },
+            {
+              "letter": "C",
+              "text": "40%"
+            },
+            {
+              "letter": "D",
+              "text": "45%"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Multiplicative Equation Solving",
+      "questions": [
+        {
+          "question": "Solve for m: 6m = 42.",
+          "options": [
+            {
+              "letter": "A",
+              "text": "6"
+            },
+            {
+              "letter": "B",
+              "text": "7"
+            },
+            {
+              "letter": "C",
+              "text": "8"
+            },
+            {
+              "letter": "D",
+              "text": "36"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Calculating Mean Heights",
+      "questions": [
+        {
+          "question": "Four plants have heights of 10 cm, 12 cm, 14 cm, and 16 cm. What is the mean height of the plants?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "12 cm"
+            },
+            {
+              "letter": "B",
+              "text": "13 cm"
+            },
+            {
+              "letter": "C",
+              "text": "14 cm"
+            },
+            {
+              "letter": "D",
+              "text": "15 cm"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ],
+  "7": [
+    {
+      "passage": "School Store Markup",
+      "questions": [
+        {
+          "question": "The school store buys notebooks for $2.00 each and sells them with a 30% markup. What is the selling price of one notebook?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$2.30"
+            },
+            {
+              "letter": "B",
+              "text": "$2.60"
+            },
+            {
+              "letter": "C",
+              "text": "$2.80"
+            },
+            {
+              "letter": "D",
+              "text": "$3.00"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Restaurant Tip Calculation",
+      "questions": [
+        {
+          "question": "A family's dinner bill comes to $65.00. They decide to leave a 15% tip for the server. How much tip do they leave?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$9.75"
+            },
+            {
+              "letter": "B",
+              "text": "$10.00"
+            },
+            {
+              "letter": "C",
+              "text": "$11.25"
+            },
+            {
+              "letter": "D",
+              "text": "$13.00"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Constant of Proportionality",
+      "questions": [
+        {
+          "question": "A baker uses 6 cups of flour to make 3 batches of cookies. Which equation models the proportional relationship between flour (f) and batches (b)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "f = 0.5b"
+            },
+            {
+              "letter": "B",
+              "text": "f = 2b"
+            },
+            {
+              "letter": "C",
+              "text": "f = 3b"
+            },
+            {
+              "letter": "D",
+              "text": "f = b + 3"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Sales Tax in a Clothing Store",
+      "questions": [
+        {
+          "question": "Maya buys a jacket priced at $50. If the sales tax rate is 8%, what is the total cost including tax?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$50.80"
+            },
+            {
+              "letter": "B",
+              "text": "$53.00"
+            },
+            {
+              "letter": "C",
+              "text": "$54.00"
+            },
+            {
+              "letter": "D",
+              "text": "$58.00"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Simple Interest Savings",
+      "questions": [
+        {
+          "question": "Alex deposits $200 into a savings account earning 5% simple interest per year. How much total interest will he earn after 3 years?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$10"
+            },
+            {
+              "letter": "B",
+              "text": "$20"
+            },
+            {
+              "letter": "C",
+              "text": "$30"
+            },
+            {
+              "letter": "D",
+              "text": "$230"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Percentage Increase in Attendance",
+      "questions": [
+        {
+          "question": "Last year, 40 students joined the chess club. This year, attendance grew to 50 students. What is the percentage increase in attendance?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "20%"
+            },
+            {
+              "letter": "B",
+              "text": "25%"
+            },
+            {
+              "letter": "C",
+              "text": "30%"
+            },
+            {
+              "letter": "D",
+              "text": "80%"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Unit Rates with Complex Fractions",
+      "questions": [
+        {
+          "question": "A worker paints 1/2 of a wall in 1/4 of an hour. At this rate, how many whole walls can the worker paint in 1 hour?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "1 wall"
+            },
+            {
+              "letter": "B",
+              "text": "2 walls"
+            },
+            {
+              "letter": "C",
+              "text": "3 walls"
+            },
+            {
+              "letter": "D",
+              "text": "4 walls"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Multiplying Rational Numbers",
+      "questions": [
+        {
+          "question": "What is the value of (-3/4) × (-8/9)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "2/3"
+            },
+            {
+              "letter": "B",
+              "text": "-2/3"
+            },
+            {
+              "letter": "C",
+              "text": "27/32"
+            },
+            {
+              "letter": "D",
+              "text": "-27/32"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Bank Account Transactions",
+      "questions": [
+        {
+          "question": "Jordan's bank account starts at $150. He withdraws $45 on Monday and deposits $30 on Tuesday. What is his final account balance?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$75"
+            },
+            {
+              "letter": "B",
+              "text": "$135"
+            },
+            {
+              "letter": "C",
+              "text": "$165"
+            },
+            {
+              "letter": "D",
+              "text": "$225"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Distributive Property Expansion",
+      "questions": [
+        {
+          "question": "Expand the algebraic expression: -4(2x - 5).",
+          "options": [
+            {
+              "letter": "A",
+              "text": "-8x - 20"
+            },
+            {
+              "letter": "B",
+              "text": "-8x + 20"
+            },
+            {
+              "letter": "C",
+              "text": "-8x - 5"
+            },
+            {
+              "letter": "D",
+              "text": "8x + 20"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Subtracting Linear Expressions",
+      "questions": [
+        {
+          "question": "Simplify the expression: (5x + 7) - (2x + 3).",
+          "options": [
+            {
+              "letter": "A",
+              "text": "3x + 4"
+            },
+            {
+              "letter": "B",
+              "text": "3x + 10"
+            },
+            {
+              "letter": "C",
+              "text": "7x + 4"
+            },
+            {
+              "letter": "D",
+              "text": "7x + 10"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Converting Fractions to Decimals",
+      "questions": [
+        {
+          "question": "Which decimal is equivalent to the rational number 7/8?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "0.78"
+            },
+            {
+              "letter": "B",
+              "text": "0.85"
+            },
+            {
+              "letter": "C",
+              "text": "0.875"
+            },
+            {
+              "letter": "D",
+              "text": "0.88"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Area of a Circle",
+      "questions": [
+        {
+          "question": "A circular garden pond has a radius of 7 meters. Using π ≈ 22/7, what is the approximate area of the pond?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "44 sq m"
+            },
+            {
+              "letter": "B",
+              "text": "154 sq m"
+            },
+            {
+              "letter": "C",
+              "text": "308 sq m"
+            },
+            {
+              "letter": "D",
+              "text": "616 sq m"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Circumference of a Bicycle Wheel",
+      "questions": [
+        {
+          "question": "A bicycle wheel has a diameter of 70 cm. Using π ≈ 22/7, what is the circumference of the wheel?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "110 cm"
+            },
+            {
+              "letter": "B",
+              "text": "220 cm"
+            },
+            {
+              "letter": "C",
+              "text": "440 cm"
+            },
+            {
+              "letter": "D",
+              "text": "1,540 cm"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Complementary Angles",
+      "questions": [
+        {
+          "question": "Two angles are complementary. If one angle measures 38°, what is the measure of the second angle?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "52°"
+            },
+            {
+              "letter": "B",
+              "text": "62°"
+            },
+            {
+              "letter": "C",
+              "text": "142°"
+            },
+            {
+              "letter": "D",
+              "text": "152°"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Supplementary Angles along a Line",
+      "questions": [
+        {
+          "question": "Angle A and Angle B form a linear pair (supplementary angles). If Angle A measures 115°, what is the measure of Angle B?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "55°"
+            },
+            {
+              "letter": "B",
+              "text": "65°"
+            },
+            {
+              "letter": "C",
+              "text": "75°"
+            },
+            {
+              "letter": "D",
+              "text": "245°"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Volume of a Triangular Prism",
+      "questions": [
+        {
+          "question": "A triangular prism shaped tent has a triangular base with base b = 4 meters and height h = 3 meters. The length of the prism is 6 meters. What is its volume?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "18 cubic meters"
+            },
+            {
+              "letter": "B",
+              "text": "36 cubic meters"
+            },
+            {
+              "letter": "C",
+              "text": "72 cubic meters"
+            },
+            {
+              "letter": "D",
+              "text": "108 cubic meters"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scale Drawing Area Scale",
+      "questions": [
+        {
+          "question": "A rectangular blueprint has dimensions of 4 cm by 5 cm. If the scale is 1 cm = 2 meters, what is the actual area of the room?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "20 sq m"
+            },
+            {
+              "letter": "B",
+              "text": "40 sq m"
+            },
+            {
+              "letter": "C",
+              "text": "80 sq m"
+            },
+            {
+              "letter": "D",
+              "text": "160 sq m"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Solving Two-Step Equations",
+      "questions": [
+        {
+          "question": "Solve for x: 3x - 7 = 14.",
+          "options": [
+            {
+              "letter": "A",
+              "text": "x = 3"
+            },
+            {
+              "letter": "B",
+              "text": "x = 7"
+            },
+            {
+              "letter": "C",
+              "text": "x = 8"
+            },
+            {
+              "letter": "D",
+              "text": "x = 21"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Solving Inequalities with Division",
+      "questions": [
+        {
+          "question": "Solve the inequality: 2y + 5 > 13.",
+          "options": [
+            {
+              "letter": "A",
+              "text": "y > 3"
+            },
+            {
+              "letter": "B",
+              "text": "y > 4"
+            },
+            {
+              "letter": "C",
+              "text": "y < 4"
+            },
+            {
+              "letter": "D",
+              "text": "y > 9"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Modeling Real-World Equations",
+      "questions": [
+        {
+          "question": "A taxi ride costs a flat fee of $3.00 plus $2.00 per mile. If the total fare was $15.00, which equation represents the number of miles (m) driven?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "3m + 2 = 15"
+            },
+            {
+              "letter": "B",
+              "text": "2m + 3 = 15"
+            },
+            {
+              "letter": "C",
+              "text": "5m = 15"
+            },
+            {
+              "letter": "D",
+              "text": "2m - 3 = 15"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Compound Probability (Two Independent Events)",
+      "questions": [
+        {
+          "question": "You flip a fair coin and roll a standard 6-sided die. What is the probability of flipping Heads AND rolling a 5?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "1/2"
+            },
+            {
+              "letter": "B",
+              "text": "1/6"
+            },
+            {
+              "letter": "C",
+              "text": "1/12"
+            },
+            {
+              "letter": "D",
+              "text": "2/3"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Probability without Replacement",
+      "questions": [
+        {
+          "question": "A bag contains 3 red balls and 2 blue balls. You pick one ball without looking, do NOT replace it, and pick a second ball. What is the probability that both balls picked are red?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "3/10"
+            },
+            {
+              "letter": "B",
+              "text": "9/25"
+            },
+            {
+              "letter": "C",
+              "text": "2/5"
+            },
+            {
+              "letter": "D",
+              "text": "1/2"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Mean Absolute Deviation (MAD) Concept",
+      "questions": [
+        {
+          "question": "A dataset has values: 10, 12, 14. The mean of this dataset is 12. What is the Mean Absolute Deviation (MAD)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "0"
+            },
+            {
+              "letter": "B",
+              "text": "1.33"
+            },
+            {
+              "letter": "C",
+              "text": "2"
+            },
+            {
+              "letter": "D",
+              "text": "4"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Random Sampling Inference",
+      "questions": [
+        {
+          "question": "A school cafeteria manager surveys a random sample of 50 Grade 7 students and finds 30 prefer pizza. If there are 300 Grade 7 students in total, how many are estimated to prefer pizza?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "120 students"
+            },
+            {
+              "letter": "B",
+              "text": "150 students"
+            },
+            {
+              "letter": "C",
+              "text": "180 students"
+            },
+            {
+              "letter": "D",
+              "text": "200 students"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    }
+  ],
+  "8": [
+    {
+      "passage": "Distance in Scientific Notation",
+      "questions": [
+        {
+          "question": "The average distance from the Earth to the Sun is approximately 150,000,000 kilometers. How is this distance written in proper scientific notation?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "15 × 107 km"
+            },
+            {
+              "letter": "B",
+              "text": "1.5 × 108 km"
+            },
+            {
+              "letter": "C",
+              "text": "1.5 × 107 km"
+            },
+            {
+              "letter": "D",
+              "text": "0.15 × 109 km"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Microscopic Measurements",
+      "questions": [
+        {
+          "question": "The width of a cell structure is 0.0000045 meters. How is this number represented in scientific notation?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "4.5 × 10-6 m"
+            },
+            {
+              "letter": "B",
+              "text": "4.5 × 10-5 m"
+            },
+            {
+              "letter": "C",
+              "text": "45 × 10-7 m"
+            },
+            {
+              "letter": "D",
+              "text": "4.5 × 106 m"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Simplifying Exponent Rules",
+      "questions": [
+        {
+          "question": "What is the simplified value of (32 × 34) / 33?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "3"
+            },
+            {
+              "letter": "B",
+              "text": "9"
+            },
+            {
+              "letter": "C",
+              "text": "27"
+            },
+            {
+              "letter": "D",
+              "text": "81"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Square Roots in Real Life",
+      "questions": [
+        {
+          "question": "A square community garden has an area of 144 square meters. What is the length of one side of the garden?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "11 meters"
+            },
+            {
+              "letter": "B",
+              "text": "12 meters"
+            },
+            {
+              "letter": "C",
+              "text": "14 meters"
+            },
+            {
+              "letter": "D",
+              "text": "36 meters"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Approximating Irrational Numbers",
+      "questions": [
+        {
+          "question": "Between which two consecutive whole numbers does √30 lie?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "4 and 5"
+            },
+            {
+              "letter": "B",
+              "text": "5 and 6"
+            },
+            {
+              "letter": "C",
+              "text": "6 and 7"
+            },
+            {
+              "letter": "D",
+              "text": "15 and 16"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Rational vs. Irrational Numbers",
+      "questions": [
+        {
+          "question": "Which of the following values represents an irrational number?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "√49"
+            },
+            {
+              "letter": "B",
+              "text": "0.333..."
+            },
+            {
+              "letter": "C",
+              "text": "5/8"
+            },
+            {
+              "letter": "D",
+              "text": "√10"
+            }
+          ],
+          "correct": "D"
+        }
+      ]
+    },
+    {
+      "passage": "Zero and Negative Exponents",
+      "questions": [
+        {
+          "question": "What is the value of 5-2 + 40?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "1/25"
+            },
+            {
+              "letter": "B",
+              "text": "1 1/25 (1.04)"
+            },
+            {
+              "letter": "C",
+              "text": "-25"
+            },
+            {
+              "letter": "D",
+              "text": "0"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Solving Multi-Step Equations",
+      "questions": [
+        {
+          "question": "Solve for x: 4(x - 3) = 2x + 10.",
+          "options": [
+            {
+              "letter": "A",
+              "text": "x = 5"
+            },
+            {
+              "letter": "B",
+              "text": "x = 11"
+            },
+            {
+              "letter": "C",
+              "text": "x = 12"
+            },
+            {
+              "letter": "D",
+              "text": "x = 22"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Finding the Slope of a Line",
+      "questions": [
+        {
+          "question": "A hiking path rises 15 meters vertically for every 30 meters of horizontal distance. What is the slope (m) of the path?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "m = 1/3"
+            },
+            {
+              "letter": "B",
+              "text": "m = 1/2"
+            },
+            {
+              "letter": "C",
+              "text": "m = 2"
+            },
+            {
+              "letter": "D",
+              "text": "m = 3"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Identifying Slope-Intercept Form",
+      "questions": [
+        {
+          "question": "A cell phone plan costs a flat fee of $20 per month plus $0.10 per text message sent. Which equation represents the monthly cost (y) for sending x text messages?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "y = 0.10x + 20"
+            },
+            {
+              "letter": "B",
+              "text": "y = 20x + 0.10"
+            },
+            {
+              "letter": "C",
+              "text": "y = 20.10x"
+            },
+            {
+              "letter": "D",
+              "text": "y = 0.10x - 20"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Number of Solutions to an Equation",
+      "questions": [
+        {
+          "question": "How many solutions does the equation 3x + 5 = 3x + 9 have?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "No solution"
+            },
+            {
+              "letter": "B",
+              "text": "Exactly one solution"
+            },
+            {
+              "letter": "C",
+              "text": "Exactly two solutions"
+            },
+            {
+              "letter": "D",
+              "text": "Infinitely many solutions"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Systems of Linear Equations by Substitution",
+      "questions": [
+        {
+          "question": "Solve the system of equations:\ny = 2x\nx + y = 9",
+          "options": [
+            {
+              "letter": "A",
+              "text": "(2, 4)"
+            },
+            {
+              "letter": "B",
+              "text": "(3, 6)"
+            },
+            {
+              "letter": "C",
+              "text": "(6, 3)"
+            },
+            {
+              "letter": "D",
+              "text": "(4, 5)"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Function Rules & Graphs",
+      "questions": [
+        {
+          "question": "Which set of ordered pairs (x, y) represents a valid function?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "{(1, 2), (1, 3), (2, 4)}"
+            },
+            {
+              "letter": "B",
+              "text": "{(1, 5), (2, 5), (3, 6)}"
+            },
+            {
+              "letter": "C",
+              "text": "{(3, 1), (3, 2), (3, 3)}"
+            },
+            {
+              "letter": "D",
+              "text": "{(4, 0), (4, 1), (5, 2)}"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "The Pythagorean Theorem in Construction",
+      "questions": [
+        {
+          "question": "A builder leans an 10-meter ladder against a wall. The base of the ladder is placed 6 meters away from the wall. How high up the wall does the ladder reach?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "7 meters"
+            },
+            {
+              "letter": "B",
+              "text": "8 meters"
+            },
+            {
+              "letter": "C",
+              "text": "9 meters"
+            },
+            {
+              "letter": "D",
+              "text": "12 meters"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Distance Between Coordinates",
+      "questions": [
+        {
+          "question": "What is the straight-line distance between the points (1, 2) and (4, 6) on a coordinate plane?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "4 units"
+            },
+            {
+              "letter": "B",
+              "text": "5 units"
+            },
+            {
+              "letter": "C",
+              "text": "6 units"
+            },
+            {
+              "letter": "D",
+              "text": "7 units"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Volume of a Cylinder",
+      "questions": [
+        {
+          "question": "A cylindrical water tank has a radius of 3 meters and a height of 5 meters. What is its volume? (Use π ≈ 3.14)",
+          "options": [
+            {
+              "letter": "A",
+              "text": "47.1 m³"
+            },
+            {
+              "letter": "B",
+              "text": "94.2 m³"
+            },
+            {
+              "letter": "C",
+              "text": "141.3 m³"
+            },
+            {
+              "letter": "D",
+              "text": "282.6 m³"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Volume of a Cone",
+      "questions": [
+        {
+          "question": "A party hat in the shape of a cone has a base radius of 6 cm and a height of 10 cm. What is its volume? (Use π ≈ 3.14)",
+          "options": [
+            {
+              "letter": "A",
+              "text": "125.6 cm³"
+            },
+            {
+              "letter": "B",
+              "text": "188.4 cm³"
+            },
+            {
+              "letter": "C",
+              "text": "376.8 cm³"
+            },
+            {
+              "letter": "D",
+              "text": "1,130.4 cm³"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Geometric Transformations (Dilations)",
+      "questions": [
+        {
+          "question": "A triangle with vertex coordinates A(2, 4) is dilated by a scale factor of 1.5 centered at the origin. What are the new coordinates of A'?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "(3, 6)"
+            },
+            {
+              "letter": "B",
+              "text": "(3.5, 5.5)"
+            },
+            {
+              "letter": "C",
+              "text": "(4, 8)"
+            },
+            {
+              "letter": "D",
+              "text": "(2.5, 4.5)"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Parallel Lines Cut by a Transversal",
+      "questions": [
+        {
+          "question": "Two parallel lines are cut by a transversal line. If one interior angle is 70°, what is the measure of its alternate interior angle?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "70°"
+            },
+            {
+              "letter": "B",
+              "text": "110°"
+            },
+            {
+              "letter": "C",
+              "text": "180°"
+            },
+            {
+              "letter": "D",
+              "text": "20°"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scatter Plot Trends",
+      "questions": [
+        {
+          "question": "A teacher records study time (hours) and test scores (%) for students. The scatter plot shows that as study time increases, test scores generally increase. What type of association is this?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Positive association"
+            },
+            {
+              "letter": "B",
+              "text": "Negative association"
+            },
+            {
+              "letter": "C",
+              "text": "No association"
+            },
+            {
+              "letter": "D",
+              "text": "Constant non-linear association"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Line of Best Fit Equation",
+      "questions": [
+        {
+          "question": "The line of best fit for ice cream sales (y in dollars) based on daily temperature (x in °C) is given by y = 12x - 50. What is the predicted sales amount when the temperature is 25°C?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$200"
+            },
+            {
+              "letter": "B",
+              "text": "$250"
+            },
+            {
+              "letter": "C",
+              "text": "$300"
+            },
+            {
+              "letter": "D",
+              "text": "$350"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Two-Way Frequency Tables",
+      "questions": [
+        {
+          "question": "In a survey of 100 students:\n• 60 students play a sport (40 boys, 20 girls)\n• 40 students do not play a sport (10 boys, 30 girls)\nHow many total boys participated in the survey?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "40"
+            },
+            {
+              "letter": "B",
+              "text": "50"
+            },
+            {
+              "letter": "C",
+              "text": "60"
+            },
+            {
+              "letter": "D",
+              "text": "70"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Volume of a Sphere",
+      "questions": [
+        {
+          "question": "A basketball has a radius of 12 cm. What is its volume? (Use π ≈ 3.14)",
+          "options": [
+            {
+              "letter": "A",
+              "text": "1,808.64 cm³"
+            },
+            {
+              "letter": "B",
+              "text": "7,234.56 cm³"
+            },
+            {
+              "letter": "C",
+              "text": "5,425.92 cm³"
+            },
+            {
+              "letter": "D",
+              "text": "2,411.52 cm³"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Exterior Angle Theorem of Triangles",
+      "questions": [
+        {
+          "question": "An exterior angle of a triangle measures 120°. If one of the remote interior angles measures 50°, what is the measure of the second remote interior angle?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "70°"
+            },
+            {
+              "letter": "B",
+              "text": "80°"
+            },
+            {
+              "letter": "C",
+              "text": "110°"
+            },
+            {
+              "letter": "D",
+              "text": "130°"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Congruence via Rigid Transformations",
+      "questions": [
+        {
+          "question": "Shape A is reflected across the y-axis and then translated 3 units down to form Shape B. Which statement correctly describes the relationship between Shape A and Shape B?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Shape B is larger than Shape A."
+            },
+            {
+              "letter": "B",
+              "text": "Shape B is similar but not congruent to Shape A."
+            },
+            {
+              "letter": "C",
+              "text": "Shape B is congruent to Shape A."
+            },
+            {
+              "letter": "D",
+              "text": "Shape B has a different area than Shape A."
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    }
+  ],
+  "9": [
+    {
+      "passage": "Laws of Rational Exponents",
+      "questions": [
+        {
+          "question": "Simplify the expression (16x4)1/2 for x > 0.",
+          "options": [
+            {
+              "letter": "A",
+              "text": "4x"
+            },
+            {
+              "letter": "B",
+              "text": "4x2"
+            },
+            {
+              "letter": "C",
+              "text": "8x2"
+            },
+            {
+              "letter": "D",
+              "text": "16x2"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Adding Polynomials in Real-World Context",
+      "questions": [
+        {
+          "question": "A company's total revenue is modeled by R(x) = 3x2 + 20x + 100, and its operating costs are C(x) = x2 + 8x + 40, where x is units sold. What polynomial represents the net profit P(x) = R(x) - C(x)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "2x2 + 12x + 60"
+            },
+            {
+              "letter": "B",
+              "text": "4x2 + 28x + 140"
+            },
+            {
+              "letter": "C",
+              "text": "2x2 + 28x + 60"
+            },
+            {
+              "letter": "D",
+              "text": "3x2 + 12x + 60"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Factoring Trinomials",
+      "questions": [
+        {
+          "question": "Factor the quadratic expression completely: x2 - 7x + 12.",
+          "options": [
+            {
+              "letter": "A",
+              "text": "(x + 3)(x + 4)"
+            },
+            {
+              "letter": "B",
+              "text": "(x - 3)(x - 4)"
+            },
+            {
+              "letter": "C",
+              "text": "(x - 2)(x - 6)"
+            },
+            {
+              "letter": "D",
+              "text": "(x + 2)(x - 6)"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Difference of Squares",
+      "questions": [
+        {
+          "question": "Which expression is equivalent to 9x2 - 25?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "(3x - 5)2"
+            },
+            {
+              "letter": "B",
+              "text": "(3x - 5)(3x + 5)"
+            },
+            {
+              "letter": "C",
+              "text": "(9x - 5)(x + 5)"
+            },
+            {
+              "letter": "D",
+              "text": "(3x + 5)2"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Multiplying Binomials",
+      "questions": [
+        {
+          "question": "Expand the expression: (2x - 3)(x + 5).",
+          "options": [
+            {
+              "letter": "A",
+              "text": "2x2 + 10x - 15"
+            },
+            {
+              "letter": "B",
+              "text": "2x2 + 7x - 15"
+            },
+            {
+              "letter": "C",
+              "text": "2x2 - 7x - 15"
+            },
+            {
+              "letter": "D",
+              "text": "2x2 + 13x - 15"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Rational Expressions Simplification",
+      "questions": [
+        {
+          "question": "Simplify (x2 - 9) / (x - 3) for x ≠ 3.",
+          "options": [
+            {
+              "letter": "A",
+              "text": "x + 3"
+            },
+            {
+              "letter": "B",
+              "text": "x - 3"
+            },
+            {
+              "letter": "C",
+              "text": "x + 9"
+            },
+            {
+              "letter": "D",
+              "text": "1"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Finding X- and Y-Intercepts",
+      "questions": [
+        {
+          "question": "What are the intercepts of the linear equation 3x + 4y = 12?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "x-intercept = (4, 0), y-intercept = (0, 3)"
+            },
+            {
+              "letter": "B",
+              "text": "x-intercept = (3, 0), y-intercept = (0, 4)"
+            },
+            {
+              "letter": "C",
+              "text": "x-intercept = (-4, 0), y-intercept = (0, -3)"
+            },
+            {
+              "letter": "D",
+              "text": "x-intercept = (12, 0), y-intercept = (0, 12)"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Parallel and Perpendicular Line Slopes",
+      "questions": [
+        {
+          "question": "Line A has an equation of y = -2x + 5. What is the slope of a line that is perpendicular to Line A?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "m = -2"
+            },
+            {
+              "letter": "B",
+              "text": "m = 2"
+            },
+            {
+              "letter": "C",
+              "text": "m = 1/2"
+            },
+            {
+              "letter": "D",
+              "text": "m = -1/2"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Vertex Form of a Parabola",
+      "questions": [
+        {
+          "question": "A quadratic function is given by f(x) = (x - 3)2 + 4. What are the coordinates of the vertex of the parabola?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "(-3, 4)"
+            },
+            {
+              "letter": "B",
+              "text": "(3, 4)"
+            },
+            {
+              "letter": "C",
+              "text": "(3, -4)"
+            },
+            {
+              "letter": "D",
+              "text": "(-3, -4)"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Solving Quadratic Equations by Factoring",
+      "questions": [
+        {
+          "question": "What are the roots of the equation x2 - 5x - 14 = 0?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "x = 5 and x = -14"
+            },
+            {
+              "letter": "B",
+              "text": "x = 7 and x = -2"
+            },
+            {
+              "letter": "C",
+              "text": "x = -7 and x = 2"
+            },
+            {
+              "letter": "D",
+              "text": "x = 7 and x = 2"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Using the Discriminant",
+      "questions": [
+        {
+          "question": "How many real solutions does the quadratic equation 2x2 - 4x + 5 = 0 have?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "No real solutions"
+            },
+            {
+              "letter": "B",
+              "text": "Exactly one real solution"
+            },
+            {
+              "letter": "C",
+              "text": "Two real solutions"
+            },
+            {
+              "letter": "D",
+              "text": "Infinitely many real solutions"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Domain and Range",
+      "questions": [
+        {
+          "question": "What is the domain of the function f(x) = √(x - 4)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "All real numbers"
+            },
+            {
+              "letter": "B",
+              "text": "x > 4"
+            },
+            {
+              "letter": "C",
+              "text": "x ≥ 4"
+            },
+            {
+              "letter": "D",
+              "text": "x ≤ 4"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Compound Inequalities",
+      "questions": [
+        {
+          "question": "Solve the inequality: -3 < 2x + 1 ≤ 7.",
+          "options": [
+            {
+              "letter": "A",
+              "text": "-2 < x ≤ 3"
+            },
+            {
+              "letter": "B",
+              "text": "-1 < x ≤ 4"
+            },
+            {
+              "letter": "C",
+              "text": "-2 ≤ x < 3"
+            },
+            {
+              "letter": "D",
+              "text": "-4 < x ≤ 6"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Right Triangle Trigonometry (Sine)",
+      "questions": [
+        {
+          "question": "In a right-angled triangle, the angle θ has an opposite side of length 6 cm and a hypotenuse of length 10 cm. What is sin(θ)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "0.6"
+            },
+            {
+              "letter": "B",
+              "text": "0.8"
+            },
+            {
+              "letter": "C",
+              "text": "0.75"
+            },
+            {
+              "letter": "D",
+              "text": "1.33"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Right Triangle Trigonometry (Tangent)",
+      "questions": [
+        {
+          "question": "A flagpole casts a shadow of 12 meters when the sun's angle of elevation is 45°. How tall is the flagpole?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "6 meters"
+            },
+            {
+              "letter": "B",
+              "text": "12 meters"
+            },
+            {
+              "letter": "C",
+              "text": "12√2 meters"
+            },
+            {
+              "letter": "D",
+              "text": "24 meters"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Similar Triangles Scale Factor",
+      "questions": [
+        {
+          "question": "Triangle ABC is similar to Triangle DEF. If AB = 8 cm, DE = 12 cm, and BC = 10 cm, what is the length of EF?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "12 cm"
+            },
+            {
+              "letter": "B",
+              "text": "15 cm"
+            },
+            {
+              "letter": "C",
+              "text": "16 cm"
+            },
+            {
+              "letter": "D",
+              "text": "20 cm"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Inscribed Angle Theorem",
+      "questions": [
+        {
+          "question": "An angle inscribed in a circle subtends an arc measuring 80°. What is the measure of the inscribed angle?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "40°"
+            },
+            {
+              "letter": "B",
+              "text": "80°"
+            },
+            {
+              "letter": "C",
+              "text": "120°"
+            },
+            {
+              "letter": "D",
+              "text": "160°"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Surface Area of a Cylinder",
+      "questions": [
+        {
+          "question": "A cylindrical can has a radius of 3 cm and a height of 7 cm. What is its total surface area including top and bottom caps? (Use π ≈ 22/7)",
+          "options": [
+            {
+              "letter": "A",
+              "text": "132 cm2"
+            },
+            {
+              "letter": "B",
+              "text": "188.57 cm2 (188 4/7)"
+            },
+            {
+              "letter": "C",
+              "text": "210 cm2"
+            },
+            {
+              "letter": "D",
+              "text": "264 cm2"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Coordinate Geometry Quadrants & Midpoints",
+      "questions": [
+        {
+          "question": "What is the midpoint of the line segment joining points A(-4, 6) and B(2, -2)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "(-1, 2)"
+            },
+            {
+              "letter": "B",
+              "text": "(-2, 4)"
+            },
+            {
+              "letter": "C",
+              "text": "(1, -2)"
+            },
+            {
+              "letter": "D",
+              "text": "(-3, 2)"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Standard Deviation Concept",
+      "questions": [
+        {
+          "question": "Two classes take the same test. Both classes achieve a mean score of 75. Class A has a standard deviation of 4, while Class B has a standard deviation of 12. What does this indicate?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Class B scored higher overall."
+            },
+            {
+              "letter": "B",
+              "text": "Class B scores are much more spread out around the mean."
+            },
+            {
+              "letter": "C",
+              "text": "Class A has a wider spread of test performance."
+            },
+            {
+              "letter": "D",
+              "text": "Students in Class A made more errors."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Box Plot Interpretation",
+      "questions": [
+        {
+          "question": "A box plot shows Q1 = 25, Median = 35, and Q3 = 50. What is the Interquartile Range (IQR)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "10"
+            },
+            {
+              "letter": "B",
+              "text": "25"
+            },
+            {
+              "letter": "C",
+              "text": "35"
+            },
+            {
+              "letter": "D",
+              "text": "60"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Conditional Probability",
+      "questions": [
+        {
+          "question": "Out of 100 students, 60 study French, 40 study Spanish, and 20 study both. If a student selected at random studies French, what is the probability they also study Spanish?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "1/5"
+            },
+            {
+              "letter": "B",
+              "text": "1/3"
+            },
+            {
+              "letter": "C",
+              "text": "1/2"
+            },
+            {
+              "letter": "D",
+              "text": "2/5"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Exponential Growth Model",
+      "questions": [
+        {
+          "question": "A town's population of 10,000 grows at a rate of 5% per year. Which equation models the population P after t years?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "P = 10,000(1.05)t"
+            },
+            {
+              "letter": "B",
+              "text": "P = 10,000(0.05)t"
+            },
+            {
+              "letter": "C",
+              "text": "P = 10,000 + 1.05t"
+            },
+            {
+              "letter": "D",
+              "text": "P = 10,000(0.95)t"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Arithmetic Sequences",
+      "questions": [
+        {
+          "question": "What is the 10th term of the arithmetic sequence: 4, 9, 14, 19, ...?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "44"
+            },
+            {
+              "letter": "B",
+              "text": "49"
+            },
+            {
+              "letter": "C",
+              "text": "50"
+            },
+            {
+              "letter": "D",
+              "text": "54"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Geometric Sequences",
+      "questions": [
+        {
+          "question": "What is the common ratio of the geometric sequence: 81, 27, 9, 3, ...?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "1/3"
+            },
+            {
+              "letter": "B",
+              "text": "3"
+            },
+            {
+              "letter": "C",
+              "text": "-3"
+            },
+            {
+              "letter": "D",
+              "text": "-1/3"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    }
+  ],
+  "10": [
+    {
+      "passage": "Solar Panel Energy Depreciation",
+      "questions": [
+        {
+          "question": "A homeowner installs a solar energy system valued at $8,000. Due to wear and hardware aging, its economic value depreciates at a constant rate of 6% annually. Which function models the system's value V(t) in dollars after t years?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "V(t) = 8000(0.06)t"
+            },
+            {
+              "letter": "B",
+              "text": "V(t) = 8000(0.94)t"
+            },
+            {
+              "letter": "C",
+              "text": "V(t) = 8000 - 480t"
+            },
+            {
+              "letter": "D",
+              "text": "V(t) = 8000(1.06)t"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "EV Charging Station Cost Structure",
+      "questions": [
+        {
+          "question": "An electric vehicle (EV) charging station charges a fixed plug-in fee of $2.50 plus $0.35 per kilowatt-hour (kWh) of energy transferred. If a driver pays $16.50 for a single charge session, how many kWh of energy were consumed?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "35 kWh"
+            },
+            {
+              "letter": "B",
+              "text": "40 kWh"
+            },
+            {
+              "letter": "C",
+              "text": "45 kWh"
+            },
+            {
+              "letter": "D",
+              "text": "47 kWh"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Carbon Footprint Reduction Goal",
+      "questions": [
+        {
+          "question": "A manufacturing plant emits 1,200 metric tons of carbon dioxide per year. Under a new green initiative, the company plans to reduce its annual emissions by 75 metric tons each year. How many years will it take for the annual emissions to reach 450 metric tons?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "8 years"
+            },
+            {
+              "letter": "B",
+              "text": "10 years"
+            },
+            {
+              "letter": "C",
+              "text": "12 years"
+            },
+            {
+              "letter": "D",
+              "text": "15 years"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Smartphone Subscription Plan Comparison",
+      "questions": [
+        {
+          "question": "Plan A costs $30/month flat fee plus $0.05 per MB over the data limit. Plan B costs $15/month flat fee plus $0.10 per MB over the data limit. At how many megabytes of overage do both plans cost the exact same total amount?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "150 MB"
+            },
+            {
+              "letter": "B",
+              "text": "200 MB"
+            },
+            {
+              "letter": "C",
+              "text": "300 MB"
+            },
+            {
+              "letter": "D",
+              "text": "450 MB"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Compound Investment Growth",
+      "questions": [
+        {
+          "question": "A student invests $1,000 in a mutual fund that guarantees 8% annual interest compounded annually. What is the total balance in the account after 2 years?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$1,160.00"
+            },
+            {
+              "letter": "B",
+              "text": "$1,166.40"
+            },
+            {
+              "letter": "C",
+              "text": "$1,200.00"
+            },
+            {
+              "letter": "D",
+              "text": "$1,259.70"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Currency Exchange Rate Fluctuation",
+      "questions": [
+        {
+          "question": "A traveler converts 500 US Dollars (USD) to Euros (EUR) at an exchange rate of 1 USD = 0.92 EUR. Upon returning, she converts 184 EUR back to USD at the same exchange rate. How many US Dollars does she receive back?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$169.28"
+            },
+            {
+              "letter": "B",
+              "text": "$200.00"
+            },
+            {
+              "letter": "C",
+              "text": "$215.00"
+            },
+            {
+              "letter": "D",
+              "text": "$230.00"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Trajectory of a Water Fountain Jet",
+      "questions": [
+        {
+          "question": "The height h(t) in meters of a water jet from a decorative fountain at time t seconds is modeled by h(t) = -5t2 + 20t. What is the maximum height reached by the water jet?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "10 meters"
+            },
+            {
+              "letter": "B",
+              "text": "20 meters"
+            },
+            {
+              "letter": "C",
+              "text": "25 meters"
+            },
+            {
+              "letter": "D",
+              "text": "40 meters"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Optimal Theater Ticket Pricing",
+      "questions": [
+        {
+          "question": "A community theater estimates its ticket sales revenue using R(p) = -10p2 + 300p, where p is the ticket price in dollars. Which ticket price maximizes the revenue?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$10"
+            },
+            {
+              "letter": "B",
+              "text": "$15"
+            },
+            {
+              "letter": "C",
+              "text": "$20"
+            },
+            {
+              "letter": "D",
+              "text": "$30"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Braking Distance Model",
+      "questions": [
+        {
+          "question": "The stopping distance d(v) in meters for a car traveling at speed v km/h is given by d(v) = 0.005v2 + 0.2v. If a driver takes 30 meters to stop completely, what was the driver's speed v?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "50 km/h"
+            },
+            {
+              "letter": "B",
+              "text": "60 km/h"
+            },
+            {
+              "letter": "C",
+              "text": "70 km/h"
+            },
+            {
+              "letter": "D",
+              "text": "80 km/h"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Population Growth of Bacterial Colony",
+      "questions": [
+        {
+          "question": "A biological culture doubles in population every 3 hours. If the initial count is 250 bacteria, how many bacteria will be present after 12 hours?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "2,000"
+            },
+            {
+              "letter": "B",
+              "text": "4,000"
+            },
+            {
+              "letter": "C",
+              "text": "6,000"
+            },
+            {
+              "letter": "D",
+              "text": "8,000"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Half-Life of Medical Isotope",
+      "questions": [
+        {
+          "question": "A medical diagnostic dye contains a radioisotope with a half-life of 4 hours. If a patient is injected with a dose of 80 mg, how much isotope remains active in the body after 12 hours?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "5 mg"
+            },
+            {
+              "letter": "B",
+              "text": "10 mg"
+            },
+            {
+              "letter": "C",
+              "text": "20 mg"
+            },
+            {
+              "letter": "D",
+              "text": "40 mg"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Draining an Overhead Water Reservoir",
+      "questions": [
+        {
+          "question": "A water tank containing 5,000 liters is drained at a constant rate. After 8 minutes of draining, 3,400 liters remain in the tank. What is the rate of water drainage per minute?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "150 liters/min"
+            },
+            {
+              "letter": "B",
+              "text": "200 liters/min"
+            },
+            {
+              "letter": "C",
+              "text": "225 liters/min"
+            },
+            {
+              "letter": "D",
+              "text": "425 liters/min"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Non-Linear Inverse Proportion in Construction",
+      "questions": [
+        {
+          "question": "The time T (in days) required to complete a road maintenance project is inversely proportional to the number of workers W assigned. If 12 workers complete the job in 10 days, how many days will 15 workers take?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "8 days"
+            },
+            {
+              "letter": "B",
+              "text": "9 days"
+            },
+            {
+              "letter": "C",
+              "text": "12.5 days"
+            },
+            {
+              "letter": "D",
+              "text": "14 days"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Drone Surveying Angle of Elevation",
+      "questions": [
+        {
+          "question": "A land surveyor uses a drone floating 50 meters directly above a ground landmark to measure a nearby tower. The drone measures an angle of depression of 30° to the top of the tower, which is standing 100 meters away horizontally from the drone's position. How tall is the tower?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "21.1 meters"
+            },
+            {
+              "letter": "B",
+              "text": "-7.7 meters (The drone is below the top)"
+            },
+            {
+              "letter": "C",
+              "text": "21.1 meters"
+            },
+            {
+              "letter": "D",
+              "text": "32.5 meters"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Shipping Container Cargo Volume",
+      "questions": [
+        {
+          "question": "A standard shipping container has internal dimensions: length 12 meters, width 2.4 meters, and height 2.6 meters. What is the maximum storage volume of the container?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "17.0 m3"
+            },
+            {
+              "letter": "B",
+              "text": "62.4 m3"
+            },
+            {
+              "letter": "C",
+              "text": "74.88 m3"
+            },
+            {
+              "letter": "D",
+              "text": "84.22 m3"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Architectural Dome Circumference & Area",
+      "questions": [
+        {
+          "question": "A architectural glass dome has a hemispherical base with a radius of 14 meters. Using π ≈ 22/7, what is the surface area of the glass dome (excluding the floor)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "616 m2"
+            },
+            {
+              "letter": "B",
+              "text": "1,232 m2"
+            },
+            {
+              "letter": "C",
+              "text": "1,848 m2"
+            },
+            {
+              "letter": "D",
+              "text": "2,464 m2"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Navigation Map Scale Areas",
+      "questions": [
+        {
+          "question": "On an urban planning scale map, 1 centimeter represents an actual ground distance of 200 meters. A proposed city park covers an area of 6 cm2 on the map. What is the actual ground area of the park in square meters?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "1,200 m2"
+            },
+            {
+              "letter": "B",
+              "text": "120,000 m2"
+            },
+            {
+              "letter": "C",
+              "text": "240,000 m2"
+            },
+            {
+              "letter": "D",
+              "text": "400,000 m2"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Circle Arc Length in Highway Design",
+      "questions": [
+        {
+          "question": "A civil engineer designs a curved highway exit ramp as an arc of a circle with a radius of 120 meters. The curved exit subtends a central angle of 60°. What is the length of the exit ramp roadway? (Use π ≈ 3.14)",
+          "options": [
+            {
+              "letter": "A",
+              "text": "62.8 meters"
+            },
+            {
+              "letter": "B",
+              "text": "125.6 meters"
+            },
+            {
+              "letter": "C",
+              "text": "251.2 meters"
+            },
+            {
+              "letter": "D",
+              "text": "376.8 meters"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Coordinate Geometry Distance in GPS Systems",
+      "questions": [
+        {
+          "question": "A delivery vehicle located at coordinate A(3, 8) needs to drive directly to location B(11, 2) on a grid system where 1 unit = 1 kilometer. What is the shortest direct air-line distance between the two locations?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "8 km"
+            },
+            {
+              "letter": "B",
+              "text": "10 km"
+            },
+            {
+              "letter": "C",
+              "text": "12 km"
+            },
+            {
+              "letter": "D",
+              "text": "14 km"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Quality Assurance & Normal Distribution",
+      "questions": [
+        {
+          "question": "A cereal manufacturing machine fills boxes with a target weight mean of 500 grams and a standard deviation of 5 grams. Assuming a normal distribution of box weights, what percentage of filled boxes weighs between 495 grams and 505 grams?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "50%"
+            },
+            {
+              "letter": "B",
+              "text": "68%"
+            },
+            {
+              "letter": "C",
+              "text": "95%"
+            },
+            {
+              "letter": "D",
+              "text": "99.7%"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Two-Way Contingency Table & Risk Probability",
+      "questions": [
+        {
+          "question": "A clinical medical study tests a new diagnostic tool on 200 patients:\n• 80 patients have the condition (72 test positive, 8 test negative)\n• 120 patients do not have the condition (6 test positive, 114 test negative)\nIf a patient selected at random tests positive, what is the probability that the patient actually has the condition?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "80%"
+            },
+            {
+              "letter": "B",
+              "text": "90%"
+            },
+            {
+              "letter": "C",
+              "text": "92.3%"
+            },
+            {
+              "letter": "D",
+              "text": "96.0%"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Analyzing Skewed Income Datasets",
+      "questions": [
+        {
+          "question": "A tech startup reports the annual salaries of its 7 employees: $45,000, $48,000, $50,000, $52,000, $55,000, $60,000, and $350,000 (CEO salary). Which statistical measure best represents a typical non-executive employee's salary?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Mean"
+            },
+            {
+              "letter": "B",
+              "text": "Median"
+            },
+            {
+              "letter": "C",
+              "text": "Range"
+            },
+            {
+              "letter": "D",
+              "text": "Standard Deviation"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Expected Value in Insurance Risk",
+      "questions": [
+        {
+          "question": "An insurance company offers a 1-year smartphone protection plan for $50. If a phone breaks, the replacement cost to the company is $400. Historical data shows a 5% chance that a phone breaks within a year. What is the company's expected profit per policy sold?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$20"
+            },
+            {
+              "letter": "B",
+              "text": "$25"
+            },
+            {
+              "letter": "C",
+              "text": "$30"
+            },
+            {
+              "letter": "D",
+              "text": "$35"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Comparing Boxplot Data Ranges",
+      "questions": [
+        {
+          "question": "Boxplots comparing test scores of two schools show:\n• School X: Min = 40, Q1 = 55, Median = 70, Q3 = 85, Max = 98\n• School Y: Min = 60, Q1 = 68, Median = 75, Q3 = 82, Max = 90\nWhich statement is correct based on the Interquartile Range (IQR)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "School X has greater middle-50% variability (IQR = 30) than School Y (IQR = 14)."
+            },
+            {
+              "letter": "B",
+              "text": "School Y has greater middle-50% variability than School X."
+            },
+            {
+              "letter": "C",
+              "text": "Both schools have equal score variability."
+            },
+            {
+              "letter": "D",
+              "text": "School Y has a larger overall score range than School X."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Binomial Probability in Quality Control",
+      "questions": [
+        {
+          "question": "A solar chip factory has a 90% pass rate on production line tests. If 3 chips are randomly sampled and tested independently, what is the probability that ALL 3 chips pass inspection?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "0.700"
+            },
+            {
+              "letter": "B",
+              "text": "0.729"
+            },
+            {
+              "letter": "C",
+              "text": "0.810"
+            },
+            {
+              "letter": "D",
+              "text": "0.900"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ],
+  "11": [
+    {
+      "passage": "Decibel Level of Concert Sound Systems",
+      "questions": [
+        {
+          "question": "The loudness of sound in decibels (dB) is given by L = 10 · log10(I / I0), where I is the sound intensity in W/m² and I0 = 10-12 W/m² is the threshold of human hearing. If a outdoor music festival speaker system emits an intensity of 10-1 W/m², what is the sound level in decibels?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "90 dB"
+            },
+            {
+              "letter": "B",
+              "text": "110 dB"
+            },
+            {
+              "letter": "C",
+              "text": "120 dB"
+            },
+            {
+              "letter": "D",
+              "text": "130 dB"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Radioactive Carbon Dating in Archaeology",
+      "questions": [
+        {
+          "question": "An ancient wooden artifact retains 25% of its original Carbon-14 (C-14). If the half-life of Carbon-14 is approximately 5,730 years, how old is the artifact?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "5,730 years"
+            },
+            {
+              "letter": "B",
+              "text": "11,460 years"
+            },
+            {
+              "letter": "C",
+              "text": "17,190 years"
+            },
+            {
+              "letter": "D",
+              "text": "22,920 years"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Pharmacological Drug Elimination",
+      "questions": [
+        {
+          "question": "A patient is administered 200 mg of a medication. The amount of active medication A(t) in milligrams remaining in the bloodstream after t hours is modeled by A(t) = 200 e-0.15t. After approximately how many hours will the active drug amount drop to 50 mg? (Use ln(0.25) ≈ -1.386)",
+          "options": [
+            {
+              "letter": "A",
+              "text": "4.6 hours"
+            },
+            {
+              "letter": "B",
+              "text": "9.24 hours"
+            },
+            {
+              "letter": "C",
+              "text": "12.5 hours"
+            },
+            {
+              "letter": "D",
+              "text": "15.0 hours"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Continuously Compounded Bank Account",
+      "questions": [
+        {
+          "question": "An investment account of $5,000 earns interest at a rate of 6% per annum compounded continuously. The balance after t years is given by A(t) = 5000 e0.06t. What is the approximate balance in the account after 10 years? (Use e0.6 ≈ 1.822)",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$8,000.00"
+            },
+            {
+              "letter": "B",
+              "text": "$9,110.00"
+            },
+            {
+              "letter": "C",
+              "text": "$10,250.00"
+            },
+            {
+              "letter": "D",
+              "text": "$11,500.00"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Seismic Richter Scale Magnitude Comparison",
+      "questions": [
+        {
+          "question": "The magnitude M of an earthquake is measured on a logarithmic scale given by M = log10(E / E0), where E is energy released. If Earthquake X measures magnitude 7.0 and Earthquake Y measures magnitude 5.0, how many times more energy is released by Earthquake X compared to Earthquake Y?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "2 times"
+            },
+            {
+              "letter": "B",
+              "text": "20 times"
+            },
+            {
+              "letter": "C",
+              "text": "100 times"
+            },
+            {
+              "letter": "D",
+              "text": "1,000 times"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Logistic Growth of Wildfire Spread",
+      "questions": [
+        {
+          "question": "The area P(t) in acres burned by a controlled wildfire after t hours is modeled by the logistic function P(t) = 1000 / (1 + 9e-0.5t). What is the carrying capacity (maximum limit) of acres that this fire can reach as t grows very large?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "100 acres"
+            },
+            {
+              "letter": "B",
+              "text": "1,000 acres"
+            },
+            {
+              "letter": "C",
+              "text": "9,000 acres"
+            },
+            {
+              "letter": "D",
+              "text": "10,000 acres"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Ferris Wheel Height Periodic Motion",
+      "questions": [
+        {
+          "question": "A passenger boards a Ferris wheel at its lowest point, 2 meters above the ground. The wheel has a radius of 15 meters and completes one full rotation every 60 seconds. Which trigonometric function models the height h(t) in meters of the passenger after t seconds?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "h(t) = -15 cos((π/30)t) + 17"
+            },
+            {
+              "letter": "B",
+              "text": "h(t) = 15 sin((π/30)t) + 2"
+            },
+            {
+              "letter": "C",
+              "text": "h(t) = -15 sin((π/60)t) + 17"
+            },
+            {
+              "letter": "D",
+              "text": "h(t) = 15 cos((π/30)t) + 15"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Tidal Water Depth Modeling",
+      "questions": [
+        {
+          "question": "The water depth d(t) in meters in a ocean harbor is modeled by d(t) = 4 sin((π/6)(t - 3)) + 10, where t is hours past midnight. What is the maximum water depth during high tide and at what time of day does the first high tide occur?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Max depth 10 m at 3:00 AM"
+            },
+            {
+              "letter": "B",
+              "text": "Max depth 14 m at 6:00 AM"
+            },
+            {
+              "letter": "C",
+              "text": "Max depth 14 m at 3:00 AM"
+            },
+            {
+              "letter": "D",
+              "text": "Max depth 18 m at 6:00 AM"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Non-Right Triangle Navigation (Law of Cosines)",
+      "questions": [
+        {
+          "question": "Two coast guard rescue boats leave a port at the same time. Boat A travels at 20 knots on a heading, and Boat B travels at 15 knots. After 1 hour, the angle between their two paths is 60°. How far apart are the two rescue boats?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "15.2 nautical miles"
+            },
+            {
+              "letter": "B",
+              "text": "18.0 nautical miles"
+            },
+            {
+              "letter": "C",
+              "text": "25.0 nautical miles"
+            },
+            {
+              "letter": "D",
+              "text": "30.4 nautical miles"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Surveying Inaccessible Heights (Law of Sines)",
+      "questions": [
+        {
+          "question": "A surveyor measures the angle of elevation to a mountain peak from Point A as 30°. Walking 200 meters closer to the mountain base to Point B, the angle of elevation increases to 45°. What is the vertical height of the mountain peak above ground level?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "200.0 meters"
+            },
+            {
+              "letter": "B",
+              "text": "273.2 meters"
+            },
+            {
+              "letter": "C",
+              "text": "346.4 meters"
+            },
+            {
+              "letter": "D",
+              "text": "400.0 meters"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "AC Electrical Voltage Phase Shift",
+      "questions": [
+        {
+          "question": "The voltage V(t) in volts in an alternating current (AC) circuit is given by V(t) = 170 cos(120π t - π/4). What is the frequency in Hertz (Hz) of this electrical supply?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "30 Hz"
+            },
+            {
+              "letter": "B",
+              "text": "60 Hz"
+            },
+            {
+              "letter": "C",
+              "text": "120 Hz"
+            },
+            {
+              "letter": "D",
+              "text": "377 Hz"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Trigonometric Identity Simplification in Wave Physics",
+      "questions": [
+        {
+          "question": "A physics signal wave is represented by the product 2 sin(x) cos(x). Which single trigonometric expression is equivalent to this wave function?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "sin(2x)"
+            },
+            {
+              "letter": "B",
+              "text": "cos(2x)"
+            },
+            {
+              "letter": "C",
+              "text": "tan(2x)"
+            },
+            {
+              "letter": "D",
+              "text": "sin²(x)"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Solar Insolation Seasonal Variation",
+      "questions": [
+        {
+          "question": "Daily solar radiation S(d) in megajoules per square meter on day d of the year (where d = 1 is Jan 1) is modeled by S(d) = 12 sin((2π / 365)(d - 80)) + 20. What is the maximum daily solar radiation received during the summer solstice?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "20 MJ/m²"
+            },
+            {
+              "letter": "B",
+              "text": "32 MJ/m²"
+            },
+            {
+              "letter": "C",
+              "text": "35 MJ/m²"
+            },
+            {
+              "letter": "D",
+              "text": "44 MJ/m²"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Mortgage Amortization Repayment Plan",
+      "questions": [
+        {
+          "question": "A homeowner takes out a loan repaid over 20 years. The annual principal repayment schedule forms an arithmetic sequence where Year 1 repayment is $5,000 and increases by $500 each year. What is the total sum of principal repaid over the 20-year term?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$145,000"
+            },
+            {
+              "letter": "B",
+              "text": "$180,000"
+            },
+            {
+              "letter": "C",
+              "text": "$195,000"
+            },
+            {
+              "letter": "D",
+              "text": "$210,000"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Retirement Annuity Accumulated Future Value",
+      "questions": [
+        {
+          "question": "A worker deposits $2,000 at the end of each year into a retirement account yielding 5% compound interest per year. Which geometric series expression calculates the total value accumulated immediately after the 10th deposit?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "2000 [(1.0510 - 1) / 0.05]"
+            },
+            {
+              "letter": "B",
+              "text": "2000 (1.05)10"
+            },
+            {
+              "letter": "C",
+              "text": "2000 [1 - (0.95)10] / 0.05"
+            },
+            {
+              "letter": "D",
+              "text": "2000 × 10 × 1.05"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Infinite Geometric Series in Economic Multiplier",
+      "questions": [
+        {
+          "question": "When a government injects $100 million into an economy, recipients spend 80% (marginal propensity to consume = 0.8), and subsequent recipients spend 80% of that, infinitely. What is the total theoretical economic activity generated?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$400 million"
+            },
+            {
+              "letter": "B",
+              "text": "$500 million"
+            },
+            {
+              "letter": "C",
+              "text": "$800 million"
+            },
+            {
+              "letter": "D",
+              "text": "$1,000 million"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Depreciation Schedule by Reduced Balance",
+      "questions": [
+        {
+          "question": "A heavy construction truck valued at $120,000 depreciates by 15% of its remaining value each year. What will be the book value of the truck at the end of 5 years?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$30,000"
+            },
+            {
+              "letter": "B",
+              "text": "$53,244"
+            },
+            {
+              "letter": "C",
+              "text": "$60,000"
+            },
+            {
+              "letter": "D",
+              "text": "$78,125"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Pascal's Triangle in Network Expansion",
+      "questions": [
+        {
+          "question": "A fiber-optic network system expands following binomial expansion coefficients. What is the coefficient of x3y2 in the expansion of (2x + y)5?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "10"
+            },
+            {
+              "letter": "B",
+              "text": "40"
+            },
+            {
+              "letter": "C",
+              "text": "80"
+            },
+            {
+              "letter": "D",
+              "text": "160"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Bouncing Ball Infinite Vertical Distance",
+      "questions": [
+        {
+          "question": "A superball is dropped from a height of 10 meters. On each bounce, it rebounds to 60% (3/5) of its previous height. What is the total vertical distance traveled by the ball before coming to rest?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "25 meters"
+            },
+            {
+              "letter": "B",
+              "text": "40 meters"
+            },
+            {
+              "letter": "C",
+              "text": "50 meters"
+            },
+            {
+              "letter": "D",
+              "text": "60 meters"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Instantaneous Velocity of a Rocket",
+      "questions": [
+        {
+          "question": "The height s(t) in meters of a research rocket t seconds after launch is s(t) = 4t3 + 2t2 + 10. What is the instantaneous velocity v(t) = s'(t) of the rocket at t = 3 seconds?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "112 m/s"
+            },
+            {
+              "letter": "B",
+              "text": "120 m/s"
+            },
+            {
+              "letter": "C",
+              "text": "126 m/s"
+            },
+            {
+              "letter": "D",
+              "text": "136 m/s"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Marginal Cost Optimization in Production",
+      "questions": [
+        {
+          "question": "A factory's total cost C(x) in dollars to manufacture x smartphones is C(x) = 0.01x2 + 40x + 5000. What is the marginal cost C'(x) when producing x = 500 smartphones?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$45.00"
+            },
+            {
+              "letter": "B",
+              "text": "$50.00"
+            },
+            {
+              "letter": "C",
+              "text": "$60.00"
+            },
+            {
+              "letter": "D",
+              "text": "$75.00"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Tangent Line Slope on a Polynomial Curve",
+      "questions": [
+        {
+          "question": "Find the slope of the line tangent to the curve f(x) = 2x3 - 5x + 3 at the point where x = 2.",
+          "options": [
+            {
+              "letter": "A",
+              "text": "11"
+            },
+            {
+              "letter": "B",
+              "text": "19"
+            },
+            {
+              "letter": "C",
+              "text": "24"
+            },
+            {
+              "letter": "D",
+              "text": "29"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Bayes' Theorem in Medical Diagnostic Testing",
+      "questions": [
+        {
+          "question": "A rare disease affects 1% of a population. A diagnostic test is 95% accurate for diseased individuals and has a 5% false-positive rate for healthy individuals. If a randomly selected person tests positive, what is the probability that they actually have the disease?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "16.1%"
+            },
+            {
+              "letter": "B",
+              "text": "50.0%"
+            },
+            {
+              "letter": "C",
+              "text": "80.0%"
+            },
+            {
+              "letter": "D",
+              "text": "95.0%"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Continuous Probability Density Function (PDF)",
+      "questions": [
+        {
+          "question": "A continuous random variable X represents waiting time in minutes at a bus stop, with PDF f(x) = 1/10 for 0 ≤ x ≤ 10. What is the probability that a passenger waits between 2 and 7 minutes?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "0.3"
+            },
+            {
+              "letter": "B",
+              "text": "0.5"
+            },
+            {
+              "letter": "C",
+              "text": "0.7"
+            },
+            {
+              "letter": "D",
+              "text": "0.8"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Binomial Distribution Expected Value & Variance",
+      "questions": [
+        {
+          "question": "An airline knows that 10% of booked passengers do not show up for flights. For a flight with 200 booked passengers, what are the expected number of no-shows (mean μ) and the standard deviation (σ)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "μ = 20, σ = 18"
+            },
+            {
+              "letter": "B",
+              "text": "μ = 20, σ = 4.24"
+            },
+            {
+              "letter": "C",
+              "text": "μ = 10, σ = 3.00"
+            },
+            {
+              "letter": "D",
+              "text": "μ = 20, σ = 16.00"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ],
+  "12": [
+    {
+      "passage": "Profit Optimization for a Tech Hardware Manufacturer",
+      "questions": [
+        {
+          "question": "A hardware company determines that the revenue function for selling x thousand smartwatches is R(x) = 120x - x² (in thousands of dollars) and the total cost function is C(x) = x³ - 6x² + 45x + 50. How many thousand smartwatches (x) should be produced to maximize net profit P(x)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "3 thousand"
+            },
+            {
+              "letter": "B",
+              "text": "5 thousand"
+            },
+            {
+              "letter": "C",
+              "text": "8 thousand"
+            },
+            {
+              "letter": "D",
+              "text": "10 thousand"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Related Rates: Oil Slick Expansion",
+      "questions": [
+        {
+          "question": "An offshore oil pipeline rupture creates a circular surface oil slick. Oil spreads such that the radius r of the spill increases at a constant rate of 3 meters per minute. At what rate is the surface area A of the oil slick increasing when the radius reaches 50 meters?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "150π m²/min"
+            },
+            {
+              "letter": "B",
+              "text": "300π m²/min"
+            },
+            {
+              "letter": "C",
+              "text": "450π m²/min"
+            },
+            {
+              "letter": "D",
+              "text": "600π m²/min"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Minimizing Packaging Material (Can Design)",
+      "questions": [
+        {
+          "question": "A beverage company wants to design a cylindrical aluminum can holding a fixed volume of 250π cm³. What radius r minimizes the total surface area S of aluminum used?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "5 cm"
+            },
+            {
+              "letter": "B",
+              "text": "10 cm"
+            },
+            {
+              "letter": "C",
+              "text": "12.5 cm"
+            },
+            {
+              "letter": "D",
+              "text": "25 cm"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Related Rates: Water Draining from a Conical Reservoir",
+      "questions": [
+        {
+          "question": "An inverted conical water tank has a height of 12 meters and a top radius of 4 meters. Water leaks out from the bottom tip at a rate of 2 m³/min. How fast is the water level h dropping when the depth of water inside is 6 meters?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "1 / (2π) m/min"
+            },
+            {
+              "letter": "B",
+              "text": "1 / (2π) m/min ≈ 0.16 m/min"
+            },
+            {
+              "letter": "C",
+              "text": "1 / (4π) m/min"
+            },
+            {
+              "letter": "D",
+              "text": "2 / π m/min"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Point of Diminishing Returns in Advertising",
+      "questions": [
+        {
+          "question": "A company's revenue R in thousands of dollars as a function of advertising spend x in thousands of dollars is modeled by R(x) = -x³ + 9x² + 48x + 100 for 0 ≤ x ≤ 10. The point of diminishing returns corresponds to the inflection point of R(x). At what advertising spend x does this occur?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$3,000"
+            },
+            {
+              "letter": "B",
+              "text": "$5,000"
+            },
+            {
+              "letter": "C",
+              "text": "$6,000"
+            },
+            {
+              "letter": "D",
+              "text": "$8,000"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "L'Hôpital's Rule in Financial Compound Limits",
+      "questions": [
+        {
+          "question": "Evaluate the continuous compounding growth limit: limx → 0 (e3x - 1) / (2x).",
+          "options": [
+            {
+              "letter": "A",
+              "text": "0"
+            },
+            {
+              "letter": "B",
+              "text": "1"
+            },
+            {
+              "letter": "C",
+              "text": "3/2"
+            },
+            {
+              "letter": "D",
+              "text": "3"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Total Distance Traveled from Velocity Function",
+      "questions": [
+        {
+          "question": "An electric train accelerates along a straight track. Its velocity function v(t) in m/s from t = 0 to t = 4 seconds is v(t) = 3t² - 6t + 8. What is the total distance traveled by the train during these 4 seconds?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "32 meters"
+            },
+            {
+              "letter": "B",
+              "text": "48 meters"
+            },
+            {
+              "letter": "C",
+              "text": "56 meters"
+            },
+            {
+              "letter": "D",
+              "text": "64 meters"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Consumer Surplus in Economics",
+      "questions": [
+        {
+          "question": "The demand function for a tech product is P(x) = 100 - 2x, where x is quantity in units and P is price in dollars. If the market equilibrium price is $60 (meaning x = 20 units), what is the Consumer Surplus CS = ∫₀²⁰ (P(x) - 60) dx?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$400"
+            },
+            {
+              "letter": "B",
+              "text": "$600"
+            },
+            {
+              "letter": "C",
+              "text": "$800"
+            },
+            {
+              "letter": "D",
+              "text": "$1,200"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Volume of Revolution: Storage Fuel Tank Design",
+      "questions": [
+        {
+          "question": "A spherical fuel storage tank is formed by rotating the region under y = √(9 - x²) for -3 ≤ x ≤ 3 around the x-axis. What is the volume of this fuel tank in cubic units?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "18π"
+            },
+            {
+              "letter": "B",
+              "text": "36π"
+            },
+            {
+              "letter": "C",
+              "text": "54π"
+            },
+            {
+              "letter": "D",
+              "text": "72π"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Integration by Parts: Water Flow Accumulation",
+      "questions": [
+        {
+          "question": "Water flows into a municipal reservoir at a rate of R(t) = t e⁻⁰ˑ¹ᵗ liters per minute. Using integration by parts ∫ u dv = uv - ∫ v du, which expression represents the indefinite integral ∫ t e⁻⁰ˑ¹ᵗ dt?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "-10t e⁻⁰ˑ¹ᵗ - 100 e⁻⁰ˑ¹ᵗ + C"
+            },
+            {
+              "letter": "B",
+              "text": "10t e⁻⁰ˑ¹ᵗ + 100 e⁻⁰ˑ¹ᵗ + C"
+            },
+            {
+              "letter": "C",
+              "text": "-0.1t e⁻⁰ˑ¹ᵗ - e⁻⁰ˑ¹ᵗ + C"
+            },
+            {
+              "letter": "D",
+              "text": "-10t e⁻⁰ˑ¹ᵗ + 100 e⁻⁰ˑ¹ᵗ + C"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Average Value of a Continuous Solar Output Function",
+      "questions": [
+        {
+          "question": "Solar power output P(t) in kilowatts over an 8-hour period (t = 0 to t = 8) is P(t) = 4t - 0.5t². What is the average power output during this 8-hour period?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "5.33 kW"
+            },
+            {
+              "letter": "B",
+              "text": "7.33 kW"
+            },
+            {
+              "letter": "C",
+              "text": "10.67 kW"
+            },
+            {
+              "letter": "D",
+              "text": "16.00 kW"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Improper Integral: Heat Dissipation in Electronic Chips",
+      "questions": [
+        {
+          "question": "Heat energy rate dissipated by a processor chip over infinite time is modeled by the improper integral ∫₁^∞ (1 / x²) dx. Does this integral converge, and if so, to what value?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Diverges to ∞"
+            },
+            {
+              "letter": "B",
+              "text": "Converges to 1"
+            },
+            {
+              "letter": "C",
+              "text": "Converges to 0.5"
+            },
+            {
+              "letter": "D",
+              "text": "Converges to 2"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Newton's Law of Cooling Differential Equation",
+      "questions": [
+        {
+          "question": "A hot cup of coffee at initial temperature 90°C is placed in a room at constant temperature 20°C. The temperature T(t) satisfies the differential equation dT/dt = -0.1(T - 20). Which explicit function represents T(t)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "T(t) = 20 + 70 e⁻⁰ˑ¹ᵗ"
+            },
+            {
+              "letter": "B",
+              "text": "T(t) = 90 e⁻⁰ˑ¹ᵗ"
+            },
+            {
+              "letter": "C",
+              "text": "T(t) = 20 + 90 e⁻⁰ˑ¹ᵗ"
+            },
+            {
+              "letter": "D",
+              "text": "T(t) = 70 + 20 e⁻⁰ˑ¹ᵗ"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Vector Dot Product in Wind Physics",
+      "questions": [
+        {
+          "question": "A force vector F = 3i + 4j + 2k (in Newtons) moves a drone along a displacement vector d = 5i + 2j + 6k (in meters). What is the total mechanical work W = F · d done by the force?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "25 Joules"
+            },
+            {
+              "letter": "B",
+              "text": "35 Joules"
+            },
+            {
+              "letter": "C",
+              "text": "40 Joules"
+            },
+            {
+              "letter": "D",
+              "text": "50 Joules"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Cross Product: Torque on a Robotic Arm",
+      "questions": [
+        {
+          "question": "A robotic arm applies a position vector r = 2i + 0j + 0k meters and a force vector F = 0i + 5j + 0k Newtons. What is the magnitude of the torque vector τ = r × F?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "0 N·m"
+            },
+            {
+              "letter": "B",
+              "text": "10 N·m"
+            },
+            {
+              "letter": "C",
+              "text": "25 N·m"
+            },
+            {
+              "letter": "D",
+              "text": "10k N·m"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Matrix Transformations in Computer Graphics",
+      "questions": [
+        {
+          "question": "A 2D graphics rendering engine applies a transformation matrix M = [[0, -1], [1, 0]] to a vertex point vector v = [3, 4]ᵀ. What are the transformed coordinates v' = M v?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "(4, 3)"
+            },
+            {
+              "letter": "B",
+              "text": "(-4, 3)"
+            },
+            {
+              "letter": "C",
+              "text": "(3, -4)"
+            },
+            {
+              "letter": "D",
+              "text": "(-3, -4)"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Markov Chain Transition in Customer Migration",
+      "questions": [
+        {
+          "question": "Two competing streaming services, Brand A and Brand B, have market retention probabilities summarized by the transition matrix T = [[0.8, 0.1], [0.2, 0.9]]. If current market shares are [0.5, 0.5]ᵀ, what will be Brand A's market share next period?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "45% (0.45)"
+            },
+            {
+              "letter": "B",
+              "text": "50% (0.50)"
+            },
+            {
+              "letter": "C",
+              "text": "55% (0.55)"
+            },
+            {
+              "letter": "D",
+              "text": "60% (0.60)"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Line Equations in 3D Space (Flight Trajectory Intersection)",
+      "questions": [
+        {
+          "question": "An airplane flight path is modeled by the 3D vector line equation r(t) = (1, 2, 3) + t(2, -1, 4). At what z-coordinate does the aircraft cross the plane x = 7?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "z = 7"
+            },
+            {
+              "letter": "B",
+              "text": "z = 11"
+            },
+            {
+              "letter": "C",
+              "text": "z = 15"
+            },
+            {
+              "letter": "D",
+              "text": "z = 19"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Exponential Probability Distribution in Service Queues",
+      "questions": [
+        {
+          "question": "Waiting time X in minutes at a tech support desk follows an exponential distribution with rate parameter λ = 0.2 (mean waiting time = 5 minutes). The cumulative distribution function is P(X ≤ x) = 1 - e⁻⁰ˑ²ˣ. What is the probability that a customer waits MORE than 10 minutes?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "e⁻² ≈ 0.1353"
+            },
+            {
+              "letter": "B",
+              "text": "1 - e⁻² ≈ 0.8647"
+            },
+            {
+              "letter": "C",
+              "text": "e⁻¹ ≈ 0.3679"
+            },
+            {
+              "letter": "D",
+              "text": "e⁻⁰ˑ² ≈ 0.8187"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Standard Normal Distribution (Z-Scores)",
+      "questions": [
+        {
+          "question": "Graduate Record Exam (GRE) scores are normally distributed with mean μ = 150 and standard deviation σ = 10. A candidate scores 170. What is the candidate's Z-score and what percentage of test-takers score below this candidate?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Z = +1.0, 84.13%"
+            },
+            {
+              "letter": "B",
+              "text": "Z = +2.0, 97.72%"
+            },
+            {
+              "letter": "C",
+              "text": "Z = +2.5, 99.38%"
+            },
+            {
+              "letter": "D",
+              "text": "Z = +3.0, 99.87%"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Central Limit Theorem in Quality Sampling",
+      "questions": [
+        {
+          "question": "Lightbulb lifespans have a mean μ = 1000 hours and standard deviation σ = 100 hours. A random sample of n = 100 bulbs is drawn. By the Central Limit Theorem, what is the standard error (σ_x̅) of the sample mean?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "1 hour"
+            },
+            {
+              "letter": "B",
+              "text": "10 hours"
+            },
+            {
+              "letter": "C",
+              "text": "50 hours"
+            },
+            {
+              "letter": "D",
+              "text": "100 hours"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Confidence Interval Construction for Population Mean",
+      "questions": [
+        {
+          "question": "A sample of 100 batteries yields a sample mean life x̅ = 50 hours with sample standard error 0.5 hours. For a 95% confidence level (Z* = 1.96), what is the margin of error and resulting confidence interval for population mean μ?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Margin of Error = 0.98, Interval: (49.02, 50.98)"
+            },
+            {
+              "letter": "B",
+              "text": "Margin of Error = 0.50, Interval: (49.50, 50.50)"
+            },
+            {
+              "letter": "C",
+              "text": "Margin of Error = 1.00, Interval: (49.00, 51.00)"
+            },
+            {
+              "letter": "D",
+              "text": "Margin of Error = 1.96, Interval: (48.04, 51.96)"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Hypothesis Testing P-Value Concept",
+      "questions": [
+        {
+          "question": "A pharmaceutical company tests a new drug claiming to reduce blood pressure. The null hypothesis H₀ states the drug has no effect. The statistical test yields a p-value of 0.02. At a standard significance level α = 0.05, what conclusion should be drawn?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Fail to reject H₀; drug is ineffective."
+            },
+            {
+              "letter": "B",
+              "text": "Reject H₀; there is statistically significant evidence the drug is effective."
+            },
+            {
+              "letter": "C",
+              "text": "Accept H₀; drug has a 98% failure rate."
+            },
+            {
+              "letter": "D",
+              "text": "Re-test because p-value must equal 0.05."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Poison Probability Distribution for Network Traffic",
+      "questions": [
+        {
+          "question": "Data packets arrive at a server at an average rate of λ = 3 packets per millisecond following a Poisson distribution P(X = k) = (e⁻λ λᵏ) / k!. What is the probability that exactly 2 packets arrive in a given millisecond? (Use e⁻³ ≈ 0.0498)",
+          "options": [
+            {
+              "letter": "A",
+              "text": "0.112"
+            },
+            {
+              "letter": "B",
+              "text": "0.224"
+            },
+            {
+              "letter": "C",
+              "text": "0.336"
+            },
+            {
+              "letter": "D",
+              "text": "0.448"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Type I and Type II Errors in Medical Screening",
+      "questions": [
+        {
+          "question": "In medical hypothesis testing, the null hypothesis H₀ is \"The patient is healthy.\" What constitutes a Type I Error in this decision-making framework?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Diagnosing a healthy patient as sick (False Positive)"
+            },
+            {
+              "letter": "B",
+              "text": "Diagnosing a sick patient as healthy (False Negative)"
+            },
+            {
+              "letter": "C",
+              "text": "Correctly identifying a healthy patient"
+            },
+            {
+              "letter": "D",
+              "text": "Correctly identifying a sick patient"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    }
+  ]
+}

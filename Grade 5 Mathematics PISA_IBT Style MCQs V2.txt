@@ -1,0 +1,218 @@
+Grade 5 Mathematics Challenge: Everyday Math Explorers 
+Welcome to your math adventure! Each question below includes the correct answer and a step-by-step explanation to help you learn.
+Section 1: Number & Operations in Daily Life
+
+1. The School Library Books
+A primary school library receives 4 boxes of new books. Each box contains 25 books. How many new books does the library receive in total?
+A) 80 books
+B) 100 books ✔ (Correct Answer)
+C) 120 books
+D) 125 books
+Explanation: Multiply the number of boxes by the number of books in each box: 4 × 25 = 100 total books.
+
+2. Baking Cupcakes
+Sarah bakes 48 delicious chocolate cupcakes for a class party. She wants to share them equally among 6 tables. How many cupcakes will each table get?
+A) 6 cupcakes
+B) 7 cupcakes
+C) 8 cupcakes ✔ (Correct Answer)
+D) 9 cupcakes
+Explanation: Divide the total number of cupcakes by the number of tables: 48 ÷ 6 = 8 cupcakes per table.
+
+3. Saving for a Toy Car
+Liam saves $15 every week from his pocket money. How much money will he have saved after 6 weeks?
+A) $75
+B) $80
+C) $90 ✔ (Correct Answer)
+D) $100
+Explanation: Multiply the weekly savings by the number of weeks: $15 × 6 = $90.
+
+4. Fruit Basket Fractions
+In a fruit bowl, there are 10 fruits in total: 3 apples, 4 bananas, and 3 oranges. What fraction of the fruit bowl is made up of bananas?
+A) 3/10
+B) 4/10 ✔ (Correct Answer)
+C) 6/10
+D) 7/10
+Explanation: The fraction of bananas is the number of bananas over the total number of fruits: 4 out of 10, which is 4/10.
+
+5. Decimal Juice Bottles
+Emma buys two bottles of juice. One bottle contains 1.25 liters and the other contains 0.75 liters. How many liters of juice does she have altogether?
+A) 1.50 liters
+B) 1.75 liters
+C) 2.00 liters ✔ (Correct Answer)
+D) 2.25 liters
+Explanation: Add the two decimal amounts together: 1.25 + 0.75 = 2.00 liters.
+
+6. Pizza Party Fractions
+A pizza is divided into 8 equal slices. Alex eats 2 slices and Maya eats 3 slices. What fraction of the pizza is left over?
+A) 3/8 ✔ (Correct Answer)
+B) 4/8
+C) 5/8
+D) 6/8
+Explanation: Total slices eaten = 2 + 3 = 5 slices (5/8). Remaining slices = 8 - 5 = 3 slices, which is 3/8 of the pizza.
+
+7. Grocery Store Rounding
+A bag of apples costs $4.87. What is $4.87 rounded to the nearest dollar?
+A) $4.00
+B) $4.50
+C) $4.90
+D) $5.00 ✔ (Correct Answer)
+Explanation: Look at the tenths place (.8). Since 8 is 5 or greater, round up to the next whole dollar, which is $5.00.
+Section 2: Patterns, Logic & Sequences
+
+8. The Bus Schedule Pattern
+Buses leave the station at regular intervals: 8:05 AM, 8:20 AM, 8:35 AM, and 8:50 AM. Following this pattern, when will the next bus leave?
+A) 9:00 AM
+B) 9:05 AM ✔ (Correct Answer)
+C) 9:10 AM
+D) 9:15 AM
+Explanation: The time increases by 15 minutes each step. Adding 15 minutes to 8:50 AM gives 9:05 AM.
+
+9. Tile Pattern Challenge
+A decorative floor design follows a growing tile pattern:
+Step 1: 3 tiles | Step 2: 6 tiles | Step 3: 9 tiles | Step 4: 12 tiles
+How many tiles will be needed for Step 6?
+A) 15 tiles
+B) 18 tiles ✔ (Correct Answer)
+C) 21 tiles
+D) 24 tiles
+Explanation: The pattern increases by 3 tiles per step (Step number × 3). For Step 6: 6 × 3 = 18 tiles.
+
+10. Missing Number Mystery
+Look at this number sequence: 5, 10, 20, 40, ___, 160. What is the missing number?
+A) 50
+B) 60
+C) 80 ✔ (Correct Answer)
+D) 100
+Explanation: Each number is doubled (multiplied by 2) to get the next number. 40 × 2 = 80 (and 80 × 2 = 160).
+
+11. Number Machine Rule
+An input-output machine transforms numbers:
+Input 2 → Output 7
+Input 4 → Output 11
+Input 6 → Output 15
+If the input is 10, what will be the output?
+A) 19
+B) 21
+C) 23 ✔ (Correct Answer)
+D) 25
+Explanation: The rule is (Input × 2) + 3. For an input of 10: (10 × 2) + 3 = 20 + 3 = 23.
+
+12. House Numbers on Green Street
+All houses on the north side of Green Street have even numbers: 102, 104, 106, 108... What will be the number of the 7th house in this row?
+A) 110
+B) 112
+C) 114 ✔ (Correct Answer)
+D) 116
+Explanation: Counting consecutive even numbers starting from 102: 102 (1st), 104 (2nd), 106 (3rd), 108 (4th), 110 (5th), 112 (6th), 114 (7th).
+Section 3: Geometry & Spatial Awareness
+
+13. Fencing the Garden
+Mr. Green is building a rectangular vegetable garden that is 8 meters long and 5 meters wide. How many meters of fencing does he need to put all around the border?
+A) 13 meters
+B) 26 meters ✔ (Correct Answer)
+C) 40 meters
+D) 50 meters
+Explanation: Perimeter = 2 × (Length + Width) = 2 × (8 + 5) = 2 × 13 = 26 meters.
+
+14. Carpet Area
+A square rug measures 4 meters on each side. What is the total area covered by the rug in square meters?
+A) 8 sq m
+B) 12 sq m
+C) 16 sq m ✔ (Correct Answer)
+D) 20 sq m
+Explanation: Area of a square = side × side = 4 × 4 = 16 square meters.
+
+15. Identifying Triangles
+A triangle has three equal sides of length 6 cm each. What type of triangle is this?
+A) Right-angled triangle
+B) Isosceles triangle
+C) Equilateral triangle ✔ (Correct Answer)
+D) Scalene triangle
+Explanation: A triangle with all three equal sides is called an equilateral triangle.
+
+16. Clock Hands Angle
+When a clock displays exactly 3:00, what kind of angle is formed between the hour hand and the minute hand?
+A) Acute angle
+B) Right angle ✔ (Correct Answer)
+C) Obtuse angle
+D) Straight angle
+Explanation: At 3:00, the minute hand points at 12 and the hour hand points at 3, forming a 90-degree right angle.
+
+17. Symmetry in Shapes
+How many lines of symmetry does a standard regular square have?
+A) 1
+B) 2
+C) 4 ✔ (Correct Answer)
+D) 8
+Explanation: A square has 4 lines of symmetry: 1 vertical, 1 horizontal, and 2 diagonal lines.
+
+18. Gift Box Nets
+Which 3D shape can be constructed by folding six identical square faces together?
+A) Pyramid
+B) Cylinder
+C) Rectangular Prism
+D) Cube ✔ (Correct Answer)
+Explanation: A cube is a 3D shape composed of 6 identical square faces.
+Section 4: Measurement, Time & Data Analysis
+
+19. Morning Bus Ride
+Noah gets on the school bus at 7:45 AM. The ride takes 35 minutes. At what time does he arrive at school?
+A) 8:15 AM
+B) 8:20 AM ✔ (Correct Answer)
+C) 8:25 AM
+D) 8:30 AM
+Explanation: Adding 15 minutes to 7:45 AM brings it to 8:00 AM. Adding the remaining 20 minutes gives 8:20 AM.
+
+20. Baking Conversion
+A cake recipe requires 2.5 kilograms of flour. How many grams is this equal to?
+A) 250 grams
+B) 2,500 grams ✔ (Correct Answer)
+C) 25,000 grams
+D) 250,000 grams
+Explanation: Since 1 kilogram = 1,000 grams, multiply 2.5 × 1,000 = 2,500 grams.
+
+21. Water Jug Measurement
+A water jug holds 3 liters of water. If David drinks 750 milliliters from the jug, how much water is left inside?
+A) 2,250 milliliters ✔ (Correct Answer)
+B) 2,500 milliliters
+C) 2,750 milliliters
+D) 3,250 milliliters
+Explanation: Convert liters to milliliters: 3 liters = 3,000 ml. Subtract the amount drunk: 3,000 ml - 750 ml = 2,250 ml.
+
+22. Favorite Pets Survey
+In a survey of 30 Grade 5 students:
+• 12 chose Dogs
+• 10 chose Cats
+• 5 chose Fish
+• The remaining students chose Birds.
+How many students chose Birds as their favorite pet?
+A) 2 students
+B) 3 students ✔ (Correct Answer)
+C) 4 students
+D) 5 students
+Explanation: Sum of students accounted for = 12 + 10 + 5 = 27. Remaining students who chose Birds = 30 - 27 = 3 students.
+
+23. Reading Temperature
+At 6:00 AM, the outside temperature was 18°C. By 1:00 PM, the temperature rose by 9°C. What was the temperature at 1:00 PM?
+A) 25°C
+B) 27°C ✔ (Correct Answer)
+C) 28°C
+D) 29°C
+Explanation: Add the temperature rise to the initial temperature: 18°C + 9°C = 27°C.
+
+24. Weekly Test Scores Average
+Mia scores 80, 90, and 100 on three weekly math quizzes. What is her average (mean) quiz score?
+A) 85
+B) 90 ✔ (Correct Answer)
+C) 95
+D) 100
+Explanation: Calculate the sum and divide by total quizzes: (80 + 90 + 100) ÷ 3 = 270 ÷ 3 = 90.
+
+25. Probability with Colored Marbles
+A pouch contains 5 red marbles, 5 blue marbles, and 10 green marbles. If you reach in without looking, which color are you most likely to pull out?
+A) Red
+B) Blue
+C) Green ✔ (Correct Answer)
+D) Red and Blue are equally likely
+Explanation: Green has the highest quantity (10 out of 20 total marbles), giving it the highest probability of being picked.
+

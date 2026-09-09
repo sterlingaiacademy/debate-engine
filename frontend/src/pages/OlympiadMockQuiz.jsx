@@ -373,9 +373,14 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
           {/* Question Area */}
           <div className="flex-1 flex flex-col transition-opacity duration-200" style={{ opacity: animate ? 1 : 0, padding: '1.5rem 2rem', gap: '1.5rem' }}>
             {/* Question Card */}
-            <div className="bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal rounded-[20px] relative overflow-hidden" style={{ padding: '1.25rem' }}>
+            <div className="bg-bg-base dark:bg-dark-base shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal rounded-[20px] relative overflow-hidden flex flex-col" style={{ padding: '1.25rem', gap: '0.75rem' }}>
               <div className="absolute left-0 top-0 bottom-0 w-[4px] opacity-80" style={gradientStyle}></div>
-              <p className="text-base text-text-main dark:text-white/90 leading-relaxed pl-6 font-medium whitespace-pre-wrap">
+              {q.passage && (
+                <p className="text-sm text-text-muted dark:text-gray-400 leading-relaxed pl-6 font-medium whitespace-pre-wrap border-b border-gray-200 dark:border-white/5 pb-3">
+                  {q.passage}
+                </p>
+              )}
+              <p className="text-base text-text-main dark:text-white/90 leading-relaxed pl-6 font-medium whitespace-pre-wrap mt-1">
                 {q.question}
               </p>
             </div>
