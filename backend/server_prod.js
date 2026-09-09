@@ -4409,6 +4409,7 @@ const subjectMockQuestions = {
   english: require('./data/english_mock.json'),
   science: require('./data/science_mock.json'),
   mathematics: require('./data/mathematics_mock.json'),
+  'social sciences': require('./data/social_science_mock.json'),
 };
 
 async function ensureMockTable() {

@@ -1,0 +1,3258 @@
+{
+  "5": [
+    {
+      "passage": "A hiker is using a standard map grid. If a river flows from coordinate (2, B) to (5, B), in which general direction is the river flowing?",
+      "questions": [
+        {
+          "question": "A hiker is using a standard map grid. If a river flows from coordinate (2, B) to (5, B), in which general direction is the river flowing?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "North"
+            },
+            {
+              "letter": "B",
+              "text": "East"
+            },
+            {
+              "letter": "C",
+              "text": "West"
+            },
+            {
+              "letter": "D",
+              "text": "South"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Look at a map scale that shows: \"1 cm on map = 100 km on ground\". If the distance between City X and City Y measures 4.5 cm on the map, what is the actual distance on the ground?",
+      "questions": [
+        {
+          "question": "Look at a map scale that shows: \"1 cm on map = 100 km on ground\". If the distance between City X and City Y measures 4.5 cm on the map, what is the actual distance on the ground?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "45 km"
+            },
+            {
+              "letter": "B",
+              "text": "450 km"
+            },
+            {
+              "letter": "C",
+              "text": "4,500 km"
+            },
+            {
+              "letter": "D",
+              "text": "400 km"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Why do cartographers use blue specifically to represent water bodies on physical maps across the world?",
+      "questions": [
+        {
+          "question": "Why do cartographers use blue specifically to represent water bodies on physical maps across the world?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Blue paint is the cheapest ink to produce commercially."
+            },
+            {
+              "letter": "B",
+              "text": "It is a universal symbol standard that helps readers instantly identify physical features."
+            },
+            {
+              "letter": "C",
+              "text": "Ocean water everywhere in the world is always bright blue."
+            },
+            {
+              "letter": "D",
+              "text": "International maritime laws require all maps to use blue color."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "If you start at the Equator and travel straight towards the North Pole, through which sequence of latitude lines will you pass?",
+      "questions": [
+        {
+          "question": "If you start at the Equator and travel straight towards the North Pole, through which sequence of latitude lines will you pass?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Tropic of Capricorn, then Tropic of Cancer"
+            },
+            {
+              "letter": "B",
+              "text": "Tropic of Cancer, then Arctic Circle"
+            },
+            {
+              "letter": "C",
+              "text": "Arctic Circle, then Tropic of Cancer"
+            },
+            {
+              "letter": "D",
+              "text": "Tropic of Capricorn, then Antarctic Circle"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "City A is located at 10° N latitude, while City B is located at 55° N latitude. Based purely on their positions relative to climate zones, which statement is most accurate?",
+      "questions": [
+        {
+          "question": "City A is located at 10° N latitude, while City B is located at 55° N latitude. Based purely on their positions relative to climate zones, which statement is most accurate?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "City A has a colder climate than City B."
+            },
+            {
+              "letter": "B",
+              "text": "City A receives more direct sunlight throughout the year than City B."
+            },
+            {
+              "letter": "C",
+              "text": "City B is located within the Torrid Zone."
+            },
+            {
+              "letter": "D",
+              "text": "City A experiences longer winters than City B."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "What primary factor causes places near the poles to remain freezing cold even during their summer months?",
+      "questions": [
+        {
+          "question": "What primary factor causes places near the poles to remain freezing cold even during their summer months?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The poles are located at a higher altitude above sea level."
+            },
+            {
+              "letter": "B",
+              "text": "Sun rays hit the polar regions at a very low, slanting angle, spreading energy over a wider area."
+            },
+            {
+              "letter": "C",
+              "text": "Ocean currents constantly block warmth from reaching the polar regions."
+            },
+            {
+              "letter": "D",
+              "text": "The poles are significantly further away from the Sun than the Equator is."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "If the tilt of Earth’s axis were to disappear completely (0° tilt), what would be the impact on global seasons?",
+      "questions": [
+        {
+          "question": "If the tilt of Earth’s axis were to disappear completely (0° tilt), what would be the impact on global seasons?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Extreme heat across the entire planet year-round."
+            },
+            {
+              "letter": "B",
+              "text": "There would be no distinct seasonal changes anywhere on Earth."
+            },
+            {
+              "letter": "C",
+              "text": "Winters would become twice as cold in both hemispheres."
+            },
+            {
+              "letter": "D",
+              "text": "The Northern and Southern Hemispheres would experience opposite seasons at the same time."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "An astronaut on the International Space Station observes that Earth looks mostly blue. Why is Earth commonly referred to as the 'Blue Planet'?",
+      "questions": [
+        {
+          "question": "An astronaut on the International Space Station observes that Earth looks mostly blue. Why is Earth commonly referred to as the 'Blue Planet'?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Nitrogen gas in the atmosphere reflects blue light."
+            },
+            {
+              "letter": "B",
+              "text": "Approximately 71% of Earth's surface is covered by water bodies."
+            },
+            {
+              "letter": "C",
+              "text": "Glacier ice reflects the light from the Moon."
+            },
+            {
+              "letter": "D",
+              "text": "The Earth's core produces a magnetic field that glows blue."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Farmers in steep hill regions construct step-like flat terraces along mountain slopes. What primary environmental problem does terrace farming solve?",
+      "questions": [
+        {
+          "question": "Farmers in steep hill regions construct step-like flat terraces along mountain slopes. What primary environmental problem does terrace farming solve?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Excessive wind exposure on crops"
+            },
+            {
+              "letter": "B",
+              "text": "Rapid water run-off causing severe soil erosion"
+            },
+            {
+              "letter": "C",
+              "text": "Overgrowth of weeds and unwanted pests"
+            },
+            {
+              "letter": "D",
+              "text": "Lack of exposure to direct sunlight"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "A city introduces a rule: 'Collect rainwater from rooftops to recharge underground wells.' What long-term benefit does this rainwater harvesting system provide?",
+      "questions": [
+        {
+          "question": "A city introduces a rule: 'Collect rainwater from rooftops to recharge underground wells.' What long-term benefit does this rainwater harvesting system provide?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It stops clouds from moving away from the city."
+            },
+            {
+              "letter": "B",
+              "text": "It helps replenish depleting groundwater levels for future use."
+            },
+            {
+              "letter": "C",
+              "text": "It completely eliminates the need for municipal water treatment."
+            },
+            {
+              "letter": "D",
+              "text": "It cools down the local atmospheric temperature significantly."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Observe the following situation: A coastal village replaces its natural mangrove forests with concrete walls. During a heavy storm, the village experiences worse flooding than before. Why did this happen?",
+      "questions": [
+        {
+          "question": "Observe the following situation: A coastal village replaces its natural mangrove forests with concrete walls. During a heavy storm, the village experiences worse flooding than before. Why did this happen?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Concrete walls attract larger ocean waves."
+            },
+            {
+              "letter": "B",
+              "text": "Mangrove root systems naturally absorb wave energy and hold coastal soil together."
+            },
+            {
+              "letter": "C",
+              "text": "Mangroves produce offshore winds that push rain clouds back to sea."
+            },
+            {
+              "letter": "D",
+              "text": "Concrete absorbs water and overflows into residential streets."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Which of the following is the most sustainable daily habit for conserving non-renewable energy resources?",
+      "questions": [
+        {
+          "question": "Which of the following is the most sustainable daily habit for conserving non-renewable energy resources?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Keeping air conditioners running continuous low settings."
+            },
+            {
+              "letter": "B",
+              "text": "Using public transportation or bicycles instead of personal motor vehicles for short distance travel."
+            },
+            {
+              "letter": "C",
+              "text": "Burning dry leaves to generate household heat."
+            },
+            {
+              "letter": "D",
+              "text": "Leaving electric appliances on standby mode overnight."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Early human settlements across the world were almost always established near river valleys (such as the Indus, Nile, or Tigris). What was the major reason for this pattern?",
+      "questions": [
+        {
+          "question": "Early human settlements across the world were almost always established near river valleys (such as the Indus, Nile, or Tigris). What was the major reason for this pattern?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "River valleys provided protection against high mountains."
+            },
+            {
+              "letter": "B",
+              "text": "Rivers offered fertile soil for agriculture, abundant fresh water, and easy transport routes."
+            },
+            {
+              "letter": "C",
+              "text": "Rivers kept dangerous wild animals completely away from humans."
+            },
+            {
+              "letter": "D",
+              "text": "Early humans used water wheels to generate domestic electricity."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Archaeologists found copper objects and terracotta seals during excavations of Harappan cities. What does this evidence tell us about ancient Indus Valley residents?",
+      "questions": [
+        {
+          "question": "Archaeologists found copper objects and terracotta seals during excavations of Harappan cities. What does this evidence tell us about ancient Indus Valley residents?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They relied entirely on hunting and gathered no plant crops."
+            },
+            {
+              "letter": "B",
+              "text": "They possessed advanced metallurgy skills and engaged in systematic trade."
+            },
+            {
+              "letter": "C",
+              "text": "They did not know how to construct permanent housing structures."
+            },
+            {
+              "letter": "D",
+              "text": "They imported all basic tools from distant European civilizations."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "How did the invention of the wheel revolutionize human society during ancient times?",
+      "questions": [
+        {
+          "question": "How did the invention of the wheel revolutionize human society during ancient times?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It enabled humans to build high-rise stone towers."
+            },
+            {
+              "letter": "B",
+              "text": "It dramatically improved land transportation, heavy load movement, and pottery creation."
+            },
+            {
+              "letter": "C",
+              "text": "It allowed immediate communication across ocean barriers."
+            },
+            {
+              "letter": "D",
+              "text": "It led directly to the development of agricultural seed types."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ],
+  "6": [
+    {
+      "passage": "An astronomer observes two celestial bodies, X and Y. Body X produces its own light and heat due to nuclear reactions, while Body Y shines only because it reflects light from Body X. How should X and Y be classified?",
+      "questions": [
+        {
+          "question": "An astronomer observes two celestial bodies, X and Y. Body X produces its own light and heat due to nuclear reactions, while Body Y shines only because it reflects light from Body X. How should X and Y be classified?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "X is a planet and Y is a star."
+            },
+            {
+              "letter": "B",
+              "text": "X is a star and Y is a planet or satellite."
+            },
+            {
+              "letter": "C",
+              "text": "Both X and Y are asteroids."
+            },
+            {
+              "letter": "D",
+              "text": "X is a meteoroid and Y is a comet."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Standard Time in India is calculated based on the 82.5° E longitude (82° 30' E) passing through Mirzapur. Why is a single standard meridian necessary for a country?",
+      "questions": [
+        {
+          "question": "Standard Time in India is calculated based on the 82.5° E longitude (82° 30' E) passing through Mirzapur. Why is a single standard meridian necessary for a country?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To ensure that daylight hours are identical in every single town."
+            },
+            {
+              "letter": "B",
+              "text": "To avoid widespread confusion in train and flight schedules caused by local time differences across long distances."
+            },
+            {
+              "letter": "C",
+              "text": "To equalize seasonal weather variations between eastern and western states."
+            },
+            {
+              "letter": "D",
+              "text": "Because international conventions mandate every country to have only one time zone."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "During the June Solstice (around June 21), places in the Northern Hemisphere experience their longest day and shortest night. What causes this astronomical phenomenon?",
+      "questions": [
+        {
+          "question": "During the June Solstice (around June 21), places in the Northern Hemisphere experience their longest day and shortest night. What causes this astronomical phenomenon?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The Sun moves much closer to the Northern Hemisphere in its elliptical orbit."
+            },
+            {
+              "letter": "B",
+              "text": "The Northern Hemisphere is tilted directly towards the Sun during Earth's revolution."
+            },
+            {
+              "letter": "C",
+              "text": "Earth rotates on its axis at a much slower speed during the month of June."
+            },
+            {
+              "letter": "D",
+              "text": "Ocean currents transfer thermal energy northwards."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "A topographical map uses thematic symbols. If you see closely packed contour lines drawn together on a elevation map, what terrain feature does this indicate?",
+      "questions": [
+        {
+          "question": "A topographical map uses thematic symbols. If you see closely packed contour lines drawn together on a elevation map, what terrain feature does this indicate?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A vast flat plain land"
+            },
+            {
+              "letter": "B",
+              "text": "A steep slope or cliff"
+            },
+            {
+              "letter": "C",
+              "text": "A broad river basin"
+            },
+            {
+              "letter": "D",
+              "text": "A shallow lake"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Life on Earth exists in a narrow zone where air, water, and land interact with each other. What is this integrated life-supporting zone called?",
+      "questions": [
+        {
+          "question": "Life on Earth exists in a narrow zone where air, water, and land interact with each other. What is this integrated life-supporting zone called?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Atmosphere"
+            },
+            {
+              "letter": "B",
+              "text": "Hydrosphere"
+            },
+            {
+              "letter": "C",
+              "text": "Biosphere"
+            },
+            {
+              "letter": "D",
+              "text": "Lithosphere"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Mountains, Plateaus, and Plains are major landforms. Which of the following describes a key economic advantage unique to plateaus?",
+      "questions": [
+        {
+          "question": "Mountains, Plateaus, and Plains are major landforms. Which of the following describes a key economic advantage unique to plateaus?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They have the highest agricultural crop yields due to deep alluvial silt."
+            },
+            {
+              "letter": "B",
+              "text": "They are rich storehouses of valuable mineral deposits like iron, coal, and manganese."
+            },
+            {
+              "letter": "C",
+              "text": "They provide natural high-altitude deepwater seaports."
+            },
+            {
+              "letter": "D",
+              "text": "They experience no seismic activity or earthquakes."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Why are river plains across India (such as the Indo-Gangetic Plain) the most densely populated regions of the country?",
+      "questions": [
+        {
+          "question": "Why are river plains across India (such as the Indo-Gangetic Plain) the most densely populated regions of the country?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They are surrounded by natural mountain walls that prevent all rainfall."
+            },
+            {
+              "letter": "B",
+              "text": "They offer fertile alluvial soil, flat land for construction, and abundant water for farming."
+            },
+            {
+              "letter": "C",
+              "text": "They are completely free from summer high temperatures."
+            },
+            {
+              "letter": "D",
+              "text": "Government regulations mandate all industrial hubs to be built exclusively on plains."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Historians distinguish between 'manufactured artifacts' and 'inscriptions'. Which of the following is considered an inscription?",
+      "questions": [
+        {
+          "question": "Historians distinguish between 'manufactured artifacts' and 'inscriptions'. Which of the following is considered an inscription?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A painted terracotta storage pot found buried underground"
+            },
+            {
+              "letter": "B",
+              "text": "Words and symbols engraved permanently on a stone pillar or copper plate"
+            },
+            {
+              "letter": "C",
+              "text": "Charred grains of wheat recovered from an ancient hearth"
+            },
+            {
+              "letter": "D",
+              "text": "A necklace assembled from polished seashell beads"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "During the Mesolithic transition, hunter-gatherers began domesticating plants and animals rather than relying solely on wild hunting. What major shift in human lifestyle did this cause?",
+      "questions": [
+        {
+          "question": "During the Mesolithic transition, hunter-gatherers began domesticating plants and animals rather than relying solely on wild hunting. What major shift in human lifestyle did this cause?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Humans abandoned stone tools completely in favor of steel implements."
+            },
+            {
+              "letter": "B",
+              "text": "Humans shifted from a nomadic lifestyle to building settled farming communities."
+            },
+            {
+              "letter": "C",
+              "text": "Humans stopped living in groups and began living in isolation."
+            },
+            {
+              "letter": "D",
+              "text": "Humans ceased trading goods with neighboring tribes."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Indus Valley (Harappan) cities were famous for their advanced urban planning. Which feature demonstrates their sophisticated public sanitation knowledge?",
+      "questions": [
+        {
+          "question": "Indus Valley (Harappan) cities were famous for their advanced urban planning. Which feature demonstrates their sophisticated public sanitation knowledge?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Houses built entirely with unbaked wooden planks"
+            },
+            {
+              "letter": "B",
+              "text": "Covered brick street drains connected to private household bathrooms"
+            },
+            {
+              "letter": "C",
+              "text": "Open waste pits placed in central assembly halls"
+            },
+            {
+              "letter": "D",
+              "text": "Absence of private residential water wells"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "In the ancient site of Burzahom (Kashmir), archaeologists uncovered deep underground pit-houses with steps leading down into them. What primary purpose did these pit-houses serve?",
+      "questions": [
+        {
+          "question": "In the ancient site of Burzahom (Kashmir), archaeologists uncovered deep underground pit-houses with steps leading down into them. What primary purpose did these pit-houses serve?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Storing excess agricultural grains away from insects"
+            },
+            {
+              "letter": "B",
+              "text": "Providing shelter and warmth against freezing cold mountain winters"
+            },
+            {
+              "letter": "C",
+              "text": "Conducting religious funeral ceremonies"
+            },
+            {
+              "letter": "D",
+              "text": "Trapping large wild animals during hunts"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "How did Mahajanapadas (like Magadha) differ economically from earlier Vedic tribal groups (Janas)?",
+      "questions": [
+        {
+          "question": "How did Mahajanapadas (like Magadha) differ economically from earlier Vedic tribal groups (Janas)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Mahajanapadas relied solely on voluntary gifts rather than regular taxation."
+            },
+            {
+              "letter": "B",
+              "text": "Mahajanapadas established organized tax collection systems on agricultural produce to support armies and administration."
+            },
+            {
+              "letter": "C",
+              "text": "Mahajanapadas banned the use of iron plows in agriculture."
+            },
+            {
+              "letter": "D",
+              "text": "Mahajanapadas had no fortified capital cities."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Emperor Ashoka abandoned military conquest after winning the Kalinga War. What unique method did he adopt to govern his vast empire afterwards?",
+      "questions": [
+        {
+          "question": "Emperor Ashoka abandoned military conquest after winning the Kalinga War. What unique method did he adopt to govern his vast empire afterwards?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "He increased taxes on foreign merchants traveling through his ports."
+            },
+            {
+              "letter": "B",
+              "text": "He promoted 'Dhamma'—moral conduct, non-violence, tolerance, and civic respect—spread through rock edicts and officials."
+            },
+            {
+              "letter": "C",
+              "text": "He required all citizens to convert to a single mandatory state religion."
+            },
+            {
+              "letter": "D",
+              "text": "He dismantled his administrative network and decentralized all power to village chiefs."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Both Gautam Buddha and Vardhamana Mahavira emphasized teachings in local Prakrit dialects rather than formal Sanskrit. Why was this choice significant?",
+      "questions": [
+        {
+          "question": "Both Gautam Buddha and Vardhamana Mahavira emphasized teachings in local Prakrit dialects rather than formal Sanskrit. Why was this choice significant?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Sanskrit was legally banned by ancient kings."
+            },
+            {
+              "letter": "B",
+              "text": "Prakrit was the everyday spoken language of common people, making philosophical ideas accessible to everyone."
+            },
+            {
+              "letter": "C",
+              "text": "Prakrit was the only language with a written script at that time."
+            },
+            {
+              "letter": "D",
+              "text": "Foreign traders only understood Prakrit."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Roman gold coins have been discovered in large quantities across ancient Sangam-era port sites in South India (such as Arikamedu). What does this archaeological evidence prove?",
+      "questions": [
+        {
+          "question": "Roman gold coins have been discovered in large quantities across ancient Sangam-era port sites in South India (such as Arikamedu). What does this archaeological evidence prove?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "South Indian kingdoms were conquered by Roman emperors."
+            },
+            {
+              "letter": "B",
+              "text": "An extensive maritime trade network existed between South India and the Mediterranean region."
+            },
+            {
+              "letter": "C",
+              "text": "Roman traders used Indian lands exclusively to bury their treasury vaults."
+            },
+            {
+              "letter": "D",
+              "text": "Indian kings adopted Roman currency as their domestic tender."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ],
+  "7": [
+    {
+      "passage": "Earthquakes release seismic waves from an underground focus point. Which location experiences the most severe surface damage during an earthquake?",
+      "questions": [
+        {
+          "question": "Earthquakes release seismic waves from an underground focus point. Which location experiences the most severe surface damage during an earthquake?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The focus point deep inside the Earth's mantle"
+            },
+            {
+              "letter": "B",
+              "text": "The epicenter located directly above the focus on the Earth's surface"
+            },
+            {
+              "letter": "C",
+              "text": "Coastal plains located 500 km away from the fault line"
+            },
+            {
+              "letter": "D",
+              "text": "High-altitude mountain plateaus in the opposite hemisphere"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "A student collects two rock samples: Sample A has large, visible mineral crystals formed underground over thousands of years, while Sample B has smooth, tiny glass-like grain structures formed rapidly on the surface. How are Sample A and Sample B classified?",
+      "questions": [
+        {
+          "question": "A student collects two rock samples: Sample A has large, visible mineral crystals formed underground over thousands of years, while Sample B has smooth, tiny glass-like grain structures formed rapidly on the surface. How are Sample A and Sample B classified?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Sample A is Extrusive Igneous; Sample B is Intrusive Igneous."
+            },
+            {
+              "letter": "B",
+              "text": "Sample A is Intrusive Igneous; Sample B is Extrusive Igneous."
+            },
+            {
+              "letter": "C",
+              "text": "Sample A is Sedimentary; Sample B is Metamorphic."
+            },
+            {
+              "letter": "D",
+              "text": "Sample A is Metamorphic; Sample B is Sedimentary."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Why does the Troposphere contain nearly all of Earth's atmospheric weather phenomena (like clouds, rain, and fog) compared to higher atmospheric layers?",
+      "questions": [
+        {
+          "question": "Why does the Troposphere contain nearly all of Earth's atmospheric weather phenomena (like clouds, rain, and fog) compared to higher atmospheric layers?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It has the highest concentration of ozone gas."
+            },
+            {
+              "letter": "B",
+              "text": "It contains almost all of the atmosphere's water vapor and atmospheric density."
+            },
+            {
+              "letter": "C",
+              "text": "It is completely shielded from solar ultraviolet radiation."
+            },
+            {
+              "letter": "D",
+              "text": "It experiences constant zero-gravity conditions."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "In desert landforms, mushroom rocks with narrow bases and wider tops are frequently observed. What geological process shapes these landforms?",
+      "questions": [
+        {
+          "question": "In desert landforms, mushroom rocks with narrow bases and wider tops are frequently observed. What geological process shapes these landforms?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Glacial melting eroding the bottom rock strata"
+            },
+            {
+              "letter": "B",
+              "text": "Wind carrying abrasive sand particles eroding the lower portion of rocks faster than the upper part"
+            },
+            {
+              "letter": "C",
+              "text": "Underground water dissolving calcium carbonate at ground level"
+            },
+            {
+              "letter": "D",
+              "text": "Volcanic ash deposits forming soft bases"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Tides in oceans are periodic rising and falling of ocean water occurring twice a day. What causes these tides?",
+      "questions": [
+        {
+          "question": "Tides in oceans are periodic rising and falling of ocean water occurring twice a day. What causes these tides?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Underwater volcanic eruptions on ocean floors"
+            },
+            {
+              "letter": "B",
+              "text": "Gravitational pull exerted by the Moon and the Sun on Earth's surface"
+            },
+            {
+              "letter": "C",
+              "text": "Seasonal shifts in global trade winds"
+            },
+            {
+              "letter": "D",
+              "text": "Variations in ocean water temperature near equator"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Tropical Rainforests (such as the Amazon Basin) remain evergreen throughout the year. Why do these forests never shed all their leaves simultaneously?",
+      "questions": [
+        {
+          "question": "Tropical Rainforests (such as the Amazon Basin) remain evergreen throughout the year. Why do these forests never shed all their leaves simultaneously?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The trees are artificially watered by river floods."
+            },
+            {
+              "letter": "B",
+              "text": "There is no distinct dry season, and warm, humid rain occurs almost daily."
+            },
+            {
+              "letter": "C",
+              "text": "The soil contains unique anti-freezing minerals."
+            },
+            {
+              "letter": "D",
+              "text": "Trees shed leaves only once every ten years."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Compare the coniferous forests (Taiga) with tropical deciduous forests. What adaptation allows coniferous trees to survive heavy snow and freezing conditions?",
+      "questions": [
+        {
+          "question": "Compare the coniferous forests (Taiga) with tropical deciduous forests. What adaptation allows coniferous trees to survive heavy snow and freezing conditions?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Large broad leaves that collect sunlight during snowstorms"
+            },
+            {
+              "letter": "B",
+              "text": "Needle-like leaves and flexible sloped branches that shed heavy snow easily"
+            },
+            {
+              "letter": "C",
+              "text": "Thick fleshy stems that store liquid water"
+            },
+            {
+              "letter": "D",
+              "text": "Shallow root networks exposed above snow cover"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "During the Chola Dynasty, village assemblies called 'Sabha' managed local irrigation, land records, and taxation. How were committee members selected in these assemblies according to Chola inscriptions (e.g., Uttaramerur)?",
+      "questions": [
+        {
+          "question": "During the Chola Dynasty, village assemblies called 'Sabha' managed local irrigation, land records, and taxation. How were committee members selected in these assemblies according to Chola inscriptions (e.g., Uttaramerur)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Members were appointed directly by the Chola Emperor."
+            },
+            {
+              "letter": "B",
+              "text": "Eligible candidates' names were written on palm-leaf slips and drawn randomly by a young boy."
+            },
+            {
+              "letter": "C",
+              "text": "Positions were sold at public auctions to the highest taxpaying family."
+            },
+            {
+              "letter": "D",
+              "text": "Military officers voted on local village commanders."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Under the Delhi Sultanate and Mughal Empire, the 'Iqta' or 'Jagir' system was used for governance. What was the primary responsibility of an Iqradar or Jagirdar?",
+      "questions": [
+        {
+          "question": "Under the Delhi Sultanate and Mughal Empire, the 'Iqta' or 'Jagir' system was used for governance. What was the primary responsibility of an Iqradar or Jagirdar?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Writing official state history manuscripts in Persian"
+            },
+            {
+              "letter": "B",
+              "text": "Collecting land revenue from assigned territories to maintain troops and keep local peace"
+            },
+            {
+              "letter": "C",
+              "text": "Building royal tombs exclusively in capital cities"
+            },
+            {
+              "letter": "D",
+              "text": "Controlling foreign ocean maritime trade routes"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Raja Todar Mal, Emperor Akbar’s revenue minister, introduced the 'Zabt' system. How was agricultural tax calculated under this system?",
+      "questions": [
+        {
+          "question": "Raja Todar Mal, Emperor Akbar’s revenue minister, introduced the 'Zabt' system. How was agricultural tax calculated under this system?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A fixed 50% tax was charged on all lands regardless of crop yields."
+            },
+            {
+              "letter": "B",
+              "text": "Crops and fields were surveyed and measured carefully over a 10-year period to fix taxes based on actual yield and market prices."
+            },
+            {
+              "letter": "C",
+              "text": "Tax was collected only in the form of gold coins."
+            },
+            {
+              "letter": "D",
+              "text": "Farmers paid taxes only during drought years."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Why did medieval rulers across India lavishly build grand temples, mosques, and monumental architecture like fortresses and tombs?",
+      "questions": [
+        {
+          "question": "Why did medieval rulers across India lavishly build grand temples, mosques, and monumental architecture like fortresses and tombs?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To comply with international trade laws"
+            },
+            {
+              "letter": "B",
+              "text": "To project their power, wealth, divine sanction, and political legitimacy to subjects and rivals"
+            },
+            {
+              "letter": "C",
+              "text": "To provide housing for common agricultural laborers"
+            },
+            {
+              "letter": "D",
+              "text": "Because stone was cheaper than mud brick construction"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "How did many tribal communities (such as the Ahoms of Assam or Gonds of Central India) transform as they established centralized medieval states?",
+      "questions": [
+        {
+          "question": "How did many tribal communities (such as the Ahoms of Assam or Gonds of Central India) transform as they established centralized medieval states?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They abandoned agriculture entirely to become nomadic hunters."
+            },
+            {
+              "letter": "B",
+              "text": "A social hierarchy developed, tribal chiefs merged into the ruling class, and specialized administrative systems were adopted."
+            },
+            {
+              "letter": "C",
+              "text": "They ceased all contact with non-tribal merchants."
+            },
+            {
+              "letter": "D",
+              "text": "They converted entirely into coastal fishing communities."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "The Bhakti and Sufi movements swept across medieval India between the 8th and 17th centuries. What was a defining characteristic shared by Bhakti saints (like Kabir and Mirabai) and Sufi mystics?",
+      "questions": [
+        {
+          "question": "The Bhakti and Sufi movements swept across medieval India between the 8th and 17th centuries. What was a defining characteristic shared by Bhakti saints (like Kabir and Mirabai) and Sufi mystics?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They conducted spiritual teachings exclusively in formal Sanskrit."
+            },
+            {
+              "letter": "B",
+              "text": "They rejected rigid ritualism, caste discrimination, and emphasized personal love and devotion to God."
+            },
+            {
+              "letter": "C",
+              "text": "They urged disciples to isolate themselves completely from community life."
+            },
+            {
+              "letter": "D",
+              "text": "They supported religious wars between rival kingdoms."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "The growth of regional languages, such as Bengali or Malayalam, during the medieval period was heavily influenced by which development?",
+      "questions": [
+        {
+          "question": "The growth of regional languages, such as Bengali or Malayalam, during the medieval period was heavily influenced by which development?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Universal colonial laws dictating language policies"
+            },
+            {
+              "letter": "B",
+              "text": "Patronage by local rulers, translation of epics into local vernaculars, and Bhakti devotional poetry"
+            },
+            {
+              "letter": "C",
+              "text": "Total abandonment of oral storytelling traditions"
+            },
+            {
+              "letter": "D",
+              "text": "Standardized printing presses established by European traders"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "In India, Universal Adult Suffrage grants every citizen who is 18 years or older the right to vote. What democratic principle does this practice uphold?",
+      "questions": [
+        {
+          "question": "In India, Universal Adult Suffrage grants every citizen who is 18 years or older the right to vote. What democratic principle does this practice uphold?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Economic equality regardless of tax bracket"
+            },
+            {
+              "letter": "B",
+              "text": "Political equality—one person, one vote, one value"
+            },
+            {
+              "letter": "C",
+              "text": "Absolute judicial freedom"
+            },
+            {
+              "letter": "D",
+              "text": "Educational entitlement for adults"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ],
+  "8": [
+    {
+      "passage": "Following the Battle of Plassey (1757) and Battle of Buxar (1764), the British East India Company acquired the 'Diwani' of Bengal, Bihar, and Orissa. What primary financial advantage did this give the Company?",
+      "questions": [
+        {
+          "question": "Following the Battle of Plassey (1757) and Battle of Buxar (1764), the British East India Company acquired the 'Diwani' of Bengal, Bihar, and Orissa. What primary financial advantage did this give the Company?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It allowed the Company to collect land revenue from Bengal to purchase Indian goods and maintain troops without importing gold/silver bullion from Britain."
+            },
+            {
+              "letter": "B",
+              "text": "It exempted the Company from paying wages to local Indian laborers."
+            },
+            {
+              "letter": "C",
+              "text": "It forced European trading rivals to sell their ships to the British."
+            },
+            {
+              "letter": "D",
+              "text": "It transferred full judicial responsibility for Bengal back to the Mughal Emperor."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Under the 'Permanent Settlement' revenue system introduced by Lord Cornwallis in 1793 in Bengal, who was recognized as the permanent owner of the land?",
+      "questions": [
+        {
+          "question": "Under the 'Permanent Settlement' revenue system introduced by Lord Cornwallis in 1793 in Bengal, who was recognized as the permanent owner of the land?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The individual peasant cultivators (Ryots)"
+            },
+            {
+              "letter": "B",
+              "text": "The local village Panchayat council"
+            },
+            {
+              "letter": "C",
+              "text": "The Zamindars, who had to pay a fixed, unchangeable revenue sum to the East India Company"
+            },
+            {
+              "letter": "D",
+              "text": "British military officers stationed in districts"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "During the 19th century, European planters forced Indian peasants to cultivate Indigo under the 'Ryoti' and 'Nij' systems. Why did peasants deeply resist indigo cultivation, leading to the Indigo Rebellion (Nil Bidroho) of 1859?",
+      "questions": [
+        {
+          "question": "During the 19th century, European planters forced Indian peasants to cultivate Indigo under the 'Ryoti' and 'Nij' systems. Why did peasants deeply resist indigo cultivation, leading to the Indigo Rebellion (Nil Bidroho) of 1859?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Indigo seeds required continuous salt water irrigation."
+            },
+            {
+              "letter": "B",
+              "text": "Planters paid extremely low prices, advance cash loans trapped peasants in debt, and deep indigo roots depleted soil fertility, preventing wheat/rice farming."
+            },
+            {
+              "letter": "C",
+              "text": "Indigo plants attracted invasive locust swarms to nearby villages."
+            },
+            {
+              "letter": "D",
+              "text": "British law prohibited the export of indigo outside Bengal."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "How did the British 'Forest Acts' of the 19th century affect tribal communities across India (such as the Santhals, Mundas, and Baigas)?",
+      "questions": [
+        {
+          "question": "How did the British 'Forest Acts' of the 19th century affect tribal communities across India (such as the Santhals, Mundas, and Baigas)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They provided tribal leaders with monetary grants to establish wooden craft industries."
+            },
+            {
+              "letter": "B",
+              "text": "They classified forests as 'Reserved', banning customary shifting cultivation (*Jhum*), hunting, and timber collection, forcing tribes into wage labor."
+            },
+            {
+              "letter": "C",
+              "text": "They declared all forest lands to be autonomous tribal republics."
+            },
+            {
+              "letter": "D",
+              "text": "They forced tribal communities to migrate exclusively to European countries."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "The Great Revolt of 1857 spread rapidly across North and Central India. Which combination of factors triggered this widespread uprising among Indian sepoys, peasants, and rulers?",
+      "questions": [
+        {
+          "question": "The Great Revolt of 1857 spread rapidly across North and Central India. Which combination of factors triggered this widespread uprising among Indian sepoys, peasants, and rulers?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "High land taxes, annexation of states under Doctrine of Lapse, and rumors of greased cartridges violating religious sentiments."
+            },
+            {
+              "letter": "B",
+              "text": "Introduction of western university degrees for village headmen."
+            },
+            {
+              "letter": "C",
+              "text": "Universal military conscription for foreign ocean voyages."
+            },
+            {
+              "letter": "D",
+              "text": "Prohibition of tea and coffee cultivation in hill stations."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "19th-century social reformers like Raja Ram Mohan Roy, Jyotirao Phule, and Ishwar Chandra Vidyasagar advocated for major social change. What was a primary strategy they used to challenge orthodox traditions like Sati and caste discrimination?",
+      "questions": [
+        {
+          "question": "19th-century social reformers like Raja Ram Mohan Roy, Jyotirao Phule, and Ishwar Chandra Vidyasagar advocated for major social change. What was a primary strategy they used to challenge orthodox traditions like Sati and caste discrimination?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Appealing to foreign colonial courts in London to draft new religious texts."
+            },
+            {
+              "letter": "B",
+              "text": "Reinterpreting ancient scriptures to demonstrate that oppressive practices lacked authentic scriptural support, while publishing vernacular literature."
+            },
+            {
+              "letter": "C",
+              "text": "Demanding the complete closure of all schools across rural regions."
+            },
+            {
+              "letter": "D",
+              "text": "Advocating military uprisings against traditional priests."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "In 1905, Viceroy Lord Curzon partitioned Bengal, claiming it was for 'administrative convenience'. What was the true political objective, and how did Indian nationalists respond?",
+      "questions": [
+        {
+          "question": "In 1905, Viceroy Lord Curzon partitioned Bengal, claiming it was for 'administrative convenience'. What was the true political objective, and how did Indian nationalists respond?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To expand trade with Tibet; nationalists supported the policy."
+            },
+            {
+              "letter": "B",
+              "text": "To divide Hindu and Muslim populations to weaken the nationalist movement; sparked the Swadeshi Movement featuring boycotts of British goods."
+            },
+            {
+              "letter": "C",
+              "text": "To build new industrial railways; sparked peaceful diplomatic missions to Europe."
+            },
+            {
+              "letter": "D",
+              "text": "To transfer Bengal’s administration to the French government."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Mahatma Gandhi organized the historic Dandi March in 1930 to launch the Civil Disobedience Movement. Why did he choose the Salt Tax as the central issue for national mobilization?",
+      "questions": [
+        {
+          "question": "Mahatma Gandhi organized the historic Dandi March in 1930 to launch the Civil Disobedience Movement. Why did he choose the Salt Tax as the central issue for national mobilization?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Salt was manufactured exclusively by foreign corporate monopolies."
+            },
+            {
+              "letter": "B",
+              "text": "Salt was an essential food item used equally by rich and poor; taxing it illustrated the oppressive nature of British rule across all social classes."
+            },
+            {
+              "letter": "C",
+              "text": "Salt was the primary export crop funding Indian railways."
+            },
+            {
+              "letter": "D",
+              "text": "Salt was banned from being sold in open urban markets."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Why are solar energy, wind power, and tidal energy classified as 'renewable resources', whereas coal, petroleum, and natural gas are classified as 'non-renewable resources'?",
+      "questions": [
+        {
+          "question": "Why are solar energy, wind power, and tidal energy classified as 'renewable resources', whereas coal, petroleum, and natural gas are classified as 'non-renewable resources'?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Renewable resources can be regenerated naturally over short timeframes, while non-renewable resources take millions of years to form and have finite stocks."
+            },
+            {
+              "letter": "B",
+              "text": "Renewable resources are found only in developed countries, whereas non-renewable resources exist everywhere."
+            },
+            {
+              "letter": "C",
+              "text": "Non-renewable resources produce zero environmental pollution when combusted."
+            },
+            {
+              "letter": "D",
+              "text": "Renewable resources are created exclusively by industrial factories."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Soil profile consists of topsoil, subsoil, weathered rock material, and parent rock. Which soil horizon contains the highest concentration of organic humus and microorganisms essential for plant growth?",
+      "questions": [
+        {
+          "question": "Soil profile consists of topsoil, subsoil, weathered rock material, and parent rock. Which soil horizon contains the highest concentration of organic humus and microorganisms essential for plant growth?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Parent Rock (Bedrock)"
+            },
+            {
+              "letter": "B",
+              "text": "Weathered Rock Material"
+            },
+            {
+              "letter": "C",
+              "text": "Topsoil (A Horizon)"
+            },
+            {
+              "letter": "D",
+              "text": "Subsoil (B Horizon)"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "In dry arid regions like Rajasthan, coastal plains, and flat farmland, rows of trees are planted along field boundaries to prevent soil erosion. What is this soil conservation technique called?",
+      "questions": [
+        {
+          "question": "In dry arid regions like Rajasthan, coastal plains, and flat farmland, rows of trees are planted along field boundaries to prevent soil erosion. What is this soil conservation technique called?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Contour Ploughing"
+            },
+            {
+              "letter": "B",
+              "text": "Terrace Farming"
+            },
+            {
+              "letter": "C",
+              "text": "Shelterbelts (Windbreaks)"
+            },
+            {
+              "letter": "D",
+              "text": "Mulching"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Although Earth is covered by nearly 71% water, water scarcity is an increasing global crisis. Why is usable fresh water so extremely limited for human needs?",
+      "questions": [
+        {
+          "question": "Although Earth is covered by nearly 71% water, water scarcity is an increasing global crisis. Why is usable fresh water so extremely limited for human needs?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "97% of Earth's water is saline ocean water, and out of the remaining freshwater, nearly two-thirds is locked in glaciers and ice caps."
+            },
+            {
+              "letter": "B",
+              "text": "Freshwater evaporates into space every year."
+            },
+            {
+              "letter": "C",
+              "text": "Rainwater contains high concentrations of natural acid that destroys soils."
+            },
+            {
+              "letter": "D",
+              "text": "Ocean salt is artificially added by commercial industries."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "How does 'Subsistence Farming' differ fundamentally from 'Commercial Farming'?",
+      "questions": [
+        {
+          "question": "How does 'Subsistence Farming' differ fundamentally from 'Commercial Farming'?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Subsistence farming relies on heavy factory machinery for cash crop exports, whereas commercial farming uses simple hand tools."
+            },
+            {
+              "letter": "B",
+              "text": "Subsistence farming aims to meet the immediate food needs of the farmer's family using small land plots, whereas commercial farming grows crops at scale for market sale and profit."
+            },
+            {
+              "letter": "C",
+              "text": "Commercial farming is practiced exclusively in mountainous forest regions."
+            },
+            {
+              "letter": "D",
+              "text": "Subsistence farming uses high doses of synthetic chemical pesticides on vast estates."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Silicon Valley in California and Bengaluru in Karnataka are major global technology hubs. Which factor primary explains why these regions became leading Information Technology (IT) clusters?",
+      "questions": [
+        {
+          "question": "Silicon Valley in California and Bengaluru in Karnataka are major global technology hubs. Which factor primary explains why these regions became leading Information Technology (IT) clusters?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Proximity to deepwater ocean shipping ports and coal mines."
+            },
+            {
+              "letter": "B",
+              "text": "Availability of a skilled technical workforce, top educational institutions, favorable government policies, and pleasant year-round climate."
+            },
+            {
+              "letter": "C",
+              "text": "Low population density and absence of urban infrastructure."
+            },
+            {
+              "letter": "D",
+              "text": "Abundant raw iron ore deposits used in computer hardware manufacturing."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Why is the Iron and Steel Industry widely referred to as a 'Feeder' or 'Basic' Industry in industrial economics?",
+      "questions": [
+        {
+          "question": "Why is the Iron and Steel Industry widely referred to as a 'Feeder' or 'Basic' Industry in industrial economics?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Because it produces packaged food products for industrial workers."
+            },
+            {
+              "letter": "B",
+              "text": "Because its output (steel) serves as the essential raw material for building machinery, transport vehicles, bridges, and other manufacturing industries."
+            },
+            {
+              "letter": "C",
+              "text": "Because it is owned entirely by public municipal councils."
+            },
+            {
+              "letter": "D",
+              "text": "Because it operates without consuming natural energy resources."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ],
+  "9": [
+    {
+      "passage": "Prior to the French Revolution of 1789, French society was divided into Three Estates. What economic grievance made the Third Estate (peasants, artisans, merchants) particularly rebellious?",
+      "questions": [
+        {
+          "question": "Prior to the French Revolution of 1789, French society was divided into Three Estates. What economic grievance made the Third Estate (peasants, artisans, merchants) particularly rebellious?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The Third Estate was banned from owning agricultural land entirely."
+            },
+            {
+              "letter": "B",
+              "text": "The Third Estate paid almost all state taxes (like Tithe and Taille), while the First and Second Estates enjoyed tax exemptions."
+            },
+            {
+              "letter": "C",
+              "text": "The Third Estate was legally forced to pay taxes directly to foreign European monarchs."
+            },
+            {
+              "letter": "D",
+              "text": "The Third Estate was exempted from military service during wartime."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "During the October Revolution of 1917 in Russia, Vladimir Lenin’s Bolshevik Party issued the famous 'April Theses'. What were the three primary demands in Lenin's platform?",
+      "questions": [
+        {
+          "question": "During the October Revolution of 1917 in Russia, Vladimir Lenin’s Bolshevik Party issued the famous 'April Theses'. What were the three primary demands in Lenin's platform?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "End the war (WWI), transfer land to peasants, and nationalize banks."
+            },
+            {
+              "letter": "B",
+              "text": "Join the Central Powers, sell state land to corporate traders, and abolish trade unions."
+            },
+            {
+              "letter": "C",
+              "text": "Restore the Tsar to constitutional power, increase food taxes, and expand imperial conquest."
+            },
+            {
+              "letter": "D",
+              "text": "Establish private commercial banks, lower industrial wages, and ban agricultural cooperatives."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "How did Adolf Hitler’s Nazi regime use the 'Enabling Act' of 1933 to dismantle German democracy?",
+      "questions": [
+        {
+          "question": "How did Adolf Hitler’s Nazi regime use the 'Enabling Act' of 1933 to dismantle German democracy?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It mandated proportional representation in parliamentary elections."
+            },
+            {
+              "letter": "B",
+              "text": "It gave Hitler dictatorial power to pass laws without parliamentary consent, banning opposition political parties."
+            },
+            {
+              "letter": "C",
+              "text": "It created an international tribunal to protect trade union rights."
+            },
+            {
+              "letter": "D",
+              "text": "It transferred supreme administrative authority to the League of Nations."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "How did European colonial forest policies in Java (under Dutch rule) and India (under British rule) similarly impact indigenous pastoralists and forest dwellers?",
+      "questions": [
+        {
+          "question": "How did European colonial forest policies in Java (under Dutch rule) and India (under British rule) similarly impact indigenous pastoralists and forest dwellers?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Both colonial powers granted indigenous tribes complete legal ownership over timber exports."
+            },
+            {
+              "letter": "B",
+              "text": "Both regimes enacted restrictive forest laws (Blandongdiensten in Java, Forest Acts in India) that curtailed traditional access to grazing and timber, forcing communities into coerced labor."
+            },
+            {
+              "letter": "C",
+              "text": "Both regimes banned foreign commercial timber companies from operating."
+            },
+            {
+              "letter": "D",
+              "text": "Both regimes subsidized traditional shifting cultivation (Ladang)."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "India's mainland lies between latitudes 8°4'N and 37°6'N, and longitudes 68°7'E and 97°25'E. What is the approximate longitudinal extent, and what is its effect on local time between Gujarat and Arunachal Pradesh?",
+      "questions": [
+        {
+          "question": "India's mainland lies between latitudes 8°4'N and 37°6'N, and longitudes 68°7'E and 97°25'E. What is the approximate longitudinal extent, and what is its effect on local time between Gujarat and Arunachal Pradesh?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "15 degrees extent, causing a 30-minute time difference."
+            },
+            {
+              "letter": "B",
+              "text": "Nearly 30 degrees extent, resulting in a ~2-hour local sunrise time difference between the eastern and western ends."
+            },
+            {
+              "letter": "C",
+              "text": "45 degrees extent, causing a 4-hour time difference."
+            },
+            {
+              "letter": "D",
+              "text": "60 degrees extent, resulting in opposite seasons."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Morphologically, the Himalayan Mountains are classified as 'Young Fold Mountains'. Which tectonic movement created the Himalayas?",
+      "questions": [
+        {
+          "question": "Morphologically, the Himalayan Mountains are classified as 'Young Fold Mountains'. Which tectonic movement created the Himalayas?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The divergence of the Pacific and Atlantic plates."
+            },
+            {
+              "letter": "B",
+              "text": "The collision and convergent compression of the Indo-Australian Plate against the Eurasian Plate."
+            },
+            {
+              "letter": "C",
+              "text": "The sliding transform faulting of the South American Plate."
+            },
+            {
+              "letter": "D",
+              "text": "Volcanic rift erosion along the Great Rift Valley."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Peninsular rivers in India are divided into east-flowing and west-flowing rivers. Why do major west-flowing rivers like the Narmada and Tapi form estuaries instead of extensive deltas at their mouths?",
+      "questions": [
+        {
+          "question": "Peninsular rivers in India are divided into east-flowing and west-flowing rivers. Why do major west-flowing rivers like the Narmada and Tapi form estuaries instead of extensive deltas at their mouths?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They flow through rift valleys created by faulting, carrying minimal silt across hard rock channels with steep gradients near the Western Ghats."
+            },
+            {
+              "letter": "B",
+              "text": "They carry excessive agricultural silt that blocks delta formation."
+            },
+            {
+              "letter": "C",
+              "text": "They are frozen into glaciers before reaching the Arabian Sea."
+            },
+            {
+              "letter": "D",
+              "text": "They are dammed entirely for inland canal networks."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "During the Indian summer monsoon season, what climatic phenomenon triggers the seasonal reversal of wind direction across the Indian subcontinent?",
+      "questions": [
+        {
+          "question": "During the Indian summer monsoon season, what climatic phenomenon triggers the seasonal reversal of wind direction across the Indian subcontinent?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "High pressure over the Tibetan Plateau attracting polar winds."
+            },
+            {
+              "letter": "B",
+              "text": "Intense solar heating over Northern India creating a low-pressure trough (ITCZ) that pulls moisture-laden South-West trade winds across the Equator."
+            },
+            {
+              "letter": "C",
+              "text": "Cold ocean currents flowing from the Antarctic Ocean."
+            },
+            {
+              "letter": "D",
+              "text": "The sudden slowdown of Earth's axial rotation speed."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "What is the cause of 'Western Disturbances' that bring essential winter rainfall to northern Indian states (Punjab, Haryana) beneficial for Rabi crops like wheat?",
+      "questions": [
+        {
+          "question": "What is the cause of 'Western Disturbances' that bring essential winter rainfall to northern Indian states (Punjab, Haryana) beneficial for Rabi crops like wheat?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Tropical cyclones originating in the Bay of Bengal moving westwards."
+            },
+            {
+              "letter": "B",
+              "text": "Shallow cyclonic depressions originating over the Mediterranean Sea brought into India by the westerly jet stream."
+            },
+            {
+              "letter": "C",
+              "text": "Local thermal convection currents over the Thar Desert."
+            },
+            {
+              "letter": "D",
+              "text": "Cold katabatic winds blowing off the Deccan Plateau."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Mangrove forests (such as the Sundarbans in the Ganga-Brahmaputra Delta) thrive in intertidal saline coastal zones. What specialized biological adaptation allows mangrove trees to survive in oxygen-poor, muddy soils?",
+      "questions": [
+        {
+          "question": "Mangrove forests (such as the Sundarbans in the Ganga-Brahmaputra Delta) thrive in intertidal saline coastal zones. What specialized biological adaptation allows mangrove trees to survive in oxygen-poor, muddy soils?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Broad leaves that store pure drinking water."
+            },
+            {
+              "letter": "B",
+              "text": "Blind breathing roots (Pneumatophores) that project vertically above water to extract atmospheric oxygen."
+            },
+            {
+              "letter": "C",
+              "text": "Needles that shed snow loads."
+            },
+            {
+              "letter": "D",
+              "text": "Deep taproots that dissolve underground rocks."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "A country holds regular multi-party elections, but the ruling party controls all news channels, disqualifies main opposition candidates on arbitrary technicalities, and changes voter lists secretly. How would political scientists evaluate this state?",
+      "questions": [
+        {
+          "question": "A country holds regular multi-party elections, but the ruling party controls all news channels, disqualifies main opposition candidates on arbitrary technicalities, and changes voter lists secretly. How would political scientists evaluate this state?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A model constitutional democracy because voting occurs regularly."
+            },
+            {
+              "letter": "B",
+              "text": "An undemocratic regime, because democratic elections require a 'free and fair' environment with genuine competition and level playing fields."
+            },
+            {
+              "letter": "C",
+              "text": "A direct democracy governed by public referendums."
+            },
+            {
+              "letter": "D",
+              "text": "A federal republic with state autonomy."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "What primary constitutional function does the independent Election Commission of India (ECI) perform under Article 324 during national and state elections?",
+      "questions": [
+        {
+          "question": "What primary constitutional function does the independent Election Commission of India (ECI) perform under Article 324 during national and state elections?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Drafting financial legislation for legislative approval."
+            },
+            {
+              "letter": "B",
+              "text": "Exercising complete autonomous control over election scheduling, enforcing the Model Code of Conduct, and conducting fair polling."
+            },
+            {
+              "letter": "C",
+              "text": "Selecting political party candidates directly."
+            },
+            {
+              "letter": "D",
+              "text": "Passing judicial sentences on criminal suspects."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "In the Indian constitutional system, why is the 'Right to Constitutional Remedies' (Article 32) considered by Dr. B.R. Ambedkar to be the 'Heart and Soul' of the Constitution?",
+      "questions": [
+        {
+          "question": "In the Indian constitutional system, why is the 'Right to Constitutional Remedies' (Article 32) considered by Dr. B.R. Ambedkar to be the 'Heart and Soul' of the Constitution?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It allows Parliament to suspend all citizen rights permanently."
+            },
+            {
+              "letter": "B",
+              "text": "It empowers citizens to approach the Supreme Court directly via writs (like Habeas Corpus) to enforce their Fundamental Rights if violated by the State."
+            },
+            {
+              "letter": "C",
+              "text": "It provides free Higher Education scholarships to all citizens."
+            },
+            {
+              "letter": "D",
+              "text": "It authorizes the Prime Minister to alter judicial benches."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "What constitutes the major functional distinction between the Political Executive and the Permanent Executive in Indian governance?",
+      "questions": [
+        {
+          "question": "What constitutes the major functional distinction between the Political Executive and the Permanent Executive in Indian governance?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Political executive consists of elected representatives (Ministers) responsible for policy decisions, while permanent executive consists of civil servants (IAS/IPS) who handle day-to-day administration across government changes."
+            },
+            {
+              "letter": "B",
+              "text": "Political executive serves lifelong terms, while civil servants are elected every 5 years."
+            },
+            {
+              "letter": "C",
+              "text": "Permanent executive writes constitutional amendments, while political executive enforces municipal laws."
+            },
+            {
+              "letter": "D",
+              "text": "Political executive commands the judiciary, while permanent executive commands military forces."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Economists analyze production using four fundamental factors: Land, Labor, Physical Capital, and Human Capital. Which scenario best represents an investment in 'Human Capital'?",
+      "questions": [
+        {
+          "question": "Economists analyze production using four fundamental factors: Land, Labor, Physical Capital, and Human Capital. Which scenario best represents an investment in 'Human Capital'?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Buying 10 acres of commercial land along a highway."
+            },
+            {
+              "letter": "B",
+              "text": "Funding vocational skill training, quality healthcare, and advanced education for healthcare workers."
+            },
+            {
+              "letter": "C",
+              "text": "Purchasing diesel generator sets for a manufacturing factory."
+            },
+            {
+              "letter": "D",
+              "text": "Storing raw cotton bales in a warehouse."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ],
+  "10": [
+    {
+      "passage": "During the nineteenth century in Europe, Ernst Renan defined a nation as a \"plebiscite of every day.\" How did liberal nationalism connect cultural identity with political sovereignty?",
+      "questions": [
+        {
+          "question": "During the nineteenth century in Europe, Ernst Renan defined a nation as a \"plebiscite of every day.\" How did liberal nationalism connect cultural identity with political sovereignty?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "By enforcing absolute divine monarchy across all European states."
+            },
+            {
+              "letter": "B",
+              "text": "By emphasizing that a nation is formed by a shared past, common identity, and the active consent of citizens through democratic choice."
+            },
+            {
+              "letter": "C",
+              "text": "By banning regional languages to impose a single European empire."
+            },
+            {
+              "letter": "D",
+              "text": "By dividing nations strictly based on foreign trade tariffs."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "In 1919, Mahatma Gandhi called for a nationwide Satyagraha against the Rowlatt Act. Why was this act universally opposed by Indian nationalists across political lines?",
+      "questions": [
+        {
+          "question": "In 1919, Mahatma Gandhi called for a nationwide Satyagraha against the Rowlatt Act. Why was this act universally opposed by Indian nationalists across political lines?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It banned the export of raw cotton to European textile mills."
+            },
+            {
+              "letter": "B",
+              "text": "It authorized the colonial government to detain political prisoners without trial for up to two years, violating fundamental judicial fairness."
+            },
+            {
+              "letter": "C",
+              "text": "It imposed a 50% tax on indigenous salt production."
+            },
+            {
+              "letter": "D",
+              "text": "It dismantled all public schools in rural districts."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "During the 19th-century globalization era, the 'Rinderpest' (cattle plague) outbreak in Africa during the 1890s drastically altered the continent's socio-economic landscape. What was the major historical outcome of this epidemic?",
+      "questions": [
+        {
+          "question": "During the 19th-century globalization era, the 'Rinderpest' (cattle plague) outbreak in Africa during the 1890s drastically altered the continent's socio-economic landscape. What was the major historical outcome of this epidemic?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "African pastoral communities successfully conquered European colonial forts."
+            },
+            {
+              "letter": "B",
+              "text": "Rinderpest wiped out 90% of local cattle, destroying African pastoral livelihoods and forcing survivors into the colonial labor market under European control."
+            },
+            {
+              "letter": "C",
+              "text": "European merchants abandoned all trading posts along the African coast."
+            },
+            {
+              "letter": "D",
+              "text": "It triggered widespread industrialization across African kingdoms."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "How did Johannes Gutenberg’s printing press with moveable metal type in 15th-century Europe trigger a 'Print Revolution' that influenced the Protestant Reformation led by Martin Luther?",
+      "questions": [
+        {
+          "question": "How did Johannes Gutenberg’s printing press with moveable metal type in 15th-century Europe trigger a 'Print Revolution' that influenced the Protestant Reformation led by Martin Luther?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It allowed the Roman Catholic Church to censor all scientific texts completely."
+            },
+            {
+              "letter": "B",
+              "text": "It made books cheap and accessible, allowing reformist texts (like Luther’s Ninety-Five Theses) to circulate widely and spark public debate against Church practices."
+            },
+            {
+              "letter": "C",
+              "text": "It replaced vernacular European languages with Latin."
+            },
+            {
+              "letter": "D",
+              "text": "It forced all authors to publish books anonymously."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Soil degradation is a growing concern in India. Black soil (Regur soil) is ideal for growing cotton. Which physical property gives black soil its high moisture-retention capability during dry seasons?",
+      "questions": [
+        {
+          "question": "Soil degradation is a growing concern in India. Black soil (Regur soil) is ideal for growing cotton. Which physical property gives black soil its high moisture-retention capability during dry seasons?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "High proportion of coarse sand particles and gravel."
+            },
+            {
+              "letter": "B",
+              "text": "Fine clayey material with high calcium, magnesium, and potash content that swells when wet and develops deep cracks when dry."
+            },
+            {
+              "letter": "C",
+              "text": "Dense organic humus layers derived from pine trees."
+            },
+            {
+              "letter": "D",
+              "text": "High concentration of soluble iron oxide."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Rainwater harvesting systems vary geographically across India. In the arid and semi-arid regions of Rajasthan (like Bikaner and Barmer), traditional 'Tanka' systems are built. What defines a Tanka?",
+      "questions": [
+        {
+          "question": "Rainwater harvesting systems vary geographically across India. In the arid and semi-arid regions of Rajasthan (like Bikaner and Barmer), traditional 'Tanka' systems are built. What defines a Tanka?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "An open surface canal bringing river water from the Himalayas."
+            },
+            {
+              "letter": "B",
+              "text": "An underground covered concrete tank built inside houses or courtyards to store clean drinking water harvested from rooftops."
+            },
+            {
+              "letter": "C",
+              "text": "A bamboo pipe network delivering spring water to crops."
+            },
+            {
+              "letter": "D",
+              "text": "A artificial wetland storing floodwater for paddy fields."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "India's jute textile mills are concentrated in a narrow belt along the Hooghly River basin in West Bengal. Which geographical and economic factor best explains this industrial localization?",
+      "questions": [
+        {
+          "question": "India's jute textile mills are concentrated in a narrow belt along the Hooghly River basin in West Bengal. Which geographical and economic factor best explains this industrial localization?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Abundant natural reserves of high-grade iron ore and coal in coastal West Bengal."
+            },
+            {
+              "letter": "B",
+              "text": "Proximity to raw jute growing areas, cheap water transport, abundant water for processing raw jute, and the port of Kolkata."
+            },
+            {
+              "letter": "C",
+              "text": "Dry desert air required for drying processed jute fibers."
+            },
+            {
+              "letter": "D",
+              "text": "High land prices that deter other competitive manufacturing sectors."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "In modern economic geography, what is meant by 'Agglomeration Economies' in urban industrial zones?",
+      "questions": [
+        {
+          "question": "In modern economic geography, what is meant by 'Agglomeration Economies' in urban industrial zones?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The economic decline experienced by rural villages when factories move away."
+            },
+            {
+              "letter": "B",
+              "text": "The financial advantages and cost savings gained by multiple industries clustering together near cities to share infrastructure, skilled labor, services, and energy supply."
+            },
+            {
+              "letter": "C",
+              "text": "Government bans on heavy manufacturing inside metropolitan borders."
+            },
+            {
+              "letter": "D",
+              "text": "The exclusive use of solar energy by rural cottage industries."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "In Belgium, power-sharing arrangements successfully prevented ethnic conflict between Dutch-speaking and French-speaking communities. Which institutional innovation distinguishes Belgium’s governance model?",
+      "questions": [
+        {
+          "question": "In Belgium, power-sharing arrangements successfully prevented ethnic conflict between Dutch-speaking and French-speaking communities. Which institutional innovation distinguishes Belgium’s governance model?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Total political dominance of the Dutch-speaking majority over national parliament."
+            },
+            {
+              "letter": "B",
+              "text": "Equal representation of Dutch and French ministers in the central government and the creation of a 'Community Government' managing language and cultural affairs."
+            },
+            {
+              "letter": "C",
+              "text": "Direct military administration by the European Union."
+            },
+            {
+              "letter": "D",
+              "text": "Complete partition of the country into two independent sovereign states."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "How does the constitutional distribution of legislative powers under the Indian Union List, State List, and Concurrent List handle new modern subjects like 'Computer Software' or 'Cyber Law'?",
+      "questions": [
+        {
+          "question": "How does the constitutional distribution of legislative powers under the Indian Union List, State List, and Concurrent List handle new modern subjects like 'Computer Software' or 'Cyber Law'?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They are automatically assigned to the State List."
+            },
+            {
+              "letter": "B",
+              "text": "They fall under 'Residuary Powers', which belong exclusively to the Union (Central) Parliament under Article 248."
+            },
+            {
+              "letter": "C",
+              "text": "They are managed by local Municipal Corporations."
+            },
+            {
+              "letter": "D",
+              "text": "They require unanimous approval from all 28 state assemblies."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "What major structural reform was introduced by the 73rd and 74th Constitutional Amendment Acts of 1992 to strengthen local self-government in India?",
+      "questions": [
+        {
+          "question": "What major structural reform was introduced by the 73rd and 74th Constitutional Amendment Acts of 1992 to strengthen local self-government in India?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Direct presidential rule over all local municipal bodies."
+            },
+            {
+              "letter": "B",
+              "text": "Mandatory regular elections, creation of State Election Commissions, and 33% reservation of seats for women in local bodies."
+            },
+            {
+              "letter": "C",
+              "text": "Abolition of Gram Sabhas in favor of district police courts."
+            },
+            {
+              "letter": "D",
+              "text": "Transfer of national defense policy to village Panchayats."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "What primary difference distinguishes a 'Sectional Interest Group' (like a trade union) from a 'Public Interest Group' (like an environmental movement)?",
+      "questions": [
+        {
+          "question": "What primary difference distinguishes a 'Sectional Interest Group' (like a trade union) from a 'Public Interest Group' (like an environmental movement)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Sectional groups seek benefits for their own specific members; public interest groups advocate for collective goods benefiting society as a whole."
+            },
+            {
+              "letter": "B",
+              "text": "Public interest groups contest elections directly, whereas sectional groups do not."
+            },
+            {
+              "letter": "C",
+              "text": "Sectional groups operate legally, while public interest groups are banned by the Constitution."
+            },
+            {
+              "letter": "D",
+              "text": "Public interest groups work exclusively for foreign corporate donors."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "According to criteria set by the Election Commission of India, what threshold must a political party achieve to be legally recognized as a 'National Party'?",
+      "questions": [
+        {
+          "question": "According to criteria set by the Election Commission of India, what threshold must a political party achieve to be legally recognized as a 'National Party'?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Win at least 50% of seats in the Rajya Sabha."
+            },
+            {
+              "letter": "B",
+              "text": "Secure at least 6% of valid votes polled in Assembly elections in four or more States plus at least 4 seats in the Lok Sabha (or 2% Lok Sabha seats across 3 states)."
+            },
+            {
+              "letter": "C",
+              "text": "Register over 10 million active party workers in capital cities."
+            },
+            {
+              "letter": "D",
+              "text": "Control municipal corporations in all metropolitan hubs."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Why is a democratic government considered 'legitimate', even if its decision-making processes may sometimes be slower than an authoritarian regime?",
+      "questions": [
+        {
+          "question": "Why is a democratic government considered 'legitimate', even if its decision-making processes may sometimes be slower than an authoritarian regime?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Because democratic leaders are appointed for lifetime tenure."
+            },
+            {
+              "letter": "B",
+              "text": "Because it is elected by the citizens, follows established constitutional procedures, and remains accountable to the public through transparent scrutiny."
+            },
+            {
+              "letter": "C",
+              "text": "Because democratic governments never face economic recessions."
+            },
+            {
+              "letter": "D",
+              "text": "Because laws are enacted by executive military decrees."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Why is Gross Domestic Product (GDP) alone often considered an incomplete metric for measuring true human development across countries?",
+      "questions": [
+        {
+          "question": "Why is Gross Domestic Product (GDP) alone often considered an incomplete metric for measuring true human development across countries?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "GDP excludes agricultural crop value from national income."
+            },
+            {
+              "letter": "B",
+              "text": "GDP measures aggregate market production but conceals income inequality, healthcare access, literacy rates, and environmental sustainability."
+            },
+            {
+              "letter": "C",
+              "text": "GDP counts only foreign corporate profits."
+            },
+            {
+              "letter": "D",
+              "text": "GDP applies exclusively to island nations."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ],
+  "11": [
+    {
+      "passage": "Which sociological perspective views society as a complex system whose parts work together to promote solidarity and stability?",
+      "questions": [
+        {
+          "question": "Which sociological perspective views society as a complex system whose parts work together to promote solidarity and stability?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Conflict Theory"
+            },
+            {
+              "letter": "B",
+              "text": "Structural Functionalism"
+            },
+            {
+              "letter": "C",
+              "text": "Symbolic Interactionism"
+            },
+            {
+              "letter": "D",
+              "text": "Social Constructionism"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "What is the primary difference between a \"nation\" and a \"state\"?",
+      "questions": [
+        {
+          "question": "What is the primary difference between a \"nation\" and a \"state\"?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A nation is a legal entity, while a state is purely cultural."
+            },
+            {
+              "letter": "B",
+              "text": "A state refers to a political entity with defined borders and sovereignty, whereas a nation refers to a shared cultural or ethnic identity."
+            },
+            {
+              "letter": "C",
+              "text": "A nation must have a government, while a state does not require one."
+            },
+            {
+              "letter": "D",
+              "text": "There is no difference; the terms are completely interchangeable in political science."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Which concept describes the rule of citizenship determined by the place of birth rather than parentage?",
+      "questions": [
+        {
+          "question": "Which concept describes the rule of citizenship determined by the place of birth rather than parentage?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Jus sanguinis"
+            },
+            {
+              "letter": "B",
+              "text": "Jus soli"
+            },
+            {
+              "letter": "C",
+              "text": "Naturalization"
+            },
+            {
+              "letter": "D",
+              "text": "Dual nationality"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Which of the following best exemplifies economic globalisation?",
+      "questions": [
+        {
+          "question": "Which of the following best exemplifies economic globalisation?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The widespread popularity of Hollywood films worldwide"
+            },
+            {
+              "letter": "B",
+              "text": "The spread of global human rights treaties"
+            },
+            {
+              "letter": "C",
+              "text": "Multinational corporations outsourcing manufacturing to lower-cost nations"
+            },
+            {
+              "letter": "D",
+              "text": "The adoption of international legal standards for maritime navigation"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "What is the process by which an immigrant voluntarily becomes a legal citizen of a country they were not born in?",
+      "questions": [
+        {
+          "question": "What is the process by which an immigrant voluntarily becomes a legal citizen of a country they were not born in?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Assimilation"
+            },
+            {
+              "letter": "B",
+              "text": "Naturalization"
+            },
+            {
+              "letter": "C",
+              "text": "Expatriation"
+            },
+            {
+              "letter": "D",
+              "text": "Socialization"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Which term describes the social, cultural, and political ties that bind individuals to communities across national borders?",
+      "questions": [
+        {
+          "question": "Which term describes the social, cultural, and political ties that bind individuals to communities across national borders?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Localism"
+            },
+            {
+              "letter": "B",
+              "text": "Global Citizenship"
+            },
+            {
+              "letter": "C",
+              "text": "Isolationism"
+            },
+            {
+              "letter": "D",
+              "text": "Ethnocentrism"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Which type of civic participation involves voting, campaigning, or running for public office?",
+      "questions": [
+        {
+          "question": "Which type of civic participation involves voting, campaigning, or running for public office?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Direct action"
+            },
+            {
+              "letter": "B",
+              "text": "Electoral participation"
+            },
+            {
+              "letter": "C",
+              "text": "Civic engagement"
+            },
+            {
+              "letter": "D",
+              "text": "Civil disobedience"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "What is the primary role of civil society organizations (CSOs) in a democratic nation?",
+      "questions": [
+        {
+          "question": "What is the primary role of civil society organizations (CSOs) in a democratic nation?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To pass state laws and enforce criminal statutes"
+            },
+            {
+              "letter": "B",
+              "text": "To represent commercial business interests and maximize profits"
+            },
+            {
+              "letter": "C",
+              "text": "To bridge the gap between citizens and the state by advocating for public interests"
+            },
+            {
+              "letter": "D",
+              "text": "To govern local police forces and public utilities"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Which international body adopted the Universal Declaration of Human Rights (UDHR) in 1948?",
+      "questions": [
+        {
+          "question": "Which international body adopted the Universal Declaration of Human Rights (UDHR) in 1948?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "World Trade Organization (WTO)"
+            },
+            {
+              "letter": "B",
+              "text": "United Nations General Assembly"
+            },
+            {
+              "letter": "C",
+              "text": "International Monetary Fund (IMF)"
+            },
+            {
+              "letter": "D",
+              "text": "League of Nations"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Cultural homogenization (often called \"Americanization\" or \"McDonaldization\") refers to:",
+      "questions": [
+        {
+          "question": "Cultural homogenization (often called \"Americanization\" or \"McDonaldization\") refers to:",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The preservation of local indigenous cultures against foreign influences."
+            },
+            {
+              "letter": "B",
+              "text": "The blending of multiple distinct cultural traditions into a brand-new local dialect."
+            },
+            {
+              "letter": "C",
+              "text": "The process where global consumer culture causes local cultural practices to become increasingly uniform."
+            },
+            {
+              "letter": "D",
+              "text": "The strict prohibition of foreign goods within a sovereign nation."
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Which of the following is considered a mandatory civic responsibility (a legal duty) rather than a voluntary civic duty?",
+      "questions": [
+        {
+          "question": "Which of the following is considered a mandatory civic responsibility (a legal duty) rather than a voluntary civic duty?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Volunteering at a community center"
+            },
+            {
+              "letter": "B",
+              "text": "Serving on a jury when summoned"
+            },
+            {
+              "letter": "C",
+              "text": "Joining a local political party"
+            },
+            {
+              "letter": "D",
+              "text": "Signing a petition for policy change"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "The concept of \"Glocalization\" refers to:",
+      "questions": [
+        {
+          "question": "The concept of \"Glocalization\" refers to:",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The complete rejection of global markets in favor of local production."
+            },
+            {
+              "letter": "B",
+              "text": "The adaptation of global products or concepts to fit local cultures and preferences."
+            },
+            {
+              "letter": "C",
+              "text": "The creation of a single world government."
+            },
+            {
+              "letter": "D",
+              "text": "The migration of local populations to mega-cities."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Which sociological term describes the process through which individuals learn the norms, values, and roles necessary to participate in society?",
+      "questions": [
+        {
+          "question": "Which sociological term describes the process through which individuals learn the norms, values, and roles necessary to participate in society?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Globalization"
+            },
+            {
+              "letter": "B",
+              "text": "Socialization"
+            },
+            {
+              "letter": "C",
+              "text": "Stratification"
+            },
+            {
+              "letter": "D",
+              "text": "Secularization"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "What is a key critique often raised against economic globalisation regarding developing nations?",
+      "questions": [
+        {
+          "question": "What is a key critique often raised against economic globalisation regarding developing nations?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It prevents technology from entering developing markets."
+            },
+            {
+              "letter": "B",
+              "text": "It leads to labor exploitation and environmental degradation in countries with weak regulatory standards."
+            },
+            {
+              "letter": "C",
+              "text": "It reduces global communication networks."
+            },
+            {
+              "letter": "D",
+              "text": "It forces all nations to maintain high tariff barriers."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "How does digital citizenship differ from traditional citizenship?",
+      "questions": [
+        {
+          "question": "How does digital citizenship differ from traditional citizenship?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Digital citizenship applies only to people working in computer science."
+            },
+            {
+              "letter": "B",
+              "text": "Digital citizenship involves rights, responsibilities, and ethical behavior in online environments."
+            },
+            {
+              "letter": "C",
+              "text": "Digital citizenship replaces national citizenship and passport obligations."
+            },
+            {
+              "letter": "D",
+              "text": "Digital citizenship requires holding an electronic birth certificate."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ],
+  "12": [
+    {
+      "passage": "According to Immanuel Wallerstein’s World Systems Theory, how is global economic inequality structured?",
+      "questions": [
+        {
+          "question": "According to Immanuel Wallerstein’s World Systems Theory, how is global economic inequality structured?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Equally across all nation-states based on natural resource distribution"
+            },
+            {
+              "letter": "B",
+              "text": "Into Core, Semi-Periphery, and Periphery regions where core nations exploit peripheral labor and resources"
+            },
+            {
+              "letter": "C",
+              "text": "Exclusively along ideological divisions between capitalist and socialist states"
+            },
+            {
+              "letter": "D",
+              "text": "Dynamically through regional free trade agreements with no dominant centers"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "What key distinction does Karl Marx make between the 'Bourgeoisie' and the 'Proletariat' in capitalist society?",
+      "questions": [
+        {
+          "question": "What key distinction does Karl Marx make between the 'Bourgeoisie' and the 'Proletariat' in capitalist society?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The Bourgeoisie own the means of production, while the Proletariat sell their labor power."
+            },
+            {
+              "letter": "B",
+              "text": "The Bourgeoisie hold political elected office, while the Proletariat hold judicial appointments."
+            },
+            {
+              "letter": "C",
+              "text": "The Bourgeoisie favor direct democracy, while the Proletariat support monarchical rule."
+            },
+            {
+              "letter": "D",
+              "text": "The Bourgeoisie are rural landowners, while the Proletariat live exclusively in urban communes."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "In international relations, what defines the political theory of \"Realism\"?",
+      "questions": [
+        {
+          "question": "In international relations, what defines the political theory of \"Realism\"?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Nations operate primarily through international institutions and moral international law."
+            },
+            {
+              "letter": "B",
+              "text": "The international system is anarchic, and sovereign states act self-interestedly to maximize power and security."
+            },
+            {
+              "letter": "C",
+              "text": "Non-state actors like NGOs are the primary driving forces behind international stability."
+            },
+            {
+              "letter": "D",
+              "text": "Global trade naturally eliminates conflict and guarantees universal peace."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Which theoretical concept, formulated by Antonio Gramsci, explains how a dominant class maintains control not just through force, but by shaping cultural norms and values?",
+      "questions": [
+        {
+          "question": "Which theoretical concept, formulated by Antonio Gramsci, explains how a dominant class maintains control not just through force, but by shaping cultural norms and values?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Hegemony"
+            },
+            {
+              "letter": "B",
+              "text": "Anomie"
+            },
+            {
+              "letter": "C",
+              "text": "Pluralism"
+            },
+            {
+              "letter": "D",
+              "text": "Bureaucratization"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "What is the fundamental principle behind \"Responsibility to Protect\" (R2P) in international law?",
+      "questions": [
+        {
+          "question": "What is the fundamental principle behind \"Responsibility to Protect\" (R2P) in international law?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "States have an unconditional right to annex neighboring territories during civil conflict."
+            },
+            {
+              "letter": "B",
+              "text": "Sovereignty is not an absolute right; the international community has a duty to intervene when a state fails to protect its population from mass atrocities."
+            },
+            {
+              "letter": "C",
+              "text": "Developing nations must allocate a fixed percentage of GDP to global peace operations."
+            },
+            {
+              "letter": "D",
+              "text": "International corporations must pay damages for environmental degradation in foreign jurisdictions."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Which principle of international law asserts that a person cannot be returned to a country where they face torture, cruel punishment, or irreparable harm?",
+      "questions": [
+        {
+          "question": "Which principle of international law asserts that a person cannot be returned to a country where they face torture, cruel punishment, or irreparable harm?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Habeas corpus"
+            },
+            {
+              "letter": "B",
+              "text": "Non-refoulement"
+            },
+            {
+              "letter": "C",
+              "text": "Extradition"
+            },
+            {
+              "letter": "D",
+              "text": "Diplomatic immunity"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Max Weber argued that modern state authority relies heavily on which form of legitimate domination?",
+      "questions": [
+        {
+          "question": "Max Weber argued that modern state authority relies heavily on which form of legitimate domination?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Charismatic authority"
+            },
+            {
+              "letter": "B",
+              "text": "Traditional authority"
+            },
+            {
+              "letter": "C",
+              "text": "Legal-rational authority"
+            },
+            {
+              "letter": "D",
+              "text": "Feudal authority"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "What is \"Hard Power\" in contrast to \"Soft Power\" in foreign policy?",
+      "questions": [
+        {
+          "question": "What is \"Hard Power\" in contrast to \"Soft Power\" in foreign policy?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Hard power relies on military force and economic coercion; soft power relies on cultural attraction and diplomacy."
+            },
+            {
+              "letter": "B",
+              "text": "Hard power is exercised by NGOs, while soft power is exercised by national militaries."
+            },
+            {
+              "letter": "C",
+              "text": "Hard power refers to constitutional law, while soft power refers to public opinion polls."
+            },
+            {
+              "letter": "D",
+              "text": "Hard power is used during peace, while soft power is used strictly during wartime."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "What primary issue does Jürgen Habermas address with his theory of the \"Public Sphere\"?",
+      "questions": [
+        {
+          "question": "What primary issue does Jürgen Habermas address with his theory of the \"Public Sphere\"?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The privatization of state-owned public transport utilities."
+            },
+            {
+              "letter": "B",
+              "text": "The ideal space in social life where individuals deliberate public matters freely and rationally to shape political action."
+            },
+            {
+              "letter": "C",
+              "text": "The military defense of physical territorial borders."
+            },
+            {
+              "letter": "D",
+              "text": "The statutory regulation of real estate markets in modern cities."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "What is the central concern of \"Cosmopolitanism\" in global ethics?",
+      "questions": [
+        {
+          "question": "What is the central concern of \"Cosmopolitanism\" in global ethics?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "National interest should always supersede moral duties to foreign populations."
+            },
+            {
+              "letter": "B",
+              "text": "All human beings belong to a single global moral community, regardless of national citizenship."
+            },
+            {
+              "letter": "C",
+              "text": "Cultural practices must strictly conform to Western institutional models."
+            },
+            {
+              "letter": "D",
+              "text": "Sovereign states should eliminate local elected assemblies in favor of city-state governance."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "In neoliberal economic theory, what policy measure is prioritized to encourage economic growth?",
+      "questions": [
+        {
+          "question": "In neoliberal economic theory, what policy measure is prioritized to encourage economic growth?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Expansion of state-owned monopolies and heavy price regulation"
+            },
+            {
+              "letter": "B",
+              "text": "Deregulation, privatization, and reduction of state intervention in free markets"
+            },
+            {
+              "letter": "C",
+              "text": "Total elimination of international trade and capital movement"
+            },
+            {
+              "letter": "D",
+              "text": "Nationalization of all private financial institutions"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "What concept describes a state in which the government lacks domestic legitimacy and cannot effectively maintain public order or basic social services?",
+      "questions": [
+        {
+          "question": "What concept describes a state in which the government lacks domestic legitimacy and cannot effectively maintain public order or basic social services?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Totalitarian state"
+            },
+            {
+              "letter": "B",
+              "text": "Fragile or failed state"
+            },
+            {
+              "letter": "C",
+              "text": "Welfare state"
+            },
+            {
+              "letter": "D",
+              "text": "Federal state"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Which judicial institution was established by the Rome Statute in 1998 to prosecute individuals for genocide, war crimes, and crimes against humanity?",
+      "questions": [
+        {
+          "question": "Which judicial institution was established by the Rome Statute in 1998 to prosecute individuals for genocide, war crimes, and crimes against humanity?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "International Court of Justice (ICJ)"
+            },
+            {
+              "letter": "B",
+              "text": "European Court of Human Rights (ECHR)"
+            },
+            {
+              "letter": "C",
+              "text": "International Criminal Court (ICC)"
+            },
+            {
+              "letter": "D",
+              "text": "Permanent Court of Arbitration (PCA)"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "What sociological term refers to the feeling of normlessness and loss of social direction experienced when social structures break down?",
+      "questions": [
+        {
+          "question": "What sociological term refers to the feeling of normlessness and loss of social direction experienced when social structures break down?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Alienation"
+            },
+            {
+              "letter": "B",
+              "text": "Anomie"
+            },
+            {
+              "letter": "C",
+              "text": "Bureaucracy"
+            },
+            {
+              "letter": "D",
+              "text": "Social mobility"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "What is \"Deliberative Democracy\"?",
+      "questions": [
+        {
+          "question": "What is \"Deliberative Democracy\"?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A political model where citizens vote directly on every single tax regulation without debate."
+            },
+            {
+              "letter": "B",
+              "text": "A model of democracy emphasizing authentic public debate and reasoned discussion among citizens prior to decision-making."
+            },
+            {
+              "letter": "C",
+              "text": "A system where military leaders make administrative decisions behind closed doors."
+            },
+            {
+              "letter": "D",
+              "text": "Voting exclusively through automated algorithms without public interaction."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ]
+}
