@@ -23,11 +23,19 @@ export default function OlympiadDashboard({ user }) {
   useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add('dark');
-      localStorage.theme = 'dark';
+      document.documentElement.style.backgroundColor = '#1a1c1e'; // Matches dark-base
+      document.body.style.backgroundColor = '#1a1c1e';
     } else {
       document.documentElement.classList.remove('dark');
-      localStorage.theme = 'light';
+      document.documentElement.style.backgroundColor = '#f6f9ff'; // Matches bg-base
+      document.body.style.backgroundColor = '#f6f9ff';
     }
+    
+    // Cleanup when leaving dashboard
+    return () => {
+      document.documentElement.style.backgroundColor = '';
+      document.body.style.backgroundColor = '';
+    };
   }, [isDarkMode]);
 
   const toggleTheme = (e) => {
@@ -52,9 +60,13 @@ export default function OlympiadDashboard({ user }) {
       setIsDarkMode(isDark);
       if (isDark) {
         document.documentElement.classList.add('dark');
+        document.documentElement.style.backgroundColor = '#1a1c1e';
+        document.body.style.backgroundColor = '#1a1c1e';
         localStorage.theme = 'dark';
       } else {
         document.documentElement.classList.remove('dark');
+        document.documentElement.style.backgroundColor = '#f6f9ff';
+        document.body.style.backgroundColor = '#f6f9ff';
         localStorage.theme = 'light';
       }
     });
