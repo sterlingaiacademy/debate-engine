@@ -16,7 +16,6 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
   const [quiz, setQuiz] = useState(null);
   const [answers, setAnswers] = useState({});
   const [correctAnswers, setCorrectAnswers] = useState({});
-  const [revealed, setRevealed] = useState({});
   const [current, setCurrent] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState(null);
@@ -77,15 +76,12 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
 
 
   const handleSelect = (letter) => {
-    if (revealed[current]) return;
     setAnswers(prev => ({ ...prev, [current]: letter }));
   };
 
   const handleAction = () => {
     const allAnswered = Object.keys(answers).length === quiz.questions.length;
-    if (answers[current] !== undefined && !revealed[current]) {
-      setRevealed(prev => ({ ...prev, [current]: true }));
-    } else if (allAnswered) {
+    if (allAnswered) {
       handleSubmit();
     } else {
       setAnimate(false);
@@ -278,17 +274,14 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
   const total = quiz.questions.length;
   const answered = Object.keys(answers).length;
   const isLastQ = current === total - 1;
-  const isRevealed = !!revealed[current];
   const selectedLetter = answers[current];
   const correctLetter = q.correct;
   
   const allAnswered = Object.keys(answers).length === total;
   
   const nextLabel = () => {
-    if (!isRevealed && selectedLetter) return 'Check Answer';
     if (allAnswered) return submitting ? 'Submitting...' : 'Submit Quiz';
-    if (!selectedLetter && !isRevealed) return isLastQ ? 'Next Unanswered' : 'Next Question →';
-    return isLastQ ? 'Next Unanswered' : 'Next Question →';
+    return 'Next Question →';
   };
 
   const nextEnabled = true;
@@ -310,7 +303,7 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
                 <span className="material-symbols-outlined text-[16px] text-text-muted dark:text-white/70">format_list_numbered</span>
                 <span className="text-sm text-text-main dark:text-white/90 font-bold">{answered}/{total}</span>
               </div>
-              <div className={`bg-bg-base dark:bg-dark-base shadow-neo-btn-portal dark:shadow-neo-btn-dark-portal rounded-full px-4 py-1.5 flex items-center gap-1.5 ${timeLeft <= 5 && !isRevealed ? 'text-red-500 dark:text-red-400 danger-pulse' : 'text-red-500 dark:text-red-400'}`}>
+              <div className={`bg-bg-base dark:bg-dark-base shadow-neo-btn-portal dark:shadow-neo-btn-dark-portal rounded-full px-4 py-1.5 flex items-center gap-1.5 ${timeLeft <= 5 ? 'text-red-500 dark:text-red-400 danger-pulse' : 'text-red-500 dark:text-red-400'}`}>
                 <span className="material-symbols-outlined text-[16px]">timer</span>
                 <span className="text-sm font-bold">{Math.floor(timeLeft/60).toString().padStart(2, '0')}:{(timeLeft%60).toString().padStart(2, '0')}</span>
               </div>
@@ -328,9 +321,6 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
               {quiz.questions.map((_, i) => {
                 const isCur = i === current;
                 const isAns = answers[i] !== undefined;
-                const isOK = isAns && revealed[i] && answers[i] === quiz.questions[i].correct;
-                const isBAD = revealed[i] && answers[i] !== quiz.questions[i].correct;
-                
                 const handleJump = () => {
                   if (i !== current) {
                     setAnimate(false);
@@ -351,22 +341,6 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
                 }
                 
                 elClass += "shadow-neo-btn-portal dark:shadow-neo-btn-dark-portal ";
-                if (isOK) {
-                  elClass += "text-green-500 dark:text-green-400 ";
-                  return (
-                    <div key={i} className={elClass} style={elStyle} onClick={handleJump}>
-                      <span className="material-symbols-outlined text-[16px]">check</span>
-                    </div>
-                  );
-                }
-                if (isBAD) {
-                  elClass += "text-red-500 dark:text-red-400 ";
-                  return (
-                    <div key={i} className={elClass} style={elStyle} onClick={handleJump}>
-                      <span className="material-symbols-outlined text-[16px]">close</span>
-                    </div>
-                  );
-                }
                 if (isAns) {
                    elClass += "text-text-main dark:text-white font-medium text-xs ";
                    return (
@@ -406,8 +380,6 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
             <div className="flex flex-col" style={{ gap: '0.75rem' }}>
               {q.options.map(opt => {
                 const isSelected = selectedLetter === opt.letter;
-                const isCorrectOpt = isRevealed && opt.letter === correctLetter;
-                const isWrongOpt = isRevealed && isSelected && opt.letter !== correctLetter;
                 
                 let containerClass = "group relative rounded-xl cursor-pointer transition-all duration-200 bg-bg-base dark:bg-dark-base overflow-hidden ";
                 let containerStyle = { display: 'flex', alignItems: 'center', padding: '0.875rem', width: '100%', boxSizing: 'border-box', overflow: 'hidden' };
@@ -415,33 +387,23 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
                 let letterStyle = { flexShrink: 0, width: '2.5rem', height: '2.5rem', marginRight: '1rem' };
                 let textClass = "text-sm font-medium min-w-0 ";
                 
-                if (isCorrectOpt) {
-                  containerClass += "shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal border border-green-500/20";
-                  letterClass += "shadow-neo-btn-inset-portal dark:shadow-neo-btn-inset-dark-portal bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400 ";
-                  textClass += "text-green-600 dark:text-green-400 font-bold ";
-                } else if (isWrongOpt) {
-                  containerClass += "shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal border border-red-500/20";
-                  letterClass += "shadow-neo-btn-inset-portal dark:shadow-neo-btn-inset-dark-portal bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400 ";
-                  textClass += "text-red-600 dark:text-red-400 font-bold ";
-                } else if (isSelected) {
+                if (isSelected) {
                   containerClass += "shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal ";
                   letterClass += "text-white shadow-[0_4px_12px_rgba(238,9,121,0.4)] "; 
                   textClass += "text-text-main dark:text-white font-bold ";
                 } else {
-                  containerClass += "shadow-neo-portal dark:shadow-neo-dark-portal hover:shadow-neo-btn-portal dark:hover:shadow-neo-btn-dark-portal " + (isRevealed ? "opacity-50 cursor-default" : "");
+                  containerClass += "shadow-neo-portal dark:shadow-neo-dark-portal hover:shadow-neo-btn-portal dark:hover:shadow-neo-btn-dark-portal ";
                   letterClass += "shadow-neo-btn-portal dark:shadow-neo-btn-dark-portal bg-bg-base dark:bg-dark-base text-text-muted dark:text-white/60 group-hover:text-text-main dark:group-hover:text-white/80 ";
                   textClass += "text-text-muted dark:text-white/80 ";
                 }
 
                 return (
                   <label key={opt.letter} className={containerClass} style={containerStyle}>
-                    <input type="radio" name={`q${current}`} className="hidden" checked={isSelected} onChange={() => handleSelect(opt.letter)} disabled={isRevealed} />
-                    <div className={letterClass} style={isSelected && !isRevealed ? { ...gradientStyle, ...letterStyle } : letterStyle}>
+                    <input type="radio" name={`q${current}`} className="hidden" checked={isSelected} onChange={() => handleSelect(opt.letter)} />
+                    <div className={letterClass} style={isSelected ? { ...gradientStyle, ...letterStyle } : letterStyle}>
                       {opt.letter}
                     </div>
                     <span className={textClass} style={{ flexGrow: 1, flexShrink: 1, minWidth: 0, wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{opt.text}</span>
-                    {isCorrectOpt && <span className="material-symbols-outlined text-green-500 ml-2 flex-shrink-0">check_circle</span>}
-                    {isWrongOpt && <span className="material-symbols-outlined text-red-500 ml-2 flex-shrink-0">cancel</span>}
                   </label>
                 );
               })}
