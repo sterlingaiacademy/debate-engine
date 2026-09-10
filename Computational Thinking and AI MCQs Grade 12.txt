@@ -1,0 +1,179 @@
+Grade 12 Assessment: Capstone Computational Thinking, Advanced AI & Systems Architecture
+Instructions: Review each of the 25 questions below. The correct answer for each multiple-choice question is clearly marked, followed by a detailed explanation of the core concept.
+Part 1: Advanced Computer Science, Systems Architecture & Algorithms
+1. P vs. NP Problem & Computational Complexity
+In computational complexity theory, which class of problems can be verified in polynomial time by a deterministic Turing machine, but whose optimal solution search time remains unknown?
+	•	A) Class P
+	•	B) Class NP (Correct Answer)
+	•	C) Class O(1)
+	•	D) Class Memory-Bound
+Explanation: NP (Nondeterministic Polynomial time) problems are those where a candidate solution can be verified quickly (in polynomial time), but finding a solution from scratch may take exponential time.
+2. Memory Management: Memory Leaks
+In low-level language systems (like C or C++), what occurs when dynamically allocated memory on the Heap is no longer referenced by any pointer but is never explicitly freed?
+	•	A) Buffer Overflow
+	•	B) Memory Leak (Correct Answer)
+	•	C) Null Pointer Exception
+	•	D) Deadlock Condition
+Explanation: A memory leak happens when dynamically allocated heap memory remains unreleased after usage, gradually consuming available RAM until the system runs out of memory.
+3. Graph Algorithms: Dijkstra's vs. A* Search
+What structural enhancement does the A* Search Algorithm add to Dijkstra's Algorithm to locate the shortest path to a target node more efficiently?
+	•	A) A LIFO stack structure
+	•	B) A Heuristic Function h(n) estimating remaining distance to the target (Correct Answer)
+	•	C) Random selection of adjacent edges
+	•	D) Binary hash indexing
+Explanation: A* uses both path cost g(n) and a heuristic distance estimate h(n) [f(n) = g(n) + h(n)] to prioritize node traversal toward the target goal.
+4. Asynchronous Architecture & Concurrency
+In multi-threaded software architectures, what critical condition arises when two processes are permanently blocked because each is waiting for a resource locked by the other?
+	•	A) Race Condition
+	•	B) Deadlock (Correct Answer)
+	•	C) Stack Overflow
+	•	D) Cache Miss
+Explanation: Deadlock occurs when two or more threads circular-depend on resources locked by one another, preventing all involved threads from proceeding.
+5. Database Optimization & Indexing
+Why do relational database management systems (RDBMS) utilize B-Trees / B+ Trees for indexing large database tables?
+	•	A) To convert SQL text queries directly into machine binary code
+	•	B) To maintain logarithmic search, insertion, and deletion time complexities [O(log n)] across disk storage (Correct Answer)
+	•	C) To compress text strings using lossless ZIP encoding
+	•	D) To prevent primary keys from using duplicate names
+Explanation: B-Trees keep indexed key data sorted in balanced tree structures, minimizing slow disk I/O operations by offering O(log n) lookups.
+6. Distributed Systems & CAP Theorem
+According to the CAP Theorem in distributed computing systems, which two guarantees can a system simultaneously provide during a network partition?
+	•	A) Consistency, Availability, and Partition Tolerance simultaneously
+	•	B) Either Consistency and Partition Tolerance (CP) OR Availability and Partition Tolerance (AP) (Correct Answer)
+	•	C) Consistency and Speed only
+	•	D) Availability and Zero Memory Usage
+Explanation: The CAP Theorem proves that a distributed data store can guarantee at most two out of three properties: Consistency, Availability, and Partition Tolerance.
+7. Distributed Consensus Algorithms
+Which consensus algorithm family (commonly used in Kubernetes clusters via etcd) guarantees distributed state replication across unreliable node clusters?
+	•	A) Dijkstra's Algorithm
+	•	B) Raft / Paxos (Correct Answer)
+	•	C) K-Nearest Neighbors
+	•	D) Depth-First Traversal
+Explanation: Raft and Paxos are consensus protocols engineered to achieve fault-tolerant state agreement across distributed system nodes.
+8. Public Key Cryptography
+In asymmetric cryptography (e.g., RSA or ECC), if User A wants to send a confidential, encrypted message to User B that only User B can read, which key must User A use to encrypt the message?
+	•	A) User A's Private Key
+	•	B) User B's Public Key (Correct Answer)
+	•	C) User B's Private Key
+	•	D) User A's Public Key
+Explanation: Messages encrypted using User B's Public Key can only be decrypted by User B's corresponding secret Private Key.
+9. Dynamic Programming & Overlapping Subproblems
+How does Memoization optimize algorithmic runtime when solving recursive dynamic programming problems like the Fibonacci sequence?
+	•	A) By converting recursive loops into hardware floating-point calls
+	•	B) By caching intermediate subproblem results in memory to eliminate redundant recalculations (Correct Answer)
+	•	C) By randomly skipping negative integer inputs
+	•	D) By sorting array elements in descending order
+Explanation: Memoization stores previously computed subproblem outcomes in a lookup table (cache), reducing exponential O(2ⁿ) recursive operations to linear O(n) runtime.
+10. Hardware Architecture: Cache Coherency
+In multi-core CPU architectures, what is the core purpose of **Cache Coherence Protocols** (such as MESI)?
+	•	A) To boost cooling fan speeds when temperature rises
+	•	B) To ensure shared memory data stored across multiple local core caches remains consistent (Correct Answer)
+	•	C) To compress execution instructions in GPU registers
+	•	D) To clear system RAM whenever a core hibernates
+Explanation: Cache coherence protocols synchronize local Level 1/2 caches across CPU cores to ensure no core operates on stale, outdated memory values.
+11. Software Security: Buffer Overflows
+How does a classic **Buffer Overflow Attack** compromise system execution security?
+	•	A) By sending too many HTTP network packets to crash a web domain
+	•	B) By writing more data into a memory buffer than allocated, overwriting adjacent stack frames and execution return pointers (Correct Answer)
+	•	C) By guessing user passwords using dictionary word lists
+	•	D) By corrupting CSS style sheets on web interfaces
+Explanation: Overflowing fixed-size stack buffers overwrites neighboring memory spaces, allowing malicious attackers to alter execution control flow and inject code.
+12. Functional Programming Principles
+In functional programming paradigms, what defines a **Pure Function**?
+	•	A) A function that contains no variable parameters
+	•	B) A function that always returns the same output given the same input and produces zero side effects (Correct Answer)
+	•	C) A function written exclusively in low-level Assembly code
+	•	D) A function that executes without consuming CPU memory
+Explanation: Pure functions rely solely on explicit input arguments to compute outputs, avoiding side effects like altering global state or modifying input arguments.
+13. Compiler Design & Optimization
+During the compilation process of high-level code, what is the role of the **Abstract Syntax Tree (AST)**?
+	•	A) To allocate physical memory addresses on the hard drive
+	•	B) To represent the structural, hierarchical logic of source code elements for syntax analysis and code generation (Correct Answer)
+	•	C) To encrypt final executable files against reverse engineering
+	•	D) To manage multi-threaded processor scheduling
+Explanation: An AST is a tree-shaped data structure constructed by compiler parsers to represent the structural syntactic hierarchy of source code for optimization and code generation.
+Part 2: Advanced AI Architectures, Fine-Tuning & Frontiers
+14. Optimization: Gradient Descent & vanishing Gradients
+When training very deep neural networks, what causes the **Vanishing Gradient Problem** during backpropagation?
+	•	A) The learning rate is set to infinity
+	•	B) Repeated multiplication of small derivative values through deep layers causes gradients to shrink toward zero, halting parameter updates (Correct Answer)
+	•	C) The model dataset contains zero numerical values
+	•	D) GPU memory clock speeds slow down during training epochs
+Explanation: Chain-rule backpropagation multiplies partial derivatives across layers. If these derivatives are fractions (< 1), early layer weights stop updating as gradients diminish to near zero.
+15. Generative AI: Retrieval-Augmented Generation (RAG)
+Why do enterprise software architects combine Large Language Models (LLMs) with **Retrieval-Augmented Generation (RAG)** systems?
+	•	A) To permanently retrain model parameters on thousands of open-source GPUs
+	•	B) To ground LLM responses in real-time, domain-specific external knowledge bases without full model retraining (Correct Answer)
+	•	C) To translate text vectors into visual bitmap files
+	•	D) To reduce model token context limits to zero
+Explanation: RAG fetches contextual data from verified external vector databases at runtime, feeding relevant context into the LLM prompt to improve factual accuracy and reduce hallucinations.
+16. Transformer Architectures: Positional Encoding
+Unlike Recurrent Neural Networks (RNNs) that process text sequentially word-by-word, Transformers process all input tokens simultaneously. Why is **Positional Encoding** strictly necessary in Transformers?
+	•	A) To compress the text vocabulary size
+	•	B) To inject sequence order and word position information into token embeddings (Correct Answer)
+	•	C) To prevent GPU memory hardware from overheating
+	•	D) To clear output layer activation biases
+Explanation: Because self-attention evaluates all tokens in parallel without sequence awareness, positional encodings are added to input embeddings to convey relative or absolute word order.
+17. Model Fine-Tuning: Parameter-Efficient Fine-Tuning (LoRA)
+How does **Low-Rank Adaptation (LoRA)** make fine-tuning massive LLMs significantly cheaper and faster?
+	•	A) By deleting half the text vocabulary parameters
+	•	B) By freezing original model weights and injecting small, trainable low-rank rank-decomposition matrix pairs into attention layers (Correct Answer)
+	•	C) By converting floating-point values into ASCII string characters
+	•	D) By executing fine-tuning directly inside the hard drive cache
+Explanation: LoRA freezes base model weights and trains low-rank parameter matrices alongside attention layers, drastically cutting trainable parameters and memory footprints.
+18. RLHF & Alignment
+What role does **Reinforcement Learning from Human Feedback (RLHF)** play in post-training foundation LLMs?
+	•	A) It reduces dataset storage space by 90%
+	•	B) It aligns model output generation with human preferences regarding helpfulness, accuracy, and safety using a Reward Model (Correct Answer)
+	•	C) It generates physical robot movements in factory assembly lines
+	•	D) It removes token limits from context windows
+Explanation: RLHF uses human preference rankings to train a Reward Model, which uses proximal policy optimization (PPO) to steer LLM outputs toward aligned, helpful, and safe behaviors.
+19. AI Security: Prompt Injection Attacks
+In LLM application security, what constitutes an **Indirect Prompt Injection Attack**?
+	•	A) A physical hack on server motherboard hardware
+	•	B) Malicious instructions embedded within untrusted external content (e.g., a web page or PDF) that hijack the model's instruction flow when retrieved (Correct Answer)
+	•	C) Interrupting internet server connection cables during inference
+	•	D) Guessing administrative database login keys
+Explanation: Indirect prompt injection occurs when an LLM processes external unstructured data (such as web search results) containing hidden text prompts that override original system instructions.
+20. Diffusion Models in Vision AI
+What core mathematical mechanism powers modern image generation models like **Stable Diffusion** during training?
+	•	A) Sorting pixel values in ascending order
+	•	B) Gradually adding Gaussian noise to training images, then learning a deep neural network to reverse the noise process (Denoising) (Correct Answer)
+	•	C) Converting visual images into plain HTML tables
+	•	D) Counting the total color histogram channels across an image
+Explanation: Diffusion models corrupt training images by progressively adding random noise (forward process) and train neural networks to reverse this transformation step-by-step to generate clear images from noise.
+21. Model Quantization
+In edge computing deployment, what is the primary benefit of applying **Model Quantization** (e.g., reducing precision from FP16 to INT8)?
+	•	A) It expands the parameter count of the network
+	•	B) It reduces model memory footprint and inference latency with minimal loss in model quality (Correct Answer)
+	•	C) It eliminates the need for activation functions
+	•	D) It converts deep learning networks into rule-based IF-THEN code
+Explanation: Quantization represents network weights and activations using lower bit-width data formats (such as 8-bit integers), dramatically reducing RAM usage and speeding up inference calculations.
+22. Vector Databases & Similarity Metrics
+When searching for semantically similar context embeddings in Vector Databases (e.g., Pinecone or Qdrant), which mathematical metric measures the direction alignment between two normalized vectors?
+	•	A) Euclidean Manhattan Distance
+	•	B) Cosine Similarity (Correct Answer)
+	•	C) Hamming Binary Bit Distance
+	•	D) Linear Search Index
+Explanation: Cosine similarity measures the cosine of the angle between two multi-dimensional vectors, evaluating directional semantic orientation regardless of magnitude.
+23. Convolutional Neural Networks: Receptive Fields
+What happens to the **Effective Receptive Field** of deeper layers in a Convolutional Neural Network (CNN) as more convolution and pooling operations are stacked?
+	•	A) The receptive field shrinks to a single pixel
+	•	B) The receptive field expands, allowing deeper layers to capture larger, global image context (Correct Answer)
+	•	C) The receptive field becomes zero
+	•	D) The receptive field measures floating-point speed
+Explanation: Stacking convolutions and spatial pooling operations increases the spatial context (receptive field) represented by each output unit in deeper network layers.
+24. Synthetic Data & AI Training
+What primary risk arises when recursive generations of AI models are trained exclusively on **Synthetic Data** generated by preceding AI models without sufficient real-world data ground truth?
+	•	A) GPU clock rates double automatically
+	•	B) Model Collapse (where degenerative artifacts and errors compound, degrading model quality over generations) (Correct Answer)
+	•	C) Automatic conversion of deep learning models into database tables
+	•	D) Instantaneous model alignment with human ethical standards
+Explanation: Model collapse is a degenerative process where AI models trained on synthetic outputs lose tail-end distribution information, causing progressive bias and quality degradation.
+25. Mixture-of-Experts (MoE) Architecture
+How does a **Mixture-of-Experts (MoE)** LLM architecture achieve high performance while maintaining efficient inference costs compared to dense models?
+	•	A) By running all neural layers continuously on every input token
+	•	B) By using a Router/Gating Network to dynamically direct each token to a sparse subset of specialized expert subnetworks (Correct Answer)
+	•	C) By replacing neural activations with binary decision trees
+	•	D) By eliminating the need for matrix multiplication
+Explanation: MoE models replace dense feed-forward layers with multiple specialized "expert" sub-layers. A router network selectively routes each token to only a few active experts per step, saving compute.

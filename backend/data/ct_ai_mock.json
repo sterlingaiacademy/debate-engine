@@ -1,0 +1,3258 @@
+{
+  "5": [
+    {
+      "passage": "Scenario: You are tasked with organizing a massive school library with thousands of unorganized books. Instead of tackling the entire library at once, you break the task into smaller steps: sorting books by genre, then by author’s last name, and finally by publication year.\nWhich Computational Thinking concept are you using when you break this large task into smaller, manageable sub-tasks?",
+      "questions": [
+        {
+          "question": "Scenario: You are tasked with organizing a massive school library with thousands of unorganized books. Instead of tackling the entire library at once, you break the task into smaller steps: sorting books by genre, then by author’s last name, and finally by publication year.\nWhich Computational Thinking concept are you using when you break this large task into smaller, manageable sub-tasks?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Abstraction"
+            },
+            {
+              "letter": "B",
+              "text": "Decomposition"
+            },
+            {
+              "letter": "C",
+              "text": "Algorithm Design"
+            },
+            {
+              "letter": "D",
+              "text": "Pattern Recognition"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Maya notices that every time she enters a password on different school websites, the system checks for three things: at least one capital letter, at least one number, and at least 8 characters long.\nWhat Computational Thinking skill is Maya using by identifying these common rules across different websites?",
+      "questions": [
+        {
+          "question": "Scenario: Maya notices that every time she enters a password on different school websites, the system checks for three things: at least one capital letter, at least one number, and at least 8 characters long.\nWhat Computational Thinking skill is Maya using by identifying these common rules across different websites?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Pattern Recognition"
+            },
+            {
+              "letter": "B",
+              "text": "Debugging"
+            },
+            {
+              "letter": "C",
+              "text": "Evaluation"
+            },
+            {
+              "letter": "D",
+              "text": "Data Collection"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A student is creating a digital map of the school playground for new students. The map shows the positions of the swings, slides, and soccer field, but leaves out individual blades of grass, tiny pebbles, and ant hills.\nWhy did the student leave out those tiny details?",
+      "questions": [
+        {
+          "question": "Scenario: A student is creating a digital map of the school playground for new students. The map shows the positions of the swings, slides, and soccer field, but leaves out individual blades of grass, tiny pebbles, and ant hills.\nWhy did the student leave out those tiny details?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The student did not have enough time to draw them."
+            },
+            {
+              "letter": "B",
+              "text": "The student used abstraction to focus only on important information needed to navigate the playground."
+            },
+            {
+              "letter": "C",
+              "text": "The map algorithm stopped working properly."
+            },
+            {
+              "letter": "D",
+              "text": "The tiny details are part of a hidden pattern."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Consider the following recipe to make a simple fruit smoothie:\n•\tPeel 1 banana and slice it.\n•\tPlace sliced banana and 5 strawberries into a blender.\n•\tAdd 1 cup of milk into the blender.\n•\tPut the lid securely on the blender.\n•\tBlend on high speed for 30 seconds.\nWhat is this step-by-step set of instructions called in computer science?",
+      "questions": [
+        {
+          "question": "Scenario: Consider the following recipe to make a simple fruit smoothie:\n•\tPeel 1 banana and slice it.\n•\tPlace sliced banana and 5 strawberries into a blender.\n•\tAdd 1 cup of milk into the blender.\n•\tPut the lid securely on the blender.\n•\tBlend on high speed for 30 seconds.\nWhat is this step-by-step set of instructions called in computer science?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A Variable"
+            },
+            {
+              "letter": "B",
+              "text": "An Algorithm"
+            },
+            {
+              "letter": "C",
+              "text": "A Loop"
+            },
+            {
+              "letter": "D",
+              "text": "A Database"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A cleaning robot is programmed to navigate a grid room. It follows this sequence of commands: Move Forward 2 units -> Turn Right 90° -> Move Forward 3 units.\nIf the robot starts at position (0, 0) facing North, what is its final position and direction?",
+      "questions": [
+        {
+          "question": "Scenario: A cleaning robot is programmed to navigate a grid room. It follows this sequence of commands: Move Forward 2 units -> Turn Right 90° -> Move Forward 3 units.\nIf the robot starts at position (0, 0) facing North, what is its final position and direction?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Position (2, 3), facing East"
+            },
+            {
+              "letter": "B",
+              "text": "Position (3, 2), facing North"
+            },
+            {
+              "letter": "C",
+              "text": "Position (3, 2), facing East"
+            },
+            {
+              "letter": "D",
+              "text": "Position (2, 3), facing South"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Look at the following sequence of numbers: 3, 6, 12, 24, 48, ___\nWhat is the next number in this sequence, and what rule generates it?",
+      "questions": [
+        {
+          "question": "Scenario: Look at the following sequence of numbers: 3, 6, 12, 24, 48, ___\nWhat is the next number in this sequence, and what rule generates it?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "50; Add 2 to the previous number."
+            },
+            {
+              "letter": "B",
+              "text": "96; Multiply the previous number by 2."
+            },
+            {
+              "letter": "C",
+              "text": "72; Add 24 to the previous number."
+            },
+            {
+              "letter": "D",
+              "text": "60; Multiply the previous number by 3."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: An automatic sprinkler system is programmed with the following rule:\nIF (Soil is Dry) AND (Time is Evening) THEN Turn On Sprinkler\nUnder which of the following conditions will the sprinkler turn ON?",
+      "questions": [
+        {
+          "question": "Scenario: An automatic sprinkler system is programmed with the following rule:\nIF (Soil is Dry) AND (Time is Evening) THEN Turn On Sprinkler\nUnder which of the following conditions will the sprinkler turn ON?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Soil is Dry and Time is Morning."
+            },
+            {
+              "letter": "B",
+              "text": "Soil is Wet and Time is Evening."
+            },
+            {
+              "letter": "C",
+              "text": "Soil is Dry and Time is Evening."
+            },
+            {
+              "letter": "D",
+              "text": "Soil is Wet and Time is Morning."
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: An educational coding game has a bug. When the sprite reaches the edge of the screen, it disappears forever instead of bouncing back.\nWhat is the process of finding and fixing this error in the code called?",
+      "questions": [
+        {
+          "question": "Scenario: An educational coding game has a bug. When the sprite reaches the edge of the screen, it disappears forever instead of bouncing back.\nWhat is the process of finding and fixing this error in the code called?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Encoding"
+            },
+            {
+              "letter": "B",
+              "text": "Decomposing"
+            },
+            {
+              "letter": "C",
+              "text": "Debugging"
+            },
+            {
+              "letter": "D",
+              "text": "Compiling"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Examine this pseudocode for a simple loop:\nSet Counter = 1 REPEAT 4 TIMES:     Print \"Hello\"     Add 1 to Counter END REPEAT\nHow many times will the word \"Hello\" be printed?",
+      "questions": [
+        {
+          "question": "Scenario: Examine this pseudocode for a simple loop:\nSet Counter = 1 REPEAT 4 TIMES:     Print \"Hello\"     Add 1 to Counter END REPEAT\nHow many times will the word \"Hello\" be printed?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "1 time"
+            },
+            {
+              "letter": "B",
+              "text": "3 times"
+            },
+            {
+              "letter": "C",
+              "text": "4 times"
+            },
+            {
+              "letter": "D",
+              "text": "5 times"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A student wants to draw a square using a program. A square has 4 equal sides and 4 right-angle (90°) turns. They write this code:\nREPEAT 4 TIMES:     Move Forward 100 steps     Turn Right 45 degrees END REPEAT\nThe output shape is an octagon fragment instead of a square. How should the code be corrected?",
+      "questions": [
+        {
+          "question": "Scenario: A student wants to draw a square using a program. A square has 4 equal sides and 4 right-angle (90°) turns. They write this code:\nREPEAT 4 TIMES:     Move Forward 100 steps     Turn Right 45 degrees END REPEAT\nThe output shape is an octagon fragment instead of a square. How should the code be corrected?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Change \"REPEAT 4 TIMES\" to \"REPEAT 8 TIMES\"."
+            },
+            {
+              "letter": "B",
+              "text": "Change \"Move Forward 100 steps\" to \"Move Forward 50 steps\"."
+            },
+            {
+              "letter": "C",
+              "text": "Change \"Turn Right 45 degrees\" to \"Turn Right 90 degrees\"."
+            },
+            {
+              "letter": "D",
+              "text": "Change \"REPEAT 4 TIMES\" to \"REPEAT 2 TIMES\"."
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: An AI system is being trained to recognize photos of apples. Scientists feed the system 5,000 photos labeled \"Apple\" and 5,000 photos labeled \"Not Apple\". The system learns to identify common features like roundness, stems, and color patterns.\nWhat type of AI learning process is described here?",
+      "questions": [
+        {
+          "question": "Scenario: An AI system is being trained to recognize photos of apples. Scientists feed the system 5,000 photos labeled \"Apple\" and 5,000 photos labeled \"Not Apple\". The system learns to identify common features like roundness, stems, and color patterns.\nWhat type of AI learning process is described here?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Unsupervised Learning"
+            },
+            {
+              "letter": "B",
+              "text": "Supervised Learning"
+            },
+            {
+              "letter": "C",
+              "text": "Manual Programming"
+            },
+            {
+              "letter": "D",
+              "text": "Hardware Processing"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A school cafeteria uses an automated facial recognition camera to let students pay for lunch without cards. However, the system frequently fails to recognize students with darker skin tones or students wearing glasses.\nWhat is the most likely cause of this issue?",
+      "questions": [
+        {
+          "question": "Scenario: A school cafeteria uses an automated facial recognition camera to let students pay for lunch without cards. However, the system frequently fails to recognize students with darker skin tones or students wearing glasses.\nWhat is the most likely cause of this issue?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The camera runs out of electricity."
+            },
+            {
+              "letter": "B",
+              "text": "The training data used to train the AI contained mostly photos of people with lighter skin and without glasses (Biased Data)."
+            },
+            {
+              "letter": "C",
+              "text": "Facial recognition systems only work on adults."
+            },
+            {
+              "letter": "D",
+              "text": "The computer algorithm is too fast."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: How does a Machine Learning model differ from traditional computer programming?",
+      "questions": [
+        {
+          "question": "Scenario: How does a Machine Learning model differ from traditional computer programming?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Traditional programming requires electricity, while Machine Learning does not."
+            },
+            {
+              "letter": "B",
+              "text": "In traditional programming, humans write explicit rules; in Machine Learning, the computer discovers rules by analyzing data."
+            },
+            {
+              "letter": "C",
+              "text": "Traditional programs can only process numbers, while AI can only process text."
+            },
+            {
+              "letter": "D",
+              "text": "Machine Learning never makes errors, whereas traditional code always has bugs."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A self-driving car needs to detect pedestrians, read stop signs, and stay inside lane lines while driving down a street.\nWhich AI technology enables the car to interpret images and video feeds from its cameras?",
+      "questions": [
+        {
+          "question": "Scenario: A self-driving car needs to detect pedestrians, read stop signs, and stay inside lane lines while driving down a street.\nWhich AI technology enables the car to interpret images and video feeds from its cameras?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Natural Language Processing (NLP)"
+            },
+            {
+              "letter": "B",
+              "text": "Computer Vision"
+            },
+            {
+              "letter": "C",
+              "text": "Speech Synthesis"
+            },
+            {
+              "letter": "D",
+              "text": "Automated Spreadsheet Sorting"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A voice assistant (like Siri or Alexa) listens to your spoken command, converts your spoken words into text, understands the meaning, and formulates a helpful response.\nWhich field of Artificial Intelligence deals with understanding human language?",
+      "questions": [
+        {
+          "question": "Scenario: A voice assistant (like Siri or Alexa) listens to your spoken command, converts your spoken words into text, understands the meaning, and formulates a helpful response.\nWhich field of Artificial Intelligence deals with understanding human language?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Computer Vision"
+            },
+            {
+              "letter": "B",
+              "text": "Robotics Mechanics"
+            },
+            {
+              "letter": "C",
+              "text": "Natural Language Processing (NLP)"
+            },
+            {
+              "letter": "D",
+              "text": "Graphical User Interface (GUI)"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    }
+  ],
+  "6": [
+    {
+      "passage": "Scenario: A city planner wants to design a smart traffic control system to reduce morning gridlock across 50 intersections. Instead of programming the entire network at once, she breaks the project into distinct sub-problems: analyzing peak traffic times, writing an algorithm for individual light timers, and setting up communication between adjacent intersections.\nWhich Computational Thinking concept is being applied to handle this complex problem?",
+      "questions": [
+        {
+          "question": "Scenario: A city planner wants to design a smart traffic control system to reduce morning gridlock across 50 intersections. Instead of programming the entire network at once, she breaks the project into distinct sub-problems: analyzing peak traffic times, writing an algorithm for individual light timers, and setting up communication between adjacent intersections.\nWhich Computational Thinking concept is being applied to handle this complex problem?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Abstraction"
+            },
+            {
+              "letter": "B",
+              "text": "Decomposition"
+            },
+            {
+              "letter": "C",
+              "text": "Data Encryption"
+            },
+            {
+              "letter": "D",
+              "text": "Pattern Synthesis"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: An online streaming platform analyzes your viewing habits and notes that every time you watch a sci-fi movie on Friday night, you also play a retro video game on Saturday morning. It uses this recurring relationship to personalize your dashboard.\nWhat core computational concept allows the system to make this connection?",
+      "questions": [
+        {
+          "question": "Scenario: An online streaming platform analyzes your viewing habits and notes that every time you watch a sci-fi movie on Friday night, you also play a retro video game on Saturday morning. It uses this recurring relationship to personalize your dashboard.\nWhat core computational concept allows the system to make this connection?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Pattern Recognition"
+            },
+            {
+              "letter": "B",
+              "text": "Hardware Calibration"
+            },
+            {
+              "letter": "C",
+              "text": "De-abstraction"
+            },
+            {
+              "letter": "D",
+              "text": "Recursion"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A software developer is building a flight simulator. To ensure the game runs smoothly, the developer programs realistic wind resistance and engine sound effects but ignores the specific color of the passengers' clothes inside the airplane.\nWhy did the developer intentionally exclude passenger clothing colors?",
+      "questions": [
+        {
+          "question": "Scenario: A software developer is building a flight simulator. To ensure the game runs smoothly, the developer programs realistic wind resistance and engine sound effects but ignores the specific color of the passengers' clothes inside the airplane.\nWhy did the developer intentionally exclude passenger clothing colors?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The developer ran out of storage space on the computer."
+            },
+            {
+              "letter": "B",
+              "text": "The developer applied abstraction to ignore non-essential details for flight simulation."
+            },
+            {
+              "letter": "C",
+              "text": "The graphics card had a bug in its rendering loop."
+            },
+            {
+              "letter": "D",
+              "text": "The algorithm failed to process passenger data."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Consider the following pseudocode for converting temperature from Celsius to Fahrenheit:\nINPUT Celsius Set Temp1 = Celsius * 1.8 Set Fahrenheit = Temp1 + 32 OUTPUT Fahrenheit\nIf the input value for Celsius is 20, what is the output value for Fahrenheit?",
+      "questions": [
+        {
+          "question": "Scenario: Consider the following pseudocode for converting temperature from Celsius to Fahrenheit:\nINPUT Celsius Set Temp1 = Celsius * 1.8 Set Fahrenheit = Temp1 + 32 OUTPUT Fahrenheit\nIf the input value for Celsius is 20, what is the output value for Fahrenheit?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "52"
+            },
+            {
+              "letter": "B",
+              "text": "68"
+            },
+            {
+              "letter": "C",
+              "text": "72"
+            },
+            {
+              "letter": "D",
+              "text": "36"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A delivery drone follows this path instruction relative to its starting point facing East: Move Forward 5m -> Turn Left 90° -> Move Forward 4m -> Turn Left 90° -> Move Forward 5m.\nWhere is the drone relative to its starting position, and which direction is it currently facing?",
+      "questions": [
+        {
+          "question": "Scenario: A delivery drone follows this path instruction relative to its starting point facing East: Move Forward 5m -> Turn Left 90° -> Move Forward 4m -> Turn Left 90° -> Move Forward 5m.\nWhere is the drone relative to its starting position, and which direction is it currently facing?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "4m North of start, facing West"
+            },
+            {
+              "letter": "B",
+              "text": "5m East of start, facing South"
+            },
+            {
+              "letter": "C",
+              "text": "4m South of start, facing West"
+            },
+            {
+              "letter": "D",
+              "text": "At the original starting point, facing North"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Look at the following data pattern generated by a sensor network:\n2, 5, 11, 23, 47, ___\nWhat is the next number in this sequence, and what is the underlying rule?",
+      "questions": [
+        {
+          "question": "Scenario: Look at the following data pattern generated by a sensor network:\n2, 5, 11, 23, 47, ___\nWhat is the next number in this sequence, and what is the underlying rule?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "95; Multiply the previous number by 2 and add 1."
+            },
+            {
+              "letter": "B",
+              "text": "94; Multiply the previous number by 2."
+            },
+            {
+              "letter": "C",
+              "text": "70; Add 23 to the previous number."
+            },
+            {
+              "letter": "D",
+              "text": "89; Add 42 to the previous number."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: An automated security gate operates under the following logic:\nIF (Valid ID Card) AND (NOT Restricted Hours) THEN Open Gate\nUnder which scenario will the gate open?",
+      "questions": [
+        {
+          "question": "Scenario: An automated security gate operates under the following logic:\nIF (Valid ID Card) AND (NOT Restricted Hours) THEN Open Gate\nUnder which scenario will the gate open?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A person has a Valid ID Card during Restricted Hours."
+            },
+            {
+              "letter": "B",
+              "text": "A person has an Invalid ID Card outside of Restricted Hours."
+            },
+            {
+              "letter": "C",
+              "text": "A person has a Valid ID Card outside of Restricted Hours."
+            },
+            {
+              "letter": "D",
+              "text": "A person has no ID Card during Restricted Hours."
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A student writes code to calculate average grades. The program runs without crashing, but when inputs are 80 and 100, the output states the average is 130.\nSet Sum = Mark1 + Mark2 * 0.5\nWhat type of error is present in this code, and how should it be fixed?",
+      "questions": [
+        {
+          "question": "Scenario: A student writes code to calculate average grades. The program runs without crashing, but when inputs are 80 and 100, the output states the average is 130.\nSet Sum = Mark1 + Mark2 * 0.5\nWhat type of error is present in this code, and how should it be fixed?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Syntax Error; change Mark1 to a number."
+            },
+            {
+              "letter": "B",
+              "text": "Logic Error; use parentheses: (Mark1 + Mark2) / 2."
+            },
+            {
+              "letter": "C",
+              "text": "Hardware Error; replace the computer memory."
+            },
+            {
+              "letter": "D",
+              "text": "System Error; remove the variable Sum."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Study the following nested loop pseudocode:\nFOR i = 1 TO 3:     FOR j = 1 TO 2:         Print \"X\"     END FOR END FOR\nHow many times will the letter \"X\" be printed in total?",
+      "questions": [
+        {
+          "question": "Scenario: Study the following nested loop pseudocode:\nFOR i = 1 TO 3:     FOR j = 1 TO 2:         Print \"X\"     END FOR END FOR\nHow many times will the letter \"X\" be printed in total?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "3 times"
+            },
+            {
+              "letter": "B",
+              "text": "5 times"
+            },
+            {
+              "letter": "C",
+              "text": "6 times"
+            },
+            {
+              "letter": "D",
+              "text": "2 times"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: An algorithm searches for a specific student's ID number in an unsorted list of 1,000 students by checking each record one by one from top to bottom.\nWhat is this search technique called, and what is its main drawback?",
+      "questions": [
+        {
+          "question": "Scenario: An algorithm searches for a specific student's ID number in an unsorted list of 1,000 students by checking each record one by one from top to bottom.\nWhat is this search technique called, and what is its main drawback?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Binary Search; it requires the list to be sorted first."
+            },
+            {
+              "letter": "B",
+              "text": "Linear Search; it can be very slow if the item is at the end of a large list."
+            },
+            {
+              "letter": "C",
+              "text": "Random Search; it skips records unpredictably."
+            },
+            {
+              "letter": "D",
+              "text": "Bubble Search; it accidentally deletes records."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: An e-commerce website groups its millions of customers into clusters based on purchasing habits without any prior labels provided by human operators. The computer discovers natural groupings on its own.\nWhich Machine Learning approach is being utilized?",
+      "questions": [
+        {
+          "question": "Scenario: An e-commerce website groups its millions of customers into clusters based on purchasing habits without any prior labels provided by human operators. The computer discovers natural groupings on its own.\nWhich Machine Learning approach is being utilized?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Supervised Learning"
+            },
+            {
+              "letter": "B",
+              "text": "Unsupervised Learning"
+            },
+            {
+              "letter": "C",
+              "text": "Reinforced Debugging"
+            },
+            {
+              "letter": "D",
+              "text": "Hardcoded Logic"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: An AI model is trained to predict whether job applicants should be hired based on 20 years of historical company hiring records. Because the company historically hired mostly male engineers, the AI begins rejecting qualified female candidates.\nWhat core problem in AI system development is demonstrated here?",
+      "questions": [
+        {
+          "question": "Scenario: An AI model is trained to predict whether job applicants should be hired based on 20 years of historical company hiring records. Because the company historically hired mostly male engineers, the AI begins rejecting qualified female candidates.\nWhat core problem in AI system development is demonstrated here?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Algorithmic speed degradation"
+            },
+            {
+              "letter": "B",
+              "text": "Training Data Bias"
+            },
+            {
+              "letter": "C",
+              "text": "Hardware incompatibility"
+            },
+            {
+              "letter": "D",
+              "text": "Overfitting of real-time sensors"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: An autonomous rover on Mars learns to navigate rocky terrain. Every time it successfully avoids a boulder, it receives a positive mathematical score (+10). Every time it gets stuck, it receives a negative score (-50). Over time, it optimizes its path choices.\nWhat type of Machine Learning model is this system using?",
+      "questions": [
+        {
+          "question": "Scenario: An autonomous rover on Mars learns to navigate rocky terrain. Every time it successfully avoids a boulder, it receives a positive mathematical score (+10). Every time it gets stuck, it receives a negative score (-50). Over time, it optimizes its path choices.\nWhat type of Machine Learning model is this system using?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Reinforcement Learning"
+            },
+            {
+              "letter": "B",
+              "text": "Supervised Classification"
+            },
+            {
+              "letter": "C",
+              "text": "Manual Control Programming"
+            },
+            {
+              "letter": "D",
+              "text": "Rule-based Deductive Reasoning"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Medical researchers train an AI system on thousands of X-ray scans to identify early signs of lung illness. The system highlights tiny abnormal shadows that human doctors might overlook.\nWhich branch of Artificial Intelligence is primarily responsible for analyzing and processing medical X-ray images?",
+      "questions": [
+        {
+          "question": "Scenario: Medical researchers train an AI system on thousands of X-ray scans to identify early signs of lung illness. The system highlights tiny abnormal shadows that human doctors might overlook.\nWhich branch of Artificial Intelligence is primarily responsible for analyzing and processing medical X-ray images?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Natural Language Processing (NLP)"
+            },
+            {
+              "letter": "B",
+              "text": "Computer Vision"
+            },
+            {
+              "letter": "C",
+              "text": "Algorithmic Sound Processing"
+            },
+            {
+              "letter": "D",
+              "text": "Automated Data Entry"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A student uses a Large Language Model (LLM) to summarize an encyclopedia article. The model generates a fluent response, but includes a claim that a famous inventor lived on the Moon in 1920—a completely fabricated fact.\nWhat is this phenomenon called in AI text generation?",
+      "questions": [
+        {
+          "question": "Scenario: A student uses a Large Language Model (LLM) to summarize an encyclopedia article. The model generates a fluent response, but includes a claim that a famous inventor lived on the Moon in 1920—a completely fabricated fact.\nWhat is this phenomenon called in AI text generation?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Data Compression"
+            },
+            {
+              "letter": "B",
+              "text": "Hallucination"
+            },
+            {
+              "letter": "C",
+              "text": "Overclocking"
+            },
+            {
+              "letter": "D",
+              "text": "Syntax Compiling"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ],
+  "7": [
+    {
+      "passage": "Scenario: An urban transport authority is building an automated subway scheduling system. The development team splits the project into distinct modules: train route mapping, real-time arrival prediction, automated signaling logic, and passenger ticketing systems. Each module is further broken down into specific algorithms.\nWhich fundamental computational thinking principle is being systematically applied to handle this high-complexity problem?",
+      "questions": [
+        {
+          "question": "Scenario: An urban transport authority is building an automated subway scheduling system. The development team splits the project into distinct modules: train route mapping, real-time arrival prediction, automated signaling logic, and passenger ticketing systems. Each module is further broken down into specific algorithms.\nWhich fundamental computational thinking principle is being systematically applied to handle this high-complexity problem?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Data Compression"
+            },
+            {
+              "letter": "B",
+              "text": "Decomposition"
+            },
+            {
+              "letter": "C",
+              "text": "Hardware Virtualization"
+            },
+            {
+              "letter": "D",
+              "text": "Pattern Matching"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Cybersecurity researchers analyze thousands of network log files to detect cyberattacks. They observe that before every major data breach, a specific sequence of 5 failed login attempts occurs within 3 seconds from an unregistered IP address.\nWhat core skill of computational thinking allows researchers to detect this common signal across millions of log entries?",
+      "questions": [
+        {
+          "question": "Scenario: Cybersecurity researchers analyze thousands of network log files to detect cyberattacks. They observe that before every major data breach, a specific sequence of 5 failed login attempts occurs within 3 seconds from an unregistered IP address.\nWhat core skill of computational thinking allows researchers to detect this common signal across millions of log entries?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Pattern Recognition"
+            },
+            {
+              "letter": "B",
+              "text": "Abstraction"
+            },
+            {
+              "letter": "C",
+              "text": "Algorithm Execution"
+            },
+            {
+              "letter": "D",
+              "text": "Syntax Validation"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Engineers are designing a computer model of a city's electrical grid to predict power surges during heatwaves. The software models power plant output, transformer capacities, and residential energy consumption, but completely ignores individual street names, house wall colors, and resident names.\nWhy is this abstraction essential for the software simulation?",
+      "questions": [
+        {
+          "question": "Scenario: Engineers are designing a computer model of a city's electrical grid to predict power surges during heatwaves. The software models power plant output, transformer capacities, and residential energy consumption, but completely ignores individual street names, house wall colors, and resident names.\nWhy is this abstraction essential for the software simulation?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Leaving out details reduces computational complexity and focuses strictly on variables that affect power distribution."
+            },
+            {
+              "letter": "B",
+              "text": "The simulation algorithm cannot process text-based data."
+            },
+            {
+              "letter": "C",
+              "text": "The computer processor lacks memory to store text data."
+            },
+            {
+              "letter": "D",
+              "text": "Electrical current cannot be calculated if house colors are included."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Consider the following array/list of integers:\nData = [14, 7, 22, 35, 18, 40]\nA programmer executes this pseudocode:\nSet Count = 0 FOR EACH item IN Data:     IF (item > 20) AND (item % 2 == 0) THEN         Set Count = Count + 1     END IF END FOR OUTPUT Count\nWhat is the final output of Count?",
+      "questions": [
+        {
+          "question": "Scenario: Consider the following array/list of integers:\nData = [14, 7, 22, 35, 18, 40]\nA programmer executes this pseudocode:\nSet Count = 0 FOR EACH item IN Data:     IF (item > 20) AND (item % 2 == 0) THEN         Set Count = Count + 1     END IF END FOR OUTPUT Count\nWhat is the final output of Count?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "1"
+            },
+            {
+              "letter": "B",
+              "text": "2"
+            },
+            {
+              "letter": "C",
+              "text": "3"
+            },
+            {
+              "letter": "D",
+              "text": "4"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Examine this recursive-like sequence generated by an algorithm:\nTerm(1) = 3\nTerm(n) = Term(n-1) * 2 - 1 for $n > 1$\nWhat is the value of Term(4)?",
+      "questions": [
+        {
+          "question": "Scenario: Examine this recursive-like sequence generated by an algorithm:\nTerm(1) = 3\nTerm(n) = Term(n-1) * 2 - 1 for $n > 1$\nWhat is the value of Term(4)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "9"
+            },
+            {
+              "letter": "B",
+              "text": "17"
+            },
+            {
+              "letter": "C",
+              "text": "33"
+            },
+            {
+              "letter": "D",
+              "text": "25"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A computer scientist compares two algorithms designed to search through a phone book of 1,000,000 sorted entries:\n•\tAlgorithm A (Linear Search): Checks entries sequentially from start to finish. In the worst case, it takes 1,000,000 operations.\n•\tAlgorithm B (Binary Search): Repeatedly divides the search interval in half. In the worst case, it takes approximately 20 operations ($log_2(1,000,000)$).\nWhy is Binary Search exponentially faster than Linear Search for sorted datasets?",
+      "questions": [
+        {
+          "question": "Scenario: A computer scientist compares two algorithms designed to search through a phone book of 1,000,000 sorted entries:\n•\tAlgorithm A (Linear Search): Checks entries sequentially from start to finish. In the worst case, it takes 1,000,000 operations.\n•\tAlgorithm B (Binary Search): Repeatedly divides the search interval in half. In the worst case, it takes approximately 20 operations ($log_2(1,000,000)$).\nWhy is Binary Search exponentially faster than Linear Search for sorted datasets?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Binary search uses parallel processors to check all items simultaneously."
+            },
+            {
+              "letter": "B",
+              "text": "Binary search eliminates half of the remaining dataset with each single comparison."
+            },
+            {
+              "letter": "C",
+              "text": "Linear search skips items at random intervals."
+            },
+            {
+              "letter": "D",
+              "text": "Binary search changes the underlying numbers into text strings."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A developer builds a smartphone app to measure daily water intake. The application uses this conditional block:\nIF WaterIntake >= 2500 THEN     Display \"Goal Reached\" ELSE IF WaterIntake >= 1500 THEN     Display \"Good Effort\" ELSE     Display \"Drink More Water\" END IF\nIf a user drinks exactly 2,500 mL of water, what message will be displayed, and why?",
+      "questions": [
+        {
+          "question": "Scenario: A developer builds a smartphone app to measure daily water intake. The application uses this conditional block:\nIF WaterIntake >= 2500 THEN     Display \"Goal Reached\" ELSE IF WaterIntake >= 1500 THEN     Display \"Good Effort\" ELSE     Display \"Drink More Water\" END IF\nIf a user drinks exactly 2,500 mL of water, what message will be displayed, and why?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "\"Good Effort\" because 2500 is the upper limit."
+            },
+            {
+              "letter": "B",
+              "text": "\"Goal Reached\" because the condition WaterIntake >= 2500 evaluates to TRUE first."
+            },
+            {
+              "letter": "C",
+              "text": "Both \"Goal Reached\" and \"Good Effort\" will print."
+            },
+            {
+              "letter": "D",
+              "text": "\"Drink More Water\" because the condition requires strict inequality."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Consider this pseudocode procedure designed to swap the values of two variables, X and Y:\nSet X = 10 Set Y = 25 Set Temp = X Set X = Y Set Y = Temp\nWhy is the temporary variable Temp necessary in this algorithm?",
+      "questions": [
+        {
+          "question": "Scenario: Consider this pseudocode procedure designed to swap the values of two variables, X and Y:\nSet X = 10 Set Y = 25 Set Temp = X Set X = Y Set Y = Temp\nWhy is the temporary variable Temp necessary in this algorithm?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Without Temp, setting X = Y would overwrite the original value of X, causing its initial value to be lost."
+            },
+            {
+              "letter": "B",
+              "text": "Computer memory cannot assign values directly between two primary variables."
+            },
+            {
+              "letter": "C",
+              "text": "Temp converts integer variables into floating-point numbers."
+            },
+            {
+              "letter": "D",
+              "text": "It prevents a syntax error in the compiler."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Trace the value of Result in the following loop structure:\nSet Result = 0 FOR i = 1 TO 4:     FOR j = 1 TO i:         Set Result = Result + 1     END FOR END FOR OUTPUT Result\nWhat is the final value of Result?",
+      "questions": [
+        {
+          "question": "Scenario: Trace the value of Result in the following loop structure:\nSet Result = 0 FOR i = 1 TO 4:     FOR j = 1 TO i:         Set Result = Result + 1     END FOR END FOR OUTPUT Result\nWhat is the final value of Result?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "4"
+            },
+            {
+              "letter": "B",
+              "text": "10"
+            },
+            {
+              "letter": "C",
+              "text": "16"
+            },
+            {
+              "letter": "D",
+              "text": "8"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: An e-learning platform records test scores. A programmer writes a sorting routine. During testing with an input list [5, 2, 8, 1, 9], the output produces [1, 2, 5, 8]. The number 9 was completely dropped.\nWhat type of error is this, and what is the best debugging strategy?",
+      "questions": [
+        {
+          "question": "Scenario: An e-learning platform records test scores. A programmer writes a sorting routine. During testing with an input list [5, 2, 8, 1, 9], the output produces [1, 2, 5, 8]. The number 9 was completely dropped.\nWhat type of error is this, and what is the best debugging strategy?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Syntax Error; fix variable capitalization."
+            },
+            {
+              "letter": "B",
+              "text": "Logic Error; trace loop boundary conditions (e.g., array index upper bound) step-by-step."
+            },
+            {
+              "letter": "C",
+              "text": "Hardware Error; increase motherboard memory."
+            },
+            {
+              "letter": "D",
+              "text": "Runtime Overflow; convert numbers to text."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A spam detection AI model classifies incoming emails as \"Spam\" or \"Not Spam\". During training, the developers evaluate the model using a confusion matrix with 10,000 test emails:\n•\tTrue Positives (Correctly identified Spam): 1,800\n•\tFalse Positives (Legitimate emails incorrectly marked as Spam): 200\n•\tTrue Negatives (Correctly identified Legitimate): 7,900\n•\tFalse Negatives (Spam emails missed by filter): 100\nWhat is the Precision of the spam filter, defined as: $\\frac{\\text{True Positives}}{\\text{True Positives} + \\text{False Positives}}$?",
+      "questions": [
+        {
+          "question": "Scenario: A spam detection AI model classifies incoming emails as \"Spam\" or \"Not Spam\". During training, the developers evaluate the model using a confusion matrix with 10,000 test emails:\n•\tTrue Positives (Correctly identified Spam): 1,800\n•\tFalse Positives (Legitimate emails incorrectly marked as Spam): 200\n•\tTrue Negatives (Correctly identified Legitimate): 7,900\n•\tFalse Negatives (Spam emails missed by filter): 100\nWhat is the Precision of the spam filter, defined as: $\\frac{\\text{True Positives}}{\\text{True Positives} + \\text{False Positives}}$?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "90%"
+            },
+            {
+              "letter": "B",
+              "text": "95%"
+            },
+            {
+              "letter": "C",
+              "text": "80%"
+            },
+            {
+              "letter": "D",
+              "text": "99%"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A credit scoring AI is trained on historical banking data spanning 1980 to 2010. During deployment, the AI consistently assigns lower credit scores to younger applicants who work in modern digital gig-economy jobs (like app developers or freelance content creators), even when they have high income and zero debt.\nWhat technical phenomenon explains why the AI makes these flawed assessments?",
+      "questions": [
+        {
+          "question": "Scenario: A credit scoring AI is trained on historical banking data spanning 1980 to 2010. During deployment, the AI consistently assigns lower credit scores to younger applicants who work in modern digital gig-economy jobs (like app developers or freelance content creators), even when they have high income and zero debt.\nWhat technical phenomenon explains why the AI makes these flawed assessments?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Historical Training Bias / Outdated Data Distribution"
+            },
+            {
+              "letter": "B",
+              "text": "Hardware Processor Throttling"
+            },
+            {
+              "letter": "C",
+              "text": "Infinite Recursive Loop"
+            },
+            {
+              "letter": "D",
+              "text": "High Network Latency"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Artificial Neural Networks (ANNs) draw inspiration from the biological human brain. Match the computational concepts of an ANN to their biological counterparts:\n[Input Nodes] -> [Weights / Connections] -> [Activation Threshold]\nWhat computational role do the Weights perform inside an artificial neural network?",
+      "questions": [
+        {
+          "question": "Scenario: Artificial Neural Networks (ANNs) draw inspiration from the biological human brain. Match the computational concepts of an ANN to their biological counterparts:\n[Input Nodes] -> [Weights / Connections] -> [Activation Threshold]\nWhat computational role do the Weights perform inside an artificial neural network?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They store the physical location of the server hosting the model."
+            },
+            {
+              "letter": "B",
+              "text": "They act as adjustable parameters that determine the signal strength between connected artificial neurons."
+            },
+            {
+              "letter": "C",
+              "text": "They convert text strings into monitor display pixels."
+            },
+            {
+              "letter": "D",
+              "text": "They regulate the power voltage sent to the computer motherboard."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A machine learning model trained to identify wild animals achieves 99.9% accuracy on its training images. However, when tested on brand new photos taken in different weather conditions, its accuracy drops drastically to 42% because it learned to identify specific background grass pixels rather than animal features.\nWhat critical machine learning concept describes this failure mode?",
+      "questions": [
+        {
+          "question": "Scenario: A machine learning model trained to identify wild animals achieves 99.9% accuracy on its training images. However, when tested on brand new photos taken in different weather conditions, its accuracy drops drastically to 42% because it learned to identify specific background grass pixels rather than animal features.\nWhat critical machine learning concept describes this failure mode?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Underfitting"
+            },
+            {
+              "letter": "B",
+              "text": "Overfitting"
+            },
+            {
+              "letter": "C",
+              "text": "Encryption Failure"
+            },
+            {
+              "letter": "D",
+              "text": "Linear Regression"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Autonomous delivery robots navigate busy city sidewalks using LiDAR sensors, cameras, and real-time computer vision models to detect pedestrians, street curbs, and moving bicycles.\nIn the standard robotics control pipeline, what order of operations occurs?",
+      "questions": [
+        {
+          "question": "Scenario: Autonomous delivery robots navigate busy city sidewalks using LiDAR sensors, cameras, and real-time computer vision models to detect pedestrians, street curbs, and moving bicycles.\nIn the standard robotics control pipeline, what order of operations occurs?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Action (Actuator Movement) $\\rightarrow$ Processing (AI Decision) $\\rightarrow$ Sensing (Data Capture)"
+            },
+            {
+              "letter": "B",
+              "text": "Sensing (Data Capture) $\\rightarrow$ Processing (AI Decision) $\\rightarrow$ Action (Actuator Movement)"
+            },
+            {
+              "letter": "C",
+              "text": "Processing (AI Decision) $\\rightarrow$ Sensing (Data Capture) $\\rightarrow$ Action (Actuator Movement)"
+            },
+            {
+              "letter": "D",
+              "text": "Action (Actuator Movement) $\\rightarrow$ Sensing (Data Capture) $\\rightarrow$ Processing (AI Decision)"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ],
+  "8": [
+    {
+      "passage": "Scenario: A global logistics company manages a routing system for 100,000 delivery trucks. To compute the shortest delivery paths across connected roads, engineers model the road network as nodes (intersections) and edges (roads with distance weights). They choose Dijkstra's algorithm over checking every possible path sequentially.\nWhich computational thinking process allows engineers to abstract a physical map into a graph data structure to apply pathfinding algorithms?",
+      "questions": [
+        {
+          "question": "Scenario: A global logistics company manages a routing system for 100,000 delivery trucks. To compute the shortest delivery paths across connected roads, engineers model the road network as nodes (intersections) and edges (roads with distance weights). They choose Dijkstra's algorithm over checking every possible path sequentially.\nWhich computational thinking process allows engineers to abstract a physical map into a graph data structure to apply pathfinding algorithms?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Pattern Synthesis"
+            },
+            {
+              "letter": "B",
+              "text": "Data Representation and Graph Abstraction"
+            },
+            {
+              "letter": "C",
+              "text": "Hardware Paging"
+            },
+            {
+              "letter": "D",
+              "text": "Heuristic Encryption"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A cybersecurity analyst is examining network packet logs. She notices that an attacker uses a repetitive script that sends a SYN packet, waits 1.5 seconds, sends 3 ACK packets, and then attempts an administrative login. By creating a rule to automatically block any IP address exhibiting this exact 3-step behavior, the system halts the attack.\nWhat core computational thinking pillar was critical in formulating this automated defense?",
+      "questions": [
+        {
+          "question": "Scenario: A cybersecurity analyst is examining network packet logs. She notices that an attacker uses a repetitive script that sends a SYN packet, waits 1.5 seconds, sends 3 ACK packets, and then attempts an administrative login. By creating a rule to automatically block any IP address exhibiting this exact 3-step behavior, the system halts the attack.\nWhat core computational thinking pillar was critical in formulating this automated defense?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Pattern Recognition"
+            },
+            {
+              "letter": "B",
+              "text": "Binary Decomposition"
+            },
+            {
+              "letter": "C",
+              "text": "Hardware Overclocking"
+            },
+            {
+              "letter": "D",
+              "text": "Loop Normalization"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A computer scientist evaluates two sorting algorithms acting on an array of $n = 1,000,000$ elements:\n•\tAlgorithm A (Bubble Sort): Time complexity of $O(n^2)$, requiring roughly $1,000,000,000,000$ operations.\n•\tAlgorithm B (Merge Sort): Time complexity of $O(n \\log_2 n)$, requiring roughly $20,000,000$ operations.\nIf a processor executes 1,000,000 operations per second, how much faster will Algorithm B complete the task compared to Algorithm A?",
+      "questions": [
+        {
+          "question": "Scenario: A computer scientist evaluates two sorting algorithms acting on an array of $n = 1,000,000$ elements:\n•\tAlgorithm A (Bubble Sort): Time complexity of $O(n^2)$, requiring roughly $1,000,000,000,000$ operations.\n•\tAlgorithm B (Merge Sort): Time complexity of $O(n \\log_2 n)$, requiring roughly $20,000,000$ operations.\nIf a processor executes 1,000,000 operations per second, how much faster will Algorithm B complete the task compared to Algorithm A?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Algorithm B finishes in ~20 seconds; Algorithm A takes ~1,000,000 seconds (about 11.5 days)."
+            },
+            {
+              "letter": "B",
+              "text": "Both algorithms finish in the exact same time because they process the same data size."
+            },
+            {
+              "letter": "C",
+              "text": "Algorithm A finishes in 2 seconds; Algorithm B finishes in 20 seconds."
+            },
+            {
+              "letter": "D",
+              "text": "Algorithm B takes 11.5 days; Algorithm A takes 20 seconds."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Trace the output of the following pseudocode function implementing a recursive calculation:\nFUNCTION Mystery(n):     IF n <= 1 THEN         RETURN 1     ELSE         RETURN n * Mystery(n - 1)     END IF END FUNCTION  OUTPUT Mystery(5)\nWhat is the return value of Mystery(5)?",
+      "questions": [
+        {
+          "question": "Scenario: Trace the output of the following pseudocode function implementing a recursive calculation:\nFUNCTION Mystery(n):     IF n <= 1 THEN         RETURN 1     ELSE         RETURN n * Mystery(n - 1)     END IF END FUNCTION  OUTPUT Mystery(5)\nWhat is the return value of Mystery(5)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "15"
+            },
+            {
+              "letter": "B",
+              "text": "120"
+            },
+            {
+              "letter": "C",
+              "text": "25"
+            },
+            {
+              "letter": "D",
+              "text": "720"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Consider a Stack data structure (Last In, First Out - LIFO) and a Queue data structure (First In, First Out - FIFO). A programmer performs these operations:\nPush(Stack, 10) Push(Stack, 20) Enqueue(Queue, 10) Enqueue(Queue, 20)  Set X = Pop(Stack) Set Y = Dequeue(Queue)\nWhat are the final values of X and Y?",
+      "questions": [
+        {
+          "question": "Scenario: Consider a Stack data structure (Last In, First Out - LIFO) and a Queue data structure (First In, First Out - FIFO). A programmer performs these operations:\nPush(Stack, 10) Push(Stack, 20) Enqueue(Queue, 10) Enqueue(Queue, 20)  Set X = Pop(Stack) Set Y = Dequeue(Queue)\nWhat are the final values of X and Y?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$X = 10, Y = 10$"
+            },
+            {
+              "letter": "B",
+              "text": "$X = 20, Y = 10$"
+            },
+            {
+              "letter": "C",
+              "text": "$X = 10, Y = 20$"
+            },
+            {
+              "letter": "D",
+              "text": "$X = 20, Y = 20$"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: An engineer designs a logic circuit for an automated greenhouse window. The window opens ($W = 1$) only when the internal temperature is High ($T = 1$) AND the rain sensor is Dry ($R = 0$), OR when a manual override switch is Active ($M = 1$).\nWhich Boolean logic expression correctly models this system?",
+      "questions": [
+        {
+          "question": "Scenario: An engineer designs a logic circuit for an automated greenhouse window. The window opens ($W = 1$) only when the internal temperature is High ($T = 1$) AND the rain sensor is Dry ($R = 0$), OR when a manual override switch is Active ($M = 1$).\nWhich Boolean logic expression correctly models this system?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$W = (T \\text{ AND } R) \\text{ OR } M$"
+            },
+            {
+              "letter": "B",
+              "text": "$W = (T \\text{ AND } (\\text{NOT } R)) \\text{ OR } M$"
+            },
+            {
+              "letter": "C",
+              "text": "$W = (T \\text{ OR } R) \\text{ AND } (\\text{NOT } M)$"
+            },
+            {
+              "letter": "D",
+              "text": "$W = (\\text{NOT } T) \\text{ AND } R \\text{ AND } M$"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Study this array filtering algorithm:\nSet Data = [12, 45, 68, 23, 89, 90, 34] Set Threshold = 50 Set Result = []  FOR EACH val IN Data:     IF (val > Threshold) AND (val % 2 == 0) THEN         Append val to Result     END IF END FOR\nWhat values will be contained in Result at the end of execution?",
+      "questions": [
+        {
+          "question": "Scenario: Study this array filtering algorithm:\nSet Data = [12, 45, 68, 23, 89, 90, 34] Set Threshold = 50 Set Result = []  FOR EACH val IN Data:     IF (val > Threshold) AND (val % 2 == 0) THEN         Append val to Result     END IF END FOR\nWhat values will be contained in Result at the end of execution?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "[68, 89, 90]"
+            },
+            {
+              "letter": "B",
+              "text": "[68, 90]"
+            },
+            {
+              "letter": "C",
+              "text": "[45, 89]"
+            },
+            {
+              "letter": "D",
+              "text": "[12, 68, 90, 34]"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A web developer tests an e-commerce checkout function. The program executes without syntax errors, but when a user buys 3 items at \\$10 each with a \\$5 discount coupon, the system calculates a total cost of \\$25 instead of \\$25... wait, $3 \\times 10 - 5 = 25$. However, when a user buys 2 items at \\$20 each with a \\$10 coupon, the system displays \\$0 total cost!\nUpon reviewing the code, the developer finds:\nTotal = Quantity * (Price - Coupon)\nWhat type of error is present, and how should it be corrected?",
+      "questions": [
+        {
+          "question": "Scenario: A web developer tests an e-commerce checkout function. The program executes without syntax errors, but when a user buys 3 items at \\$10 each with a \\$5 discount coupon, the system calculates a total cost of \\$25 instead of \\$25... wait, $3 \\times 10 - 5 = 25$. However, when a user buys 2 items at \\$20 each with a \\$10 coupon, the system displays \\$0 total cost!\nUpon reviewing the code, the developer finds:\nTotal = Quantity * (Price - Coupon)\nWhat type of error is present, and how should it be corrected?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Syntax Error; change Total to a floating-point string."
+            },
+            {
+              "letter": "B",
+              "text": "Logic Error; change the operator precedence to Total = (Quantity * Price) - Coupon."
+            },
+            {
+              "letter": "C",
+              "text": "Runtime Stack Overflow; clear the RAM memory."
+            },
+            {
+              "letter": "D",
+              "text": "Compiler Fault; reinstall the programming language environment."
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A Binary Search Tree (BST) stores integers. By definition, for any node, all values in its left subtree are smaller, and all values in its right subtree are larger.\nIf you insert the elements [50, 30, 70, 20, 40] in order into an empty BST, which element is the left child of node 30?",
+      "questions": [
+        {
+          "question": "Scenario: A Binary Search Tree (BST) stores integers. By definition, for any node, all values in its left subtree are smaller, and all values in its right subtree are larger.\nIf you insert the elements [50, 30, 70, 20, 40] in order into an empty BST, which element is the left child of node 30?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "50"
+            },
+            {
+              "letter": "B",
+              "text": "70"
+            },
+            {
+              "letter": "C",
+              "text": "20"
+            },
+            {
+              "letter": "D",
+              "text": "40"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A multi-threaded operating system manages two processes ($P_1$ and $P_2$). $P_1$ locks File A and waits to access File B. Simultaneously, $P_2$ locks File B and waits to access File A. Neither process can proceed, freezing the system.\nWhat is this state called in computer architecture?",
+      "questions": [
+        {
+          "question": "Scenario: A multi-threaded operating system manages two processes ($P_1$ and $P_2$). $P_1$ locks File A and waits to access File B. Simultaneously, $P_2$ locks File B and waits to access File A. Neither process can proceed, freezing the system.\nWhat is this state called in computer architecture?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Deadlock"
+            },
+            {
+              "letter": "B",
+              "text": "Infinite Recursion"
+            },
+            {
+              "letter": "C",
+              "text": "Cache Miss"
+            },
+            {
+              "letter": "D",
+              "text": "Memory Leak"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: An AI development team trains a Convolutional Neural Network (CNN) to detect malignant skin lesions from medical photos. The model achieves 99% accuracy on training images, but drops to 61% accuracy on validation images from an external hospital.\nWhat technique should engineers use to reduce this overfitting issue?",
+      "questions": [
+        {
+          "question": "Scenario: An AI development team trains a Convolutional Neural Network (CNN) to detect malignant skin lesions from medical photos. The model achieves 99% accuracy on training images, but drops to 61% accuracy on validation images from an external hospital.\nWhat technique should engineers use to reduce this overfitting issue?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Add Dropout layers, apply Data Augmentation, and gather more diverse training samples."
+            },
+            {
+              "letter": "B",
+              "text": "Increase the learning rate to maximum speed."
+            },
+            {
+              "letter": "C",
+              "text": "Remove all hidden layers from the neural network."
+            },
+            {
+              "letter": "D",
+              "text": "Turn off the computer's graphics processing unit (GPU)."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: During the training of a Deep Neural Network using Gradient Descent, the error gradients become extremely tiny as they propagate backward through many hidden layers, causing the early layer weights to stop updating completely.\nWhat is this fundamental deep learning issue called?",
+      "questions": [
+        {
+          "question": "Scenario: During the training of a Deep Neural Network using Gradient Descent, the error gradients become extremely tiny as they propagate backward through many hidden layers, causing the early layer weights to stop updating completely.\nWhat is this fundamental deep learning issue called?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Exploding Gradient Problem"
+            },
+            {
+              "letter": "B",
+              "text": "Vanishing Gradient Problem"
+            },
+            {
+              "letter": "C",
+              "text": "Deadlock Conditions"
+            },
+            {
+              "letter": "D",
+              "text": "Binary Compilation Error"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: An autonomous drone uses Reinforcement Learning (RL) to learn how to fly through a forest. It receives numerical rewards for moving forward (+5) and severe penalties for colliding with branches (-100).\nIf the drone discovers a trick where it spins in tight circles near the starting line to continuously collect minor stability rewards (+0.1 per second) while avoiding all risks of hitting trees, what RL challenge is demonstrated?",
+      "questions": [
+        {
+          "question": "Scenario: An autonomous drone uses Reinforcement Learning (RL) to learn how to fly through a forest. It receives numerical rewards for moving forward (+5) and severe penalties for colliding with branches (-100).\nIf the drone discovers a trick where it spins in tight circles near the starting line to continuously collect minor stability rewards (+0.1 per second) while avoiding all risks of hitting trees, what RL challenge is demonstrated?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Reward Hacking / Specification Gaming"
+            },
+            {
+              "letter": "B",
+              "text": "Hardware Sensor Overheating"
+            },
+            {
+              "letter": "C",
+              "text": "Unsupervised Clustering Failure"
+            },
+            {
+              "letter": "D",
+              "text": "Natural Language Misalignment"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A court system tests an AI risk assessment tool designed to help judges set bail amounts. The AI predicts the likelihood that an arrested individual will re-offend. Analysis reveals that the AI produces a False Positive Rate (predicting high risk for someone who does NOT re-offend) twice as high for minority defendants compared to non-minority defendants.\nWhich ethical priority must AI developers address before deploying this algorithm?",
+      "questions": [
+        {
+          "question": "Scenario: A court system tests an AI risk assessment tool designed to help judges set bail amounts. The AI predicts the likelihood that an arrested individual will re-offend. Analysis reveals that the AI produces a False Positive Rate (predicting high risk for someone who does NOT re-offend) twice as high for minority defendants compared to non-minority defendants.\nWhich ethical priority must AI developers address before deploying this algorithm?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Algorithmic Fairness and Disparate Impact Analysis"
+            },
+            {
+              "letter": "B",
+              "text": "CPU Clock Frequency Optimization"
+            },
+            {
+              "letter": "C",
+              "text": "GPU Memory Bandwidth Compression"
+            },
+            {
+              "letter": "D",
+              "text": "Database Index Sharding"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Generative AI models that generate images from text prompts (like Stable Diffusion or Midjourney) rely on a mathematical architecture that adds Gaussian noise to an image step-by-step until it is pure static, and then learns how to reverse that process to generate clean images from noisy inputs.\nWhat type of generative neural network model is built on this reverse-denoising principle?",
+      "questions": [
+        {
+          "question": "Scenario: Generative AI models that generate images from text prompts (like Stable Diffusion or Midjourney) rely on a mathematical architecture that adds Gaussian noise to an image step-by-step until it is pure static, and then learns how to reverse that process to generate clean images from noisy inputs.\nWhat type of generative neural network model is built on this reverse-denoising principle?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Recurrent Neural Network (RNN)"
+            },
+            {
+              "letter": "B",
+              "text": "Diffusion Model"
+            },
+            {
+              "letter": "C",
+              "text": "Decision Tree Classifier"
+            },
+            {
+              "letter": "D",
+              "text": "K-Means Clustering Algorithm"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ],
+  "9": [
+    {
+      "passage": "Scenario: An engineer is developing a real-time GPS navigation application. To model the road network, intersections are represented as vertices and roads as weighted edges. When computing the shortest path between two distant cities, evaluating every simple path would take $O(V!)$ exponential time. Instead, the engineer uses A* Search algorithm with an admissible heuristic function.\nWhich computational thinking process is being used when converting a real physical road network into a weighted graph and applying a heuristic search to solve an otherwise intractable problem?",
+      "questions": [
+        {
+          "question": "Scenario: An engineer is developing a real-time GPS navigation application. To model the road network, intersections are represented as vertices and roads as weighted edges. When computing the shortest path between two distant cities, evaluating every simple path would take $O(V!)$ exponential time. Instead, the engineer uses A* Search algorithm with an admissible heuristic function.\nWhich computational thinking process is being used when converting a real physical road network into a weighted graph and applying a heuristic search to solve an otherwise intractable problem?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Structural Decomposition & Heuristic Abstraction"
+            },
+            {
+              "letter": "B",
+              "text": "Syntax Compilation & Parallel Memory Mapping"
+            },
+            {
+              "letter": "C",
+              "text": "Hardware Paging & Virtual Cache Loading"
+            },
+            {
+              "letter": "D",
+              "text": "Lexical Analysis & Recursion Unrolling"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A bioinformatics researcher analyzes genetic sequences across species. She notices that a specific 12-base-pair sequence motif appears in 95% of disease-causing mutations across distinct genomes. By creating an algorithm that scans unknown DNA strands specifically for this sequence, she identifies potential genetic vulnerabilities.\nWhich computational thinking pillar is primary in translating observed multi-genome similarities into a predictive screening tool?",
+      "questions": [
+        {
+          "question": "Scenario: A bioinformatics researcher analyzes genetic sequences across species. She notices that a specific 12-base-pair sequence motif appears in 95% of disease-causing mutations across distinct genomes. By creating an algorithm that scans unknown DNA strands specifically for this sequence, she identifies potential genetic vulnerabilities.\nWhich computational thinking pillar is primary in translating observed multi-genome similarities into a predictive screening tool?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Pattern Recognition & Feature Extraction"
+            },
+            {
+              "letter": "B",
+              "text": "Heap Allocation"
+            },
+            {
+              "letter": "C",
+              "text": "Hardware Pipelining"
+            },
+            {
+              "letter": "D",
+              "text": "Thread Concurrency"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Compare the worst-case time complexity of searching for an element in an unsorted array of size $n$ versus searching in a balanced Binary Search Tree (BST) of size $n$:\n•\tUnsorted Array Linear Search: $O(n)$\n•\tBalanced BST Search: $O(\\log_2 n)$\nIf $n = 1,048,576$ elements, approximately how many operations does the balanced BST search take in the worst case compared to the linear search?",
+      "questions": [
+        {
+          "question": "Scenario: Compare the worst-case time complexity of searching for an element in an unsorted array of size $n$ versus searching in a balanced Binary Search Tree (BST) of size $n$:\n•\tUnsorted Array Linear Search: $O(n)$\n•\tBalanced BST Search: $O(\\log_2 n)$\nIf $n = 1,048,576$ elements, approximately how many operations does the balanced BST search take in the worst case compared to the linear search?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "BST takes ~20 operations, while linear search takes ~1,048,576 operations."
+            },
+            {
+              "letter": "B",
+              "text": "BST takes ~1,000 operations, while linear search takes ~20 operations."
+            },
+            {
+              "letter": "C",
+              "text": "Both take approximately 1,048,576 operations."
+            },
+            {
+              "letter": "D",
+              "text": "BST takes ~524,288 operations, while linear search takes ~1,000 operations."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Trace the output of the following recursive function:\nFUNCTION FastPower(base, exp):     IF exp == 0 THEN         RETURN 1     ELSE IF exp % 2 == 0 THEN         Set half = FastPower(base, exp / 2)         RETURN half * half     ELSE         RETURN base * FastPower(base, exp - 1)     END IF END FUNCTION  OUTPUT FastPower(2, 6)\nWhat is the return value of FastPower(2, 6) and its logarithmic recurrence property?",
+      "questions": [
+        {
+          "question": "Scenario: Trace the output of the following recursive function:\nFUNCTION FastPower(base, exp):     IF exp == 0 THEN         RETURN 1     ELSE IF exp % 2 == 0 THEN         Set half = FastPower(base, exp / 2)         RETURN half * half     ELSE         RETURN base * FastPower(base, exp - 1)     END IF END FUNCTION  OUTPUT FastPower(2, 6)\nWhat is the return value of FastPower(2, 6) and its logarithmic recurrence property?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "64; computed in $O(\\log_2 \\text{exp})$ recursive calls."
+            },
+            {
+              "letter": "B",
+              "text": "32; computed in $O(\\text{exp})$ recursive calls."
+            },
+            {
+              "letter": "C",
+              "text": "128; computed in $O(\\text{exp}^2)$ recursive calls."
+            },
+            {
+              "letter": "D",
+              "text": "64; computed in $O(1)$ recursive calls."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: An operating system uses a Queue to manage print jobs (FIFO) and a Stack to manage undo actions in a text editor (LIFO). Consider the execution sequence:\nEnqueue(PrintQueue, \"Doc1\") Enqueue(PrintQueue, \"Doc2\") Push(UndoStack, \"Edit1\") Push(UndoStack, \"Edit2\")  Set Job = Dequeue(PrintQueue) Set Action = Pop(UndoStack)\nWhat are the values of Job and Action?",
+      "questions": [
+        {
+          "question": "Scenario: An operating system uses a Queue to manage print jobs (FIFO) and a Stack to manage undo actions in a text editor (LIFO). Consider the execution sequence:\nEnqueue(PrintQueue, \"Doc1\") Enqueue(PrintQueue, \"Doc2\") Push(UndoStack, \"Edit1\") Push(UndoStack, \"Edit2\")  Set Job = Dequeue(PrintQueue) Set Action = Pop(UndoStack)\nWhat are the values of Job and Action?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Job = \"Doc1\", Action = \"Edit2\""
+            },
+            {
+              "letter": "B",
+              "text": "Job = \"Doc2\", Action = \"Edit1\""
+            },
+            {
+              "letter": "C",
+              "text": "Job = \"Doc1\", Action = \"Edit1\""
+            },
+            {
+              "letter": "D",
+              "text": "Job = \"Doc2\", Action = \"Edit2\""
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A digital logic circuit controls an industrial cooling pump ($P$). The pump turns on ($P = 1$) if the Temperature is Critical ($T = 1$) AND the Pressure is Normal ($R = 1$), OR if the Emergency Bypass Switch is Triggered ($E = 1$). However, if the Main Breaker is Tripped ($B = 1$), the pump MUST stay OFF regardless of all other inputs.\nWhich Boolean expression accurately represents this safety logic?",
+      "questions": [
+        {
+          "question": "Scenario: A digital logic circuit controls an industrial cooling pump ($P$). The pump turns on ($P = 1$) if the Temperature is Critical ($T = 1$) AND the Pressure is Normal ($R = 1$), OR if the Emergency Bypass Switch is Triggered ($E = 1$). However, if the Main Breaker is Tripped ($B = 1$), the pump MUST stay OFF regardless of all other inputs.\nWhich Boolean expression accurately represents this safety logic?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "$P = ((T \\text{ AND } R) \\text{ OR } E) \\text{ AND } (\\text{NOT } B)$"
+            },
+            {
+              "letter": "B",
+              "text": "$P = (T \\text{ OR } R \\text{ OR } E) \\text{ AND } B$"
+            },
+            {
+              "letter": "C",
+              "text": "$P = ((T \\text{ AND } R) \\text{ AND } E) \\text{ OR } B$"
+            },
+            {
+              "letter": "D",
+              "text": "$P = (T \\text{ AND } (\\text{NOT } R)) \\text{ OR } (E \\text{ AND } B)$"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Trace the output of this list processing algorithm:\nSet Values = [15, 8, 24, 7, 30, 12, 19] Set Target = 10 Set OutputList = []  FOR i = 0 TO Length(Values) - 1:     IF (Values[i] > Target) AND (i % 2 == 0) THEN         Append Values[i] to OutputList     END IF END FOR\nWhat is the content of OutputList?",
+      "questions": [
+        {
+          "question": "Scenario: Trace the output of this list processing algorithm:\nSet Values = [15, 8, 24, 7, 30, 12, 19] Set Target = 10 Set OutputList = []  FOR i = 0 TO Length(Values) - 1:     IF (Values[i] > Target) AND (i % 2 == 0) THEN         Append Values[i] to OutputList     END IF END FOR\nWhat is the content of OutputList?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "[15, 24, 30]"
+            },
+            {
+              "letter": "B",
+              "text": "[15, 24, 30, 19]"
+            },
+            {
+              "letter": "C",
+              "text": "[24, 30, 12]"
+            },
+            {
+              "letter": "D",
+              "text": "[8, 7, 12]"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A developer builds a banking application to transfer funds between accounts. The code performs:\nAccountA.balance = AccountA.balance - transferAmount AccountB.balance = AccountB.balance + transferAmount\nDuring a network glitch midway through execution, AccountA is debited, but the system crashes before AccountB is credited. The money vanishes from the system.\nWhat database concept should be applied to prevent this partial execution error?",
+      "questions": [
+        {
+          "question": "Scenario: A developer builds a banking application to transfer funds between accounts. The code performs:\nAccountA.balance = AccountA.balance - transferAmount AccountB.balance = AccountB.balance + transferAmount\nDuring a network glitch midway through execution, AccountA is debited, but the system crashes before AccountB is credited. The money vanishes from the system.\nWhat database concept should be applied to prevent this partial execution error?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Database Transactions with Atomicity (ACID properties)"
+            },
+            {
+              "letter": "B",
+              "text": "Lossy Data Compression"
+            },
+            {
+              "letter": "C",
+              "text": "Polymorphic Inheritance"
+            },
+            {
+              "letter": "D",
+              "text": "Asynchronous Web Scraping"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Consider a hash table with 10 slots using the hash function $H(k) = k \\bmod 10$. Keys are inserted in this order: 23, 43, 13. Using linear probing ($H(k, i) = (H(k) + i) \\bmod 10$) to resolve collisions, at which array index will key 13 be stored?",
+      "questions": [
+        {
+          "question": "Scenario: Consider a hash table with 10 slots using the hash function $H(k) = k \\bmod 10$. Keys are inserted in this order: 23, 43, 13. Using linear probing ($H(k, i) = (H(k) + i) \\bmod 10$) to resolve collisions, at which array index will key 13 be stored?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Index 5"
+            },
+            {
+              "letter": "B",
+              "text": "Index 3"
+            },
+            {
+              "letter": "C",
+              "text": "Index 4"
+            },
+            {
+              "letter": "D",
+              "text": "Index 6"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Two processes $P_1$ and $P_2$ share resources $R_1$ and $R_2$. $P_1$ acquires $R_1$ and requests $R_2$. $P_2$ acquires $R_2$ and requests $R_1$. Neither process yields its held resource.\nWhat four Coffman conditions define this state, and how can it be prevented?",
+      "questions": [
+        {
+          "question": "Scenario: Two processes $P_1$ and $P_2$ share resources $R_1$ and $R_2$. $P_1$ acquires $R_1$ and requests $R_2$. $P_2$ acquires $R_2$ and requests $R_1$. Neither process yields its held resource.\nWhat four Coffman conditions define this state, and how can it be prevented?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Mutual Exclusion, Hold & Wait, No Preemption, Circular Wait; prevented by breaking Circular Wait (ordering resource acquisition)."
+            },
+            {
+              "letter": "B",
+              "text": "Compilation, Execution, Linking, Loading; prevented by restarting the server."
+            },
+            {
+              "letter": "C",
+              "text": "Encryption, Decryption, Hashing, Salting; prevented by increasing key length."
+            },
+            {
+              "letter": "D",
+              "text": "Overfitting, Underfitting, Bias, Variance; prevented by gathering more data."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A computer vision model trained to diagnose chest X-rays achieves 98% overall accuracy on a dataset where 98% of images are healthy and 2% show disease. When deployed in a clinic, it fails to detect a single sick patient.\nWhy did high overall accuracy fail, and which evaluation metric should be used instead?",
+      "questions": [
+        {
+          "question": "Scenario: A computer vision model trained to diagnose chest X-rays achieves 98% overall accuracy on a dataset where 98% of images are healthy and 2% show disease. When deployed in a clinic, it fails to detect a single sick patient.\nWhy did high overall accuracy fail, and which evaluation metric should be used instead?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Class Imbalance Problem; evaluation should use Recall / Sensitivity and $F_1$-score instead of Accuracy."
+            },
+            {
+              "letter": "B",
+              "text": "Overclocking Error; evaluation should use GPU clock speed."
+            },
+            {
+              "letter": "C",
+              "text": "Syntax Errors; evaluation should use compiler logs."
+            },
+            {
+              "letter": "D",
+              "text": "Lossy Compression; evaluation should use image resolution."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: A deep learning model uses Gradient Descent to minimize a loss function. During training, the weight updates oscillate wildly back and forth across a steep valley without reaching the global minimum.\nWhat hyperparameter adjustment or optimizer enhancement resolves this instability?",
+      "questions": [
+        {
+          "question": "Scenario: A deep learning model uses Gradient Descent to minimize a loss function. During training, the weight updates oscillate wildly back and forth across a steep valley without reaching the global minimum.\nWhat hyperparameter adjustment or optimizer enhancement resolves this instability?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Reduce the Learning Rate or add Momentum (e.g., using the Adam optimizer)."
+            },
+            {
+              "letter": "B",
+              "text": "Increase the Learning Rate to maximum."
+            },
+            {
+              "letter": "C",
+              "text": "Remove all training data."
+            },
+            {
+              "letter": "D",
+              "text": "Convert model weights to integer strings."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: An AI system plays a complex strategy game using Reinforcement Learning. The agent must choose between taking actions that exploit known high-reward strategies versus exploring unfamiliar actions that might yield even higher long-term rewards.\nWhat foundational RL dilemma does this scenario describe, and what policy manages it?",
+      "questions": [
+        {
+          "question": "Scenario: An AI system plays a complex strategy game using Reinforcement Learning. The agent must choose between taking actions that exploit known high-reward strategies versus exploring unfamiliar actions that might yield even higher long-term rewards.\nWhat foundational RL dilemma does this scenario describe, and what policy manages it?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Exploration vs. Exploitation Trade-off; managed by $\\epsilon$-Greedy policies."
+            },
+            {
+              "letter": "B",
+              "text": "Supervised vs. Unsupervised Learning; managed by Linear Regression."
+            },
+            {
+              "letter": "C",
+              "text": "Overfitting vs. Underfitting; managed by Data Deletion."
+            },
+            {
+              "letter": "D",
+              "text": "Hardware vs. Software Constraints; managed by CPU Paging."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: An automated resume screening model is trained on historic company hiring data. The model gives lower scores to female applicants for engineering roles because historical data reflected male-dominated hiring patterns.\nWhat type of AI bias is demonstrated, and how can engineers mitigate it during model development?",
+      "questions": [
+        {
+          "question": "Scenario: An automated resume screening model is trained on historic company hiring data. The model gives lower scores to female applicants for engineering roles because historical data reflected male-dominated hiring patterns.\nWhat type of AI bias is demonstrated, and how can engineers mitigate it during model development?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Historical / Representation Bias; mitigated by auditing training data balance, applying re-weighting, and testing for demographic parity."
+            },
+            {
+              "letter": "B",
+              "text": "Hardware Thermal Bias; mitigated by cooling the server room."
+            },
+            {
+              "letter": "C",
+              "text": "Syntax Bias; mitigated by reformatting text files."
+            },
+            {
+              "letter": "D",
+              "text": "Compiler Bias; mitigated by updating the operating system."
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Scenario: Large Language Models (LLMs) rely on the Transformer architecture. Unlike older Recurrent Neural Networks (RNNs) that process text sequentially word-by-word, Transformers process whole sequences in parallel using a specific mechanism to model dependencies between any two words regardless of distance.\nWhat is this core mechanism called?",
+      "questions": [
+        {
+          "question": "Scenario: Large Language Models (LLMs) rely on the Transformer architecture. Unlike older Recurrent Neural Networks (RNNs) that process text sequentially word-by-word, Transformers process whole sequences in parallel using a specific mechanism to model dependencies between any two words regardless of distance.\nWhat is this core mechanism called?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Self-Attention Mechanism"
+            },
+            {
+              "letter": "B",
+              "text": "Convolutional Pooling"
+            },
+            {
+              "letter": "C",
+              "text": "Linear Interpolation"
+            },
+            {
+              "letter": "D",
+              "text": "Gradient Accumulation"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    }
+  ],
+  "10": [
+    {
+      "passage": "Decomposition\nWhen creating a complex mobile application, a developer breaks down the project into smaller tasks: designing the user interface, setting up the database, and writing the underlying code. Which computational thinking principle is being demonstrated here?",
+      "questions": [
+        {
+          "question": "Decomposition\nWhen creating a complex mobile application, a developer breaks down the project into smaller tasks: designing the user interface, setting up the database, and writing the underlying code. Which computational thinking principle is being demonstrated here?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Abstraction"
+            },
+            {
+              "letter": "B",
+              "text": "Decomposition"
+            },
+            {
+              "letter": "C",
+              "text": "Pattern Recognition"
+            },
+            {
+              "letter": "D",
+              "text": "Algorithm Design"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Pattern Recognition\nA weather system analyzes temperature records from the past 50 years to identify recurring seasonal trends. Which skill is primarily used to spot these repeated trends?",
+      "questions": [
+        {
+          "question": "Pattern Recognition\nA weather system analyzes temperature records from the past 50 years to identify recurring seasonal trends. Which skill is primarily used to spot these repeated trends?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Abstraction"
+            },
+            {
+              "letter": "B",
+              "text": "Pattern Recognition"
+            },
+            {
+              "letter": "C",
+              "text": "Hardware Calibration"
+            },
+            {
+              "letter": "D",
+              "text": "Decomposition"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Abstraction\nA GPS map application displays roads, traffic levels, and estimated travel times, but hides underground water pipes and electrical lines. Why does the app hide this extra information?",
+      "questions": [
+        {
+          "question": "Abstraction\nA GPS map application displays roads, traffic levels, and estimated travel times, but hides underground water pipes and electrical lines. Why does the app hide this extra information?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To apply abstraction by keeping only relevant details for navigation"
+            },
+            {
+              "letter": "B",
+              "text": "To decompose the map into separate pixels"
+            },
+            {
+              "letter": "C",
+              "text": "To run a pattern recognition check on driver behavior"
+            },
+            {
+              "letter": "D",
+              "text": "To prevent the GPS signal from disconnecting"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Algorithmic Thinking\nWhich of the following best describes an algorithm?",
+      "questions": [
+        {
+          "question": "Algorithmic Thinking\nWhich of the following best describes an algorithm?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A physical component inside a computer CPU"
+            },
+            {
+              "letter": "B",
+              "text": "A step-by-step set of instructions to solve a specific problem"
+            },
+            {
+              "letter": "C",
+              "text": "A decorative graphic design layout"
+            },
+            {
+              "letter": "D",
+              "text": "A collection of random numbers generated by a machine"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Searching Algorithms\nYou are looking for the word \"Python\" in a dictionary. Instead of checking every page from the beginning, you open the middle, see that \"Python\" comes after the current page, and eliminate the first half. Which search method does this represent?",
+      "questions": [
+        {
+          "question": "Searching Algorithms\nYou are looking for the word \"Python\" in a dictionary. Instead of checking every page from the beginning, you open the middle, see that \"Python\" comes after the current page, and eliminate the first half. Which search method does this represent?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Linear Search"
+            },
+            {
+              "letter": "B",
+              "text": "Binary Search"
+            },
+            {
+              "letter": "C",
+              "text": "Random Search"
+            },
+            {
+              "letter": "D",
+              "text": "Exhaustive Search"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Sorting Algorithms\nConsider the list of numbers: [5, 2, 8, 1, 3]. If you sort them in ascending order, what is the final sorted list?",
+      "questions": [
+        {
+          "question": "Sorting Algorithms\nConsider the list of numbers: [5, 2, 8, 1, 3]. If you sort them in ascending order, what is the final sorted list?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "[8, 5, 3, 2, 1]"
+            },
+            {
+              "letter": "B",
+              "text": "[1, 2, 3, 5, 8]"
+            },
+            {
+              "letter": "C",
+              "text": "[2, 5, 1, 3, 8]"
+            },
+            {
+              "letter": "D",
+              "text": "[1, 3, 2, 5, 8]"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Logic Conditions\nAn automated door opens ONLY IF a person approaches AND the emergency lock is OFF. In which scenario will the door open?",
+      "questions": [
+        {
+          "question": "Logic Conditions\nAn automated door opens ONLY IF a person approaches AND the emergency lock is OFF. In which scenario will the door open?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A person approaches and the emergency lock is ON"
+            },
+            {
+              "letter": "B",
+              "text": "No person approaches and the emergency lock is OFF"
+            },
+            {
+              "letter": "C",
+              "text": "A person approaches and the emergency lock is OFF"
+            },
+            {
+              "letter": "D",
+              "text": "No person approaches and the emergency lock is ON"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Debugging\nA student writes a program to compute the average of three exam scores: 80, 90, and 100. The computer outputs 200 because the program calculated 80 + 90 + (100 / 3) instead of (80 + 90 + 100) / 3. What type of issue is this?",
+      "questions": [
+        {
+          "question": "Debugging\nA student writes a program to compute the average of three exam scores: 80, 90, and 100. The computer outputs 200 because the program calculated 80 + 90 + (100 / 3) instead of (80 + 90 + 100) / 3. What type of issue is this?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A hardware failure in the monitor"
+            },
+            {
+              "letter": "B",
+              "text": "A logic error caused by incorrect operation order"
+            },
+            {
+              "letter": "C",
+              "text": "A network connection error"
+            },
+            {
+              "letter": "D",
+              "text": "A syntax error that prevents execution"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Loops and Iteration\nExamine the following pseudocode:\ncount = 0 REPEAT 4 TIMES:     count = count + 3 PRINT count\nWhat value is printed at the end?",
+      "questions": [
+        {
+          "question": "Loops and Iteration\nExamine the following pseudocode:\ncount = 0 REPEAT 4 TIMES:     count = count + 3 PRINT count\nWhat value is printed at the end?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "4"
+            },
+            {
+              "letter": "B",
+              "text": "7"
+            },
+            {
+              "letter": "C",
+              "text": "12"
+            },
+            {
+              "letter": "D",
+              "text": "16"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Flowcharts\nIn standard flowchart diagrams, which symbol shape represents a decision point (e.g., checking an IF condition)?",
+      "questions": [
+        {
+          "question": "Flowcharts\nIn standard flowchart diagrams, which symbol shape represents a decision point (e.g., checking an IF condition)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Oval"
+            },
+            {
+              "letter": "B",
+              "text": "Rectangle"
+            },
+            {
+              "letter": "C",
+              "text": "Diamond"
+            },
+            {
+              "letter": "D",
+              "text": "Circle"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Definition of AI\nWhich statement best defines Artificial Intelligence (AI)?",
+      "questions": [
+        {
+          "question": "Definition of AI\nWhich statement best defines Artificial Intelligence (AI)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Hardware components designed to protect computers from physical damage"
+            },
+            {
+              "letter": "B",
+              "text": "Systems or machines that perform tasks typically requiring human intelligence"
+            },
+            {
+              "letter": "C",
+              "text": "High-speed internet cables connecting international networks"
+            },
+            {
+              "letter": "D",
+              "text": "Manual software spreadsheets used for accounting"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Machine Learning Basics\nHow does a Machine Learning model improve its performance on a task over time?",
+      "questions": [
+        {
+          "question": "Machine Learning Basics\nHow does a Machine Learning model improve its performance on a task over time?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "By replacing physical memory chips inside the motherboard"
+            },
+            {
+              "letter": "B",
+              "text": "By learning from data and experience without being explicitly reprogrammed for every rule"
+            },
+            {
+              "letter": "C",
+              "text": "By increasing monitor screen resolution"
+            },
+            {
+              "letter": "D",
+              "text": "By requiring humans to write more lines of manual code every day"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Supervised vs. Unsupervised Learning\nA model is trained using thousands of pictures that are explicitly tagged as either \"Dog\" or \"Cat\". What type of machine learning is this?",
+      "questions": [
+        {
+          "question": "Supervised vs. Unsupervised Learning\nA model is trained using thousands of pictures that are explicitly tagged as either \"Dog\" or \"Cat\". What type of machine learning is this?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Unsupervised Learning"
+            },
+            {
+              "letter": "B",
+              "text": "Supervised Learning"
+            },
+            {
+              "letter": "C",
+              "text": "Manual Rules-Based Programming"
+            },
+            {
+              "letter": "D",
+              "text": "Random Learning"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Training Data Quality\nIf a facial recognition model is trained using photos taken only in bright daylight, what is the most likely outcome when tested in low-light conditions?",
+      "questions": [
+        {
+          "question": "Training Data Quality\nIf a facial recognition model is trained using photos taken only in bright daylight, what is the most likely outcome when tested in low-light conditions?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It will automatically turn on light sources in the room"
+            },
+            {
+              "letter": "B",
+              "text": "It may perform poorly because its training dataset lacked low-light examples"
+            },
+            {
+              "letter": "C",
+              "text": "It will perform perfectly regardless of lighting conditions"
+            },
+            {
+              "letter": "D",
+              "text": "It will permanently delete its training parameters"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Natural Language Processing (NLP)\nWhich application relies primarily on Natural Language Processing (NLP)?",
+      "questions": [
+        {
+          "question": "Natural Language Processing (NLP)\nWhich application relies primarily on Natural Language Processing (NLP)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Adjusting computer fan speed based on system temperature"
+            },
+            {
+              "letter": "B",
+              "text": "Translating text from English to Spanish automatically"
+            },
+            {
+              "letter": "C",
+              "text": "Sorting physical mail using mechanical belt drives"
+            },
+            {
+              "letter": "D",
+              "text": "Calculating monthly bank interest rates"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ],
+  "11": [
+    {
+      "passage": "Time Complexity (Big-O Notation)\nAn algorithm searches through an unsorted array of size n by checking elements one by one from beginning to end in the worst-case scenario. What is the Big-O time complexity of this Linear Search?",
+      "questions": [
+        {
+          "question": "Time Complexity (Big-O Notation)\nAn algorithm searches through an unsorted array of size n by checking elements one by one from beginning to end in the worst-case scenario. What is the Big-O time complexity of this Linear Search?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "O(1)"
+            },
+            {
+              "letter": "B",
+              "text": "O(n)"
+            },
+            {
+              "letter": "C",
+              "text": "O(n log n)"
+            },
+            {
+              "letter": "D",
+              "text": "O(n²)"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Abstract Data Types: Stacks\nWhich operations principle strictly governs the behavior of a standard **Stack** data structure?",
+      "questions": [
+        {
+          "question": "Abstract Data Types: Stacks\nWhich operations principle strictly governs the behavior of a standard **Stack** data structure?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "First-In, First-Out (FIFO)"
+            },
+            {
+              "letter": "B",
+              "text": "Last-In, First-Out (LIFO)"
+            },
+            {
+              "letter": "C",
+              "text": "Random Access Memory (RAM)"
+            },
+            {
+              "letter": "D",
+              "text": "Priority Ordering"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Abstract Data Types: Queues\nA print server receives document jobs from multiple connected computers and processes them in the order they arrived. Which data structure does this system implement?",
+      "questions": [
+        {
+          "question": "Abstract Data Types: Queues\nA print server receives document jobs from multiple connected computers and processes them in the order they arrived. Which data structure does this system implement?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Queue (FIFO)"
+            },
+            {
+              "letter": "B",
+              "text": "Stack (LIFO)"
+            },
+            {
+              "letter": "C",
+              "text": "Binary Search Tree"
+            },
+            {
+              "letter": "D",
+              "text": "Hash Table"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Recursion\nA recursive function calls itself continuously to calculate factorials. What essential component must be included to prevent an infinite loop and stack overflow error?",
+      "questions": [
+        {
+          "question": "Recursion\nA recursive function calls itself continuously to calculate factorials. What essential component must be included to prevent an infinite loop and stack overflow error?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "An iterative WHILE loop wrapper"
+            },
+            {
+              "letter": "B",
+              "text": "A Base Case condition"
+            },
+            {
+              "letter": "C",
+              "text": "A global variable declaration"
+            },
+            {
+              "letter": "D",
+              "text": "A random number generator"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Searching Algorithms\nWhy must a dataset be sorted before executing a **Binary Search** algorithm?",
+      "questions": [
+        {
+          "question": "Searching Algorithms\nWhy must a dataset be sorted before executing a **Binary Search** algorithm?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Binary search only works on text strings, not numbers"
+            },
+            {
+              "letter": "B",
+              "text": "It relies on order to determine whether the target value lies in the upper or lower half"
+            },
+            {
+              "letter": "C",
+              "text": "Sorting changes the Big-O time complexity from O(n²) to O(1)"
+            },
+            {
+              "letter": "D",
+              "text": "Unsorted lists crash the CPU hardware during execution"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Sorting Efficiency\nWhich sorting algorithm has a worst-case time complexity of O(n²), making it inefficient for large datasets compared to Merge Sort's O(n log n)?",
+      "questions": [
+        {
+          "question": "Sorting Efficiency\nWhich sorting algorithm has a worst-case time complexity of O(n²), making it inefficient for large datasets compared to Merge Sort's O(n log n)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Merge Sort"
+            },
+            {
+              "letter": "B",
+              "text": "Bubble Sort"
+            },
+            {
+              "letter": "C",
+              "text": "Quick Sort (Average case)"
+            },
+            {
+              "letter": "D",
+              "text": "Radix Sort"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Graph Theory\nIn graph theory representations of social networks, what do the **vertices (nodes)** and **edges** typically represent?",
+      "questions": [
+        {
+          "question": "Graph Theory\nIn graph theory representations of social networks, what do the **vertices (nodes)** and **edges** typically represent?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Vertices represent internet speeds; Edges represent IP addresses"
+            },
+            {
+              "letter": "B",
+              "text": "Vertices represent individual users; Edges represent connections/friendships"
+            },
+            {
+              "letter": "C",
+              "text": "Vertices represent databases; Edges represent programming languages"
+            },
+            {
+              "letter": "D",
+              "text": "Vertices represent CPU cores; Edges represent RAM storage"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Logic Gates and Boolean Algebra\nExamine the Boolean expression: Result = (A OR B) AND (NOT A). If A = True and B = True, what is the value of Result?",
+      "questions": [
+        {
+          "question": "Logic Gates and Boolean Algebra\nExamine the Boolean expression: Result = (A OR B) AND (NOT A). If A = True and B = True, what is the value of Result?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "False"
+            },
+            {
+              "letter": "B",
+              "text": "True"
+            },
+            {
+              "letter": "C",
+              "text": "Undefined"
+            },
+            {
+              "letter": "D",
+              "text": "Syntax Error"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Floating-Point Precision\nWhy do binary computers sometimes produce subtle rounding inaccuracies when representing numbers like 0.1 + 0.2 in floating-point format?",
+      "questions": [
+        {
+          "question": "Floating-Point Precision\nWhy do binary computers sometimes produce subtle rounding inaccuracies when representing numbers like 0.1 + 0.2 in floating-point format?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The computer monitor resolution is too low"
+            },
+            {
+              "letter": "B",
+              "text": "Certain base-10 decimal fractions cannot be represented exactly in base-2 binary"
+            },
+            {
+              "letter": "C",
+              "text": "The CPU overheats during arithmetic evaluation"
+            },
+            {
+              "letter": "D",
+              "text": "Floating-point operations skip logic gates"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Modular Programming\nWhat is the main software engineering advantage of designing modular code with **high cohesion and low coupling**?",
+      "questions": [
+        {
+          "question": "Modular Programming\nWhat is the main software engineering advantage of designing modular code with **high cohesion and low coupling**?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It allows the code to bypass compiler syntax verification"
+            },
+            {
+              "letter": "B",
+              "text": "Modules are independent, easy to maintain, test, and reuse without breaking other components"
+            },
+            {
+              "letter": "C",
+              "text": "It automatically doubles the processor's clock speed"
+            },
+            {
+              "letter": "D",
+              "text": "It removes the need for data structures"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Overfitting in Machine Learning\nA machine learning model achieves 99% accuracy on its training dataset but drops to 52% accuracy on new validation data. What model defect does this indicate?",
+      "questions": [
+        {
+          "question": "Overfitting in Machine Learning\nA machine learning model achieves 99% accuracy on its training dataset but drops to 52% accuracy on new validation data. What model defect does this indicate?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Underfitting"
+            },
+            {
+              "letter": "B",
+              "text": "Overfitting"
+            },
+            {
+              "letter": "C",
+              "text": "Linear Regression"
+            },
+            {
+              "letter": "D",
+              "text": "Optimal Convergence"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Reinforcement Learning\nWhich Machine Learning paradigm trains an **agent** to make a sequence of decisions by interacting with an environment to maximize cumulative **rewards**?",
+      "questions": [
+        {
+          "question": "Reinforcement Learning\nWhich Machine Learning paradigm trains an **agent** to make a sequence of decisions by interacting with an environment to maximize cumulative **rewards**?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Supervised Learning"
+            },
+            {
+              "letter": "B",
+              "text": "Unsupervised Learning"
+            },
+            {
+              "letter": "C",
+              "text": "Reinforcement Learning"
+            },
+            {
+              "letter": "D",
+              "text": "Rule-Based Expert Systems"
+            }
+          ],
+          "correct": "C"
+        }
+      ]
+    },
+    {
+      "passage": "Deep Learning vs. Traditional ML\nWhat major architectural advantage do **Deep Neural Networks** offer over conventional Machine Learning algorithms when dealing with unstructured data like raw audio or images?",
+      "questions": [
+        {
+          "question": "Deep Learning vs. Traditional ML\nWhat major architectural advantage do **Deep Neural Networks** offer over conventional Machine Learning algorithms when dealing with unstructured data like raw audio or images?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They do not require any computing hardware"
+            },
+            {
+              "letter": "B",
+              "text": "They perform automated feature extraction without requiring manual feature engineering"
+            },
+            {
+              "letter": "C",
+              "text": "They guarantee 100% mathematical accuracy on all tasks"
+            },
+            {
+              "letter": "D",
+              "text": "They do not use hyperparameter tuning"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Convolutional Neural Networks (CNNs)\nWhich deep learning architecture uses specialized layers (e.g., convolution and pooling) designed specifically for image recognition and grid-like visual processing?",
+      "questions": [
+        {
+          "question": "Convolutional Neural Networks (CNNs)\nWhich deep learning architecture uses specialized layers (e.g., convolution and pooling) designed specifically for image recognition and grid-like visual processing?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Convolutional Neural Network (CNN)"
+            },
+            {
+              "letter": "B",
+              "text": "Recurrent Neural Network (RNN)"
+            },
+            {
+              "letter": "C",
+              "text": "Long Short-Term Memory (LSTM)"
+            },
+            {
+              "letter": "D",
+              "text": "Naive Bayes Classifier"
+            }
+          ],
+          "correct": "A"
+        }
+      ]
+    },
+    {
+      "passage": "Transformers & Attention Mechanism\nModern Large Language Models (LLMs) rely on the **Transformer architecture**. What key mechanism allows Transformers to process entire text sequences in parallel while capturing word context?",
+      "questions": [
+        {
+          "question": "Transformers & Attention Mechanism\nModern Large Language Models (LLMs) rely on the **Transformer architecture**. What key mechanism allows Transformers to process entire text sequences in parallel while capturing word context?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Sequential Convolution"
+            },
+            {
+              "letter": "B",
+              "text": "Self-Attention Mechanism"
+            },
+            {
+              "letter": "C",
+              "text": "Binary Tree Traversal"
+            },
+            {
+              "letter": "D",
+              "text": "Genetic Selection"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ],
+  "12": [
+    {
+      "passage": "P vs. NP Problem & Computational Complexity\nIn computational complexity theory, which class of problems can be verified in polynomial time by a deterministic Turing machine, but whose optimal solution search time remains unknown?",
+      "questions": [
+        {
+          "question": "P vs. NP Problem & Computational Complexity\nIn computational complexity theory, which class of problems can be verified in polynomial time by a deterministic Turing machine, but whose optimal solution search time remains unknown?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Class P"
+            },
+            {
+              "letter": "B",
+              "text": "Class NP"
+            },
+            {
+              "letter": "C",
+              "text": "Class O(1)"
+            },
+            {
+              "letter": "D",
+              "text": "Class Memory-Bound"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Memory Management: Memory Leaks\nIn low-level language systems (like C or C++), what occurs when dynamically allocated memory on the Heap is no longer referenced by any pointer but is never explicitly freed?",
+      "questions": [
+        {
+          "question": "Memory Management: Memory Leaks\nIn low-level language systems (like C or C++), what occurs when dynamically allocated memory on the Heap is no longer referenced by any pointer but is never explicitly freed?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Buffer Overflow"
+            },
+            {
+              "letter": "B",
+              "text": "Memory Leak"
+            },
+            {
+              "letter": "C",
+              "text": "Null Pointer Exception"
+            },
+            {
+              "letter": "D",
+              "text": "Deadlock Condition"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Graph Algorithms: Dijkstra's vs. A* Search\nWhat structural enhancement does the A* Search Algorithm add to Dijkstra's Algorithm to locate the shortest path to a target node more efficiently?",
+      "questions": [
+        {
+          "question": "Graph Algorithms: Dijkstra's vs. A* Search\nWhat structural enhancement does the A* Search Algorithm add to Dijkstra's Algorithm to locate the shortest path to a target node more efficiently?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A LIFO stack structure"
+            },
+            {
+              "letter": "B",
+              "text": "A Heuristic Function h(n) estimating remaining distance to the target"
+            },
+            {
+              "letter": "C",
+              "text": "Random selection of adjacent edges"
+            },
+            {
+              "letter": "D",
+              "text": "Binary hash indexing"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Asynchronous Architecture & Concurrency\nIn multi-threaded software architectures, what critical condition arises when two processes are permanently blocked because each is waiting for a resource locked by the other?",
+      "questions": [
+        {
+          "question": "Asynchronous Architecture & Concurrency\nIn multi-threaded software architectures, what critical condition arises when two processes are permanently blocked because each is waiting for a resource locked by the other?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Race Condition"
+            },
+            {
+              "letter": "B",
+              "text": "Deadlock"
+            },
+            {
+              "letter": "C",
+              "text": "Stack Overflow"
+            },
+            {
+              "letter": "D",
+              "text": "Cache Miss"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Database Optimization & Indexing\nWhy do relational database management systems (RDBMS) utilize B-Trees / B+ Trees for indexing large database tables?",
+      "questions": [
+        {
+          "question": "Database Optimization & Indexing\nWhy do relational database management systems (RDBMS) utilize B-Trees / B+ Trees for indexing large database tables?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To convert SQL text queries directly into machine binary code"
+            },
+            {
+              "letter": "B",
+              "text": "To maintain logarithmic search, insertion, and deletion time complexities [O(log n)] across disk storage"
+            },
+            {
+              "letter": "C",
+              "text": "To compress text strings using lossless ZIP encoding"
+            },
+            {
+              "letter": "D",
+              "text": "To prevent primary keys from using duplicate names"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Distributed Systems & CAP Theorem\nAccording to the CAP Theorem in distributed computing systems, which two guarantees can a system simultaneously provide during a network partition?",
+      "questions": [
+        {
+          "question": "Distributed Systems & CAP Theorem\nAccording to the CAP Theorem in distributed computing systems, which two guarantees can a system simultaneously provide during a network partition?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Consistency, Availability, and Partition Tolerance simultaneously"
+            },
+            {
+              "letter": "B",
+              "text": "Either Consistency and Partition Tolerance (CP) OR Availability and Partition Tolerance (AP)"
+            },
+            {
+              "letter": "C",
+              "text": "Consistency and Speed only"
+            },
+            {
+              "letter": "D",
+              "text": "Availability and Zero Memory Usage"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Distributed Consensus Algorithms\nWhich consensus algorithm family (commonly used in Kubernetes clusters via etcd) guarantees distributed state replication across unreliable node clusters?",
+      "questions": [
+        {
+          "question": "Distributed Consensus Algorithms\nWhich consensus algorithm family (commonly used in Kubernetes clusters via etcd) guarantees distributed state replication across unreliable node clusters?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Dijkstra's Algorithm"
+            },
+            {
+              "letter": "B",
+              "text": "Raft / Paxos"
+            },
+            {
+              "letter": "C",
+              "text": "K-Nearest Neighbors"
+            },
+            {
+              "letter": "D",
+              "text": "Depth-First Traversal"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Public Key Cryptography\nIn asymmetric cryptography (e.g., RSA or ECC), if User A wants to send a confidential, encrypted message to User B that only User B can read, which key must User A use to encrypt the message?",
+      "questions": [
+        {
+          "question": "Public Key Cryptography\nIn asymmetric cryptography (e.g., RSA or ECC), if User A wants to send a confidential, encrypted message to User B that only User B can read, which key must User A use to encrypt the message?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "User A's Private Key"
+            },
+            {
+              "letter": "B",
+              "text": "User B's Public Key"
+            },
+            {
+              "letter": "C",
+              "text": "User B's Private Key"
+            },
+            {
+              "letter": "D",
+              "text": "User A's Public Key"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Dynamic Programming & Overlapping Subproblems\nHow does Memoization optimize algorithmic runtime when solving recursive dynamic programming problems like the Fibonacci sequence?",
+      "questions": [
+        {
+          "question": "Dynamic Programming & Overlapping Subproblems\nHow does Memoization optimize algorithmic runtime when solving recursive dynamic programming problems like the Fibonacci sequence?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "By converting recursive loops into hardware floating-point calls"
+            },
+            {
+              "letter": "B",
+              "text": "By caching intermediate subproblem results in memory to eliminate redundant recalculations"
+            },
+            {
+              "letter": "C",
+              "text": "By randomly skipping negative integer inputs"
+            },
+            {
+              "letter": "D",
+              "text": "By sorting array elements in descending order"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Hardware Architecture: Cache Coherency\nIn multi-core CPU architectures, what is the core purpose of **Cache Coherence Protocols** (such as MESI)?",
+      "questions": [
+        {
+          "question": "Hardware Architecture: Cache Coherency\nIn multi-core CPU architectures, what is the core purpose of **Cache Coherence Protocols** (such as MESI)?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To boost cooling fan speeds when temperature rises"
+            },
+            {
+              "letter": "B",
+              "text": "To ensure shared memory data stored across multiple local core caches remains consistent"
+            },
+            {
+              "letter": "C",
+              "text": "To compress execution instructions in GPU registers"
+            },
+            {
+              "letter": "D",
+              "text": "To clear system RAM whenever a core hibernates"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Optimization: Gradient Descent & vanishing Gradients\nWhen training very deep neural networks, what causes the **Vanishing Gradient Problem** during backpropagation?",
+      "questions": [
+        {
+          "question": "Optimization: Gradient Descent & vanishing Gradients\nWhen training very deep neural networks, what causes the **Vanishing Gradient Problem** during backpropagation?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The learning rate is set to infinity"
+            },
+            {
+              "letter": "B",
+              "text": "Repeated multiplication of small derivative values through deep layers causes gradients to shrink toward zero, halting parameter updates"
+            },
+            {
+              "letter": "C",
+              "text": "The model dataset contains zero numerical values"
+            },
+            {
+              "letter": "D",
+              "text": "GPU memory clock speeds slow down during training epochs"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Generative AI: Retrieval-Augmented Generation (RAG)\nWhy do enterprise software architects combine Large Language Models (LLMs) with **Retrieval-Augmented Generation (RAG)** systems?",
+      "questions": [
+        {
+          "question": "Generative AI: Retrieval-Augmented Generation (RAG)\nWhy do enterprise software architects combine Large Language Models (LLMs) with **Retrieval-Augmented Generation (RAG)** systems?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To permanently retrain model parameters on thousands of open-source GPUs"
+            },
+            {
+              "letter": "B",
+              "text": "To ground LLM responses in real-time, domain-specific external knowledge bases without full model retraining"
+            },
+            {
+              "letter": "C",
+              "text": "To translate text vectors into visual bitmap files"
+            },
+            {
+              "letter": "D",
+              "text": "To reduce model token context limits to zero"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Transformer Architectures: Positional Encoding\nUnlike Recurrent Neural Networks (RNNs) that process text sequentially word-by-word, Transformers process all input tokens simultaneously. Why is **Positional Encoding** strictly necessary in Transformers?",
+      "questions": [
+        {
+          "question": "Transformer Architectures: Positional Encoding\nUnlike Recurrent Neural Networks (RNNs) that process text sequentially word-by-word, Transformers process all input tokens simultaneously. Why is **Positional Encoding** strictly necessary in Transformers?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "To compress the text vocabulary size"
+            },
+            {
+              "letter": "B",
+              "text": "To inject sequence order and word position information into token embeddings"
+            },
+            {
+              "letter": "C",
+              "text": "To prevent GPU memory hardware from overheating"
+            },
+            {
+              "letter": "D",
+              "text": "To clear output layer activation biases"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "Model Fine-Tuning: Parameter-Efficient Fine-Tuning (LoRA)\nHow does **Low-Rank Adaptation (LoRA)** make fine-tuning massive LLMs significantly cheaper and faster?",
+      "questions": [
+        {
+          "question": "Model Fine-Tuning: Parameter-Efficient Fine-Tuning (LoRA)\nHow does **Low-Rank Adaptation (LoRA)** make fine-tuning massive LLMs significantly cheaper and faster?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "By deleting half the text vocabulary parameters"
+            },
+            {
+              "letter": "B",
+              "text": "By freezing original model weights and injecting small, trainable low-rank rank-decomposition matrix pairs into attention layers"
+            },
+            {
+              "letter": "C",
+              "text": "By converting floating-point values into ASCII string characters"
+            },
+            {
+              "letter": "D",
+              "text": "By executing fine-tuning directly inside the hard drive cache"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    },
+    {
+      "passage": "RLHF & Alignment\nWhat role does **Reinforcement Learning from Human Feedback (RLHF)** play in post-training foundation LLMs?",
+      "questions": [
+        {
+          "question": "RLHF & Alignment\nWhat role does **Reinforcement Learning from Human Feedback (RLHF)** play in post-training foundation LLMs?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It reduces dataset storage space by 90%"
+            },
+            {
+              "letter": "B",
+              "text": "It aligns model output generation with human preferences regarding helpfulness, accuracy, and safety using a Reward Model"
+            },
+            {
+              "letter": "C",
+              "text": "It generates physical robot movements in factory assembly lines"
+            },
+            {
+              "letter": "D",
+              "text": "It removes token limits from context windows"
+            }
+          ],
+          "correct": "B"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+Grade 11 Assessment: Advanced Computational Thinking and Artificial Intelligence
+Instructions: Review each of the 25 questions below. The correct answer for each multiple-choice question is clearly marked, followed by a detailed explanation of the core concept.
+Part 1: Computational Thinking & Computer Science Concepts
+1. Time Complexity (Big-O Notation)
+An algorithm searches through an unsorted array of size n by checking elements one by one from beginning to end in the worst-case scenario. What is the Big-O time complexity of this Linear Search?
+	•	A) O(1)
+	•	B) O(n) (Correct Answer)
+	•	C) O(n log n)
+	•	D) O(n²)
+Explanation: In linear search over an unsorted dataset of size n, the worst-case time complexity is proportional to n because every item may need to be inspected sequentially.
+2. Abstract Data Types: Stacks
+Which operations principle strictly governs the behavior of a standard **Stack** data structure?
+	•	A) First-In, First-Out (FIFO)
+	•	B) Last-In, First-Out (LIFO) (Correct Answer)
+	•	C) Random Access Memory (RAM)
+	•	D) Priority Ordering
+Explanation: A Stack operates on a Last-In, First-Out (LIFO) model, where the most recently added item is the first one removed (e.g., undo history or function call stack).
+3. Abstract Data Types: Queues
+A print server receives document jobs from multiple connected computers and processes them in the order they arrived. Which data structure does this system implement?
+	•	A) Queue (FIFO) (Correct Answer)
+	•	B) Stack (LIFO)
+	•	C) Binary Search Tree
+	•	D) Hash Table
+Explanation: Queues process data using a First-In, First-Out (FIFO) order, making them ideal for managing requests, print jobs, and task scheduling.
+4. Recursion
+A recursive function calls itself continuously to calculate factorials. What essential component must be included to prevent an infinite loop and stack overflow error?
+	•	A) An iterative WHILE loop wrapper
+	•	B) A Base Case condition (Correct Answer)
+	•	C) A global variable declaration
+	•	D) A random number generator
+Explanation: The base case provides a terminating condition where the recursive function stops calling itself and returns a definitive value.
+5. Searching Algorithms
+Why must a dataset be sorted before executing a **Binary Search** algorithm?
+	•	A) Binary search only works on text strings, not numbers
+	•	B) It relies on order to determine whether the target value lies in the upper or lower half (Correct Answer)
+	•	C) Sorting changes the Big-O time complexity from O(n²) to O(1)
+	•	D) Unsorted lists crash the CPU hardware during execution
+Explanation: Binary search makes comparative decisions (greater than or less than) to eliminate half the dataset. This logic fails if the data is not sorted.
+6. Sorting Efficiency
+Which sorting algorithm has a worst-case time complexity of O(n²), making it inefficient for large datasets compared to Merge Sort's O(n log n)?
+	•	A) Merge Sort
+	•	B) Bubble Sort (Correct Answer)
+	•	C) Quick Sort (Average case)
+	•	D) Radix Sort
+Explanation: Bubble Sort uses nested loops to compare adjacent elements, resulting in O(n²) time complexity, which scales poorly for large inputs.
+7. Graph Theory
+In graph theory representations of social networks, what do the **vertices (nodes)** and **edges** typically represent?
+	•	A) Vertices represent internet speeds; Edges represent IP addresses
+	•	B) Vertices represent individual users; Edges represent connections/friendships (Correct Answer)
+	•	C) Vertices represent databases; Edges represent programming languages
+	•	D) Vertices represent CPU cores; Edges represent RAM storage
+Explanation: Graphs consist of vertices (entities such as people, routers, or locations) connected by edges (relationships, data pipes, or paths).
+8. Logic Gates and Boolean Algebra
+Examine the Boolean expression: Result = (A OR B) AND (NOT A). If A = True and B = True, what is the value of Result?
+	•	A) False (Correct Answer)
+	•	B) True
+	•	C) Undefined
+	•	D) Syntax Error
+Explanation: Step 1: (True OR True) = True. Step 2: (NOT True) = False. Step 3: True AND False = False.
+9. Floating-Point Precision
+Why do binary computers sometimes produce subtle rounding inaccuracies when representing numbers like 0.1 + 0.2 in floating-point format?
+	•	A) The computer monitor resolution is too low
+	•	B) Certain base-10 decimal fractions cannot be represented exactly in base-2 binary (Correct Answer)
+	•	C) The CPU overheats during arithmetic evaluation
+	•	D) Floating-point operations skip logic gates
+Explanation: Fractions like 0.1 become infinitely repeating binary fractions in base-2, requiring truncation and causing minor floating-point precision errors.
+10. Modular Programming
+What is the main software engineering advantage of designing modular code with **high cohesion and low coupling**?
+	•	A) It allows the code to bypass compiler syntax verification
+	•	B) Modules are independent, easy to maintain, test, and reuse without breaking other components (Correct Answer)
+	•	C) It automatically doubles the processor's clock speed
+	•	D) It removes the need for data structures
+Explanation: High cohesion ensures a module focuses on a clear single task, while low coupling minimizes dependencies between modules, improving maintainability.
+11. Pseudocode Analysis
+Analyze the pseudocode below:
+FUNCTION process(n):     IF n <= 1 THEN         RETURN 1     ELSE         RETURN n + process(n - 1) 
+What value is returned by calling process(4)?
+	•	A) 4
+	•	B) 8
+	•	C) 10 (Correct Answer)
+	•	D) 24
+Explanation: Trace: process(4) = 4 + process(3) = 4 + (3 + process(2)) = 4 + 3 + (2 + process(1)) = 4 + 3 + 2 + 1 = 10.
+12. Hash Tables & Collisions
+What occurs when two distinct keys generate the exact same index location in a **Hash Table**?
+	•	A) Stack overflow error
+	•	B) Hash Collision (Correct Answer)
+	•	C) Binary truncation
+	•	D) Deadlock state
+Explanation: A hash collision occurs when a hash function maps two distinct keys to the same bucket index in memory. Resolution methods include chaining or open addressing.
+13. Object-Oriented Concepts
+In Object-Oriented Programming (OOP), what is the term for creating a new class derived from an existing class to inherit its properties and behaviors?
+	•	A) Encapsulation
+	•	B) Inheritance (Correct Answer)
+	•	C) Polymorphism
+	•	D) Compilation
+Explanation: Inheritance allows a subclass (child class) to acquire attributes and methods from a superclass (parent class), promoting code reuse.
+Part 2: Artificial Intelligence, Deep Learning & Ethics
+14. Overfitting in Machine Learning
+A machine learning model achieves 99% accuracy on its training dataset but drops to 52% accuracy on new validation data. What model defect does this indicate?
+	•	A) Underfitting
+	•	B) Overfitting (Correct Answer)
+	•	C) Linear Regression
+	•	D) Optimal Convergence
+Explanation: Overfitting occurs when a model learns noise and specific details of the training data too closely, reducing its ability to generalize to unseen data.
+15. Reinforcement Learning
+Which Machine Learning paradigm trains an **agent** to make a sequence of decisions by interacting with an environment to maximize cumulative **rewards**?
+	•	A) Supervised Learning
+	•	B) Unsupervised Learning
+	•	C) Reinforcement Learning (Correct Answer)
+	•	D) Rule-Based Expert Systems
+Explanation: Reinforcement Learning (RL) uses trial-and-error mechanisms, rewarding desirable actions and penalizing undesirable ones to learn optimal strategies.
+16. Deep Learning vs. Traditional ML
+What major architectural advantage do **Deep Neural Networks** offer over conventional Machine Learning algorithms when dealing with unstructured data like raw audio or images?
+	•	A) They do not require any computing hardware
+	•	B) They perform automated feature extraction without requiring manual feature engineering (Correct Answer)
+	•	C) They guarantee 100% mathematical accuracy on all tasks
+	•	D) They do not use hyperparameter tuning
+Explanation: Deep learning networks automatically learn feature representations (such as edges, textures, and high-level shapes) directly from raw unstructured data.
+17. Convolutional Neural Networks (CNNs)
+Which deep learning architecture uses specialized layers (e.g., convolution and pooling) designed specifically for image recognition and grid-like visual processing?
+	•	A) Convolutional Neural Network (CNN) (Correct Answer)
+	•	B) Recurrent Neural Network (RNN)
+	•	C) Long Short-Term Memory (LSTM)
+	•	D) Naive Bayes Classifier
+Explanation: CNNs utilize spatial filters (kernels) to extract visual feature maps, making them the standard architecture for image classification and object detection.
+18. Transformers & Attention Mechanism
+Modern Large Language Models (LLMs) rely on the **Transformer architecture**. What key mechanism allows Transformers to process entire text sequences in parallel while capturing word context?
+	•	A) Sequential Convolution
+	•	B) Self-Attention Mechanism (Correct Answer)
+	•	C) Binary Tree Traversal
+	•	D) Genetic Selection
+Explanation: The self-attention mechanism computes mathematical relationships between all words in a sequence simultaneously, evaluating context regardless of positional distance.
+19. Hyperparameters
+In machine learning model training, what is the **Learning Rate**?
+	•	A) The speed of the processor's cooling fan
+	•	B) A hyperparameter controlling the step size taken toward minimizing loss during optimization (Correct Answer)
+	•	C) The exact count of rows in the training dataset
+	•	D) The total runtime duration of the training execution
+Explanation: Learning rate determines the size of parameter adjustments made during optimization algorithms (such as Gradient Descent) at each iteration.
+20. Evaluation Metrics
+In medical AI diagnostics for rare severe diseases, why is **Recall (Sensitivity)** often prioritized over Accuracy?
+	•	A) High recall guarantees faster internet response times
+	•	B) High recall minimizes False Negatives, ensuring actual disease cases are not missed (Correct Answer)
+	•	C) Recall measures only true negative outcomes
+	•	D) Accuracy cannot be calculated on numerical datasets
+Explanation: Recall measures the proportion of actual positive cases correctly identified. In medical contexts, a False Negative (missing a sick patient) is far more dangerous than a False Positive.
+21. Clustering Algorithms
+A retail company groups its customer database into 4 distinct segments based on purchasing habits without using pre-existing labels. Which algorithm is best suited for this task?
+	•	A) Linear Search
+	•	B) K-Means Clustering (Correct Answer)
+	•	C) Supervised Decision Trees
+	•	D) Binary Search
+Explanation: K-Means is an unsupervised learning clustering algorithm that partitions unlabeled data points into K distinct clusters based on similarity.
+22. Explainable AI (XAI)
+Why is the "Black Box" nature of complex deep learning models a major concern in critical fields like medical diagnoses and legal systems?
+	•	A) Black box algorithms consume too much paper when printed
+	•	B) It is difficult for human experts to audit or understand how the model derived a specific decision (Correct Answer)
+	•	C) Deep learning models run exclusively without internet access
+	•	D) Black box systems prevent models from learning from text data
+Explanation: Complex deep learning models contain millions or billions of parameters, making it difficult for users to inspect the exact decision rationale, leading to trust and auditability concerns.
+23. AI Ethics: Deepfakes & Authentication
+Generative Adversarial Networks (GANs) utilize a **Generator** and a **Discriminator** network in competition. What primary risk does this architecture pose regarding media integrity?
+	•	A) It reduces image resolutions across public websites
+	•	B) It can create hyper-realistic synthetic video and audio (Deepfakes) used for impersonation (Correct Answer)
+	•	C) It automatically encrypts local user files
+	•	D) It causes database connection timeouts
+Explanation: GANs train generative models capable of producing synthetic imagery, audio, and video (Deepfakes) that are nearly indistinguishable from real recordings.
+24. Natural Language Processing: Word Embeddings
+What is the purpose of technique models like **Word2Vec** in Natural Language Processing?
+	•	A) To convert plain text into binary ASCII codes
+	•	B) To map words into high-dimensional vector spaces where semantic relationships are captured mathematically (Correct Answer)
+	•	C) To count the number of spelling errors in a document
+	•	D) To compress text files for email attachments
+Explanation: Word embeddings represent words as numerical vectors in multi-dimensional space, capturing semantic relationships (e.g., "king" - "man" + "woman" ≈ "queen").
+25. AI Safety & Alignment
+What does the term **AI Alignment** refer to in advanced Artificial Intelligence research?
+	•	A) Aligning computer monitors side-by-side in server centers
+	•	B) Ensuring AI goals, decisions, and behaviors match human ethics, values, and safety intents (Correct Answer)
+	•	C) Formatting code indentation using tab spaces
+	•	D) Balancing CPU and GPU power consumption evenly
+Explanation: AI Alignment focuses on steering AI models toward human-intended goals, ethical principles, and safety standards to prevent harmful outcomes.

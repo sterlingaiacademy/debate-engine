@@ -181,7 +181,7 @@ export default function OlympiadDashboard({ user }) {
             Mock Tests
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-            {SUBJECTS.filter(s => ['English', 'Science', 'Mathematics', 'Social Sciences'].includes(s.key)).map((s) => {
+            {SUBJECTS.filter(s => ['English', 'Science', 'Mathematics', 'Social Sciences', 'CT & AI'].includes(s.key)).map((s) => {
               const isSelected = userSubjectsArray.length === 0 || userSubjectsArray.includes(s.key);
 
               if (!isSelected) {

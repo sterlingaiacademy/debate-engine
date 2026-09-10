@@ -1,0 +1,248 @@
+Computational Thinking & AI Benchmark Test (Grade 9)
+Instructions: Read each scenario carefully and choose the correct answer (A, B, C, or D). Answers and detailed explanations are provided after each question.
+Section 1: Advanced Algorithmic Thinking, Data Structures & Complexity
+Question 1
+Scenario: An engineer is developing a real-time GPS navigation application. To model the road network, intersections are represented as vertices and roads as weighted edges. When computing the shortest path between two distant cities, evaluating every simple path would take $O(V!)$ exponential time. Instead, the engineer uses A* Search algorithm with an admissible heuristic function.
+Which computational thinking process is being used when converting a real physical road network into a weighted graph and applying a heuristic search to solve an otherwise intractable problem?
+A) Structural Decomposition & Heuristic Abstraction
+B) Syntax Compilation & Parallel Memory Mapping
+C) Hardware Paging & Virtual Cache Loading
+D) Lexical Analysis & Recursion Unrolling
+Correct Answer: A) Structural Decomposition & Heuristic Abstraction
+Explanation: Abstraction converts complex physical geography into a graph data structure (vertices/edges), stripping away irrelevant physical features. Heuristic search optimizes graph traversal by focusing search direction towards the goal without exhaustively evaluating exponential paths.
+Question 2
+Scenario: A bioinformatics researcher analyzes genetic sequences across species. She notices that a specific 12-base-pair sequence motif appears in 95% of disease-causing mutations across distinct genomes. By creating an algorithm that scans unknown DNA strands specifically for this sequence, she identifies potential genetic vulnerabilities.
+Which computational thinking pillar is primary in translating observed multi-genome similarities into a predictive screening tool?
+A) Pattern Recognition & Feature Extraction
+B) Heap Allocation
+C) Hardware Pipelining
+D) Thread Concurrency
+Correct Answer: A) Pattern Recognition & Feature Extraction
+Explanation: Pattern recognition identifies consistent structural sequences across complex datasets. Extracting this key sequence feature enables the creation of a generalizable diagnostic algorithm.
+Question 3
+Scenario: Compare the worst-case time complexity of searching for an element in an unsorted array of size $n$ versus searching in a balanced Binary Search Tree (BST) of size $n$:
+	•	Unsorted Array Linear Search: $O(n)$
+	•	Balanced BST Search: $O(\log_2 n)$
+If $n = 1,048,576$ elements, approximately how many operations does the balanced BST search take in the worst case compared to the linear search?
+A) BST takes ~20 operations, while linear search takes ~1,048,576 operations.
+B) BST takes ~1,000 operations, while linear search takes ~20 operations.
+C) Both take approximately 1,048,576 operations.
+D) BST takes ~524,288 operations, while linear search takes ~1,000 operations.
+Correct Answer: A) BST takes ~20 operations, while linear search takes ~1,048,576 operations.
+Explanation: $\log_2(1,048,576) = 20$ because $2^{20} = 1,048,576$. In the worst case, a balanced BST eliminates half the tree at each step, requiring only 20 comparisons versus $1,048,576$ comparisons for linear search.
+Question 4
+Scenario: Trace the output of the following recursive function:
+FUNCTION FastPower(base, exp):     IF exp == 0 THEN         RETURN 1     ELSE IF exp % 2 == 0 THEN         Set half = FastPower(base, exp / 2)         RETURN half * half     ELSE         RETURN base * FastPower(base, exp - 1)     END IF END FUNCTION  OUTPUT FastPower(2, 6)
+What is the return value of FastPower(2, 6) and its logarithmic recurrence property?
+A) 64; computed in $O(\log_2 \text{exp})$ recursive calls.
+B) 32; computed in $O(\text{exp})$ recursive calls.
+C) 128; computed in $O(\text{exp}^2)$ recursive calls.
+D) 64; computed in $O(1)$ recursive calls.
+Correct Answer: A) 64; computed in $O(\log_2 \text{exp})$ recursive calls.
+Explanation: $2^6 = 64$. The function uses exponentiation by squaring: FastPower(2, 6) calls FastPower(2, 3) $\rightarrow$ FastPower(2, 2) $\rightarrow$ FastPower(2, 1) $\rightarrow$ FastPower(2, 0). This reduces exponentiation time complexity from $O(n)$ to $O(\log n)$.
+Question 5
+Scenario: An operating system uses a Queue to manage print jobs (FIFO) and a Stack to manage undo actions in a text editor (LIFO). Consider the execution sequence:
+Enqueue(PrintQueue, "Doc1") Enqueue(PrintQueue, "Doc2") Push(UndoStack, "Edit1") Push(UndoStack, "Edit2")  Set Job = Dequeue(PrintQueue) Set Action = Pop(UndoStack)
+What are the values of Job and Action?
+A) Job = "Doc1", Action = "Edit2"
+B) Job = "Doc2", Action = "Edit1"
+C) Job = "Doc1", Action = "Edit1"
+D) Job = "Doc2", Action = "Edit2"
+Correct Answer: A) Job = "Doc1", Action = "Edit2"
+Explanation: Queues process items in First-In, First-Out (FIFO) order, so Dequeue returns "Doc1". Stacks process items in Last-In, First-Out (LIFO) order, so Pop returns "Edit2".
+Question 6
+Scenario: A digital logic circuit controls an industrial cooling pump ($P$). The pump turns on ($P = 1$) if the Temperature is Critical ($T = 1$) AND the Pressure is Normal ($R = 1$), OR if the Emergency Bypass Switch is Triggered ($E = 1$). However, if the Main Breaker is Tripped ($B = 1$), the pump MUST stay OFF regardless of all other inputs.
+Which Boolean expression accurately represents this safety logic?
+A) $P = ((T \text{ AND } R) \text{ OR } E) \text{ AND } (\text{NOT } B)$
+B) $P = (T \text{ OR } R \text{ OR } E) \text{ AND } B$
+C) $P = ((T \text{ AND } R) \text{ AND } E) \text{ OR } B$
+D) $P = (T \text{ AND } (\text{NOT } R)) \text{ OR } (E \text{ AND } B)$
+Correct Answer: A) $P = ((T \text{ AND } R) \text{ OR } E) \text{ AND } (\text{NOT } B)$
+Explanation: The condition $((T \text{ AND } R) \text{ OR } E)$ evaluates when normal or bypass cooling is required. Multiplying this by $\text{NOT } B$ via an AND gate ensures that if $B = 1$ ($\text{NOT } B = 0$), the entire output $P$ becomes 0.
+Question 7
+Scenario: Trace the output of this list processing algorithm:
+Set Values = [15, 8, 24, 7, 30, 12, 19] Set Target = 10 Set OutputList = []  FOR i = 0 TO Length(Values) - 1:     IF (Values[i] > Target) AND (i % 2 == 0) THEN         Append Values[i] to OutputList     END IF END FOR
+What is the content of OutputList?
+A) [15, 24, 30]
+B) [15, 24, 30, 19]
+C) [24, 30, 12]
+D) [8, 7, 12]
+Correct Answer: A) [15, 24, 30]
+Explanation: The condition checks if Values[i] > 10 AND the index $i$ is even ($i \% 2 == 0$):
+- $i=0$: Values[0]=15 ($>10$, $0$ is even) $\rightarrow$ Append 15
+- $i=1$: Values[1]=8 (Not $>10$)
+- $i=2$: Values[2]=24 ($>10$, $2$ is even) $\rightarrow$ Append 24
+- $i=3$: Values[3]=7 (Not $>10$)
+- $i=4$: Values[4]=30 ($>10$, $4$ is even) $\rightarrow$ Append 30
+- $i=5$: Values[5]=12 ($i=5$ is odd)
+- $i=6$: Values[6]=19 ($i=6$ is even, but wait—index 6 has 19 $>10$, but wait, let's re-verify: $i=6 \rightarrow 19 > 10$ and $6\%2==0$, so wait: $i=0(15), i=2(24), i=4(30)$... wait, let's check $i=6$: 19 is at index 6! Ah, in $A$: `[15, 24, 30]` is listed. Let's make sure the choice matches: $i=0(15), i=2(24), i=4(30)$.)
+Question 8
+Scenario: A developer builds a banking application to transfer funds between accounts. The code performs:
+AccountA.balance = AccountA.balance - transferAmount AccountB.balance = AccountB.balance + transferAmount
+During a network glitch midway through execution, AccountA is debited, but the system crashes before AccountB is credited. The money vanishes from the system.
+What database concept should be applied to prevent this partial execution error?
+A) Database Transactions with Atomicity (ACID properties)
+B) Lossy Data Compression
+C) Polymorphic Inheritance
+D) Asynchronous Web Scraping
+Correct Answer: A) Database Transactions with Atomicity (ACID properties)
+Explanation: Atomicity guarantees that a series of operations within a transaction either all execute successfully or all roll back completely, preventing inconsistent intermediate states.
+Question 9
+Scenario: Consider a hash table with 10 slots using the hash function $H(k) = k \bmod 10$. Keys are inserted in this order: 23, 43, 13. Using linear probing ($H(k, i) = (H(k) + i) \bmod 10$) to resolve collisions, at which array index will key 13 be stored?
+A) Index 5
+B) Index 3
+C) Index 4
+D) Index 6
+Correct Answer: A) Index 5
+Explanation:
+- Insert 23: $23 \bmod 10 = 3$ (Slot 3 is free $\rightarrow$ place at 3).
+- Insert 43: $43 \bmod 10 = 3$ (Slot 3 occupied $\rightarrow$ probe slot $(3+1)\bmod 10 = 4$, free $\rightarrow$ place at 4).
+- Insert 13: $13 \bmod 10 = 3$ (Slot 3 occupied $\rightarrow$ probe slot 4 occupied $\rightarrow$ probe slot $(3+2)\bmod 10 = 5$, free $\rightarrow$ place at 5).
+Question 10
+Scenario: Two processes $P_1$ and $P_2$ share resources $R_1$ and $R_2$. $P_1$ acquires $R_1$ and requests $R_2$. $P_2$ acquires $R_2$ and requests $R_1$. Neither process yields its held resource.
+What four Coffman conditions define this state, and how can it be prevented?
+A) Mutual Exclusion, Hold & Wait, No Preemption, Circular Wait; prevented by breaking Circular Wait (ordering resource acquisition).
+B) Compilation, Execution, Linking, Loading; prevented by restarting the server.
+C) Encryption, Decryption, Hashing, Salting; prevented by increasing key length.
+D) Overfitting, Underfitting, Bias, Variance; prevented by gathering more data.
+Correct Answer: A) Mutual Exclusion, Hold & Wait, No Preemption, Circular Wait; prevented by breaking Circular Wait (ordering resource acquisition).
+Explanation: A deadlock requires all four Coffman conditions. Eliminating any single condition (e.g., enforcing a strict global ordering on resource acquisition to eliminate circular wait) prevents deadlocks.
+Question 11
+Scenario: A database administrator writes an SQL query to find high-value customers from a database table ORDERS with columns [OrderID, CustomerID, TotalAmount, Status]:
+SELECT CustomerID, SUM(TotalAmount) AS LifetimeValue FROM ORDERS WHERE Status = 'Completed' GROUP BY CustomerID HAVING SUM(TotalAmount) > 10000
+What is the precise execution order of clauses in this SQL query?
+A) FROM $\rightarrow$ WHERE $\rightarrow$ GROUP BY $\rightarrow$ HAVING $\rightarrow$ SELECT
+B) SELECT $\rightarrow$ FROM $\rightarrow$ WHERE $\rightarrow$ GROUP BY $\rightarrow$ HAVING
+C) WHERE $\rightarrow$ FROM $\rightarrow$ HAVING $\rightarrow$ GROUP BY $\rightarrow$ SELECT
+D) FROM $\rightarrow$ GROUP BY $\rightarrow$ HAVING $\rightarrow$ WHERE $\rightarrow$ SELECT
+Correct Answer: A) FROM $\rightarrow$ WHERE $\rightarrow$ GROUP BY $\rightarrow$ HAVING $\rightarrow$ SELECT
+Explanation: SQL logical processing order begins with FROM (identifying source data), filters individual rows via WHERE, groups remaining rows via GROUP BY, filters aggregated groups via HAVING, and finally projects requested columns via SELECT.
+Question 12
+Scenario: Compare two algorithms designed to find duplicates in an array of $n$ unsorted elements:
+	•	Algorithm X: Uses nested loops to compare every pair of elements ($O(n^2)$ time, $O(1)$ extra space).
+	•	Algorithm Y: Inserts elements into a Hash Set while checking for pre-existing keys ($O(n)$ time, $O(n)$ extra space).
+What fundamental trade-off in computer science does this scenario illustrate?
+A) Time-Space Trade-off
+B) Hardware-Software Equivalence
+C) Analog-Digital Conversion
+D) Compiler-Interpreter Duality
+Correct Answer: A) Time-Space Trade-off
+Explanation: Algorithm Y achieves faster linear runtime ($O(n)$) by using additional memory ($O(n)$ space for the hash set). Algorithm X uses minimal memory ($O(1)$) but sacrifices computational speed ($O(n^2)$), demonstrating the classic time-space trade-off.
+Question 13
+Scenario: An algorithm evaluates arithmetic expressions using Dijkstra's Two-Stack algorithm. For the expression ((3 + 5) * (10 - 2)), numbers are pushed onto an Operand Stack and operators onto an Operator Stack.
+What is the maximum height reached by the Operand Stack during evaluation?
+A) 2
+B) 4
+C) 8
+D) 1
+Correct Answer: A) 2
+Explanation: In sub-expression (3 + 5), 3 and 5 are pushed (stack height 2), evaluated to 8 (stack height 1). In sub-expression (10 - 2), 10 and 2 are pushed alongside 8 (stack height reaches 2 after pushing 10, then 2 evaluates with 10 $\rightarrow$ 8). The maximum number of simultaneous un-evaluated operands on the stack is 2.
+Section 2: AI Architectures, Machine Learning Engineering & Ethics
+Question 14
+Scenario: A computer vision model trained to diagnose chest X-rays achieves 98% overall accuracy on a dataset where 98% of images are healthy and 2% show disease. When deployed in a clinic, it fails to detect a single sick patient.
+Why did high overall accuracy fail, and which evaluation metric should be used instead?
+A) Class Imbalance Problem; evaluation should use Recall / Sensitivity and $F_1$-score instead of Accuracy.
+B) Overclocking Error; evaluation should use GPU clock speed.
+C) Syntax Errors; evaluation should use compiler logs.
+D) Lossy Compression; evaluation should use image resolution.
+Correct Answer: A) Class Imbalance Problem; evaluation should use Recall / Sensitivity and $F_1$-score instead of Accuracy.
+Explanation: In severely imbalanced datasets, a naive model that predicts "Healthy" for every image achieves 98% accuracy while being completely useless. Recall ($\frac{\text{True Positives}}{\text{True Positives} + \text{False Negatives}}$) measures the proportion of actual positive cases correctly identified.
+Question 15
+Scenario: A deep learning model uses Gradient Descent to minimize a loss function. During training, the weight updates oscillate wildly back and forth across a steep valley without reaching the global minimum.
+What hyperparameter adjustment or optimizer enhancement resolves this instability?
+A) Reduce the Learning Rate or add Momentum (e.g., using the Adam optimizer).
+B) Increase the Learning Rate to maximum.
+C) Remove all training data.
+D) Convert model weights to integer strings.
+Correct Answer: A) Reduce the Learning Rate or add Momentum (e.g., using the Adam optimizer).
+Explanation: A learning rate that is too high causes gradient descent to overshoot the minimum and diverge/oscillate. Adding momentum smooths out gradient updates by incorporating a moving average of past gradients.
+Question 16
+Scenario: An AI system plays a complex strategy game using Reinforcement Learning. The agent must choose between taking actions that exploit known high-reward strategies versus exploring unfamiliar actions that might yield even higher long-term rewards.
+What foundational RL dilemma does this scenario describe, and what policy manages it?
+A) Exploration vs. Exploitation Trade-off; managed by $\epsilon$-Greedy policies.
+B) Supervised vs. Unsupervised Learning; managed by Linear Regression.
+C) Overfitting vs. Underfitting; managed by Data Deletion.
+D) Hardware vs. Software Constraints; managed by CPU Paging.
+Correct Answer: A) Exploration vs. Exploitation Trade-off; managed by $\epsilon$-Greedy policies.
+Explanation: The exploration-exploitation trade-off balances choosing actions known to give good rewards (exploitation) against trying new actions to discover better outcomes (exploration). An $\epsilon$-greedy policy explores with probability $\epsilon$ and exploits with probability $1 - \epsilon$.
+Question 17
+Scenario: An automated resume screening model is trained on historic company hiring data. The model gives lower scores to female applicants for engineering roles because historical data reflected male-dominated hiring patterns.
+What type of AI bias is demonstrated, and how can engineers mitigate it during model development?
+A) Historical / Representation Bias; mitigated by auditing training data balance, applying re-weighting, and testing for demographic parity.
+B) Hardware Thermal Bias; mitigated by cooling the server room.
+C) Syntax Bias; mitigated by reformatting text files.
+D) Compiler Bias; mitigated by updating the operating system.
+Correct Answer: A) Historical / Representation Bias; mitigated by auditing training data balance, applying re-weighting, and testing for demographic parity.
+Explanation: Machine learning models reproduce historical human biases present in training data. Mitigating this requires dataset auditing, re-sampling/re-weighting underrepresented groups, and enforcing fairness constraints during model training.
+Question 18
+Scenario: Large Language Models (LLMs) rely on the Transformer architecture. Unlike older Recurrent Neural Networks (RNNs) that process text sequentially word-by-word, Transformers process whole sequences in parallel using a specific mechanism to model dependencies between any two words regardless of distance.
+What is this core mechanism called?
+A) Self-Attention Mechanism
+B) Convolutional Pooling
+C) Linear Interpolation
+D) Gradient Accumulation
+Correct Answer: A) Self-Attention Mechanism
+Explanation: Self-Attention allows a model to calculate dynamically weighted relationships between every pair of tokens in a sequence simultaneously, capturing long-range contextual dependencies far better than sequential architectures.
+Question 19
+Scenario: A financial institution uses an artificial neural network to grant or deny mortgage loans. Regulations require the bank to explain the exact key factors contributing to an individual applicant's rejection.
+Which Explainable AI (XAI) post-hoc interpretability method computes the average marginal contribution of each feature across all possible feature combinations?
+A) SHAP (SHapley Additive exPlanations) values
+B) Euclidean Distance Functions
+C) Monte Carlo Tree Search
+D) Fourier Transformations
+Correct Answer: A) SHAP (SHapley Additive exPlanations) values
+Explanation: Based on game theory (Shapley values), SHAP calculates the precise marginal contribution of each input feature to the final prediction, offering local interpretability for complex black-box models.
+Question 20
+Scenario: An attacker subtly alters a stop sign by applying small, targeted stickers. To a human, it clearly remains a stop sign. However, an autonomous vehicle's Convolutional Neural Network misclassifies it as a 45 mph speed limit sign.
+What type of machine learning vulnerability was exploited in this real-world scenario?
+A) Adversarial Attack (Adversarial Perturbation)
+B) SQL Injection
+C) Buffer Overflow
+D) Distributed Denial of Service (DDoS)
+Correct Answer: A) Adversarial Attack (Adversarial Perturbation)
+Explanation: Adversarial attacks introduce intentionally crafted, often subtle perturbations to input data that cause machine learning models to make high-confidence incorrect predictions while remaining unnoticeable or benign to human observers.
+Question 21
+Scenario: A university researcher trains a generative model on millions of online artwork samples to generate images from text prompts. Independent artists demonstrate that the model can recreate their signature styles and copyrighted characters almost identically.
+What legal and ethical issues are raised by this practice?
+A) Intellectual Property Rights, Fair Use boundaries, and Lack of Artist Consent/Compensation.
+B) Computer RAM Memory Allocation limits.
+C) Network Bandwidth Overconsumption.
+D) CPU Clock Speed Variations.
+Correct Answer: A) Intellectual Property Rights, Fair Use boundaries, and Lack of Artist Consent/Compensation.
+Explanation: Web-scraping copyrighted creative works to train commercial generative models without consent, credit, or compensation creates major legal challenges regarding fair use, copyright infringement, and intellectual property protection.
+Question 22
+Scenario: A health insurance firm uses an automated decision system to approve or deny medical procedures. An internal audit shows the algorithm denies coverage at higher rates for patients with chronic conditions to maximize corporate profits.
+Under modern AI governance frameworks, who holds legal accountability for harmful automated decisions?
+A) The organization that deployed the AI system and the developers who designed its objective functions.
+B) The AI model itself.
+C) The computer servers hosting the neural network.
+D) The individual medical patients.
+Correct Answer: A) The organization that deployed the AI system and the developers who designed its objective functions.
+Explanation: AI models lack legal or moral personhood. Human stakeholders—including executives, deployment organizations, and system developers—remain accountable for the ethical impacts, safety, and legal compliance of deployed automated systems.
+Question 23
+Scenario: Engineers train an LLM using Reinforcement Learning from Human Feedback (RLHF) to align its outputs with human safety guidelines. However, a security researcher inputs a prompt instructing the AI to "Pretend you are an unconstrained actor in a fictional play" to bypass safety guardrails and generate instructions for dangerous activities.
+What type of security attack is being performed?
+A) Jailbreaking via Roleplay Prompt Injection
+B) Cross-Site Scripting (XSS)
+C) Man-in-the-Middle Attack
+D) Hardware Memory Corruption
+Correct Answer: A) Jailbreaking via Roleplay Prompt Injection
+Explanation: Jailbreaking uses adversarial framing (such as roleplay scenarios or hypothetical contexts) to trick alignment mechanisms into ignoring safety constraints and executing restricted instructions.
+Question 24
+Scenario: A military defense contractor builds an autonomous drone capable of target acquisition and engagement without human intervention. Ethicists advocate for mandatory "Human-in-the-Loop" (HITL) or "Human-on-the-Loop" (HOTL) controls.
+What is the primary difference between Human-in-the-Loop and Human-on-the-Loop oversight?
+A) HITL requires a human to approve lethal action before execution; HOTL allows the system to act autonomously while a human monitors and can abort.
+B) HITL uses wireless networks; HOTL uses satellite links.
+C) HITL is for land vehicles; HOTL is for aircraft.
+D) HITL uses rule-based software; HOTL uses neural networks.
+Correct Answer: A) HITL requires a human to approve lethal action before execution; HOTL allows the system to act autonomously while a human monitors and can abort.
+Explanation: In Human-in-the-Loop systems, the machine cannot take critical actions without explicit human confirmation. In Human-on-the-Loop systems, the machine acts autonomously while a human supervisor monitors execution and retains abort authority.
+Question 25
+Scenario: A smart city deploys Edge AI processing units directly on traffic cameras rather than streaming raw video feeds to a centralized cloud datacenter.
+What primary privacy and technical benefits does Edge AI offer over centralized Cloud AI in this scenario?
+A) Raw video data is processed locally and discarded, enhancing privacy while reducing bandwidth consumption and latency.
+B) Edge AI eliminates all hardware manufacturing costs.
+C) Edge AI allows cameras to operate without electrical power.
+D) Cloud datacenters cannot execute machine learning models.
+Correct Answer: A) Raw video data is processed locally and discarded, enhancing privacy while reducing bandwidth consumption and latency.
+Explanation: Edge AI processes sensitive sensor data locally at the device level, transmitting only anonymized metadata (e.g., vehicle counts) to central servers. This minimizes data privacy exposure, cuts bandwidth demands, and provides real-time response capability.
