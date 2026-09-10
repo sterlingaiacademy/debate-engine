@@ -411,16 +411,7 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
           </div>
 
           {/* Bottom Nav */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 1.5rem 1.5rem' }}>
-            <button
-              onClick={onClose}
-              style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.875rem', fontWeight: 500, opacity: 0.5, transition: 'opacity 0.2s' }}
-              className="text-text-main dark:text-white hover:opacity-80"
-              onMouseEnter={e => e.currentTarget.style.opacity = '0.8'}
-              onMouseLeave={e => e.currentTarget.style.opacity = '0.5'}
-            >
-              <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>close</span> Exit
-            </button>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', padding: '1rem 1.5rem 1.5rem' }}>
 
             <button
               onClick={handleAction}
