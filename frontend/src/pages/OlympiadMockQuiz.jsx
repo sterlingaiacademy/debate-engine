@@ -289,13 +289,13 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
         <div className="bg-bg-base dark:bg-dark-base shadow-neo-portal dark:shadow-neo-dark-portal rounded-[28px] relative overflow-hidden flex flex-col" style={{ width: '100%', maxWidth: '680px', margin: '0 auto', boxSizing: 'border-box' }}>
           
           {/* Header & Stats */}
-          <div className="px-6 md:px-8 flex justify-between items-center border-b border-gray-200 dark:border-white/[0.03] flex-wrap gap-4" style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
-            <div>
+          <div className="px-6 md:px-8 flex justify-between items-start sm:items-center border-b border-gray-200 dark:border-white/[0.03] gap-4" style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
+            <div className="flex-1 min-w-0">
               <div className="text-xs font-bold text-text-muted dark:text-white/50 tracking-wider uppercase mb-1">ThinkQuest Olympiad · {subject}</div>
-              <h1 className="text-2xl md:text-3xl font-extrabold" style={gradientTextStyle}>{quiz.quiz_name}</h1>
+              <h1 className="text-2xl md:text-3xl font-extrabold" style={{ ...gradientTextStyle, lineHeight: '1.2' }}>{quiz.quiz_name}</h1>
             </div>
             
-            <div className="flex gap-4">
+            <div className="flex gap-4 shrink-0">
               <div className="bg-bg-base dark:bg-dark-base shadow-neo-btn-portal dark:shadow-neo-btn-dark-portal rounded-full px-4 py-1.5 flex items-center gap-1.5 hidden sm:flex">
                 <span className="material-symbols-outlined text-[16px] text-text-muted dark:text-white/70">format_list_numbered</span>
                 <span className="text-sm text-text-main dark:text-white/90 font-bold">{answered}/{total}</span>
