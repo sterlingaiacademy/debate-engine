@@ -81,18 +81,28 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
     setAnswers(prev => ({ ...prev, [current]: letter }));
   };
 
-  const handleNext = () => {
-    if (!revealed[current]) {
+  const handleAction = () => {
+    const allAnswered = Object.keys(answers).length === quiz.questions.length;
+    if (answers[current] !== undefined && !revealed[current]) {
       setRevealed(prev => ({ ...prev, [current]: true }));
+    } else if (allAnswered) {
+      handleSubmit();
     } else {
       setAnimate(false);
-      setTimeout(() => { setCurrent(c => c + 1); setAnimate(true); }, 180);
+      setTimeout(() => {
+        if (current === quiz.questions.length - 1 && !allAnswered) {
+          const firstUnanswered = quiz.questions.findIndex((_, idx) => answers[idx] === undefined);
+          if (firstUnanswered !== -1) setCurrent(firstUnanswered);
+        } else if (current < quiz.questions.length - 1) {
+          setCurrent(c => c + 1);
+        }
+        setAnimate(true);
+      }, 180);
     }
   };
 
-  
   const handleSubmit = async () => {
-    if (answers[current] === undefined && timeLeft > 0) {
+    if (Object.keys(answers).length < quiz.questions.length && timeLeft > 0) {
       if (!window.confirm("You have unanswered questions. Submit quiz anyway?")) return;
     }
     setSubmitting(true);
@@ -272,16 +282,16 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
   const selectedLetter = answers[current];
   const correctLetter = q.correct;
   
+  const allAnswered = Object.keys(answers).length === total;
+  
   const nextLabel = () => {
-    if (isLastQ) {
-      if (!isRevealed && selectedLetter) return 'Check Answer';
-      return submitting ? 'Submitting...' : 'Submit Quiz';
-    }
-    if (!isRevealed) return 'Check Answer';
-    return 'Next Question →';
+    if (!isRevealed && selectedLetter) return 'Check Answer';
+    if (allAnswered) return submitting ? 'Submitting...' : 'Submit Quiz';
+    if (!selectedLetter && !isRevealed) return isLastQ ? 'Next Unanswered' : 'Next Question →';
+    return isLastQ ? 'Next Unanswered' : 'Next Question →';
   };
 
-  const nextEnabled = !!selectedLetter || isRevealed;
+  const nextEnabled = true;
 
   return (
     <div className="fixed inset-0 z-[100] bg-bg-base dark:bg-dark-base overflow-y-auto text-text-main dark:text-white">
@@ -321,13 +331,20 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
                 const isOK = isAns && revealed[i] && answers[i] === quiz.questions[i].correct;
                 const isBAD = revealed[i] && answers[i] !== quiz.questions[i].correct;
                 
+                const handleJump = () => {
+                  if (i !== current) {
+                    setAnimate(false);
+                    setTimeout(() => { setCurrent(i); setAnimate(true); }, 180);
+                  }
+                };
+
                 let elStyle = {};
-                let elClass = "w-[32px] h-[32px] rounded-full bg-bg-base dark:bg-dark-base flex items-center justify-center ";
+                let elClass = "w-[32px] h-[32px] rounded-full bg-bg-base dark:bg-dark-base flex items-center justify-center cursor-pointer transition-transform hover:scale-110 ";
 
                 if (isCur) {
                   elClass += "shadow-neo-inset-portal dark:shadow-neo-inset-dark-portal font-bold text-sm ";
                   return (
-                    <div key={i} className={elClass} style={elStyle}>
+                    <div key={i} className={elClass} style={elStyle} onClick={handleJump}>
                       <span style={gradientTextStyle}>{i + 1}</span>
                     </div>
                   );
@@ -337,7 +354,7 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
                 if (isOK) {
                   elClass += "text-green-500 dark:text-green-400 ";
                   return (
-                    <div key={i} className={elClass} style={elStyle}>
+                    <div key={i} className={elClass} style={elStyle} onClick={handleJump}>
                       <span className="material-symbols-outlined text-[16px]">check</span>
                     </div>
                   );
@@ -345,7 +362,7 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
                 if (isBAD) {
                   elClass += "text-red-500 dark:text-red-400 ";
                   return (
-                    <div key={i} className={elClass} style={elStyle}>
+                    <div key={i} className={elClass} style={elStyle} onClick={handleJump}>
                       <span className="material-symbols-outlined text-[16px]">close</span>
                     </div>
                   );
@@ -353,7 +370,7 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
                 if (isAns) {
                    elClass += "text-text-main dark:text-white font-medium text-xs ";
                    return (
-                    <div key={i} className={elClass} style={elStyle}>
+                    <div key={i} className={elClass} style={elStyle} onClick={handleJump}>
                       {i + 1}
                     </div>
                   );
@@ -361,7 +378,7 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
                 
                 elClass += `text-text-muted dark:text-white/40 font-medium text-xs ${Math.abs(current - i) > 3 ? 'hidden sm:flex' : 'flex'} `;
                 return (
-                  <div key={i} className={elClass} style={elStyle}>
+                  <div key={i} className={elClass} style={elStyle} onClick={handleJump}>
                     {i + 1}
                   </div>
                 );
@@ -443,69 +460,36 @@ export default function OlympiadMockQuiz({ user, subject = 'English', onClose })
               <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>close</span> Exit
             </button>
 
-            {isLastQ ? (
-              <button
-                onClick={handleSubmit}
-                disabled={submitting || !nextEnabled}
-                style={nextEnabled && !submitting ? {
-                  ...gradientStyle,
-                  border: 'none',
-                  borderRadius: '999px',
-                  padding: '0.75rem 2rem',
-                  fontWeight: 700,
-                  fontSize: '0.9rem',
-                  color: '#fff',
-                  cursor: 'pointer',
-                  letterSpacing: '0.02em',
-                  boxShadow: '0 4px 20px rgba(238,9,121,0.45), 0 1px 4px rgba(0,0,0,0.3)',
-                  transition: 'transform 0.15s, box-shadow 0.15s',
-                } : {
-                  border: 'none',
-                  borderRadius: '999px',
-                  padding: '0.75rem 2rem',
-                  fontWeight: 700,
-                  fontSize: '0.9rem',
-                  background: 'rgba(255,255,255,0.06)',
-                  color: 'rgba(255,255,255,0.3)',
-                  cursor: 'not-allowed',
-                }}
-                onMouseEnter={e => { if (nextEnabled && !submitting) e.currentTarget.style.transform = 'scale(1.03)'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; }}
-              >
-                {nextLabel()}
-              </button>
-            ) : (
-              <button
-                onClick={handleNext}
-                disabled={!nextEnabled}
-                style={nextEnabled ? {
-                  ...gradientStyle,
-                  border: 'none',
-                  borderRadius: '999px',
-                  padding: '0.75rem 2rem',
-                  fontWeight: 700,
-                  fontSize: '0.9rem',
-                  color: '#fff',
-                  cursor: 'pointer',
-                  letterSpacing: '0.02em',
-                  boxShadow: '0 4px 20px rgba(238,9,121,0.45), 0 1px 4px rgba(0,0,0,0.3)',
-                  transition: 'transform 0.15s, box-shadow 0.15s',
-                } : {
-                  border: 'none',
-                  borderRadius: '999px',
-                  padding: '0.75rem 2rem',
-                  fontWeight: 700,
-                  fontSize: '0.9rem',
-                  background: 'rgba(255,255,255,0.06)',
-                  color: 'rgba(255,255,255,0.3)',
-                  cursor: 'not-allowed',
-                }}
-                onMouseEnter={e => { if (nextEnabled) e.currentTarget.style.transform = 'scale(1.03)'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; }}
-              >
-                {nextLabel()}
-              </button>
-            )}
+            <button
+              onClick={handleAction}
+              disabled={submitting}
+              style={!submitting ? {
+                ...gradientStyle,
+                border: 'none',
+                borderRadius: '999px',
+                padding: '0.75rem 2rem',
+                fontWeight: 700,
+                fontSize: '0.9rem',
+                color: '#fff',
+                cursor: 'pointer',
+                letterSpacing: '0.02em',
+                boxShadow: '0 4px 20px rgba(238,9,121,0.45), 0 1px 4px rgba(0,0,0,0.3)',
+                transition: 'transform 0.15s, box-shadow 0.15s',
+              } : {
+                border: 'none',
+                borderRadius: '999px',
+                padding: '0.75rem 2rem',
+                fontWeight: 700,
+                fontSize: '0.9rem',
+                background: 'rgba(255,255,255,0.06)',
+                color: 'rgba(255,255,255,0.3)',
+                cursor: 'not-allowed',
+              }}
+              onMouseEnter={e => { if (!submitting) e.currentTarget.style.transform = 'scale(1.03)'; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; }}
+            >
+              {nextLabel()}
+            </button>
           </div>
         </div>
       </div>
