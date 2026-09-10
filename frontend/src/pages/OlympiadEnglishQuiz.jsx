@@ -22,7 +22,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
   const [result, setResult] = useState(null);
   const [error, setError] = useState('');
   const [animate, setAnimate] = useState(true);
-  const [timeLeft, setTimeLeft] = useState(15);
+  const [timeLeft, setTimeLeft] = useState(1200);
 
   let gradeNum = GRADE_NUM[user?.classLevel] || GRADE_NUM[user?.grade];
   if (!gradeNum && (user?.classLevel === 'Professional' || user?.grade === 'Professional')) {
@@ -50,12 +50,10 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
 
   useEffect(() => {
     if (phase !== 'quiz') return;
-    if (revealed[current]) return;
+    if (submitting) return;
 
     if (timeLeft <= 0) {
-      if (!revealed[current]) {
-        setRevealed(prev => ({ ...prev, [current]: true }));
-      }
+      handleSubmit();
       return;
     }
 
@@ -64,7 +62,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
     }, 1000);
 
     return () => clearInterval(timerId);
-  }, [phase, revealed, current, timeLeft]);
+  }, [phase, timeLeft, submitting]);
 
   const handleSelect = (letter) => {
     if (revealed[current]) return;
@@ -76,7 +74,7 @@ export default function OlympiadEnglishQuiz({ user, subject = 'English', onClose
       setRevealed(prev => ({ ...prev, [current]: true }));
     } else {
       setAnimate(false);
-      setTimeout(() => { setTimeLeft(15); setCurrent(c => c + 1); setAnimate(true); }, 180);
+      setTimeout(() => { setCurrent(c => c + 1); setAnimate(true); }, 180);
     }
   };
 
