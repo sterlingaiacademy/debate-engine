@@ -20,7 +20,7 @@ const SECTIONS = [
   { id: 'thinkquest_individual', label: 'TQ Independent' },
   { id: 'indusmun_individual', label: 'IndusMUN Independent' },
 
-  { id: 'quiz_results', label: 'Mock Test Results' },
+  { id: 'quiz_results', label: 'Selection Test Results' },
 ];
 
 const PLAN_COLORS = { free: '#64748b', pro: '#3b82f6', max: '#f97316' };
@@ -1448,7 +1448,7 @@ function QuizResultsSection({ adminToken, apiBase }) {
         <div style={{ color: '#94a3b8', marginBottom: '2rem' }}>No attempts yet to determine leaders.</div>
       )}
 
-      <SectionTitle>ThinkQuest Mock Test Results ({data.length} total attempts)</SectionTitle>
+      <SectionTitle>ThinkQuest Selection Test Results ({data.length} total attempts)</SectionTitle>
       <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>

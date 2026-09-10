@@ -4472,7 +4472,7 @@ app.get('/api/olympiad/mock/:subject/:grade', async (req, res) => {
     });
 
     const label = SUBJECT_LABELS[subject] || subject;
-    res.json({ quiz_name: `${label} Mock Test – Grade ${grade}`, subject: label, grade, total: questions.length, questions });
+    res.json({ quiz_name: `${label} Selection Test – Grade ${grade}`, subject: label, grade, total: questions.length, questions });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -4484,7 +4484,7 @@ app.get('/api/olympiad/mock/status/:subject/:grade', async (req, res) => {
     const grade = parseInt(req.params.grade);
     const subject = req.params.subject.toLowerCase();
     const label = SUBJECT_LABELS[subject] || subject;
-    const quiz_name = `${label} Mock Test – Grade ${grade}`;
+    const quiz_name = `${label} Selection Test – Grade ${grade}`;
 
     const existing = await db.query(
       'SELECT score, total, percentage, answers FROM olympiad_mock_results WHERE user_email = $1 AND quiz_name = $2 ORDER BY attempted_at DESC LIMIT 1',
