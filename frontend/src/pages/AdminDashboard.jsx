@@ -894,6 +894,7 @@ function OlympiadSchoolsSection({ adminToken, apiBase }) {
 
   const filteredSchools = schools.filter(s => {
     const q = schoolSearch.toLowerCase();
+    if (!q) return true;
     return (
       (s.name || '').toLowerCase().includes(q) ||
       (s.principal_name || '').toLowerCase().includes(q) ||
@@ -908,37 +909,31 @@ function OlympiadSchoolsSection({ adminToken, apiBase }) {
         ThinkQuest School Registrations
         {!loading && schools.length > 0 && (
           <span style={{ background: 'rgba(255,255,255,0.03)', color: '#94a3b8', padding: '0.2rem 0.6rem', borderRadius: 8, fontSize: '0.75rem', fontWeight: 600, border: '1px solid rgba(255,255,255,0.06)' }}>
-            {schools.length} Total
+            {filteredSchools.length}{schoolSearch ? ` of ${schools.length}` : ''} Total
           </span>
         )}
       </SectionTitle>
 
       {/* Search Bar */}
-      <div style={{ marginBottom: '1rem' }}>
+      <div style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.75rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '0.6rem 1rem' }}>
+        <span style={{ color: '#64748b', fontSize: '1rem' }}>🔍</span>
         <input
           type="text"
-          placeholder="🔍  Search by school name, principal, coordinator or email…"
           value={schoolSearch}
           onChange={e => setSchoolSearch(e.target.value)}
-          style={{
-            width: '100%',
-            padding: '0.6rem 1rem',
-            borderRadius: 10,
-            border: '1px solid rgba(255,255,255,0.1)',
-            background: 'rgba(255,255,255,0.04)',
-            color: '#e2e8f0',
-            fontSize: '0.9rem',
-            outline: 'none',
-            boxSizing: 'border-box',
-          }}
+          placeholder="Search by school name, principal, coordinator or email..."
+          style={{ flex: 1, background: 'transparent', border: 'none', outline: 'none', color: '#f1f5f9', fontSize: '0.875rem', '::placeholder': { color: '#475569' } }}
         />
+        {schoolSearch && (
+          <button onClick={() => setSchoolSearch('')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#64748b', fontSize: '1rem', padding: 0 }}>✕</button>
+        )}
       </div>
 
       <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
         {loading ? (
           <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>Loading...</div>
         ) : filteredSchools.length === 0 ? (
-          <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>{schoolSearch ? `No schools match "${schoolSearch}"` : 'No schools found'}</div>
+          <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>No schools match your search</div>
         ) : (
           <div style={{ overflowX: 'auto' }}>
             <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
