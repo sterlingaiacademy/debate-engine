@@ -854,6 +854,7 @@ function ITOSection({ adminToken, apiBase }) {
 function OlympiadSchoolsSection({ adminToken, apiBase }) {
   const [schools, setSchools] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [schoolSearch, setSchoolSearch] = useState('');
 
   const fetchSchools = useCallback(async () => {
     setLoading(true);
@@ -891,6 +892,16 @@ function OlympiadSchoolsSection({ adminToken, apiBase }) {
     }
   };
 
+  const filteredSchools = schools.filter(s => {
+    const q = schoolSearch.toLowerCase();
+    return (
+      (s.name || '').toLowerCase().includes(q) ||
+      (s.principal_name || '').toLowerCase().includes(q) ||
+      (s.coordinator_name || '').toLowerCase().includes(q) ||
+      (s.contact_email || '').toLowerCase().includes(q)
+    );
+  });
+
   return (
     <div>
       <SectionTitle>
@@ -902,17 +913,38 @@ function OlympiadSchoolsSection({ adminToken, apiBase }) {
         )}
       </SectionTitle>
 
+      {/* Search Bar */}
+      <div style={{ marginBottom: '1rem' }}>
+        <input
+          type="text"
+          placeholder="🔍  Search by school name, principal, coordinator or email…"
+          value={schoolSearch}
+          onChange={e => setSchoolSearch(e.target.value)}
+          style={{
+            width: '100%',
+            padding: '0.6rem 1rem',
+            borderRadius: 10,
+            border: '1px solid rgba(255,255,255,0.1)',
+            background: 'rgba(255,255,255,0.04)',
+            color: '#e2e8f0',
+            fontSize: '0.9rem',
+            outline: 'none',
+            boxSizing: 'border-box',
+          }}
+        />
+      </div>
+
       <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
         {loading ? (
           <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>Loading...</div>
-        ) : schools.length === 0 ? (
-          <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>No schools found</div>
+        ) : filteredSchools.length === 0 ? (
+          <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>{schoolSearch ? `No schools match "${schoolSearch}"` : 'No schools found'}</div>
         ) : (
           <div style={{ overflowX: 'auto' }}>
             <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
               <TableHead cols={['Name', 'Principal', 'Coordinator', 'Contact', 'Expected Students', 'Status', 'Actions', 'Credentials', 'Remove']} />
               <tbody>
-                {schools.map((s, idx) => (
+                {filteredSchools.map((s, idx) => (
                   <TableRow key={s.id} idx={idx}>
                     <TD>
                       <div style={{ fontWeight: 600, color: '#fff' }}>{s.name}</div>
