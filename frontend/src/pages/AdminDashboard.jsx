@@ -1065,6 +1065,7 @@ function GenericSchoolsSection({ adminToken, apiBase, endpoint, title, accentCol
 function IndusMunIndividualSection({ adminToken, apiBase }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     fetch(`${apiBase}/api/admin/indusmun/independent-students`, { headers: { 'Authorization': `Bearer ${adminToken}` } })
@@ -1073,20 +1074,53 @@ function IndusMunIndividualSection({ adminToken, apiBase }) {
       .catch(() => setLoading(false));
   }, [adminToken, apiBase]);
 
+  const filteredData = data.filter(s => {
+    const q = search.toLowerCase();
+    if (!q) return true;
+    return (
+      (s.name || '').toLowerCase().includes(q) ||
+      (s.email || '').toLowerCase().includes(q) ||
+      (s.mobile || '').toLowerCase().includes(q)
+    );
+  });
+
   return (
     <div>
-      <SectionTitle>Indus MUN — Independent Registrants ({data.length})</SectionTitle>
+      <SectionTitle>
+        Indus MUN — Independent Registrants
+        {!loading && data.length > 0 && (
+          <span style={{ marginLeft: 8, background: 'rgba(255,255,255,0.03)', color: '#94a3b8', padding: '0.2rem 0.6rem', borderRadius: 8, fontSize: '0.75rem', fontWeight: 600, border: '1px solid rgba(255,255,255,0.06)' }}>
+            {filteredData.length}{search ? ` of ${data.length}` : ''} Total
+          </span>
+        )}
+      </SectionTitle>
+
+      {/* Search Bar */}
+      <div style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.75rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '0.6rem 1rem' }}>
+        <span style={{ color: '#64748b', fontSize: '1rem' }}>🔍</span>
+        <input
+          type="text"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder="Search by student name, email, or phone..."
+          style={{ flex: 1, background: 'transparent', border: 'none', outline: 'none', color: '#f1f5f9', fontSize: '0.875rem' }}
+        />
+        {search && (
+          <button onClick={() => setSearch('')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#64748b', fontSize: '1rem', padding: 0 }}>✕</button>
+        )}
+      </div>
+
       <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
         {loading ? (
           <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>Loading...</div>
-        ) : data.length === 0 ? (
-          <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>No independent registrants yet</div>
+        ) : filteredData.length === 0 ? (
+          <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>No matching registrants found</div>
         ) : (
           <div style={{ overflowX: 'auto' }}>
             <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
               <TableHead cols={['Name', 'Email', 'Grade', 'City', 'State', 'Phone', 'Registered']} />
               <tbody>
-                {data.map((s, idx) => (
+                {filteredData.map((s, idx) => (
                   <TableRow key={s.id} idx={idx}>
                     <TD><div style={{ fontWeight: 600, color: '#fff' }}>{s.name}</div></TD>
                     <TD>{s.email}</TD>
@@ -1285,6 +1319,7 @@ function ThinkQuestIndividualSection({ adminToken, apiBase }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [search, setSearch] = useState('');
 
   const fetchData = useCallback(() => {
     fetch(`${apiBase}/api/admin/olympiad/independent-students`, {
@@ -1327,15 +1362,48 @@ function ThinkQuestIndividualSection({ adminToken, apiBase }) {
   if (error) return <div style={{ color: '#ef4444' }}>Error: {error}</div>;
   if (!data || data.length === 0) return <div style={{ color: '#94a3b8' }}>No independent registrations found.</div>;
 
+  const filteredData = (data || []).filter(r => {
+    const q = search.toLowerCase();
+    if (!q) return true;
+    return (
+      (r.name || '').toLowerCase().includes(q) ||
+      (r.email || '').toLowerCase().includes(q) ||
+      (r.parent_phone || '').toLowerCase().includes(q)
+    );
+  });
+
   return (
     <div>
-      <SectionTitle>ThinkQuest Independent Students ({data.length})</SectionTitle>
+      <SectionTitle>
+        ThinkQuest Independent Students 
+        {data && data.length > 0 && (
+          <span style={{ marginLeft: 8, background: 'rgba(255,255,255,0.03)', color: '#94a3b8', padding: '0.2rem 0.6rem', borderRadius: 8, fontSize: '0.75rem', fontWeight: 600, border: '1px solid rgba(255,255,255,0.06)' }}>
+            {filteredData.length}{search ? ` of ${data.length}` : ''} Total
+          </span>
+        )}
+      </SectionTitle>
+
+      {/* Search Bar */}
+      <div style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.75rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '0.6rem 1rem' }}>
+        <span style={{ color: '#64748b', fontSize: '1rem' }}>🔍</span>
+        <input
+          type="text"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder="Search by student name, email, or phone..."
+          style={{ flex: 1, background: 'transparent', border: 'none', outline: 'none', color: '#f1f5f9', fontSize: '0.875rem' }}
+        />
+        {search && (
+          <button onClick={() => setSearch('')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#64748b', fontSize: '1rem', padding: 0 }}>✕</button>
+        )}
+      </div>
+
       <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ minWidth: '100%', borderCollapse: 'collapse' }}>
             <TableHead cols={['Name', 'Email', 'Grade', 'City', 'Phone', 'Subjects', 'Joined', 'Actions']} />
             <tbody>
-              {data.map((r, i) => (
+              {filteredData.map((r, i) => (
                 <TableRow key={r.id || i} idx={i}>
                   <TD>{r.name}</TD>
                   <TD>{r.email}</TD>
@@ -1355,6 +1423,9 @@ function ThinkQuestIndividualSection({ adminToken, apiBase }) {
                   </TD>
                 </TableRow>
               ))}
+              {filteredData.length === 0 && (
+                <tr><td colSpan={8} style={{ textAlign: 'center', padding: '2rem', color: '#94a3b8' }}>No matching registrations found</td></tr>
+              )}
             </tbody>
           </table>
         </div>
