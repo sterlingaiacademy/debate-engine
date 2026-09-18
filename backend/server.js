@@ -2253,6 +2253,16 @@ function requireAdmin(req, res, next) {
   }
 }
 
+// DELETE /api/admin/speech-league/clear — wipe all speech league registrations (admin only)
+app.delete('/api/admin/speech-league/clear', requireAdmin, async (req, res) => {
+  try {
+    const result = await db.query('DELETE FROM speech_league_registrations');
+    res.json({ success: true, deleted: result.rowCount });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // GET /api/admin/stats — comprehensive platform stats
 app.get('/api/admin/stats', requireAdmin, async (req, res) => {
   try {
