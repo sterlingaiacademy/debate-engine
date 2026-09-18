@@ -224,18 +224,17 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
           display: 'flex', 
           flexDirection: 'row',
           alignItems: 'center',
-          justifyContent: !desktopExpanded && !isMobile ? 'center' : 'space-between',
-          padding: isMobile ? '1.25rem 1.25rem 1.25rem 1.5rem' : (!desktopExpanded ? '1.5rem 0 0.5rem 0' : '1.5rem 1rem 0.5rem 1.25rem'),
+          justifyContent: isMobile ? 'space-between' : 'flex-start',
+          padding: isMobile ? '1.25rem 1.25rem 1.25rem 1.5rem' : '1.5rem 1rem 0.5rem 1.5rem',
           minHeight: 72,
           flexShrink: 0,
-          gap: !desktopExpanded && !isMobile ? '0.75rem' : '0.5rem',
+          gap: '0.75rem',
         }}>
           {/* Logo (Always visible, scaled when collapsed) */}
           <Link to="/dashboard" onClick={() => isMobile && setMobileMenuOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', overflow: 'hidden' }}>
             <img src={logoImg} alt="G FORCE" style={{ 
-              height: !desktopExpanded && !isMobile ? 'auto' : 32, 
-              width: !desktopExpanded && !isMobile ? '100%' : 'auto', 
-              maxWidth: !desktopExpanded && !isMobile ? '36px' : 'none',
+              height: 32, 
+              width: 'auto', 
               flexShrink: 0 
             }} />
             <motion.span
@@ -271,7 +270,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
           flex: 1,
           display: 'flex', flexDirection: 'column',
           gap: isMobile ? '0.45rem' : (isJunior ? '0.35rem' : '0.15rem'),
-          padding: isMobile ? '1.5rem 1.25rem 80px 1.25rem' : (!desktopExpanded && !isMobile ? '0.5rem' : '0.75rem 0.75rem 0.75rem 0'),
+          padding: isMobile ? '1.5rem 1.25rem 80px 1.25rem' : '0.75rem 0.75rem 0.75rem 0',
           overflowY: 'auto', overflowX: 'hidden',
           marginTop: isMobile ? '1rem' : 0,
         }}>
@@ -292,13 +291,11 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
                 className={`group/sidebar ${!isMobile && isActive && isJunior ? 'gf-nav-link-active-junior' : ''}`}
                 style={{
                   display: 'flex', alignItems: 'center',
-                  gap: isMobile ? '1rem' : (!desktopExpanded && !isMobile ? 0 : '0.75rem'),
+                  gap: isMobile ? '1rem' : '0.75rem',
                   padding: isMobile 
                     ? '1.05rem 1.25rem'
-                    : (isJunior
-                      ? (!desktopExpanded && !isMobile ? '0.85rem' : '0.85rem 1.1rem')
-                      : (!desktopExpanded && !isMobile ? '0.85rem 0' : '0.85rem 1rem')),
-                  justifyContent: !desktopExpanded && !isMobile ? 'center' : 'flex-start',
+                    : '0.85rem 1.5rem',
+                  justifyContent: 'flex-start',
                   fontWeight: isActive ? 800 : 600,
                   fontSize: isMobile ? '1.1rem' : '0.95rem',
                   textDecoration: 'none',
