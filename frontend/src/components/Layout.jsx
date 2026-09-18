@@ -363,7 +363,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
                 margin: '0.5rem 0.5rem 1rem',
                 background: 'linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)',
                 borderRadius: 14,
-                padding: '0.75rem 1rem',
+                padding: '0.75rem 1.2rem',
                 cursor: 'pointer',
                 display: 'flex', alignItems: 'center',
                 justifyContent: 'flex-start',
@@ -375,7 +375,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
               onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
               title="Upgrade to Pro"
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: (desktopExpanded || isMobile) ? '0.6rem' : 0 }}>
                 <div style={{ background: 'rgba(255,255,255,0.2)', padding: '0.3rem', borderRadius: '50%', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <Crown size={16} strokeWidth={2.5} />
                 </div>
