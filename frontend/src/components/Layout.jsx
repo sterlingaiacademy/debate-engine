@@ -118,9 +118,9 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
   };
   const tierColor = TIER_COLORS[user?.rank] || '#64748b';
 
-  // Desktop: collapsed=64px icons only, hovered=264px expanded
+  // Desktop: collapsed=80px icons only, hovered=264px expanded
   const desktopExpanded = !isCollapsed || sidebarHovered;
-  const SIDEBAR_W = desktopExpanded && !isMobile ? 264 : (!isMobile ? 64 : 280);
+  const SIDEBAR_W = desktopExpanded && !isMobile ? 264 : (!isMobile ? 80 : 280);
 
   const activeStyle = isJunior
     ? {
@@ -190,7 +190,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
         onMouseEnter={() => !isMobile && setSidebarHovered(true)}
         onMouseLeave={() => !isMobile && setSidebarHovered(false)}
         animate={{ 
-          width: isMobile ? 280 : (desktopExpanded ? 264 : 64),
+          width: isMobile ? 280 : (desktopExpanded ? 264 : 80),
         }}
         transition={{ type: 'spring', stiffness: 300, damping: 35, mass: 0.8 }}
         style={{
