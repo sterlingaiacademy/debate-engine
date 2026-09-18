@@ -124,23 +124,23 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
 
   const activeStyle = isJunior
     ? {
-        background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-        color: '#fff',
-        boxShadow: '0 4px 16px rgba(124,58,237,0.4)',
+        background: 'transparent',
+        color: '#7c3aed',
+        boxShadow: 'none',
         borderRadius: 99,
       }
     : {
-        background: 'linear-gradient(135deg, rgba(255,107,0,0.18) 0%, rgba(255,107,0,0.08) 100%)',
-        color: '#FF6B00',
-        borderLeft: '3px solid #FF6B00',
+        background: 'transparent',
+        color: '#ffffff',
+        borderLeft: 'none',
         borderRadius: 0,
-        boxShadow: '0 0 20px rgba(255,107,0,0.12), inset 0 0 0 1px rgba(255,107,0,0.12)',
+        boxShadow: 'none',
       };
 
   const inactiveStyle = {
     background: 'transparent',
     color: isJunior ? 'var(--j-purple)' : '#64748b',
-    borderLeft: isJunior ? 'none' : '3px solid transparent',
+    borderLeft: 'none',
     borderRadius: isJunior ? 99 : 0,
   };
 
@@ -289,7 +289,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
                 to={path}
                 onClick={() => isMobile && setMobileMenuOpen(false)}
                 title={!desktopExpanded && !isMobile ? name : ''}
-                className={!isMobile && isActive ? (isJunior ? 'gf-nav-link-active gf-nav-link-active-junior' : 'gf-nav-link-active') : ''}
+                className={`group/sidebar ${!isMobile && isActive && isJunior ? 'gf-nav-link-active-junior' : ''}`}
                 style={{
                   display: 'flex', alignItems: 'center',
                   gap: isMobile ? '1rem' : (!desktopExpanded && !isMobile ? 0 : '0.75rem'),
@@ -310,29 +310,24 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
                 }}
                 onMouseEnter={e => {
                   if (!isActive) {
-                    e.currentTarget.style.background = isJunior
-                      ? 'rgba(124,58,237,0.08)'
-                      : 'rgba(255,255,255,0.06)';
                     e.currentTarget.style.color = isJunior ? '#7c3aed' : '#e2e8f0';
-                    e.currentTarget.style.borderLeftColor = 'rgba(255,255,255,0.12)';
                   }
                 }}
                 onMouseLeave={e => {
                   if (!isActive) {
-                    e.currentTarget.style.background = 'transparent';
                     e.currentTarget.style.color = isJunior ? 'var(--j-purple)' : '#64748b';
-                    e.currentTarget.style.borderLeftColor = 'transparent';
                   }
                 }}
               >
                 <Icon
                   size={isMobile ? 24 : 20}
                   strokeWidth={isActive ? 2.5 : 2}
-                  style={{ flexShrink: 0, color: isActive && !isJunior ? '#FF6B00' : 'currentColor' }}
+                  style={{ flexShrink: 0, color: 'currentColor' }}
                 />
                 <motion.span
                   animate={{ opacity: (desktopExpanded || isMobile) ? 1 : 0, maxWidth: (desktopExpanded || isMobile) ? 200 : 0 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 35, mass: 0.8 }}
+                  className="group-hover/sidebar:translate-x-1 transition duration-150"
                   style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'block' }}
                 >{name}</motion.span>
                 {/* Lock badge — emoji only to save horizontal space */}
