@@ -289,7 +289,8 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
                 key={name}
                 to={path}
                 onClick={() => isMobile && setMobileMenuOpen(false)}
-                title={isCollapsed && !isMobile ? name : ''}
+                title={!desktopExpanded && !isMobile ? name : ''}
+                className={!isMobile && isActive ? (isJunior ? 'gf-nav-link-active gf-nav-link-active-junior' : 'gf-nav-link-active') : ''}
                 style={{
                   display: 'flex', alignItems: 'center',
                   gap: isMobile ? '1rem' : (!desktopExpanded && !isMobile ? 0 : '0.75rem'),
@@ -304,7 +305,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
                   textDecoration: 'none',
                   transition: 'all 0.2s ease',
                   whiteSpace: 'nowrap',
-                  overflow: 'hidden',
+                  overflow: isActive && !isMobile ? 'visible' : 'hidden',
                   opacity: locked ? 0.6 : 1,
                   ...(isActive ? activeStyle : inactiveStyle),
                 }}
