@@ -204,8 +204,8 @@ app.get('/api/speech-league/registrations', async (req, res) => {
   }
 });
 
-// POST /api/speech-league/clear — admin wipe of all registrations
-app.post('/api/speech-league/clear', async (req, res) => {
+// POST /api/sl/clear — admin wipe of all speech league registrations
+app.post('/api/sl/clear', async (req, res) => {
   try {
     const { adminSecret } = req.body;
     const ADMIN_SECRET = process.env.ADMIN_SECRET || 'gforce_admin_2026';
@@ -2266,18 +2266,6 @@ function requireAdmin(req, res, next) {
   }
 }
 
-// POST /api/admin/speech-league/clear — wipe all speech league registrations (admin only)
-app.post('/api/admin/speech-league/clear', async (req, res) => {
-  try {
-    const { adminSecret } = req.body;
-    const ADMIN_SECRET = process.env.ADMIN_SECRET || 'gforce_admin_2026';
-    if (adminSecret !== ADMIN_SECRET) return res.status(401).json({ error: 'Unauthorized' });
-    const result = await db.query('DELETE FROM speech_league_registrations');
-    res.json({ success: true, deleted: result.rowCount });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
 
 // GET /api/admin/stats — comprehensive platform stats
 app.get('/api/admin/stats', requireAdmin, async (req, res) => {
