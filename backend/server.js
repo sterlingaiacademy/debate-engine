@@ -204,6 +204,19 @@ app.get('/api/speech-league/registrations', async (req, res) => {
   }
 });
 
+// POST /api/speech-league/clear — admin wipe of all registrations
+app.post('/api/speech-league/clear', async (req, res) => {
+  try {
+    const { adminSecret } = req.body;
+    const ADMIN_SECRET = process.env.ADMIN_SECRET || 'gforce_admin_2026';
+    if (adminSecret !== ADMIN_SECRET) return res.status(401).json({ error: 'Unauthorized' });
+    const result = await db.query('DELETE FROM speech_league_registrations');
+    res.json({ success: true, deleted: result.rowCount });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 // SECTION: Freedom Quiz Registrations
 
