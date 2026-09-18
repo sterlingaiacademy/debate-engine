@@ -226,7 +226,6 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
           alignItems: 'center',
           justifyContent: !desktopExpanded && !isMobile ? 'center' : 'space-between',
           padding: isMobile ? '1.25rem 1.25rem 1.25rem 1.5rem' : (!desktopExpanded ? '1.5rem 0 0.5rem 0' : '1.5rem 1rem 0.5rem 1.25rem'),
-          borderBottom: isJunior ? '2px solid rgba(124,58,237,0.08)' : '1px solid rgba(255,255,255,0.1)',
           minHeight: 72,
           flexShrink: 0,
           gap: !desktopExpanded && !isMobile ? '0.75rem' : '0.5rem',
