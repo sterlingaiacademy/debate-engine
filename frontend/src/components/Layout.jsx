@@ -66,7 +66,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
     pathname.includes('/mock-un') ||
     pathname.includes('/speech-coach') ||
     pathname.includes('/speech-analysis') ||
-    pathname.includes('/speech-league');
+    (pathname.includes('/speech-league') && !pathname.includes('/speech-league-register'));
 
   const isFullWidthRoute = pathname.includes('/ito-register') || pathname.includes('/mini-mun') || pathname.includes('/indus-mun') || pathname.includes('/english-session') || pathname.includes('/speech-league-register') || pathname.includes('/freedom-quiz') || pathname.includes('/teacher-2030-register');
 
