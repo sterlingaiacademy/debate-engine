@@ -343,7 +343,6 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
         <div style={{
           marginTop: 'auto',
           padding: !desktopExpanded && !isMobile ? '1rem 0.5rem' : '1rem 1rem',
-          borderTop: isJunior ? '2px solid rgba(124,58,237,0.08)' : '1px solid rgba(255,255,255,0.05)',
           display: 'flex', flexDirection: 'column', gap: '0.75rem', flexShrink: 0,
         }}>
 
