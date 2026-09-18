@@ -145,7 +145,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', height: isMobile ? '100svh' : '111.111vh', minHeight: isMobile ? '-webkit-fill-available' : '111.111vh', overflow: 'hidden', background: isJunior ? 'var(--bg-secondary)' : '#06080f' }}>
+    <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', height: isMobile ? '100svh' : '111.111vh', minHeight: isMobile ? '-webkit-fill-available' : '111.111vh', overflow: 'hidden', background: isJunior ? 'rgba(240,233,255,0.6)' : 'rgba(8,10,18,0.97)' }}>
       
       {/* Mobile Top Header */}
       {isMobile && !isFullScreenRoute && (
@@ -488,8 +488,14 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
-        /* Match sidebar bg exactly so sidebar+wrapper read as one panel */
-        background: isJunior ? 'rgba(255,255,255,0.95)' : 'rgba(8,10,18,0.97)',
+        /* Inward curve: this whole panel curves away from the sidebar */
+        borderTopLeftRadius: isMobile ? 0 : 24,
+        borderBottomLeftRadius: isMobile ? 0 : 24,
+        borderTop: isMobile ? 'none' : (isJunior ? '1px solid rgba(124,58,237,0.12)' : '1px solid rgba(255,255,255,0.08)'),
+        borderLeft: isMobile ? 'none' : (isJunior ? '1px solid rgba(124,58,237,0.12)' : '1px solid rgba(255,255,255,0.08)'),
+        background: isJunior
+          ? 'linear-gradient(135deg, #faf5ff 0%, #fff0f7 50%, #f0f9ff 100%)'
+          : '#06080f',
       }}>
         
         {/* TOPBAR — desktop only; mobile already has the top header */}
@@ -504,14 +510,6 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
           padding: isFullScreenRoute ? 0 : isFullWidthRoute ? (isMobile ? '0 0 calc(80px + env(safe-area-inset-bottom, 0px)) 0' : 0) : (isMobile ? '1rem 1rem calc(80px + env(safe-area-inset-bottom, 0px)) 1rem' : '2rem 1.5rem'),
           display: 'flex', flexDirection: 'column', alignItems: 'center',
           position: 'relative', zIndex: 10,
-          /* Inward curve: rounded top-left corner, border traces the curve */
-          borderTopLeftRadius: isMobile ? 0 : 24,
-          borderBottomLeftRadius: isMobile ? 0 : 24,
-          borderTop: isMobile ? 'none' : (isJunior ? '1px solid rgba(124,58,237,0.12)' : '1px solid rgba(255,255,255,0.08)'),
-          borderLeft: isMobile ? 'none' : (isJunior ? '1px solid rgba(124,58,237,0.12)' : '1px solid rgba(255,255,255,0.08)'),
-          background: isJunior
-            ? 'linear-gradient(135deg, #faf5ff 0%, #fff0f7 50%, #f0f9ff 100%)'
-            : '#06080f',
         }}>
           <div style={{
             width: '100%',
