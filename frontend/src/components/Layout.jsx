@@ -191,7 +191,6 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
         onMouseLeave={() => !isMobile && setSidebarHovered(false)}
         animate={{ 
           width: isMobile ? 280 : (desktopExpanded ? 264 : 64),
-          borderRadius: isMobile ? 0 : (desktopExpanded ? '0 20px 20px 0' : '0 16px 16px 0'),
         }}
         transition={{ type: 'spring', stiffness: 300, damping: 35, mass: 0.8 }}
         style={{
@@ -484,7 +483,13 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
       </motion.aside>
 
       {/* ─── RIGHT SIDE (TOPBAR + MAIN CONTENT) ─── */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      <div style={{
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+        background: isJunior ? 'rgba(220,210,255,0.4)' : 'rgba(2,3,6,1)',
+      }}>
         
         {/* TOPBAR — desktop only; mobile already has the top header */}
         {!isMobile && <Topbar user={user} setUser={setUser} isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} isMobile={isMobile} onLogout={onLogout} />}
@@ -498,6 +503,8 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
           padding: isFullScreenRoute ? 0 : isFullWidthRoute ? (isMobile ? '0 0 calc(80px + env(safe-area-inset-bottom, 0px)) 0' : 0) : (isMobile ? '1rem 1rem calc(80px + env(safe-area-inset-bottom, 0px)) 1rem' : '2rem 1.5rem'),
           display: 'flex', flexDirection: 'column', alignItems: 'center',
           position: 'relative', zIndex: 10,
+          borderTopLeftRadius: isMobile ? 0 : 24,
+          borderBottomLeftRadius: isMobile ? 0 : 24,
           background: isJunior
             ? 'linear-gradient(135deg, #faf5ff 0%, #fff0f7 50%, #f0f9ff 100%)'
             : '#06080f',
