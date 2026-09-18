@@ -6,7 +6,9 @@ import { COUNTRY_CODES } from '../countryCodes';
 
 export default function SpeechLeagueRegister({ user }) {
   const navigate = useNavigate();
-  const initialGrade = (user?.grade || user?.classLevel || '').toString();
+  const rawGrade = (user?.grade || user?.classLevel || '').toString();
+  const gradeNum = parseInt(rawGrade.replace(/\D/g, ''), 10);
+  const initialGrade = (gradeNum >= 5 && gradeNum <= 12) ? String(gradeNum) : '';
 
   const [form, setForm] = useState({
     studentName: user?.name || '',
