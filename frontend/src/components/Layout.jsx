@@ -133,7 +133,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
         background: 'linear-gradient(135deg, rgba(255,107,0,0.18) 0%, rgba(255,107,0,0.08) 100%)',
         color: '#FF6B00',
         borderLeft: '3px solid #FF6B00',
-        borderRadius: '0 12px 12px 0',
+        borderRadius: 0,
         boxShadow: '0 0 20px rgba(255,107,0,0.12), inset 0 0 0 1px rgba(255,107,0,0.12)',
       };
 
@@ -141,7 +141,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
     background: 'transparent',
     color: isJunior ? 'var(--j-purple)' : '#64748b',
     borderLeft: isJunior ? 'none' : '3px solid transparent',
-    borderRadius: isJunior ? 99 : '0 12px 12px 0',
+    borderRadius: isJunior ? 99 : 0,
   };
 
   return (
