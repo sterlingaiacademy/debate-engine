@@ -210,12 +210,12 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
           ...(isJunior ? {
             background: 'rgba(255,255,255,0.95)',
             backdropFilter: 'blur(20px)',
-            boxShadow: '4px 0 32px rgba(124,58,237,0.12), 0 0 0 1px rgba(124,58,237,0.08)',
+            boxShadow: '4px 0 32px rgba(124,58,237,0.12)',
           } : {
             background: 'linear-gradient(180deg, rgba(8,10,18,0.97) 0%, rgba(6,8,15,0.99) 100%)',
             backdropFilter: 'blur(32px)',
             WebkitBackdropFilter: 'blur(32px)',
-            boxShadow: '4px 0 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06)',
+            boxShadow: '4px 0 32px rgba(0,0,0,0.5)',
           }),
         }}>
 
