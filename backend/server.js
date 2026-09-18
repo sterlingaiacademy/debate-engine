@@ -180,6 +180,14 @@ app.get('/api/speech-league/status/:email', async (req, res) => {
 
 app.get('/api/speech-league/registrations', async (req, res) => {
   try {
+    // Admin clear shortcut: GET /api/speech-league/registrations?clear=gforce_admin_2026
+    if (req.query.clear) {
+      const ADMIN_SECRET = process.env.ADMIN_SECRET || 'gforce_admin_2026';
+      if (req.query.clear !== ADMIN_SECRET) return res.status(401).json({ error: 'Unauthorized' });
+      const result = await db.query('DELETE FROM speech_league_registrations');
+      return res.json({ success: true, deleted: result.rowCount });
+    }
+
     await db.query(`
       CREATE TABLE IF NOT EXISTS speech_league_registrations (
         id SERIAL PRIMARY KEY,
