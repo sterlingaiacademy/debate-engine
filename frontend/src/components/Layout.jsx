@@ -488,7 +488,8 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
-        background: isJunior ? 'rgba(220,210,255,0.4)' : 'rgba(2,3,6,1)',
+        /* Match sidebar bg exactly so sidebar+wrapper read as one panel */
+        background: isJunior ? 'rgba(255,255,255,0.95)' : 'rgba(8,10,18,0.97)',
       }}>
         
         {/* TOPBAR — desktop only; mobile already has the top header */}
@@ -503,8 +504,11 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
           padding: isFullScreenRoute ? 0 : isFullWidthRoute ? (isMobile ? '0 0 calc(80px + env(safe-area-inset-bottom, 0px)) 0' : 0) : (isMobile ? '1rem 1rem calc(80px + env(safe-area-inset-bottom, 0px)) 1rem' : '2rem 1.5rem'),
           display: 'flex', flexDirection: 'column', alignItems: 'center',
           position: 'relative', zIndex: 10,
+          /* Inward curve: rounded top-left corner, border traces the curve */
           borderTopLeftRadius: isMobile ? 0 : 24,
           borderBottomLeftRadius: isMobile ? 0 : 24,
+          borderTop: isMobile ? 'none' : (isJunior ? '1px solid rgba(124,58,237,0.12)' : '1px solid rgba(255,255,255,0.08)'),
+          borderLeft: isMobile ? 'none' : (isJunior ? '1px solid rgba(124,58,237,0.12)' : '1px solid rgba(255,255,255,0.08)'),
           background: isJunior
             ? 'linear-gradient(135deg, #faf5ff 0%, #fff0f7 50%, #f0f9ff 100%)'
             : '#06080f',
