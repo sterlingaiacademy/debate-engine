@@ -235,6 +235,8 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
             <img src={logoImg} alt="G FORCE" style={{ 
               height: 32, 
               width: 'auto', 
+              minWidth: 32,
+              maxWidth: 'none',
               flexShrink: 0 
             }} />
             <motion.span
@@ -358,36 +360,39 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
                 setShowPremiumModal(true);
               }}
               style={{
-                margin: (desktopExpanded || isMobile) ? '0.5rem 0.5rem 1rem' : '0.5rem 0 1rem',
+                margin: '0.5rem 0.5rem 1rem',
                 background: 'linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)',
-                borderRadius: (desktopExpanded || isMobile) ? 14 : 10,
-                padding: (desktopExpanded || isMobile) ? '0.75rem' : '0.65rem',
+                borderRadius: 14,
+                padding: '0.75rem 1rem',
                 cursor: 'pointer',
                 display: 'flex', alignItems: 'center',
-                justifyContent: (desktopExpanded || isMobile) ? 'space-between' : 'center',
+                justifyContent: 'flex-start',
                 boxShadow: '0 4px 12px rgba(139,92,246,0.3)',
                 transition: 'transform 0.2s',
+                overflow: 'hidden',
               }}
               onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
               onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
               title="Upgrade to Pro"
             >
-              {(desktopExpanded || isMobile) ? (
-                <>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                    <div style={{ background: 'rgba(255,255,255,0.2)', padding: '0.3rem', borderRadius: '50%', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <Crown size={16} strokeWidth={2.5} />
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column' }}>
-                      <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.01em', lineHeight: 1.1 }}>Upgrade Plan</span>
-                      <span style={{ fontSize: '0.65rem', fontWeight: 600, color: 'rgba(255,255,255,0.9)', marginTop: '0.1rem' }}>Unlock all features</span>
-                    </div>
-                  </div>
-                  <ChevronRight size={16} color="#fff" strokeWidth={3} />
-                </>
-              ) : (
-                <Crown size={20} color="#fff" strokeWidth={2.5} />
-              )}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                <div style={{ background: 'rgba(255,255,255,0.2)', padding: '0.3rem', borderRadius: '50%', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <Crown size={16} strokeWidth={2.5} />
+                </div>
+                <motion.div 
+                  animate={{ opacity: (desktopExpanded || isMobile) ? 1 : 0, width: (desktopExpanded || isMobile) ? 'auto' : 0 }}
+                  style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', whiteSpace: 'nowrap' }}
+                >
+                  <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.01em', lineHeight: 1.1 }}>Upgrade Plan</span>
+                  <span style={{ fontSize: '0.65rem', fontWeight: 600, color: 'rgba(255,255,255,0.9)', marginTop: '0.1rem' }}>Unlock all features</span>
+                </motion.div>
+              </div>
+              <motion.div 
+                animate={{ opacity: (desktopExpanded || isMobile) ? 1 : 0, width: (desktopExpanded || isMobile) ? 'auto' : 0 }}
+                style={{ marginLeft: 'auto', overflow: 'hidden', display: 'flex', flexShrink: 0 }}
+              >
+                <ChevronRight size={16} color="#fff" strokeWidth={3} />
+              </motion.div>
             </div>
           )}
 
