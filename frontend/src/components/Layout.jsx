@@ -190,7 +190,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
         onMouseEnter={() => !isMobile && setSidebarHovered(true)}
         onMouseLeave={() => !isMobile && setSidebarHovered(false)}
         animate={{ width: isMobile ? 280 : (desktopExpanded ? 264 : 64) }}
-        transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ type: 'spring', stiffness: 300, damping: 35, mass: 0.8 }}
         style={{
           position: 'relative',
           flexShrink: 0,
@@ -239,18 +239,20 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
               maxWidth: !desktopExpanded && !isMobile ? '36px' : 'none',
               flexShrink: 0 
             }} />
-            {(desktopExpanded || isMobile) && (
-              <span style={{
+            <motion.span
+              animate={{ opacity: (desktopExpanded || isMobile) ? 1 : 0, width: (desktopExpanded || isMobile) ? 'auto' : 0 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 35, mass: 0.8 }}
+              style={{
                 fontWeight: 900, fontSize: '1.35rem', letterSpacing: '-0.02em',
-                whiteSpace: 'nowrap', overflow: 'hidden',
+                whiteSpace: 'nowrap', overflow: 'hidden', display: 'block',
                 background: isJunior
                   ? 'linear-gradient(135deg, #7c3aed, #e879f9)'
                   : 'linear-gradient(135deg, #FF6B5A, #FF6B00)',
                 WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-              }}>
-                G FORCE
-              </span>
-            )}
+              }}
+            >
+              G FORCE
+            </motion.span>
           </Link>
 
           {/* Mobile Close Button */}
@@ -328,21 +330,18 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
                   strokeWidth={isActive ? 2.5 : 2}
                   style={{ flexShrink: 0, color: isActive && !isJunior ? '#FF6B00' : 'currentColor' }}
                 />
-                {(desktopExpanded || isMobile) && (
-                  <span style={{ opacity: 1, transition: 'opacity 0.2s', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{name}</span>
-                )}
+                <motion.span
+                  animate={{ opacity: (desktopExpanded || isMobile) ? 1 : 0, maxWidth: (desktopExpanded || isMobile) ? 200 : 0 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 35, mass: 0.8 }}
+                  style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'block' }}
+                >{name}</motion.span>
                 {/* Lock badge — emoji only to save horizontal space */}
-                {locked && (desktopExpanded || isMobile) && (
-                  <span
-                    title={`${requiredPlan} plan required`}
-                    style={{
-                      fontSize: '0.75rem', flexShrink: 0, marginLeft: '0.2rem',
-                      opacity: 0.85,
-                    }}
-                  >
-                    🔒
-                  </span>
-                )}
+                <motion.span
+                  animate={{ opacity: locked && (desktopExpanded || isMobile) ? 0.85 : 0, maxWidth: locked && (desktopExpanded || isMobile) ? 20 : 0 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 35, mass: 0.8 }}
+                  title={`${requiredPlan} plan required`}
+                  style={{ fontSize: '0.75rem', flexShrink: 0, marginLeft: '0.2rem', overflow: 'hidden', display: 'inline-block' }}
+                >🔒</motion.span>
               </Link>
             );
           })}
