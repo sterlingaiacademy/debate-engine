@@ -2,39 +2,7 @@
    GRACE & FORCE — DESIGN SYSTEM v2.0 | Game-Inspired Premium UI
    ================================================================ */
 
-/* ── Sidebar curved notch effect for active nav items ─────────── */
-/* Creates a concave carved curve at top & bottom of active item  */
-.gf-nav-link-active {
-  position: relative;
-}
-.gf-nav-link-active::before,
-.gf-nav-link-active::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  width: 14px;
-  height: 14px;
-  pointer-events: none;
-  z-index: 10;
-}
-/* Top-right concave curve: sidebar bg quarter-circle curving into active item */
-.gf-nav-link-active::before {
-  top: -14px;
-  background: rgba(6, 8, 15, 0.99);
-  border-radius: 0 0 0 100%;
-}
-/* Bottom-right concave curve */
-.gf-nav-link-active::after {
-  bottom: -14px;
-  background: rgba(6, 8, 15, 0.99);
-  border-radius: 0 100% 0 0;
-}
-/* Junior (light) theme variant — sidebar bg is white */
-.gf-nav-link-active-junior::before,
-.gf-nav-link-active-junior::after {
-  background: rgba(255, 255, 255, 0.95);
-}
-/* ─────────────────────────────────────────────────────────────── */
+/* ── Sidebar concave notch effect removed as it conflicts with new Aceternity layout ───────── */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
 @import "tailwindcss";
