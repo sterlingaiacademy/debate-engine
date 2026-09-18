@@ -204,7 +204,6 @@ app.get('/api/speech-league/registrations', async (req, res) => {
     const result = await db.query(`
       SELECT *
       FROM speech_league_registrations
-      WHERE DATE_TRUNC('month', created_at) = DATE_TRUNC('month', CURRENT_TIMESTAMP)
       ORDER BY created_at DESC
     `);
     res.json(result.rows);
