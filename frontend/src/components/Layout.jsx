@@ -344,7 +344,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
         {/* ── Bottom Section ── */}
         <div style={{
           marginTop: 'auto',
-          padding: !desktopExpanded && !isMobile ? '1rem 0.5rem' : '1rem 1rem',
+          padding: isMobile ? '1rem 1rem' : '1rem 0.5rem',
           display: 'flex', flexDirection: 'column', gap: '0.75rem', flexShrink: 0,
         }}>
 
@@ -363,7 +363,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
                 margin: '0.5rem 0.5rem 1rem',
                 background: 'linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)',
                 borderRadius: 14,
-                padding: '0.75rem 1.2rem',
+                padding: isMobile ? '0.75rem 1rem' : '0.75rem 0.7rem',
                 cursor: 'pointer',
                 display: 'flex', alignItems: 'center',
                 justifyContent: 'flex-start',
