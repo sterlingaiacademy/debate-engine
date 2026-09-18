@@ -165,6 +165,19 @@ app.post('/api/speech-league/register', async (req, res) => {
   }
 });
 
+app.get('/api/speech-league/status/:email', async (req, res) => {
+  const { email } = req.params;
+  try {
+    const result = await db.query(
+      `SELECT id FROM speech_league_registrations WHERE email = $1 LIMIT 1`,
+      [email]
+    );
+    res.json({ registered: result.rows.length > 0 });
+  } catch (err) {
+    res.json({ registered: false });
+  }
+});
+
 app.get('/api/speech-league/registrations', async (req, res) => {
   try {
     await db.query(`

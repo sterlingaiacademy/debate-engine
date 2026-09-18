@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Globe, Trophy, Star, Calendar, CheckCircle2, ChevronRight, User, Phone, Mail, School, Users } from 'lucide-react';
 import { API_BASE } from '../api';
@@ -20,6 +20,17 @@ export default function SpeechLeagueRegister({ user }) {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [success, setSuccess] = useState(false);
+  const [alreadyRegistered, setAlreadyRegistered] = useState(false);
+
+  // Check on mount if this user is already registered
+  useEffect(() => {
+    if (user?.email) {
+      fetch(`${API_BASE}/api/speech-league/status/${encodeURIComponent(user.email)}`)
+        .then(r => r.json())
+        .then(d => { if (d.registered) setAlreadyRegistered(true); })
+        .catch(console.error);
+    }
+  }, [user?.email]);
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -53,6 +64,23 @@ export default function SpeechLeagueRegister({ user }) {
       setLoading(false);
     }
   };
+
+  if (alreadyRegistered) {
+    return (
+      <div style={{ minHeight: '100vh', background: '#081734', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(234,179,8,0.25)', borderRadius: 24, padding: '4rem 2rem', textAlign: 'center', maxWidth: 480, margin: '2rem' }}>
+          <CheckCircle2 size={64} color="#eab308" style={{ margin: '0 auto 1.5rem auto' }} />
+          <h2 style={{ fontSize: '2rem', fontWeight: 800, color: '#eab308', marginBottom: '1rem', letterSpacing: '-0.02em' }}>You're Already Registered!</h2>
+          <p style={{ color: '#94a3b8', lineHeight: 1.6, marginBottom: '2.5rem' }}>
+            You have already registered for the Monthly Speech League — September 2026. We'll notify you when the contest date and topics are announced. Prepare to speak, persuade, and shine!
+          </p>
+          <button onClick={() => navigate('/dashboard')} style={{ background: 'linear-gradient(135deg, #eab308, #d97706)', color: '#fff', border: 'none', padding: '1rem 2rem', borderRadius: 12, fontSize: '1rem', fontWeight: 700, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', boxShadow: '0 4px 15px rgba(234,179,8,0.3)' }}>
+            Back to Dashboard <ChevronRight size={18} />
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (success) {
     return (

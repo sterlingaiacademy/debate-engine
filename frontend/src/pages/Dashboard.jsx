@@ -884,12 +884,22 @@ export default function Dashboard({ user, setUser }) {
   const isBasicLevel = ['Level 1', 'Level 2'].includes(normalizedLevel);
 
   const [minimunRegistered, setMinimunRegistered] = useState(false);
+  const [speechLeagueRegistered, setSpeechLeagueRegistered] = useState(false);
 
   useEffect(() => {
     if (user?.email) {
       fetch(`${API_BASE}/api/minimun/status/${user.email}`)
         .then(res => res.json())
         .then(data => setMinimunRegistered(data.registered))
+        .catch(console.error);
+    }
+  }, [user?.email]);
+
+  useEffect(() => {
+    if (user?.email) {
+      fetch(`${API_BASE}/api/speech-league/status/${encodeURIComponent(user.email)}`)
+        .then(res => res.json())
+        .then(data => setSpeechLeagueRegistered(data.registered))
         .catch(console.error);
     }
   }, [user?.email]);
@@ -1149,6 +1159,58 @@ export default function Dashboard({ user, setUser }) {
 
 
 
+
+
+        {/* Monthly Speech League */}
+        <div
+          onClick={() => navigate('/speech-league-register')}
+          style={{
+            borderRadius: 18, padding: '1.4rem 1.5rem', cursor: 'pointer',
+            background: 'rgba(255,255,255,0.03)',
+            backdropFilter: 'blur(18px)',
+            WebkitBackdropFilter: 'blur(18px)',
+            border: `1px solid ${speechLeagueRegistered ? 'rgba(234,179,8,0.35)' : 'rgba(234,179,8,0.18)'}`,
+            position: 'relative', overflow: 'hidden',
+            transition: 'transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s, border-color 0.22s',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.transform = 'translateY(-3px)';
+            e.currentTarget.style.boxShadow = '0 16px 48px rgba(234,179,8,0.2), 0 0 0 1px rgba(234,179,8,0.3)';
+            e.currentTarget.style.borderColor = 'rgba(234,179,8,0.4)';
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.transform = '';
+            e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.3)';
+            e.currentTarget.style.borderColor = speechLeagueRegistered ? 'rgba(234,179,8,0.35)' : 'rgba(234,179,8,0.18)';
+          }}
+        >
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #eab308, #f59e0b)', opacity: 0.9 }} />
+          <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, background: 'radial-gradient(ellipse at top right, rgba(234,179,8,0.07) 0%, transparent 60%)', pointerEvents: 'none' }} />
+
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
+                <span style={{ fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.12em', color: speechLeagueRegistered ? '#10b981' : '#eab308', background: speechLeagueRegistered ? 'rgba(16,185,129,0.12)' : 'rgba(234,179,8,0.1)', border: `1px solid ${speechLeagueRegistered ? 'rgba(16,185,129,0.3)' : 'rgba(234,179,8,0.25)'}`, padding: '0.2rem 0.65rem', borderRadius: 99 }}>
+                  {speechLeagueRegistered ? '✓ REGISTERED' : 'LIVE EVENT'}
+                </span>
+                <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(234,179,8,0.12)', border: '1px solid rgba(234,179,8,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 14px rgba(234,179,8,0.15)' }}>
+                  <Trophy size={16} color="#eab308" strokeWidth={2.5} />
+                </div>
+              </div>
+              <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fff', marginBottom: '0.25rem', letterSpacing: '-0.01em' }}>
+                <span style={{ color: '#eab308' }}>Monthly</span> Speech League
+              </div>
+              <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#f59e0b', marginBottom: '0.3rem', letterSpacing: '0.05em' }}>SEPTEMBER 2026</div>
+              <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '1rem', lineHeight: 1.5 }}>
+                Speak. Persuade. Shine. Free participation &amp; certification.
+              </div>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#eab308' }}>
+              {speechLeagueRegistered ? 'View Details' : 'Register Free'} <ChevronRight size={14} />
+            </div>
+          </div>
+        </div>
 
         {/* ThinkQuest Olympiad */}
         <div

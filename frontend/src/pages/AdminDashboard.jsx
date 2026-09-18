@@ -11,6 +11,7 @@ const SECTIONS = [
   { id: 'users', label: 'Users' },
   { id: 'subscriptions', label: 'Subscriptions' },
   { id: 'debates', label: 'Debates' },
+  { id: 'speech_league', label: 'Speech League Registrations' },
   { id: 'speech_league_scores', label: 'Speech League Scores' },
   { id: 'speech_analysis', label: 'Speech Analysis' },
   { id: 'coupons', label: 'School Coupons' },
