@@ -245,6 +245,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
               style={{
                 fontWeight: 900, fontSize: '1.35rem', letterSpacing: '-0.02em',
                 whiteSpace: 'nowrap', overflow: 'hidden', display: 'block',
+                marginTop: '-4px', // Shift up to visually align with the main part of the logo image
                 background: isJunior
                   ? 'linear-gradient(135deg, #7c3aed, #e879f9)'
                   : 'linear-gradient(135deg, #FF6B5A, #FF6B00)',
