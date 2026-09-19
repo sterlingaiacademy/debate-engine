@@ -1185,10 +1185,13 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
       const normClass = stripped.trim().toLowerCase() === 'kg' ? 'KG'
         : /^\d+$/.test(stripped.trim()) ? `Grade ${stripped.trim()}`
         : stripped.replace(/^grade\s*/i, 'Grade ');
+      // Extract grade number for range validation (Grade 5–12 only)
+      const gradeNum = parseInt(normClass.replace(/^Grade\s*/i, ''), 10);
+      const gradeInRange = !isNaN(gradeNum) && gradeNum >= 5 && gradeNum <= 12;
       const isY = v => v && v.trim().toLowerCase() === 'y';
       return {
         name: cols[nameIdx] || '',
-        classLevel: normClass,
+        classLevel: gradeInRange ? normClass : '', // blank so it gets filtered out
         password: passIdx !== -1 ? cols[passIdx] || '' : '',
         email: emailIdx !== -1 ? cols[emailIdx] || '' : '',
         phone: phoneIdx !== -1 ? cols[phoneIdx] || '' : '',
@@ -1203,7 +1206,7 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
     }).filter(r => r.name);
     const valid = rows.filter(r => r.classLevel);
     const skipped = rows.length - valid.length;
-    if (skipped > 0) setParseError(`${skipped} row(s) skipped — class/grade is required for every student.`);
+    if (skipped > 0) setParseError(`${skipped} row(s) skipped — grade must be between 5 and 12 (KG/Grade 1–4 not accepted).`);
     else setParseError('');
     setParsed(valid);
   };
