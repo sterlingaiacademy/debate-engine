@@ -1150,7 +1150,17 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
     setParseError('');
     const lines = text.trim().split('\n').filter(l => l.trim());
     if (lines.length < 2) { setParseError('CSV must have a header row and at least one student row.'); return; }
-    const header = lines[0].split(',').map(h => h.trim().toLowerCase().replace(/"/g, ''));
+
+    // Auto-detect header row: scan up to first 15 lines for one containing a recognisable name column.
+    // This handles templates with school metadata rows above the real header (e.g. School Name, Mail Id, etc.)
+    let headerLineIdx = 0;
+    for (let i = 0; i < Math.min(lines.length, 15); i++) {
+      const cols = lines[i].split(',').map(h => h.trim().toLowerCase().replace(/"/g, ''));
+      const hasName = cols.some(h => h === 'name' || h === 'student name' || h === 'student_name' || h === 'students name');
+      if (hasName) { headerLineIdx = i; break; }
+    }
+
+    const header = lines[headerLineIdx].split(',').map(h => h.trim().toLowerCase().replace(/"/g, ''));
     const nameIdx = header.findIndex(h => h === 'name' || h === 'student name' || h === 'student_name' || h === 'students name');
     const classIdx = header.findIndex(h => h === 'class' || h === 'classlevel' || h === 'grade' || h === 'class level' || h === 'grade(in number)' || h === 'grade (in number)');
     const passIdx = header.findIndex(h => h === 'password' || h === 'pass');
@@ -1166,13 +1176,15 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
     };
     if (nameIdx === -1) { setParseError('Could not find a "name" column. Please check your CSV headers.'); return; }
     if (classIdx === -1) { setParseError('Could not find a "class" or "grade" column. Please check your CSV headers.'); return; }
-    const rows = lines.slice(1).map(line => {
+    const rows = lines.slice(headerLineIdx + 1).map(line => {
       const cols = line.split(',').map(c => c.trim().replace(/"/g, ''));
       const rawClass = cols[classIdx] || '';
-      // Accept plain numbers (8, 9, 12) or "Grade 8" style
-      const normClass = rawClass.trim().toLowerCase() === 'kg' ? 'KG'
-        : /^\d+$/.test(rawClass.trim()) ? `Grade ${rawClass.trim()}`
-        : rawClass.replace(/^grade\s*/i, 'Grade ');
+      // Strip trailing division letter: "11A" → "11", "12C" → "12", "KG" stays "KG"
+      const stripped = rawClass.trim().replace(/^(\d+)[A-Za-z]+$/, '$1');
+      // Normalise: plain number → "Grade N", already "Grade N" style → normalise casing
+      const normClass = stripped.trim().toLowerCase() === 'kg' ? 'KG'
+        : /^\d+$/.test(stripped.trim()) ? `Grade ${stripped.trim()}`
+        : stripped.replace(/^grade\s*/i, 'Grade ');
       const isY = v => v && v.trim().toLowerCase() === 'y';
       return {
         name: cols[nameIdx] || '',
