@@ -1142,7 +1142,7 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
   const [manualError, setManualError] = useState('');
 
 
-  const CLASS_OPTIONS = ['KG','Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6','Grade 7','Grade 8','Grade 9','Grade 10','Grade 11','Grade 12'];
+  const CLASS_OPTIONS = ['Grade 5','Grade 6','Grade 7','Grade 8','Grade 9','Grade 10','Grade 11','Grade 12'];
   const SUBJECTS = ['Social Science', 'Science', 'CT&AI', 'Maths', 'English'];
   const SUBJECT_KEYS = ['social_science', 'science', 'ct_ai', 'maths', 'english'];
 
@@ -1337,29 +1337,41 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.25rem', padding: '1rem 1.25rem', background: 'rgba(59,130,246,0.05)', border: '1px solid rgba(59,130,246,0.2)', borderRadius: 14 }}>
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: '0.875rem', fontWeight: 700, color: '#e2e8f0', marginBottom: '0.2rem' }}>Download Excel Template</div>
-              <div style={{ fontSize: '0.78rem', color: '#64748b' }}>Fill in student names, grade (as a number), and mark Y/N for each subject. Email and phone are optional.</div>
+              <div style={{ fontSize: '0.78rem', color: '#64748b' }}>Fill in student names, grade 5–12 (plain number or with division e.g. 11A), and mark Y/N for each subject. Email and phone are optional.</div>
             </div>
             <button
               onClick={() => {
-                const headers = ['Sl. No.', 'Students Name', 'Mail ID (optional)', 'Phone Number (optional)', 'Grade (in number)', 'Social Science (Y/N)', 'Science (Y/N)', 'CT&AI (Y/N)', 'Maths (Y/N)', 'English (Y/N)'];
-                const sampleRows = [
-                  [1, 'Arjun Kumar', '', '', 8, 'Y', 'Y', 'N', 'Y', 'Y'],
-                  [2, 'Priya Sharma', '', '', 6, 'Y', 'N', 'Y', 'N', 'Y'],
-                  [3, 'Rohan Nair', '', '', 10, 'N', 'Y', 'N', 'Y', 'Y'],
+                // School metadata rows (matches the actual coordinator template format)
+                const metaRows = [
+                  ['School Name', 'YOUR SCHOOL NAME'],
+                  ['Mail Id', ''],
+                  ['ThinkQuest School Code.', ''],
+                  ['Co-ordinator Name', ''],
+                  ['ThinkQuest Coordinator Code', ''],
+                  ['CO-ordinator Contact No.', ''],
+                  [], // blank separator row
                 ];
-                const ws = XLSX.utils.aoa_to_sheet([headers, ...sampleRows]);
+                // Student data header — matches the format schools already use
+                const headers = ['SL. NO.', 'Student Name', 'Mail ID', 'Phone NO.', 'Grade', 'Social Science', 'Science', 'CT&AI', 'Maths', 'English'];
+                const sampleRows = [
+                  [1, 'Arjun Kumar', 'arjun@example.com', '9876543210', '11A', 'Y', 'Y', 'N', 'Y', 'Y'],
+                  [2, 'Priya Sharma', 'priya@example.com', '9876543211', '11B', 'Y', 'N', 'Y', 'N', 'Y'],
+                  [3, 'Rohan Nair', '', '', '12', 'N', 'Y', 'N', 'Y', 'Y'],
+                  [4, 'Ananya Reddy', '', '', '10', 'Y', 'Y', 'Y', 'N', 'N'],
+                ];
+                const ws = XLSX.utils.aoa_to_sheet([...metaRows, headers, ...sampleRows]);
                 // Set column widths
                 ws['!cols'] = [
-                  { wch: 8 },   // Sl. No.
-                  { wch: 25 },  // Students Name
+                  { wch: 8 },   // SL. NO.
+                  { wch: 25 },  // Student Name
                   { wch: 28 },  // Mail ID
-                  { wch: 28 },  // Phone Number
-                  { wch: 20 },  // Grade
-                  { wch: 22 },  // Social Science
-                  { wch: 16 },  // Science
-                  { wch: 16 },  // CT&AI
-                  { wch: 16 },  // Maths
-                  { wch: 16 },  // English
+                  { wch: 18 },  // Phone NO.
+                  { wch: 10 },  // Grade
+                  { wch: 18 },  // Social Science
+                  { wch: 12 },  // Science
+                  { wch: 12 },  // CT&AI
+                  { wch: 12 },  // Maths
+                  { wch: 12 },  // English
                 ];
                 const wb = XLSX.utils.book_new();
                 XLSX.utils.book_append_sheet(wb, ws, 'Students');
