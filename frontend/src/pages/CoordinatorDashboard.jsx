@@ -1341,30 +1341,31 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
             </div>
             <button
               onClick={() => {
-                // School metadata rows (matches the actual coordinator template format)
+                // School metadata rows — col A = label, col B = blank spacer, col C = value
                 const metaRows = [
-                  ['School Name', 'YOUR SCHOOL NAME'],
-                  ['Mail Id', ''],
-                  ['ThinkQuest School Code.', ''],
-                  ['Co-ordinator Name', ''],
-                  ['ThinkQuest Coordinator Code', ''],
-                  ['CO-ordinator Contact No.', ''],
+                  ['School Name', '', ''],
+                  ['Mail Id', '', ''],
+                  ['ThinkQuest School Code.', '', ''],
+                  ['Co-ordinator Name', '', ''],
+                  ['ThinkQuest Coordinator Code', '', ''],
+                  ['CO-ordinator Contact No.', '', ''],
                   [], // blank separator row
                 ];
-                // Student data header — matches the format schools already use
+                // Student data header
                 const headers = ['SL. NO.', 'Student Name', 'Mail ID', 'Phone NO.', 'Grade', 'Social Science', 'Science', 'CT&AI', 'Maths', 'English'];
+                // Sample rows — plain grade numbers only (no division letter)
                 const sampleRows = [
-                  [1, 'Arjun Kumar', 'arjun@example.com', '9876543210', '11A', 'Y', 'Y', 'N', 'Y', 'Y'],
-                  [2, 'Priya Sharma', 'priya@example.com', '9876543211', '11B', 'Y', 'N', 'Y', 'N', 'Y'],
-                  [3, 'Rohan Nair', '', '', '12', 'N', 'Y', 'N', 'Y', 'Y'],
-                  [4, 'Ananya Reddy', '', '', '10', 'Y', 'Y', 'Y', 'N', 'N'],
+                  [1, 'Arjun Kumar', 'arjun@example.com', '9876543210', 11, 'Y', 'Y', 'N', 'Y', 'Y'],
+                  [2, 'Priya Sharma', 'priya@example.com', '9876543211', 11, 'Y', 'N', 'Y', 'N', 'Y'],
+                  [3, 'Rohan Nair', '', '', 12, 'N', 'Y', 'N', 'Y', 'Y'],
+                  [4, 'Ananya Reddy', '', '', 10, 'Y', 'Y', 'Y', 'N', 'N'],
                 ];
                 const ws = XLSX.utils.aoa_to_sheet([...metaRows, headers, ...sampleRows]);
-                // Set column widths
+                // Column widths
                 ws['!cols'] = [
-                  { wch: 8 },   // SL. NO.
-                  { wch: 25 },  // Student Name
-                  { wch: 28 },  // Mail ID
+                  { wch: 30 },  // SL. NO. / label col
+                  { wch: 4 },   // blank spacer
+                  { wch: 25 },  // Student Name / value col
                   { wch: 18 },  // Phone NO.
                   { wch: 10 },  // Grade
                   { wch: 18 },  // Social Science
@@ -1373,6 +1374,9 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
                   { wch: 12 },  // Maths
                   { wch: 12 },  // English
                 ];
+                // Row heights — make header row (row 8, index 7) taller
+                ws['!rows'] = Array.from({ length: metaRows.length }, () => ({ hpt: 18 }));
+                ws['!rows'][metaRows.length] = { hpt: 22 }; // header row slightly taller
                 const wb = XLSX.utils.book_new();
                 XLSX.utils.book_append_sheet(wb, ws, 'Students');
                 XLSX.writeFile(wb, 'student_upload_template.xlsx');
