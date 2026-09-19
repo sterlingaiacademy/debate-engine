@@ -1152,7 +1152,7 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
     if (lines.length < 2) { setParseError('CSV must have a header row and at least one student row.'); return; }
     const header = lines[0].split(',').map(h => h.trim().toLowerCase().replace(/"/g, ''));
     const nameIdx = header.findIndex(h => h === 'name' || h === 'student name' || h === 'student_name' || h === 'students name');
-    const classIdx = header.findIndex(h => h === 'class' || h === 'classlevel' || h === 'grade' || h === 'class level' || h === 'grade(in number)');
+    const classIdx = header.findIndex(h => h === 'class' || h === 'classlevel' || h === 'grade' || h === 'class level' || h === 'grade(in number)' || h === 'grade (in number)');
     const passIdx = header.findIndex(h => h === 'password' || h === 'pass');
     const emailIdx = header.findIndex(h => h.startsWith('email') || h.startsWith('mail'));
     const phoneIdx = header.findIndex(h => h.startsWith('phone'));
