@@ -1341,45 +1341,81 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
             </div>
             <button
               onClick={() => {
-                // School metadata rows — col A = label, col B = blank spacer, col C = value
+                // School metadata rows: label in col A, value in col B
                 const metaRows = [
-                  ['School Name', '', ''],
-                  ['Mail Id', '', ''],
-                  ['ThinkQuest School Code.', '', ''],
-                  ['Co-ordinator Name', '', ''],
-                  ['ThinkQuest Coordinator Code', '', ''],
-                  ['CO-ordinator Contact No.', '', ''],
-                  [], // blank separator row
+                  ['School Name', ''],
+                  ['Mail Id', ''],
+                  ['ThinkQuest School Code.', ''],
+                  ['Co-ordinator Name', ''],
+                  ['ThinkQuest Coordinator Code', ''],
+                  ['CO-ordinator Contact No.', ''],
+                  [], // blank separator
                 ];
-                // Student data header
                 const headers = ['SL. NO.', 'Student Name', 'Mail ID', 'Phone NO.', 'Grade', 'Social Science', 'Science', 'CT&AI', 'Maths', 'English'];
-                // Sample rows — plain grade numbers only (no division letter)
                 const sampleRows = [
-                  [1, 'Arjun Kumar', 'arjun@example.com', '9876543210', 11, 'Y', 'Y', 'N', 'Y', 'Y'],
-                  [2, 'Priya Sharma', 'priya@example.com', '9876543211', 11, 'Y', 'N', 'Y', 'N', 'Y'],
-                  [3, 'Rohan Nair', '', '', 12, 'N', 'Y', 'N', 'Y', 'Y'],
-                  [4, 'Ananya Reddy', '', '', 10, 'Y', 'Y', 'Y', 'N', 'N'],
+                  [1, 'Arjun Kumar',   'arjun@example.com',  '9876543210', 11, 'Y', 'Y', 'N', 'Y', 'Y'],
+                  [2, 'Priya Sharma',  'priya@example.com',  '9876543211', 11, 'Y', 'N', 'Y', 'N', 'Y'],
+                  [3, 'Rohan Nair',    'rohan@example.com',  '9876543212', 12, 'N', 'Y', 'N', 'Y', 'Y'],
+                  [4, 'Ananya Reddy',  'ananya@example.com', '9876543213', 10, 'Y', 'Y', 'Y', 'N', 'N'],
                 ];
+
                 const ws = XLSX.utils.aoa_to_sheet([...metaRows, headers, ...sampleRows]);
+
+                // ── Styling helpers ────────────────────────────────────────
+                const thin = { style: 'thin', color: { rgb: 'B0B8C8' } };
+                const border = { top: thin, bottom: thin, left: thin, right: thin };
+                const headerStyle = {
+                  font: { bold: true, color: { rgb: 'FFFFFF' }, sz: 11 },
+                  fill: { patternType: 'solid', fgColor: { rgb: '4472C4' } },
+                  alignment: { horizontal: 'center', vertical: 'center', wrapText: true },
+                  border,
+                };
+                const dataStyle = {
+                  alignment: { vertical: 'center' },
+                  border,
+                };
+
+                const hRow = metaRows.length; // 0-indexed header row
+                const totalRows = metaRows.length + 1 + sampleRows.length;
+
+                // Bold + colour the header row
+                headers.forEach((_, c) => {
+                  const ref = XLSX.utils.encode_cell({ r: hRow, c });
+                  if (ws[ref]) ws[ref].s = headerStyle;
+                });
+
+                // Borders on data rows
+                sampleRows.forEach((_, ri) => {
+                  headers.forEach((_, c) => {
+                    const ref = XLSX.utils.encode_cell({ r: hRow + 1 + ri, c });
+                    if (ws[ref]) ws[ref].s = dataStyle;
+                  });
+                });
+
                 // Column widths
                 ws['!cols'] = [
-                  { wch: 30 },  // SL. NO. / label col
-                  { wch: 4 },   // blank spacer
-                  { wch: 25 },  // Student Name / value col
-                  { wch: 18 },  // Phone NO.
-                  { wch: 10 },  // Grade
+                  { wch: 10 },  // SL. NO.
+                  { wch: 28 },  // Student Name
+                  { wch: 30 },  // Mail ID
+                  { wch: 16 },  // Phone NO.
+                  { wch: 9 },   // Grade
                   { wch: 18 },  // Social Science
                   { wch: 12 },  // Science
                   { wch: 12 },  // CT&AI
                   { wch: 12 },  // Maths
                   { wch: 12 },  // English
                 ];
-                // Row heights — make header row (row 8, index 7) taller
-                ws['!rows'] = Array.from({ length: metaRows.length }, () => ({ hpt: 18 }));
-                ws['!rows'][metaRows.length] = { hpt: 22 }; // header row slightly taller
+
+                // Row heights
+                ws['!rows'] = [
+                  ...Array.from({ length: metaRows.length }, () => ({ hpt: 18 })),
+                  { hpt: 26 }, // header row taller
+                  ...Array.from({ length: sampleRows.length }, () => ({ hpt: 18 })),
+                ];
+
                 const wb = XLSX.utils.book_new();
                 XLSX.utils.book_append_sheet(wb, ws, 'Students');
-                XLSX.writeFile(wb, 'student_upload_template.xlsx');
+                XLSX.writeFile(wb, 'student_upload_template.xlsx', { cellStyles: true });
               }}
               style={{ padding: '0.6rem 1.25rem', background: 'linear-gradient(135deg, #1d4ed8, #3b82f6)', color: '#fff', border: 'none', borderRadius: 10, fontFamily: FONT, fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0, transition: 'opacity 0.2s' }}
               onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
