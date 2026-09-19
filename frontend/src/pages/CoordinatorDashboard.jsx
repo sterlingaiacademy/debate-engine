@@ -1341,27 +1341,34 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
             </div>
             <button
               onClick={() => {
-                // School metadata rows: label in col A, value in col B
+                // Exact structure from the school's own template:
+                // col A = blank, col B = label/data (metadata section)
                 const metaRows = [
-                  ['School Name', ''],
-                  ['Mail Id', ''],
-                  ['ThinkQuest School Code.', ''],
-                  ['Co-ordinator Name', ''],
-                  ['ThinkQuest Coordinator Code', ''],
-                  ['CO-ordinator Contact No.', ''],
-                  [], // blank separator
+                  ['', 'School Name'],
+                  ['', 'Mail Id'],
+                  ['', 'ThinkQuest School Code.'],
+                  ['', 'CO-ordinator Name'],
+                  ['', 'ThinkQuest Coordinator Code'],
+                  ['', 'CO-ordinator Contact No.'],
+                  [], // blank separator row (row 7)
                 ];
+                // Row 8: header
                 const headers = ['SL. NO.', 'Student Name', 'Mail ID', 'Phone NO.', 'Grade', 'Social Science', 'Science', 'CT&AI', 'Maths', 'English'];
+                // Rows 9–13: sample students (matching template style)
                 const sampleRows = [
-                  [1, 'Arjun Kumar',   'arjun@example.com',  '9876543210', 11, 'Y', 'Y', 'N', 'Y', 'Y'],
-                  [2, 'Priya Sharma',  'priya@example.com',  '9876543211', 11, 'Y', 'N', 'Y', 'N', 'Y'],
-                  [3, 'Rohan Nair',    'rohan@example.com',  '9876543212', 12, 'N', 'Y', 'N', 'Y', 'Y'],
-                  [4, 'Ananya Reddy',  'ananya@example.com', '9876543213', 10, 'Y', 'Y', 'Y', 'N', 'N'],
+                  [1, 'Hanan Hashim',  'hanan@gmail.com',   '9123456780', 11, 'Y', 'Y', 'Y', 'N', 'N'],
+                  [2, 'Nimesh',        'nimesh@gmail.com',  '9876543210',  9, 'N', 'N', 'Y', 'N', 'Y'],
+                  [3, 'Merlin',        'merlin@gmail.com',  '7987654321', 11, 'Y', 'N', 'Y', 'Y', 'N'],
+                  [4, 'Akshay K',      'akshayk@gmail.com', '9345678901', 12, 'N', 'Y', 'Y', 'Y', 'Y'],
+                  [5, 'Shallet',       'shallet@gmail.com', '8976543210', 10, 'N', 'N', 'Y', 'N', 'N'],
                 ];
+                // 80 blank rows after samples (rows 14–91) — coordinator fills these
+                const blankRows = Array.from({ length: 80 }, () => Array(10).fill(''));
 
-                const ws = XLSX.utils.aoa_to_sheet([...metaRows, headers, ...sampleRows]);
+                const allData = [...metaRows, headers, ...sampleRows, ...blankRows];
+                const ws = XLSX.utils.aoa_to_sheet(allData);
 
-                // ── Styling helpers ────────────────────────────────────────
+                // ── Styling ────────────────────────────────────────────────
                 const thin = { style: 'thin', color: { rgb: 'B0B8C8' } };
                 const border = { top: thin, bottom: thin, left: thin, right: thin };
                 const headerStyle = {
@@ -1370,21 +1377,16 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
                   alignment: { horizontal: 'center', vertical: 'center', wrapText: true },
                   border,
                 };
-                const dataStyle = {
-                  alignment: { vertical: 'center' },
-                  border,
-                };
+                const dataStyle = { alignment: { vertical: 'center' }, border };
 
-                const hRow = metaRows.length; // 0-indexed header row
-                const totalRows = metaRows.length + 1 + sampleRows.length;
+                const hRow = metaRows.length; // 0-indexed row 7 = index 7
 
-                // Bold + colour the header row
+                // Bold blue header row
                 headers.forEach((_, c) => {
                   const ref = XLSX.utils.encode_cell({ r: hRow, c });
                   if (ws[ref]) ws[ref].s = headerStyle;
                 });
-
-                // Borders on data rows
+                // Borders on sample data rows only
                 sampleRows.forEach((_, ri) => {
                   headers.forEach((_, c) => {
                     const ref = XLSX.utils.encode_cell({ r: hRow + 1 + ri, c });
@@ -1394,23 +1396,22 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
 
                 // Column widths
                 ws['!cols'] = [
-                  { wch: 10 },  // SL. NO.
-                  { wch: 28 },  // Student Name
+                  { wch: 10 },  // SL. NO. / blank in meta
+                  { wch: 28 },  // Student Name / label in meta
                   { wch: 30 },  // Mail ID
                   { wch: 16 },  // Phone NO.
-                  { wch: 9 },   // Grade
+                  { wch: 9  },  // Grade
                   { wch: 18 },  // Social Science
                   { wch: 12 },  // Science
                   { wch: 12 },  // CT&AI
                   { wch: 12 },  // Maths
                   { wch: 12 },  // English
                 ];
-
                 // Row heights
                 ws['!rows'] = [
                   ...Array.from({ length: metaRows.length }, () => ({ hpt: 18 })),
-                  { hpt: 26 }, // header row taller
-                  ...Array.from({ length: sampleRows.length }, () => ({ hpt: 18 })),
+                  { hpt: 26 }, // header row
+                  ...Array.from({ length: sampleRows.length + blankRows.length }, () => ({ hpt: 18 })),
                 ];
 
                 const wb = XLSX.utils.book_new();
