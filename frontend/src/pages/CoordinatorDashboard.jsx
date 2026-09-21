@@ -1188,7 +1188,9 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
       // Extract grade number for range validation (Grade 5–12 only)
       const gradeNum = parseInt(normClass.replace(/^Grade\s*/i, ''), 10);
       const gradeInRange = !isNaN(gradeNum) && gradeNum >= 5 && gradeNum <= 12;
-      const isY = v => v && v.trim().toLowerCase() === 'y';
+      const isY = v => v != null && String(v).trim().toLowerCase() === 'y';
+      // blank / undefined / null / anything not 'y' → false (treated as N)
+      const subjectVal = (idx) => idx !== -1 ? isY(cols[idx]) : false;
       return {
         name: cols[nameIdx] || '',
         classLevel: gradeInRange ? normClass : '', // blank so it gets filtered out
@@ -1196,11 +1198,11 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
         email: emailIdx !== -1 ? cols[emailIdx] || '' : '',
         phone: phoneIdx !== -1 ? cols[phoneIdx] || '' : '',
         subjects: {
-          social_science: subjIdx.social_science !== -1 ? isY(cols[subjIdx.social_science]) : false,
-          science: subjIdx.science !== -1 ? isY(cols[subjIdx.science]) : false,
-          ct_ai: subjIdx.ct_ai !== -1 ? isY(cols[subjIdx.ct_ai]) : false,
-          maths: subjIdx.maths !== -1 ? isY(cols[subjIdx.maths]) : false,
-          english: subjIdx.english !== -1 ? isY(cols[subjIdx.english]) : false,
+          social_science: subjectVal(subjIdx.social_science),
+          science:        subjectVal(subjIdx.science),
+          ct_ai:          subjectVal(subjIdx.ct_ai),
+          maths:          subjectVal(subjIdx.maths),
+          english:        subjectVal(subjIdx.english),
         },
       };
     }).filter(r => r.name);
