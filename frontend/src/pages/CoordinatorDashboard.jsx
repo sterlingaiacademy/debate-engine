@@ -404,8 +404,9 @@ function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent, 
             };
 
             const sheetData = [
-              ['Name', 'Class', 'Username', 'Password', 'Subjects'],
-              ...rows.map(s => [
+              ['SL. NO.', 'Name', 'Class', 'Username', 'Password', 'Subjects'],
+              ...rows.map((s, i) => [
+                i + 1,
                 s.name || '',
                 s.class || '',
                 s.username || '',
@@ -415,7 +416,7 @@ function StudentsSection({ students, fetchData, coordinatorId, setScoreStudent, 
             ];
 
             const ws = XLSX.utils.aoa_to_sheet(sheetData);
-            ws['!cols'] = [{ wch: 30 }, { wch: 12 }, { wch: 25 }, { wch: 20 }, { wch: 40 }];
+            ws['!cols'] = [{ wch: 8 }, { wch: 30 }, { wch: 12 }, { wch: 25 }, { wch: 20 }, { wch: 40 }];
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, 'Student Credentials');
 
