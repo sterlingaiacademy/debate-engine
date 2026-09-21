@@ -1279,11 +1279,11 @@ function ManageStudentsSection({ coordinatorId, fetchData, school }) {
     if (!results) return;
     const created = results.filter(r => r.status === 'created');
     const sheetData = [
-      ['Name', 'Username', 'Password'],
-      ...created.map(r => [r.name || '', r.username || '', r.password || ''])
+      ['SL. NO.', 'Name', 'Username', 'Password'],
+      ...created.map((r, i) => [i + 1, r.name || '', r.username || '', r.password || ''])
     ];
     const ws = XLSX.utils.aoa_to_sheet(sheetData);
-    ws['!cols'] = [{ wch: 30 }, { wch: 25 }, { wch: 20 }];
+    ws['!cols'] = [{ wch: 8 }, { wch: 30 }, { wch: 25 }, { wch: 20 }];
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Student Credentials');
     const schoolLabel = (school || 'School').replace(/[^a-z0-9 ]/gi, '').trim();
