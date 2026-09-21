@@ -1124,7 +1124,7 @@ function AddStudentsSection({ coordinatorId }) {
   );
 }
 
-function ManageStudentsSection({ coordinatorId, fetchData }) {
+function ManageStudentsSection({ coordinatorId, fetchData, school }) {
 
 
   const [tab, setTab] = useState('csv'); // 'csv' | 'manual' | 'results'
@@ -1286,7 +1286,7 @@ function ManageStudentsSection({ coordinatorId, fetchData }) {
     ws['!cols'] = [{ wch: 30 }, { wch: 25 }, { wch: 20 }];
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Student Credentials');
-    const schoolLabel = (data.school || 'School').replace(/[^a-z0-9 ]/gi, '').trim();
+    const schoolLabel = (school || 'School').replace(/[^a-z0-9 ]/gi, '').trim();
     XLSX.writeFile(wb, `${schoolLabel} Student Credentials.xlsx`);
   };
 
@@ -1822,7 +1822,7 @@ export default function CoordinatorDashboard() {
             <>
               {activeSection === 'overview' && <OverviewSection data={data} />}
               {activeSection === 'students' && <StudentsSection students={data.students} fetchData={fetchData} coordinatorId={coordinatorId} school={data.school} />}
-              {activeSection === 'manage' && <ManageStudentsSection coordinatorId={coordinatorId} fetchData={fetchData} />}
+              {activeSection === 'manage' && <ManageStudentsSection coordinatorId={coordinatorId} fetchData={fetchData} school={data.school} />}
               {activeSection === 'scores' && <ScoresSection students={data.students} />}
 
             </>
