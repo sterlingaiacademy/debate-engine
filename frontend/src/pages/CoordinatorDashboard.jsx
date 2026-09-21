@@ -1728,6 +1728,12 @@ export default function CoordinatorDashboard() {
           </div>
         </div>
 
+        {/* Toggle */}
+        <button onClick={() => setSidebarOpen(!sidebarOpen)}
+          style={{ position: 'absolute', top: '1.65rem', right: '-13px', background: '#0f172a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '50%', width: 26, height: 26, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#64748b', fontSize: '0.65rem', zIndex: 101, transition: 'transform 0.3s, color 0.2s', transform: sidebarOpen ? 'rotate(0deg)' : 'rotate(180deg)' }}
+          onMouseEnter={e => e.currentTarget.style.color = '#fff'}
+          onMouseLeave={e => e.currentTarget.style.color = '#64748b'}
+        >◀</button>
 
         {/* Nav */}
         <nav style={{ flex: 1, padding: '1rem 0.6rem', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
