@@ -268,7 +268,7 @@ export default function Topbar({ user, setUser, isCollapsed, setIsCollapsed, isM
   const navigate = useNavigate();
 
   const getBreadcrumb = (path) => {
-    if (path.includes('dashboard'))            return 'Home';
+    if (path.includes('dashboard'))            return 'Dashboard';
     if (path.includes('mock-un'))              return 'Model UN';
     if (path.includes('mun30'))               return 'MUN 30 Boot Camp';
     if (path.includes('persona'))             return 'Wisdom Arena';
@@ -285,7 +285,7 @@ export default function Topbar({ user, setUser, isCollapsed, setIsCollapsed, isM
     if (path.includes('speech-league'))       return 'Speech League';
     if (path.includes('diplomat'))            return 'Diplomat 365';
     if (path.includes('certificate'))         return 'Certificates';
-    return 'Home';
+    return 'Dashboard';
   };
 
   const isJunior = ['Level 1','Level 2','Class 1-3','Class 3-5','KG','Class KG','KG-2',
