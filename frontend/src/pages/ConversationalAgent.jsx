@@ -17,7 +17,7 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
   const getNormalizedLevel = (cls) => {
     if (!cls) return 'Level 1';
     if (cls.startsWith('Level ')) return cls;
-    if (['KG', 'Class 1', 'Class 2', 'Class KG', 'KG-2'].includes(cls)) return 'Level 1';
+    if (['KG', 'Class 1', 'Class 2', 'Class KG', 'KG-2', 'Grade KG', 'Grade 1', 'Grade 2'].includes(cls)) return 'Level 1';
     if (['Class 3', 'Class 4', 'Class 5'].includes(cls)) return 'Level 2';
     if (['Class 6', 'Class 7', 'Class 8'].includes(cls)) return 'Level 3';
     if (['Class 9', 'Class 10'].includes(cls)) return 'Level 4';
@@ -35,7 +35,7 @@ export default function ConversationalAgent({ user, agentId: agentIdProp, mode }
   };
   const agentId = getAgentId();
 
-  const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg'].includes(user.classLevel);
+  const isJunior = ['Level 1', 'Level 2', 'Class 1-3', 'Class 3-5', 'KG', 'Class KG', 'KG-2', 'Class 1-5', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'kg', 'Grade KG', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5'].includes(user.classLevel);
   const [timer, setTimer] = useState(600);
   const [isActive, setIsActive] = useState(false);
   const [screenSleep, setScreenSleep] = useState(false);
