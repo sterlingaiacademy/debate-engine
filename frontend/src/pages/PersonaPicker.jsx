@@ -65,7 +65,7 @@ export default function PersonaPicker({ user }) {
   const getNormalizedLevel = (cls) => {
     if (!cls) return 'Level 1';
     if (cls.startsWith('Level ')) return cls;
-    if (['KG', 'Class 1', 'Class 2', 'Class KG', 'KG-2', 'Grade KG', 'Grade 1', 'Grade 2'].includes(cls)) return 'Level 1';
+    if (['KG', 'Class 1', 'Class 2', 'Class KG', 'KG-2'].includes(cls)) return 'Level 1';
     if (['Class 3', 'Class 4', 'Class 5'].includes(cls)) return 'Level 2';
     if (['Class 6', 'Class 7', 'Class 8'].includes(cls)) return 'Level 3';
     if (['Class 9', 'Class 10'].includes(cls)) return 'Level 4';
