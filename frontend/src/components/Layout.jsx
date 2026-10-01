@@ -24,6 +24,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
 
   const navigate = useNavigate();
   const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showPremiumModal, setShowPremiumModal] = useState(false);
@@ -97,7 +98,9 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
   };
   const tierColor = TIER_COLORS[user?.rank] || '#64748b';
 
-  const SIDEBAR_W = isCollapsed && !isMobile ? 96 : 264;
+  // Sidebar is slim when collapsed & not hovered; expands on hover OR when explicitly opened
+  const sidebarExpanded = !isCollapsed || isHovered;
+  const SIDEBAR_W = sidebarExpanded && !isMobile ? 240 : 64;
 
   const activeStyle = isJunior
     ? {
@@ -162,14 +165,18 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
       )}
 
       {/* SIDEBAR */}
-      <aside style={{
+      <aside
+        onMouseEnter={() => !isMobile && setIsHovered(true)}
+        onMouseLeave={() => !isMobile && setIsHovered(false)}
+        style={{
         position: 'relative',
         width: isMobile ? 280 : SIDEBAR_W,
         flexShrink: 0,
         display: 'flex',
         flexDirection: 'column',
-        transition: isMobile ? 'transform 0.3s cubic-bezier(0.16,1,0.3,1)' : 'width 0.3s cubic-bezier(0.16,1,0.3,1)',
+        transition: isMobile ? 'transform 0.3s cubic-bezier(0.16,1,0.3,1)' : 'width 0.25s cubic-bezier(0.16,1,0.3,1)',
         zIndex: 70,
+        overflow: 'hidden',
         ...(isMobile ? {
           position: 'fixed', top: 0, bottom: 0, left: 0,
           transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(-100%)',
@@ -194,22 +201,22 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
           display: 'flex', 
           flexDirection: 'row',
           alignItems: 'center',
-          justifyContent: isCollapsed && !isMobile ? 'center' : 'space-between',
-          padding: isMobile ? '1.25rem 1.25rem 1.25rem 1.5rem' : (isCollapsed ? '1.5rem 0 0.5rem 0' : '1.5rem 1rem 0.5rem 1.25rem'),
+          justifyContent: !sidebarExpanded && !isMobile ? 'center' : 'space-between',
+          padding: isMobile ? '1.25rem 1.25rem 1.25rem 1.5rem' : (!sidebarExpanded ? '1.5rem 0 0.5rem 0' : '1.5rem 1rem 0.5rem 1.25rem'),
           borderBottom: isJunior ? '2px solid rgba(124,58,237,0.08)' : '1px solid rgba(255,255,255,0.05)',
           minHeight: 72,
           flexShrink: 0,
-          gap: isCollapsed && !isMobile ? '0.75rem' : '0.5rem',
+          gap: !sidebarExpanded && !isMobile ? '0.75rem' : '0.5rem',
         }}>
           {/* Logo (Always visible, scaled when collapsed) */}
           <Link to="/dashboard" onClick={() => isMobile && setMobileMenuOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', overflow: 'hidden' }}>
             <img src={logoImg} alt="G FORCE" style={{ 
-              height: isCollapsed && !isMobile ? 'auto' : 32, 
-              width: isCollapsed && !isMobile ? '100%' : 'auto', 
-              maxWidth: isCollapsed && !isMobile ? '40px' : 'none',
+              height: !sidebarExpanded && !isMobile ? 'auto' : 32, 
+              width: !sidebarExpanded && !isMobile ? '100%' : 'auto', 
+              maxWidth: !sidebarExpanded && !isMobile ? '40px' : 'none',
               flexShrink: 0 
             }} />
-            {(!isCollapsed || isMobile) && (
+            {(sidebarExpanded || isMobile) && (
               <span style={{
                 fontWeight: 900, fontSize: '1.35rem', letterSpacing: '-0.02em',
                 whiteSpace: 'nowrap', overflow: 'hidden',
@@ -240,7 +247,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
           flex: 1,
           display: 'flex', flexDirection: 'column',
           gap: isMobile ? '0.45rem' : (isJunior ? '0.35rem' : '0.15rem'),
-          padding: isMobile ? '1.5rem 1.25rem 80px 1.25rem' : (isCollapsed && !isMobile ? '0.5rem' : '0.75rem 0.75rem 0.75rem 0'),
+          padding: isMobile ? '1.5rem 1.25rem 80px 1.25rem' : (!sidebarExpanded && !isMobile ? '0.5rem' : '0.75rem 0.75rem 0.75rem 0'),
           overflowY: 'auto', overflowX: 'hidden',
           marginTop: isMobile ? '1rem' : 0,
         }}>
@@ -257,16 +264,16 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
                 key={name}
                 to={path}
                 onClick={() => isMobile && setMobileMenuOpen(false)}
-                title={isCollapsed && !isMobile ? name : ''}
+                title={!sidebarExpanded && !isMobile ? name : ''}
                 style={{
                   display: 'flex', alignItems: 'center',
-                  gap: isMobile ? '1rem' : (isCollapsed && !isMobile ? 0 : '0.75rem'),
+                  gap: isMobile ? '1rem' : (!sidebarExpanded && !isMobile ? 0 : '0.75rem'),
                   padding: isMobile 
                     ? '1.05rem 1.25rem'
                     : (isJunior
-                      ? (isCollapsed && !isMobile ? '0.85rem' : '0.85rem 1.1rem')
-                      : (isCollapsed && !isMobile ? '0.85rem 0' : '0.85rem 1rem')),
-                  justifyContent: isCollapsed && !isMobile ? 'center' : 'flex-start',
+                      ? (!sidebarExpanded && !isMobile ? '0.85rem' : '0.85rem 1.1rem')
+                      : (!sidebarExpanded && !isMobile ? '0.85rem 0' : '0.85rem 1rem')),
+                  justifyContent: !sidebarExpanded && !isMobile ? 'center' : 'flex-start',
                   fontWeight: isActive ? 800 : 600,
                   fontSize: isMobile ? '1.1rem' : '0.95rem',
                   textDecoration: 'none',
@@ -296,11 +303,11 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
                   strokeWidth={isActive ? 2.5 : 2}
                   style={{ flexShrink: 0, color: isActive && !isJunior ? '#FF6B00' : 'currentColor' }}
                 />
-                {(!isCollapsed || isMobile) && (
+                {(sidebarExpanded || isMobile) && (
                   <span style={{ opacity: 1, transition: 'opacity 0.2s', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{name}</span>
                 )}
                 {/* Lock badge — emoji only to save horizontal space */}
-                {locked && (!isCollapsed || isMobile) && (
+                {locked && (sidebarExpanded || isMobile) && (
                   <span
                     title={`${requiredPlan} plan required`}
                     style={{
@@ -319,7 +326,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
         {/* ── Bottom Section ── */}
         <div style={{
           marginTop: 'auto',
-          padding: isCollapsed && !isMobile ? '1rem 0.5rem' : '1rem 1rem',
+          padding: !sidebarExpanded && !isMobile ? '1rem 0.5rem' : '1rem 1rem',
           borderTop: isJunior ? '2px solid rgba(124,58,237,0.08)' : '1px solid rgba(255,255,255,0.05)',
           display: 'flex', flexDirection: 'column', gap: '0.75rem', flexShrink: 0,
         }}>
@@ -336,13 +343,13 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
                 setShowPremiumModal(true);
               }}
               style={{
-                margin: (!isCollapsed || isMobile) ? '0.5rem 0.5rem 1rem' : '0.5rem 0 1rem',
+                margin: (sidebarExpanded || isMobile) ? '0.5rem 0.5rem 1rem' : '0.5rem 0 1rem',
                 background: 'linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)',
-                borderRadius: (!isCollapsed || isMobile) ? 14 : 10,
-                padding: (!isCollapsed || isMobile) ? '0.75rem' : '0.65rem',
+                borderRadius: (sidebarExpanded || isMobile) ? 14 : 10,
+                padding: (sidebarExpanded || isMobile) ? '0.75rem' : '0.65rem',
                 cursor: 'pointer',
                 display: 'flex', alignItems: 'center',
-                justifyContent: (!isCollapsed || isMobile) ? 'space-between' : 'center',
+                justifyContent: (sidebarExpanded || isMobile) ? 'space-between' : 'center',
                 boxShadow: '0 4px 12px rgba(139,92,246,0.3)',
                 transition: 'transform 0.2s',
               }}
@@ -350,7 +357,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
               onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
               title="Upgrade to Pro"
             >
-              {(!isCollapsed || isMobile) ? (
+              {(sidebarExpanded || isMobile) ? (
                 <>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                     <div style={{ background: 'rgba(255,255,255,0.2)', padding: '0.3rem', borderRadius: '50%', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -373,9 +380,9 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
           <div style={{
             display: 'flex', alignItems: 'center',
             gap: '0.75rem',
-            padding: isCollapsed && !isMobile ? '0.5rem' : '0.75rem',
+            padding: !sidebarExpanded && !isMobile ? '0.5rem' : '0.75rem',
             borderRadius: isJunior ? 99 : 12,
-            justifyContent: isCollapsed && !isMobile ? 'center' : 'flex-start',
+            justifyContent: !sidebarExpanded && !isMobile ? 'center' : 'flex-start',
             background: isJunior ? 'rgba(124,58,237,0.06)' : 'rgba(255,255,255,0.03)',
             border: isJunior ? '1.5px solid rgba(124,58,237,0.12)' : '1px solid rgba(255,255,255,0.05)',
           }}>
@@ -393,7 +400,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
               }
             </div>
 
-            {(!isCollapsed || isMobile) && (
+            {(sidebarExpanded || isMobile) && (
               <>
                 <div style={{ flex: 1, overflow: 'hidden' }}>
                   <div style={{ fontSize: '0.875rem', fontWeight: 800, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
@@ -429,7 +436,7 @@ export default function Layout({ user, setUser, onLogout, onSwitchProfile }) {
           </div>
 
           {/* Collapsed logout (Desktop only) */}
-          {isCollapsed && !isMobile && (
+          {!sidebarExpanded && !isMobile && (
             <button
               onClick={onLogout}
               title="Logout"
